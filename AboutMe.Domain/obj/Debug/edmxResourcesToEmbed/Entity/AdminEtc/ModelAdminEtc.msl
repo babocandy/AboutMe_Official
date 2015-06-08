@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AdminEtcModelStoreContainer" CdmEntityContainer="AdminEtcEntities">
+    <EntitySetMapping Name="ADMIN_MEMBER">
+      <EntityTypeMapping TypeName="AdminEtcModel.ADMIN_MEMBER">
+        <MappingFragment StoreEntitySet="ADMIN_MEMBER">
+          <ScalarProperty Name="ADM_PHOTO" ColumnName="ADM_PHOTO" />
+          <ScalarProperty Name="POINT" ColumnName="POINT" />
+          <ScalarProperty Name="IDX" ColumnName="IDX" />
+          <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+          <ScalarProperty Name="ADM_PASS" ColumnName="ADM_PASS" />
+          <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+          <ScalarProperty Name="ADM_DEPT" ColumnName="ADM_DEPT" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="MOBILE" ColumnName="MOBILE" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="ADM_ROLE_GRADE" ColumnName="ADM_ROLE_GRADE" />
+          <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+          <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_ADM_ADMIN_MEMBER_CNT" FunctionName="AdminEtcModel.Store.SP_ADM_ADMIN_MEMBER_CNT">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADM_ADMIN_MEMBER_CNT">
+          <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_DUMMY_ADMIN_SEL" FunctionName="AdminEtcModel.Store.SP_DUMMY_ADMIN_SEL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AdminEtcModel.SP_DUMMY_ADMIN_SEL_Result">
+          <ScalarProperty Name="IDX" ColumnName="IDX" />
+          <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+          <ScalarProperty Name="ADM_PASS" ColumnName="ADM_PASS" />
+          <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+          <ScalarProperty Name="ADM_DEPT" ColumnName="ADM_DEPT" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="MOBILE" ColumnName="MOBILE" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="ADM_ROLE_GRADE" ColumnName="ADM_ROLE_GRADE" />
+          <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+          <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_ADM_ADMIN_DEPT_SEL" FunctionName="AdminEtcModel.Store.SP_ADM_ADMIN_DEPT_SEL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADM_ADMIN_DEPT_SEL_Result">
+          <ScalarProperty Name="DEPT_CODE" ColumnName="DEPT_CODE" />
+          <ScalarProperty Name="DEPT_NAME" ColumnName="DEPT_NAME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_ADM_ADMIN_MEMBER_INS" FunctionName="AdminEtcModel.Store.SP_ADM_ADMIN_MEMBER_INS" />
+    <FunctionImportMapping FunctionImportName="SP_ADM_ADMIN_MEMBER_SEL" FunctionName="AdminEtcModel.Store.SP_ADM_ADMIN_MEMBER_SEL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADM_ADMIN_MEMBER_SEL_Result">
+          <ScalarProperty Name="IDX" ColumnName="IDX" />
+          <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+          <ScalarProperty Name="ADM_PASS" ColumnName="ADM_PASS" />
+          <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+          <ScalarProperty Name="ADM_DEPT" ColumnName="ADM_DEPT" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="MOBILE" ColumnName="MOBILE" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="ADM_ROLE_GRADE" ColumnName="ADM_ROLE_GRADE" />
+          <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+          <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+          <ScalarProperty Name="ADM_PHOTO" ColumnName="ADM_PHOTO" />
+          <ScalarProperty Name="POINT" ColumnName="POINT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="CATEGORies">
+      <EntityTypeMapping TypeName="AdminEtcModel.CATEGORY">
+        <MappingFragment StoreEntitySet="CATEGORY">
+          <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+          <ScalarProperty Name="UPD_DATE" ColumnName="UPD_DATE" />
+          <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+          <ScalarProperty Name="DEPTH_FLAG" ColumnName="DEPTH_FLAG" />
+          <ScalarProperty Name="DEPTH2_NAME" ColumnName="DEPTH2_NAME" />
+          <ScalarProperty Name="DEPTH2_CODE" ColumnName="DEPTH2_CODE" />
+          <ScalarProperty Name="DEPTH1_IMG" ColumnName="DEPTH1_IMG" />
+          <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
+          <ScalarProperty Name="DEPTH1_CODE" ColumnName="DEPTH1_CODE" />
+          <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+          <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
+          <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+          <ScalarProperty Name="IDX" ColumnName="IDX" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ADMIN_MEMBER_DEPT">
+      <EntityTypeMapping TypeName="AdminEtcModel.ADMIN_MEMBER_DEPT">
+        <MappingFragment StoreEntitySet="ADMIN_MEMBER_DEPT">
+          <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+          <ScalarProperty Name="DEPT_NAME" ColumnName="DEPT_NAME" />
+          <ScalarProperty Name="DEPT_CODE" ColumnName="DEPT_CODE" />
+          <ScalarProperty Name="IDX" ColumnName="IDX" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

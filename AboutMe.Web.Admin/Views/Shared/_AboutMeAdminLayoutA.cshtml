@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/aboutCom/css/bootstrap.css" rel="stylesheet">
+    <link href="/aboutCom/css/style.css" rel="stylesheet">
+    <script src="/aboutCom/js/jquery-1.11.3.min.js"></script>
+    <script src="/aboutCom/js/bootstrap.min.js"></script>
+    <script src="/aboutCom/js/script.js"></script>
+    <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+    @RenderSection("Scripts",false)
+    <title>ABOUT ME</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!--sidebar-->
+            @RenderSection("Left")
+            <!--//sidebar-->
+            <!--container-->
+            <div class="col-xs-10 col-xs-offset-2 container">
+
+                <!--header ssw -------------------->
+                @RenderSection("Header")
+                <!--header ssw -------------------->
+                <!--content-->
+                @RenderSection("Body")
+                <!--//content-->
+            </div>
+            <!--//container-->
+        </div>
+    </div>
+</body>
+</html>

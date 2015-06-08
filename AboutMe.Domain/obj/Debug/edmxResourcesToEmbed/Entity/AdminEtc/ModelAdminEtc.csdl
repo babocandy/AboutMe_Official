@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AdminEtcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ADMIN_MEMBER">
+    <Key>
+      <PropertyRef Name="ADM_ID" />
+    </Key>
+    <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ADM_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ADM_PASS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ADM_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ADM_DEPT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PHONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MOBILE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="ADM_ROLE_GRADE" Type="Int32" />
+    <Property Name="MEMO" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+    <Property Name="POINT" Type="Int32" />
+    <Property Name="ADM_PHOTO" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="AdminEtcEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ADMIN_MEMBER" EntityType="Self.ADMIN_MEMBER" />
+    <FunctionImport Name="SP_ADM_ADMIN_MEMBER_CNT" ReturnType="Collection(AdminEtcModel.SP_ADM_ADMIN_MEMBER_CNT)">
+      <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+      <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_DUMMY_ADMIN_SEL" ReturnType="Collection(AdminEtcModel.SP_DUMMY_ADMIN_SEL_Result)" />
+    <FunctionImport Name="SP_ADM_ADMIN_DEPT_SEL" ReturnType="Collection(AdminEtcModel.SP_ADM_ADMIN_DEPT_SEL_Result)" />
+    <FunctionImport Name="SP_ADM_ADMIN_MEMBER_INS">
+      <Parameter Name="ADM_ID" Mode="In" Type="String" />
+      <Parameter Name="ADM_PASS" Mode="In" Type="String" />
+      <Parameter Name="ADM_NAME" Mode="In" Type="String" />
+      <Parameter Name="ADM_PHOTO" Mode="In" Type="String" />
+      <Parameter Name="ADM_DEPT" Mode="In" Type="String" />
+      <Parameter Name="POINT" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_ADM_ADMIN_MEMBER_SEL" ReturnType="Collection(AdminEtcModel.SP_ADM_ADMIN_MEMBER_SEL_Result)">
+      <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+      <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+      <Parameter Name="SORT_COL" Mode="In" Type="String" />
+      <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+      <Parameter Name="PAGE" Mode="In" Type="Int32" />
+      <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="CATEGORies" EntityType="AdminEtcModel.CATEGORY" />
+    <EntitySet Name="ADMIN_MEMBER_DEPT" EntityType="AdminEtcModel.ADMIN_MEMBER_DEPT" />
+  </EntityContainer>
+  <ComplexType Name="SP_ADM_ADMIN_MEMBER_CNT">
+    <Property Type="Int32" Name="COUNT" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SP_DUMMY_ADMIN_SEL_Result">
+    <Property Type="Int32" Name="IDX" Nullable="false" />
+    <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ADM_PASS" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ADM_NAME" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ADM_DEPT" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PHONE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MOBILE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="EMAIL" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="ADM_ROLE_GRADE" Nullable="true" />
+    <Property Type="String" Name="MEMO" Nullable="true" MaxLength="512" />
+    <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ADM_PHOTO" Nullable="false" />
+    <Property Type="Int32" Name="POINT" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SP_ADM_ADMIN_DEPT_SEL_Result">
+    <Property Type="String" Name="DEPT_CODE" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="DEPT_NAME" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="SP_ADM_ADMIN_MEMBER_SEL_Result">
+    <Property Type="Int32" Name="IDX" Nullable="false" />
+    <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="ADM_PASS" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ADM_NAME" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ADM_DEPT" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PHONE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MOBILE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="EMAIL" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="ADM_ROLE_GRADE" Nullable="true" />
+    <Property Type="String" Name="MEMO" Nullable="true" MaxLength="512" />
+    <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ADM_PHOTO" Nullable="false" />
+    <Property Type="Int32" Name="POINT" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="CATEGORY">
+    <Key>
+      <PropertyRef Name="IDX" />
+    </Key>
+    <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CATE_GBN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="RE_SORT" Type="Int32" />
+    <Property Name="DEPTH1_CODE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="DEPTH1_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DEPTH1_IMG" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DEPTH2_CODE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="DEPTH2_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DEPTH_FLAG" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DISPLAY_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="UPD_DATE" Type="DateTime" Precision="3" />
+    <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ADMIN_MEMBER_DEPT">
+    <Key>
+      <PropertyRef Name="IDX" />
+    </Key>
+    <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DEPT_CODE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="DEPT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+  </EntityType>
+</Schema>
