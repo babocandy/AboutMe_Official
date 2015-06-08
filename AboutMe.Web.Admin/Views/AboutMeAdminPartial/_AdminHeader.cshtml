@@ -12,10 +12,16 @@
         <a href="#" class="btn btn-primary small">로그아웃</a>
     </div>
 </div>
+페이지코드:@ViewBag.BodyPageCode 
+<br />
+@{
+    var Path = Request.Url.LocalPath;
+}
 <div class="navbar_menu">
     <!--활성화 페이지시 active class 사용합니다.-->
     <ul>
         <li><a href="/basic/index.html">기본설정</a></li>
+        <li><a href="/display/index.html">관리자관리</a></li>
         <li class="active"><a href="/product/index.html">상품관리</a></li>
         <li><a href="/display/index.html">전시관리</a></li>
         <li><a href="/promotion/index.html">프로모션관리</a></li>
