@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "AES256";
+}
+<h2>@ViewBag.Title.</h2>
+
+<table class="table table_row">
+    <colgroup><col width="25%" /><col width="75%" /></colgroup>
+    <tbody>
+
+        <tr>
+            <th>test567암호화</th>
+            <td><input type="text" class="input-sm text-left" size="100" name="aes_en" value="@ViewBag.encode" /></td>
+
+        </tr>
+        <tr>
+            <th>ITXL5+ehBoUKyWWrO8Miog==복호화</th>
+            <td><input type="text" name="aes_de" size="100" class="input-sm text-left" value="@ViewBag.decode" /></td>
+        </tr>
+    </tbody>
+</table>
