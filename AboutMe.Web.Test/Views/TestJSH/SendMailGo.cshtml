@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "SendMailGo";
+}
+
+<h2>SendMailGo</h2>
+
+After Mail.....
+
+<br />
+<br />
+ViewBag.mail_err_no : {@ViewBag.mail_err_no}
+<br />
+ViewBag.mail_err_msg : {@ViewBag.mail_err_msg}
+<br />
+ViewBag.mail_sender : {@ViewBag.mail_sender}
+<br />
+ViewBag.mail_receiver : {@ViewBag.mail_receiver}
+<br />
+ViewBag.mail_subject : {@ViewBag.mail_subject}
+<br />
+ViewBag.mail_body : {@ViewBag.mail_body}
+<br />
+<br />
+@Html.Raw(ViewBag.mail_body)
+<br />
+<br />
+@{
+    var myString = new MvcHtmlString(ViewBag.mail_body);
+}
+@myString
