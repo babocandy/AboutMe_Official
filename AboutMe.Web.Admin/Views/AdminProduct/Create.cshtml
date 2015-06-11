@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Create_Plain";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+    <script language="javascript">
+
+        function frmCheck() {
+           var f = document.frm01;
+           if (f.DEPTH1_NAME.value == '') {
+                alert("카테고리 이름을 입력하세요.");
+                return false;
+            }
+        }
+      
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">카테고리 등록 @ViewBag.resultVal</h3>
+
+            @using (Html.BeginForm("Create", "AdminProduct", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                            <table class="table table_row">
+                                <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                <tbody>
+
+                                    <tr>
+                                        <th>카테고리이름</th>
+                                        <td><input type="text" class="input-sm text-left" name="DEPTH1_NAME" ID="DEPTH1_NAME" /></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>저장</th>
+                                        <td>
+                                            <input type="submit" value="저장" class="btn btn-default middium" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+            }
+        </div>
+
+        <div class="btn_area">
+            <a class="btn btn-primary small" href="/AdminProduct/Index">목록</a>
+        </div>
+
+
+    </div>
+}
+

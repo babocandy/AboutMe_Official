@@ -142,13 +142,47 @@
     <Compile Include="Entity\AdminEtc\SP_DUMMY_ADMIN_SEL_Result.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminProduct\ModelAdminProduct.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminProduct.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\ModelAdminProduct.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\ModelAdminProduct.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminProduct.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\SP_ADMIN_CATEGORY_NAME_SEL_Result.cs">
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\SP_ADMIN_CATEGORY_ONE_SEL_Result.cs">
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\SP_ADMIN_CATEGORY_TWO_SEL_Result.cs">
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\SP_ADMIN_CATEGORY_VIEW_Result.cs">
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\TB_CATEGORY.cs">
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminProduct\TB_PRODUCT_INFO.cs">
+      <DependentUpon>ModelAdminProduct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\IAdminMemberService.cs" />
+    <Compile Include="Service\AdminProduct\AdminProductService.cs" />
+    <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\AdminOrder\" />
-    <Folder Include="Entity\AdminProduct\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Member\" />
     <Folder Include="Entity\Order\" />
@@ -176,6 +210,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelAdminEtc.edmx</DependentUpon>
       <LastGenOutput>ModelAdminEtc.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\AdminProduct\ModelAdminProduct.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminProduct.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminProduct\ModelAdminProduct.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminProduct.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminProduct.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminProduct\ModelAdminProduct.edmx.diagram">
+      <DependentUpon>ModelAdminProduct.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminProduct\ModelAdminProduct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminProduct.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminProduct.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

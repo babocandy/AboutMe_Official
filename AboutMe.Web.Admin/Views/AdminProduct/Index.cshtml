@@ -1,0 +1,87 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CATE_GBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CATE_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RE_SORT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPTH1_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPTH1_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPTH2_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPTH2_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPTH_FLAG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISPLAY_YN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REGDATE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDX)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATE_GBN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATE_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RE_SORT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPTH1_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPTH1_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPTH2_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPTH2_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPTH_FLAG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISPLAY_YN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REGDATE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
