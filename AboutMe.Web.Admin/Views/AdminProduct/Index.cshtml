@@ -1,5 +1,19 @@
 ﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result>
 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -77,11 +91,11 @@
             @Html.DisplayFor(modelItem => item.REGDATE)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("edit", "CategoryUpdate", new {  idx=item.IDX }) |
+            @Html.ActionLink("Delete", "CategoryDelete", new { idx = item.IDX })
         </td>
     </tr>
 }
 
 </table>
+    }

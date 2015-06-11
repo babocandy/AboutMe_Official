@@ -1,0 +1,181 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_PRODUCT_SEL_Result>
+
+@{
+    ViewBag.Title = "ProductIndex";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+
+<p>
+    @Html.ActionLink("Create New", "ProductInsert")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_CATE_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C_CATE_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.L_CATE_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_COUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_POINT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_PRICE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SELLING_PRICE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISCOUNT_RATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISCOUNT_P_POINT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISCOUNT_PRICE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SOLDOUT_YN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MV_URL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_TAG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MAIN_IMG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RE_SORT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISPLAY_YN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ICON_YN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SELLING_COUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P_VIEW_COUNT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WITH_PRODUCT_LIST)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REGDATE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDX)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_CATE_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C_CATE_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.L_CATE_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_COUNT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_POINT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_PRICE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SELLING_PRICE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISCOUNT_RATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISCOUNT_P_POINT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISCOUNT_PRICE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SOLDOUT_YN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MV_URL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_TAG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MAIN_IMG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RE_SORT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISPLAY_YN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ICON_YN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SELLING_COUNT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P_VIEW_COUNT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WITH_PRODUCT_LIST)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REGDATE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "ProductUpdate", new { pcode=item.P_CODE }) |
+            
+        </td>
+    </tr>
+}
+
+</table>
+    }

@@ -52,27 +52,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_ONE_SEL_Result>("SP_ADMIN_CATEGORY_ONE_SEL");
         }
     
-        public virtual int SP_ADMIN_CATEGORY_ONE_UPD(Nullable<int> iDX, string dEPTH1_NAME, string dISPLAY_YN, Nullable<int> rE_SORT, ObjectParameter iNTRESULT)
-        {
-            var iDXParameter = iDX.HasValue ?
-                new ObjectParameter("IDX", iDX) :
-                new ObjectParameter("IDX", typeof(int));
-    
-            var dEPTH1_NAMEParameter = dEPTH1_NAME != null ?
-                new ObjectParameter("DEPTH1_NAME", dEPTH1_NAME) :
-                new ObjectParameter("DEPTH1_NAME", typeof(string));
-    
-            var dISPLAY_YNParameter = dISPLAY_YN != null ?
-                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
-                new ObjectParameter("DISPLAY_YN", typeof(string));
-    
-            var rE_SORTParameter = rE_SORT.HasValue ?
-                new ObjectParameter("RE_SORT", rE_SORT) :
-                new ObjectParameter("RE_SORT", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_UPD", iDXParameter, dEPTH1_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter, iNTRESULT);
-        }
-    
         public virtual int SP_ADMIN_CATEGORY_TWO_INS(string cATE_GBN, string dEPTH1_CODE, string dEPTH2_NAME, ObjectParameter iNTRESULT)
         {
             var cATE_GBNParameter = cATE_GBN != null ?
@@ -124,6 +103,286 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_UPD", iDXParameter, dEPTH2_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter, iNTRESULT);
         }
     
+        public virtual int SP_ADMIN_CATEGORY_ONE_INS(string dEPTH1_NAME, ObjectParameter iNTRESULT)
+        {
+            var dEPTH1_NAMEParameter = dEPTH1_NAME != null ?
+                new ObjectParameter("DEPTH1_NAME", dEPTH1_NAME) :
+                new ObjectParameter("DEPTH1_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_INS", dEPTH1_NAMEParameter, iNTRESULT);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_ADMIN_PRODUCT_CNT()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_PRODUCT_CNT");
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result> SP_ADMIN_PRODUCT_DETAIL_VIEW(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result>("SP_ADMIN_PRODUCT_DETAIL_VIEW", p_CODEParameter);
+        }
+    
+        public virtual int SP_ADMIN_PRODUCT_IMG_DEL(Nullable<int> iDX, string imgColumName)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var imgColumNameParameter = imgColumName != null ?
+                new ObjectParameter("imgColumName", imgColumName) :
+                new ObjectParameter("imgColumName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_IMG_DEL", iDXParameter, imgColumNameParameter);
+        }
+    
+        public virtual int SP_ADMIN_PRODUCT_INS(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> p_POINT, Nullable<int> p_PRICE, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_P_POINT, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string dISPLAY_YN, string iCON_YN, string wITH_PRODUCT_LIST)
+        {
+            var p_CATE_CODEParameter = p_CATE_CODE != null ?
+                new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
+                new ObjectParameter("P_CATE_CODE", typeof(string));
+    
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            var l_CATE_CODEParameter = l_CATE_CODE != null ?
+                new ObjectParameter("L_CATE_CODE", l_CATE_CODE) :
+                new ObjectParameter("L_CATE_CODE", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+    
+            var p_COUNTParameter = p_COUNT.HasValue ?
+                new ObjectParameter("P_COUNT", p_COUNT) :
+                new ObjectParameter("P_COUNT", typeof(int));
+    
+            var p_POINTParameter = p_POINT.HasValue ?
+                new ObjectParameter("P_POINT", p_POINT) :
+                new ObjectParameter("P_POINT", typeof(int));
+    
+            var p_PRICEParameter = p_PRICE.HasValue ?
+                new ObjectParameter("P_PRICE", p_PRICE) :
+                new ObjectParameter("P_PRICE", typeof(int));
+    
+            var sELLING_PRICEParameter = sELLING_PRICE.HasValue ?
+                new ObjectParameter("SELLING_PRICE", sELLING_PRICE) :
+                new ObjectParameter("SELLING_PRICE", typeof(int));
+    
+            var dISCOUNT_RATEParameter = dISCOUNT_RATE.HasValue ?
+                new ObjectParameter("DISCOUNT_RATE", dISCOUNT_RATE) :
+                new ObjectParameter("DISCOUNT_RATE", typeof(int));
+    
+            var dISCOUNT_P_POINTParameter = dISCOUNT_P_POINT.HasValue ?
+                new ObjectParameter("DISCOUNT_P_POINT", dISCOUNT_P_POINT) :
+                new ObjectParameter("DISCOUNT_P_POINT", typeof(int));
+    
+            var dISCOUNT_PRICEParameter = dISCOUNT_PRICE.HasValue ?
+                new ObjectParameter("DISCOUNT_PRICE", dISCOUNT_PRICE) :
+                new ObjectParameter("DISCOUNT_PRICE", typeof(int));
+    
+            var sOLDOUT_YNParameter = sOLDOUT_YN != null ?
+                new ObjectParameter("SOLDOUT_YN", sOLDOUT_YN) :
+                new ObjectParameter("SOLDOUT_YN", typeof(string));
+    
+            var p_INFO_DETAIL_WEBParameter = p_INFO_DETAIL_WEB != null ?
+                new ObjectParameter("P_INFO_DETAIL_WEB", p_INFO_DETAIL_WEB) :
+                new ObjectParameter("P_INFO_DETAIL_WEB", typeof(string));
+    
+            var p_INFO_DETAIL_MOBILEParameter = p_INFO_DETAIL_MOBILE != null ?
+                new ObjectParameter("P_INFO_DETAIL_MOBILE", p_INFO_DETAIL_MOBILE) :
+                new ObjectParameter("P_INFO_DETAIL_MOBILE", typeof(string));
+    
+            var mV_URLParameter = mV_URL != null ?
+                new ObjectParameter("MV_URL", mV_URL) :
+                new ObjectParameter("MV_URL", typeof(string));
+    
+            var p_COMPONENT_INFOParameter = p_COMPONENT_INFO != null ?
+                new ObjectParameter("P_COMPONENT_INFO", p_COMPONENT_INFO) :
+                new ObjectParameter("P_COMPONENT_INFO", typeof(string));
+    
+            var p_TAGParameter = p_TAG != null ?
+                new ObjectParameter("P_TAG", p_TAG) :
+                new ObjectParameter("P_TAG", typeof(string));
+    
+            var mAIN_IMGParameter = mAIN_IMG != null ?
+                new ObjectParameter("MAIN_IMG", mAIN_IMG) :
+                new ObjectParameter("MAIN_IMG", typeof(string));
+    
+            var oTHER_IMG1Parameter = oTHER_IMG1 != null ?
+                new ObjectParameter("OTHER_IMG1", oTHER_IMG1) :
+                new ObjectParameter("OTHER_IMG1", typeof(string));
+    
+            var oTHER_IMG2Parameter = oTHER_IMG2 != null ?
+                new ObjectParameter("OTHER_IMG2", oTHER_IMG2) :
+                new ObjectParameter("OTHER_IMG2", typeof(string));
+    
+            var oTHER_IMG3Parameter = oTHER_IMG3 != null ?
+                new ObjectParameter("OTHER_IMG3", oTHER_IMG3) :
+                new ObjectParameter("OTHER_IMG3", typeof(string));
+    
+            var oTHER_IMG4Parameter = oTHER_IMG4 != null ?
+                new ObjectParameter("OTHER_IMG4", oTHER_IMG4) :
+                new ObjectParameter("OTHER_IMG4", typeof(string));
+    
+            var oTHER_IMG5Parameter = oTHER_IMG5 != null ?
+                new ObjectParameter("OTHER_IMG5", oTHER_IMG5) :
+                new ObjectParameter("OTHER_IMG5", typeof(string));
+    
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+    
+            var iCON_YNParameter = iCON_YN != null ?
+                new ObjectParameter("ICON_YN", iCON_YN) :
+                new ObjectParameter("ICON_YN", typeof(string));
+    
+            var wITH_PRODUCT_LISTParameter = wITH_PRODUCT_LIST != null ?
+                new ObjectParameter("WITH_PRODUCT_LIST", wITH_PRODUCT_LIST) :
+                new ObjectParameter("WITH_PRODUCT_LIST", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_INS", p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, p_CODEParameter, p_NAMEParameter, p_COUNTParameter, p_POINTParameter, p_PRICEParameter, sELLING_PRICEParameter, dISCOUNT_RATEParameter, dISCOUNT_P_POINTParameter, dISCOUNT_PRICEParameter, sOLDOUT_YNParameter, p_INFO_DETAIL_WEBParameter, p_INFO_DETAIL_MOBILEParameter, mV_URLParameter, p_COMPONENT_INFOParameter, p_TAGParameter, mAIN_IMGParameter, oTHER_IMG1Parameter, oTHER_IMG2Parameter, oTHER_IMG3Parameter, oTHER_IMG4Parameter, oTHER_IMG5Parameter, dISPLAY_YNParameter, iCON_YNParameter, wITH_PRODUCT_LISTParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_ADMIN_PRODUCT_PCODE_CHK(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_PRODUCT_PCODE_CHK", p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_SEL_Result> SP_ADMIN_PRODUCT_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL");
+        }
+    
+        public virtual int SP_ADMIN_PRODUCT_UPD(Nullable<int> iDX, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> p_POINT, Nullable<int> p_PRICE, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_P_POINT, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string dISPLAY_YN, string iCON_YN, string wITH_PRODUCT_LIST)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var p_CATE_CODEParameter = p_CATE_CODE != null ?
+                new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
+                new ObjectParameter("P_CATE_CODE", typeof(string));
+    
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            var l_CATE_CODEParameter = l_CATE_CODE != null ?
+                new ObjectParameter("L_CATE_CODE", l_CATE_CODE) :
+                new ObjectParameter("L_CATE_CODE", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+    
+            var p_COUNTParameter = p_COUNT.HasValue ?
+                new ObjectParameter("P_COUNT", p_COUNT) :
+                new ObjectParameter("P_COUNT", typeof(int));
+    
+            var p_POINTParameter = p_POINT.HasValue ?
+                new ObjectParameter("P_POINT", p_POINT) :
+                new ObjectParameter("P_POINT", typeof(int));
+    
+            var p_PRICEParameter = p_PRICE.HasValue ?
+                new ObjectParameter("P_PRICE", p_PRICE) :
+                new ObjectParameter("P_PRICE", typeof(int));
+    
+            var sELLING_PRICEParameter = sELLING_PRICE.HasValue ?
+                new ObjectParameter("SELLING_PRICE", sELLING_PRICE) :
+                new ObjectParameter("SELLING_PRICE", typeof(int));
+    
+            var dISCOUNT_RATEParameter = dISCOUNT_RATE.HasValue ?
+                new ObjectParameter("DISCOUNT_RATE", dISCOUNT_RATE) :
+                new ObjectParameter("DISCOUNT_RATE", typeof(int));
+    
+            var dISCOUNT_P_POINTParameter = dISCOUNT_P_POINT.HasValue ?
+                new ObjectParameter("DISCOUNT_P_POINT", dISCOUNT_P_POINT) :
+                new ObjectParameter("DISCOUNT_P_POINT", typeof(int));
+    
+            var dISCOUNT_PRICEParameter = dISCOUNT_PRICE.HasValue ?
+                new ObjectParameter("DISCOUNT_PRICE", dISCOUNT_PRICE) :
+                new ObjectParameter("DISCOUNT_PRICE", typeof(int));
+    
+            var sOLDOUT_YNParameter = sOLDOUT_YN != null ?
+                new ObjectParameter("SOLDOUT_YN", sOLDOUT_YN) :
+                new ObjectParameter("SOLDOUT_YN", typeof(string));
+    
+            var p_INFO_DETAIL_WEBParameter = p_INFO_DETAIL_WEB != null ?
+                new ObjectParameter("P_INFO_DETAIL_WEB", p_INFO_DETAIL_WEB) :
+                new ObjectParameter("P_INFO_DETAIL_WEB", typeof(string));
+    
+            var p_INFO_DETAIL_MOBILEParameter = p_INFO_DETAIL_MOBILE != null ?
+                new ObjectParameter("P_INFO_DETAIL_MOBILE", p_INFO_DETAIL_MOBILE) :
+                new ObjectParameter("P_INFO_DETAIL_MOBILE", typeof(string));
+    
+            var mV_URLParameter = mV_URL != null ?
+                new ObjectParameter("MV_URL", mV_URL) :
+                new ObjectParameter("MV_URL", typeof(string));
+    
+            var p_COMPONENT_INFOParameter = p_COMPONENT_INFO != null ?
+                new ObjectParameter("P_COMPONENT_INFO", p_COMPONENT_INFO) :
+                new ObjectParameter("P_COMPONENT_INFO", typeof(string));
+    
+            var p_TAGParameter = p_TAG != null ?
+                new ObjectParameter("P_TAG", p_TAG) :
+                new ObjectParameter("P_TAG", typeof(string));
+    
+            var mAIN_IMGParameter = mAIN_IMG != null ?
+                new ObjectParameter("MAIN_IMG", mAIN_IMG) :
+                new ObjectParameter("MAIN_IMG", typeof(string));
+    
+            var oTHER_IMG1Parameter = oTHER_IMG1 != null ?
+                new ObjectParameter("OTHER_IMG1", oTHER_IMG1) :
+                new ObjectParameter("OTHER_IMG1", typeof(string));
+    
+            var oTHER_IMG2Parameter = oTHER_IMG2 != null ?
+                new ObjectParameter("OTHER_IMG2", oTHER_IMG2) :
+                new ObjectParameter("OTHER_IMG2", typeof(string));
+    
+            var oTHER_IMG3Parameter = oTHER_IMG3 != null ?
+                new ObjectParameter("OTHER_IMG3", oTHER_IMG3) :
+                new ObjectParameter("OTHER_IMG3", typeof(string));
+    
+            var oTHER_IMG4Parameter = oTHER_IMG4 != null ?
+                new ObjectParameter("OTHER_IMG4", oTHER_IMG4) :
+                new ObjectParameter("OTHER_IMG4", typeof(string));
+    
+            var oTHER_IMG5Parameter = oTHER_IMG5 != null ?
+                new ObjectParameter("OTHER_IMG5", oTHER_IMG5) :
+                new ObjectParameter("OTHER_IMG5", typeof(string));
+    
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+    
+            var iCON_YNParameter = iCON_YN != null ?
+                new ObjectParameter("ICON_YN", iCON_YN) :
+                new ObjectParameter("ICON_YN", typeof(string));
+    
+            var wITH_PRODUCT_LISTParameter = wITH_PRODUCT_LIST != null ?
+                new ObjectParameter("WITH_PRODUCT_LIST", wITH_PRODUCT_LIST) :
+                new ObjectParameter("WITH_PRODUCT_LIST", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_UPD", iDXParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, p_CODEParameter, p_NAMEParameter, p_COUNTParameter, p_POINTParameter, p_PRICEParameter, sELLING_PRICEParameter, dISCOUNT_RATEParameter, dISCOUNT_P_POINTParameter, dISCOUNT_PRICEParameter, sOLDOUT_YNParameter, p_INFO_DETAIL_WEBParameter, p_INFO_DETAIL_MOBILEParameter, mV_URLParameter, p_COMPONENT_INFOParameter, p_TAGParameter, mAIN_IMGParameter, oTHER_IMG1Parameter, oTHER_IMG2Parameter, oTHER_IMG3Parameter, oTHER_IMG4Parameter, oTHER_IMG5Parameter, dISPLAY_YNParameter, iCON_YNParameter, wITH_PRODUCT_LISTParameter);
+        }
+    
         public virtual ObjectResult<SP_ADMIN_CATEGORY_VIEW_Result> SP_ADMIN_CATEGORY_VIEW(Nullable<int> iDX)
         {
             var iDXParameter = iDX.HasValue ?
@@ -133,13 +392,37 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_VIEW_Result>("SP_ADMIN_CATEGORY_VIEW", iDXParameter);
         }
     
-        public virtual int SP_ADMIN_CATEGORY_ONE_INS(string dEPTH1_NAME, ObjectParameter iNTRESULT)
+        public virtual int SP_ADMIN_CATEGORY_ONE_UPD(Nullable<int> iDX, string dEPTH1_NAME, string dISPLAY_YN, Nullable<int> rE_SORT)
         {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
             var dEPTH1_NAMEParameter = dEPTH1_NAME != null ?
                 new ObjectParameter("DEPTH1_NAME", dEPTH1_NAME) :
                 new ObjectParameter("DEPTH1_NAME", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_INS", dEPTH1_NAMEParameter, iNTRESULT);
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+    
+            var rE_SORTParameter = rE_SORT.HasValue ?
+                new ObjectParameter("RE_SORT", rE_SORT) :
+                new ObjectParameter("RE_SORT", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_UPD", iDXParameter, dEPTH1_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter);
         }
+
+
+        public virtual int SP_ADMIN_CATEGORY_ONE_DEL(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_DEL", iDXParameter);
+        }
+
+
     }
 }

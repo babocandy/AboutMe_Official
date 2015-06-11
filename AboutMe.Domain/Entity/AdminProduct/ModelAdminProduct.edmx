@@ -65,6 +65,9 @@
           <Parameter Name="CATE_GBN" Type="varchar" Mode="In" />
           <Parameter Name="LIST_GBN" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_CATEGORY_ONE_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_CATEGORY_ONE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DEPTH1_NAME" Type="varchar" Mode="In" />
           <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
@@ -75,7 +78,6 @@
           <Parameter Name="DEPTH1_NAME" Type="varchar" Mode="In" />
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
           <Parameter Name="RE_SORT" Type="int" Mode="In" />
-          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_TWO_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CATE_GBN" Type="varchar" Mode="In" />
@@ -96,6 +98,77 @@
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_ADMIN_PRODUCT_DETAIL_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_IMG_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="imgColumName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CATE_CODE" Type="char" Mode="In" />
+          <Parameter Name="C_CATE_CODE" Type="char" Mode="In" />
+          <Parameter Name="L_CATE_CODE" Type="char" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="P_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="P_COUNT" Type="int" Mode="In" />
+          <Parameter Name="P_POINT" Type="int" Mode="In" />
+          <Parameter Name="P_PRICE" Type="int" Mode="In" />
+          <Parameter Name="SELLING_PRICE" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_RATE" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_P_POINT" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_PRICE" Type="int" Mode="In" />
+          <Parameter Name="SOLDOUT_YN" Type="varchar" Mode="In" />
+          <Parameter Name="P_INFO_DETAIL_WEB" Type="text" Mode="In" />
+          <Parameter Name="P_INFO_DETAIL_MOBILE" Type="text" Mode="In" />
+          <Parameter Name="MV_URL" Type="varchar" Mode="In" />
+          <Parameter Name="P_COMPONENT_INFO" Type="varchar" Mode="In" />
+          <Parameter Name="P_TAG" Type="varchar" Mode="In" />
+          <Parameter Name="MAIN_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG1" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG2" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG3" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG4" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG5" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+          <Parameter Name="ICON_YN" Type="varchar" Mode="In" />
+          <Parameter Name="WITH_PRODUCT_LIST" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_PCODE_CHK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_ADMIN_PRODUCT_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="P_CATE_CODE" Type="char" Mode="In" />
+          <Parameter Name="C_CATE_CODE" Type="char" Mode="In" />
+          <Parameter Name="L_CATE_CODE" Type="char" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="P_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="P_COUNT" Type="int" Mode="In" />
+          <Parameter Name="P_POINT" Type="int" Mode="In" />
+          <Parameter Name="P_PRICE" Type="int" Mode="In" />
+          <Parameter Name="SELLING_PRICE" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_RATE" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_P_POINT" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_PRICE" Type="int" Mode="In" />
+          <Parameter Name="SOLDOUT_YN" Type="varchar" Mode="In" />
+          <Parameter Name="P_INFO_DETAIL_WEB" Type="text" Mode="In" />
+          <Parameter Name="P_INFO_DETAIL_MOBILE" Type="text" Mode="In" />
+          <Parameter Name="MV_URL" Type="varchar" Mode="In" />
+          <Parameter Name="P_COMPONENT_INFO" Type="varchar" Mode="In" />
+          <Parameter Name="P_TAG" Type="varchar" Mode="In" />
+          <Parameter Name="MAIN_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG1" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG2" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG3" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG4" Type="varchar" Mode="In" />
+          <Parameter Name="OTHER_IMG5" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+          <Parameter Name="ICON_YN" Type="varchar" Mode="In" />
+          <Parameter Name="WITH_PRODUCT_LIST" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ModelAdminProductStoreContainer">
           <EntitySet Name="TB_CATEGORY" EntityType="Self.TB_CATEGORY" Schema="dbo" store:Type="Tables" />
@@ -169,13 +242,6 @@
             <Parameter Name="LIST_GBN" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result)" />
-          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_UPD">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
-            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_CATEGORY_TWO_INS">
             <Parameter Name="CATE_GBN" Mode="In" Type="String" />
             <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
@@ -193,12 +259,92 @@
             <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
             <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_CATEGORY_VIEW_Result)">
-          <Parameter Name="IDX" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_INS">
             <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
             <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_CNT" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="SP_ADMIN_PRODUCT_DETAIL_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_PRODUCT_DETAIL_VIEW_Result)">
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_IMG_DEL">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="imgColumName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_INS">
+            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="C_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="L_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="P_POINT" Mode="In" Type="Int32" />
+            <Parameter Name="P_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_P_POINT" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_WEB" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="MV_URL" Mode="In" Type="String" />
+            <Parameter Name="P_COMPONENT_INFO" Mode="In" Type="String" />
+            <Parameter Name="P_TAG" Mode="In" Type="String" />
+            <Parameter Name="MAIN_IMG" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG1" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG2" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG3" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG4" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG5" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="ICON_YN" Mode="In" Type="String" />
+            <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_PCODE_CHK" ReturnType="Collection(Int32)">
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_PRODUCT_SEL_Result)" />
+          <FunctionImport Name="SP_ADMIN_PRODUCT_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="C_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="L_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="P_POINT" Mode="In" Type="Int32" />
+            <Parameter Name="P_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_P_POINT" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_WEB" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="MV_URL" Mode="In" Type="String" />
+            <Parameter Name="P_COMPONENT_INFO" Mode="In" Type="String" />
+            <Parameter Name="P_TAG" Mode="In" Type="String" />
+            <Parameter Name="MAIN_IMG" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG1" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG2" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG3" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG4" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG5" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="ICON_YN" Mode="In" Type="String" />
+            <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_CATEGORY_VIEW_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_DEL">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
@@ -236,10 +382,68 @@
           <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="REGDATE" Nullable="true" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="SP_ADMIN_PRODUCT_DETAIL_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="P_POINT" Nullable="true" />
+          <Property Type="Int32" Name="P_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_P_POINT" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG4" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG5" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_PRODUCT_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="P_POINT" Nullable="true" />
+          <Property Type="Int32" Name="P_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_P_POINT" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="SELLING_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="P_VIEW_COUNT" Nullable="true" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="REGDATE" Nullable="true" MaxLength="10" />
+        </ComplexType>
         <ComplexType Name="SP_ADMIN_CATEGORY_VIEW_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
           <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
           <Property Type="String" Name="DEPTH1_CODE" Nullable="true" MaxLength="3" />
           <Property Type="String" Name="DEPTH1_NAME" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="DEPTH2_CODE" Nullable="true" MaxLength="3" />
@@ -340,7 +544,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_SEL">
             <ResultMapping>
@@ -360,12 +563,84 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_CNT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DETAIL_VIEW" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DETAIL_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_PRODUCT_DETAIL_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="P_POINT" ColumnName="P_POINT" />
+                <ScalarProperty Name="P_PRICE" ColumnName="P_PRICE" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_P_POINT" ColumnName="DISCOUNT_P_POINT" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
+                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
+                <ScalarProperty Name="OTHER_IMG4" ColumnName="OTHER_IMG4" />
+                <ScalarProperty Name="OTHER_IMG5" ColumnName="OTHER_IMG5" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_IMG_DEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_IMG_DEL" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PCODE_CHK" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PCODE_CHK" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_PRODUCT_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="P_POINT" ColumnName="P_POINT" />
+                <ScalarProperty Name="P_PRICE" ColumnName="P_PRICE" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_P_POINT" ColumnName="DISCOUNT_P_POINT" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="SELLING_COUNT" ColumnName="SELLING_COUNT" />
+                <ScalarProperty Name="P_VIEW_COUNT" ColumnName="P_VIEW_COUNT" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_VIEW" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_VIEW">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_CATEGORY_VIEW_Result">
                 <ScalarProperty Name="IDX" ColumnName="IDX" />
                 <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
                 <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
                 <ScalarProperty Name="DEPTH1_CODE" ColumnName="DEPTH1_CODE" />
                 <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
                 <ScalarProperty Name="DEPTH2_CODE" ColumnName="DEPTH2_CODE" />
@@ -375,7 +650,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_DEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_DEL" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

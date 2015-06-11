@@ -16,6 +16,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public int IDX { get; set; }
         public string CATE_GBN { get; set; }
         public string CATE_CODE { get; set; }
+        public Nullable<int> RE_SORT { get; set; }
         public string DEPTH1_CODE { get; set; }
         public string DEPTH1_NAME { get; set; }
         public string DEPTH2_CODE { get; set; }
