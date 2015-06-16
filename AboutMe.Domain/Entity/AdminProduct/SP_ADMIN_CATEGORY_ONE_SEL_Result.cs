@@ -21,6 +21,8 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string DEPTH1_NAME { get; set; }
         public string DEPTH2_CODE { get; set; }
         public string DEPTH2_NAME { get; set; }
+        public string DEPTH3_CODE { get; set; }
+        public string DEPTH3_NAME { get; set; }
         public string DEPTH_FLAG { get; set; }
         public string DISPLAY_YN { get; set; }
         public string REGDATE { get; set; }

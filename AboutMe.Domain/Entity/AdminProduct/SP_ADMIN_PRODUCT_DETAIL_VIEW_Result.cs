@@ -21,10 +21,8 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string P_NAME { get; set; }
         public Nullable<int> P_COUNT { get; set; }
         public Nullable<int> P_POINT { get; set; }
-        public Nullable<int> P_PRICE { get; set; }
         public Nullable<int> SELLING_PRICE { get; set; }
         public Nullable<int> DISCOUNT_RATE { get; set; }
-        public Nullable<int> DISCOUNT_P_POINT { get; set; }
         public Nullable<int> DISCOUNT_PRICE { get; set; }
         public string SOLDOUT_YN { get; set; }
         public string P_INFO_DETAIL_WEB { get; set; }

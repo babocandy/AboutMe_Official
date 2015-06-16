@@ -26,5 +26,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string DISPLAY_YN { get; set; }
         public Nullable<System.DateTime> UPD_DATE { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public string DEPTH3_CODE { get; set; }
+        public string DEPTH3_NAME { get; set; }
     }
 }

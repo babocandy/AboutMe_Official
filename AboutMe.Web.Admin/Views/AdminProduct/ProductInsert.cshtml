@@ -81,15 +81,6 @@
                 @Html.ValidationMessageFor(model => model.P_POINT, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_PRICE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_PRICE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.SELLING_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -103,14 +94,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DISCOUNT_RATE, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DISCOUNT_RATE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISCOUNT_P_POINT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISCOUNT_P_POINT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DISCOUNT_P_POINT, "", new { @class = "text-danger" })
             </div>
         </div>
 
