@@ -9,13 +9,15 @@ using System.Security.Cryptography;
 
 namespace AboutMe.Common.Helper
 {
-    #region AES256 암호화 코드
 
-    /// <summary>
-    /// 암호화, 복호화 함수 KEY값은 WEB CONFIG의 appSetting "AES256_KEY" 호출
-    /// </summary>
     public class AES256Cipher
     {
+
+        #region AES256 암호화 코드
+
+        /// <summary>
+        /// 암호화, 복호화 함수 KEY값은 WEB CONFIG의 appSetting "AES256_KEY" 호출
+        /// </summary>
         public String AES_encrypt(String Input, String key)
         {
             RijndaelManaged aes = new RijndaelManaged();
@@ -70,6 +72,42 @@ namespace AboutMe.Common.Helper
             return Output;
         }
 
+        #endregion
+
+        #region MD5 암호화 128bit 암호화
+        public string MD5Hash(string Data)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(Data));
+
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (byte b in hash)
+            {
+                stringBuilder.AppendFormat("{0:x2}", b);
+            }
+            return stringBuilder.ToString();
+        }
+        #endregion
+
+        #region SHA256  256bit 암호화
+        public string SHA256Hash(string Data)
+        {
+            SHA256 sha = new SHA256Managed();
+            byte[] hash = sha.ComputeHash(Encoding.ASCII.GetBytes(Data));
+
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (byte b in hash)
+            {
+                stringBuilder.AppendFormat("{0:x2}", b);
+            }
+            return stringBuilder.ToString();
+        }
+        #endregion
+
     }
-    #endregion
+   
+
+
+
+
 }
