@@ -4,6 +4,43 @@
     ViewBag.Title = "ProductInsert";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
+@section Scripts{
+
+    <script language="javascript">
+
+        function formChk() {
+        
+            var f = document.bform;
+            if (f.P_CODE.value == '') {
+                alert("상품코드를 입력하세요.");
+                return false;
+            }
+
+            oEditors.getById["P_INFO_DETAIL_WEB"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+            oEditors2.getById["P_INFO_DETAIL_MOBILE"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+
+            //alert(f.P_INFO_DETAIL_WEB.value);
+            if (f.P_INFO_DETAIL_WEB.value == "<p>&nbsp;</p>") {
+                    alert("상품 정보(web)를 입력해 주세요!");
+                    f.P_INFO_DETAIL_WEB.focus();
+                    return false;
+                }
+            
+            if (f.P_INFO_DETAIL_MOBILE.value == "<p>&nbsp;</p>") {
+                    alert("상품 정보(mobile)를 입력해 주세요!");
+                    f.P_INFO_DETAIL_MOBILE.focus();
+                    return false;
+                }
+            
+            return document.bform.submit();
+        }
+
+        function selChange(obj_selectbox, sel_index) {
+            alert(obj_selectbox[sel_index].value);
+        }
+    </script>
+
+}
 @section Left {
 
     @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
@@ -15,252 +52,171 @@
 
 @section Body{
 
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>TB_PRODUCT_INFO</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-       
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_CATE_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_CATE_CODE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_CATE_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.C_CATE_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.C_CATE_CODE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.C_CATE_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.L_CATE_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.L_CATE_CODE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.L_CATE_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_CODE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_NAME, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_COUNT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_COUNT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_COUNT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_POINT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_POINT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_POINT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.SELLING_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SELLING_PRICE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SELLING_PRICE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISCOUNT_RATE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISCOUNT_RATE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DISCOUNT_RATE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISCOUNT_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISCOUNT_PRICE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DISCOUNT_PRICE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SOLDOUT_YN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SOLDOUT_YN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SOLDOUT_YN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_INFO_DETAIL_WEB, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_INFO_DETAIL_WEB, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_INFO_DETAIL_WEB, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_INFO_DETAIL_MOBILE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_INFO_DETAIL_MOBILE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_INFO_DETAIL_MOBILE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MV_URL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MV_URL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MV_URL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_COMPONENT_INFO, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_COMPONENT_INFO, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_COMPONENT_INFO, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_TAG, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_TAG, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_TAG, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MAIN_IMG, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MAIN_IMG, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MAIN_IMG, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG1, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG1, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG1, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG2, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG2, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG3, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG3, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG3, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG4, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG4, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG4, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG5, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG5, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG5, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RE_SORT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RE_SORT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RE_SORT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISPLAY_YN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISPLAY_YN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DISPLAY_YN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ICON_YN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ICON_YN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ICON_YN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SELLING_COUNT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SELLING_COUNT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SELLING_COUNT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_VIEW_COUNT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_VIEW_COUNT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.P_VIEW_COUNT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.WITH_PRODUCT_LIST, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.WITH_PRODUCT_LIST, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WITH_PRODUCT_LIST, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-      
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
     </div>
-}
+    <!--//path-->
+@using (Html.BeginForm("ProductInsert", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", enctype = "multipart/form-data", onsubmit = "return formChk();" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+        <input type="hidden" name="P_CODE_CHK_OK" value="">
 
-<div>
-    @Html.ActionLink("Back to List", "ProductIndex")
+        <div class="panel">
+            <h3 class="sub-header">상품관리</h3>
+            <table class="table table_row">
+                <colgroup><col width="15%" /><col width="35%" /><col width="15%" /><col width="35%" /></colgroup>
+                <tbody>
+                    <tr>
+                        <th>카테고리 1 (상품 분류)</th>
+                        <td colspan="3">
+                            <select style="width:170px;" id="P_CATE_CODE" name="P_CATE_CODE">
+                                <option>=선택=</option>
+                                <option>상품품번</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>카테고리 2 (피부고민 분류)</th>
+                        <td colspan="3">
+                            <select style="width:170px;" id="C_CATE_CODE" name="C_CATE_CODE">
+                                <option>=선택=</option>
+                                <option>상품품번</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>카테고리 3 (LINE 분류)</th>
+                        <td colspan="3">
+                            <select style="width:170px;" id="L_CATE_CODE" name="L_CATE_CODE">
+                                <option>=선택=</option>
+                                <option>상품품번</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품코드</th>
+                        <td colspan="3">
+                            <input type="text" class="input-sm text-left" id="P_CODE" name="P_CODE" maxlength="10" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품명</th>
+                        <td colspan="3">
+                            <input type="text" style="width:150px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>검색태그(","로 구분)</th>
+                        <td colspan="3">
+                            <input type="text" style="width:200px;" class="input-sm text-left" id="P_TAG" name="P_TAG" maxlength="300" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품판매가</th>
+                        <td><input type="text" style="width:70px;" class="input-sm text-left" id="SELLING_PRICE" name="SELLING_PRICE" maxlength="8" value="" /></td>
+                        <th>상품할인가</th>
+                        <td><input type="text" style="width:70px;" class="input-sm text-left" id="DISCOUNT_PRICE" name="DISCOUNT_PRICE" maxlength="8" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>상품할인율(%)</th>
+                        <td><input type="text" style="width:30px;" class="input-sm text-left" id="DISCOUNT_RATE" name="DISCOUNT_RATE" maxlength="3" value="" />%</td>
+                        <th>재고수량</th>
+                        <td><input type="text" style="width:30px;" class="input-sm text-left" id="P_COUNT" name="P_COUNT" maxlength="8" value="" /></td>
+                    </tr>
+                    <tr>
+                        <th>영상url</th>
+                        <td colspan="3">
+                            <input type="text" style="width:550px;" class="input-sm text-left" id="MV_URL" name="MV_URL" maxlength="200" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>전성분</th>
+                        <td colspan="3">
+                            <textarea id="P_COMPONENT_INFO" name="P_COMPONENT_INFO" style="padding:5px;width:600px;height:80px;border:1px solid #d8d7d5;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품대표이미지</th>
+                        <td colspan="3">
+                            <input type="file" id="MAIN_IMG" name="MAIN_IMG" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품추가이미지1</th>
+                        <td colspan="3">
+                            <input type="file" id="OTHER_IMG1" name="OTHER_IMG1" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품추가이미지2</th>
+                        <td colspan="3">
+                            <input type="file" id="OTHER_IMG2" name="OTHER_IMG2" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품추가이미지3</th>
+                        <td colspan="3">
+                            <input type="file" id="OTHER_IMG3" name="OTHER_IMG3" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품추가이미지4</th>
+                        <td colspan="3">
+                            <input type="file" id="OTHER_IMG4" name="OTHER_IMG4" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품추가이미지5</th>
+                        <td colspan="3">
+                            <input type="file" id="OTHER_IMG5" name="OTHER_IMG5" maxlength="100" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품정보(web)</th>
+                        <td colspan="3">
+                            <textarea name="P_INFO_DETAIL_WEB" id="P_INFO_DETAIL_WEB" class="form-control" rows="10" title="내용"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>상품정보(mobile)</th>
+                        <td colspan="3">
+                            <textarea name="P_INFO_DETAIL_MOBILE" id="P_INFO_DETAIL_MOBILE" class="form-control" rows="10" title="내용"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="btn_area">
+            <a class="btn btn-default small" href="#" onclick="formChk();">등록</a>
+            <a class="btn btn-primary small" href="/AdminProduct/ProductIndex">목록</a>
+        </div>
+   }
+        <script type="text/javascript" src="/AboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "P_INFO_DETAIL_WEB",
+                sSkinURI: "/AboutCom/smarteditor/SmartEditor2Skin.html",
+                fCreator: "createSEditor2"
+            });
+
+        </script>
+        <script type="text/javascript">
+            var oEditors2 = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors2,
+                elPlaceHolder: "P_INFO_DETAIL_MOBILE",
+                sSkinURI: "/AboutCom/smarteditor/SmartEditor2Skin.html",
+                fCreator: "createSEditor2"
+            });
+
+        </script>
 </div>
+<!--//content-->
 
 }
