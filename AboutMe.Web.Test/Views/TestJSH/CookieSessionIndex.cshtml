@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "CookieSessionIndex";
+}
+
+<h2>CookieSessionIndex</h2>
+
+<br />--------------------------------------------------------------
+<br /> Cookie & Session Test
+<br />--------------------------------------------------------------
+
+
+<form name="frmCOOKIESESSION" method="post" action="/TestJSH/SET_COOKIE_SESSION">
+    id:<input type="text" name="id" value="" />
+    <br />
+    email:<input type="text" name="email" value="" />
+
+    <input type="submit" value="GoCookieSessionSet" />
+    &nbsp;&nbsp;&nbsp;
+    <a href="/TestJSH/CLEAR_COOKIES/">[ClearCookies]</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="/TestJSH/CLEAR_SESSION/">[ClearSession]</a>
+
+</form>
+
+<br />
+
+
+Show Cookie/Session using Viewback ---------------
+<br />
+
+
+
+<br />
+COOKIE_id:@ViewBag.COOKIE_id
+<br />
+COOKIE_email:@ViewBag.COOKIE_email
+
+<br />
+<br />
+SESSION_id:@ViewBag.SESSION_id
+<br />
+SESSION_email:@ViewBag.SESSION_email
+
+
+
+
+

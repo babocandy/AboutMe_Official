@@ -15,9 +15,10 @@ namespace AboutMe.Web.Test.Controllers
 {
     public class TestJSHController : Controller
     {
-        // GET: TestJSH
+        // GET: TestJSH : Mailsend
         public ActionResult Index()
         {
+
             return View();
         }
         [ValidateInput(false)]
@@ -76,6 +77,58 @@ namespace AboutMe.Web.Test.Controllers
             }
              */
         }
+
+        //---COOKIE & SESSION TEST ----------------------------------------------------------------------------------------
+        // GET: 
+        
+        public ActionResult CookieSessionIndex()
+        {
+
+            CookieSessionStore cookiesession = new CookieSessionStore();
+
+            this.ViewBag.COOKIE_id = cookiesession.GetSecretCookie("id");
+            this.ViewBag.COOKIE_email = cookiesession.GetSecretCookie("email");
+
+            this.ViewBag.SESSION_id = cookiesession.GetSecretSession("id");
+            this.ViewBag.SESSION_email = cookiesession.GetSecretSession("email");
+
+
+            return View();
+        }
+        
+        public ActionResult SET_COOKIE_SESSION(string id = "", string email = "")
+        {
+
+            CookieSessionStore cookiesession = new CookieSessionStore();
+            cookiesession.SetSecretCookie("id", id);
+            cookiesession.SetSecretCookie("email", email);
+
+            cookiesession.SetSecretSession("id", id);
+            cookiesession.SetSecretSession("email", email);
+
+            
+            return RedirectToAction("CookieSessionIndex", "TestJSH");
+            //return View();
+        }
+
+        public ActionResult CLEAR_COOKIES()
+        {
+            CookieSessionStore cookiesession = new CookieSessionStore();
+            cookiesession.ClearCookies();
+
+            return RedirectToAction("CookieSessionIndex", "TestJSH");
+
+        }
+
+        public ActionResult CLEAR_SESSION()
+        {
+            CookieSessionStore cookiesession = new CookieSessionStore();
+            cookiesession.ClearSession();
+
+            return RedirectToAction("CookieSessionIndex", "TestJSH");
+
+        }
+
 
     }
 }
