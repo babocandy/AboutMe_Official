@@ -101,7 +101,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         #endregion
 
-        #region 상품 //1
+        #region 상품 //2
 
         //리스트
         public ActionResult ProductIndex()
