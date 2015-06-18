@@ -101,7 +101,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         #endregion
 
-        #region 상품
+        #region 상품 //
 
         //리스트
         public ActionResult ProductIndex()
@@ -229,7 +229,7 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
-        #endregion
+
 
         
         // GET:  수정
@@ -255,7 +255,7 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
-      
-        
+        #endregion
+
     }
 }
