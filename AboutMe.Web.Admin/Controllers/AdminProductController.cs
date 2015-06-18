@@ -106,6 +106,7 @@ namespace AboutMe.Web.Admin.Controllers
         //리스트
         public ActionResult ProductIndex()
         {
+            //
             return View(_AdminProductService.GetAdminProductList().ToList());
         }
 
