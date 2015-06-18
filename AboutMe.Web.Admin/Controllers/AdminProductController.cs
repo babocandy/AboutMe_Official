@@ -106,7 +106,6 @@ namespace AboutMe.Web.Admin.Controllers
         //리스트
         public ActionResult ProductIndex()
         {
-            //
             return View(_AdminProductService.GetAdminProductList().ToList());
         }
 
@@ -130,7 +129,7 @@ namespace AboutMe.Web.Admin.Controllers
                 if (MAIN_IMG != null)
                 {
                     //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
-                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
 
                     // rename, resize, and upload
                     //return object that contains {bool Success,string ErrorMessage,string ImageName}
