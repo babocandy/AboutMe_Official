@@ -20,7 +20,7 @@ namespace AboutMe.Common.Helper
         public int Height { get; set; }
         public string fileType { get; set; } //파일 type:image/file
 
-        // folder for the upload, you can put this in the web.config
+        // folder for the upload, you can put this in the web.config 
         public string UploadPath = "~/Upload/"; //이미지 업로드 경로 default /Upload/
         public bool addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
         private int fileMaxSize = 5000000; //파일 max size 5MB
