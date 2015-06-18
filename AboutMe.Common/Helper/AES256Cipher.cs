@@ -55,21 +55,29 @@ namespace AboutMe.Common.Helper
             aes.Key = Encoding.UTF8.GetBytes(key);
             aes.IV = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-            var decrypt = aes.CreateDecryptor();
-            byte[] xBuff = null;
-            using (var ms = new MemoryStream())
+            try
             {
-                using (var cs = new CryptoStream(ms, decrypt, CryptoStreamMode.Write))
+
+                var decrypt = aes.CreateDecryptor();
+                byte[] xBuff = null;
+                using (var ms = new MemoryStream())
                 {
-                    byte[] xXml = Convert.FromBase64String(Input);
-                    cs.Write(xXml, 0, xXml.Length);
+                    using (var cs = new CryptoStream(ms, decrypt, CryptoStreamMode.Write))
+                    {
+                        byte[] xXml = Convert.FromBase64String(Input);
+                        cs.Write(xXml, 0, xXml.Length);
+                    }
+
+                    xBuff = ms.ToArray();
                 }
 
-                xBuff = ms.ToArray();
+                String Output = Encoding.UTF8.GetString(xBuff);
+                return Output;
             }
-
-            String Output = Encoding.UTF8.GetString(xBuff);
-            return Output;
+            catch (Exception e)
+            {
+                return "";
+            }
         }
 
         #endregion
