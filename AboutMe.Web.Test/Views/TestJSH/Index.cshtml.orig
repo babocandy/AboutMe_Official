@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+MAIL TEST hsw 20150618 555 ----------------
+<br />
+<script>
+    function fGoMail() {
+        var f = document.frmMAIL;
+        /*
+        if (f.sender.value.length < 1) {
+            alert("발송자를 등록하세요");
+            return;
+        }
+        */
+        if (f.receiver.value.length < 1) {
+            alert("수신자를 등록하세요");
+            return;
+        }
+        f.action = "/TestJSH/SendMailGo";
+        f.submit();
+    }
+    function fGoMailSkin() {
+        var f = document.frmMAIL;
+        /*
+        if (f.sender.value.length < 1) {
+            alert("발송자를 등록하세요");
+            return;
+        }
+        */
+        if (f.receiver.value.length < 1) {
+            alert("수신자를 등록하세요");
+            return;
+        }
+        f.action = "/TestJSH/SendMailGoUsinMailSkin";
+        f.submit();
+    }
+</script>
+<form name="frmMAIL" method="post" action="">
+    <br />
+    sender:noreply@cstone.co.kr
+    <br />
+    receiver:<input type="text" name="receiver" value="jangsh@cstone.co.kr" />
+    <br />
+    subject:<input type="text" name="subject" value="test mail" />
+    <br />
+    body:<textarea name="body" cols="800" rows="10">
+
+        hello! test mail
+        <br/>
+        <table border="1" width="800">
+            <tr>
+                <th>Col1</th>
+                <th>Col2</th>
+                <th>Col3</th>
+                <th>Col4</th>
+            </tr>
+            <tr>
+                <td>Data1</td>
+                <td>Data1</td>
+                <td>Data1</td>
+                <td>Data1</td>
+            </tr>
+            <tr>
+                <td>Data2</td>
+                <td>Data2</td>
+                <td>Data2</td>
+                <td>Data2</td>
+            </tr>
+        </table>
+        <br />
+        <img src="https://www.google.co.kr/images/nav_logo195.png">
+        <br />
+    </textarea>
+</form>
+
+<a href="javascript:fGoMail();">[GoMail]</a>
+&nbsp;&nbsp;
+<a href="javascript:fGoMailSkin();">[GoMailSkin]</a>
+
