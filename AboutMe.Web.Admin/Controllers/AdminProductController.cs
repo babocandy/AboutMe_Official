@@ -229,7 +229,7 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
-        #endregion
+
 
         
         // GET:  수정
@@ -255,7 +255,7 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
-      
-        
+        #endregion
+
     }
 }
