@@ -23,11 +23,16 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         #region 카테고리
+        
+        #region 카테고리 리스트
         public ActionResult Index()
         {
             return View(_AdminProductService.GetAdminCategoryOneList().ToList());
         }
+        #endregion
 
+        #region 카테고리 등록
+        
         // GET: AdminProduct/Create
         public ActionResult Create()
         {
@@ -60,6 +65,10 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
+        #endregion
+
+        #region 카테고리 수정
+        
         // GET:  수정
         public ActionResult CategoryUpdate(int idx)
         {
@@ -82,6 +91,10 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
+        #endregion
+
+        #region 카테고리 삭제
+        
         // POST: AdminProduct/CategoryDelete
         public ActionResult CategoryDelete(int idx)
         {
@@ -97,19 +110,59 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
+        #endregion
+
+        #region ajax partial category partialView 방식
+        public PartialViewResult CategoryList()
+        {
+            #region ajax dropdownlist partialView 방식
+
+            List<SP_ADMIN_CATEGORY_ONE_SEL_Result> CateCodeData = _AdminProductService.GetAdminCategoryOneList().ToList();
+            List<SelectListItem> P_CATE_CODE = Utility01.GetDropDownList<SP_ADMIN_CATEGORY_ONE_SEL_Result>("DEPTH1_NAME", "DEPTH1_CODE", "001", CateCodeData.ToList());
+            ViewData["P_CATE_CODE"] = P_CATE_CODE;
+
+            return PartialView("_categoryList");
+
+            #endregion
+
+            #region 참고소스(지금은 사용안함)
+            //var CateCodeData = new List<SP_ADMIN_CATEGORY_ONE_SEL_Result>();
+            //List<SelectListItem> P_CATE_CODE = new List<SelectListItem>();
+
+            //return PartialView("_categoryList", P_CATE_CODE);
+            //ReturnArgs r = new ReturnArgs();
+            //r.ViewString = this.RenderViewToString("_CaseManager");
+            
+            //string viewData1 = PartialView("_categoryList", P_CATE_CODE).ToString();
+            //return Json(new { success = true, ViewString = viewData1 });
+            //return Json(r);
+            #endregion
+        }
+        #endregion
+
+        #region ajax partial category 자바스크립트로 dropdownlist방식
+        public ActionResult CategoryListJavascript()
+        {
+            List<SP_ADMIN_CATEGORY_ONE_SEL_Result> CateCodeData = _AdminProductService.GetAdminCategoryOneList().ToList();
+            ViewData["P_CATE_CODE"] = CateCodeData;
+            return Json(new { success = false, msg = CateCodeData });
+        }
+        #endregion
       
 
         #endregion
 
         #region 상품
         
-        //리스트
+        #region 상품 리스트
         public ActionResult ProductIndex()
         {
             return View(_AdminProductService.GetAdminProductList().ToList());
         }
+        #endregion
 
-        //등록
+        #region 상품 등록
+
         public ActionResult ProductInsert()
         {
             return View();
@@ -228,11 +281,25 @@ namespace AboutMe.Web.Admin.Controllers
                 return View();
             }
         }
+        #endregion
 
-
-
+        #region 상품코드(p_code) 유효성 체크
+        [HttpPost]
+        public ActionResult PcodeChk(string P_CODE)
+        {
+            int? pcodeCount = _AdminProductService.PcodeChkAdminProduct(P_CODE);
+            if (pcodeCount == 0)
+            {
+                return Json(new { success = true, msg = "사용가능한 상품코드입니다." });
+            }
+            else
+            {
+                return Json(new { success = false, msg = "사용할 수 없는 상품코드입니다." });
+            }
+        }
+        #endregion
         
-        // GET:  수정
+        #region 상품 수정
         public ActionResult ProductUpdate(string pcode)
         {
             SP_ADMIN_PRODUCT_DETAIL_VIEW_Result productView = _AdminProductService.ViewAdminProduct(pcode);
@@ -254,7 +321,8 @@ namespace AboutMe.Web.Admin.Controllers
                 return View();
             }
         }
-
+        #endregion
+        
         #endregion
 
     }
