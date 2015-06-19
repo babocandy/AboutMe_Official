@@ -122,6 +122,21 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
+        #region 상품코드 유효성 체크
+
+        public int? PcodeChkAdminProduct(string PCODE)
+        {
+            int? pcodeCount = -1;
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                pcodeCount = AdminProductContext.SP_ADMIN_PRODUCT_PCODE_CHK(PCODE).FirstOrDefault();
+            }
+            return pcodeCount;
+        }
+
+        #endregion
+
         #region 상품 VIEW
 
         public SP_ADMIN_PRODUCT_DETAIL_VIEW_Result ViewAdminProduct(string PCODE)

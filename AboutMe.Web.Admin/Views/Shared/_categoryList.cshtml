@@ -1,0 +1,7 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@Html.DropDownList("P_CATE_CODE", ViewData["P_CATE_CODE"] as SelectListItem[], new { onchange = "selChange(this,this.selectedIndex)", style = "width:150px;" })
