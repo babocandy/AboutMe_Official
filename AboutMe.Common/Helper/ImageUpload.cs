@@ -15,29 +15,39 @@ namespace AboutMe.Common.Helper
 {
     public class ImageUpload
     {
+        #region 기본 초기값
+
         // set default size here
         public int Width { get; set; }
         public int Height { get; set; }
-        public string fileType { get; set; } //파일 type:image/file
-
+        
         // folder for the upload, you can put this in the web.config 
         public string UploadPath = "~/Upload/"; //이미지 업로드 경로 default /Upload/
         public bool addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
+        public string fileType = "image";  //파일 type:image/file
         private int fileMaxSize = 5000000; //파일 max size 5MB
+
+        #endregion
 
         #region 고유한 이미지네임으로 변경
         public ImageResult RenameUploadFile(HttpPostedFileBase file, Int32 counter = 0)
         {
             var fileName = Path.GetFileName(file.FileName);
 
-            string prepend = "A";
-            string finalFileName = prepend + ((counter).ToString()) + "_" + fileName;
-            if (System.IO.File.Exists
-                (HttpContext.Current.Request.MapPath(UploadPath + finalFileName)))
-            {
-                //file exists => add country try again
-                return RenameUploadFile(file, ++counter);
-            }
+            #region 기존소스 주석처리됨 (같은파일 있으면 리네임)
+            //string prepend = "A";
+            //string finalFileName = prepend + ((counter).ToString()) + "_" + fileName;
+            //if (System.IO.File.Exists
+            //    (HttpContext.Current.Request.MapPath(UploadPath + finalFileName)))
+            //{
+            //    //file exists => add country try again
+            //    return RenameUploadFile(file, ++counter);
+            //}
+            #endregion
+
+            //파일명 유니크하게 리네임
+            string finalFileName = GetUniqueKey() + Path.GetExtension(file.FileName);
+
             //file doesn't exist, upload item but validate first
             return UploadFile(file, finalFileName);
             
@@ -224,13 +234,17 @@ namespace AboutMe.Common.Helper
         }
         #endregion
 
-
-       private string GetUniqueKey()
+        #region 고유키값 생성
+        private string GetUniqueKey()
        {
-           return DateTime.Now.ToString().GetHashCode().ToString("x"); 
+           Random rand = new Random((int)DateTime.Now.Ticks);
+           string RandomNumber;
+           RandomNumber = rand.Next(100, 999).ToString();
+           string UniqueKey = "A"+DateTime.Now.ToString("yyyyMMddHHmmssfff")+"_"+ RandomNumber;
+
+           return UniqueKey;
        }
-
-
+        #endregion
 
 
     }
