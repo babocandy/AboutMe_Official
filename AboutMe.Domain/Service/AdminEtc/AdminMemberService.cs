@@ -74,7 +74,7 @@ namespace AboutMe.Domain.Service.AdminEtc
       {
           using(AdminEtcEntities AdmEtcContext = new AdminEtcEntities())
           {
-              AdmEtcContext.SP_ADM_ADMIN_MEMBER_INS(AdmId, AdmPass, AdmName,AdmPhoto, AdmDept, Point);
+             // AdmEtcContext.SP_ADM_ADMIN_MEMBER_INS(AdmId, AdmPass, AdmName,AdmPhoto, AdmDept, Point);
           }
       }
 

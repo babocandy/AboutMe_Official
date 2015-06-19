@@ -28,8 +28,8 @@ namespace AboutMe.Domain.Entity.AdminEtc
         }
     
         public virtual DbSet<ADMIN_MEMBER> ADMIN_MEMBER { get; set; }
-        public virtual DbSet<CATEGORY> CATEGORies { get; set; }
         public virtual DbSet<ADMIN_MEMBER_DEPT> ADMIN_MEMBER_DEPT { get; set; }
+        public virtual DbSet<TB_ADMIN_MEMBER> TB_ADMIN_MEMBER { get; set; }
     
         public virtual ObjectResult<SP_ADM_ADMIN_MEMBER_CNT> SP_ADM_ADMIN_MEMBER_CNT(string sEARCH_COL, string sEARCH_KEYWORD)
         {
@@ -54,7 +54,7 @@ namespace AboutMe.Domain.Entity.AdminEtc
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADM_ADMIN_DEPT_SEL_Result>("SP_ADM_ADMIN_DEPT_SEL");
         }
     
-        public virtual int SP_ADM_ADMIN_MEMBER_INS(string aDM_ID, string aDM_PASS, string aDM_NAME, string aDM_PHOTO, string aDM_DEPT, Nullable<int> pOINT)
+        public virtual int SP_ADM_ADMIN_MEMBER_INS(string aDM_ID, string aDM_PASS, string aDM_NAME, string aDM_PHOTO, string aDM_DEPT, Nullable<int> pOINT, ObjectParameter nEW_IDX)
         {
             var aDM_IDParameter = aDM_ID != null ?
                 new ObjectParameter("ADM_ID", aDM_ID) :
@@ -80,7 +80,7 @@ namespace AboutMe.Domain.Entity.AdminEtc
                 new ObjectParameter("POINT", pOINT) :
                 new ObjectParameter("POINT", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADM_ADMIN_MEMBER_INS", aDM_IDParameter, aDM_PASSParameter, aDM_NAMEParameter, aDM_PHOTOParameter, aDM_DEPTParameter, pOINTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADM_ADMIN_MEMBER_INS", aDM_IDParameter, aDM_PASSParameter, aDM_NAMEParameter, aDM_PHOTOParameter, aDM_DEPTParameter, pOINTParameter, nEW_IDX);
         }
     
         public virtual ObjectResult<SP_ADM_ADMIN_MEMBER_SEL_Result> SP_ADM_ADMIN_MEMBER_SEL(string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
@@ -110,6 +110,132 @@ namespace AboutMe.Domain.Entity.AdminEtc
                 new ObjectParameter("PAGESIZE", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADM_ADMIN_MEMBER_SEL_Result>("SP_ADM_ADMIN_MEMBER_SEL", sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COMMON_CNT_Result> SP_ADMIN_ADMIN_MEMBER_CNT(string sEARCH_COL, string sEARCH_KEYWORD)
+        {
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COMMON_CNT_Result>("SP_ADMIN_ADMIN_MEMBER_CNT", sEARCH_COLParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual int SP_ADMIN_ADMIN_MEMBER_DEL(string aDM_ID, ObjectParameter eRR_CODE)
+        {
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ADMIN_MEMBER_DEL", aDM_IDParameter, eRR_CODE);
+        }
+    
+        public virtual int SP_ADMIN_ADMIN_MEMBER_INS(string aDM_ID, string aDM_NAME, string aDM_PWD, string aDM_GRADE, string aDM_EMAIL, string aDM_PHONE, string aDM_USE_YN, ObjectParameter eRR_CODE)
+        {
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            var aDM_NAMEParameter = aDM_NAME != null ?
+                new ObjectParameter("ADM_NAME", aDM_NAME) :
+                new ObjectParameter("ADM_NAME", typeof(string));
+    
+            var aDM_PWDParameter = aDM_PWD != null ?
+                new ObjectParameter("ADM_PWD", aDM_PWD) :
+                new ObjectParameter("ADM_PWD", typeof(string));
+    
+            var aDM_GRADEParameter = aDM_GRADE != null ?
+                new ObjectParameter("ADM_GRADE", aDM_GRADE) :
+                new ObjectParameter("ADM_GRADE", typeof(string));
+    
+            var aDM_EMAILParameter = aDM_EMAIL != null ?
+                new ObjectParameter("ADM_EMAIL", aDM_EMAIL) :
+                new ObjectParameter("ADM_EMAIL", typeof(string));
+    
+            var aDM_PHONEParameter = aDM_PHONE != null ?
+                new ObjectParameter("ADM_PHONE", aDM_PHONE) :
+                new ObjectParameter("ADM_PHONE", typeof(string));
+    
+            var aDM_USE_YNParameter = aDM_USE_YN != null ?
+                new ObjectParameter("ADM_USE_YN", aDM_USE_YN) :
+                new ObjectParameter("ADM_USE_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ADMIN_MEMBER_INS", aDM_IDParameter, aDM_NAMEParameter, aDM_PWDParameter, aDM_GRADEParameter, aDM_EMAILParameter, aDM_PHONEParameter, aDM_USE_YNParameter, eRR_CODE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ADMIN_MEMBER_VIEW_Result> SP_ADMIN_ADMIN_MEMBER_SEL(string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var sORT_COLParameter = sORT_COL != null ?
+                new ObjectParameter("SORT_COL", sORT_COL) :
+                new ObjectParameter("SORT_COL", typeof(string));
+    
+            var sORT_DIRParameter = sORT_DIR != null ?
+                new ObjectParameter("SORT_DIR", sORT_DIR) :
+                new ObjectParameter("SORT_DIR", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ADMIN_MEMBER_VIEW_Result>("SP_ADMIN_ADMIN_MEMBER_SEL", sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual int SP_ADMIN_ADMIN_MEMBER_UPD(string aDM_ID, string aDM_NAME, string aDM_PWD, string aDM_GRADE, string aDM_EMAIL, string aDM_PHONE, string aDM_USE_YN, ObjectParameter eRR_CODE)
+        {
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            var aDM_NAMEParameter = aDM_NAME != null ?
+                new ObjectParameter("ADM_NAME", aDM_NAME) :
+                new ObjectParameter("ADM_NAME", typeof(string));
+    
+            var aDM_PWDParameter = aDM_PWD != null ?
+                new ObjectParameter("ADM_PWD", aDM_PWD) :
+                new ObjectParameter("ADM_PWD", typeof(string));
+    
+            var aDM_GRADEParameter = aDM_GRADE != null ?
+                new ObjectParameter("ADM_GRADE", aDM_GRADE) :
+                new ObjectParameter("ADM_GRADE", typeof(string));
+    
+            var aDM_EMAILParameter = aDM_EMAIL != null ?
+                new ObjectParameter("ADM_EMAIL", aDM_EMAIL) :
+                new ObjectParameter("ADM_EMAIL", typeof(string));
+    
+            var aDM_PHONEParameter = aDM_PHONE != null ?
+                new ObjectParameter("ADM_PHONE", aDM_PHONE) :
+                new ObjectParameter("ADM_PHONE", typeof(string));
+    
+            var aDM_USE_YNParameter = aDM_USE_YN != null ?
+                new ObjectParameter("ADM_USE_YN", aDM_USE_YN) :
+                new ObjectParameter("ADM_USE_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ADMIN_MEMBER_UPD", aDM_IDParameter, aDM_NAMEParameter, aDM_PWDParameter, aDM_GRADEParameter, aDM_EMAILParameter, aDM_PHONEParameter, aDM_USE_YNParameter, eRR_CODE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ADMIN_MEMBER_VIEW_Result> SP_ADMIN_ADMIN_MEMBER_VIEW(string aDM_ID)
+        {
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ADMIN_MEMBER_VIEW_Result>("SP_ADMIN_ADMIN_MEMBER_VIEW", aDM_IDParameter);
         }
     }
 }

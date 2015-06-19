@@ -1,0 +1,149 @@
+﻿
+@model IEnumerable<AboutMe.Domain.Entity.AdminEtc.SP_ADMIN_ADMIN_MEMBER_VIEW_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="tar mb10">
+            <a class="btn btn-default middium" href="/AdminMember/Create_Plain">관리자 등록 with Plain form style</a>
+            <a class="btn btn-default middium" href="/AdminMember/Create">관리자 등록 with Strongly bind style</a>
+            <a class="btn btn-default middium" href="#">예약상품일괄전시</a>
+            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+        </div>
+
+        <div class="panel">
+            <h3 class="sub-header">기본설정</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.111111111111</li>
+                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>배송정책</h4>
+
+            @{ var selected_str = "selected";}
+            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+
+                                    <table class="table table_row">
+                                        <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" class="vam">검색</th>
+                                                <td class="condition_seacth">
+                                                    <select name="SearchCol" style="width:170px;">
+                                                        <option>-선택하세요-</option>
+                                                        <option value="ADM_ID" @if (ViewBag.SearchCol == "ADM_ID") { @selected_str   ; }>아이디</option>
+                                                        <option value="ADM_NAME" @if (ViewBag.SearchCol == "ADM_NAME") { @selected_str   ; }>이름</option>
+                                                    </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
+                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                    <input type="submit" value=" Search >> ">
+                                                </td>
+                                            </tr>
+                                            <!--
+                                            <tr>
+                                                <th scope="row" class="vam">테스트</th>
+
+                                                <td>
+                                                    다음 중 대세남은?
+                                                    <select name="lunch" style="width:270px;">
+                                                        <option value="h" @if (Request.Form["lunch"] != null && Request.Form["lunch"].ToString().Trim() == "h") { @selected_str     ; }>황부장</option>
+                                                        <option value="j" @if (Request.Form["lunch"] != null && Request.Form["lunch"].ToString().Trim() == "j") { @selected_str      ; }>장수현</option>
+                                                        <option value="k" @if (Request.Form["lunch"] != null && Request.Form["lunch"].ToString().Trim() == "k") { @selected_str      ; }>김도영</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                                -->
+                                        </tbody>
+                                    </table>
+            }
+        </div>
+
+        <div class="panel">
+            <h4>관리자 리스트</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="20%" /><col width="*" /><col width="8%" /></colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone">아이디</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">등급</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">전화</th>
+                        <th scope="col">등록일자</th>
+                        <th scope="col">사용여부</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="brnone"><a href="/AdminUser/Edit?SEL_ADM_ID = item.ADM_ID" class="btn btn-primary small">@item.ADM_ID</a></td>
+                            <td>@item.ADM_NAME</td>
+                            <td>@item.ADM_GRADE</td>
+                            <td>@item.ADM_EMAIL</td>
+                            <td>@item.ADM_PHONE</td>
+                            <td>@item.ADM_INS_DATE</td>
+                            <td class="brnone">@item.ADM_USE_YN</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
+
+
+        <!--버튼모음-->
+        ************************************************<br />
+        버튼가이드 <br /><br />
+        대버튼 : <br />
+        <a href="#" class="btn btn-default large">확인</a>
+        <a href="#" class="btn btn-primary large">취소</a>
+        <br /><br />
+        중버튼 : <br />
+        <a href="#" class="btn btn-default middium">편집중인 설정으로 저장</a>
+        <br /><br />
+        소버튼 : <br />
+        <a href="#" class="btn btn-default small">저장</a>
+        <a href="#" class="btn btn-success small">수정</a>
+        <a href="#" class="btn btn-primary small">삭제</a><br />
+        ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑<br />
+        3가지 타입 버튼이 필요할때 적용<br />
+        <a href="#" class="btn btn-info small">추가</a>
+        <!--//버튼모음-->
+
+    </div>
+}
+

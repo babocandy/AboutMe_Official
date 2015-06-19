@@ -32,23 +32,18 @@
           <Property Name="DEPT_NAME" Type="varchar" MaxLength="20" />
           <Property Name="INS_DATE" Type="datetime" />
         </EntityType>
-        <EntityType Name="CATEGORY">
+        <EntityType Name="TB_ADMIN_MEMBER">
           <Key>
-            <PropertyRef Name="IDX" />
+            <PropertyRef Name="ADM_ID" />
           </Key>
-          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CATE_GBN" Type="varchar" MaxLength="15" />
-          <Property Name="CATE_CODE" Type="char" MaxLength="9" />
-          <Property Name="RE_SORT" Type="int" />
-          <Property Name="DEPTH1_CODE" Type="char" MaxLength="3" />
-          <Property Name="DEPTH1_NAME" Type="varchar" MaxLength="50" />
-          <Property Name="DEPTH1_IMG" Type="varchar" MaxLength="100" />
-          <Property Name="DEPTH2_CODE" Type="char" MaxLength="3" />
-          <Property Name="DEPTH2_NAME" Type="varchar" MaxLength="50" />
-          <Property Name="DEPTH_FLAG" Type="varchar" MaxLength="1" />
-          <Property Name="DISPLAY_YN" Type="varchar" MaxLength="1" />
-          <Property Name="UPD_DATE" Type="datetime" />
-          <Property Name="INS_DATE" Type="datetime" />
+          <Property Name="ADM_ID" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="ADM_NAME" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ADM_PWD" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ADM_GRADE" Type="varchar" MaxLength="1" />
+          <Property Name="ADM_EMAIL" Type="varchar" MaxLength="100" />
+          <Property Name="ADM_PHONE" Type="varchar" MaxLength="30" />
+          <Property Name="ADM_INS_DATE" Type="datetime" />
+          <Property Name="ADM_USE_YN" Type="varchar" MaxLength="1" />
         </EntityType>
         <Function Name="SP_ADM_ADMIN_DEPT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_ADM_ADMIN_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -62,6 +57,7 @@
           <Parameter Name="ADM_PHOTO" Type="varchar" Mode="In" />
           <Parameter Name="ADM_DEPT" Type="varchar" Mode="In" />
           <Parameter Name="POINT" Type="int" Mode="In" />
+          <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADM_ADMIN_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
@@ -71,11 +67,50 @@
           <Parameter Name="PAGE" Type="int" Mode="In" />
           <Parameter Name="PAGESIZE" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_ADMIN_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ADMIN_MEMBER_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_ADMIN_MEMBER_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_PWD" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_GRADE" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_PHONE" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_USE_YN" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_ADMIN_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ADMIN_MEMBER_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_PWD" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_GRADE" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_PHONE" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_USE_YN" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_ADMIN_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_DUMMY_ADMIN_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AdminEtcModelStoreContainer">
           <EntitySet Name="ADMIN_MEMBER" EntityType="Self.ADMIN_MEMBER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMIN_MEMBER_DEPT" EntityType="Self.ADMIN_MEMBER_DEPT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ADMIN_MEMBER" EntityType="Self.TB_ADMIN_MEMBER" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -114,6 +149,7 @@
             <Parameter Name="ADM_PHOTO" Mode="In" Type="String" />
             <Parameter Name="ADM_DEPT" Mode="In" Type="String" />
             <Parameter Name="POINT" Mode="In" Type="Int32" />
+            <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADM_ADMIN_MEMBER_SEL" ReturnType="Collection(AdminEtcModel.SP_ADM_ADMIN_MEMBER_SEL_Result)">
             <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
@@ -123,8 +159,47 @@
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
             <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="CATEGORies" EntityType="AdminEtcModel.CATEGORY" />
           <EntitySet Name="ADMIN_MEMBER_DEPT" EntityType="AdminEtcModel.ADMIN_MEMBER_DEPT" />
+          <EntitySet Name="TB_ADMIN_MEMBER" EntityType="AdminEtcModel.TB_ADMIN_MEMBER" />
+          <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_CNT" ReturnType="Collection(AdminEtcModel.SP_ADMIN_COMMON_CNT_Result)">
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_DEL">
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_INS">
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="ADM_NAME" Mode="In" Type="String" />
+            <Parameter Name="ADM_PWD" Mode="In" Type="String" />
+            <Parameter Name="ADM_GRADE" Mode="In" Type="String" />
+            <Parameter Name="ADM_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="ADM_PHONE" Mode="In" Type="String" />
+            <Parameter Name="ADM_USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_SEL" ReturnType="Collection(AdminEtcModel.SP_ADMIN_ADMIN_MEMBER_VIEW_Result)">
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_UPD">
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="ADM_NAME" Mode="In" Type="String" />
+            <Parameter Name="ADM_PWD" Mode="In" Type="String" />
+            <Parameter Name="ADM_GRADE" Mode="In" Type="String" />
+            <Parameter Name="ADM_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="ADM_PHONE" Mode="In" Type="String" />
+            <Parameter Name="ADM_USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_VIEW" ReturnType="Collection(AdminEtcModel.SP_ADMIN_ADMIN_MEMBER_VIEW_Result)">
+          <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADM_ADMIN_MEMBER_CNT" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -163,24 +238,6 @@
           <Property Type="String" Name="ADM_PHOTO" Nullable="false" />
           <Property Type="Int32" Name="POINT" Nullable="false" />
         </ComplexType>
-        <EntityType Name="CATEGORY">
-          <Key>
-            <PropertyRef Name="IDX" />
-          </Key>
-          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CATE_GBN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
-          <Property Name="RE_SORT" Type="Int32" />
-          <Property Name="DEPTH1_CODE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="DEPTH1_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DEPTH1_IMG" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DEPTH2_CODE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="DEPTH2_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DEPTH_FLAG" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DISPLAY_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="UPD_DATE" Type="DateTime" Precision="3" />
-          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="ADMIN_MEMBER_DEPT">
           <Key>
             <PropertyRef Name="IDX" />
@@ -190,6 +247,32 @@
           <Property Name="DEPT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="INS_DATE" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="TB_ADMIN_MEMBER">
+          <Key>
+            <PropertyRef Name="ADM_ID" />
+          </Key>
+          <Property Name="ADM_ID" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="ADM_NAME" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ADM_PWD" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ADM_GRADE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ADM_EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ADM_PHONE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ADM_INS_DATE" Type="DateTime" Precision="3" />
+          <Property Name="ADM_USE_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="SP_ADMIN_ADMIN_MEMBER_VIEW_Result">
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="ADM_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="ADM_PWD" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ADM_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ADM_EMAIL" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ADM_PHONE" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="ADM_INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ADM_USE_YN" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_COMMON_CNT_Result" >
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -267,25 +350,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="CATEGORies">
-            <EntityTypeMapping TypeName="AdminEtcModel.CATEGORY">
-              <MappingFragment StoreEntitySet="CATEGORY">
-                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
-                <ScalarProperty Name="UPD_DATE" ColumnName="UPD_DATE" />
-                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
-                <ScalarProperty Name="DEPTH_FLAG" ColumnName="DEPTH_FLAG" />
-                <ScalarProperty Name="DEPTH2_NAME" ColumnName="DEPTH2_NAME" />
-                <ScalarProperty Name="DEPTH2_CODE" ColumnName="DEPTH2_CODE" />
-                <ScalarProperty Name="DEPTH1_IMG" ColumnName="DEPTH1_IMG" />
-                <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
-                <ScalarProperty Name="DEPTH1_CODE" ColumnName="DEPTH1_CODE" />
-                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
-                <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
-                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ADMIN_MEMBER_DEPT">
             <EntityTypeMapping TypeName="AdminEtcModel.ADMIN_MEMBER_DEPT">
               <MappingFragment StoreEntitySet="ADMIN_MEMBER_DEPT">
@@ -296,6 +360,58 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TB_ADMIN_MEMBER">
+            <EntityTypeMapping TypeName="AdminEtcModel.TB_ADMIN_MEMBER">
+              <MappingFragment StoreEntitySet="TB_ADMIN_MEMBER">
+                <ScalarProperty Name="ADM_USE_YN" ColumnName="ADM_USE_YN" />
+                <ScalarProperty Name="ADM_INS_DATE" ColumnName="ADM_INS_DATE" />
+                <ScalarProperty Name="ADM_PHONE" ColumnName="ADM_PHONE" />
+                <ScalarProperty Name="ADM_EMAIL" ColumnName="ADM_EMAIL" />
+                <ScalarProperty Name="ADM_GRADE" ColumnName="ADM_GRADE" />
+                <ScalarProperty Name="ADM_PWD" ColumnName="ADM_PWD" />
+                <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_CNT" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADMIN_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_DEL" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_DEL" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_INS" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_SEL" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADMIN_ADMIN_MEMBER_VIEW_Result">
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+                <ScalarProperty Name="ADM_PWD" ColumnName="ADM_PWD" />
+                <ScalarProperty Name="ADM_GRADE" ColumnName="ADM_GRADE" />
+                <ScalarProperty Name="ADM_EMAIL" ColumnName="ADM_EMAIL" />
+                <ScalarProperty Name="ADM_PHONE" ColumnName="ADM_PHONE" />
+                <ScalarProperty Name="ADM_INS_DATE" ColumnName="ADM_INS_DATE" />
+                <ScalarProperty Name="ADM_USE_YN" ColumnName="ADM_USE_YN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_UPD" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_VIEW" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADMIN_ADMIN_MEMBER_VIEW_Result">
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+                <ScalarProperty Name="ADM_PWD" ColumnName="ADM_PWD" />
+                <ScalarProperty Name="ADM_GRADE" ColumnName="ADM_GRADE" />
+                <ScalarProperty Name="ADM_EMAIL" ColumnName="ADM_EMAIL" />
+                <ScalarProperty Name="ADM_PHONE" ColumnName="ADM_PHONE" />
+                <ScalarProperty Name="ADM_INS_DATE" ColumnName="ADM_INS_DATE" />
+                <ScalarProperty Name="ADM_USE_YN" ColumnName="ADM_USE_YN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
