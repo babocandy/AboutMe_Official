@@ -141,11 +141,11 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region ajax partial category 자바스크립트로 dropdownlist방식
-        public ActionResult CategoryListJavascript()
+        public ActionResult CategoryListJavascript(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE)
         {
-            List<SP_ADMIN_CATEGORY_ONE_SEL_Result> CateCodeData = _AdminProductService.GetAdminCategoryOneList().ToList();
-            ViewData["P_CATE_CODE"] = CateCodeData;
-            return Json(new { success = false, msg = CateCodeData });
+            List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> CateCodeData = _AdminProductService.GetAdminCategoryDeptList(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE).ToList();
+            //ViewData["DEPTH_CATE_CODE"] = CateCodeData;
+            return Json(new { success = true, msg = CateCodeData });
         }
         #endregion
       
@@ -182,7 +182,8 @@ namespace AboutMe.Web.Admin.Controllers
                 if (MAIN_IMG != null)
                 {
                     //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
-                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                    //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
 
                     // rename, resize, and upload
                     //return object that contains {bool Success,string ErrorMessage,string ImageName}

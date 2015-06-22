@@ -85,6 +85,26 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
+        #region depth별 카테고리 리스트
+        public List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> GetAdminCategoryDeptList(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE)
+        {
+
+            List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> lst = new List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result>();
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                /**try {**/
+                lst = AdminProductContext.SP_ADMIN_CATEGORY_DEPTH_SEL(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+        #endregion
+
 
 
 
@@ -116,7 +136,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_COUNT, tb_product_info.P_POINT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.SOLDOUT_YN, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.OTHER_IMG4, tb_product_info.OTHER_IMG5, tb_product_info.DISPLAY_YN, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
+                AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.OTHER_IMG4, tb_product_info.OTHER_IMG5, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
 
             }
         }
@@ -160,7 +180,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                AdminProductContext.SP_ADMIN_PRODUCT_UPD(tb_product_info.IDX, tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_COUNT, tb_product_info.P_POINT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.SOLDOUT_YN, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.OTHER_IMG4, tb_product_info.OTHER_IMG5, tb_product_info.DISPLAY_YN, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
+                AdminProductContext.SP_ADMIN_PRODUCT_UPD(tb_product_info.IDX, tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.SOLDOUT_YN, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.OTHER_IMG4, tb_product_info.OTHER_IMG5, tb_product_info.DISPLAY_YN, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
             }
         }
         #endregion

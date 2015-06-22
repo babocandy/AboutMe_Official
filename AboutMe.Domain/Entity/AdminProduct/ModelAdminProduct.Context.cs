@@ -156,15 +156,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_PRODUCT_CNT");
         }
 
-        public virtual ObjectResult<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result> SP_ADMIN_PRODUCT_DETAIL_VIEW(string p_CODE)
-        {
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result>("SP_ADMIN_PRODUCT_DETAIL_VIEW", p_CODEParameter);
-        }
-
         public virtual int SP_ADMIN_PRODUCT_IMG_DEL(Nullable<int> iDX, string imgColumName)
         {
             var iDXParameter = iDX.HasValue ?
@@ -178,7 +169,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_IMG_DEL", iDXParameter, imgColumNameParameter);
         }
 
-        public virtual int SP_ADMIN_PRODUCT_INS(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> p_POINT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string dISPLAY_YN, string iCON_YN, string wITH_PRODUCT_LIST)
+        public virtual int SP_ADMIN_PRODUCT_INS(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string iCON_YN, string wITH_PRODUCT_LIST)
         {
             var p_CATE_CODEParameter = p_CATE_CODE != null ?
                 new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
@@ -204,10 +195,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("P_COUNT", p_COUNT) :
                 new ObjectParameter("P_COUNT", typeof(int));
 
-            var p_POINTParameter = p_POINT.HasValue ?
-                new ObjectParameter("P_POINT", p_POINT) :
-                new ObjectParameter("P_POINT", typeof(int));
-
             var sELLING_PRICEParameter = sELLING_PRICE.HasValue ?
                 new ObjectParameter("SELLING_PRICE", sELLING_PRICE) :
                 new ObjectParameter("SELLING_PRICE", typeof(int));
@@ -219,10 +206,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             var dISCOUNT_PRICEParameter = dISCOUNT_PRICE.HasValue ?
                 new ObjectParameter("DISCOUNT_PRICE", dISCOUNT_PRICE) :
                 new ObjectParameter("DISCOUNT_PRICE", typeof(int));
-
-            var sOLDOUT_YNParameter = sOLDOUT_YN != null ?
-                new ObjectParameter("SOLDOUT_YN", sOLDOUT_YN) :
-                new ObjectParameter("SOLDOUT_YN", typeof(string));
 
             var p_INFO_DETAIL_WEBParameter = p_INFO_DETAIL_WEB != null ?
                 new ObjectParameter("P_INFO_DETAIL_WEB", p_INFO_DETAIL_WEB) :
@@ -268,10 +251,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("OTHER_IMG5", oTHER_IMG5) :
                 new ObjectParameter("OTHER_IMG5", typeof(string));
 
-            var dISPLAY_YNParameter = dISPLAY_YN != null ?
-                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
-                new ObjectParameter("DISPLAY_YN", typeof(string));
-
             var iCON_YNParameter = iCON_YN != null ?
                 new ObjectParameter("ICON_YN", iCON_YN) :
                 new ObjectParameter("ICON_YN", typeof(string));
@@ -280,7 +259,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("WITH_PRODUCT_LIST", wITH_PRODUCT_LIST) :
                 new ObjectParameter("WITH_PRODUCT_LIST", typeof(string));
 
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_INS", p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, p_CODEParameter, p_NAMEParameter, p_COUNTParameter, p_POINTParameter, sELLING_PRICEParameter, dISCOUNT_RATEParameter, dISCOUNT_PRICEParameter, sOLDOUT_YNParameter, p_INFO_DETAIL_WEBParameter, p_INFO_DETAIL_MOBILEParameter, mV_URLParameter, p_COMPONENT_INFOParameter, p_TAGParameter, mAIN_IMGParameter, oTHER_IMG1Parameter, oTHER_IMG2Parameter, oTHER_IMG3Parameter, oTHER_IMG4Parameter, oTHER_IMG5Parameter, dISPLAY_YNParameter, iCON_YNParameter, wITH_PRODUCT_LISTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_INS", p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, p_CODEParameter, p_NAMEParameter, p_COUNTParameter, sELLING_PRICEParameter, dISCOUNT_RATEParameter, dISCOUNT_PRICEParameter, p_INFO_DETAIL_WEBParameter, p_INFO_DETAIL_MOBILEParameter, mV_URLParameter, p_COMPONENT_INFOParameter, p_TAGParameter, mAIN_IMGParameter, oTHER_IMG1Parameter, oTHER_IMG2Parameter, oTHER_IMG3Parameter, oTHER_IMG4Parameter, oTHER_IMG5Parameter, iCON_YNParameter, wITH_PRODUCT_LISTParameter);
         }
 
         public virtual ObjectResult<Nullable<int>> SP_ADMIN_PRODUCT_PCODE_CHK(string p_CODE)
@@ -292,12 +271,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_PRODUCT_PCODE_CHK", p_CODEParameter);
         }
 
-        public virtual ObjectResult<SP_ADMIN_PRODUCT_SEL_Result> SP_ADMIN_PRODUCT_SEL()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL");
-        }
-
-        public virtual int SP_ADMIN_PRODUCT_UPD(Nullable<int> iDX, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> p_POINT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string dISPLAY_YN, string iCON_YN, string wITH_PRODUCT_LIST)
+        public virtual int SP_ADMIN_PRODUCT_UPD(Nullable<int> iDX, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string dISPLAY_YN, string iCON_YN, string wITH_PRODUCT_LIST)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -327,10 +301,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("P_COUNT", p_COUNT) :
                 new ObjectParameter("P_COUNT", typeof(int));
 
-            var p_POINTParameter = p_POINT.HasValue ?
-                new ObjectParameter("P_POINT", p_POINT) :
-                new ObjectParameter("P_POINT", typeof(int));
-
             var sELLING_PRICEParameter = sELLING_PRICE.HasValue ?
                 new ObjectParameter("SELLING_PRICE", sELLING_PRICE) :
                 new ObjectParameter("SELLING_PRICE", typeof(int));
@@ -403,7 +373,38 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("WITH_PRODUCT_LIST", wITH_PRODUCT_LIST) :
                 new ObjectParameter("WITH_PRODUCT_LIST", typeof(string));
 
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_UPD", iDXParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, p_CODEParameter, p_NAMEParameter, p_COUNTParameter, p_POINTParameter, sELLING_PRICEParameter, dISCOUNT_RATEParameter, dISCOUNT_PRICEParameter, sOLDOUT_YNParameter, p_INFO_DETAIL_WEBParameter, p_INFO_DETAIL_MOBILEParameter, mV_URLParameter, p_COMPONENT_INFOParameter, p_TAGParameter, mAIN_IMGParameter, oTHER_IMG1Parameter, oTHER_IMG2Parameter, oTHER_IMG3Parameter, oTHER_IMG4Parameter, oTHER_IMG5Parameter, dISPLAY_YNParameter, iCON_YNParameter, wITH_PRODUCT_LISTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_UPD", iDXParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, p_CODEParameter, p_NAMEParameter, p_COUNTParameter, sELLING_PRICEParameter, dISCOUNT_RATEParameter, dISCOUNT_PRICEParameter, sOLDOUT_YNParameter, p_INFO_DETAIL_WEBParameter, p_INFO_DETAIL_MOBILEParameter, mV_URLParameter, p_COMPONENT_INFOParameter, p_TAGParameter, mAIN_IMGParameter, oTHER_IMG1Parameter, oTHER_IMG2Parameter, oTHER_IMG3Parameter, oTHER_IMG4Parameter, oTHER_IMG5Parameter, dISPLAY_YNParameter, iCON_YNParameter, wITH_PRODUCT_LISTParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> SP_ADMIN_CATEGORY_DEPTH_SEL(string cATE_GBN, string dEPTH1_CODE, string dEPTH2_CODE)
+        {
+            var cATE_GBNParameter = cATE_GBN != null ?
+                new ObjectParameter("CATE_GBN", cATE_GBN) :
+                new ObjectParameter("CATE_GBN", typeof(string));
+
+            var dEPTH1_CODEParameter = dEPTH1_CODE != null ?
+                new ObjectParameter("DEPTH1_CODE", dEPTH1_CODE) :
+                new ObjectParameter("DEPTH1_CODE", typeof(string));
+
+            var dEPTH2_CODEParameter = dEPTH2_CODE != null ?
+                new ObjectParameter("DEPTH2_CODE", dEPTH2_CODE) :
+                new ObjectParameter("DEPTH2_CODE", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_DEPTH_SEL_Result>("SP_ADMIN_CATEGORY_DEPTH_SEL", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_CODEParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result> SP_ADMIN_PRODUCT_DETAIL_VIEW(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result>("SP_ADMIN_PRODUCT_DETAIL_VIEW", p_CODEParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_SEL_Result> SP_ADMIN_PRODUCT_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL");
         }
     }
 }

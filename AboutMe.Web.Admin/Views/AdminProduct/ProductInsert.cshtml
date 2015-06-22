@@ -11,10 +11,165 @@
         function formChk() {
         
             var f = document.bform;
-            if (f.P_CODE.value == '') {
-                alert("상품코드를 입력하세요.");
+            var deny_pattern = /[^(a-zA-Z0-9)]/;
+            var deny_pattern_id = /[^(a-z0-9)]/;
+            var deny_pattern_hp = /[^(0-9)*-]/;
+            var deny_patternOnlyEng = /[^(sa-zA-Z)]/;
+            var P_CATE_CODE1 = $("#P_CATE_CODE1 option:selected").val();
+            if (P_CATE_CODE1 == '') {
+                alert("카테고리 상품분류를 선택해주세요.");
                 return false;
             }
+
+            if ($("#P_CATE_CODE2 option:selected").val() == '') {
+                alert("카테고리 상품분류를 선택해주세요.");
+                return false;
+            }
+
+            f.P_CATE_CODE.value = $("#P_CATE_CODE2 option:selected").val();
+
+            if (P_CATE_CODE1 == '101100100') { //뷰티(101100100)만 3depth까지 있음
+
+                if ($("#P_CATE_CODE3 option:selected").val() == '') {
+                    alert("카테고리 상품분류를 선택해주세요.");
+                    return false;
+                }
+                f.P_CATE_CODE.value = $("#P_CATE_CODE3 option:selected").val();
+
+                if ($("#L_CATE_CODE option:selected").val() == '') {
+                    alert("카테고리 라인분류를 선택해주세요.");
+                    return false;
+                }
+
+            }
+
+            if ($("#C_CATE_CODE option:selected").val() == '') {
+                alert("카테고리 피부고민분류를 선택해주세요.");
+                return false;
+            }
+
+            if (f.P_CATE_CODE.value == '') {
+                alert("카테고리 상품분류가 완전히 선택되지 않았습니다.");
+                return false;
+            }
+
+            if (f.P_CODE.value == '') {
+                alert("상품코드를 입력하세요.");
+                f.P_CODE.focus();
+                return false;
+            }
+
+            if ((f.P_CODE.value).length != 8) {
+                alert("상품코드는 8자리입니다. ");
+                f.P_CODE.focus();
+                return false;
+            }
+
+            if (f.P_CODE_CHK_OK.value != 'Y') {
+                alert("상품코드를 정확하게 입력해 주세요.");
+                f.P_CODE_CHK_OK.focus();
+                return false;
+            }
+
+            if (f.P_NAME.value == '') {
+                alert("상품명을 입력하세요.");
+                f.P_NAME.focus();
+                return false;
+            }
+
+            if (f.SELLING_PRICE.value == "") {
+                alert("판매가를 입력해 주세요!");
+                f.SELLING_PRICE.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.SELLING_PRICE.value) == 0) {
+                alert("판매가를 입력하세요.");
+                f.SELLING_PRICE.value = "";
+                f.SELLING_PRICE.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.SELLING_PRICE.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.SELLING_PRICE.value = "";
+                document.bform.SELLING_PRICE.focus();
+                return false;
+            }
+
+            if (f.DISCOUNT_RATE.value == "") {
+                alert("할인율을 입력해 주세요!");
+                f.DISCOUNT_RATE.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.DISCOUNT_RATE.value) == 0) {
+                alert("할인율을 입력하세요.");
+                f.DISCOUNT_RATE.value = "";
+                f.DISCOUNT_RATE.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.DISCOUNT_RATE.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.DISCOUNT_RATE.value = "";
+                document.bform.DISCOUNT_RATE.focus();
+                return false;
+            }
+
+            if (f.DISCOUNT_PRICE.value == "") {
+                alert("할인가를 입력해 주세요!");
+                f.DISCOUNT_PRICE.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.DISCOUNT_PRICE.value) == 0) {
+                alert("할인가를 입력하세요.");
+                f.DISCOUNT_PRICE.value = "";
+                f.DISCOUNT_PRICE.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.DISCOUNT_PRICE.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.DISCOUNT_PRICE.value = "";
+                document.bform.DISCOUNT_PRICE.focus();
+                return false;
+            }
+
+            if (f.P_COUNT.value == "") {
+                alert("재고수량을 입력해 주세요!");
+                f.P_COUNT.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.P_COUNT.value) == 0) {
+                alert("재고수량을 입력하세요.");
+                f.P_COUNT.value = "";
+                f.P_COUNT.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.P_COUNT.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.P_COUNT.value = "";
+                document.bform.P_COUNT.focus();
+                return false;
+            }
+
+            if (f.MAIN_IMG.value == "") {
+                alert("상품 대표 이미지를 올려 주세요!");
+                f.MAIN_IMG.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.MAIN_IMG.value) == 0) {
+                alert("상품 대표 이미지를 올려 주세요.");
+                f.MAIN_IMG.value = "";
+                f.MAIN_IMG.focus();
+                return false;
+            }
+
 
             oEditors.getById["P_INFO_DETAIL_WEB"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
             oEditors2.getById["P_INFO_DETAIL_MOBILE"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
@@ -26,16 +181,29 @@
                     return false;
                 }
             
-            if (f.P_INFO_DETAIL_MOBILE.value == "<p>&nbsp;</p>") {
-                    alert("상품 정보(mobile)를 입력해 주세요!");
-                    f.P_INFO_DETAIL_MOBILE.focus();
-                    return false;
-                }
+            //if (f.P_INFO_DETAIL_MOBILE.value == "<p>&nbsp;</p>") {
+            //        alert("상품 정보(mobile)를 입력해 주세요!");
+            //        f.P_INFO_DETAIL_MOBILE.focus();
+            //        return false;
+            //    }
             
-            return document.bform.submit();
+            document.bform.submit();
 
         }
 
+
+        //문자열 안의 공백 지우기
+        function deleteSpace(str) {
+            var out = "";
+
+            for (common_i = 0; common_i < str.length; common_i++) {
+                if (str.charAt(common_i) == " ") {
+                    continue;
+                }
+                out += str.charAt(common_i);
+            }
+            return out.length;
+        }
         function selChange(obj_selectbox, sel_index) {
             alert(obj_selectbox[sel_index].value);
         }
@@ -46,7 +214,11 @@
             var f = document.bform;
             if (f.P_CODE.value == '') {
                 $('#pcodeMsgSpan').html("상품코드를 입력하세요.");
-                //alert("상품코드를 입력하세요.");
+                return false;
+            }
+            if ((f.P_CODE.value).length != 8) {
+                $('#pcodeMsgSpan').html("상품코드는 8자리입니다. ");
+                f.P_CODE.focus();
                 return false;
             }
             
@@ -56,7 +228,6 @@
                 data: {
                     P_CODE: f.P_CODE.value
                 },
-                //contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     if (data.success) {
                         bform.P_CODE_CHK_OK.value = "Y";
@@ -83,60 +254,247 @@
             $.ajax({
                 url: '/AdminProduct/CategoryList',
                 type: 'POST',
-                //data: {
-                //    P_CODE: f.P_CODE.value
-                //},
-                //contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    
                     $('#ajaxPCateCode').html(data);
-
-                    //alert(data.success);
-                    
                 },
                 error: function (errorData) {
-                    alert("error");
-                    //onError(errorData);
+                    alert("ajaxSelectCateCode error");
                 }
             });
         }
-
-        function ajaxSelectCateCodeJavascript() {
+        //카테고리 유형별(PRODUCT_TYPE) 초기화 1
+        function ajaxSelectCateCodeJavascriptInit() {
 
             var f = document.bform;
 
             $.ajax({
                 url: '/AdminProduct/CategoryListJavascript',
                 type: 'POST',
-                //data: {
-                //    P_CODE: f.P_CODE.value
-                //},
-                //contentType: 'application/json; charset=utf-8',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: '',
+                    DEPTH2_CODE: ''
+                },
                 success: function (data) {
-                    var result = "<select style='width:170px;' id='P_CATE_CODE' name='P_CATE_CODE'>";
-                    result += "<option>=선택=</option>";
-                    $('#ajaxPCateCode').html('');
+                    //var result = "<select style='width:170px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='alert(this.options[this.selectedIndex].value)'>";
+                    var result = "<select style='width:120px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='ajaxSelectCateCodeJavascriptProductType1();'>";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode1').html('');
                     $.each(data.msg, function (id, category) {
-                        result += '<option value='+ category.DEPTH1_CODE +'>'+ category.DEPTH1_NAME +'</option>' ;
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH1_NAME + '</option>';
                     });
                     result += "</select>";
                    
-                    $('#ajaxPCateCode').html(result);
+                    $('#ajaxPCateCode1').html(result);
+                    
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptInit error");
+                }
+            });
+        }
 
-                    //alert(data.success);
+        //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+        function ajaxSelectCateCodeJavascriptProductType1() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+
+            if (DEPTH1_CODE == '101') { //뷰티만 라인별 타입이 있음
+                $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show                $("#cs_category2").show(); //라인별(LINE_TYPE) show
+                ajaxSelectCateCodeJavascriptSkinType2();
+                ajaxSelectCateCodeJavascriptLineType2();
+            } else {
+                $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show                $("#cs_category2").hide(); //라인별(LINE_TYPE) hide
+                ajaxSelectCateCodeJavascriptSkinType2();
+            }
+            $('#ajaxPCateCode2').html('');
+            $('#ajaxPCateCode3').html('');
+
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    var result = "<select style='width:120px;' id='P_CATE_CODE2' name='P_CATE_CODE2' onchange='ajaxSelectCateCodeJavascriptProductType2();'>";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode2').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxPCateCode2').html(result);
 
                 },
                 error: function (errorData) {
-                    alert("error");
-                    //onError(errorData);
+                    alert("ajaxSelectCateCodeJavascriptProductType1 error");
+                }
+            });
+        }
+
+        //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+        function ajaxSelectCateCodeJavascriptProductType2() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+            var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
+            //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
+            //var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val();
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: DEPTH2_CODE
+                },
+                success: function (data) {
+                    if((data.msg).length > 0){ //데이타가 있을때만 생성한다.
+                        var result = "<select style='width:120px;' id='P_CATE_CODE3' name='P_CATE_CODE3'>";
+                        result += "<option value=''>=선택=</option>";
+                        $('#ajaxPCateCode3').html('');
+                        $.each(data.msg, function (id, category) {
+                            result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH3_NAME + '</option>';
+                        });
+                        result += "</select>";
+
+                        $('#ajaxPCateCode3').html(result);
+                    }
+
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptProductType2 error");
+                }
+            });
+        }
+
+       
+
+        //카테고리 피부 고민별(SKIN_TYPE) 2
+        function ajaxSelectCateCodeJavascriptSkinType2() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3); 
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'SKIN_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    var result = "<select style='width:120px;' id='C_CATE_CODE' name='C_CATE_CODE' >";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxCCateCode').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxCCateCode').html(result);
+                },
+                error: function (errorData) {
+                    alert("SKIN_TYPE ajaxSelectCateCodeJavascriptSkinType2() error");
+                }
+            });
+        }
+
+        //카테고리 라인별(LINE_TYPE) 2
+        function ajaxSelectCateCodeJavascriptLineType2() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'LINE_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    var result = "<select style='width:120px;' id='L_CATE_CODE' name='L_CATE_CODE' >";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxLCateCode').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxLCateCode').html(result);
+                },
+                error: function (errorData) {
+                    alert("SKIN_TYPE ajaxSelectCateCodeJavascriptLineType2() error");
                 }
             });
         }
 
         $(function() {
             //ajaxSelectCateCode();
-            ajaxSelectCateCodeJavascript();
+            ajaxSelectCateCodeJavascriptInit();
+            $("#cs_category1").hide(); //stone 설정 화면 hide            $("#cs_category2").hide(); //stone 설정 화면 hide
         });
+
+
+
+
+        //일반몰 할인가에 맞는 할인율 
+        //소수점 버림 ex>29.624 => 29%
+        function getUpdateDiscountRate() {
+
+            var f = document.bform;
+            var SELLING_PRICE = f.SELLING_PRICE.value;   //판매가
+            var DISCOUNT_PRICE = f.DISCOUNT_PRICE.value; //할인가
+            var DISCOUNT_RATE;						   //할인율
+
+            if ((f.SELLING_PRICE.value != "") && (f.SELLING_PRICE.value > 0) && (f.DISCOUNT_PRICE.value != "") && (f.DISCOUNT_PRICE.value > 0)) {
+                DISCOUNT_RATE = Math.floor(100 - ((DISCOUNT_PRICE / SELLING_PRICE) * 100));
+                if (DISCOUNT_RATE >= 0) //할인율이 -는 제외
+                {
+                    f.DISCOUNT_RATE.value = DISCOUNT_RATE;
+                }
+                else {
+                    f.DISCOUNT_RATE.value = "";
+                }
+
+            }
+
+        }
+
+        //할인율에 맞는 할인가
+        //10원단위 절사 ex>290 => 200원으로
+        function getUpdateDiscountPrice() {
+
+            var f = document.bform;
+            var SELLING_PRICE = f.SELLING_PRICE.value;  //판매가
+            var DISCOUNT_RATE = f.DISCOUNT_RATE.value;  //할인율
+            if ((f.SELLING_PRICE.value != "") && (f.SELLING_PRICE.value > 0)) {
+                //var cd=(ab*bc*0.01)/10;
+                //cd = cd.toFixed();
+                //cd = cd*10;
+                //f.DISCOUNT_PRICE.value =ab - cd;
+
+                var CHA_PRICE = (SELLING_PRICE * DISCOUNT_RATE) * 0.01;
+                var DISCOUNT_PRICE = (SELLING_PRICE - CHA_PRICE) / 100;
+                DISCOUNT_PRICE = Math.floor(DISCOUNT_PRICE) * 100;
+                if (DISCOUNT_PRICE >= 0) //할인가 -는 제외
+                {
+                    f.DISCOUNT_PRICE.value = DISCOUNT_PRICE;
+                }
+                else {
+                    f.DISCOUNT_PRICE.value = "";
+                }
+
+            }
+        }
+
+       
 
     </script>
 
@@ -164,6 +522,7 @@
 {
     @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
         <input type="hidden" name="P_CODE_CHK_OK" value="N">
+        <input type="hidden" name="P_CATE_CODE" value="">
 
         <div class="panel">
             <h3 class="sub-header">상품관리</h3>
@@ -173,31 +532,25 @@
                     <tr>
                         <th>카테고리 1 (상품 분류)</th>
                         <td colspan="3">
-                            <div id="ajaxPCateCode"></div>
+                            <span id="ajaxPCateCode1"></span>
+                            <span id="ajaxPCateCode2"></span>
+                            <span id="ajaxPCateCode3"></span>
                             @*<select style="width:170px;" id="P_CATE_CODE" name="P_CATE_CODE">
                                 <option>=선택=</option>
                                 <option>상품품번</option>
                             </select>*@
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="cs_category1">
                         <th>카테고리 2 (피부고민 분류)</th>
                         <td colspan="3">
-                            <div id="ajaxCCateCode"></div>
-                            <select style="width:170px;" id="C_CATE_CODE" name="C_CATE_CODE">
-                                <option>=선택=</option>
-                                <option>상품품번</option>
-                            </select>
+                            <span id="ajaxCCateCode"></span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="cs_category2">
                         <th>카테고리 3 (LINE 분류)</th>
                         <td colspan="3">
-                            <div id="ajaxLCateCode"></div>
-                            <select style="width:170px;" id="L_CATE_CODE" name="L_CATE_CODE">
-                                <option>=선택=</option>
-                                <option>상품품번</option>
-                            </select>
+                            <span id="ajaxLCateCode"></span>
                         </td>
                     </tr>
                     <tr>
@@ -223,11 +576,11 @@
                         <th>상품판매가</th>
                         <td><input type="text" style="width:70px;" class="input-sm text-left" id="SELLING_PRICE" name="SELLING_PRICE" maxlength="8" value="" /></td>
                         <th>상품할인가</th>
-                        <td><input type="text" style="width:70px;" class="input-sm text-left" id="DISCOUNT_PRICE" name="DISCOUNT_PRICE" maxlength="8" value="" /></td>
+                        <td><input type="text" style="width:70px;" class="input-sm text-left" id="DISCOUNT_PRICE" name="DISCOUNT_PRICE" onkeyup="getUpdateDiscountRate();" maxlength="8" value="" /></td>
                     </tr>
                     <tr>
                         <th>상품할인율(%)</th>
-                        <td><input type="text" style="width:30px;" class="input-sm text-left" id="DISCOUNT_RATE" name="DISCOUNT_RATE" maxlength="3" value="" />%</td>
+                        <td><input type="text" style="width:30px;" class="input-sm text-left" id="DISCOUNT_RATE" name="DISCOUNT_RATE" onkeyup="getUpdateDiscountPrice();" maxlength="3" value="" />%</td>
                         <th>재고수량</th>
                         <td><input type="text" style="width:30px;" class="input-sm text-left" id="P_COUNT" name="P_COUNT" maxlength="8" value="" /></td>
                     </tr>
@@ -299,7 +652,7 @@
             <a class="btn btn-default small" href="#" onclick="formChk();">등록</a>
             <a class="btn btn-primary small" href="/AdminProduct/ProductIndex">목록</a>
         </div>
-   }
+}
         <script type="text/javascript" src="/AboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
         <script type="text/javascript">
             var oEditors = [];

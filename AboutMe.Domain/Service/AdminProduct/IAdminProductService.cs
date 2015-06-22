@@ -21,6 +21,8 @@ namespace AboutMe.Domain.Service.AdminProduct
         void UpdateAdminCategoryOne(Nullable<int> IDX, string DEPTH1_NAME, string DISPLAY_YN, Nullable<int> RE_SORT);
         //카테고리 삭제
         void DeleteAdminCategoryOne(Nullable<int> IDX);
+        //카테고리별 서브리스트 가져오기
+        List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> GetAdminCategoryDeptList(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE);
 
         //상품 리스트
         List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList();
