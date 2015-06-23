@@ -31,6 +31,8 @@ namespace AboutMe.Domain.Service.AdminProduct
         void InsertAdminProduct(TB_PRODUCT_INFO tb_product_info);
         //상품코드 유효성 체크
         int? PcodeChkAdminProduct(string pcode);
+        //상품이미지 개별 삭제
+        void ImageDelAdminProduct(string P_CODE, string imgColumName);
         //상품 보기
         SP_ADMIN_PRODUCT_DETAIL_VIEW_Result ViewAdminProduct(string PCODE);
         //상품 수정

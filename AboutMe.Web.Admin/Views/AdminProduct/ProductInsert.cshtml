@@ -14,7 +14,8 @@
             var deny_pattern = /[^(a-zA-Z0-9)]/;
             var deny_pattern_id = /[^(a-z0-9)]/;
             var deny_pattern_hp = /[^(0-9)*-]/;
-            var deny_patternOnlyEng = /[^(sa-zA-Z)]/;
+            var deny_patternOnlyEng = /[^(sa-zA-Z)]/;
+
             var P_CATE_CODE1 = $("#P_CATE_CODE1 option:selected").val();
             if (P_CATE_CODE1 == '') {
                 alert("카테고리 상품분류를 선택해주세요.");
@@ -203,7 +204,8 @@
                 out += str.charAt(common_i);
             }
             return out.length;
-        }
+        }
+
         function selChange(obj_selectbox, sel_index) {
             alert(obj_selectbox[sel_index].value);
         }
@@ -301,11 +303,13 @@
             var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
 
             if (DEPTH1_CODE == '101') { //뷰티만 라인별 타입이 있음
-                $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show                $("#cs_category2").show(); //라인별(LINE_TYPE) show
+                $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show
+                $("#cs_category2").show(); //라인별(LINE_TYPE) show
                 ajaxSelectCateCodeJavascriptSkinType2();
                 ajaxSelectCateCodeJavascriptLineType2();
             } else {
-                $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show                $("#cs_category2").hide(); //라인별(LINE_TYPE) hide
+                $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show
+                $("#cs_category2").hide(); //라인별(LINE_TYPE) hide
                 ajaxSelectCateCodeJavascriptSkinType2();
             }
             $('#ajaxPCateCode2').html('');
@@ -438,7 +442,9 @@
         $(function() {
             //ajaxSelectCateCode();
             ajaxSelectCateCodeJavascriptInit();
-            $("#cs_category1").hide(); //stone 설정 화면 hide            $("#cs_category2").hide(); //stone 설정 화면 hide
+            $("#cs_category1").hide(); //stone 설정 화면 hide
+            $("#cs_category2").hide(); //stone 설정 화면 hide
+
         });
 
 
@@ -494,7 +500,8 @@
             }
         }
 
-       
+       
+
 
     </script>
 

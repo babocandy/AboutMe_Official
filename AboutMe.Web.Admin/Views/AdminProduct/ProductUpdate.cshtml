@@ -8,17 +8,15 @@
 
     <script language="javascript">
 
-        $(function () {
-            //ajaxSelectCateCode();
+    $(function () {
+        ajaxSelectCateCodeJavascriptInit(); //카테고리 활성화
+        //var b = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType1() }, 2500); //카테고리 활성화
+        //var c = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType2() }, 3500); //카테고리 활성화
+        //var d = setTimeout(function () { ajaxSelectCateCodeJavascriptSkinType2() }, 3500); //카테고리 활성화
+        //var e = setTimeout(function () { ajaxSelectCateCodeJavascriptLineType2() }, 5000); //카테고리 활성화
+        
+    });
 
-            var a = setTimeout(function () { ajaxSelectCateCodeJavascriptInit() }, 1000); //카테고리 활성화            var b = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType1() }, 2000); //카테고리 활성화            //var c = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType2() }, 3000); //카테고리 활성화            //var d = setTimeout(function () { ajaxSelectCateCodeJavascriptSkinType2() }, 4000); //카테고리 활성화            //var e = setTimeout(function () { ajaxSelectCateCodeJavascriptLineType2() }, 5000); //카테고리 활성화            
-            //ajaxSelectCateCodeJavascriptInit();
-            //setTimeout(ajaxSelectCateCodeJavascriptInit(), 2000);
-            //setTimeout(ajaxSelectCateCodeJavascriptProductType1(), 4000);
-            //setTimeout(ajaxSelectCateCodeJavascriptProductType2(), 2000);
-            //setTimeout(ajaxSelectCateCodeJavascriptSkinType2(), 3000);
-            //setTimeout(ajaxSelectCateCodeJavascriptLineType2(), 4000);
-        });
 
 
     function formChk() {
@@ -153,20 +151,6 @@
             return false;
         }
 
-        if (f.MAIN_IMG.value == "") {
-            alert("상품 대표 이미지를 올려 주세요!");
-            f.MAIN_IMG.focus();
-            return false;
-        }
-
-        if (deleteSpace(f.MAIN_IMG.value) == 0) {
-            alert("상품 대표 이미지를 올려 주세요.");
-            f.MAIN_IMG.value = "";
-            f.MAIN_IMG.focus();
-            return false;
-        }
-
-
         oEditors.getById["P_INFO_DETAIL_WEB"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
         oEditors2.getById["P_INFO_DETAIL_MOBILE"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
 
@@ -220,8 +204,7 @@
             },
             success: function (data) {
                 //var result = "<select style='width:170px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='alert(this.options[this.selectedIndex].value)'>";
-                //var result = "<select style='width:120px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='ajaxSelectCateCodeJavascriptProductType1();'>";
-                var result = "<select style='width:120px;' id='P_CATE_CODE1' name='P_CATE_CODE1' '>";
+                var result = "<select style='width:120px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='ajaxSelectCateCodeJavascriptProductType1();'>";
                 result += "<option value=''>=선택=</option>";
                 $('#ajaxPCateCode1').html('');
                 $.each(data.msg, function (id, category) {
@@ -234,6 +217,9 @@
                 result += "</select>";
 
                 $('#ajaxPCateCode1').html(result);
+
+                //category 2depth load
+                ajaxSelectCateCodeJavascriptProductType1();
 
             },
             error: function (errorData) {
@@ -283,6 +269,9 @@
                 result += "</select>";
 
                 $('#ajaxPCateCode2').html(result);
+
+                //category 3depth load
+                ajaxSelectCateCodeJavascriptProductType2();
 
             },
             error: function (errorData) {
@@ -401,7 +390,7 @@
         });
     }
 
-   
+
 
     //일반몰 할인가에 맞는 할인율
     //소수점 버림 ex>29.624 => 29%
@@ -454,6 +443,44 @@
     }
 
 
+    //상품이미지 삭제
+    function imgDelChk(imgColumName) {
+        var f = document.bform;
+        //alert(eval('document.bform.OLD_' + imgColumName + '.value'));
+        //eval('document.bform.OLD_' + imgColumName + '.value = ""');
+        //alert(eval('document.bform.OLD_' + imgColumName + '.value'));
+        //var eSpan = "#SPAN_" + imgColumName;
+        //eval($(eSpan).hide());
+        //$("#cs_category2").hide()
+
+        var cmt;
+        cmt = " 선택하신 이미지를 삭제 하시겠습니까?"
+        if (confirm(cmt)) {
+            $.ajax({
+                url: '/AdminProduct/AjaxImageDel',
+                type: 'POST',
+                data: {
+                    P_CODE: "@Html.DisplayFor(model => model.P_CODE)",
+                    imgColumName:imgColumName
+                },
+                success: function (data) {
+                    if (data.success) { //삭제 성공시 old 이미지컬럼value 값을 "" 처리, 이미지 display hidden 처리한다.
+                        eval('document.bform.OLD_' + imgColumName + '.value = ""');
+                        var eSpan = "#SPAN_" + imgColumName;
+                        eval($(eSpan).hide());
+                    } else {
+                        alert('이미지가 삭제되지 않았습니다.');
+                    }
+                },
+                error: function (errorData) {
+                    alert("imgDeleteChk error");
+                }
+            });
+        }
+
+    }
+
+
 
 
     </script>
@@ -482,10 +509,16 @@
     @using (Html.BeginForm("ProductUpdate", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", enctype = "multipart/form-data", onsubmit = "return formChk();" }))
     {
         @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
-                            <input type="hidden" name="P_CODE_CHK_OK" value="N">
-                            <input type="hidden" name="P_CATE_CODE" value="">
+    <input type="hidden" name="P_CATE_CODE" value="">
+    <input type="hidden" name="IDX" value="@Html.DisplayFor(model => model.IDX)">
+    <input type="hidden" name="OLD_MAIN_IMG" value="@Html.DisplayFor(model => model.MAIN_IMG)">
+    <input type="hidden" name="OLD_OTHER_IMG1" value="@Html.DisplayFor(model => model.OTHER_IMG1)">
+    <input type="hidden" name="OLD_OTHER_IMG2" value="@Html.DisplayFor(model => model.OTHER_IMG2)">
+    <input type="hidden" name="OLD_OTHER_IMG3" value="@Html.DisplayFor(model => model.OTHER_IMG3)">
+    <input type="hidden" name="OLD_OTHER_IMG4" value="@Html.DisplayFor(model => model.OTHER_IMG4)">
+    <input type="hidden" name="OLD_OTHER_IMG5" value="@Html.DisplayFor(model => model.OTHER_IMG5)">
 
-                            <div class="panel">
+                               <div class="panel">
                                 <h3 class="sub-header">상품관리</h3>
                                 <table class="table table_row">
                                     <colgroup><col width="15%" /><col width="35%" /><col width="15%" /><col width="35%" /></colgroup>
@@ -561,36 +594,60 @@
                                             <th>상품대표이미지</th>
                                             <td colspan="3">
                                                 <input type="file" id="MAIN_IMG" name="MAIN_IMG" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.MAIN_IMG).ToString() != "")
+                                                {
+                                                <span id="SPAN_MAIN_IMG"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.MAIN_IMG)" width="100" height="100" /><a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a></span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품추가이미지1</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG1" name="OTHER_IMG1" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG1).ToString() != "")
+                                                {
+                                                    <span id="SPAN_OTHER_IMG1"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG1)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG1');">[삭제]</a></span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품추가이미지2</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG2" name="OTHER_IMG2" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG2).ToString() != "")
+                                                {
+                                                <span id="SPAN_OTHER_IMG2"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG2)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG2');">[삭제]</a></span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품추가이미지3</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG3" name="OTHER_IMG3" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG3).ToString() != "")
+                                                {
+                                                <span id="SPAN_OTHER_IMG3"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG3)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG3');">[삭제]</a></span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품추가이미지4</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG4" name="OTHER_IMG4" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG4).ToString() != "")
+                                                {
+                                                    <span id="SPAN_OTHER_IMG4"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG4)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG4');">[삭제]</a></span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품추가이미지5</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG5" name="OTHER_IMG5" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG5).ToString() != "")
+                                                {
+                                                    <span id="SPAN_OTHER_IMG5"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG5)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG5');">[삭제]</a></span>
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
