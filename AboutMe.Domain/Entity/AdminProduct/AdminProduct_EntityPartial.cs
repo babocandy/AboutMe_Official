@@ -20,5 +20,12 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string SEARCH_KEY { get; set; }
         public string SEARCH_KEYWORD { get; set; }
 
+        public string OLD_MAIN_IMG { get; set; }
+        public string OLD_OTHER_IMG1 { get; set; }
+        public string OLD_OTHER_IMG2 { get; set; }
+        public string OLD_OTHER_IMG3 { get; set; }
+        public string OLD_OTHER_IMG4 { get; set; }
+        public string OLD_OTHER_IMG5 { get; set; }
+
     }
 }

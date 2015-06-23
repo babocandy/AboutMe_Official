@@ -141,11 +141,11 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region ajax partial category 자바스크립트로 dropdownlist방식
-        public ActionResult CategoryListJavascript()
+        public ActionResult CategoryListJavascript(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE)
         {
-            List<SP_ADMIN_CATEGORY_ONE_SEL_Result> CateCodeData = _AdminProductService.GetAdminCategoryOneList().ToList();
-            ViewData["P_CATE_CODE"] = CateCodeData;
-            return Json(new { success = false, msg = CateCodeData });
+            List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> CateCodeData = _AdminProductService.GetAdminCategoryDeptList(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE).ToList();
+            //ViewData["DEPTH_CATE_CODE"] = CateCodeData;
+            return Json(new { success = true, msg = CateCodeData });
         }
         #endregion
       
@@ -182,7 +182,8 @@ namespace AboutMe.Web.Admin.Controllers
                 if (MAIN_IMG != null)
                 {
                     //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
-                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                    //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
 
                     // rename, resize, and upload
                     //return object that contains {bool Success,string ErrorMessage,string ImageName}
@@ -298,25 +299,147 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
         #endregion
+
+         #region 상품 개별 이미지 DB에서 삭제
+        [HttpPost]
+        public ActionResult AjaxImageDel(string P_CODE, string imgColumName)
+        {
+            _AdminProductService.ImageDelAdminProduct(P_CODE, imgColumName);
+            return Json(new { success = true, msg = "사용가능한 상품코드입니다." });
+            
+        }
+        #endregion
+
+        
         
         #region 상품 수정
         public ActionResult ProductUpdate(string pcode)
         {
             SP_ADMIN_PRODUCT_DETAIL_VIEW_Result productView = _AdminProductService.ViewAdminProduct(pcode);
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
             return View(productView);
         }
 
         // POST
-        [HttpPost]
-        //public ActionResult ProductUpdate(int IDX, string P_CATE_CODE, string C_CATE_CODE, string L_CATE_CODE, string P_CODE, string P_NAME, Nullable<int> P_COUNT, Nullable<int> P_POINT, Nullable<int> P_PRICE, Nullable<int> SELLING_PRICE, Nullable<int> DISCOUNT_RATE, Nullable<int> DISCOUNT_P_POINT, Nullable<int> DISCOUNT_PRICE, string SOLDOUT_YN, string P_INFO_DETAIL_WEB, string P_INFO_DETAIL_MOBILE, string MV_URL, string P_COMPONENT_INFO, string P_TAG, string MAIN_IMG, string OTHER_IMG1, string OTHER_IMG2, string OTHER_IMG3, string OTHER_IMG4, string OTHER_IMG5, string DISPLAY_YN, string ICON_YN, string WITH_PRODUCT_LIST)
-        public ActionResult ProductUpdate(TB_PRODUCT_INFO tb_product_info)
+        [HttpPost, ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
+        [ValidateAntiForgeryToken]
+        public ActionResult ProductUpdate(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3, HttpPostedFileBase OTHER_IMG4, HttpPostedFileBase OTHER_IMG5)
         {
-            try
+            if (ModelState.IsValid)
             {
+                string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+
+                #region 파일 업로드
+                if (MAIN_IMG != null)
+                {
+                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageResult imageResult = imageUpload.RenameUploadFile(MAIN_IMG);
+                    if (imageResult.Success)
+                    {
+                        tb_product_info.MAIN_IMG = imageResult.ImageName;
+                    }
+                    else
+                    {
+                        tb_product_info.MAIN_IMG = tb_product_info.OLD_MAIN_IMG;
+                    }
+                }
+                else
+                {
+                    tb_product_info.MAIN_IMG = tb_product_info.OLD_MAIN_IMG;
+                }
+
+                if (OTHER_IMG1 != null)
+                {
+                    ImageUpload imageUpload1 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageResult imageResult1 = imageUpload1.RenameUploadFile(OTHER_IMG1);
+                    if (imageResult1.Success)
+                    {
+                        tb_product_info.OTHER_IMG1 = imageResult1.ImageName;
+                    }
+                    else
+                    {
+                        tb_product_info.OTHER_IMG1 = tb_product_info.OLD_OTHER_IMG1;
+                    }
+
+                }
+                else
+                {
+                    tb_product_info.OTHER_IMG1 = tb_product_info.OLD_OTHER_IMG1;
+                }
+                if (OTHER_IMG2 != null)
+                {
+                    ImageUpload imageUpload2 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageResult imageResult2 = imageUpload2.RenameUploadFile(OTHER_IMG2);
+                    if (imageResult2.Success)
+                    {
+                        tb_product_info.OTHER_IMG2 = imageResult2.ImageName;
+                    }
+                    else
+                    {
+                        tb_product_info.OTHER_IMG2 = tb_product_info.OLD_OTHER_IMG2;
+                    }
+                }
+                else
+                {
+                    tb_product_info.OTHER_IMG2 = tb_product_info.OLD_OTHER_IMG2;
+                }
+                if (OTHER_IMG3 != null)
+                {
+                    ImageUpload imageUpload3 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageResult imageResult3 = imageUpload3.RenameUploadFile(OTHER_IMG3);
+                    if (imageResult3.Success)
+                    {
+                        tb_product_info.OTHER_IMG3 = imageResult3.ImageName;
+                    }
+                    else
+                    {
+                        tb_product_info.OTHER_IMG3 = tb_product_info.OLD_OTHER_IMG3;
+                    }
+                }
+                else
+                {
+                    tb_product_info.OTHER_IMG3 = tb_product_info.OLD_OTHER_IMG3;
+                }
+                if (OTHER_IMG4 != null)
+                {
+                    ImageUpload imageUpload4 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageResult imageResult4 = imageUpload4.RenameUploadFile(OTHER_IMG4);
+                    if (imageResult4.Success)
+                    {
+                        tb_product_info.OTHER_IMG4 = imageResult4.ImageName;
+                    }
+                    else
+                    {
+                        tb_product_info.OTHER_IMG4 = tb_product_info.OLD_OTHER_IMG4;
+                    }
+                }
+                else
+                {
+                    tb_product_info.OTHER_IMG4 = tb_product_info.OLD_OTHER_IMG4;
+                }
+                if (OTHER_IMG5 != null)
+                {
+                    ImageUpload imageUpload5 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageResult imageResult5 = imageUpload5.RenameUploadFile(OTHER_IMG5);
+                    if (imageResult5.Success)
+                    {
+                        tb_product_info.OTHER_IMG5 = imageResult5.ImageName;
+                    }
+                    else
+                    {
+                        tb_product_info.OTHER_IMG5 = tb_product_info.OLD_OTHER_IMG5;
+                    }
+                }
+                else
+                {
+                    tb_product_info.OTHER_IMG5 = tb_product_info.OLD_OTHER_IMG5;
+                }
+                #endregion
+
                 _AdminProductService.UpdateAdminProduct(tb_product_info);
                 return RedirectToAction("ProductIndex");
             }
-            catch
+            else
             {
                 return View();
             }

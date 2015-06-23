@@ -4,6 +4,489 @@
     ViewBag.Title = "ProductUpdate";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
+@section Scripts{
+
+    <script language="javascript">
+
+    $(function () {
+        ajaxSelectCateCodeJavascriptInit(); //카테고리 활성화
+        //var b = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType1() }, 2500); //카테고리 활성화
+        //var c = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType2() }, 3500); //카테고리 활성화
+        //var d = setTimeout(function () { ajaxSelectCateCodeJavascriptSkinType2() }, 3500); //카테고리 활성화
+        //var e = setTimeout(function () { ajaxSelectCateCodeJavascriptLineType2() }, 5000); //카테고리 활성화
+        
+    });
+
+
+
+    function formChk() {
+
+        var f = document.bform;
+        var deny_pattern = /[^(a-zA-Z0-9)]/;
+        var deny_pattern_id = /[^(a-z0-9)]/;
+        var deny_pattern_hp = /[^(0-9)*-]/;
+        var deny_patternOnlyEng = /[^(sa-zA-Z)]/;
+
+        var P_CATE_CODE1 = $("#P_CATE_CODE1 option:selected").val();
+        if (P_CATE_CODE1 == '') {
+            alert("카테고리 상품분류를 선택해주세요.");
+            return false;
+        }
+
+        if ($("#P_CATE_CODE2 option:selected").val() == '') {
+            alert("카테고리 상품분류를 선택해주세요.");
+            return false;
+        }
+
+        f.P_CATE_CODE.value = $("#P_CATE_CODE2 option:selected").val();
+
+        if (P_CATE_CODE1 == '101100100') { //뷰티(101100100)만 3depth까지 있음
+
+            if ($("#P_CATE_CODE3 option:selected").val() == '') {
+                alert("카테고리 상품분류를 선택해주세요.");
+                return false;
+            }
+            f.P_CATE_CODE.value = $("#P_CATE_CODE3 option:selected").val();
+
+            if ($("#L_CATE_CODE option:selected").val() == '') {
+                alert("카테고리 라인분류를 선택해주세요.");
+                return false;
+            }
+
+        }
+
+        if ($("#C_CATE_CODE option:selected").val() == '') {
+            alert("카테고리 피부고민분류를 선택해주세요.");
+            return false;
+        }
+
+        if (f.P_CATE_CODE.value == '') {
+            alert("카테고리 상품분류가 완전히 선택되지 않았습니다.");
+            return false;
+        }
+
+        if (f.P_NAME.value == '') {
+            alert("상품명을 입력하세요.");
+            f.P_NAME.focus();
+            return false;
+        }
+
+        if (f.SELLING_PRICE.value == "") {
+            alert("판매가를 입력해 주세요!");
+            f.SELLING_PRICE.focus();
+            return false;
+        }
+
+        if (deleteSpace(f.SELLING_PRICE.value) == 0) {
+            alert("판매가를 입력하세요.");
+            f.SELLING_PRICE.value = "";
+            f.SELLING_PRICE.focus();
+            return false;
+        }
+
+        if (deny_pattern_hp.test(f.SELLING_PRICE.value)) {
+            alert("숫자만 입력해 주십시오.");
+            document.bform.SELLING_PRICE.value = "";
+            document.bform.SELLING_PRICE.focus();
+            return false;
+        }
+
+        if (f.DISCOUNT_RATE.value == "") {
+            alert("할인율을 입력해 주세요!");
+            f.DISCOUNT_RATE.focus();
+            return false;
+        }
+
+        if (deleteSpace(f.DISCOUNT_RATE.value) == 0) {
+            alert("할인율을 입력하세요.");
+            f.DISCOUNT_RATE.value = "";
+            f.DISCOUNT_RATE.focus();
+            return false;
+        }
+
+        if (deny_pattern_hp.test(f.DISCOUNT_RATE.value)) {
+            alert("숫자만 입력해 주십시오.");
+            document.bform.DISCOUNT_RATE.value = "";
+            document.bform.DISCOUNT_RATE.focus();
+            return false;
+        }
+
+        if (f.DISCOUNT_PRICE.value == "") {
+            alert("할인가를 입력해 주세요!");
+            f.DISCOUNT_PRICE.focus();
+            return false;
+        }
+
+        if (deleteSpace(f.DISCOUNT_PRICE.value) == 0) {
+            alert("할인가를 입력하세요.");
+            f.DISCOUNT_PRICE.value = "";
+            f.DISCOUNT_PRICE.focus();
+            return false;
+        }
+
+        if (deny_pattern_hp.test(f.DISCOUNT_PRICE.value)) {
+            alert("숫자만 입력해 주십시오.");
+            document.bform.DISCOUNT_PRICE.value = "";
+            document.bform.DISCOUNT_PRICE.focus();
+            return false;
+        }
+
+        if (f.P_COUNT.value == "") {
+            alert("재고수량을 입력해 주세요!");
+            f.P_COUNT.focus();
+            return false;
+        }
+
+        if (deleteSpace(f.P_COUNT.value) == 0) {
+            alert("재고수량을 입력하세요.");
+            f.P_COUNT.value = "";
+            f.P_COUNT.focus();
+            return false;
+        }
+
+        if (deny_pattern_hp.test(f.P_COUNT.value)) {
+            alert("숫자만 입력해 주십시오.");
+            document.bform.P_COUNT.value = "";
+            document.bform.P_COUNT.focus();
+            return false;
+        }
+
+        oEditors.getById["P_INFO_DETAIL_WEB"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+        oEditors2.getById["P_INFO_DETAIL_MOBILE"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+
+        //alert(f.P_INFO_DETAIL_WEB.value);
+        if (f.P_INFO_DETAIL_WEB.value == "<p>&nbsp;</p>") {
+            alert("상품 정보(web)를 입력해 주세요!");
+            f.P_INFO_DETAIL_WEB.focus();
+            return false;
+        }
+
+        //if (f.P_INFO_DETAIL_MOBILE.value == "<p>&nbsp;</p>") {
+        //        alert("상품 정보(mobile)를 입력해 주세요!");
+        //        f.P_INFO_DETAIL_MOBILE.focus();
+        //        return false;
+        //    }
+
+        document.bform.submit();
+
+    }
+
+
+    //문자열 안의 공백 지우기
+    function deleteSpace(str) {
+        var out = "";
+
+        for (common_i = 0; common_i < str.length; common_i++) {
+            if (str.charAt(common_i) == " ") {
+                continue;
+            }
+            out += str.charAt(common_i);
+        }
+        return out.length;
+    }
+
+    function selChange(obj_selectbox, sel_index) {
+        alert(obj_selectbox[sel_index].value);
+    }
+
+    //카테고리 유형별(PRODUCT_TYPE) 초기화 1
+    function ajaxSelectCateCodeJavascriptInit() {
+
+        var f = document.bform;
+
+        $.ajax({
+            url: '/AdminProduct/CategoryListJavascript',
+            type: 'POST',
+            data: {
+                CATE_GBN: 'PRODUCT_TYPE',
+                DEPTH1_CODE: '',
+                DEPTH2_CODE: ''
+            },
+            success: function (data) {
+                //var result = "<select style='width:170px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='alert(this.options[this.selectedIndex].value)'>";
+                var result = "<select style='width:120px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='ajaxSelectCateCodeJavascriptProductType1();'>";
+                result += "<option value=''>=선택=</option>";
+                $('#ajaxPCateCode1').html('');
+                $.each(data.msg, function (id, category) {
+                    if ((category.CATE_CODE).substring(0, 3) == "@Html.DisplayFor(model => model.P_CATE_CODE).ToString().Substring(0,3)") {
+                        result += '<option value=' + category.CATE_CODE + ' selected >' + category.DEPTH1_NAME + '</option>';
+                    } else {
+                        result += '<option value=' + category.CATE_CODE + ' >' + category.DEPTH1_NAME + '</option>';
+                    }
+                });
+                result += "</select>";
+
+                $('#ajaxPCateCode1').html(result);
+
+                //category 2depth load
+                ajaxSelectCateCodeJavascriptProductType1();
+
+            },
+            error: function (errorData) {
+                alert("ajaxSelectCateCodeJavascriptInit error");
+            }
+        });
+    }
+
+    //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+    function ajaxSelectCateCodeJavascriptProductType1() {
+
+        var f = document.bform;
+        var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+
+        if (DEPTH1_CODE == '101') { //뷰티만 라인별 타입이 있음
+            $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show
+            $("#cs_category2").show(); //라인별(LINE_TYPE) show
+            ajaxSelectCateCodeJavascriptSkinType2();
+            ajaxSelectCateCodeJavascriptLineType2();
+        } else {
+            $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show
+            $("#cs_category2").hide(); //라인별(LINE_TYPE) hide
+            ajaxSelectCateCodeJavascriptSkinType2();
+        }
+        $('#ajaxPCateCode2').html('');
+        $('#ajaxPCateCode3').html('');
+
+        $.ajax({
+            url: '/AdminProduct/CategoryListJavascript',
+            type: 'POST',
+            data: {
+                CATE_GBN: 'PRODUCT_TYPE',
+                DEPTH1_CODE: DEPTH1_CODE,
+                DEPTH2_CODE: ''
+            },
+            success: function (data) {
+                var result = "<select style='width:120px;' id='P_CATE_CODE2' name='P_CATE_CODE2' onchange='ajaxSelectCateCodeJavascriptProductType2();'>";
+                result += "<option value=''>=선택=</option>";
+                $('#ajaxPCateCode2').html('');
+                $.each(data.msg, function (id, category) {
+                    if ((category.CATE_CODE).substring(0, 6) == "@Html.DisplayFor(model => model.P_CATE_CODE).ToString().Substring(0,6)") {
+                        result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH2_NAME + '</option>';
+                    } else {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    }
+                });
+                result += "</select>";
+
+                $('#ajaxPCateCode2').html(result);
+
+                //category 3depth load
+                ajaxSelectCateCodeJavascriptProductType2();
+
+            },
+            error: function (errorData) {
+                alert("ajaxSelectCateCodeJavascriptProductType1 error");
+            }
+        });
+    }
+
+    //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+    function ajaxSelectCateCodeJavascriptProductType2() {
+
+        var f = document.bform;
+        var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+        var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
+        //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
+        //var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val();
+        $.ajax({
+            url: '/AdminProduct/CategoryListJavascript',
+            type: 'POST',
+            data: {
+                CATE_GBN: 'PRODUCT_TYPE',
+                DEPTH1_CODE: DEPTH1_CODE,
+                DEPTH2_CODE: DEPTH2_CODE
+            },
+            success: function (data) {
+                if ((data.msg).length > 0) { //데이타가 있을때만 생성한다.
+                    var result = "<select style='width:120px;' id='P_CATE_CODE3' name='P_CATE_CODE3'>";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode3').html('');
+                    $.each(data.msg, function (id, category) {
+                        if (category.CATE_CODE == "@Html.DisplayFor(model => model.P_CATE_CODE)") {
+                            result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH3_NAME + '</option>';
+                        } else {
+                            result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH3_NAME + '</option>';
+                        }
+                    });
+                    result += "</select>";
+
+                    $('#ajaxPCateCode3').html(result);
+                }
+
+            },
+            error: function (errorData) {
+                alert("ajaxSelectCateCodeJavascriptProductType2 error");
+            }
+        });
+    }
+
+
+
+    //카테고리 피부 고민별(SKIN_TYPE) 2
+    function ajaxSelectCateCodeJavascriptSkinType2() {
+
+        var f = document.bform;
+        var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+        $.ajax({
+            url: '/AdminProduct/CategoryListJavascript',
+            type: 'POST',
+            data: {
+                CATE_GBN: 'SKIN_TYPE',
+                DEPTH1_CODE: DEPTH1_CODE,
+                DEPTH2_CODE: ''
+            },
+            success: function (data) {
+                var result = "<select style='width:120px;' id='C_CATE_CODE' name='C_CATE_CODE' >";
+                result += "<option value=''>=선택=</option>";
+                $('#ajaxCCateCode').html('');
+                $.each(data.msg, function (id, category) {
+                    if (category.CATE_CODE == "@Html.DisplayFor(model => model.C_CATE_CODE)") {
+                        result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH2_NAME + '</option>';
+                    } else {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    }
+                });
+                result += "</select>";
+
+                $('#ajaxCCateCode').html(result);
+            },
+            error: function (errorData) {
+                alert("SKIN_TYPE ajaxSelectCateCodeJavascriptSkinType2() error");
+            }
+        });
+    }
+
+    //카테고리 라인별(LINE_TYPE) 2
+    function ajaxSelectCateCodeJavascriptLineType2() {
+
+        var f = document.bform;
+        var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+        $.ajax({
+            url: '/AdminProduct/CategoryListJavascript',
+            type: 'POST',
+            data: {
+                CATE_GBN: 'LINE_TYPE',
+                DEPTH1_CODE: DEPTH1_CODE,
+                DEPTH2_CODE: ''
+            },
+            success: function (data) {
+                var result = "<select style='width:120px;' id='L_CATE_CODE' name='L_CATE_CODE' >";
+                result += "<option value=''>=선택=</option>";
+                $('#ajaxLCateCode').html('');
+                $.each(data.msg, function (id, category) {
+                    if (category.CATE_CODE == "@Html.DisplayFor(model => model.L_CATE_CODE)") {
+                        result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH2_NAME + '</option>';
+                    } else {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    }
+                });
+                result += "</select>";
+
+                $('#ajaxLCateCode').html(result);
+            },
+            error: function (errorData) {
+                alert("SKIN_TYPE ajaxSelectCateCodeJavascriptLineType2() error");
+            }
+        });
+    }
+
+
+
+    //일반몰 할인가에 맞는 할인율
+    //소수점 버림 ex>29.624 => 29%
+    function getUpdateDiscountRate() {
+
+        var f = document.bform;
+        var SELLING_PRICE = f.SELLING_PRICE.value;   //판매가
+        var DISCOUNT_PRICE = f.DISCOUNT_PRICE.value; //할인가
+        var DISCOUNT_RATE;						   //할인율
+
+        if ((f.SELLING_PRICE.value != "") && (f.SELLING_PRICE.value > 0) && (f.DISCOUNT_PRICE.value != "") && (f.DISCOUNT_PRICE.value > 0)) {
+            DISCOUNT_RATE = Math.floor(100 - ((DISCOUNT_PRICE / SELLING_PRICE) * 100));
+            if (DISCOUNT_RATE >= 0) //할인율이 -는 제외
+            {
+                f.DISCOUNT_RATE.value = DISCOUNT_RATE;
+            }
+            else {
+                f.DISCOUNT_RATE.value = "";
+            }
+
+        }
+
+    }
+
+    //할인율에 맞는 할인가
+    //10원단위 절사 ex>290 => 200원으로
+    function getUpdateDiscountPrice() {
+
+        var f = document.bform;
+        var SELLING_PRICE = f.SELLING_PRICE.value;  //판매가
+        var DISCOUNT_RATE = f.DISCOUNT_RATE.value;  //할인율
+        if ((f.SELLING_PRICE.value != "") && (f.SELLING_PRICE.value > 0)) {
+            //var cd=(ab*bc*0.01)/10;
+            //cd = cd.toFixed();
+            //cd = cd*10;
+            //f.DISCOUNT_PRICE.value =ab - cd;
+
+            var CHA_PRICE = (SELLING_PRICE * DISCOUNT_RATE) * 0.01;
+            var DISCOUNT_PRICE = (SELLING_PRICE - CHA_PRICE) / 100;
+            DISCOUNT_PRICE = Math.floor(DISCOUNT_PRICE) * 100;
+            if (DISCOUNT_PRICE >= 0) //할인가 -는 제외
+            {
+                f.DISCOUNT_PRICE.value = DISCOUNT_PRICE;
+            }
+            else {
+                f.DISCOUNT_PRICE.value = "";
+            }
+
+        }
+    }
+
+
+    //상품이미지 삭제
+    function imgDelChk(imgColumName) {
+        var f = document.bform;
+        //alert(eval('document.bform.OLD_' + imgColumName + '.value'));
+        //eval('document.bform.OLD_' + imgColumName + '.value = ""');
+        //alert(eval('document.bform.OLD_' + imgColumName + '.value'));
+        //var eSpan = "#SPAN_" + imgColumName;
+        //eval($(eSpan).hide());
+        //$("#cs_category2").hide()
+
+        var cmt;
+        cmt = " 선택하신 이미지를 삭제 하시겠습니까?"
+        if (confirm(cmt)) {
+            $.ajax({
+                url: '/AdminProduct/AjaxImageDel',
+                type: 'POST',
+                data: {
+                    P_CODE: "@Html.DisplayFor(model => model.P_CODE)",
+                    imgColumName:imgColumName
+                },
+                success: function (data) {
+                    if (data.success) { //삭제 성공시 old 이미지컬럼value 값을 "" 처리, 이미지 display hidden 처리한다.
+                        eval('document.bform.OLD_' + imgColumName + '.value = ""');
+                        var eSpan = "#SPAN_" + imgColumName;
+                        eval($(eSpan).hide());
+                    } else {
+                        alert('이미지가 삭제되지 않았습니다.');
+                    }
+                },
+                error: function (errorData) {
+                    alert("imgDeleteChk error");
+                }
+            });
+        }
+
+    }
+
+
+
+
+    </script>
+
+
+}
 @section Left {
 
     @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
@@ -16,247 +499,200 @@
 @section Body{
 
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>SP_ADMIN_PRODUCT_DETAIL_VIEW_Result</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            <input type="text" name="SEARCH_KEY" class="input-sm text-left" />
-            <input type="text" name="SEARCH_KEYWORD" class="input-sm text-left" />
-        </div>
-
-      
-        <div class="form-group">
-            @Html.LabelFor(model => model.IDX, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IDX, new { htmlAttributes = new {  } })
-                @Html.ValidationMessageFor(model => model.IDX, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_CATE_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_CATE_CODE, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_CATE_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.C_CATE_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.C_CATE_CODE, new { htmlAttributes = new {  } })
-                @Html.ValidationMessageFor(model => model.C_CATE_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.L_CATE_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.L_CATE_CODE, new { htmlAttributes = new {  } })
-                @Html.ValidationMessageFor(model => model.L_CATE_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_CODE, new { htmlAttributes = new {} })
-                @Html.ValidationMessageFor(model => model.P_CODE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_NAME, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_NAME, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_COUNT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_COUNT, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_COUNT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_POINT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_POINT, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_POINT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SELLING_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SELLING_PRICE, new { htmlAttributes = new {  } })
-                @Html.ValidationMessageFor(model => model.SELLING_PRICE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISCOUNT_RATE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISCOUNT_RATE, new { htmlAttributes = new {  } })
-                @Html.ValidationMessageFor(model => model.DISCOUNT_RATE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISCOUNT_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISCOUNT_PRICE, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.DISCOUNT_PRICE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SOLDOUT_YN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SOLDOUT_YN, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.SOLDOUT_YN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_INFO_DETAIL_WEB, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_INFO_DETAIL_WEB, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_INFO_DETAIL_WEB, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_INFO_DETAIL_MOBILE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_INFO_DETAIL_MOBILE, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_INFO_DETAIL_MOBILE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MV_URL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MV_URL, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.MV_URL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_COMPONENT_INFO, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_COMPONENT_INFO, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_COMPONENT_INFO, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.P_TAG, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.P_TAG, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.P_TAG, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MAIN_IMG, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MAIN_IMG, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.MAIN_IMG, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG1, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG1, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG1, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG2, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG2, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG3, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG3, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG3, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG4, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG4, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG4, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OTHER_IMG5, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OTHER_IMG5, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.OTHER_IMG5, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RE_SORT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RE_SORT, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.RE_SORT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DISPLAY_YN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DISPLAY_YN, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.DISPLAY_YN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ICON_YN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ICON_YN, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.ICON_YN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.WITH_PRODUCT_LIST, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.WITH_PRODUCT_LIST, new { htmlAttributes = new { } })
-                @Html.ValidationMessageFor(model => model.WITH_PRODUCT_LIST, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
     </div>
-}
+    <!--//path-->
+    @using (Html.BeginForm("ProductUpdate", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", enctype = "multipart/form-data", onsubmit = "return formChk();" }))
+    {
+        @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+    <input type="hidden" name="P_CATE_CODE" value="">
+    <input type="hidden" name="IDX" value="@Html.DisplayFor(model => model.IDX)">
+    <input type="hidden" name="OLD_MAIN_IMG" value="@Html.DisplayFor(model => model.MAIN_IMG)">
+    <input type="hidden" name="OLD_OTHER_IMG1" value="@Html.DisplayFor(model => model.OTHER_IMG1)">
+    <input type="hidden" name="OLD_OTHER_IMG2" value="@Html.DisplayFor(model => model.OTHER_IMG2)">
+    <input type="hidden" name="OLD_OTHER_IMG3" value="@Html.DisplayFor(model => model.OTHER_IMG3)">
+    <input type="hidden" name="OLD_OTHER_IMG4" value="@Html.DisplayFor(model => model.OTHER_IMG4)">
+    <input type="hidden" name="OLD_OTHER_IMG5" value="@Html.DisplayFor(model => model.OTHER_IMG5)">
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                               <div class="panel">
+                                <h3 class="sub-header">상품관리</h3>
+                                <table class="table table_row">
+                                    <colgroup><col width="15%" /><col width="35%" /><col width="15%" /><col width="35%" /></colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>카테고리 1 (상품 분류)</th>
+                                            <td colspan="3">
+                                                <span id="ajaxPCateCode1"></span>
+                                                <span id="ajaxPCateCode2"></span>
+                                                <span id="ajaxPCateCode3"></span>
+                                                @*<select style="width:170px;" id="P_CATE_CODE" name="P_CATE_CODE">
+                                                        <option>=선택=</option>
+                                                        <option>상품품번</option>
+                                                    </select>*@
+                                            </td>
+                                        </tr>
+                                        <tr id="cs_category1">
+                                            <th>카테고리 2 (피부고민 분류)</th>
+                                            <td colspan="3">
+                                                <span id="ajaxCCateCode"></span>
+                                            </td>
+                                        </tr>
+                                        <tr id="cs_category2">
+                                            <th>카테고리 3 (LINE 분류)</th>
+                                            <td colspan="3">
+                                                <span id="ajaxLCateCode"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품코드</th>
+                                            <td colspan="3">
+                                               @Html.DisplayFor(model => model.P_CODE)
+                                                <span id="pcodeMsgSpan"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품명</th>
+                                            <td colspan="3">
+                                                <input type="text" style="width:150px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="100" value="@Html.DisplayFor(model => model.P_NAME)" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>검색태그(","로 구분)</th>
+                                            <td colspan="3">
+                                                <input type="text" style="width:200px;" class="input-sm text-left" id="P_TAG" name="P_TAG" maxlength="300" value="@Html.DisplayFor(model => model.P_TAG)" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품판매가</th>
+                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="SELLING_PRICE" name="SELLING_PRICE" maxlength="8" value="@Html.DisplayFor(model => model.SELLING_PRICE)" /></td>
+                                            <th>상품할인가</th>
+                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="DISCOUNT_PRICE" name="DISCOUNT_PRICE" onkeyup="getUpdateDiscountRate();" maxlength="8" value="@Html.DisplayFor(model => model.DISCOUNT_PRICE)" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품할인율(%)</th>
+                                            <td><input type="text" style="width:30px;" class="input-sm text-left" id="DISCOUNT_RATE" name="DISCOUNT_RATE" onkeyup="getUpdateDiscountPrice();" maxlength="3" value="@Html.DisplayFor(model => model.DISCOUNT_RATE)" />%</td>
+                                            <th>재고수량</th>
+                                            <td><input type="text" style="width:30px;" class="input-sm text-left" id="P_COUNT" name="P_COUNT" maxlength="8" value="@Html.DisplayFor(model => model.P_COUNT)" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th>영상url</th>
+                                            <td colspan="3">
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="MV_URL" name="MV_URL" maxlength="200" value="@Html.DisplayFor(model => model.MV_URL)" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>전성분</th>
+                                            <td colspan="3">
+                                                <textarea id="P_COMPONENT_INFO" name="P_COMPONENT_INFO" style="padding:5px;width:600px;height:80px;border:1px solid #d8d7d5;">@Html.DisplayFor(model => model.P_COMPONENT_INFO)</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품대표이미지</th>
+                                            <td colspan="3">
+                                                <input type="file" id="MAIN_IMG" name="MAIN_IMG" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.MAIN_IMG).ToString() != "")
+                                                {
+                                                <span id="SPAN_MAIN_IMG"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.MAIN_IMG)" width="100" height="100" /><a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a></span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품추가이미지1</th>
+                                            <td colspan="3">
+                                                <input type="file" id="OTHER_IMG1" name="OTHER_IMG1" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG1).ToString() != "")
+                                                {
+                                                    <span id="SPAN_OTHER_IMG1"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG1)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG1');">[삭제]</a></span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품추가이미지2</th>
+                                            <td colspan="3">
+                                                <input type="file" id="OTHER_IMG2" name="OTHER_IMG2" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG2).ToString() != "")
+                                                {
+                                                <span id="SPAN_OTHER_IMG2"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG2)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG2');">[삭제]</a></span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품추가이미지3</th>
+                                            <td colspan="3">
+                                                <input type="file" id="OTHER_IMG3" name="OTHER_IMG3" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG3).ToString() != "")
+                                                {
+                                                <span id="SPAN_OTHER_IMG3"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG3)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG3');">[삭제]</a></span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품추가이미지4</th>
+                                            <td colspan="3">
+                                                <input type="file" id="OTHER_IMG4" name="OTHER_IMG4" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG4).ToString() != "")
+                                                {
+                                                    <span id="SPAN_OTHER_IMG4"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG4)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG4');">[삭제]</a></span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품추가이미지5</th>
+                                            <td colspan="3">
+                                                <input type="file" id="OTHER_IMG5" name="OTHER_IMG5" maxlength="100" value="" />
+                                                @if (@Html.DisplayFor(model => model.OTHER_IMG5).ToString() != "")
+                                                {
+                                                    <span id="SPAN_OTHER_IMG5"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG5)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG5');">[삭제]</a></span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품정보(web)</th>
+                                            <td colspan="3">
+                                                <textarea name="P_INFO_DETAIL_WEB" id="P_INFO_DETAIL_WEB" class="form-control" rows="10" title="내용">@Html.DisplayFor(model => model.P_INFO_DETAIL_WEB)</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품정보(mobile)</th>
+                                            <td colspan="3">
+                                                <textarea name="P_INFO_DETAIL_MOBILE" id="P_INFO_DETAIL_MOBILE" class="form-control" rows="10" title="내용">@Html.DisplayFor(model => model.P_INFO_DETAIL_MOBILE)</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="btn_area">
+                                <a class="btn btn-default small" href="#" onclick="formChk();">수정</a>
+                                <a class="btn btn-primary small" href="/AdminProduct/ProductIndex">목록</a>
+                            </div>
+    }
+    <script type="text/javascript" src="/AboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+    <script type="text/javascript">
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "P_INFO_DETAIL_WEB",
+                sSkinURI: "/AboutCom/smarteditor/SmartEditor2Skin.html",
+                fCreator: "createSEditor2"
+            });
+
+    </script>
+    <script type="text/javascript">
+            var oEditors2 = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors2,
+                elPlaceHolder: "P_INFO_DETAIL_MOBILE",
+                sSkinURI: "/AboutCom/smarteditor/SmartEditor2Skin.html",
+                fCreator: "createSEditor2"
+            });
+
+    </script>
 </div>
+<!--//content-->
+
     }
