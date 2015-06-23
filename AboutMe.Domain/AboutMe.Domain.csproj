@@ -112,9 +112,6 @@
     <Compile Include="Entity\AdminEtc\ADMIN_MEMBER_DEPT.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\AdminEtc\CATEGORY.cs">
-      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\AdminEtc\ModelAdminEtc.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,6 +127,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelAdminEtc.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminEtc\SP_ADMIN_ADMIN_MEMBER_VIEW_Result.cs">
+      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminEtc\SP_ADMIN_COMMON_CNT_Result.cs">
+      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminEtc\SP_ADM_ADMIN_DEPT_SEL_Result.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
@@ -140,6 +143,9 @@
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminEtc\SP_DUMMY_ADMIN_SEL_Result.cs">
+      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminEtc\TB_ADMIN_MEMBER.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminProduct\AdminProduct_EntityPartial.cs" />
@@ -188,11 +194,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
+    <Compile Include="Service\AdminEtc\AdminUserService.cs" />
     <Compile Include="Service\AdminEtc\IAdminMemberService.cs" />
+    <Compile Include="Service\AdminEtc\IAdminUserService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AboutCom\" />
     <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Member\" />
