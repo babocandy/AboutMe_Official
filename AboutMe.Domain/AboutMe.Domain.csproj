@@ -127,6 +127,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelAdminEtc.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminEtc\SP_ADMIN_ADMIN_LOGIN_Result.cs">
+      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminEtc\SP_ADMIN_ADMIN_MEMBER_VIEW_Result.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
@@ -201,7 +204,6 @@
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AboutCom\" />
     <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Member\" />

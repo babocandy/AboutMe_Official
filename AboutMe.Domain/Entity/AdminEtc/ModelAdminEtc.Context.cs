@@ -237,5 +237,14 @@ namespace AboutMe.Domain.Entity.AdminEtc
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ADMIN_MEMBER_VIEW_Result>("SP_ADMIN_ADMIN_MEMBER_VIEW", aDM_IDParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_ADMIN_LOGIN_Result> SP_ADMIN_ADMIN_LOGIN(string aDM_ID)
+        {
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ADMIN_LOGIN_Result>("SP_ADMIN_ADMIN_LOGIN", aDM_IDParameter);
+        }
     }
 }

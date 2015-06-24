@@ -187,6 +187,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Common\AdminInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminMemberController.cs" />
     <Compile Include="Controllers\AdminProductController.cs" />
@@ -205,6 +206,26 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cmsManager\aboutCom\css\bootstrap.css" />
+    <Content Include="cmsManager\aboutCom\css\jquery-ui.min.css" />
+    <Content Include="cmsManager\aboutCom\css\style.css" />
+    <Content Include="cmsManager\aboutCom\images\bg_depth1.png" />
+    <Content Include="cmsManager\aboutCom\images\bg_depth2.png" />
+    <Content Include="cmsManager\aboutCom\images\bg_loginipt.gif" />
+    <Content Include="cmsManager\aboutCom\images\bl_cal.png" />
+    <Content Include="cmsManager\aboutCom\images\btn_login.gif" />
+    <Content Include="cmsManager\aboutCom\images\edit.gif" />
+    <Content Include="cmsManager\aboutCom\images\h_logo.png" />
+    <Content Include="cmsManager\aboutCom\images\ico_bul1.gif" />
+    <Content Include="cmsManager\aboutCom\images\ico_bul2.gif" />
+    <Content Include="cmsManager\aboutCom\images\login_logo.gif" />
+    <Content Include="cmsManager\aboutCom\js\bootstrap.js" />
+    <Content Include="cmsManager\aboutCom\js\bootstrap.min.js" />
+    <Content Include="cmsManager\aboutCom\js\jquery-1.11.3.min.js" />
+    <Content Include="cmsManager\aboutCom\js\jquery-ui.js" />
+    <Content Include="cmsManager\aboutCom\js\npm.js" />
+    <Content Include="cmsManager\aboutCom\js\script.js" />
+    <Content Include="cmsManager\aboutCom\js\ui.datepicker-ko.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\kendo\2015.1.318\Black\editor.png" />
@@ -461,7 +482,6 @@
     <Content Include="Content\kendo\2015.1.318\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\2015.1.318\Uniform\sprite_kpi_2x.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -480,6 +500,15 @@
     <Content Include="Content\kendo\2015.1.318\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
     <Content Include="Content\kendo\2015.1.318\fonts\DejaVu\DejaVuSans-Bold.ttf" />
     <Content Include="Content\kendo\2015.1.318\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="cmsManager\aboutCom\fonts\NanumBarunGothicLight.eot" />
+    <Content Include="cmsManager\aboutCom\fonts\NanumBarunGothicLight.ttf" />
+    <Content Include="cmsManager\aboutCom\fonts\NanumBarunGothicLight.woff" />
+    <Content Include="cmsManager\aboutCom\fonts\NanumBarunGothicUltraLight.eot" />
+    <Content Include="cmsManager\aboutCom\fonts\NanumBarunGothicUltraLight.ttf" />
+    <Content Include="cmsManager\aboutCom\fonts\NanumBarunGothicUltraLight.woff" />
+    <Content Include="cmsManager\aboutCom\fonts\NotoSansKR-Medium.eot" />
+    <Content Include="cmsManager\aboutCom\fonts\NotoSansKR-Medium.ttf" />
+    <Content Include="cmsManager\aboutCom\fonts\NotoSansKR-Medium.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1135,17 +1164,14 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\AdminUser\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AboutCom\" />
     <Folder Include="App_Data\" />
     <Folder Include="Upload\Product\" />
     <Folder Include="Views\BaseAdmin\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
