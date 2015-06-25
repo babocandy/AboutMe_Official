@@ -1,0 +1,156 @@
+﻿@model  AboutMe.Domain.Entity.AdminEtc.SP_ADMIN_ADMIN_MEMBER_VIEW_Result
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">수퍼어드민</a> &gt; <a href="#">관리자관리</a> &gt; <strong>관리자수정</strong>
+        </div>
+        <!--//path-->
+        <!--
+                <div class="tar mb10">
+                    <a class="btn btn-default middium" href="/AdminUser/Insert">관리자 등록</a>
+                    <a class="btn btn-default middium" href="/AdminUser/Excel">EXEL 다운로드</a>
+                </div>
+        -->
+        <!--
+                <div class="panel">
+                    <h3 class="sub-header">기본설정</h3>
+                    <div class="alert alert-info">
+                        <ul>
+                            <li>· 관리자를 등록 합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+        -->
+        <script>
+            function fGoSave()
+            {
+                var f = document.frmFORM;
+                //if (f.ADM_ID.value.length < 4) {
+                //    alert("아이디를 입력하세요.");
+                //    return;
+                //}
+                if (f.ADM_NAME.value.length < 1) {
+                    alert("이름을 입력하세요.");
+                    return;
+                }
+                if (f.ADM_PWD.value.length > 1 && f.ADM_PWD.value.length < 4) {
+                    alert("암호를 수정하려면 4자이상 입력하세요.\n 수정하지않으려면 공란으로 두세요");
+                    return;
+                }
+                f.action = "/AdminUser/EditOK";
+                f.submit();
+            }
+        </script>
+
+        <div class="panel">
+            <h3 class="sub-header">관리자수정</h3>
+
+@{ var selected_str = "selected";}
+@using (Html.BeginForm("EditOK", "AdminUser", FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+    
+                <table class="table table_row">
+                    <colgroup><col width="200px" /><col width="*" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>*아이디</th>
+                            <td><input type="text" name="ADM_ID" value="@Html.DisplayFor(model => model.ADM_ID)" maxlength="13" readonly /></td>
+                        </tr>
+                        <tr>
+                            <th>*이름</th>
+                            <td><input type="text" name="ADM_NAME" value="@Html.DisplayFor(model => model.ADM_NAME)" maxlength="20" /></td>
+                        </tr>
+                        <tr>
+                            <th>*암호</th>
+                            <td>
+                                <input type="text" name="ADM_PWD" value="" maxlength="20" />(공란시 수정안함)
+                                <input type="hidden" name="ADM_PWD_ENC" value="@Html.DisplayFor(model => model.ADM_PWD)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>*등급</th>
+                            <td>
+                                @{
+                                    List<SelectListItem> listItems_GRADE = new List<SelectListItem>();
+                                    listItems_GRADE.Add(new SelectListItem
+                                         {
+                                             Text = "A(일반관리자)",
+                                             Value = "A"
+                                         });
+                                    listItems_GRADE.Add(new SelectListItem
+                                         {
+                                             Text = "S(수퍼어드민)",
+                                             Value = "S"
+                                         });
+                                }
+                                @Html.DropDownListFor(model => model.ADM_GRADE, listItems_GRADE)
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>EMAIL</th>
+                            <td><input type="text" name="ADM_EMAIL" value="@Html.DisplayFor(model => model.ADM_EMAIL)" maxlength="50" /></td>
+                        </tr>
+                        <tr>
+                            <th>전화</th>
+                            <td><input type="text" name="ADM_PHONE" value="@Html.DisplayFor(model => model.ADM_PHONE)" maxlength="30" /></td>
+                        </tr>
+                        <tr>
+                            <th>*사용여부</th>
+                            <td>
+                                    @{
+                                        List<SelectListItem> listItems_YN = new List<SelectListItem>();
+                                        listItems_YN.Add(new SelectListItem
+                                             {
+                                                 Text = "Y",
+                                                 Value = "Y"
+                                             });
+                                        listItems_YN.Add(new SelectListItem
+                                             {
+                                                 Text = "N",
+                                                 Value = "N"
+                                             });
+                                    }
+                                    @Html.DropDownListFor(model => model.ADM_USE_YN, listItems_YN)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+}
+
+        </div>
+
+        <div class="btn_area">
+            <a class="btn btn-default small" href="javascript:fGoSave();">수정</a>
+            <!--
+            <a class="btn btn-default small" href="#">수정</a>
+            <a class="btn btn-success small" href="#">삭제</a>
+            <a class="btn btn-primary small" href="/cmsManager/product/index.html">목록</a>
+              -->
+        </div>
+
+    </div>
+}
+

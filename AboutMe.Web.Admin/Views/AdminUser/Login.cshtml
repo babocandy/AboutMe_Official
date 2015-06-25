@@ -17,7 +17,16 @@
     <![endif]-->
     <title>ABOUT ME</title>
     <script>
-        function fGoLogin()
+    var ERR_CODE = "@ViewBag.ERR_CODE";
+    var ERR_MSG = "@ViewBag.ERR_MSG";
+
+    function fErrChk()
+    {
+        if (ERR_CODE != "")
+            alert("ERR_CODE:" + ERR_CODE + "\n" + ERR_MSG);
+
+    }
+    function fGoLogin()
         {
             var f = document.frmLOGIN;
             if (f.ID.value.length < 2) {
@@ -31,7 +40,10 @@
             f.action = "/AdminUser/LoginProc/";
             f.submit();
 
-        }
+    }
+
+    fErrChk();
+
     </script>
 </head>
 
@@ -42,9 +54,9 @@
             <form class="form-signin" name="frmLOGIN" method="post" >
                 <h2 class="form-signin-heading"><img src="/cmsManager/aboutCom/images/login_logo.gif" alt="ABOUT ME Adminstration" /></h2>
                 <label for="inputEmail" class="sr-only">아이디</label>
-                <input type="text" id="inputEmail" class="form-control" name="ID" maxlength="13" required autofocus onclick="this.style.background='#fff'" onblur="if (this.value.length==0){this.style.background='#fff url(/cmsManager/aboutCom/images/bg_loginipt.gif) 0 0 no-repeat'}">
+                <input type="text" id="inputEmail" class="form-control" name="ID" value="admin" maxlength="13" required autofocus onclick="this.style.background='#fff'" onblur="if (this.value.length==0){this.style.background='#fff url(/cmsManager/aboutCom/images/bg_loginipt.gif) 0 0 no-repeat'}">
                 <label for="inputPassword" class="sr-only" >패스워드</label>
-                <input type="password" id="inputPassword" class="form-control pw" name="PW" maxlength="20" required onclick="this.style.background='#fff'" onblur="if (this.value.length==0){this.style.background='#fff url(/cmsManager/aboutCom/images/bg_loginipt.gif) 0 -47px no-repeat'}">
+                <input type="password" id="inputPassword" class="form-control pw" name="PW" value="1111" maxlength="20" required onclick="this.style.background='#fff'" onblur="if (this.value.length==0){this.style.background='#fff url(/cmsManager/aboutCom/images/bg_loginipt.gif) 0 -47px no-repeat'}">
                 <a href="javascript:fGoLogin();"><img src="/cmsManager/aboutCom/images/btn_login.gif" alt="L O G I N " /></a>
                 <div class="copy">
                     Copyright ⓒ ABOUTME. All right reserved.
