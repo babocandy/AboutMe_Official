@@ -91,6 +91,68 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
 
+        // POST
+        [HttpPost]
+        //public ActionResult CategoryOneInsert(IEnumerable<string> IsEnabled, IEnumerable<string> DEPTH1_NAME)
+        //public ActionResult CategoryOneInsert(IEnumerable<TB_CATEGORY> tb_category)
+        //public ActionResult CategoryOneInsert(FormCollection tb_category)
+        //public ActionResult CategoryOneInsert(List<TB_CATEGORY> tb_category)
+        //public ActionResult CategoryOneInsert(IEnumerable<string> IsEnabled, IEnumerable<string> DEPTH1_NAME, IEnumerable<string> DEPTH1_CODE)
+        //public ActionResult CategoryOneInsert(IEnumerable<SP_ADMIN_CATEGORY_ONE_SEL_Result> IsEnabled, IEnumerable<string> DEPTH1_NAME, IEnumerable<string> DEPTH1_CODE)
+        public ActionResult CategoryOneInsert(FormCollection form)
+        {
+
+            foreach (var key in form.AllKeys)
+            {
+                var value = form[key];
+                // etc.
+            }
+
+            foreach (var key in form.Keys)
+            {
+                var value = form[key.ToString()];
+                // etc.
+            }
+
+            string IsEnabled = Request.Form["IsEnabled"];
+            string DEPTH1_NAME = Request.Form["DEPTH1_NAME"];
+
+            string[] AllStrings = form["IsEnabled"].Split(',');
+            foreach (string item in AllStrings)
+            {
+                int value = int.Parse(item);
+                // handle value
+            }
+
+            var allvalues = form["IsEnabled"].Split(',').Select(x => int.Parse(x));
+          
+            //if (tb_category.DEPTH1_CODE.Any(m => m.ToString()))  
+            //{
+            //   //How to get the selected Code & Name here
+            //}
+            //IsEnabled.Count(0).ToString();
+            
+
+
+            //foreach (TB_CATEGORY tb_category in tb_category)
+            //{
+            //    enabled.ToString();
+            //}
+
+            try
+            {
+                //_AdminProductService.UpdateAdminCategoryOne(IDX, DEPTH1_NAME, DISPLAY_YN, RE_SORT);
+                //return RedirectToAction("Index");
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        
+
         #endregion
 
         #region 카테고리 삭제

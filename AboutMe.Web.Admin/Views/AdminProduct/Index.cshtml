@@ -4,6 +4,22 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
+
+@section Scripts{
+
+    <script language="javascript">
+
+        function formChk() {
+
+            var f = document.bform;
+            document.bform.submit();
+
+        }
+
+    </script>
+
+
+}
 @section Left {
 
     @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
@@ -17,6 +33,9 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm("CategoryOneInsert", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", onsubmit = "return formChk();" }))
+{
+<a class="btn btn-default small" href="#" onclick="formChk();">수정</a>
 <table class="table">
     <tr>
         <th>
@@ -59,6 +78,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.IDX)
+            <input id="IsEnabled" type="checkbox" value="@Html.DisplayFor(modelItem => item.DEPTH1_CODE)" name="IsEnabled">
+            <input id="DEPTH1_CODE" type="text" value="@Html.DisplayFor(modelItem => item.DEPTH1_CODE)" name="DEPTH1_CODE">
+            <input type="text" id="DEPTH1_NAME" name="DEPTH1_NAME" maxlength="20" value="@Html.DisplayFor(modelItem => item.DEPTH1_NAME)" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CATE_GBN)
@@ -98,4 +120,5 @@
 }
 
 </table>
+}
     }
