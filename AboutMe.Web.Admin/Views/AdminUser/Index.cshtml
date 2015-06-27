@@ -24,32 +24,30 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/index.asp">HOME</a> &gt; <a href="#">수퍼어드민</a> &gt; <a href="#">관리자관리</a> &gt; <strong>관리자관리</strong>
         </div>
         <!--//path-->
 
         <div class="tar mb10">
-            <a class="btn btn-default middium" href="/AdminMember/Create_Plain">관리자 등록 with Plain form style</a>
-            <a class="btn btn-default middium" href="/AdminMember/Create">관리자 등록 with Strongly bind style</a>
-            <a class="btn btn-default middium" href="#">예약상품일괄전시</a>
-            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+            <a class="btn btn-default middium" href="/AdminUser/Insert">관리자 등록</a>
+            <a class="btn btn-default middium" href="/AdminUser/Excel">EXEL 다운로드</a>
         </div>
 
         <div class="panel">
-            <h3 class="sub-header">기본설정</h3>
+            <h3 class="sub-header">관리자 관리</h3>
             <div class="alert alert-info">
                 <ul>
-                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.111111111111</li>
-                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                    <li>· 관리자를 등록/수정/삭제 합니다.</li>
+                    <li>· 관리자를 등록/수정/삭제 합니다.</li>
                 </ul>
             </div>
         </div>
 
         <div class="panel">
-            <h4>배송정책</h4>
+            <h4>관리자관리</h4>
 
             @{ var selected_str = "selected";}
-            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("Index", "AdminUser", FormMethod.Post, new { id = "frmSearch", name = "frmSearch", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -61,12 +59,10 @@
                                                 <th scope="row" class="vam">검색</th>
                                                 <td class="condition_seacth">
                                                     <select name="SearchCol" style="width:170px;">
-                                                        <option>-선택하세요-</option>
                                                         <option value="ADM_ID" @if (ViewBag.SearchCol == "ADM_ID") { @selected_str   ; }>아이디</option>
                                                         <option value="ADM_NAME" @if (ViewBag.SearchCol == "ADM_NAME") { @selected_str   ; }>이름</option>
                                                     </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
-                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
-                                                    <input type="submit" value=" Search >> ">
+                                                    <a href="javascript:document.frmSearch.submit();" class="btn btn-default small">search</a>
                                                 </td>
                                             </tr>
                                             <!--
@@ -105,11 +101,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if (Model != null)
+                    {
+                        if (Model.Count() <1)
+                        {
+                            <tr>
+                                <td colspan="7" class="brnone">No data...</td>
+                            </tr>
+                        }
+                    }
+
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td class="brnone"><a href="/AdminUser/Edit?SEL_ADM_ID = item.ADM_ID" class="btn btn-primary small">@item.ADM_ID</a></td>
-                            <td>@item.ADM_NAME</td>
+                            <td class="brnone"><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_ID</a></td>
+                            <td><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_NAME</a></td>
                             <td>@item.ADM_GRADE</td>
                             <td>@item.ADM_EMAIL</td>
                             <td>@item.ADM_PHONE</td>
@@ -126,6 +132,7 @@
 
 
         <!--버튼모음-->
+        <!--
         ************************************************<br />
         버튼가이드 <br /><br />
         대버튼 : <br />
@@ -142,6 +149,7 @@
         ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑<br />
         3가지 타입 버튼이 필요할때 적용<br />
         <a href="#" class="btn btn-info small">추가</a>
+            -->
         <!--//버튼모음-->
 
     </div>

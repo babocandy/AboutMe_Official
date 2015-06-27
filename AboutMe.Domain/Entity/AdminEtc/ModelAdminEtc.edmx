@@ -67,6 +67,9 @@
           <Parameter Name="PAGE" Type="int" Mode="In" />
           <Parameter Name="PAGESIZE" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_ADMIN_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_ADMIN_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
@@ -200,6 +203,9 @@
           <FunctionImport Name="SP_ADMIN_ADMIN_MEMBER_VIEW" ReturnType="Collection(AdminEtcModel.SP_ADMIN_ADMIN_MEMBER_VIEW_Result)">
           <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ADMIN_LOGIN" ReturnType="Collection(AdminEtcModel.SP_ADMIN_ADMIN_LOGIN_Result)">
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADM_ADMIN_MEMBER_CNT" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -272,6 +278,16 @@
         </ComplexType>
         <ComplexType Name="SP_ADMIN_COMMON_CNT_Result" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ADMIN_LOGIN_Result">
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="ADM_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="ADM_PWD" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ADM_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ADM_EMAIL" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ADM_PHONE" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="ADM_INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ADM_USE_YN" Nullable="true" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -401,6 +417,20 @@
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_MEMBER_VIEW" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_MEMBER_VIEW">
             <ResultMapping>
               <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADMIN_ADMIN_MEMBER_VIEW_Result">
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+                <ScalarProperty Name="ADM_PWD" ColumnName="ADM_PWD" />
+                <ScalarProperty Name="ADM_GRADE" ColumnName="ADM_GRADE" />
+                <ScalarProperty Name="ADM_EMAIL" ColumnName="ADM_EMAIL" />
+                <ScalarProperty Name="ADM_PHONE" ColumnName="ADM_PHONE" />
+                <ScalarProperty Name="ADM_INS_DATE" ColumnName="ADM_INS_DATE" />
+                <ScalarProperty Name="ADM_USE_YN" ColumnName="ADM_USE_YN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ADMIN_LOGIN" FunctionName="AdminEtcModel.Store.SP_ADMIN_ADMIN_LOGIN">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADMIN_ADMIN_LOGIN_Result">
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
                 <ScalarProperty Name="ADM_PWD" ColumnName="ADM_PWD" />
