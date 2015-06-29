@@ -14,6 +14,8 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.UI;
 
+using AboutMe.Web.Admin.Common.Filters;
+
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -25,6 +27,12 @@ namespace AboutMe.Web.Admin.Controllers
         public AdminUserController(IAdminUserService _adminUserService)
         {
             this._AdminUserService = _adminUserService;
+        }
+
+       
+        public ActionResult Test01()
+        {
+            return View();
         }
         
         //관리자 로그인 폼
