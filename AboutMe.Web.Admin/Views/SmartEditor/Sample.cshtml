@@ -1,0 +1,49 @@
+﻿@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>네이버 스마트 에디터 샘플</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                            <div>
+                                @{
+    Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
+    {
+        width = 600 //에디터 width 값
+        ,
+        height = 100 //에디터 height 값
+        ,
+        tfID = "default_se" //에디터 id 혹은 name
+        ,
+        memo = "편집할때 내용" //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+    });
+                                }
+                            </div>
+
+                            <div><a href="#" onclick="submitContents(); return false;">저장</a></div>
+}
+
+
+<script>
+    /**
+        저장시 form 값들을 보낼때 호출하는 함수 핸들러
+    */
+    function submitContents() {
+        var frm = document.frmFORM;
+
+        // 에디터의 내용이 textarea에 적용된다.
+        oEditors.getById["default_se"].exec("UPDATE_CONTENTS_FIELD", []);
+
+        //내용 참조하기
+        document.getElementById("default_se").value;
+
+        try {
+            frm.submit();
+        } catch (e) { }
+    }
+</script>
+

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using System.Diagnostics;
 using AboutMe.Common.Data;
 
-namespace AboutMe.Common.Helper
+namespace AboutMe.Web.Admin.Controllers
 {
-    public class SmartEditor
+    public class SmartEditorController : Controller
     {
         const int maxFileSize = 10;
         const string uploadPath = "~/Upload/";
@@ -19,13 +17,14 @@ namespace AboutMe.Common.Helper
         //이미지 파일형식 체크
         private string[] typeFilter = { "image/jpg", "image/png", "image/gif", "image/jpeg", "image/bmp", "image/pjpeg" };
 
-        public ViewResult Index()
+        // GET: EditorTest
+        public ActionResult Sample()
         {
-            return View
+            return View();
         }
 
         [ChildActionOnly]
-        public ActionResult GetEditor(SmartEditorConfig config)
+        public ActionResult InstallEditor(SmartEditorConfig config)
         {
             return PartialView(config);
         }
@@ -43,9 +42,6 @@ namespace AboutMe.Common.Helper
 
             if (file != null && file.ContentLength > 0)
             {
-
-                Debug.WriteLine(">>>>>>> " + file.FileName);
-                Debug.WriteLine(">>>>>>> " + file.ContentType);
 
                 bool isSave = true;
 
@@ -164,7 +160,7 @@ namespace AboutMe.Common.Helper
             //확장자
             string ext = Path.GetExtension(fileName);
             //새파일명
-            string newFileName = string.Format("{0}.{1}", GetUniqueKey(), ext);
+            string newFileName = string.Format("{0}{1}", GetUniqueKey(), ext);
 
             //업로드 디렉토리
             string filePath = Server.MapPath(uploadPath);
