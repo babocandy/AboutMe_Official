@@ -25,9 +25,31 @@ namespace AboutMe.Web.Admin.Controllers
         #region 카테고리
         
         #region 카테고리 리스트
-        public ActionResult Index()
+        public ActionResult Index(string cate_gbn, string depth1_code, string depth2_code)
         {
-            return View(_AdminProductService.GetAdminCategoryOneList().ToList());
+            if (cate_gbn == null)
+            {
+                cate_gbn = "PRODUCT_TYPE";
+            }
+            if (depth1_code == null)
+            {
+                depth1_code = "101";
+            }
+            if (depth2_code == null)
+            {
+                depth2_code = "101";
+            }
+
+            ViewBag.cate_gbn = cate_gbn;
+            ViewBag.depth1_code = depth1_code;
+            ViewBag.depth2_code = depth2_code;
+
+            ViewData["category1"] = _AdminProductService.GetAdminCategoryDeptListAll("PRODUCT_TYPE", "", "").ToList();
+            ViewData["category2"] = _AdminProductService.GetAdminCategoryDeptListAll("PRODUCT_TYPE", depth1_code, "").ToList();
+            ViewData["category3"] = _AdminProductService.GetAdminCategoryDeptListAll("PRODUCT_TYPE", depth1_code, depth2_code).ToList();
+            ViewData["categoryLine"] = _AdminProductService.GetAdminCategoryDeptListAll("LINE_TYPE", depth1_code, "").ToList();
+            ViewData["categorySkin"] = _AdminProductService.GetAdminCategoryDeptListAll("SKIN_TYPE", depth1_code, "").ToList();
+            return View();
         }
         #endregion
 
@@ -41,7 +63,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string DEPTH1_NAME)
+        public ActionResult Create(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE, string DEPTH_NAME)
         {
 
             //System.Data.Entity.Core.Objects.ObjectParameter intResult;
@@ -51,13 +73,33 @@ namespace AboutMe.Web.Admin.Controllers
                 // TODO: Add insert logic here
 
                 //;
-                int i = _AdminProductService.InsertAdminCategoryOne(DEPTH1_NAME);
+                if (String.IsNullOrEmpty(DEPTH1_CODE))
+                { 
+                 _AdminProductService.InsertAdminCategoryOne(DEPTH_NAME);
+                }
+                else if (CATE_GBN != "PRODUCT_TYPE") //피부타입 또는 라인타입은 무조건 여기
+                {
+                    _AdminProductService.InsertAdminCategoryTwo(CATE_GBN, DEPTH1_CODE, DEPTH_NAME);
+                }
+                else if ( (!String.IsNullOrEmpty(DEPTH1_CODE)) && (String.IsNullOrEmpty(DEPTH2_CODE)) )
+                {
+                    _AdminProductService.InsertAdminCategoryTwo(CATE_GBN, DEPTH1_CODE, DEPTH_NAME);
+                }
+                else if ((!String.IsNullOrEmpty(DEPTH1_CODE)) && (!String.IsNullOrEmpty(DEPTH2_CODE)) )
+                {
+                    _AdminProductService.InsertAdminCategoryThree(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE, DEPTH_NAME);
+                }
+                else
+                {
+                    
+                }
 
                 //return RedirectToAction("Index");
                 //Redirect("/AdminMember/Index");
                 //return View(Index("" ,"", "","", 1, 10));
-                ViewBag.resultVal = i;
-                return RedirectToAction("Index", new { SearchCol = ViewBag.resultVal });
+                //ViewBag.resultVal = i;
+                //return RedirectToAction("Index", new { SearchCol = ViewBag.resultVal });
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -68,7 +110,88 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 카테고리 수정
-        
+
+        #region 카테고리 수정 1depth
+        // POST
+        [HttpPost]
+        public ActionResult CategoryOneUpdate(List<TB_CATEGORY> tb_category)
+        {
+            
+            try
+            {
+                foreach (TB_CATEGORY category in tb_category)
+                {
+                    //category.DEPTH1_NAME.ToString();
+                    if (category.DISPLAY_YN != null)
+                    { category.DISPLAY_YN = "Y"; }
+                    else
+                    { category.DISPLAY_YN = "N"; }
+                    _AdminProductService.UpdateAdminCategoryOne(category.IDX, category.DEPTH1_NAME, category.DISPLAY_YN, category.RE_SORT);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        #endregion
+
+        #region 카테고리 수정 2depth
+        // POST
+        [HttpPost]
+        public ActionResult CategoryTwoUpdate(List<TB_CATEGORY> tb_category)
+        {
+
+            try
+            {
+                foreach (TB_CATEGORY category in tb_category)
+                {
+                    //category.DEPTH1_NAME.ToString();
+                    if (category.DISPLAY_YN != null)
+                    { category.DISPLAY_YN = "Y"; }
+                    else
+                    { category.DISPLAY_YN = "N"; }
+                    _AdminProductService.UpdateAdminCategoryTwo(category.IDX, category.DEPTH2_NAME, category.DISPLAY_YN, category.RE_SORT);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        #endregion
+
+        #region 카테고리 수정 3depth
+        // POST
+        [HttpPost]
+        public ActionResult CategoryThreeUpdate(List<TB_CATEGORY> tb_category)
+        {
+
+            try
+            {
+                foreach (TB_CATEGORY category in tb_category)
+                {
+                    //category.DEPTH1_NAME.ToString();
+                    if (category.DISPLAY_YN != null)
+                    { category.DISPLAY_YN = "Y"; }
+                    else
+                    { category.DISPLAY_YN = "N"; }
+                    _AdminProductService.UpdateAdminCategoryThree(category.IDX, category.DEPTH3_NAME, category.DISPLAY_YN, category.RE_SORT);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        #endregion
+
         // GET:  수정
         public ActionResult CategoryUpdate(int idx)
         {
@@ -99,32 +222,40 @@ namespace AboutMe.Web.Admin.Controllers
         //public ActionResult CategoryOneInsert(List<TB_CATEGORY> tb_category)
         //public ActionResult CategoryOneInsert(IEnumerable<string> IsEnabled, IEnumerable<string> DEPTH1_NAME, IEnumerable<string> DEPTH1_CODE)
         //public ActionResult CategoryOneInsert(IEnumerable<SP_ADMIN_CATEGORY_ONE_SEL_Result> IsEnabled, IEnumerable<string> DEPTH1_NAME, IEnumerable<string> DEPTH1_CODE)
-        public ActionResult CategoryOneInsert(FormCollection form)
+        //public ActionResult CategoryOneInsert(FormCollection form)
+        //public ActionResult CategoryOneInsert(FormCollection form)
+        public ActionResult CategoryOneInsert(List<TB_CATEGORY> tb_category)
         {
 
-            foreach (var key in form.AllKeys)
+            foreach (TB_CATEGORY category in tb_category)
             {
-                var value = form[key];
-                // etc.
+              category.DEPTH1_NAME.ToString();
             }
 
-            foreach (var key in form.Keys)
-            {
-                var value = form[key.ToString()];
-                // etc.
-            }
 
-            string IsEnabled = Request.Form["IsEnabled"];
-            string DEPTH1_NAME = Request.Form["DEPTH1_NAME"];
+            //foreach (var key in form.AllKeys)
+            //{
+            //    var value = form[key];
+            //    // etc.
+            //}
 
-            string[] AllStrings = form["IsEnabled"].Split(',');
-            foreach (string item in AllStrings)
-            {
-                int value = int.Parse(item);
-                // handle value
-            }
+            //foreach (var key in form.Keys)
+            //{
+            //    var value = form[key.ToString()];
+            //    // etc.
+            //}
 
-            var allvalues = form["IsEnabled"].Split(',').Select(x => int.Parse(x));
+            //string IsEnabled = Request.Form["IsEnabled"];
+            //string DEPTH1_NAME = Request.Form["DEPTH1_NAME"];
+
+            //string[] AllStrings = form["IsEnabled"].Split(',');
+            //foreach (string item in AllStrings)
+            //{
+            //    int value = int.Parse(item);
+            //    // handle value
+            //}
+
+            //var allvalues = form["IsEnabled"].Split(',').Select(x => int.Parse(x));
           
             //if (tb_category.DEPTH1_CODE.Any(m => m.ToString()))  
             //{

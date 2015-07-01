@@ -56,15 +56,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_DEL", iDXParameter);
         }
 
-        public virtual int SP_ADMIN_CATEGORY_ONE_INS(string dEPTH1_NAME, ObjectParameter iNTRESULT)
-        {
-            var dEPTH1_NAMEParameter = dEPTH1_NAME != null ?
-                new ObjectParameter("DEPTH1_NAME", dEPTH1_NAME) :
-                new ObjectParameter("DEPTH1_NAME", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_INS", dEPTH1_NAMEParameter, iNTRESULT);
-        }
-
         public virtual ObjectResult<SP_ADMIN_CATEGORY_ONE_SEL_Result> SP_ADMIN_CATEGORY_ONE_SEL()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_ONE_SEL_Result>("SP_ADMIN_CATEGORY_ONE_SEL");
@@ -91,23 +82,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_UPD", iDXParameter, dEPTH1_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter);
         }
 
-        public virtual int SP_ADMIN_CATEGORY_TWO_INS(string cATE_GBN, string dEPTH1_CODE, string dEPTH2_NAME, ObjectParameter iNTRESULT)
-        {
-            var cATE_GBNParameter = cATE_GBN != null ?
-                new ObjectParameter("CATE_GBN", cATE_GBN) :
-                new ObjectParameter("CATE_GBN", typeof(string));
-
-            var dEPTH1_CODEParameter = dEPTH1_CODE != null ?
-                new ObjectParameter("DEPTH1_CODE", dEPTH1_CODE) :
-                new ObjectParameter("DEPTH1_CODE", typeof(string));
-
-            var dEPTH2_NAMEParameter = dEPTH2_NAME != null ?
-                new ObjectParameter("DEPTH2_NAME", dEPTH2_NAME) :
-                new ObjectParameter("DEPTH2_NAME", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_INS", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_NAMEParameter, iNTRESULT);
-        }
-
         public virtual ObjectResult<SP_ADMIN_CATEGORY_TWO_SEL_Result> SP_ADMIN_CATEGORY_TWO_SEL(string cATE_GBN, string dEPTH1_CODE)
         {
             var cATE_GBNParameter = cATE_GBN != null ?
@@ -119,27 +93,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("DEPTH1_CODE", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_TWO_SEL_Result>("SP_ADMIN_CATEGORY_TWO_SEL", cATE_GBNParameter, dEPTH1_CODEParameter);
-        }
-
-        public virtual int SP_ADMIN_CATEGORY_TWO_UPD(Nullable<int> iDX, string dEPTH2_NAME, string dISPLAY_YN, Nullable<int> rE_SORT, ObjectParameter iNTRESULT)
-        {
-            var iDXParameter = iDX.HasValue ?
-                new ObjectParameter("IDX", iDX) :
-                new ObjectParameter("IDX", typeof(int));
-
-            var dEPTH2_NAMEParameter = dEPTH2_NAME != null ?
-                new ObjectParameter("DEPTH2_NAME", dEPTH2_NAME) :
-                new ObjectParameter("DEPTH2_NAME", typeof(string));
-
-            var dISPLAY_YNParameter = dISPLAY_YN != null ?
-                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
-                new ObjectParameter("DISPLAY_YN", typeof(string));
-
-            var rE_SORTParameter = rE_SORT.HasValue ?
-                new ObjectParameter("RE_SORT", rE_SORT) :
-                new ObjectParameter("RE_SORT", typeof(int));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_UPD", iDXParameter, dEPTH2_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter, iNTRESULT);
         }
 
         public virtual ObjectResult<SP_ADMIN_CATEGORY_VIEW_Result> SP_ADMIN_CATEGORY_VIEW(Nullable<int> iDX)
@@ -401,6 +354,112 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("imgColumName", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_IMG_DEL", p_CODEParameter, imgColumNameParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result> SP_ADMIN_CATEGORY_DEPTH_SEL_ALL(string cATE_GBN, string dEPTH1_CODE, string dEPTH2_CODE)
+        {
+            var cATE_GBNParameter = cATE_GBN != null ?
+                new ObjectParameter("CATE_GBN", cATE_GBN) :
+                new ObjectParameter("CATE_GBN", typeof(string));
+
+            var dEPTH1_CODEParameter = dEPTH1_CODE != null ?
+                new ObjectParameter("DEPTH1_CODE", dEPTH1_CODE) :
+                new ObjectParameter("DEPTH1_CODE", typeof(string));
+
+            var dEPTH2_CODEParameter = dEPTH2_CODE != null ?
+                new ObjectParameter("DEPTH2_CODE", dEPTH2_CODE) :
+                new ObjectParameter("DEPTH2_CODE", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>("SP_ADMIN_CATEGORY_DEPTH_SEL_ALL", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_CODEParameter);
+        }
+
+        public virtual int SP_ADMIN_CATEGORY_THREE_UPD(Nullable<int> iDX, string dEPTH2_NAME, string dISPLAY_YN, Nullable<int> rE_SORT)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            var dEPTH2_NAMEParameter = dEPTH2_NAME != null ?
+                new ObjectParameter("DEPTH2_NAME", dEPTH2_NAME) :
+                new ObjectParameter("DEPTH2_NAME", typeof(string));
+
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+
+            var rE_SORTParameter = rE_SORT.HasValue ?
+                new ObjectParameter("RE_SORT", rE_SORT) :
+                new ObjectParameter("RE_SORT", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_THREE_UPD", iDXParameter, dEPTH2_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter);
+        }
+
+        public virtual int SP_ADMIN_CATEGORY_TWO_UPD(Nullable<int> iDX, string dEPTH2_NAME, string dISPLAY_YN, Nullable<int> rE_SORT)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            var dEPTH2_NAMEParameter = dEPTH2_NAME != null ?
+                new ObjectParameter("DEPTH2_NAME", dEPTH2_NAME) :
+                new ObjectParameter("DEPTH2_NAME", typeof(string));
+
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+
+            var rE_SORTParameter = rE_SORT.HasValue ?
+                new ObjectParameter("RE_SORT", rE_SORT) :
+                new ObjectParameter("RE_SORT", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_UPD", iDXParameter, dEPTH2_NAMEParameter, dISPLAY_YNParameter, rE_SORTParameter);
+        }
+
+        public virtual int SP_ADMIN_CATEGORY_ONE_INS(string dEPTH1_NAME)
+        {
+            var dEPTH1_NAMEParameter = dEPTH1_NAME != null ?
+                new ObjectParameter("DEPTH1_NAME", dEPTH1_NAME) :
+                new ObjectParameter("DEPTH1_NAME", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_ONE_INS", dEPTH1_NAMEParameter);
+        }
+
+        public virtual int SP_ADMIN_CATEGORY_THREE_INS(string cATE_GBN, string dEPTH1_CODE, string dEPTH2_CODE, string dEPTH3_NAME)
+        {
+            var cATE_GBNParameter = cATE_GBN != null ?
+                new ObjectParameter("CATE_GBN", cATE_GBN) :
+                new ObjectParameter("CATE_GBN", typeof(string));
+
+            var dEPTH1_CODEParameter = dEPTH1_CODE != null ?
+                new ObjectParameter("DEPTH1_CODE", dEPTH1_CODE) :
+                new ObjectParameter("DEPTH1_CODE", typeof(string));
+
+            var dEPTH2_CODEParameter = dEPTH2_CODE != null ?
+                new ObjectParameter("DEPTH2_CODE", dEPTH2_CODE) :
+                new ObjectParameter("DEPTH2_CODE", typeof(string));
+
+            var dEPTH3_NAMEParameter = dEPTH3_NAME != null ?
+                new ObjectParameter("DEPTH3_NAME", dEPTH3_NAME) :
+                new ObjectParameter("DEPTH3_NAME", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_THREE_INS", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_CODEParameter, dEPTH3_NAMEParameter);
+        }
+
+        public virtual int SP_ADMIN_CATEGORY_TWO_INS(string cATE_GBN, string dEPTH1_CODE, string dEPTH2_NAME)
+        {
+            var cATE_GBNParameter = cATE_GBN != null ?
+                new ObjectParameter("CATE_GBN", cATE_GBN) :
+                new ObjectParameter("CATE_GBN", typeof(string));
+
+            var dEPTH1_CODEParameter = dEPTH1_CODE != null ?
+                new ObjectParameter("DEPTH1_CODE", dEPTH1_CODE) :
+                new ObjectParameter("DEPTH1_CODE", typeof(string));
+
+            var dEPTH2_NAMEParameter = dEPTH2_NAME != null ?
+                new ObjectParameter("DEPTH2_NAME", dEPTH2_NAME) :
+                new ObjectParameter("DEPTH2_NAME", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_INS", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_NAMEParameter);
         }
     }
 }

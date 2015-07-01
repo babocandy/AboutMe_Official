@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result>
+﻿@model List<AboutMe.Domain.Entity.AdminProduct.TB_CATEGORY>
 
 @{
     ViewBag.Title = "Index";
@@ -9,12 +9,463 @@
 
     <script language="javascript">
 
-        function formChk() {
+        function formChk1() {
 
-            var f = document.bform;
-            document.bform.submit();
+            var deny_pattern_hp = /[^(0-9)]/;
+            var cbox;
+            cbox = document.bform1.DEPTH1_NAME;
+            var f = document.bform1;
+            if (cbox != undefined) {
+                if (cbox.length) {  // 여러 개일 경우
+                    for (var i = 0; i < cbox.length; i++) {
+
+                        if (f.DEPTH1_NAME[i].value == '') {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH1_NAME[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.DEPTH1_NAME[i].value) == 0) {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH1_NAME[i].focus();
+                            return false;
+                        }
+                        if (f.RE_SORT[i].value == '') {
+                            alert("노출순서를 입력해주세요");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.RE_SORT[i].value) == 0) {
+                            alert("노출순서를 입력해주세요.");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+
+                        if (deny_pattern_hp.test(f.RE_SORT[i].value)) {
+                            alert("숫자만 입력해 주십시오.");
+                            f.RE_SORT[i].value = "";
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    if (f.DEPTH1_NAME.value == '') {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH1_NAME.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.DEPTH1_NAME.value) == 0) {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH1_NAME.focus();
+                        return false;
+                    }
+                    if (f.RE_SORT.value == '') {
+                        alert("노출순서를 입력해주세요");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.RE_SORT.value) == 0) {
+                        alert("노출순서를 입력해주세요.");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                    if (deny_pattern_hp.test(f.RE_SORT.value)) {
+                        alert("숫자만 입력해 주십시오.");
+                        f.RE_SORT.value = "";
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                }
+            }
+            else {
+                alert("수정 가능한 카테고리가 없습니다.");
+                return false;
+            }
+
+            var cmt;
+            cmt = "카테고리 정보를 수정 하시겠습니까?"
+            if (confirm(cmt)) {
+                //f.action = "category_one_update_ok.asp";
+                //f.target = "";
+                f.method = "post"
+                f.submit();
+            }
+
+
+            //function showValues() {
+            //    var fields = $(":input").serializeArray();
+            //    $("#results").empty();
+            //    jQuery.each(fields, function (i, field) {
+            //        $("#results").append(field.value + " ");
+            //    });
+            //}
+            //$('form').serialize();
+
+            //$(":checkbox, :radio").click(showValues);
+            //$("select").change(showValues);
+            //showValues();
+
+            //var values = [];
+            //$('input').each(function () {
+            //    values.push($(this).val());
+            //});
+
+            //alert($('form').serialize());
+
 
         }
+
+        function formChk2() {
+            var deny_pattern_hp = /[^(0-9)]/;
+            var cbox;
+            cbox = document.bform2.DEPTH2_NAME;
+            var f = document.bform2;
+            if (cbox != undefined) {
+                if (cbox.length) {  // 여러 개일 경우
+                    for (var i = 0; i < cbox.length; i++) {
+
+                        if (f.DEPTH2_NAME[i].value == '') {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.DEPTH2_NAME[i].value) == 0) {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (f.RE_SORT[i].value == '') {
+                            alert("노출순서를 입력해주세요");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.RE_SORT[i].value) == 0) {
+                            alert("노출순서를 입력해주세요.");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+
+                        if (deny_pattern_hp.test(f.RE_SORT[i].value)) {
+                            alert("숫자만 입력해 주십시오.");
+                            f.RE_SORT[i].value = "";
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    if (f.DEPTH2_NAME.value == '') {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH2_NAME.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.DEPTH2_NAME.value) == 0) {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH2_NAME.focus();
+                        return false;
+                    }
+                    if (f.RE_SORT.value == '') {
+                        alert("노출순서를 입력해주세요");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.RE_SORT.value) == 0) {
+                        alert("노출순서를 입력해주세요.");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                    if (deny_pattern_hp.test(f.RE_SORT.value)) {
+                        alert("숫자만 입력해 주십시오.");
+                        f.RE_SORT.value = "";
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                }
+            }
+            else {
+                alert("수정 가능한 카테고리가 없습니다.");
+                return false;
+            }
+
+            var cmt;
+            cmt = "카테고리 정보를 수정 하시겠습니까?"
+            if (confirm(cmt)) {
+                f.method = "post"
+                f.submit();
+            }
+        }
+
+        function formChk3() {
+
+            var deny_pattern_hp = /[^(0-9)]/;
+            var cbox;
+            cbox = document.bform3.DEPTH3_NAME;
+            var f = document.bform3;
+            if (cbox != undefined) {
+                if (cbox.length) {  // 여러 개일 경우
+                    for (var i = 0; i < cbox.length; i++) {
+
+                        if (f.DEPTH3_NAME[i].value == '') {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.DEPTH3_NAME[i].value) == 0) {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH3_NAME[i].focus();
+                            return false;
+                        }
+                        if (f.RE_SORT[i].value == '') {
+                            alert("노출순서를 입력해주세요");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.RE_SORT[i].value) == 0) {
+                            alert("노출순서를 입력해주세요.");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+
+                        if (deny_pattern_hp.test(f.RE_SORT[i].value)) {
+                            alert("숫자만 입력해 주십시오.");
+                            f.RE_SORT[i].value = "";
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    if (f.DEPTH3_NAME.value == '') {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH3_NAME.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.DEPTH3_NAME.value) == 0) {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH3_NAME.focus();
+                        return false;
+                    }
+                    if (f.RE_SORT.value == '') {
+                        alert("노출순서를 입력해주세요");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.RE_SORT.value) == 0) {
+                        alert("노출순서를 입력해주세요.");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                    if (deny_pattern_hp.test(f.RE_SORT.value)) {
+                        alert("숫자만 입력해 주십시오.");
+                        f.RE_SORT.value = "";
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                }
+            }
+            else {
+                alert("수정 가능한 카테고리가 없습니다.");
+                return false;
+            }
+
+            var cmt;
+            cmt = "카테고리 정보를 수정 하시겠습니까?"
+            if (confirm(cmt)) {
+                f.method = "post"
+                f.submit();
+            }
+
+
+        }
+
+        function formChk4() {
+            var deny_pattern_hp = /[^(0-9)]/;
+            var cbox;
+            cbox = document.bform4.DEPTH2_NAME;
+            var f = document.bform4;
+            if (cbox != undefined) {
+                if (cbox.length) {  // 여러 개일 경우
+                    for (var i = 0; i < cbox.length; i++) {
+
+                        if (f.DEPTH2_NAME[i].value == '') {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.DEPTH2_NAME[i].value) == 0) {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (f.RE_SORT[i].value == '') {
+                            alert("노출순서를 입력해주세요");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.RE_SORT[i].value) == 0) {
+                            alert("노출순서를 입력해주세요.");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+
+                        if (deny_pattern_hp.test(f.RE_SORT[i].value)) {
+                            alert("숫자만 입력해 주십시오.");
+                            f.RE_SORT[i].value = "";
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    if (f.DEPTH2_NAME.value == '') {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH2_NAME.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.DEPTH2_NAME.value) == 0) {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH2_NAME.focus();
+                        return false;
+                    }
+                    if (f.RE_SORT.value == '') {
+                        alert("노출순서를 입력해주세요");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.RE_SORT.value) == 0) {
+                        alert("노출순서를 입력해주세요.");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                    if (deny_pattern_hp.test(f.RE_SORT.value)) {
+                        alert("숫자만 입력해 주십시오.");
+                        f.RE_SORT.value = "";
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                }
+            }
+            else {
+                alert("수정 가능한 카테고리가 없습니다.");
+                return false;
+            }
+
+            var cmt;
+            cmt = "카테고리 정보를 수정 하시겠습니까?"
+            if (confirm(cmt)) {
+                f.method = "post"
+                f.submit();
+            }
+
+            
+        }
+
+        function formChk5() {
+
+            var deny_pattern_hp = /[^(0-9)]/;
+            var cbox;
+            cbox = document.bform5.DEPTH2_NAME;
+            var f = document.bform5;
+            if (cbox != undefined) {
+                if (cbox.length) {  // 여러 개일 경우
+                    for (var i = 0; i < cbox.length; i++) {
+
+                        if (f.DEPTH2_NAME[i].value == '') {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.DEPTH2_NAME[i].value) == 0) {
+                            alert("카테고리명을 입력해주세요");
+                            f.DEPTH2_NAME[i].focus();
+                            return false;
+                        }
+                        if (f.RE_SORT[i].value == '') {
+                            alert("노출순서를 입력해주세요");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                        if (deleteSpace(f.RE_SORT[i].value) == 0) {
+                            alert("노출순서를 입력해주세요.");
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+
+                        if (deny_pattern_hp.test(f.RE_SORT[i].value)) {
+                            alert("숫자만 입력해 주십시오.");
+                            f.RE_SORT[i].value = "";
+                            f.RE_SORT[i].focus();
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    if (f.DEPTH2_NAME.value == '') {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH2_NAME.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.DEPTH2_NAME.value) == 0) {
+                        alert("카테고리명을 입력해주세요");
+                        f.DEPTH2_NAME.focus();
+                        return false;
+                    }
+                    if (f.RE_SORT.value == '') {
+                        alert("노출순서를 입력해주세요");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+                    if (deleteSpace(f.RE_SORT.value) == 0) {
+                        alert("노출순서를 입력해주세요.");
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                    if (deny_pattern_hp.test(f.RE_SORT.value)) {
+                        alert("숫자만 입력해 주십시오.");
+                        f.RE_SORT.value = "";
+                        f.RE_SORT.focus();
+                        return false;
+                    }
+
+                }
+            }
+            else {
+                alert("수정 가능한 카테고리가 없습니다.");
+                return false;
+            }
+
+            var cmt;
+            cmt = "카테고리 정보를 수정 하시겠습니까?"
+            if (confirm(cmt)) {
+                f.method = "post"
+                f.submit();
+            }
+
+           
+        }
+
+
+        //문자열 안의 공백 지우기
+        function deleteSpace(str) {
+            var out = "";
+
+            for (common_i = 0; common_i < str.length; common_i++) {
+                if (str.charAt(common_i) == " ") {
+                    continue;
+                }
+                out += str.charAt(common_i);
+            }
+            return out.length;
+        }
 
     </script>
 
@@ -33,92 +484,177 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm("CategoryOneInsert", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", onsubmit = "return formChk();" }))
+@{ var i = 0; }
+        <h3 class="sub-header">카테고리관리</h3>
+        <div class="panel" style="overflow:hidden;">    
+@using (Html.BeginForm("CategoryOneUpdate", "AdminProduct", FormMethod.Post, new { id = "bform1", name = "bform1" }))
 {
-<a class="btn btn-default small" href="#" onclick="formChk();">수정</a>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IDX)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CATE_GBN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CATE_CODE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RE_SORT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DEPTH1_CODE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DEPTH1_NAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DEPTH2_CODE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DEPTH2_NAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DEPTH_FLAG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DISPLAY_YN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.REGDATE)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDX)
-            <input id="IsEnabled" type="checkbox" value="@Html.DisplayFor(modelItem => item.DEPTH1_CODE)" name="IsEnabled">
-            <input id="DEPTH1_CODE" type="text" value="@Html.DisplayFor(modelItem => item.DEPTH1_CODE)" name="DEPTH1_CODE">
-            <input type="text" id="DEPTH1_NAME" name="DEPTH1_NAME" maxlength="20" value="@Html.DisplayFor(modelItem => item.DEPTH1_NAME)" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CATE_GBN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CATE_CODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RE_SORT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DEPTH1_CODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DEPTH1_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DEPTH2_CODE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DEPTH2_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DEPTH_FLAG)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DISPLAY_YN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.REGDATE)
-        </td>
-        <td>
-            @Html.ActionLink("edit", "CategoryUpdate", new {  idx=item.IDX }) |
-            @Html.ActionLink("Delete", "CategoryDelete", new { idx = item.IDX })
-        </td>
-    </tr>
+            <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
+                <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
+                <thead>
+                    <tr>
+                        <th><a class="btn btn-default small" href="#" onclick="formChk1();">1DEPTH<BR/>일괄수정</a>
+                        </th>
+                        <th>순서</th>
+                        <th>노출
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ i = 0; }
+                    @foreach (var item in ViewData["category1"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)
+                    {
+                        
+                        <tr>
+                            <td>
+                                <input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
+                                <input id="DEPTH1_NAME" name="tb_category[@i].DEPTH1_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH1_NAME" />
+                            <br/>@if (@item.DEPTH1_CODE == ViewBag.depth1_code)
+                                 {<text><b></text> }<a href="/AdminProduct/Index?depth1_code=@item.DEPTH1_CODE">하위DEPTH</a>
+</td>
+                            <td >
+                                <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="2" value="@item.RE_SORT" maxlength="20" />
+                            </td>
+                            <td >
+                                <input id="DISPLAY_YN" name="tb_category[@i].DISPLAY_YN" type="checkbox" @(@item.DISPLAY_YN == "Y" ? "CHECKED" : "") value="@item.DISPLAY_YN">
+                            </td>
+                        </tr>
+                      i++; 
+                    }
+                </tbody>
+            </table>
+}    
+@using (Html.BeginForm("CategoryTwoUpdate", "AdminProduct", FormMethod.Post, new { id = "bform2", name = "bform2" }))
+{
+            <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
+                <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
+                <thead>
+                    <tr>
+                        <th><a class="btn btn-default small" href="#" onclick="formChk2();">2DEPTH<br />일괄수정</a>
+                        </th>
+                        <th>순서</th>
+                        <th>노출</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ i = 0; }
+                    @foreach (var item in ViewData["category2"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)
+                    {
+                        <tr>
+                            <td>
+                                <input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
+                                <input id="DEPTH2_NAME" name="tb_category[@i].DEPTH2_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH2_NAME" />
+                                <br />@if (@item.DEPTH2_CODE == ViewBag.depth2_code)
+                                      {<text><b></text> }<a href="/AdminProduct/Index?depth1_code=@item.DEPTH1_CODE&depth2_code=@item.DEPTH2_CODE">하위DEPTH</a>
+                            </td>
+                            <td>
+                                <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="3" value="@item.RE_SORT" maxlength="20" />
+                            </td>
+                            <td>
+                                <input id="DISPLAY_YN" name="tb_category[@i].DISPLAY_YN" type="checkbox" @(@item.DISPLAY_YN == "Y" ? "CHECKED" : "") value="@item.DISPLAY_YN">
+                            </td>
+                        </tr>
+                        i++; 
+                    }
+                </tbody>
+            </table>
+}    
+            @if (ViewBag.depth1_code == "101") 
+            { <text>
+@using (Html.BeginForm("CategoryThreeUpdate", "AdminProduct", FormMethod.Post, new { id = "bform3", name = "bform3" }))
+{
+            <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
+                <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
+                <thead>
+                    <tr>
+                        <th><a class="btn btn-default small" href="#" onclick="formChk3();">3DEPTH<br />일괄수정</a>
+                        </th>
+                        <th>순서</th>
+                        <th>노출</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ i = 0; }
+                    @foreach (var item in ViewData["category3"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)
+                    {
+                        <tr>
+                            <td><input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
+                            <input id="DEPTH3_NAME" name="tb_category[@i].DEPTH3_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH3_NAME" /></td>
+                            <td>
+                                <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="3" value="@item.RE_SORT" maxlength="20" />
+                            </td>
+                            <td>
+                                <input id="DISPLAY_YN" name="tb_category[@i].DISPLAY_YN" type="checkbox" @(@item.DISPLAY_YN == "Y" ? "CHECKED" : "") value="@item.DISPLAY_YN">
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+}    
+            </text>}
+@using (Html.BeginForm("CategoryTwoUpdate", "AdminProduct", FormMethod.Post, new { id = "bform4", name = "bform4" }))
+{
+            <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
+                <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            <a class="btn btn-default small" href="#" onclick="formChk4();">LINE_TYPE<br />일괄수정</a>
+                        </th>
+                        <th>순서</th>
+                        <th>노출</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ i = 0; }
+                    @foreach (var item in ViewData["categorySkin"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)
+                    {
+                        <tr>
+                            <td><input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
+                            <input id="DEPTH2_NAME" name="tb_category[@i].DEPTH2_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH2_NAME" /></td>
+                            <td>
+                                <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="3" value="@item.RE_SORT" maxlength="20" />
+                            </td>
+                            <td>
+                                <input id="DISPLAY_YN" name="tb_category[@i].DISPLAY_YN" type="checkbox" @(@item.DISPLAY_YN == "Y" ? "CHECKED" : "") value="@item.DISPLAY_YN">
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
 }
-
-</table>
+@using (Html.BeginForm("CategoryTwoUpdate", "AdminProduct", FormMethod.Post, new { id = "bform5", name = "bform5" }))
+{
+            <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
+                <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
+                <thead>
+                    <tr>
+                        <th><a class="btn btn-default small" href="#" onclick="formChk5();">SKIN_TYPE<br />일괄수정</a>
+                        </th>
+                        <th>순서</th>
+                        <th>노출</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ i = 0; }
+                    @foreach (var item in ViewData["categoryLine"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)
+                    {
+                        <tr>
+                            <td><input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
+                            <input id="DEPTH2_NAME" name="tb_category[@i].DEPTH2_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH2_NAME" /></td>
+                            <td>
+                                <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="3" value="@item.RE_SORT" maxlength="20" />
+                            </td>
+                            <td>
+                                <input id="DISPLAY_YN" name="tb_category[@i].DISPLAY_YN" type="checkbox" @(@item.DISPLAY_YN == "Y" ? "CHECKED" : "") value="@item.DISPLAY_YN">
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
 }
+        </div>
     }

@@ -13,16 +13,26 @@ namespace AboutMe.Domain.Service.AdminProduct
     {
         //카테고리 리스트
         List<SP_ADMIN_CATEGORY_ONE_SEL_Result> GetAdminCategoryOneList();
-        //카테고리 등록
-        int InsertAdminCategoryOne(string DEPTH1_NAME);
+        //카테고리 등록 1DEPTH
+        void InsertAdminCategoryOne(string DEPTH1_NAME);
+        //카테고리 등록 2DEPTH
+        void InsertAdminCategoryTwo(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_NAME);
+        //카테고리 등록 3DEPTH
+        void InsertAdminCategoryThree(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE, string DEPTH3_NAME);
         //카테고리 내용보기
         SP_ADMIN_CATEGORY_VIEW_Result ViewAdminCategory(int IDX);
-        //카테고리 수정
+        //카테고리 수정 1depth
         void UpdateAdminCategoryOne(Nullable<int> IDX, string DEPTH1_NAME, string DISPLAY_YN, Nullable<int> RE_SORT);
+        //카테고리 수정 2depth
+        void UpdateAdminCategoryTwo(Nullable<int> IDX, string DEPTH2_NAME, string DISPLAY_YN, Nullable<int> RE_SORT);
+        //카테고리 수정 3depth
+        void UpdateAdminCategoryThree(Nullable<int> IDX, string DEPTH3_NAME, string DISPLAY_YN, Nullable<int> RE_SORT);
         //카테고리 삭제
         void DeleteAdminCategoryOne(Nullable<int> IDX);
         //카테고리별 서브리스트 가져오기
         List<SP_ADMIN_CATEGORY_DEPTH_SEL_Result> GetAdminCategoryDeptList(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE);
+        //카테고리별 서브리스트 가져오기 DISPLAY_YN = N 포함
+        List<SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result> GetAdminCategoryDeptListAll(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE);
 
         //상품 리스트
         List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList();
