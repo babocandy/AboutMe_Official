@@ -27,6 +27,7 @@ namespace AboutMe.Web.Admin
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            /**
             Exception exception = Server.GetLastError();
             Response.Clear();
 
@@ -56,6 +57,7 @@ namespace AboutMe.Web.Admin
 
                 Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
             }
+             * **/
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
+
+using AboutMe.Web.Front.DI_Core; //Dependency Injection definition ssw
+
 namespace AboutMe.Web.Front
 {
     public class MvcApplication : System.Web.HttpApplication
@@ -16,6 +19,9 @@ namespace AboutMe.Web.Front
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            Bootstrapper.Initialise(); //Depency injection ... 
         }
     }
 }
