@@ -348,9 +348,27 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품
         
         #region 상품 리스트
-        public ActionResult ProductIndex()
+        public ActionResult ProductIndex(string SearchKey = "", string SearchKeyword = "", string cateCode = "", string iconYn = "", string searchDisplayYn = "", int Page = 1, int PageSize = 10)
         {
-            return View(_AdminProductService.GetAdminProductList().ToList());
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchKey;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.cateCode = cateCode;
+            this.ViewBag.iconYn = iconYn;
+            this.ViewBag.searchDisplayYn = searchDisplayYn;
+
+            int TotalRecord = 0;
+            TotalRecord = _AdminProductService.GetAdminProductCnt(SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn);
+            
+            this.ViewBag.TotalRecord = TotalRecord;
+            this.ViewBag.Page = Page;
+
+
+            return View(_AdminProductService.GetAdminProductList(Page, PageSize, SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList());
+            
+
+            //return View(_AdminProductService.GetAdminProductList().ToList());
         }
         #endregion
 
@@ -493,7 +511,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
         #endregion
 
-         #region 상품 개별 이미지 DB에서 삭제
+        #region 상품 개별 이미지 DB에서 삭제
         [HttpPost]
         public ActionResult AjaxImageDel(string P_CODE, string imgColumName)
         {
@@ -502,8 +520,6 @@ namespace AboutMe.Web.Admin.Controllers
             
         }
         #endregion
-
-        
         
         #region 상품 수정
         public ActionResult ProductUpdate(string pcode)
