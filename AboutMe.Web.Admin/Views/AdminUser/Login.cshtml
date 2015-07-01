@@ -52,6 +52,7 @@
     <div class="container">
         <div class="loginwrap">
             <form class="form-signin" name="frmLOGIN" method="post" >
+                
                 <h2 class="form-signin-heading"><img src="/cmsManager/aboutCom/images/login_logo.gif" alt="ABOUT ME Adminstration" /></h2>
                 <label for="inputEmail" class="sr-only">아이디</label>
                 <input type="text" id="inputEmail" class="form-control" name="ID" value="admin" maxlength="13" required autofocus onclick="this.style.background='#fff'" onblur="if (this.value.length==0){this.style.background='#fff url(/cmsManager/aboutCom/images/bg_loginipt.gif) 0 0 no-repeat'}">
@@ -61,6 +62,9 @@
                 <div class="copy">
                     Copyright ⓒ ABOUTME. All right reserved.
                 </div>
+
+                <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
+
             </form>
         </div>
     </div>
