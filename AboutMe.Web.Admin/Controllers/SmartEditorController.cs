@@ -12,7 +12,7 @@ namespace AboutMe.Web.Admin.Controllers
     public class SmartEditorController : Controller
     {
         const int maxFileSize = 10;
-        const string defaultUploadPath = "~/Upload/";
+        const string defaultUploadPath = "~/Upload/StmartEditor/";
         string uploadPath;
 
         //이미지 파일형식 체크
