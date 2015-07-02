@@ -7,6 +7,7 @@
 
 nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({		
 	name : "SE2M_AttachQuickPhoto",
+	uploadPath: undefined,
 
 	$init : function(){},
 	
@@ -47,7 +48,8 @@ nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({
 	 * nhn.husky.SE2M_AttachQuickPhoto.prototype.makePopupURL로 덮어써서 사용하시면 됨.
 	 */
 	makePopupURL : function(){
-		var sPopupUrl = "./photo_uploader/popup/photo_uploader.html";
+	    //var sPopupUrl = "./photo_uploader/popup/photo_uploader.html?uploadPath=" + this.uploadFolder;
+	    var sPopupUrl = "/SmartEditor/PopupPhotoUploader?uploadPath=" + this.uploadPath;
 		
 		return sPopupUrl;
 	},

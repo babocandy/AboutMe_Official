@@ -12,5 +12,6 @@ namespace AboutMe.Common.Data
         public int height { set; get; }
         public string tfID { set; get; }
         public string memo { set; get; }
+        public string uploadPath { set; get; }
     }
 }
