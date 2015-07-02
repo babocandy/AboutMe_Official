@@ -29,7 +29,8 @@ namespace AboutMe.Web.Admin.DI_Core
             container.RegisterType<AboutMe.Domain.Service.AdminProduct.IAdminProductService, AboutMe.Domain.Service.AdminProduct.AdminProductService>();
             //container.RegisterType<IController, StoreController>("Store");
 
-            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리
+            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리 -jsh 6/?
+            container.RegisterType<AboutMe.Domain.Service.AdminFrontMember.IAdminFrontMemberService, AboutMe.Domain.Service.AdminFrontMember.AdminFrontMemberService>(); //관리자-회원관리 -jsh 7/2
 
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));

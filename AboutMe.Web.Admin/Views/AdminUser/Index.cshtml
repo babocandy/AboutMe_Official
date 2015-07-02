@@ -21,6 +21,9 @@
 
 @section Body{
 
+@{ var selected_str = "selected";}
+
+
     <div class="content">
         <!--path-->
         <div class="path">
@@ -45,44 +48,58 @@
 
         <div class="panel">
             <h4>관리자관리</h4>
+            <script>
+                function fGoSearch() {
+                    var f = document.frmSearch;
+                    f.PAGE.value = "1";
+                    f.action = "/AdminUser/Index";
+                    f.method = "post";
+                    f.submit();
+                }
+            </script>
 
-            @{ var selected_str = "selected";}
-            @using (Html.BeginForm("Index", "AdminUser", FormMethod.Post, new { id = "frmSearch", name = "frmSearch", onsubmit = "return frmCheck();" }))
-            {
-                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+            <form name="frmSearch" method="post" action="">
+                <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
 
 
-                                    <table class="table table_row">
-                                        <colgroup><col width="20%" /><col width="*" /></colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row" class="vam">검색</th>
-                                                <td class="condition_seacth">
-                                                    <select name="SearchCol" style="width:170px;">
-                                                        <option value="ADM_ID" @if (ViewBag.SearchCol == "ADM_ID") { @selected_str   ; }>아이디</option>
-                                                        <option value="ADM_NAME" @if (ViewBag.SearchCol == "ADM_NAME") { @selected_str   ; }>이름</option>
-                                                    </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
-                                                    <a href="javascript:document.frmSearch.submit();" class="btn btn-default small">search</a>
-                                                </td>
-                                            </tr>
-                                            <!--
-                                            <tr>
-                                                <th scope="row" class="vam">테스트</th>
+                <table class="table table_row">
+                    <colgroup><col width="20%" /><col width="*" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="vam">검색</th>
+                            <td class="condition_seacth">
+                                <select name="SEARCHCOL" style="width:170px;">
+                                    <option value="ADM_ID" @if (ViewBag.SEARCHCOL == "ADM_ID") { @selected_str    ; }>아이디</option>
+                                    <option value="ADM_NAME" @if (ViewBag.SEARCHCOL == "ADM_NAME") { @selected_str    ; }>이름</option>
+                                </select>  <input type="text" class="input-sm text-left" name="SEARCHKEYWORD" value="@ViewBag.SEARCHKEYWORD" />
+                                <a href="javascript:fGoSearch();" class="btn btn-default small">search</a>
+                            </td>
+                        </tr>
 
-                                                <td>
-                                                    다음 중 대세남은?
-                                                    <select name="lunch" style="width:270px;">
-                                                        <option value="h" @if (Request.Form["lunch"] != null && Request.Form["lunch"].ToString().Trim() == "h") { @selected_str     ; }>황부장</option>
-                                                        <option value="j" @if (Request.Form["lunch"] != null && Request.Form["lunch"].ToString().Trim() == "j") { @selected_str      ; }>장수현</option>
-                                                        <option value="k" @if (Request.Form["lunch"] != null && Request.Form["lunch"].ToString().Trim() == "k") { @selected_str      ; }>김도영</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                                -->
-                                        </tbody>
-                                    </table>
-            }
-        </div>
+                    </tbody>
+                </table>
+
+                <div class="">
+                    <table class="table table_row">
+                        <colgroup><col width="12%" /><col width="*" /><col width="12%" /><col width="*" /></colgroup>
+                        <tr>
+                            <th>총검색</th>
+                            <td>@ViewBag.TotalRecord 건</td>
+                            <th>출력수</th>
+                            <td>
+                                <select name="PAGESIZE" onchange="javascript:fGoSearch();">
+                                    <option value="10" @if (ViewBag.PAGESIZE == 10) { @selected_str             ; }>10개</option>
+                                    <option value="20" @if (ViewBag.PAGESIZE == 20) { @selected_str             ; }>20개</option>
+                                    <option value="50" @if (ViewBag.PAGESIZE == 50) { @selected_str              ; }>50개</option>
+                                    <option value="100" @if (ViewBag.PAGESIZE == 100) { @selected_str              ; }>100개</option>
+                                    <option value="200" @if (ViewBag.PAGESIZE == 200) { @selected_str              ; }>200개</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+</div>
 
         <div class="panel">
             <h4>관리자 리스트</h4>
@@ -128,7 +145,7 @@
         </div>
 
 
-        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = "SEARCHCOL=" + ViewBag.SEARCHCOL + "&SEARCHKEYWORD=" + ViewBag.SEARCHKEYWORD + "&SORTCOL=" + ViewBag.SORTCOL + "&SORTDIR=" + ViewBag.SORTDIR });}
 
 
         <!--버튼모음-->

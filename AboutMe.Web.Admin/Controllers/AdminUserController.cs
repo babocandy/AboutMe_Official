@@ -16,7 +16,7 @@ using System.Web.UI;
 
 using AboutMe.Web.Admin.Common.Filters;
 
-
+//관리자 관리 ctl --jsh
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminUserController : BaseAdminController
@@ -124,7 +124,7 @@ namespace AboutMe.Web.Admin.Controllers
 
             }
 
-            return RedirectToAction("Index", "AdminUser"); // 로그인 성공
+            return RedirectToAction("Index", "AdminFrontMember"); // 로그인 성공
             //return View();
         }
 
@@ -162,26 +162,26 @@ namespace AboutMe.Web.Admin.Controllers
 
         // GET: AdminUser 관리자관리-목록 /AdminUser/Index/
         [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10)
+        public ActionResult Index(string SEARCHCOL = "", string SEARCHKEYWORD = "", string SORTCOL = "ADM_INS_DATE", string SORTDIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
         {
             //return View();
-            this.ViewBag.PageSize = PageSize;
-            this.ViewBag.SearchCol = SearchCol;
-            this.ViewBag.SearchKeyword = SearchKeyword;
-            this.ViewBag.SortCol = SortCol;
-            this.ViewBag.SortDir = SortDir;
+            this.ViewBag.PageSize = PAGESIZE;
+            this.ViewBag.SearchCol = SEARCHCOL;
+            this.ViewBag.SearchKeyword = SEARCHKEYWORD;
+            this.ViewBag.SortCol = SORTCOL;
+            this.ViewBag.SortDir = SORTDIR;
 
             //AdminUserService srv = new AdminUserService();
             int TotalRecord = 0;
-            TotalRecord = _AdminUserService.GetAdminMemberListCnt(SearchCol, SearchKeyword);
+            TotalRecord = _AdminUserService.GetAdminMemberListCnt(SEARCHCOL, SEARCHKEYWORD);
             //TotalRecord = srv.GetAdminMemberListCnt(SearchCol, SearchKeyword);
 
             this.ViewBag.TotalRecord = TotalRecord;
             //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
-            this.ViewBag.Page = Page;
+            this.ViewBag.Page = PAGE;
 
 
-            return View(_AdminUserService.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList());
+            return View(_AdminUserService.GetAdminMemberList(SEARCHCOL, SEARCHKEYWORD, SORTCOL, SORTDIR, PAGE, PAGESIZE).ToList());
             //return View(srv.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList());
         }
 
