@@ -14,16 +14,16 @@ namespace AboutMe.Common.Helper
         public void SetSecretCookie(string key = "", string value = "", int expire_days = 99999)
         {
             AES256Cipher objEnc = new AES256Cipher();
-            string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
-            //string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
+            //string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
+            string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
 
             this.SetCookie(key, objEnc.AES_encrypt(value,ENC_key), expire_days);
         }
         public string GetSecretCookie(string key = "")
         {
             AES256Cipher objEnc = new AES256Cipher();
-            string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
-            //string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
+            //string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
+            string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
             return objEnc.AES_decrypt(this.GetCookie(key), ENC_key);
         }
 
@@ -78,16 +78,16 @@ namespace AboutMe.Common.Helper
         public void SetSecretSession(string key = "", string value = "")
         {
             AES256Cipher objEnc = new AES256Cipher();
-            string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
-            //string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
+            //string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
+            string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
 
             this.SetSession(key, objEnc.AES_encrypt(value, ENC_key));
         }
         public string GetSecretSession(string key = "")
         {
             AES256Cipher objEnc = new AES256Cipher();
-            string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
-            //string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
+            //string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
+            string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
             return objEnc.AES_decrypt(this.GetSession(key), ENC_key);
         }
 

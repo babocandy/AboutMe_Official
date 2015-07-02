@@ -34,7 +34,7 @@
         </div>
 
         <div class="panel">
-            <h3 class="sub-header">기본설정</h3>
+            <h3 class="sub-header">관리자 관리</h3>
             <div class="alert alert-info">
                 <ul>
                     <li>· 관리자를 등록/수정/삭제 합니다.</li>
@@ -59,7 +59,6 @@
                                                 <th scope="row" class="vam">검색</th>
                                                 <td class="condition_seacth">
                                                     <select name="SearchCol" style="width:170px;">
-                                                        <option>-선택하세요-</option>
                                                         <option value="ADM_ID" @if (ViewBag.SearchCol == "ADM_ID") { @selected_str   ; }>아이디</option>
                                                         <option value="ADM_NAME" @if (ViewBag.SearchCol == "ADM_NAME") { @selected_str   ; }>이름</option>
                                                     </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
@@ -102,11 +101,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if (Model != null)
+                    {
+                        if (Model.Count() <1)
+                        {
+                            <tr>
+                                <td colspan="7" class="brnone">No data...</td>
+                            </tr>
+                        }
+                    }
+
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td class="brnone"><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_ID</a></td>
-                            <td>@item.ADM_NAME</td>
+                            <td><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_NAME</a></td>
                             <td>@item.ADM_GRADE</td>
                             <td>@item.ADM_EMAIL</td>
                             <td>@item.ADM_PHONE</td>

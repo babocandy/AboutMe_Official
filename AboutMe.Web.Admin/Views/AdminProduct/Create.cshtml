@@ -9,11 +9,83 @@
 
         function frmCheck() {
            var f = document.frm01;
-           if (f.DEPTH1_NAME.value == '') {
+           if (f.DEPTH_NAME.value == '') {
                 alert("카테고리 이름을 입력하세요.");
                 return false;
             }
         }
+
+
+        $(function () {
+            ajaxSelectCateCodeJavascriptInit();
+        });
+
+        //카테고리 유형별(PRODUCT_TYPE) 초기화 1
+        function ajaxSelectCateCodeJavascriptInit() {
+
+            var f = document.bform;
+
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: '',
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    //var result = "<select style='width:170px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='alert(this.options[this.selectedIndex].value)'>";
+                    var result = "<select style='width:120px;' id='DEPTH1_CODE' name='DEPTH1_CODE' onchange='ajaxSelectCateCodeJavascriptProductType1();'>";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode1').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.DEPTH1_CODE + '>' + category.DEPTH1_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxPCateCode1').html(result);
+
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptInit error");
+                }
+            });
+        }
+
+        //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+        function ajaxSelectCateCodeJavascriptProductType1() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#DEPTH1_CODE option:selected").val();
+
+            $('#ajaxPCateCode2').html('');
+            
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    var result = "<select style='width:120px;' id='DEPTH2_CODE' name='DEPTH2_CODE' >";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode2').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.DEPTH2_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxPCateCode2').html(result);
+
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptProductType1 error");
+                }
+            });
+        }
+
       
     </script>
 
@@ -47,11 +119,24 @@
                             <table class="table table_row">
                                 <colgroup><col width="25%" /><col width="75%" /></colgroup>
                                 <tbody>
-
+                                    <tr>
+                                        <th class="c">카테고리 타입 선택</th>
+                                        <td class="radio_area">
+                                            <label><input type="radio" value="PRODUCT_TYPE" id="CATE_GBN" name="CATE_GBN" /> 상품타입 </label>
+                                            <label><input type="radio" value="SKIN_TYPE" id="CATE_GBN" name="CATE_GBN" /> 피부타입 </label>
+                                            <label><input type="radio" value="LINE_TYPE" id="CATE_GBN" name="CATE_GBN" /> 라인타입 </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>부모 카테고리 선택</th>
+                                        <td colspan="3">
+                                            <span id="ajaxPCateCode1"></span>
+                                            <span id="ajaxPCateCode2"></span>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th>카테고리이름</th>
-                                        <td><input type="text" class="input-sm text-left" name="DEPTH1_NAME" ID="DEPTH1_NAME" /></td>
-
+                                        <td><input type="text" class="input-sm text-left" name="DEPTH_NAME" ID="DEPTH_NAME" /></td>
                                     </tr>
                                     <tr>
                                         <th>저장</th>

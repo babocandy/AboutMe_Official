@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
 
-namespace AboutMe.Common.DI_Core
+using AboutMe.Web.Admin.Common.Filters;
+
+namespace AboutMe.Web.Admin.DI_Core
 {
     public static class Bootstrapper
     {
@@ -29,7 +31,13 @@ namespace AboutMe.Common.DI_Core
 
             container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리
             container.RegisterType<AboutMe.Domain.Service.Faq.IFaqService, AboutMe.Domain.Service.Faq.FaqService>(); //Faq
-            
+
+            /**
+            container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
+            container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());
+            **/
+
+            container.RegisterType<AboutMe.Web.Admin.Controllers.AccountController>(new InjectionConstructor());
 
             return container;
         }
