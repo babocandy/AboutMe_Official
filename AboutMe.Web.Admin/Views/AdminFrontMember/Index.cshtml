@@ -56,6 +56,20 @@
         <div>@isretire_name</div>
     }
 
+    @helper fM_GBN_NAME(string m_gbn)
+    {
+        var m_gbn_name = m_gbn;
+        switch (m_gbn)
+        {
+            case "A": m_gbn_name = "일반회원";
+                break;
+            case "S": m_gbn_name = "임직원";
+                break;
+
+        }
+        <div>@m_gbn_name</div>
+    }
+
     @helper fCheckBoxChecked(string strList,string strChked)
     {
         if (strList != null && strChked != null)
@@ -236,7 +250,7 @@ ViewBag.GRADE_LIST : @ViewBag.GRADE_LIST
                             <td class="brnone">@count.ToString("#,##0")</td>
                             <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID" class="btn btn-primary small">@item.M_ID</a></td>
                             <td><a href="/AdminFrontMember/Edit?SEL_ADM_ID=@item.M_ID" class="btn btn-primary small">@item.M_NAME</a></td>
-                            <td>@item.M_GBN</td>
+                            <td>@fM_GBN_NAME(@item.M_GBN)</td>
                             <td>@fGradeName(@item.M_GRADE)</td>
                             <td>@item.M_EMAIL</td>
                             <td>@item.M_MOBILE</td>
