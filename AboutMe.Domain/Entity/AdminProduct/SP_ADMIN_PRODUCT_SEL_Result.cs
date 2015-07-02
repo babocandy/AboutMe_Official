@@ -15,24 +15,21 @@ namespace AboutMe.Domain.Entity.AdminProduct
     {
         public int IDX { get; set; }
         public string P_CATE_CODE { get; set; }
-        public string C_CATE_CODE { get; set; }
-        public string L_CATE_CODE { get; set; }
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public Nullable<int> P_COUNT { get; set; }
         public Nullable<int> SELLING_PRICE { get; set; }
         public Nullable<int> DISCOUNT_RATE { get; set; }
-        public Nullable<int> DISCOUNT_PRICE { get; set; }
         public string SOLDOUT_YN { get; set; }
         public string MV_URL { get; set; }
+        public string ICON_NAME { get; set; }
         public string P_TAG { get; set; }
-        public string MAIN_IMG { get; set; }
         public Nullable<int> RE_SORT { get; set; }
         public string DISPLAY_YN { get; set; }
         public string ICON_YN { get; set; }
-        public Nullable<int> SELLING_COUNT { get; set; }
-        public Nullable<int> P_VIEW_COUNT { get; set; }
         public string WITH_PRODUCT_LIST { get; set; }
+        public string DISPLAY_NAME { get; set; }
+        public int DISCOUNT_PRICE { get; set; }
         public string REGDATE { get; set; }
     }
 }

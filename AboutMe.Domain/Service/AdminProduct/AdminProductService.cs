@@ -164,14 +164,14 @@ namespace AboutMe.Domain.Service.AdminProduct
 
 
         #region 상품 리스트
-        public List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList()
+        public List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList(int Page, int PageSize, string SearchKey, string SearchKeyword, string cateCode, string iconYn, string searchDisplayYn)
         {
 
             List<SP_ADMIN_PRODUCT_SEL_Result> lst = new List<SP_ADMIN_PRODUCT_SEL_Result>();
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
                 /**try {**/
-                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL().ToList();
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL(Page, PageSize, SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList();
                 /** }catch()
                  {
                        AdmEtcContext.Dispose();
@@ -179,6 +179,29 @@ namespace AboutMe.Domain.Service.AdminProduct
             }
 
             return lst;
+
+        }
+        #endregion
+
+        #region 상품 카운트
+        public int GetAdminProductCnt(string SearchKey, string SearchKeyword, string cateCode, string iconYn, string searchDisplayYn)
+        {
+            List<SP_ADMIN_PRODUCT_CNT_Result> lst = new List<SP_ADMIN_PRODUCT_CNT_Result>();
+            int productCount = -1;
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_CNT(SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList();
+                if (lst != null && lst.Count > 0)
+                    productCount = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return productCount;
 
         }
         #endregion
@@ -223,8 +246,6 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
 
         #endregion
-
-        
 
         #region 상품 VIEW
 

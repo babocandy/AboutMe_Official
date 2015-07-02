@@ -104,11 +104,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_CATEGORY_VIEW_Result>("SP_ADMIN_CATEGORY_VIEW", iDXParameter);
         }
 
-        public virtual ObjectResult<Nullable<int>> SP_ADMIN_PRODUCT_CNT()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_PRODUCT_CNT");
-        }
-
         public virtual int SP_ADMIN_PRODUCT_INS(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string iCON_YN, string wITH_PRODUCT_LIST)
         {
             var p_CATE_CODEParameter = p_CATE_CODE != null ?
@@ -235,11 +230,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("P_CODE", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result>("SP_ADMIN_PRODUCT_DETAIL_VIEW", p_CODEParameter);
-        }
-
-        public virtual ObjectResult<SP_ADMIN_PRODUCT_SEL_Result> SP_ADMIN_PRODUCT_SEL()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL");
         }
 
         public virtual int SP_ADMIN_PRODUCT_UPD(Nullable<int> iDX, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_NAME, Nullable<int> p_COUNT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string oTHER_IMG4, string oTHER_IMG5, string dISPLAY_YN, string iCON_YN, string wITH_PRODUCT_LIST)
@@ -460,6 +450,64 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("DEPTH2_NAME", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_INS", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_NAMEParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_CNT_Result> SP_ADMIN_PRODUCT_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string cATE_CODE, string iCON_YN, string sEARCH_DISPLAY_YN)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+
+            var iCON_YNParameter = iCON_YN != null ?
+                new ObjectParameter("ICON_YN", iCON_YN) :
+                new ObjectParameter("ICON_YN", typeof(string));
+
+            var sEARCH_DISPLAY_YNParameter = sEARCH_DISPLAY_YN != null ?
+                new ObjectParameter("SEARCH_DISPLAY_YN", sEARCH_DISPLAY_YN) :
+                new ObjectParameter("SEARCH_DISPLAY_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_CNT_Result>("SP_ADMIN_PRODUCT_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YNParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_SEL_Result> SP_ADMIN_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cATE_CODE, string iCON_YN, string sEARCH_DISPLAY_YN)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+
+            var iCON_YNParameter = iCON_YN != null ?
+                new ObjectParameter("ICON_YN", iCON_YN) :
+                new ObjectParameter("ICON_YN", typeof(string));
+
+            var sEARCH_DISPLAY_YNParameter = sEARCH_DISPLAY_YN != null ?
+                new ObjectParameter("SEARCH_DISPLAY_YN", sEARCH_DISPLAY_YN) :
+                new ObjectParameter("SEARCH_DISPLAY_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YNParameter);
         }
     }
 }
