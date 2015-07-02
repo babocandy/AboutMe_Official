@@ -33,6 +33,10 @@
 	var welDropArea = $Element(elDropArea);
 	var welDropAreaUL = $Element(elDropAreaUL); 
 	var fnUploadImage = null;
+
+	var uploadPath = $Element("uploadPath").$value().value;
+
+	console.log(uploadPath)
 	
 	//File API 지원 여부로 결정
 	function checkDragAndDropAPI(){
@@ -58,7 +62,7 @@
      function goStartMode(){
     	 var sSrc = welBtnConfirm.attr("src")|| "";
     	 if(sSrc.indexOf("btn_confirm2.png") < 0 ){
-    		 welBtnConfirm.attr("src","../../img/photoQuickPopup/btn_confirm2.png");
+    	     welBtnConfirm.attr("src", "/cmsManager/aboutCom/smarteditor/img/photoQuickPopup/btn_confirm2.png");
     		 fnUploadImage.attach(welBtnConfirm.$value(), "click");
     	 }
      } 
@@ -70,7 +74,7 @@
     	 var sSrc = welBtnConfirm.attr("src")|| "";
     	 if(sSrc.indexOf("btn_confirm2.png") >= 0 ){
     		 fnUploadImage.detach(welBtnConfirm.$value(), "click");
-	    	 welBtnConfirm.attr("src","../../img/photoQuickPopup/btn_confirm.png");
+    		 welBtnConfirm.attr("src", "/cmsManager/aboutCom/smarteditor/img/photoQuickPopup/btn_confirm.png");
     	 }
      }   
 	
@@ -317,7 +321,7 @@
     		//List 마크업 생성하기
 			aFileList.push('	<li id="img'+nImageInfoCnt+'" class="imgLi"><span>'+ sFileName +'</span>');
 			aFileList.push('	<em>'+ sFileSize +'</em>');
-	        aFileList.push('	<a onclick="delImage(\'img'+nImageInfoCnt+'\')"><img class="del_button" src="../../img/photoQuickPopup/btn_del.png"  width="14" height="13" alt="첨부 사진 삭제"></a>');
+			aFileList.push('	<a onclick="delImage(\'img' + nImageInfoCnt + '\')"><img class="del_button" src="/cmsManager/aboutCom/smarteditor/img/photoQuickPopup/btn_del.png"  width="14" height="13" alt="첨부 사진 삭제"></a>');
 			aFileList.push('	</li> ');   
 			
 			sLiTag = aFileList.join(" ");
@@ -372,7 +376,9 @@
 		oAjax.header("contentType","multipart/form-data");
 		oAjax.header("file-name",encodeURIComponent(tempFile.name));
 		oAjax.header("file-size",tempFile.size);
-		oAjax.header("file-Type",tempFile.type);
+		oAjax.header("file-Type", tempFile.type);
+		oAjax.header("file-Upload", uploadPath);
+
 		oAjax.request(tempFile);
     }
     

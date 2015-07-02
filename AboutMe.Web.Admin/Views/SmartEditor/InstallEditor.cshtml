@@ -1,15 +1,11 @@
 ﻿@model  AboutMe.Common.Data.SmartEditorConfig
-<div>
-    <textarea name="@Model.tfID" id="@Model.tfID" rows="10" cols="100" style="width:@(Model.width)px; height:@(Model.height)px;display:none;">
-        @if (Model.memo != null)
-        {
-            @Model.memo;
-        }
-    </textarea>
-</div>
-
-
-
+<textarea name="@Model.tfID" id="@Model.tfID" rows="10" cols="100" style="width:@(Model.width)px; height:@(Model.height)px;display:none;">
+    @if (Model.memo != null)
+    {
+        @Model.memo;
+    }
+</textarea>
+<div>@Model.uploadPath</div>
 <script type="text/javascript" src="/cmsManager/aboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf8"></script>
 <script type="text/javascript">
     var oEditors = [];
@@ -17,6 +13,8 @@
         oAppRef: oEditors,
         elPlaceHolder: "@Model.tfID",
         sSkinURI: "/cmsManager/aboutCom/smarteditor/SmartEditor2Skin.html",
-        fCreator: "createSEditor2"
+        fCreator: "createSEditor2",
+        htParams: { uploadPath: "@(Model.uploadPath)" }
+
     });
 </script>

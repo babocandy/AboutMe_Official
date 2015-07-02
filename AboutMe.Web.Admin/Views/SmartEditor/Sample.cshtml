@@ -20,6 +20,31 @@
         tfID = "default_se" //에디터 id 혹은 name
         ,
         memo = "편집할때 내용" //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+        ,
+        uploadPath = "~/Upload/Test/"//업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
+    });
+                                }
+                            </div>
+
+                            <div><a href="#" onclick="submitContents(); return false;">저장</a></div>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                            <div>
+                                @{
+    Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
+    {
+        width = 600 //에디터 width 값
+        ,
+        height = 100 //에디터 height 값
+        ,
+        tfID = "default_se2" //에디터 id 혹은 name
+        ,
+        memo = "편집할때 내용" //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+        ,
+        uploadPath = "~/Upload/Test2/"//업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
     });
                                 }
                             </div>

@@ -31,6 +31,7 @@ namespace AboutMe.Web.Admin.DI_Core
 
             container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리 -jsh 6/?
             container.RegisterType<AboutMe.Domain.Service.AdminFrontMember.IAdminFrontMemberService, AboutMe.Domain.Service.AdminFrontMember.AdminFrontMemberService>(); //관리자-회원관리 -jsh 7/2
+            container.RegisterType<AboutMe.Domain.Service.Faq.IFaqService, AboutMe.Domain.Service.Faq.FaqService>(); //Faq
 
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));

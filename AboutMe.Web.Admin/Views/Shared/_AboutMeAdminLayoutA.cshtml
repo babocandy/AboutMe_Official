@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="/cmsManager/aboutCom/css/bootstrap.css" rel="stylesheet">
     <link href="/cmsManager/aboutCom/css/style.css" rel="stylesheet">
-    <script src="/cmsManager/aboutCom/js/jquery-1.11.3.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/jquery-1.11.3.min.js"></script>  
     <script src="/cmsManager/aboutCom/js/bootstrap.min.js"></script>
     <script src="/cmsManager/aboutCom/js/script.js"></script>
     <!--[if lt IE 9]>
@@ -23,16 +23,29 @@
     <div class="container-fluid">
         <div class="row">
             <!--sidebar-->
-            @RenderSection("Left")
+            @if (IsSectionDefined("Left"))
+	        {
+                @RenderSection("Left")
+            }
             <!--//sidebar-->
             <!--container-->
             <div class="col-xs-10 col-xs-offset-2 container">
 
                 <!--header ssw -------------------->
+            @if (IsSectionDefined("Header"))
+	        {
                 @RenderSection("Header")
+            }
                 <!--header ssw -------------------->
                 <!--content-->
-                @RenderSection("Body")
+                @if (IsSectionDefined("Body"))
+                {
+                    @RenderSection("Body")
+                }
+                else
+                { 
+                    @RenderBody()
+                }
                 <!--//content-->
             </div>
             <!--//container-->

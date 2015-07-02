@@ -12,7 +12,8 @@ namespace AboutMe.Web.Admin.Controllers
     public class SmartEditorController : Controller
     {
         const int maxFileSize = 10;
-        const string uploadPath = "~/Upload/";
+        const string defaultUploadPath = "~/Upload/StmartEditor/";
+        string uploadPath;
 
         //이미지 파일형식 체크
         private string[] typeFilter = { "image/jpg", "image/png", "image/gif", "image/jpeg", "image/bmp", "image/pjpeg" };
@@ -26,7 +27,17 @@ namespace AboutMe.Web.Admin.Controllers
         [ChildActionOnly]
         public ActionResult InstallEditor(SmartEditorConfig config)
         {
+           // this.uploadPath = (config.uploadFolder == null) ? defaultUploadPath : config.uploadFolder;
+           // Debug.WriteLine("uploadPath:" + this.uploadPath);
             return PartialView(config);
+        }
+
+        [HttpGet]
+        public ActionResult PopupPhotoUploader(string uploadPath)
+        {
+            Debug.WriteLine("uploadPath :" + uploadPath);
+            ViewBag.uploadPath = uploadPath;
+            return View();
         }
 
         /**
@@ -35,6 +46,15 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         public ActionResult FileUploader()
         {
+            uploadPath = Request.Form["uploadPath"];
+
+
+            Debug.WriteLine("uploadPath=>" + uploadPath);
+
+            if (uploadPath == null)
+            {
+                uploadPath = defaultUploadPath;
+            }
 
             string callbackUrl = string.Format("{0}?callback_func={1}", Request.Form["callback"], Request.Form["callback_func"]);
 
@@ -101,13 +121,21 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         public String FileUploaderHtml5()
         {
+
+
             int length = Request.ContentLength;
             byte[] bytes = new byte[length];
             Request.InputStream.Read(bytes, 0, length);
-
+            
             string fileName = Request.Headers["file-name"];
             int fileSize = int.Parse(Request.Headers["file-size"]);
             string fileType = Request.Headers["file-type"];
+
+            this.uploadPath = Request.Headers["file-Upload"];
+            if (this.uploadPath == null)
+            {
+                this.uploadPath = defaultUploadPath;
+            }
 
             /**
              * 업로드 이미지의 유효성 체크 필요
@@ -162,14 +190,16 @@ namespace AboutMe.Web.Admin.Controllers
             //새파일명
             string newFileName = string.Format("{0}{1}", GetUniqueKey(), ext);
 
+            Debug.WriteLine("this.uploadPath : " + this.uploadPath);
+
             //업로드 디렉토리
-            string filePath = Server.MapPath(uploadPath);
+            string filePath = Server.MapPath(this.uploadPath);
 
             //저장할 이미지 파일의 서버상 물리적 경로
             var saveToFileLoc = string.Format("{0}\\{1}", filePath, newFileName);
 
             //이미지 파일 URL 생성
-            var fileUrl = string.Format("{0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content(uploadPath), newFileName);
+            var fileUrl = string.Format("{0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content(this.uploadPath), newFileName);
 
             Tuple<string, string, string> tuple = new Tuple<string, string, string>(newFileName, saveToFileLoc, fileUrl);
 
