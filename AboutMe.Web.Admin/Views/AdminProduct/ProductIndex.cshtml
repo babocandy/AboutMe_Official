@@ -12,7 +12,140 @@
 @section Header{
     @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
 }
+@section Scripts{
 
+    <script language="javascript">
+
+        $(function () {
+            ajaxSelectCateCodeJavascriptInit();
+        });
+
+      
+        //문자열 안의 공백 지우기
+        function deleteSpace(str) {
+            var out = "";
+
+            for (common_i = 0; common_i < str.length; common_i++) {
+                if (str.charAt(common_i) == " ") {
+                    continue;
+                }
+                out += str.charAt(common_i);
+            }
+            return out.length;
+        }
+
+
+        //카테고리 유형별(PRODUCT_TYPE) 초기화 1
+        function ajaxSelectCateCodeJavascriptInit() {
+
+            var f = document.bform;
+
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: '',
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    //var result = "<select style='width:170px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='alert(this.options[this.selectedIndex].value)'>";
+                    var result = "<select style='width:120px;' id='P_CATE_CODE1' name='P_CATE_CODE1' onchange='ajaxSelectCateCodeJavascriptProductType1();'>";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode1').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH1_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxPCateCode1').html(result);
+
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptInit error");
+                }
+            });
+        }
+
+        //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+        function ajaxSelectCateCodeJavascriptProductType1() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+
+            $('#ajaxPCateCode2').html('');
+            $('#ajaxPCateCode3').html('');
+
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: ''
+                },
+                success: function (data) {
+                    var result = "<select style='width:120px;' id='P_CATE_CODE2' name='P_CATE_CODE2' onchange='ajaxSelectCateCodeJavascriptProductType2();'>";
+                    result += "<option value=''>=선택=</option>";
+                    $('#ajaxPCateCode2').html('');
+                    $.each(data.msg, function (id, category) {
+                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                    });
+                    result += "</select>";
+
+                    $('#ajaxPCateCode2').html(result);
+
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptProductType1 error");
+                }
+            });
+        }
+
+        //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+        function ajaxSelectCateCodeJavascriptProductType2() {
+
+            var f = document.bform;
+            var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
+            var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
+            //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
+            //var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val();
+            $.ajax({
+                url: '/AdminProduct/CategoryListJavascript',
+                type: 'POST',
+                data: {
+                    CATE_GBN: 'PRODUCT_TYPE',
+                    DEPTH1_CODE: DEPTH1_CODE,
+                    DEPTH2_CODE: DEPTH2_CODE
+                },
+                success: function (data) {
+                    if ((data.msg).length > 0) { //데이타가 있을때만 생성한다.
+                        var result = "<select style='width:120px;' id='P_CATE_CODE3' name='P_CATE_CODE3'>";
+                        result += "<option value=''>=선택=</option>";
+                        $('#ajaxPCateCode3').html('');
+                        $.each(data.msg, function (id, category) {
+                            result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH3_NAME + '</option>';
+                        });
+                        result += "</select>";
+
+                        $('#ajaxPCateCode3').html(result);
+                    }
+
+                },
+                error: function (errorData) {
+                    alert("ajaxSelectCateCodeJavascriptProductType2 error");
+                }
+            });
+        }
+
+
+
+
+
+    </script>
+
+
+}
 @section Body{
 
     <!--content-->
@@ -25,14 +158,14 @@
 
     <div class="panel">
         <h3 class="sub-header">상품관리</h3>
+@using (Html.BeginForm("ProductIndex", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", onsubmit = "return frmCheck();" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
         <div class="tar mb10">
            
             <a class="btn btn-default middium" href="#">@Html.ActionLink("Create New", "ProductInsert")</a>
-            @*<a class="btn btn-default middium" href="#">상품일괄저장</a>
-            <a class="btn btn-default middium" href="#">아이콘일괄등록</a>
-            <a class="btn btn-default middium" href="#">예약상품일괄전시</a>
-            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>*@
         </div>
+
         <div class="">
             <table class="table table_row">
                 <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="20%" /></colgroup>
@@ -42,23 +175,6 @@
                     <tr>
                         <th>일자</th>
                         <td>
-                            @*<select>
-                                <option>선택하세요</option>
-                                <option>최종수정일</option>
-                                <option>최초전시일</option>
-                            </select>*@
-                            @*<script type="text/javascript">
-											  $(function() {
-												$( "#datepicker" ).datepicker({
-													showOn: "button",
-													buttonImage: "/cmsManager/aboutCom/images/bl_cal.png",
-													changeMonth: true,
-													changeYear: true,
-													buttonImageOnly: true,
-													buttonText: "Select date"
-												});
-											  });
-                            </script>*@
                             <input type="text" id="datepicker" name="from" class="input-sm" style="width:120px">
                             <a href="#" class="btn btn-primary small">7일</a>
                             <a href="#" class="btn btn-primary small">15일</a>
@@ -66,44 +182,29 @@
                         </td>
                         <th rowspan="5">검색조건</th>
                         <td rowspan="5" class="condition_seacth">
-                            <select style="width:170px;">
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                                <option>상품품번</option>
+                            <select name="SearchKey" style="width:170px;" >
+                                <option value="P_CODE">상품품번</option>
+                                <option value="P_NAME">상품명</option>
                             </select><br />
-                            <input type="text" value="다중검색" class="input-sm mt10" id="txt1" style="width:170px; height:125px;">
-                            <a href="#" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
+                            <input type="text" value="@ViewBag.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
+                            <a href="javascript:document.bform.submit();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
                         </td>
                     </tr>
+
                     <tr>
                         <th>판매상태</th>
                         <td>
-                            <label for="sale1"><input type="checkbox" id="sale1" /><span class="txt mr5">비전시</span></label>
-                            <label for="sale2"><input type="checkbox" id="sale2" /><span class="txt mr5">전시내림</span></label>
-                            <label for="sale3"><input type="checkbox" id="sale3" /><span class="txt mr5">판매중</span></label>
+                            <label for="sale1"><input type="checkbox" id="sale1" /><span class="txt mr5">전시</span></label>
+                            <label for="sale2"><input type="checkbox" id="sale2" /><span class="txt mr5">비전시</span></label>
                             <label for="sale4"><input type="checkbox" id="sale4" /><span class="txt mr5">품절</span></label>
                         </td>
                     </tr>
                     <tr>
                         <th>카테고리</th>
                         <td>
-                            <select>
-                                <option>대분류</option>
-                                <option>대분류</option>
-                                <option>대분류</option>
-                            </select>
-                            <select>
-                                <option>중분류</option>
-                                <option>중분류</option>
-                                <option>중분류</option>
-                            </select>
-                            <select>
-                                <option>소분류</option>
-                                <option>소분류</option>
-                                <option>소분류</option>
-                            </select>
+                            <span id="ajaxPCateCode1"></span>
+                            <span id="ajaxPCateCode2"></span>
+                            <span id="ajaxPCateCode3"></span>
                         </td>
                     </tr>
                     <tr>
@@ -119,13 +220,12 @@
                         <th>판매가</th>
                         <td>
                             <input type="text" class="input-sm" style="width:120px">
-                            @*<input type="text" class="input-sm" style="width:120px">
-                            <label for="price"><input type="checkbox" id="price" /><span class="txt ml5">상품이미지 노출</span></label>*@
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+}    
     </div>
 
     <div class="panel">
@@ -134,7 +234,7 @@
                 <colgroup><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /></colgroup>
                 <tr>
                     <th>총검색</th>
-                    <td>250건</td>
+                    <td>@ViewBag.TotalRecord 건</td>
                     <th>■ 판매상태 일괄변경</th>
                     <td>
                         <select>
@@ -174,10 +274,19 @@
                     <th scope="col">쿠폰여부</th>
                     <th scope="col">전시채널</th>
                     <th scope="col">모델정보</th>
-                    <th scope="col">최초전시일</th>
+                    <th scope="col">등록일</th>
                 </tr>
             </thead>
             <tbody>
+                @if (Model != null)
+                {
+                    if (Model.Count() < 1)
+                    {
+                        <tr>
+                            <td colspan="7" class="brnone">No data...</td>
+                        </tr>
+                    }
+                }
                 @foreach (var item in Model)
                 {
                 <tr>
