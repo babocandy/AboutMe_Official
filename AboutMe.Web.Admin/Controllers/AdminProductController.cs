@@ -9,6 +9,8 @@ using AboutMe.Domain.Service.AdminProduct;
 using AboutMe.Domain.Entity.AdminProduct;
 using System.Data.Entity.Core.Objects;
 using AboutMe.Common.Data;
+using Newtonsoft.Json;
+using AboutMe.Web.Admin.Common;
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -486,6 +488,13 @@ namespace AboutMe.Web.Admin.Controllers
 
                 //_AdminProductService.InsertAdminProduct(P_CATE_CODE, C_CATE_CODE, L_CATE_CODE, P_CODE, P_NAME, P_COUNT, P_POINT, P_PRICE, SELLING_PRICE, DISCOUNT_RATE, DISCOUNT_P_POINT, DISCOUNT_PRICE, SOLDOUT_YN, P_INFO_DETAIL_WEB, P_INFO_DETAIL_MOBILE, MV_URL, P_COMPONENT_INFO, P_TAG, MAIN_IMG, OTHER_IMG1, OTHER_IMG2, OTHER_IMG3, OTHER_IMG4, OTHER_IMG5, DISPLAY_YN, ICON_YN, WITH_PRODUCT_LIST);
                 _AdminProductService.InsertAdminProduct(tb_product_info);
+                
+                #region 상품등록 로그 생성
+                var serialised = JsonConvert.SerializeObject(tb_product_info); //entity 클래스 값을 json 포맷으로 파싱
+                AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(serialised, "관리자상품등록");
+                #endregion
+
                 return RedirectToAction("ProductIndex", new { SearchCol = "" });
             }
             else
@@ -534,6 +543,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProductUpdate(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3, HttpPostedFileBase OTHER_IMG4, HttpPostedFileBase OTHER_IMG5)
         {
+            
             if (ModelState.IsValid)
             {
                 string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
@@ -646,6 +656,13 @@ namespace AboutMe.Web.Admin.Controllers
                 #endregion
 
                 _AdminProductService.UpdateAdminProduct(tb_product_info);
+
+                #region 상품수정 로그 생성
+                var serialised = JsonConvert.SerializeObject(tb_product_info);
+                AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(serialised, "관리자상품수정");
+                #endregion
+
                 return RedirectToAction("ProductIndex");
             }
             else

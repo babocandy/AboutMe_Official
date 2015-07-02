@@ -509,5 +509,63 @@ namespace AboutMe.Domain.Entity.AdminProduct
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YNParameter);
         }
+
+        public virtual int SP_USER_LOG_INS(string uid, string memo, string comment, string url, string userip)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("uid", uid) :
+                new ObjectParameter("uid", typeof(string));
+
+            var memoParameter = memo != null ?
+                new ObjectParameter("memo", memo) :
+                new ObjectParameter("memo", typeof(string));
+
+            var commentParameter = comment != null ?
+                new ObjectParameter("comment", comment) :
+                new ObjectParameter("comment", typeof(string));
+
+            var urlParameter = url != null ?
+                new ObjectParameter("url", url) :
+                new ObjectParameter("url", typeof(string));
+
+            var useripParameter = userip != null ?
+                new ObjectParameter("userip", userip) :
+                new ObjectParameter("userip", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_LOG_INS", uidParameter, memoParameter, commentParameter, urlParameter, useripParameter);
+        }
+
+        public virtual int SP_ADMIN_LOG_INS(string uid, string memo, string comment, string url, string userip, string userAgent, string urlReFerrer)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("uid", uid) :
+                new ObjectParameter("uid", typeof(string));
+
+            var memoParameter = memo != null ?
+                new ObjectParameter("memo", memo) :
+                new ObjectParameter("memo", typeof(string));
+
+            var commentParameter = comment != null ?
+                new ObjectParameter("comment", comment) :
+                new ObjectParameter("comment", typeof(string));
+
+            var urlParameter = url != null ?
+                new ObjectParameter("url", url) :
+                new ObjectParameter("url", typeof(string));
+
+            var useripParameter = userip != null ?
+                new ObjectParameter("userip", userip) :
+                new ObjectParameter("userip", typeof(string));
+
+            var userAgentParameter = userAgent != null ?
+                new ObjectParameter("userAgent", userAgent) :
+                new ObjectParameter("userAgent", typeof(string));
+
+            var urlReFerrerParameter = urlReFerrer != null ?
+                new ObjectParameter("urlReFerrer", urlReFerrer) :
+                new ObjectParameter("urlReFerrer", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_LOG_INS", uidParameter, memoParameter, commentParameter, urlParameter, useripParameter, userAgentParameter, urlReFerrerParameter);
+        }
     }
 }
