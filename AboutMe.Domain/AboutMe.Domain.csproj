@@ -195,6 +195,35 @@
     <Compile Include="Entity\AdminProduct\TB_PRODUCT_INFO.cs">
       <DependentUpon>ModelAdminProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Faq\ModelFaq_EntityPartial.cs" />
+    <Compile Include="Entity\Faq\ModelFaq_Metadata.cs" />
+    <Compile Include="Entity\Faq\ModelFaq.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelFaq.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Faq\ModelFaq.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelFaq.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Faq\ModelFaq.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelFaq.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Faq\SP_TB_FAQ_CNT_Result.cs">
+      <DependentUpon>ModelFaq.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Faq\SP_TB_FAQ_SEL_Result.cs">
+      <DependentUpon>ModelFaq.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Faq\SP_TB_FAQ_VIEW_Result.cs">
+      <DependentUpon>ModelFaq.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Faq\TB_FAQ.cs">
+      <DependentUpon>ModelFaq.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
@@ -202,6 +231,8 @@
     <Compile Include="Service\AdminEtc\IAdminUserService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
+    <Compile Include="Service\Faq\FaqService.cs" />
+    <Compile Include="Service\Faq\IFaqService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\AdminOrder\" />
@@ -249,6 +280,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelAdminProduct.edmx</DependentUpon>
       <LastGenOutput>ModelAdminProduct.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Faq\ModelFaq.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelFaq.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Faq\ModelFaq.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelFaq.edmx</DependentUpon>
+      <LastGenOutput>ModelFaq.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Faq\ModelFaq.edmx.diagram">
+      <DependentUpon>ModelFaq.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Faq\ModelFaq.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelFaq.edmx</DependentUpon>
+      <LastGenOutput>ModelFaq.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -28,6 +28,7 @@ namespace AboutMe.Common.DI_Core
             //container.RegisterType<IController, StoreController>("Store");
 
             container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리
+            container.RegisterType<AboutMe.Domain.Service.Faq.IFaqService, AboutMe.Domain.Service.Faq.FaqService>(); //Faq
             
 
             return container;
