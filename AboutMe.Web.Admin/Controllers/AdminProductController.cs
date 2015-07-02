@@ -350,27 +350,26 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품
         
         #region 상품 리스트
-        public ActionResult ProductIndex(string SearchKey = "", string SearchKeyword = "", string cateCode = "", string iconYn = "", string searchDisplayYn = "", int Page = 1, int PageSize = 10)
+        public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
 
-            this.ViewBag.PageSize = PageSize;
-            this.ViewBag.SearchCol = SearchKey;
-            this.ViewBag.SearchKeyword = SearchKeyword;
-            this.ViewBag.cateCode = cateCode;
-            this.ViewBag.iconYn = iconYn;
-            this.ViewBag.searchDisplayYn = searchDisplayYn;
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.searchDisplayYn = productSearch_Entity.searchDisplayYn;
 
             int TotalRecord = 0;
-            TotalRecord = _AdminProductService.GetAdminProductCnt(SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn);
+            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
             
             this.ViewBag.TotalRecord = TotalRecord;
-            this.ViewBag.Page = Page;
+            this.ViewBag.Page = productSearch_Entity.Page;
 
+            ProductSearch_Entity e = new ProductSearch_Entity();
 
-            return View(_AdminProductService.GetAdminProductList(Page, PageSize, SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList());
+            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
             
-
-            //return View(_AdminProductService.GetAdminProductList().ToList());
         }
         #endregion
 

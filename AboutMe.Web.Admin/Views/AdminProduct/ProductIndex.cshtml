@@ -320,7 +320,7 @@
         </table>
     </div>
 
-    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = 5, RecordPerPage = 1, PagePerBlock = 10, CurrentPage = 1, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
+    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
 
 </div>
 <!--//content-->
