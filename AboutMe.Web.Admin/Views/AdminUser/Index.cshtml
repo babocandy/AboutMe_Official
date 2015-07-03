@@ -6,6 +6,47 @@
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
 
+@{
+
+    var QueryStr = "";
+    QueryStr = QueryStr + "PAGESIZE=" + ViewBag.PAGESIZE;
+    QueryStr = QueryStr + "&SORTCOL=" + ViewBag.SORTCOL;
+    QueryStr = QueryStr + "&SORTDIR=" + ViewBag.SORTDIR;
+
+    QueryStr = QueryStr + "&SEARCH_COL=" + ViewBag.SEARCH_COL;
+    QueryStr = QueryStr + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
+
+
+
+    @helper fCheckBoxChecked(string strList, string strChked)
+{
+    if (strList != null && strChked != null)
+    {
+        if (strList.Contains(strChked))
+        {
+            @(" checked")
+        }
+    }
+
+}
+
+    @helper fSelectBoxSelecteded(string str1, string str2)
+{
+    if (str1 != null && str2 != null)
+    {
+        if (str1 == str2)
+        {
+            @(" selected")
+        }
+    }
+
+}
+
+}
+
+
+
+
 @section Scripts{
 
 }
@@ -21,8 +62,6 @@
 
 @section Body{
 
-@{ var selected_str = "selected";}
-
 
     <div class="content">
         <!--path-->
@@ -33,7 +72,7 @@
 
         <div class="tar mb10">
             <a class="btn btn-default middium" href="/AdminUser/Insert">관리자 등록</a>
-            <a class="btn btn-default middium" href="/AdminUser/Excel">EXEL 다운로드</a>
+            <a class="btn btn-default middium" href="javascript:fExcel();">EXEL 다운로드</a>
         </div>
 
         <div class="panel">
@@ -56,6 +95,13 @@
                     f.method = "post";
                     f.submit();
                 }
+
+                function fExcel() {
+                    var f = document.frmSearch;
+                    f.action = "/AdminUser/Excel";
+                    f.method = "post";
+                    f.submit();
+                }
             </script>
 
             <form name="frmSearch" method="post" action="">
@@ -63,15 +109,15 @@
 
 
                 <table class="table table_row">
-                    <colgroup><col width="20%" /><col width="*" /></colgroup>
+                    <colgroup><col style="width:12%" /><col style="width:auto" /></colgroup>
                     <tbody>
                         <tr>
                             <th scope="row" class="vam">검색</th>
                             <td class="condition_seacth">
-                                <select name="SEARCHCOL" style="width:170px;">
-                                    <option value="ADM_ID" @if (ViewBag.SEARCHCOL == "ADM_ID") { @selected_str    ; }>아이디</option>
-                                    <option value="ADM_NAME" @if (ViewBag.SEARCHCOL == "ADM_NAME") { @selected_str    ; }>이름</option>
-                                </select>  <input type="text" class="input-sm text-left" name="SEARCHKEYWORD" value="@ViewBag.SEARCHKEYWORD" />
+                                <select name="SEARCH_COL" style="width:170px;">
+                                    <option value="ADM_ID" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "ADM_ID")>아이디</option>
+                                    <option value="ADM_NAME" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "ADM_NAME")>이름</option>
+                                </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD" />
                                 <a href="javascript:fGoSearch();" class="btn btn-default small">search</a>
                             </td>
                         </tr>
@@ -81,18 +127,18 @@
 
                 <div class="">
                     <table class="table table_row">
-                        <colgroup><col width="12%" /><col width="*" /><col width="12%" /><col width="*" /></colgroup>
+                        <colgroup><col style="width:12%" /><col style="width:auto" /><col style="width:12%" /><col style="width:auto" /></colgroup>
                         <tr>
                             <th>총검색</th>
                             <td>@ViewBag.TotalRecord 건</td>
                             <th>출력수</th>
                             <td>
                                 <select name="PAGESIZE" onchange="javascript:fGoSearch();">
-                                    <option value="10" @if (ViewBag.PAGESIZE == 10) { @selected_str             ; }>10개</option>
-                                    <option value="20" @if (ViewBag.PAGESIZE == 20) { @selected_str             ; }>20개</option>
-                                    <option value="50" @if (ViewBag.PAGESIZE == 50) { @selected_str              ; }>50개</option>
-                                    <option value="100" @if (ViewBag.PAGESIZE == 100) { @selected_str              ; }>100개</option>
-                                    <option value="200" @if (ViewBag.PAGESIZE == 200) { @selected_str              ; }>200개</option>
+                                    <option value="10" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "10")>10개</option>
+                                    <option value="20" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "20")>20개</option>
+                                    <option value="50" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "50")>50개</option>
+                                    <option value="100" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "100")>100개</option>
+                                    <option value="200" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "200")>200개</option>
                                 </select>
                             </td>
                         </tr>
@@ -105,16 +151,17 @@
             <h4>관리자 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
-                <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="20%" /><col width="*" /><col width="8%" /></colgroup>
+                <colgroup><col /><col /><col/><col /><col /><col  /><col /></colgroup>
                 <thead>
                     <tr>
-                        <th scope="col" class="brnone">아이디</th>
+                        <th scope="col" class="brnone">No</th>
+                        <th scope="col" >아이디</th>
                         <th scope="col">이름</th>
                         <th scope="col">등급</th>
                         <th scope="col">EMAIL</th>
                         <th scope="col">전화</th>
                         <th scope="col">등록일자</th>
-                        <th scope="col">사용여부</th>
+                        <th scope="col" class="brnone">사용여부</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,29 +170,35 @@
                         if (Model.Count() <1)
                         {
                             <tr>
-                                <td colspan="7" class="brnone">No data...</td>
+                                <td colspan="8" class="brnone">No data...</td>
                             </tr>
                         }
                     }
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="brnone"><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_ID</a></td>
-                            <td><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_NAME</a></td>
-                            <td>@item.ADM_GRADE</td>
-                            <td>@item.ADM_EMAIL</td>
-                            <td>@item.ADM_PHONE</td>
-                            <td>@item.ADM_INS_DATE</td>
-                            <td class="brnone">@item.ADM_USE_YN</td>
-                        </tr>
+                    @{
+                        var count = ViewBag.TotalRecord - (ViewBag.PAGE - 1) * ViewBag.PAGESIZE;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="brnone">@count.ToString("#,##0")</td>
+                                <td><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_ID</a></td>
+                                <td><a href="/AdminUser/Edit?SEL_ADM_ID=@item.ADM_ID" class="btn btn-primary small">@item.ADM_NAME</a></td>
+                                <td>@item.ADM_GRADE</td>
+                                <td>@item.ADM_EMAIL</td>
+                                <td>@item.ADM_PHONE</td>
+                                <td>@item.ADM_INS_DATE</td>
+                                <td class="brnone">@item.ADM_USE_YN</td>
+                            </tr>
+                        
+                            count = count - 1;
+                        }
                     }
                 </tbody>
             </table>
         </div>
 
 
-        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = "SEARCHCOL=" + ViewBag.SEARCHCOL + "&SEARCHKEYWORD=" + ViewBag.SEARCHKEYWORD + "&SORTCOL=" + ViewBag.SORTCOL + "&SORTDIR=" + ViewBag.SORTDIR });}
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = @QueryStr });}
 
 
         <!--버튼모음-->
