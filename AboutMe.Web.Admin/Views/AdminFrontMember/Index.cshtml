@@ -1,0 +1,355 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_FRONT_MEMBER_VIEW_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+ }
+
+@{
+
+    var QueryStr = "";
+    QueryStr = QueryStr + "PAGESIZE=" + ViewBag.PAGESIZE;
+    QueryStr = QueryStr + "&SORTCOL=" + ViewBag.SORTCOL;
+    QueryStr = QueryStr + "&SORTDIR=" + ViewBag.SORTDIR;
+
+    QueryStr = QueryStr + "&DATE_FROM=" + ViewBag.DATE_FROM;
+    QueryStr = QueryStr + "&DATE_TO=" + ViewBag.DATE_TO;
+    QueryStr = QueryStr + "&GBN=" + ViewBag.GBN;
+    QueryStr = QueryStr + "&GRADE_LIST=" + ViewBag.GRADE_LIST;
+    QueryStr = QueryStr + "&IS_RETIRE=" + ViewBag.IS_RETIRE;
+
+    QueryStr = QueryStr + "&SEARCH_COL=" + ViewBag.SEARCH_COL;
+    QueryStr = QueryStr + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
+        
+    @helper fGradeName(string gradeCode)
+    {
+        var grade_name = gradeCode;
+        switch (gradeCode)
+        {
+            case "B": grade_name = "브론즈";
+                break;
+            case "S": grade_name = "실버";
+                break;
+            case "G": grade_name = "골드";
+                break;
+            case "V": grade_name = "VIP";
+                break;
+
+        }
+        <div>@grade_name</div>
+    }
+
+    @helper fIsRerireNAME(string is_retire)
+    {
+        var isretire_name = is_retire;
+        switch (is_retire)
+        {
+            case "Y": isretire_name = "탈퇴";
+                break;
+            case "N": isretire_name = "활동";
+                break;
+
+        }
+        <div>@isretire_name</div>
+    }
+
+    @helper fM_GBN_NAME(string m_gbn)
+    {
+        var m_gbn_name = m_gbn;
+        switch (m_gbn)
+        {
+            case "A": m_gbn_name = "일반회원";
+                break;
+            case "S": m_gbn_name = "임직원";
+                break;
+
+        }
+        <div>@m_gbn_name</div>
+    }
+
+    @helper fCheckBoxChecked(string strList, string strChked)
+    {
+        if (strList != null && strChked != null)
+        {
+            if (strList.Contains(strChked))
+            {
+                @(" checked")
+            }
+        }
+
+    }
+
+    @helper fSelectBoxSelecteded(string str1, string str2)
+    {
+        if (str1 != null && str2 != null)
+        {
+            if (str1 == str2)
+            {
+                @(" selected")
+            }
+        }
+
+    }
+    
+}
+
+
+
+
+
+
+@section Scripts{
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">수퍼어드민</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원관리</strong>
+        </div>
+        <!--//path-->
+
+        <div class="tar mb10">
+            <!--a class="btn btn-default middium" href="/AdminFrontMember/Insert">회원 등록</a>-->
+            <a class="btn btn-default middium" href="javascript:fExcel();">EXEL 다운로드</a>
+        </div>
+
+        <div class="panel">
+            <h3 class="sub-header">회원관리</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 회원을 수정/삭제 합니다.</li>
+                    <li>· 회원을 수정/삭제 합니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>회원관리</h4>
+
+            <script>
+                function fGoSearch()
+                {
+                    var f = document.frmSearch;
+                    fMakeGRADE_LIST();
+                    f.PAGE.value = "1";
+                    f.action = "/AdminFrontMember/Index";
+                    f.method = "post";
+                    f.submit();
+                }
+
+                function fExcel()
+                {
+                    var f = document.frmSearch;
+                    fMakeGRADE_LIST();
+                    f.action = "/AdminFrontMember/Excel";
+                    f.method = "post";
+                    f.submit();
+                }
+
+                function fMakeGRADE_LIST()
+                {
+                    var f = document.frmSearch;
+                    var strLIST="";
+                    for (var i = 0; i < f.GRADE.length; i++) {
+                        if (f.GRADE[i].checked) {
+                            if (strLIST == "")
+                                strLIST = f.GRADE[i].value;
+                            else
+                                strLIST = strLIST + "," + f.GRADE[i].value;
+                        }
+                    }
+
+                    f.GRADE_LIST.value = strLIST;
+                }
+            </script>
+
+            <form name="frmSearch" method="post" action="">
+                <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
+                <input type="hidden" name="GRADE_LIST" value="@ViewBag.GRADE_LIST">
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:auto" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="vam">가입기간</th>
+                            <td class="condition_seacth">
+                                <input type="text" class="input-sm text-left" name="DATE_FROM" value="@ViewBag.DATE_FROM">
+                                ~
+                                <input type="text" class="input-sm text-left" name="DATE_TO" value="@ViewBag.DATE_TO">  (YYYY-MM-DD)  <==추후 Calendar
+                            </td>
+                            <td class="condition_seacth" rowspan="4">
+                                <a href="javascript:fGoSearch();" class="btn btn-default small">search</a> 
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row" class="vam">검색조건</th>
+                            <td class="condition_seacth">
+                                <select name="SEARCH_COL" style="width:170px;">
+                                    <option value="M_ID" @fSelectBoxSelecteded(ViewBag.SEARCH_COL,"M_ID") >아이디</option>
+                                    <option value="M_NAME" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_NAME") >이름</option>
+                                    <option value="M_EMAIL" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_EMAIL") >EMAIL</option>
+                                    <option value="M_MOBILE" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_MOBILE") >핸드폰</option>
+                                    <option value="M_PHONE" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_PHONE")>전화번호</option>
+                                </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="vam">임직원구분/등급</th>
+                            <td class="condition_seacth">
+                                <select name="GBN" style="width:170px;">
+                                    <option value="" @fSelectBoxSelecteded(ViewBag.GBN, "") >전체(임직원+일반회원)</option>
+                                    <option value="A" @fSelectBoxSelecteded(ViewBag.GBN, "A") >일반회원</option>
+                                    <option value="S" @fSelectBoxSelecteded(ViewBag.GBN, "S") >임직원</option>
+                                </select>
+                                &nbsp;/&nbsp;
+                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="B" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "B") /><span class="txt mr5">브론즈</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="S" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "S") /><span class="txt mr5">실버</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="G" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "G") /><span class="txt mr5">골드</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="V" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "V") /><span class="txt mr5">VIP</span></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="vam">탈퇴여부</th>
+                            <td class="condition_seacth">
+                                <select name="IS_RETIRE" style="width:170px;">
+                                    <option value="" @fSelectBoxSelecteded(ViewBag.IS_RETIRE, "") >전체(활동+탈퇴)</option>
+                                    <option value="N" @fSelectBoxSelecteded(ViewBag.IS_RETIRE, "N")>활동회원</option>
+                                    <option value="Y" @fSelectBoxSelecteded(ViewBag.IS_RETIRE, "Y")>탈퇴회원</option>
+                                </select>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+                <div class="">
+                    <table class="table table_row">
+                        <colgroup><col style="width:12%" /><col style="width:auto" /><col style="width:12%" /><col style="width:auto" /></colgroup>
+                        <tr>
+                            <th>총검색</th>
+                            <td>@ViewBag.TotalRecord.ToString("#,##0") 건</td>
+                            <th>출력수</th>
+                            <td>
+                                <select name="PAGESIZE" onchange="javascript:fGoSearch();">
+                                    <option value="10" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "10")>10개</option>
+                                    <option value="20" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "20")>20개</option>
+                                    <option value="50" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "50")>50개</option>
+                                    <option value="100" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "100")>100개</option>
+                                    <option value="200" @fSelectBoxSelecteded(Convert.ToString(ViewBag.PAGESIZE), "200")>200개</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            </form>
+
+
+
+
+        </div>
+
+
+        <div class="panel">
+            <h4>회원 리스트</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup><col /><col  /><col  /><col  /><col  /><col /><col /><col /><col /><col /></colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone">No</th>
+                        <th scope="col">아이디</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">임직원구분</th>
+                        <th scope="col">등급</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">전화</th>
+
+                        <th scope="col">포인트</th>
+                        <th scope="col">가입일</th>
+                        <th scope="col" class="brnone">탈퇴여부</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        if (Model.Count() < 1)
+                        {
+                            <tr>
+                                <td colspan="10" class="brnone">No data...</td>
+                            </tr>
+                        }
+                    }
+                    
+                    @{
+                        var count = ViewBag.TotalRecord - (ViewBag.PAGE - 1) * ViewBag.PAGESIZE;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="brnone">@count.ToString("#,##0")</td>
+                                <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID" class="btn btn-primary small">@item.M_ID</a></td>
+                                <td><a href="/AdminFrontMember/Edit?SEL_ADM_ID=@item.M_ID" class="btn btn-primary small">@item.M_NAME</a></td>
+                                <td>@fM_GBN_NAME(@item.M_GBN)</td>
+                                <td>@fGradeName(@item.M_GRADE)</td>
+                                <td>@item.M_EMAIL</td>
+                                <td>@item.M_MOBILE</td>
+                                <td>@item.M_POINT.ToString("#,##0")</td>
+                                <td>@item.M_CREDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td class="brnone">@fIsRerireNAME(@item.M_IS_RETIRE)</td>
+                            </tr>
+                            count = count - 1;
+                        }
+
+                    }
+    
+                </tbody>
+            </table>
+        </div>
+
+
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = @QueryStr });}
+
+
+        <!--버튼모음-->
+        <!--
+        ************************************************<br />
+        버튼가이드 <br /><br />
+        대버튼 : <br />
+        <a href="#" class="btn btn-default large">확인</a>
+        <a href="#" class="btn btn-primary large">취소</a>
+        <br /><br />
+        중버튼 : <br />
+        <a href="#" class="btn btn-default middium">편집중인 설정으로 저장</a>
+        <br /><br />
+        소버튼 : <br />
+        <a href="#" class="btn btn-default small">저장</a>
+        <a href="#" class="btn btn-success small">수정</a>
+        <a href="#" class="btn btn-primary small">삭제</a><br />
+        ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑<br />
+        3가지 타입 버튼이 필요할때 적용<br />
+        <a href="#" class="btn btn-info small">추가</a>
+            -->
+        <!--//버튼모음-->
+
+    </div>
+}
+

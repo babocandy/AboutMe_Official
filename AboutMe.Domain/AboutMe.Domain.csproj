@@ -151,6 +151,27 @@
     <Compile Include="Entity\AdminEtc\TB_ADMIN_MEMBER.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminFrontMember\ModelAdminFrontMember.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminFrontMember.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminFrontMember\ModelAdminFrontMember.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminFrontMember\ModelAdminFrontMember.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminFrontMember.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminFrontMember\SP_ADMIN_FRONT_COMMON_CNT_Result.cs">
+      <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminFrontMember\SP_ADMIN_FRONT_MEMBER_VIEW_Result.cs">
+      <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminProduct\AdminProduct_EntityPartial.cs" />
     <Compile Include="Entity\AdminProduct\AdminProduct_Metadata.cs" />
     <Compile Include="Entity\AdminProduct\ModelAdminProduct.Context.cs">
@@ -239,6 +260,8 @@
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
     <Compile Include="Service\AdminEtc\IAdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\IAdminUserService.cs" />
+    <Compile Include="Service\AdminFrontMember\AdminFrontMemberService.cs" />
+    <Compile Include="Service\AdminFrontMember\IAdminFrontMemberService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
     <Compile Include="Service\Faq\FaqService.cs" />
@@ -256,7 +279,9 @@
     <Folder Include="Service\Product\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="Entity\AdminEtc\ModelAdminEtc.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelAdminEtc.Designer.cs</LastGenOutput>
@@ -278,6 +303,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelAdminProduct.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\AdminFrontMember\ModelAdminFrontMember.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminFrontMember.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminFrontMember\ModelAdminFrontMember.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminFrontMember.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminFrontMember.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminFrontMember\ModelAdminFrontMember.edmx.diagram">
+      <DependentUpon>ModelAdminFrontMember.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminFrontMember\ModelAdminFrontMember.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminFrontMember.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminFrontMember.cs</LastGenOutput>
+    </None>
     <None Include="Entity\AdminProduct\ModelAdminProduct.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelAdminProduct.edmx</DependentUpon>
