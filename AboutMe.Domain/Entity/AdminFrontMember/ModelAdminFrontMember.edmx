@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_FRONT_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
+          <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
+          <Parameter Name="GRADE_LIST" Type="varchar" Mode="In" />
+          <Parameter Name="GBN" Type="varchar" Mode="In" />
+          <Parameter Name="IS_RETIRE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_PWD_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_PWD" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
+          <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
+          <Parameter Name="GRADE_LIST" Type="varchar" Mode="In" />
+          <Parameter Name="GBN" Type="varchar" Mode="In" />
+          <Parameter Name="IS_RETIRE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_GRADE" Type="varchar" Mode="In" />
+          <Parameter Name="M_MOBILE" Type="varchar" Mode="In" />
+          <Parameter Name="M_PHONE" Type="varchar" Mode="In" />
+          <Parameter Name="M_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="M_ZIPCODE" Type="varchar" Mode="In" />
+          <Parameter Name="M_ADDR1" Type="varchar" Mode="In" />
+          <Parameter Name="M_ADDR2" Type="varchar" Mode="In" />
+          <Parameter Name="M_ISSMS" Type="char" Mode="In" />
+          <Parameter Name="M_ISEMAIL" Type="char" Mode="In" />
+          <Parameter Name="M_ISDM" Type="char" Mode="In" />
+          <Parameter Name="M_SKIN_TROUBLE_CD" Type="char" Mode="In" />
+          <Parameter Name="M_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="M_STAFF_COMAPNY" Type="varchar" Mode="In" />
+          <Parameter Name="M_STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_IS_RETIRE" Type="varchar" Mode="In" />
+          <Parameter Name="M_DEL_REASON" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AboutMeModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AboutMeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AdminFrontMemberEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_PWD_UPD">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_PWD" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_SEL" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="GRADE_LIST" Mode="In" Type="String" />
+            <Parameter Name="GBN" Mode="In" Type="String" />
+            <Parameter Name="IS_RETIRE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_UPD">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_GRADE" Mode="In" Type="String" />
+            <Parameter Name="M_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="M_PHONE" Mode="In" Type="String" />
+            <Parameter Name="M_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="M_ZIPCODE" Mode="In" Type="String" />
+            <Parameter Name="M_ADDR1" Mode="In" Type="String" />
+            <Parameter Name="M_ADDR2" Mode="In" Type="String" />
+            <Parameter Name="M_ISSMS" Mode="In" Type="String" />
+            <Parameter Name="M_ISEMAIL" Mode="In" Type="String" />
+            <Parameter Name="M_ISDM" Mode="In" Type="String" />
+            <Parameter Name="M_SKIN_TROUBLE_CD" Mode="In" Type="String" />
+            <Parameter Name="M_GBN" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_COMAPNY" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="M_IS_RETIRE" Mode="In" Type="String" />
+            <Parameter Name="M_DEL_REASON" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_VIEW" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="GRADE_LIST" Mode="In" Type="String" />
+            <Parameter Name="GBN" Mode="In" Type="String" />
+            <Parameter Name="IS_RETIRE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_ADMIN_FRONT_MEMBER_VIEW_Result">
+          <Property Type="Int32" Name="M_NO" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="M_PWD" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="M_GRADE" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="M_SEX" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_BIRTHDAY" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_MOBILE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="M_PHONE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="M_EMAIL" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_ZIPCODE" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="M_ADDR1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_ADDR2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_ISSMS" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_ISEMAIL" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_ISDM" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="M_POINT" Nullable="false" />
+          <Property Type="DateTime" Name="M_CREDATE" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="M_VISITCNT" Nullable="false" />
+          <Property Type="DateTime" Name="M_LASTVISITDATE" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="M_UPDATEDATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="M_JOIN_MODE" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="M_DI" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_SKIN_TROUBLE_CD" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="M_AGREE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_AGREE2" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="M_STAFF_COMAPNY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="M_STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="M_SFAFF_APPROV_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="M_IS_RETIRE" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="M_DEL_DATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="M_DEL_POINT" Nullable="false" />
+          <Property Type="String" Name="M_DEL_REASON" Nullable="true" MaxLength="2000" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModelStoreContainer" CdmEntityContainer="AdminFrontMemberEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_PWD_UPD" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_PWD_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_SEL" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result">
+                <ScalarProperty Name="M_NO" ColumnName="M_NO" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_PWD" ColumnName="M_PWD" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_MOBILE" ColumnName="M_MOBILE" />
+                <ScalarProperty Name="M_PHONE" ColumnName="M_PHONE" />
+                <ScalarProperty Name="M_EMAIL" ColumnName="M_EMAIL" />
+                <ScalarProperty Name="M_ZIPCODE" ColumnName="M_ZIPCODE" />
+                <ScalarProperty Name="M_ADDR1" ColumnName="M_ADDR1" />
+                <ScalarProperty Name="M_ADDR2" ColumnName="M_ADDR2" />
+                <ScalarProperty Name="M_ISSMS" ColumnName="M_ISSMS" />
+                <ScalarProperty Name="M_ISEMAIL" ColumnName="M_ISEMAIL" />
+                <ScalarProperty Name="M_ISDM" ColumnName="M_ISDM" />
+                <ScalarProperty Name="M_POINT" ColumnName="M_POINT" />
+                <ScalarProperty Name="M_CREDATE" ColumnName="M_CREDATE" />
+                <ScalarProperty Name="M_VISITCNT" ColumnName="M_VISITCNT" />
+                <ScalarProperty Name="M_LASTVISITDATE" ColumnName="M_LASTVISITDATE" />
+                <ScalarProperty Name="M_UPDATEDATE" ColumnName="M_UPDATEDATE" />
+                <ScalarProperty Name="M_JOIN_MODE" ColumnName="M_JOIN_MODE" />
+                <ScalarProperty Name="M_DI" ColumnName="M_DI" />
+                <ScalarProperty Name="M_SKIN_TROUBLE_CD" ColumnName="M_SKIN_TROUBLE_CD" />
+                <ScalarProperty Name="M_AGREE" ColumnName="M_AGREE" />
+                <ScalarProperty Name="M_AGREE2" ColumnName="M_AGREE2" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="M_STAFF_COMAPNY" ColumnName="M_STAFF_COMAPNY" />
+                <ScalarProperty Name="M_STAFF_ID" ColumnName="M_STAFF_ID" />
+                <ScalarProperty Name="M_SFAFF_APPROV_DATE" ColumnName="M_SFAFF_APPROV_DATE" />
+                <ScalarProperty Name="M_IS_RETIRE" ColumnName="M_IS_RETIRE" />
+                <ScalarProperty Name="M_DEL_DATE" ColumnName="M_DEL_DATE" />
+                <ScalarProperty Name="M_DEL_POINT" ColumnName="M_DEL_POINT" />
+                <ScalarProperty Name="M_DEL_REASON" ColumnName="M_DEL_REASON" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_VIEW" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result">
+                <ScalarProperty Name="M_NO" ColumnName="M_NO" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_PWD" ColumnName="M_PWD" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_MOBILE" ColumnName="M_MOBILE" />
+                <ScalarProperty Name="M_PHONE" ColumnName="M_PHONE" />
+                <ScalarProperty Name="M_EMAIL" ColumnName="M_EMAIL" />
+                <ScalarProperty Name="M_ZIPCODE" ColumnName="M_ZIPCODE" />
+                <ScalarProperty Name="M_ADDR1" ColumnName="M_ADDR1" />
+                <ScalarProperty Name="M_ADDR2" ColumnName="M_ADDR2" />
+                <ScalarProperty Name="M_ISSMS" ColumnName="M_ISSMS" />
+                <ScalarProperty Name="M_ISEMAIL" ColumnName="M_ISEMAIL" />
+                <ScalarProperty Name="M_ISDM" ColumnName="M_ISDM" />
+                <ScalarProperty Name="M_POINT" ColumnName="M_POINT" />
+                <ScalarProperty Name="M_CREDATE" ColumnName="M_CREDATE" />
+                <ScalarProperty Name="M_VISITCNT" ColumnName="M_VISITCNT" />
+                <ScalarProperty Name="M_LASTVISITDATE" ColumnName="M_LASTVISITDATE" />
+                <ScalarProperty Name="M_UPDATEDATE" ColumnName="M_UPDATEDATE" />
+                <ScalarProperty Name="M_JOIN_MODE" ColumnName="M_JOIN_MODE" />
+                <ScalarProperty Name="M_DI" ColumnName="M_DI" />
+                <ScalarProperty Name="M_SKIN_TROUBLE_CD" ColumnName="M_SKIN_TROUBLE_CD" />
+                <ScalarProperty Name="M_AGREE" ColumnName="M_AGREE" />
+                <ScalarProperty Name="M_AGREE2" ColumnName="M_AGREE2" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="M_STAFF_COMAPNY" ColumnName="M_STAFF_COMAPNY" />
+                <ScalarProperty Name="M_STAFF_ID" ColumnName="M_STAFF_ID" />
+                <ScalarProperty Name="M_SFAFF_APPROV_DATE" ColumnName="M_SFAFF_APPROV_DATE" />
+                <ScalarProperty Name="M_IS_RETIRE" ColumnName="M_IS_RETIRE" />
+                <ScalarProperty Name="M_DEL_DATE" ColumnName="M_DEL_DATE" />
+                <ScalarProperty Name="M_DEL_POINT" ColumnName="M_DEL_POINT" />
+                <ScalarProperty Name="M_DEL_REASON" ColumnName="M_DEL_REASON" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

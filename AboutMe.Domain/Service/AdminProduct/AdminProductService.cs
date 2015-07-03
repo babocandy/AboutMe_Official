@@ -33,19 +33,33 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
-        #region 1depth 카테고리 등록 OUTPUT PARAMETER적용
-        public int InsertAdminCategoryOne(string DEPTH1_NAME)
+        #region 1depth 카테고리 등록
+        public void InsertAdminCategoryOne(string DEPTH1_NAME)
         {
-
-            int i = 3 ;
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
-
-                ObjectParameter objParam = new ObjectParameter("INTRESULT", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
-                i = AdminProductContext.SP_ADMIN_CATEGORY_ONE_INS(DEPTH1_NAME, objParam);
-                
+                AdminProductContext.SP_ADMIN_CATEGORY_ONE_INS(DEPTH1_NAME);
             }
-            return i;
+        }
+        #endregion
+
+        #region 2depth 카테고리 등록
+        public void InsertAdminCategoryTwo(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_NAME)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                AdminProductContext.SP_ADMIN_CATEGORY_TWO_INS(CATE_GBN, DEPTH1_CODE, DEPTH2_NAME);
+            }
+        }
+        #endregion
+
+        #region 3depth 카테고리 등록
+        public void InsertAdminCategoryThree(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE, string DEPTH3_NAME)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                AdminProductContext.SP_ADMIN_CATEGORY_THREE_INS(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE, DEPTH3_NAME);
+            }
         }
         #endregion
 
@@ -65,7 +79,7 @@ namespace AboutMe.Domain.Service.AdminProduct
 
         #endregion
 
-        #region 카테고리 수정
+        #region 카테고리 수정 1depth
         public void UpdateAdminCategoryOne(Nullable<int> IDX, string DEPTH1_NAME, string DISPLAY_YN, Nullable<int> RE_SORT)
         {
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
@@ -74,6 +88,27 @@ namespace AboutMe.Domain.Service.AdminProduct
             }
         }
         #endregion
+
+        #region 카테고리 수정 2depth
+        public void UpdateAdminCategoryTwo(Nullable<int> IDX, string DEPTH2_NAME, string DISPLAY_YN, Nullable<int> RE_SORT)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                AdminProductContext.SP_ADMIN_CATEGORY_TWO_UPD(IDX, DEPTH2_NAME, DISPLAY_YN, RE_SORT);
+            }
+        }
+        #endregion
+
+        #region 카테고리 수정 3depth
+        public void UpdateAdminCategoryThree(Nullable<int> IDX, string DEPTH3_NAME, string DISPLAY_YN, Nullable<int> RE_SORT)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                AdminProductContext.SP_ADMIN_CATEGORY_THREE_UPD(IDX, DEPTH3_NAME, DISPLAY_YN, RE_SORT);
+            }
+        }
+        #endregion
+
 
         #region 카테고리 삭제
         public void DeleteAdminCategoryOne(Nullable<int> IDX)
@@ -105,18 +140,15 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
-
-
-
-        #region 상품 리스트
-        public List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList()
+        #region depth별 카테고리 리스트 DISPLAY_YN = N 포함
+        public List<SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result> GetAdminCategoryDeptListAll(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE)
         {
 
-            List<SP_ADMIN_PRODUCT_SEL_Result> lst = new List<SP_ADMIN_PRODUCT_SEL_Result>();
+            List<SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result> lst = new List<SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>();
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
                 /**try {**/
-                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL().ToList();
+                lst = AdminProductContext.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE).ToList();
                 /** }catch()
                  {
                        AdmEtcContext.Dispose();
@@ -124,6 +156,52 @@ namespace AboutMe.Domain.Service.AdminProduct
             }
 
             return lst;
+
+        }
+        #endregion
+
+
+
+
+        #region 상품 리스트
+        public List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList(ProductSearch_Entity productSearch_Entity)
+        {
+
+            List<SP_ADMIN_PRODUCT_SEL_Result> lst = new List<SP_ADMIN_PRODUCT_SEL_Result>();
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                /**try {**/
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL(productSearch_Entity.Page, productSearch_Entity.PageSize, productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayYn).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region 상품 카운트
+        public int GetAdminProductCnt(ProductSearch_Entity productSearch_Entity)
+        {
+            List<SP_ADMIN_PRODUCT_CNT_Result> lst = new List<SP_ADMIN_PRODUCT_CNT_Result>();
+            int productCount = -1;
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_CNT(productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayYn).ToList();
+                if (lst != null && lst.Count > 0)
+                    productCount = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return productCount;
 
         }
         #endregion
@@ -168,8 +246,6 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
 
         #endregion
-
-        
 
         #region 상품 VIEW
 

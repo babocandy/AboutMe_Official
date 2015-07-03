@@ -8,6 +8,14 @@
 
     <script language="javascript">
 
+        $(function () {
+            //ajaxSelectCateCode();
+            ajaxSelectCateCodeJavascriptInit();
+            $("#cs_category1").hide(); //stone 설정 화면 hide
+            $("#cs_category2").hide(); //stone 설정 화면 hide
+
+        });
+
         function formChk() {
         
             var f = document.bform;
@@ -439,17 +447,6 @@
             });
         }
 
-        $(function() {
-            //ajaxSelectCateCode();
-            ajaxSelectCateCodeJavascriptInit();
-            $("#cs_category1").hide(); //stone 설정 화면 hide
-            $("#cs_category2").hide(); //stone 설정 화면 hide
-
-        });
-
-
-
-
         //일반몰 할인가에 맞는 할인율 
         //소수점 버림 ex>29.624 => 29%
         function getUpdateDiscountRate() {
@@ -660,13 +657,13 @@
             <a class="btn btn-primary small" href="/AdminProduct/ProductIndex">목록</a>
         </div>
 }
-        <script type="text/javascript" src="/AboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/cmsManager/aboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
         <script type="text/javascript">
             var oEditors = [];
             nhn.husky.EZCreator.createInIFrame({
                 oAppRef: oEditors,
                 elPlaceHolder: "P_INFO_DETAIL_WEB",
-                sSkinURI: "/AboutCom/smarteditor/SmartEditor2Skin.html",
+                sSkinURI: "/cmsManager/aboutCom/smarteditor/SmartEditor2Skin.html",
                 fCreator: "createSEditor2"
             });
 
@@ -676,7 +673,7 @@
             nhn.husky.EZCreator.createInIFrame({
                 oAppRef: oEditors2,
                 elPlaceHolder: "P_INFO_DETAIL_MOBILE",
-                sSkinURI: "/AboutCom/smarteditor/SmartEditor2Skin.html",
+                sSkinURI: "/cmsManager/aboutCom/smarteditor/SmartEditor2Skin.html",
                 fCreator: "createSEditor2"
             });
 

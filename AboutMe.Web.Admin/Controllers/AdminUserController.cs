@@ -16,7 +16,7 @@ using System.Web.UI;
 
 using AboutMe.Web.Admin.Common.Filters;
 
-
+//관리자 관리 ctl --jsh
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminUserController : BaseAdminController
@@ -36,7 +36,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
         
         //관리자 로그인 폼
-        public ActionResult Login(string ERR_CODE="",string ERR_MSG="")
+        public ActionResult Login(string ERR_CODE = "", string ERR_MSG = "", string RedirectUrl="")
         {
             //세션 확인용
             /*
@@ -48,15 +48,17 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.ADM_PHONE = cookiesession.GetSecretSession("ADM_PHONE");
             */
 
+
+            this.ViewBag.RedirectUrl = RedirectUrl;
+
             this.ViewBag.ERR_CODE = ERR_CODE;
             this.ViewBag.ERR_MSG = ERR_MSG;
-            
-            AdminInfo adminInfo = new AdminInfo();
-            this.ViewBag.ADM_ID = adminInfo.getADM_ID();
-            this.ViewBag.ADM_NAME = adminInfo.getADM_NAME();
-            this.ViewBag.ADM_GRADE = adminInfo.getADM_GRADE();
-            this.ViewBag.ADM_EMAIL = adminInfo.getADM_EMAIL();
-            this.ViewBag.ADM_PHONE = adminInfo.getADM_PHONE();
+
+            this.ViewBag.ADM_ID = AdminUserInfo.GetAdmId();
+            this.ViewBag.ADM_NAME = AdminUserInfo.GetAdmName();
+            this.ViewBag.ADM_GRADE = AdminUserInfo.GetAdmGrade();
+            this.ViewBag.ADM_EMAIL = AdminUserInfo.GetAdmEmail();
+            this.ViewBag.ADM_PHONE = AdminUserInfo.GetAdmPhone();
 
 
             return View();
@@ -65,7 +67,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         //관리자 로그인 처리
-        public ActionResult LoginProc(string ID="" ,string PW="")
+        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "")
         {
             //1.넘어온 인자값 확인 
             if (ID == "" || PW == "")
@@ -108,16 +110,21 @@ namespace AboutMe.Web.Admin.Controllers
                 cookiesession.SetSecretSession("ADM_EMAIL", result_list[0].ADM_EMAIL);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("ADM_PHONE", result_list[0].ADM_PHONE);  //로그인 세션 세팅
 
-                //세션 확인용
-                AdminInfo adminInfo = new AdminInfo();
-                this.ViewBag.ADM_ID = adminInfo.getADM_ID();
-                this.ViewBag.ADM_NAME = adminInfo.getADM_NAME();
-                this.ViewBag.ADM_GRADE = adminInfo.getADM_GRADE();
-                this.ViewBag.ADM_EMAIL = adminInfo.getADM_EMAIL();
-                this.ViewBag.ADM_PHONE = adminInfo.getADM_PHONE();                  
+
+                if (RedirectUrl!="")
+                    return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
+
+
+                //세션 확인용-ssw
+                this.ViewBag.ADM_ID = AdminUserInfo.GetAdmId();
+                this.ViewBag.ADM_NAME = AdminUserInfo.GetAdmName();
+                this.ViewBag.ADM_GRADE = AdminUserInfo.GetAdmGrade();
+                this.ViewBag.ADM_EMAIL = AdminUserInfo.GetAdmEmail();
+                this.ViewBag.ADM_PHONE = AdminUserInfo.GetAdmPhone();
+
             }
 
-            return RedirectToAction("Index", "AdminUser"); // 로그인 성공
+            return RedirectToAction("Index", "AdminFrontMember"); // 로그인 성공
             //return View();
         }
 
@@ -133,49 +140,60 @@ namespace AboutMe.Web.Admin.Controllers
 
             cookiesession.ClearSession(); //session Abandon
 
-            //확인용/
+            //확인용 -jsh
+            /*
             AdminInfo adminInfo = new AdminInfo();
             this.ViewBag.ADM_ID = adminInfo.getADM_ID();
             this.ViewBag.ADM_NAME = adminInfo.getADM_NAME();
             this.ViewBag.ADM_GRADE = adminInfo.getADM_GRADE();
             this.ViewBag.ADM_EMAIL = adminInfo.getADM_EMAIL();
             this.ViewBag.ADM_PHONE = adminInfo.getADM_PHONE();
+            */
+            //세션 확인용-ssw
+            this.ViewBag.ADM_ID = AdminUserInfo.GetAdmId();
+            this.ViewBag.ADM_NAME = AdminUserInfo.GetAdmName();
+            this.ViewBag.ADM_GRADE = AdminUserInfo.GetAdmGrade();
+            this.ViewBag.ADM_EMAIL = AdminUserInfo.GetAdmEmail();
+            this.ViewBag.ADM_PHONE = AdminUserInfo.GetAdmPhone();
 
             return RedirectToAction("Login", "AdminUser"); // 로그인 페이지로 이동
             //return View();
         }
 
         // GET: AdminUser 관리자관리-목록 /AdminUser/Index/
-        public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10)
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult Index(string SEARCHCOL = "", string SEARCHKEYWORD = "", string SORTCOL = "ADM_INS_DATE", string SORTDIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
         {
             //return View();
-            this.ViewBag.PageSize = PageSize;
-            this.ViewBag.SearchCol = SearchCol;
-            this.ViewBag.SearchKeyword = SearchKeyword;
-            this.ViewBag.SortCol = SortCol;
-            this.ViewBag.SortDir = SortDir;
+            this.ViewBag.PageSize = PAGESIZE;
+            this.ViewBag.SearchCol = SEARCHCOL;
+            this.ViewBag.SearchKeyword = SEARCHKEYWORD;
+            this.ViewBag.SortCol = SORTCOL;
+            this.ViewBag.SortDir = SORTDIR;
 
             //AdminUserService srv = new AdminUserService();
             int TotalRecord = 0;
-            TotalRecord = _AdminUserService.GetAdminMemberListCnt(SearchCol, SearchKeyword);
+            TotalRecord = _AdminUserService.GetAdminMemberListCnt(SEARCHCOL, SEARCHKEYWORD);
             //TotalRecord = srv.GetAdminMemberListCnt(SearchCol, SearchKeyword);
 
             this.ViewBag.TotalRecord = TotalRecord;
             //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
-            this.ViewBag.Page = Page;
+            this.ViewBag.Page = PAGE;
 
 
-            return View(_AdminUserService.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList());
+            return View(_AdminUserService.GetAdminMemberList(SEARCHCOL, SEARCHKEYWORD, SORTCOL, SORTDIR, PAGE, PAGESIZE).ToList());
             //return View(srv.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList());
         }
 
         // GET: AdminUser 관리자관리-등록폼 /AdminUser/Inert/
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Insert()
         {
             return View();
          }
         // GET: AdminUser 관리자관리-등록저장 /AdminUser/InserOK/
-        public ActionResult InsertOK(string ADM_ID = "", string ADM_NAME = "", string ADM_PWD = "", string ADM_GRADE = "A",string ADM_EMAIL = "",string ADM_PHONE = "",string ADM_USE_YN = "N")
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult InsertOK(string ADM_ID = "", string ADM_NAME = "", string ADM_PWD = "", string ADM_GRADE = "A", string ADM_EMAIL = "", string ADM_PHONE = "", string ADM_USE_YN = "N")
         {
 
             int iERR_CODE = 0;
@@ -215,7 +233,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         // GET: AdminUser 관리자관리-수정폼 /AdminUser/Edit/
-        public ActionResult Edit(string SEL_ADM_ID="")
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult Edit(string SEL_ADM_ID = "")
         {
             string ERR_MSG = "";
             if (SEL_ADM_ID == "")
@@ -232,6 +251,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         // GET: AdminUser 관리자관리-수정저장 /AdminUser/EditOK/
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK(string ADM_ID = "", string ADM_NAME = "", string ADM_PWD = "", string ADM_GRADE = "A", string ADM_EMAIL = "", string ADM_PHONE = "", string ADM_USE_YN = "N")
         {
 
@@ -282,6 +302,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         // GET: AdminUser 관리자관리-목록엑셀  /AdminUser/Excel/
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Excel(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10000000)
         {
 
@@ -331,6 +352,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
         // GET: AdminUser 관리자관리-목록엑셀  /AdminUser/Excel2/  
+        [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Excel2(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10000000)
         {
 

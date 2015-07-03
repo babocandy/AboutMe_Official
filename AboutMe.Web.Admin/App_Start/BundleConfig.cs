@@ -28,7 +28,8 @@ namespace AboutMe.Web.Admin
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
-            "~/Scripts/kendo/2015.1.318/kendo.ui.core.min.js"));
+            "~/Scripts/kendo/2015.1.318/kendo.all.min.js",
+            "~/Scripts/kendo/2015.1.318/kendo.aspnetmvc.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
             "~/Content/kendo/2015.1.318/kendo.common.min.css",
