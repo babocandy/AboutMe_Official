@@ -12,14 +12,20 @@ namespace AboutMe.Web.Admin.Controllers
     public class AdmTestController : BaseAdminController
     {
         // GET: AdmTest
-        //[CustomAuthorize(Roles = "S", Roles2 = "S,A,B")]
+        //[CustomAuthorize(Roles = "S")]
         //[CustomAuthorizeOther(Roles = UserType.User)]
-     
-       
-        [CustomAuthorize()]
+
+
+        [CustomAuthorize(Roles = "S")]
         public ActionResult Index()
         {
             return View();
+        }
+
+        public RedirectResult Test001()
+        {
+            
+            return Redirect("/test1.aspx");
         }
     }
 }
