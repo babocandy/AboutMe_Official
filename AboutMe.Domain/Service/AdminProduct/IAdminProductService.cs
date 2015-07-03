@@ -38,7 +38,7 @@ namespace AboutMe.Domain.Service.AdminProduct
 
         #region 상품
         //상품 리스트
-        List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList(ProductSearch_Entity productSearch_Entity);
+        List<SP_ADMIN_PRODUCT_LIST_Result> GetAdminProductList(ProductSearch_Entity productSearch_Entity);
         //상품 카운트
         int GetAdminProductCnt(ProductSearch_Entity productSearch_Entity);
         //상품 등록

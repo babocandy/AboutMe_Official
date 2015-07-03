@@ -20,7 +20,10 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string SearchKeyword { get; set; }
         public string cateCode { get; set; }
         public string iconYn { get; set; }
-        public string searchDisplayYn { get; set; }
+        public string searchDisplayY { get; set; }
+        public string searchDisplayN { get; set; }
+        public string soldoutYn { get; set; }
+        public string POutletYn { get; set; }
         [DefaultValue(1)]
         public int Page { get; set; }
         [DefaultValue(10)]

@@ -352,21 +352,23 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 리스트
         public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
-
             this.ViewBag.PageSize = productSearch_Entity.PageSize;
             this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
             this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
             this.ViewBag.cateCode = productSearch_Entity.cateCode;
             this.ViewBag.iconYn = productSearch_Entity.iconYn;
-            this.ViewBag.searchDisplayYn = productSearch_Entity.searchDisplayYn;
-
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+            
             int TotalRecord = 0;
             TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
             
             this.ViewBag.TotalRecord = TotalRecord;
             this.ViewBag.Page = productSearch_Entity.Page;
 
-            ProductSearch_Entity e = new ProductSearch_Entity();
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
             return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
             
