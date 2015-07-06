@@ -16,7 +16,7 @@ using System.Web.UI;
 
 using AboutMe.Web.Admin.Common.Filters;
 
-
+//관리자 관리 ctl --jsh
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminUserController : BaseAdminController
@@ -124,7 +124,7 @@ namespace AboutMe.Web.Admin.Controllers
 
             }
 
-            return RedirectToAction("Index", "AdminUser"); // 로그인 성공
+            return RedirectToAction("Index", "AdminFrontMember"); // 로그인 성공
             //return View();
         }
 
@@ -162,26 +162,26 @@ namespace AboutMe.Web.Admin.Controllers
 
         // GET: AdminUser 관리자관리-목록 /AdminUser/Index/
         [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10)
+        public ActionResult Index(string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORTCOL = "ADM_INS_DATE", string SORTDIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
         {
             //return View();
-            this.ViewBag.PageSize = PageSize;
-            this.ViewBag.SearchCol = SearchCol;
-            this.ViewBag.SearchKeyword = SearchKeyword;
-            this.ViewBag.SortCol = SortCol;
-            this.ViewBag.SortDir = SortDir;
+            this.ViewBag.PAGESIZE = PAGESIZE;
+            this.ViewBag.SEARCH_COL = SEARCH_COL;
+            this.ViewBag.SEARCH_KEYWORD = SEARCH_KEYWORD;
+            this.ViewBag.SORTCOL = SORTCOL;
+            this.ViewBag.SORTDIR = SORTDIR;
 
             //AdminUserService srv = new AdminUserService();
             int TotalRecord = 0;
-            TotalRecord = _AdminUserService.GetAdminMemberListCnt(SearchCol, SearchKeyword);
+            TotalRecord = _AdminUserService.GetAdminMemberListCnt(SEARCH_COL, SEARCH_KEYWORD);
             //TotalRecord = srv.GetAdminMemberListCnt(SearchCol, SearchKeyword);
 
             this.ViewBag.TotalRecord = TotalRecord;
             //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
-            this.ViewBag.Page = Page;
+            this.ViewBag.Page = PAGE;
 
 
-            return View(_AdminUserService.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList());
+            return View(_AdminUserService.GetAdminMemberList(SEARCH_COL, SEARCH_KEYWORD, SORTCOL, SORTDIR, PAGE, PAGESIZE).ToList());
             //return View(srv.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList());
         }
 
@@ -303,7 +303,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         // GET: AdminUser 관리자관리-목록엑셀  /AdminUser/Excel/
         [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult Excel(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10000000)
+        public ActionResult Excel(string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORTCOL = "ADM_INS_DATE", string SORTDIR = "DESC", int PAGE = 1, int PAGESIZE = 10000000)
         {
 
             var products = new System.Data.DataTable("test");
@@ -315,7 +315,7 @@ namespace AboutMe.Web.Admin.Controllers
             products.Columns.Add("Phone", typeof(string));
             products.Columns.Add("UseYN", typeof(string));
 
-            var Data = _AdminUserService.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList(); //데이타 가져오기
+            var Data = _AdminUserService.GetAdminMemberList(SEARCH_COL, SEARCH_KEYWORD, SORTCOL, SORTDIR, 1, 10000000).ToList(); //데이타 가져오기
             if (Data != null && Data.Any())
             {
 
@@ -353,14 +353,14 @@ namespace AboutMe.Web.Admin.Controllers
         }
         // GET: AdminUser 관리자관리-목록엑셀  /AdminUser/Excel2/  
         [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult Excel2(string SearchCol = "", string SearchKeyword = "", string SortCol = "ADM_INS_DATE", string SortDir = "DESC", int Page = 1, int PageSize = 10000000)
+        public ActionResult Excel2(string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORTCOL = "ADM_INS_DATE", string SORTDIR = "DESC", int PAGE = 1, int PAGESIZE = 10000000)
         {
 
              StringBuilder sb = new StringBuilder();
             //static file name, can be changes as per requirement
             string sFileName = "AdminUser.xls";
             //Bind data list from edmx
-            var Data = _AdminUserService.GetAdminMemberList(SearchCol, SearchKeyword, SortCol, SortDir, Page, PageSize).ToList(); //데이타 가져오기
+            var Data = _AdminUserService.GetAdminMemberList(SEARCH_COL, SEARCH_KEYWORD, SORTCOL, SORTDIR, 1, 10000000).ToList(); //데이타 가져오기
             if (Data != null && Data.Any())
             {
                 sb.Append("<table style='1px solid black; font-size:12px;'>");

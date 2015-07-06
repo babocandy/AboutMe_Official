@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_PRODUCT_SEL_Result>
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_PRODUCT_LIST_Result>
 
 @{
     ViewBag.Title = "ProductIndex";
@@ -194,9 +194,10 @@
                     <tr>
                         <th>판매상태</th>
                         <td>
-                            <label for="sale1"><input type="checkbox" id="sale1" /><span class="txt mr5">전시</span></label>
-                            <label for="sale2"><input type="checkbox" id="sale2" /><span class="txt mr5">비전시</span></label>
-                            <label for="sale4"><input type="checkbox" id="sale4" /><span class="txt mr5">품절</span></label>
+                            <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (ViewBag.searchDisplayY == "Y"){ <text>checked</text> } /><span class="txt mr5">전시</span></label>
+                            <label for="sale2"><input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (ViewBag.searchDisplayN == "Y") { <text> checked</text> } /><span class="txt mr5">비전시</span></label>
+                            <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (ViewBag.soldoutYn == "Y") { <text> checked</text> } /><span class="txt mr5">품절</span></label>
+                            <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (ViewBag.POutletYn == "Y") { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
                         </td>
                     </tr>
                     <tr>
@@ -261,19 +262,17 @@
             <thead>
                 <tr>
                     <th scope="col"><input type="checkbox" /></th>
-                    <th scope="col">상품번호▼</th>
-                    <th scope="col">상품품번▼</th>
-                    <th scope="col">상품상세</th>
                     <th scope="col">이미지</th>
+                    <th scope="col">상품품번</th>
+                    <th scope="col">카테고리2</th>
+                    <th scope="col">카테고리3</th>
                     <th scope="col">상품명</th>
-                    <th scope="col">정상가▼</th>
-                    <th scope="col">판매가▼</th>
-                    <th scope="col">할인률▼</th>
-                    <th scope="col">판매상태</th>
-                    <th scope="col">예약상품</th>
-                    <th scope="col">쿠폰여부</th>
-                    <th scope="col">전시채널</th>
-                    <th scope="col">모델정보</th>
+                    <th scope="col">판매가</th>
+                    <th scope="col">할인가</th>
+                    <th scope="col">할인률</th>
+                    <th scope="col">전시여부</th>
+                    <th scope="col">품절여부</th>
+                    <th scope="col">전시순서</th>
                     <th scope="col">등록일</th>
                 </tr>
             </thead>
@@ -291,36 +290,34 @@
                 {
                 <tr>
                     <td><input type="checkbox" /></td>
-                    <td>@Html.DisplayFor(modelItem => item.IDX)</td>
-                    <td><a href="/AdminProduct/ProductUpdate?pcode=@Html.DisplayFor(modelItem => item.P_CODE)">
-                            @Html.DisplayFor(modelItem => item.P_CODE)
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.MAIN_IMG))
+                        {
+                            <span id="SPAN_MAIN_IMG"><img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" width="100" height="100" /></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/AdminProduct/ProductUpdate?pcode=@item.P_CODE">
+                            @item.P_CODE
                         </a>
                     </td>
-                    <td>O</td>
-                    <td></td>
-                    <td><a href="/cmsManager/product/view.html">@Html.DisplayFor(modelItem => item.P_NAME)</a></td>
-                    <td>@Html.DisplayFor(modelItem => item.SELLING_PRICE)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DISCOUNT_PRICE)</td>
+                    <td>@item.DEPTH2_NAME</td>
+                    <td>@item.DEPTH3_NAME</td>
+                    <td><a href="/cmsManager/product/view.html">@item.P_NAME</a></td>
+                    <td>@string.Format("{0:C}",item.SELLING_PRICE)</td>
+                    <td>@string.Format("{0:C}", item.DISCOUNT_PRICE)</td>
                     <td>@Html.DisplayFor(modelItem => item.DISCOUNT_RATE)</td>
-                    <td>
-                        <select>
-                            <option>대기중</option>
-                            <option>대기중</option>
-                            <option>대기중</option>
-                        </select>
-                    </td>
-                    <td>YES</td>
-                    <td>O</td>
-                    <td>WEB</td>
-                    <td>없음</td>
-                    <td>@Html.DisplayFor(modelItem => item.REGDATE)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DISPLAY_YN)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SOLDOUT_YN)</td>
+                    <td>▲<br />▼</td>
+                    <td>@item.REGDATE</td>
                 </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = 5, RecordPerPage = 1, PagePerBlock = 10, CurrentPage = 1, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
+    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
 
 </div>
 <!--//content-->

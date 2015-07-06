@@ -164,14 +164,14 @@ namespace AboutMe.Domain.Service.AdminProduct
 
 
         #region 상품 리스트
-        public List<SP_ADMIN_PRODUCT_SEL_Result> GetAdminProductList(int Page, int PageSize, string SearchKey, string SearchKeyword, string cateCode, string iconYn, string searchDisplayYn)
+        public List<SP_ADMIN_PRODUCT_LIST_Result> GetAdminProductList(ProductSearch_Entity productSearch_Entity)
         {
 
-            List<SP_ADMIN_PRODUCT_SEL_Result> lst = new List<SP_ADMIN_PRODUCT_SEL_Result>();
+            List<SP_ADMIN_PRODUCT_LIST_Result> lst = new List<SP_ADMIN_PRODUCT_LIST_Result>();
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
                 /**try {**/
-                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL(Page, PageSize, SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList();
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL(productSearch_Entity.Page, productSearch_Entity.PageSize, productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayY, productSearch_Entity.searchDisplayN, productSearch_Entity.soldoutYn, productSearch_Entity.POutletYn).ToList();
                 /** }catch()
                  {
                        AdmEtcContext.Dispose();
@@ -184,7 +184,7 @@ namespace AboutMe.Domain.Service.AdminProduct
         #endregion
 
         #region 상품 카운트
-        public int GetAdminProductCnt(string SearchKey, string SearchKeyword, string cateCode, string iconYn, string searchDisplayYn)
+        public int GetAdminProductCnt(ProductSearch_Entity productSearch_Entity)
         {
             List<SP_ADMIN_PRODUCT_CNT_Result> lst = new List<SP_ADMIN_PRODUCT_CNT_Result>();
             int productCount = -1;
@@ -192,7 +192,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                lst = AdminProductContext.SP_ADMIN_PRODUCT_CNT(SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList();
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_CNT(productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayY, productSearch_Entity.searchDisplayN, productSearch_Entity.soldoutYn, productSearch_Entity.POutletYn).ToList();
                 if (lst != null && lst.Count > 0)
                     productCount = lst[0].COUNT;
                 /** }catch()

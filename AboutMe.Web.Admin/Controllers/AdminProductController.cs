@@ -350,27 +350,28 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품
         
         #region 상품 리스트
-        public ActionResult ProductIndex(string SearchKey = "", string SearchKeyword = "", string cateCode = "", string iconYn = "", string searchDisplayYn = "", int Page = 1, int PageSize = 10)
+        public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
-
-            this.ViewBag.PageSize = PageSize;
-            this.ViewBag.SearchCol = SearchKey;
-            this.ViewBag.SearchKeyword = SearchKeyword;
-            this.ViewBag.cateCode = cateCode;
-            this.ViewBag.iconYn = iconYn;
-            this.ViewBag.searchDisplayYn = searchDisplayYn;
-
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+            
             int TotalRecord = 0;
-            TotalRecord = _AdminProductService.GetAdminProductCnt(SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn);
+            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
             
             this.ViewBag.TotalRecord = TotalRecord;
-            this.ViewBag.Page = Page;
+            this.ViewBag.Page = productSearch_Entity.Page;
 
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
-            return View(_AdminProductService.GetAdminProductList(Page, PageSize, SearchKey, SearchKeyword, cateCode, iconYn, searchDisplayYn).ToList());
+            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
             
-
-            //return View(_AdminProductService.GetAdminProductList().ToList());
         }
         #endregion
 

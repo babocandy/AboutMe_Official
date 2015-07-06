@@ -16,18 +16,22 @@ namespace AboutMe.Common.Helper
     public class ImageUpload
     {
         #region 기본 초기값
-
+        public ImageUpload()
+        {
+            UploadPath = "~/Upload/Temp/"; //이미지 업로드 경로 default /Upload/
+            addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
+            fileType = "image";  //파일 type:image/file
+            fileMaxSize = 5000000; //파일 max size 5MB
+        }
         // set default size here
         public int Width { get; set; }
         public int Height { get; set; }
-        
-        // folder for the upload, you can put this in the web.config 
-        public string UploadPath = "~/Upload/"; //이미지 업로드 경로 default /Upload/
-        public bool addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
-        public string fileType = "image";  //파일 type:image/file
-        private int fileMaxSize = 5000000; //파일 max size 5MB
+        public string UploadPath { get; set; }
+        public bool addMobileImage { get; set; }
+        public string fileType { get; set; }
+        private int fileMaxSize { get; set; }
 
-        #endregion
+       #endregion
 
         #region 고유한 이미지네임으로 변경
         public ImageResult RenameUploadFile(HttpPostedFileBase file, Int32 counter = 0)

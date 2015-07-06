@@ -452,64 +452,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_CATEGORY_TWO_INS", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_NAMEParameter);
         }
 
-        public virtual ObjectResult<SP_ADMIN_PRODUCT_CNT_Result> SP_ADMIN_PRODUCT_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string cATE_CODE, string iCON_YN, string sEARCH_DISPLAY_YN)
-        {
-            var sEARCH_KEYParameter = sEARCH_KEY != null ?
-                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
-                new ObjectParameter("SEARCH_KEY", typeof(string));
-
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-
-            var cATE_CODEParameter = cATE_CODE != null ?
-                new ObjectParameter("CATE_CODE", cATE_CODE) :
-                new ObjectParameter("CATE_CODE", typeof(string));
-
-            var iCON_YNParameter = iCON_YN != null ?
-                new ObjectParameter("ICON_YN", iCON_YN) :
-                new ObjectParameter("ICON_YN", typeof(string));
-
-            var sEARCH_DISPLAY_YNParameter = sEARCH_DISPLAY_YN != null ?
-                new ObjectParameter("SEARCH_DISPLAY_YN", sEARCH_DISPLAY_YN) :
-                new ObjectParameter("SEARCH_DISPLAY_YN", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_CNT_Result>("SP_ADMIN_PRODUCT_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YNParameter);
-        }
-
-        public virtual ObjectResult<SP_ADMIN_PRODUCT_SEL_Result> SP_ADMIN_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cATE_CODE, string iCON_YN, string sEARCH_DISPLAY_YN)
-        {
-            var pAGEParameter = pAGE.HasValue ?
-                new ObjectParameter("PAGE", pAGE) :
-                new ObjectParameter("PAGE", typeof(int));
-
-            var pAGESIZEParameter = pAGESIZE.HasValue ?
-                new ObjectParameter("PAGESIZE", pAGESIZE) :
-                new ObjectParameter("PAGESIZE", typeof(int));
-
-            var sEARCH_KEYParameter = sEARCH_KEY != null ?
-                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
-                new ObjectParameter("SEARCH_KEY", typeof(string));
-
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-
-            var cATE_CODEParameter = cATE_CODE != null ?
-                new ObjectParameter("CATE_CODE", cATE_CODE) :
-                new ObjectParameter("CATE_CODE", typeof(string));
-
-            var iCON_YNParameter = iCON_YN != null ?
-                new ObjectParameter("ICON_YN", iCON_YN) :
-                new ObjectParameter("ICON_YN", typeof(string));
-
-            var sEARCH_DISPLAY_YNParameter = sEARCH_DISPLAY_YN != null ?
-                new ObjectParameter("SEARCH_DISPLAY_YN", sEARCH_DISPLAY_YN) :
-                new ObjectParameter("SEARCH_DISPLAY_YN", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_SEL_Result>("SP_ADMIN_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YNParameter);
-        }
-
         public virtual int SP_USER_LOG_INS(string uid, string memo, string comment, string url, string userip)
         {
             var uidParameter = uid != null ?
@@ -566,6 +508,88 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("urlReFerrer", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_LOG_INS", uidParameter, memoParameter, commentParameter, urlParameter, useripParameter, userAgentParameter, urlReFerrerParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_CNT_Result> SP_ADMIN_PRODUCT_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string cATE_CODE, string iCON_YN, string sEARCH_DISPLAY_Y, string sEARCH_DISPLAY_N, string sOLDOUT_YN, string p_OUTLET_YN)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+
+            var iCON_YNParameter = iCON_YN != null ?
+                new ObjectParameter("ICON_YN", iCON_YN) :
+                new ObjectParameter("ICON_YN", typeof(string));
+
+            var sEARCH_DISPLAY_YParameter = sEARCH_DISPLAY_Y != null ?
+                new ObjectParameter("SEARCH_DISPLAY_Y", sEARCH_DISPLAY_Y) :
+                new ObjectParameter("SEARCH_DISPLAY_Y", typeof(string));
+
+            var sEARCH_DISPLAY_NParameter = sEARCH_DISPLAY_N != null ?
+                new ObjectParameter("SEARCH_DISPLAY_N", sEARCH_DISPLAY_N) :
+                new ObjectParameter("SEARCH_DISPLAY_N", typeof(string));
+
+            var sOLDOUT_YNParameter = sOLDOUT_YN != null ?
+                new ObjectParameter("SOLDOUT_YN", sOLDOUT_YN) :
+                new ObjectParameter("SOLDOUT_YN", typeof(string));
+
+            var p_OUTLET_YNParameter = p_OUTLET_YN != null ?
+                new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
+                new ObjectParameter("P_OUTLET_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_CNT_Result>("SP_ADMIN_PRODUCT_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YParameter, sEARCH_DISPLAY_NParameter, sOLDOUT_YNParameter, p_OUTLET_YNParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_PRODUCT_LIST_Result> SP_ADMIN_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cATE_CODE, string iCON_YN, string sEARCH_DISPLAY_Y, string sEARCH_DISPLAY_N, string sOLDOUT_YN, string p_OUTLET_YN)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+
+            var iCON_YNParameter = iCON_YN != null ?
+                new ObjectParameter("ICON_YN", iCON_YN) :
+                new ObjectParameter("ICON_YN", typeof(string));
+
+            var sEARCH_DISPLAY_YParameter = sEARCH_DISPLAY_Y != null ?
+                new ObjectParameter("SEARCH_DISPLAY_Y", sEARCH_DISPLAY_Y) :
+                new ObjectParameter("SEARCH_DISPLAY_Y", typeof(string));
+
+            var sEARCH_DISPLAY_NParameter = sEARCH_DISPLAY_N != null ?
+                new ObjectParameter("SEARCH_DISPLAY_N", sEARCH_DISPLAY_N) :
+                new ObjectParameter("SEARCH_DISPLAY_N", typeof(string));
+
+            var sOLDOUT_YNParameter = sOLDOUT_YN != null ?
+                new ObjectParameter("SOLDOUT_YN", sOLDOUT_YN) :
+                new ObjectParameter("SOLDOUT_YN", typeof(string));
+
+            var p_OUTLET_YNParameter = p_OUTLET_YN != null ?
+                new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
+                new ObjectParameter("P_OUTLET_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_LIST_Result>("SP_ADMIN_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YParameter, sEARCH_DISPLAY_NParameter, sOLDOUT_YNParameter, p_OUTLET_YNParameter);
         }
     }
 }

@@ -192,6 +192,7 @@
     <Compile Include="Common\Filters\CustomAuthorizeAttr.cs" />
     <Compile Include="Common\Filters\CustomAuthorizeOtherAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminFrontMemberController.cs" />
     <Compile Include="Controllers\AdminMemberController.cs" />
     <Compile Include="Controllers\AdminProductController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
@@ -210,6 +211,13 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="test1.aspx.cs">
+      <DependentUpon>test1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test1.aspx.designer.cs">
+      <DependentUpon>test1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="cmsManager\aboutCom\css\bootstrap.css" />
@@ -1091,6 +1099,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="test1.aspx" />
     <Content Include="Upload\SmartEditor\A20150618214744780_325.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1232,13 +1241,15 @@
     <Content Include="Views\SmartEditor\Sample.cshtml" />
     <Content Include="Views\SmartEditor\Callback.cshtml" />
     <Content Include="Views\SmartEditor\InstallEditor.cshtml" />
+    <Content Include="Views\AdminFrontMember\Index.cshtml" />
     <Content Include="Views\SmartEditor\PopupPhotoUploader.cshtml" />
     <Content Include="Views\Faq\Index.cshtml" />
     <Content Include="Views\Faq\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Upload\Product\" />
+    <Folder Include="Upload\Product\Detail\" />
+    <Folder Include="Upload\Temp\" />
     <Folder Include="Views\BaseAdmin\" />
   </ItemGroup>
   <ItemGroup>
