@@ -61,6 +61,30 @@ namespace AboutMe.Web.Admin.Controllers
             return View(_AdminFrontMemberService.GetAdminFrontMemberList(SEL_DATE_FROM, SEL_DATE_TO, SEL_GRADE_LIST, SEL_GBN, SEL_IS_RETIRE, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, PAGE, PAGESIZE).ToList());
         }
 
+        //관리자 - 회원 상세
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult Edit(string SEL_M_ID = "", string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEL_GRADE_LIST = "", string SEL_GBN = "", string SEL_IS_RETIRE = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "M_CREDATE", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
+        {
+            //return View();
+
+            this.ViewBag.SEL_DATE_FROM = SEL_DATE_FROM;
+            this.ViewBag.SEL_DATE_TO = SEL_DATE_TO;
+            this.ViewBag.SEL_GRADE_LIST = SEL_GRADE_LIST;
+            this.ViewBag.SEL_GBN = SEL_GBN;
+            this.ViewBag.SEL_IS_RETIRE = SEL_IS_RETIRE;
+
+            this.ViewBag.SEARCH_COL = SEARCH_COL;
+            this.ViewBag.SEARCH_KEYWORD = SEARCH_KEYWORD;
+            this.ViewBag.SORT_COL = SORT_COL;
+            this.ViewBag.SORT_DIR = SORT_DIR;
+            this.ViewBag.PAGE = PAGE;
+            this.ViewBag.PAGESIZE = PAGESIZE;
+            if (SEL_M_ID=="")
+                return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+
+
+            return View(_AdminFrontMemberService.GetAdminFrontMemberView(SEL_M_ID));
+        }
 
         // 관리자 - 회원 목록엑셀  /AdminUser/Excel/
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
@@ -105,7 +129,7 @@ namespace AboutMe.Web.Admin.Controllers
 
                 foreach (var result in Data)
                 {
-                    products.Rows.Add(result.M_ID, result.M_NAME, result.M_GBN, result.M_STAFF_COMAPNY, result.M_STAFF_ID, result.M_GRADE, result.M_EMAIL, result.M_MOBILE, result.M_PHONE, result.M_POINT
+                    products.Rows.Add(result.M_ID, result.M_NAME, result.M_GBN, result.M_STAFF_COMPANY, result.M_STAFF_ID, result.M_GRADE, result.M_EMAIL, result.M_MOBILE, result.M_PHONE, result.M_POINT
                                        , result.M_SEX, result.M_BIRTHDAY, result.M_ZIPCODE, result.M_ADDR1, result.M_ADDR2
                                        , result.M_ISSMS, result.M_ISEMAIL, result.M_ISDM, result.M_AGREE, result.M_AGREE2
                                        , result.M_CREDATE, result.M_LASTVISITDATE, result.M_IS_RETIRE, result.M_DEL_DATE, result.M_DEL_POINT, result.M_DEL_REASON
