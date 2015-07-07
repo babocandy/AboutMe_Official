@@ -472,8 +472,8 @@
                         {
                             <tr>
                                 <td class="brnone">@count.ToString("#,##0")</td>
-                                <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID" class="btn btn-primary small">@item.M_ID</a></td>
-                                <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID" class="btn btn-primary small">@item.M_NAME</a></td>
+                                <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID&PAGE=@ViewBag.PAGE&@QueryStr" class="btn btn-primary small">@item.M_ID</a></td>
+                                <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID&PAGE=@ViewBag.PAGE&@QueryStr" class="btn btn-primary small">@item.M_NAME</a></td>
                                 <td>@fM_GBN_NAME(@item.M_GBN)</td>
                                 <td>@fGradeName(@item.M_GRADE)</td>
                                 <td>@item.M_EMAIL</td>

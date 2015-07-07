@@ -86,9 +86,9 @@ namespace AboutMe.Domain.Service.AdminFrontMember
 
         }
 
-        //관리자 -회원 암호수정
+        //관리자 -회원 수정 :기본정보
         //리턴:ERR_CODE : 0:에러없음
-        public int SetAdminFrontMemberPwdUpdate(string m_ID = "", string m_PWD = "")
+        public int SetAdminFrontMemberUpdate_Basic(string m_ID = "", string m_GRADE = "A", string m_MOBILE = "", string m_PHONE = "", string m_EMAIL = "", string m_ZIPCODE = "", string m_ADDR1 = "", string m_ADDR2 = "", string m_ISSMS = "", string m_ISEMAIL = "", string m_ISDM = "")
         {
 
             int ERR_CODE = 999; //일단 SP호출 에러 있음
@@ -96,7 +96,67 @@ namespace AboutMe.Domain.Service.AdminFrontMember
             {
                 /**try {**/
                 ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
-                int sp_ret = AdminFrontMemberContext.SP_ADMIN_FRONT_MEMBER_PWD_UPD(m_ID, m_PWD, objOutParam);
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_FRONT_MEMBER_UPD_BASIC(m_ID, m_GRADE, m_MOBILE, m_PHONE, m_EMAIL, m_ZIPCODE, m_ADDR1, m_ADDR2, m_ISSMS, m_ISEMAIL, m_ISDM, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+        //관리자 -회원 수정 :암호변경
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminFrontMemberUpdate_PWD(string m_ID = "", string m_PWD = "")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_FRONT_MEMBER_UPD_PWD(m_ID, m_PWD, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+        //관리자 -회원 수정 :임직원정
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminFrontMemberUpdate_Staff(string m_ID = "", string m_GBN = "", string m_STAFF_COMAPNY = "", string m_STAFF_ID = "")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_FRONT_MEMBER_UPD_STAFF(m_ID, m_GBN,m_STAFF_COMAPNY,m_STAFF_ID, objOutParam);
                 ERR_CODE = (int)objOutParam.Value;
 
                 //if (sp_ret==1)
@@ -117,6 +177,35 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         }
 
 
+        //관리자 -회원 수정 :탈퇴
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminFrontMemberUpdate_Retire(string m_ID = "", string m_IS_RETIRE = "", string m_DEL_REASON = "")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_FRONT_MEMBER_UPD_RETIRE(m_ID, m_IS_RETIRE, m_DEL_REASON, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
 
 
         //관리자 상세 1명

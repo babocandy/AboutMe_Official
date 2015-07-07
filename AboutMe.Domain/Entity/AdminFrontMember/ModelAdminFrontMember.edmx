@@ -52,6 +52,38 @@
           <Parameter Name="M_DEL_REASON" Type="varchar" Mode="In" />
           <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_UPD_BASIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_GRADE" Type="varchar" Mode="In" />
+          <Parameter Name="M_MOBILE" Type="varchar" Mode="In" />
+          <Parameter Name="M_PHONE" Type="varchar" Mode="In" />
+          <Parameter Name="M_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="M_ZIPCODE" Type="varchar" Mode="In" />
+          <Parameter Name="M_ADDR1" Type="varchar" Mode="In" />
+          <Parameter Name="M_ADDR2" Type="varchar" Mode="In" />
+          <Parameter Name="M_ISSMS" Type="char" Mode="In" />
+          <Parameter Name="M_ISEMAIL" Type="char" Mode="In" />
+          <Parameter Name="M_ISDM" Type="char" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_UPD_PWD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_PWD" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_UPD_RETIRE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_IS_RETIRE" Type="varchar" Mode="In" />
+          <Parameter Name="M_DEL_REASON" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_FRONT_MEMBER_UPD_STAFF" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="M_STAFF_COMPANY" Type="varchar" Mode="In" />
+          <Parameter Name="M_STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_ADMIN_FRONT_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
@@ -109,7 +141,39 @@
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_VIEW" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_UPD_BASIC">
             <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_GRADE" Mode="In" Type="String" />
+            <Parameter Name="M_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="M_PHONE" Mode="In" Type="String" />
+            <Parameter Name="M_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="M_ZIPCODE" Mode="In" Type="String" />
+            <Parameter Name="M_ADDR1" Mode="In" Type="String" />
+            <Parameter Name="M_ADDR2" Mode="In" Type="String" />
+            <Parameter Name="M_ISSMS" Mode="In" Type="String" />
+            <Parameter Name="M_ISEMAIL" Mode="In" Type="String" />
+            <Parameter Name="M_ISDM" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_UPD_PWD">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_PWD" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_UPD_RETIRE">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_IS_RETIRE" Mode="In" Type="String" />
+            <Parameter Name="M_DEL_REASON" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_UPD_STAFF">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_GBN" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_COMPANY" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
@@ -246,6 +310,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_BASIC" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_BASIC" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_PWD" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_PWD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_RETIRE" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_RETIRE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_STAFF" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_STAFF" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
