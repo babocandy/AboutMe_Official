@@ -1,0 +1,137 @@
+﻿@model AboutMe.Web.Admin.Models.AdminPointMemberViewModel
+
+@{
+    ViewBag.Title = "PointIndex";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+
+
+        <div class="panel">
+            <h3 class="sub-header">기본설정</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
+                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>배송정책</h4>
+
+            @Model.SearchKey
+            <br />
+            @Model.SearchValue
+            @using (Html.BeginForm("Index", "AdminPoint/Index", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+
+                                    <table class="table table_row">
+                                        <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" class="vam">검색</th>
+                                                <td class="condition_seacth">
+                                                    <select name="SearchKey" style="width:170px;">
+                                                        <option value="">-선택하세요-</option>
+                                                        @if (Model.SearchKey.IsEmpty())
+                                                        {
+                                                            <option value="M_ID">아이디</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="M_ID" selected>아이디</option>
+                                                        }
+
+                                                    </select>
+                                                    <input type="text" class="input-sm text-left" name="SearchValue" value="@Model.SearchValue" />
+                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                    <!--<input type="submit" value=" Search >> ">-->
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+            }
+        </div>
+
+        <div class="panel">
+            <h4>관리자 리스트</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="10%" /><col width="10%" /><col width="8%" /></colgroup>
+                <thead>
+                    <tr>
+                        <!--<th scope="col" class="brnone">check</th>-->
+                        <th scope="col">NO</th>
+                        <th scope="col">아이디</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">등급</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col">구분</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.MemberList)
+                    {
+                        <tr>
+                            <!--<td class="brnone"><input type="checkbox" value="50,000" title="선택" /></td>-->
+                            <td>@item.M_NO</td>
+                            <td>@Html.DisplayFor(modelItem => item.M_ID)</td>
+                            <td>@Html.DisplayFor(modelItem => item.M_NAME)</td>
+                            <!--<td><input type="text" class="input-sm wper100" value="@Html.DisplayFor(modelItem => item.M_NAME)" title="이름" /></td>                        -->
+                            <td>@Html.DisplayFor(modelItem => item.M_GRADE)</td>
+                            <td>@Html.ActionLink(item.M_POINT.ToString(), null, null, new { onclick = string.Format("popupPointUpdate('{0}'); return false;", @item.M_ID) })</td>
+
+                            @Html.DisplayFor(modelItem => item.M_POINT)
+                            <td>@item.M_GBN</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+
+        @{
+            var queryStr = "";
+            if (!Model.SearchKey.IsEmpty())
+            {
+                queryStr += "searchKey=" + Model.SearchKey;
+            }
+
+            if (!Model.SearchValue.IsEmpty())
+            {
+                queryStr += "searchValue=" + Model.SearchValue;
+            }
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = 1, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
+        }
+
+        <script>
+        function popupPointUpdate(mid) {
+            var myWindow = window.open("/AdminPoint/PopupMemberPoint?Mid=" + mid, "MsgWindow", "width=400, height=400,scrollbars=0");
+        }
+        </script>
+
+}
+
+
