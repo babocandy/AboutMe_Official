@@ -14,20 +14,13 @@ namespace AboutMe.Domain.Service.AdminPoint
     public class AdminPointService : IAdminPointService
     {
         //관리자 목록
-        public List<SP_POINT_MEMBER_SEL_Result> GetMemberList(int pageNo, int pageSize, string searchKey, string searchValue)
+        public List<SP_POINT_MEMBER_SEL_Result> GetMemberList(int pageNo=1, int pageSize = 10, string searchKey=null, string searchValue=null)
         {
 
             List<SP_POINT_MEMBER_SEL_Result> lst = new List<SP_POINT_MEMBER_SEL_Result>();
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                try
-                {
-                    lst = context.SP_POINT_MEMBER_SEL(pageNo, pageSize, searchKey, searchValue).ToList();
-                }
-                catch (Exception ex)
-                {
-                    context.Dispose();
-                }
+                lst = context.SP_POINT_MEMBER_SEL(pageNo, pageSize, searchKey, searchValue).ToList();
             }
 
             return lst;
@@ -81,6 +74,30 @@ namespace AboutMe.Domain.Service.AdminPoint
             Debug.WriteLine("UpdateMemberPointSave retMsg:  " + retMsg.Value);
 
             return tp;
+        }
+
+        public List<SP_ADMIN_POINT_HISTORY_SEL_Result> GetMyPointHistoryList(string mid, int pageNo = 1, int pageSize = 10)
+        {
+            List<SP_ADMIN_POINT_HISTORY_SEL_Result> lst = new List<SP_ADMIN_POINT_HISTORY_SEL_Result>();
+
+            using (AdminPointEntities context = new AdminPointEntities())
+            {
+                lst = context.SP_ADMIN_POINT_HISTORY_SEL(mid,pageNo,pageSize).ToList();
+            }
+
+            return lst;
+        }
+
+        public int GetMyPointHistoryListCnt(string mid)
+        {
+            int ret = 0;
+            using (AdminPointEntities context = new AdminPointEntities())
+            {
+                int? cnt = context.SP_ADMIN_POINT_HISTORY_CNT(mid).SingleOrDefault();
+                ret = cnt ?? 0;
+            }
+
+            return ret;
         }
     }
 }

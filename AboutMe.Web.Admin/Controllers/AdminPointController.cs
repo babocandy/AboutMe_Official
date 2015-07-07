@@ -27,14 +27,14 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         // GET: AdminPoint
-        public ActionResult Index(string SearchKey, string SearchValue, int Page = 1)
+        public ActionResult Index(string SearchKey, string SearchValue, int Page = 1, int PageSize = 10)
         {
             AdminPointMemberViewModel viewModel = new AdminPointMemberViewModel();
 
             Debug.WriteLine("SearchKey: " + SearchKey);
             Debug.WriteLine("SearchValue: " + SearchValue);
 
-            viewModel.MemberList = _AdminPointService.GetMemberList(Page, 10, SearchKey, SearchValue);
+            viewModel.MemberList = _AdminPointService.GetMemberList(Page, PageSize, SearchKey, SearchValue);
             viewModel.PageNo = Page;
             viewModel.SearchKey = SearchKey;
 
@@ -49,10 +49,10 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //public ActionResult PopupMemberPointInsert(string Mid, string Type, string Reason, string Point)
-        public ActionResult PopupMemberPoint(string Mid)
+        public ActionResult PopupMemberPoint(string M_ID)
         {
             AdminPointInsertViewModel model = new AdminPointInsertViewModel();
-            model.Mid = Mid;
+            model.Mid = M_ID;
 
             return View(model);
         }
@@ -86,13 +86,18 @@ namespace AboutMe.Web.Admin.Controllers
                 return View(model);
             }
 
-            ModelState.AddModelError("", "Invalid login attempt.");
+            ModelState.AddModelError("", "필수항목들을 입력해주세요");
             return View(model);
         }
 
-        public ActionResult MemberPointInsert()
+        public ActionResult MyPointHistory(string M_ID, int page = 1)
         {
-            return View();
+            var model = new AdminMyPointHistoryViewModel();
+            model.PointHistoryList = _AdminPointService.GetMyPointHistoryList(M_ID, page);
+            model.Mid = M_ID;
+            model.PageNo = page;
+            model.TotalItem = _AdminPointService.GetMyPointHistoryListCnt(M_ID);
+            return View(model);
         }
     }
 }

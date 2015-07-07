@@ -25,7 +25,7 @@
 
 
         <div class="panel">
-            <h3 class="sub-header">기본설정</h3>
+            <h3 class="sub-header">포인트 관리</h3>
             <div class="alert alert-info">
                 <ul>
                     <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="panel">
-            <h4>배송정책</h4>
+            <h4>회원 검색</h4>
 
             @Model.SearchKey
             <br />
@@ -74,7 +74,7 @@
         </div>
 
         <div class="panel">
-            <h4>관리자 리스트</h4>
+            <h4>회원 목록</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
                 <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="10%" /><col width="10%" /><col width="8%" /></colgroup>
@@ -96,13 +96,12 @@
                         <tr>
                             <!--<td class="brnone"><input type="checkbox" value="50,000" title="선택" /></td>-->
                             <td>@item.M_NO</td>
-                            <td>@Html.DisplayFor(modelItem => item.M_ID)</td>
+                            <!--<td>@Html.DisplayFor(modelItem => item.M_ID)</td>-->
+                            <td>@Html.ActionLink(item.M_ID.ToString(), null, null, new { onclick = string.Format("popupPointHistory('{0}'); return false;", @item.M_ID), @class = "btn" })</td>
                             <td>@Html.DisplayFor(modelItem => item.M_NAME)</td>
                             <!--<td><input type="text" class="input-sm wper100" value="@Html.DisplayFor(modelItem => item.M_NAME)" title="이름" /></td>                        -->
                             <td>@Html.DisplayFor(modelItem => item.M_GRADE)</td>
-                            <td>@Html.ActionLink(item.M_POINT.ToString(), null, null, new { onclick = string.Format("popupPointUpdate('{0}'); return false;", @item.M_ID) })</td>
-
-                            @Html.DisplayFor(modelItem => item.M_POINT)
+                            <td>@Html.ActionLink(item.M_POINT.ToString(), null, null, new { onclick = string.Format("popupPointUpdate('{0}'); return false;", @item.M_ID) , @class="btn"})</td>
                             <td>@item.M_GBN</td>
                         </tr>
                     }
@@ -128,7 +127,11 @@
 
         <script>
         function popupPointUpdate(mid) {
-            var myWindow = window.open("/AdminPoint/PopupMemberPoint?Mid=" + mid, "MsgWindow", "width=400, height=400,scrollbars=0");
+            var myWindow = window.open("/AdminPoint/PopupMemberPoint?M_ID=" + mid, "MsgWindow", "width=400, height=400,scrollbars=0");
+        }
+
+        function popupPointHistory(mid) {
+            var myWindow = window.open("/AdminPoint/MyPointHistory?M_ID=" + mid, "MsgWindow", "width=800, height=500,scrollbars=0");
         }
         </script>
 

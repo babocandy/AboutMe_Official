@@ -107,5 +107,31 @@ namespace AboutMe.Domain.Entity.AdminPoint
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POINT_MEMBER_SEL_Result>("SP_POINT_MEMBER_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_POINT_HISTORY_SEL_Result> SP_ADMIN_POINT_HISTORY_SEL(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_POINT_HISTORY_SEL_Result>("SP_ADMIN_POINT_HISTORY_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_ADMIN_POINT_HISTORY_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_POINT_HISTORY_CNT", m_IDParameter);
+        }
     }
 }

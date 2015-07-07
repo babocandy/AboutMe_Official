@@ -1,0 +1,98 @@
+﻿@model AboutMe.Web.Admin.Models.AdminMyPointHistoryViewModel
+@{
+    ViewBag.Title = "PointIndex";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Other{
+    <style>
+        .container {
+            padding: 10px;
+            width: 100%;
+            min-width: inherit;
+        }
+
+        .table {
+            width: 100%;
+            min-width: inherit;
+        }
+
+    </style>
+}
+@section Scripts{
+    <script>
+        function closePopup() {
+            if (window.opener) {
+                window.opener.location.reload(true);
+            }
+            self.close();
+
+        }
+
+
+    </script>
+
+    @*if (!Model.ResultNum.IsEmpty() && Model.ResultNum != "0")
+    {
+        <script>
+             alert("@(Model.ResultMessage)");
+        </script>
+    }
+    else if (Model.ResultNum == "0")
+    {
+        <script>
+                window.opener.location.reload(true);
+                self.close();
+        </script>
+    }*@
+}
+
+@section Left {
+
+}
+
+@section Header{
+
+}
+
+@section Body{
+    <h4>포인트 내역</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+    <table class="table table_col">
+        <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="10%" /><col width="10%" /><col width="8%" /><col width="8%" /></colgroup>
+        <thead>
+            <tr>
+                <!--<th scope="col" class="brnone">check</th>-->
+                <th scope="col">구분</th>
+                <th scope="col">일자</th>
+                <th scope="col">포인트</th>
+                <th scope="col">누적 포인트</th>
+                <th scope="col">설명</th>
+                <th scope="col">메모</th>
+                <th scope="col">등록자</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.PointHistoryList)
+            {
+                <tr>
+                    <td>@item.KIND</td>
+                    <td>@item.INS_DATE.Value.ToString("yyyy/MM/dd/ HH:mm")</td>
+                    <td>@item.POINT</td>
+                    <td>@item.SUM_POINT</td>
+                    <td>@item.DETAIL</td>
+                    <td>@item.ADDITION_REASON</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    @{
+
+        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = "M_ID=" + Model.Mid });
+    }
+}

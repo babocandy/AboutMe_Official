@@ -9,8 +9,12 @@ namespace AboutMe.Domain.Service.AdminPoint
 {
     public interface IAdminPointService
     {
-        List<SP_POINT_MEMBER_SEL_Result> GetMemberList(int pageNo, int pageSize, string searchKey, string searchValue);
-        int GeMemberListCnt(string searchKey, string searchValue);
+        List<SP_POINT_MEMBER_SEL_Result> GetMemberList(int pageNo = 1, int pageSize = 10, string searchKey = null, string searchValue = null);
+         int GeMemberListCnt(string searchKey, string searchValue);
+
+         List<SP_ADMIN_POINT_HISTORY_SEL_Result> GetMyPointHistoryList(string mid, int pageNo = 1, int pageSize = 10);
+        int GetMyPointHistoryListCnt(string mid);
+       
         Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition, int? orderIdx = null, int? revieweIdx = null);
         Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, int? orderIdx = null);
     }

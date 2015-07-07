@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AboutMeModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_POINT_HISTORY_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_POINT_HISTORY_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_POINT_SAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="AMOUNT" Type="int" Mode="In" />
@@ -65,6 +73,14 @@
             <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
             <Parameter Name="SEARCH_VALUE" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POINT_HISTORY_SEL" ReturnType="Collection(AboutMeModel1.SP_ADMIN_POINT_HISTORY_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POINT_HISTORY_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_POINT_MEMBER_SEL_Result">
           <Property Type="Int32" Name="M_NO" Nullable="false" />
@@ -73,6 +89,16 @@
           <Property Type="String" Name="M_GRADE" Nullable="false" MaxLength="1" />
           <Property Type="Int32" Name="M_POINT" Nullable="false" />
           <Property Type="String" Name="M_GBN" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_POINT_HISTORY_SEL_Result">
+          <Property Type="Int32" Name="SUM_POINT" Nullable="true" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EXPIRE_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ADDITION_REASON" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DETAIL" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="POINT" Nullable="true" />
+          <Property Type="String" Name="KIND" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="ADM_NAME" Nullable="true" MaxLength="30" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -95,6 +121,21 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POINT_HISTORY_SEL" FunctionName="AboutMeModel1.Store.SP_ADMIN_POINT_HISTORY_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel1.SP_ADMIN_POINT_HISTORY_SEL_Result">
+                <ScalarProperty Name="SUM_POINT" ColumnName="SUM_POINT" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="EXPIRE_YN" ColumnName="EXPIRE_YN" />
+                <ScalarProperty Name="ADDITION_REASON" ColumnName="ADDITION_REASON" />
+                <ScalarProperty Name="DETAIL" ColumnName="DETAIL" />
+                <ScalarProperty Name="POINT" ColumnName="POINT" />
+                <ScalarProperty Name="KIND" ColumnName="KIND" />
+                <ScalarProperty Name="ADM_NAME" ColumnName="ADM_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POINT_HISTORY_CNT" FunctionName="AboutMeModel1.Store.SP_ADMIN_POINT_HISTORY_CNT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
