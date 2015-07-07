@@ -13,11 +13,11 @@
     QueryStr = QueryStr + "&SORTCOL=" + ViewBag.SORTCOL;
     QueryStr = QueryStr + "&SORTDIR=" + ViewBag.SORTDIR;
 
-    QueryStr = QueryStr + "&DATE_FROM=" + ViewBag.DATE_FROM;
-    QueryStr = QueryStr + "&DATE_TO=" + ViewBag.DATE_TO;
-    QueryStr = QueryStr + "&GBN=" + ViewBag.GBN;
-    QueryStr = QueryStr + "&GRADE_LIST=" + ViewBag.GRADE_LIST;
-    QueryStr = QueryStr + "&IS_RETIRE=" + ViewBag.IS_RETIRE;
+    QueryStr = QueryStr + "&SEL_DATE_FROM=" + ViewBag.SEL_DATE_FROM;
+    QueryStr = QueryStr + "&SEL_DATE_TO=" + ViewBag.SEL_DATE_TO;
+    QueryStr = QueryStr + "&SEL_GBN=" + ViewBag.SEL_GBN;
+    QueryStr = QueryStr + "&SEL_GRADE_LIST=" + ViewBag.SEL_GRADE_LIST;
+    QueryStr = QueryStr + "&SEL_IS_RETIRE=" + ViewBag.SEL_IS_RETIRE;
 
     QueryStr = QueryStr + "&SEARCH_COL=" + ViewBag.SEARCH_COL;
     QueryStr = QueryStr + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
@@ -141,10 +141,31 @@
         <div class="panel">
             <h4>회원관리</h4>
 
+            <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
             <script>
                 function fGoSearch()
                 {
                     var f = document.frmSearch;
+                    if (f.SEL_DATE_FROM.value.length > 0) {
+                        if (fISDate(f.SEL_DATE_FROM.value) == false) {
+                            alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
+                            return;
+                        }
+                    }
+                    if (f.SEL_DATE_TO.value.length > 0) {
+                        if (fISDate(f.SEL_DATE_TO.value) == false) {
+                            alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
+                            return;
+                        }
+                    }
+                    if (f.SEL_DATE_FROM.value > f.SEL_DATE_TO.value) {
+                        var tmp = f.SEL_DATE_FROM.value;
+                        f.SEL_DATE_FROM.value = f.SEL_DATE_TO.value;
+                        f.SEL_DATE_TO.value = tmp;
+                    }
+
+
                     fMakeGRADE_LIST();
                     f.PAGE.value = "1";
                     f.action = "/AdminFrontMember/Index";
@@ -165,22 +186,157 @@
                 {
                     var f = document.frmSearch;
                     var strLIST="";
-                    for (var i = 0; i < f.GRADE.length; i++) {
-                        if (f.GRADE[i].checked) {
+                    for (var i = 0; i < f.SEL_GRADE.length; i++) {
+                        if (f.SEL_GRADE[i].checked) {
                             if (strLIST == "")
-                                strLIST = f.GRADE[i].value;
+                                strLIST = f.SEL_GRADE[i].value;
                             else
-                                strLIST = strLIST + "," + f.GRADE[i].value;
+                                strLIST = strLIST + "," + f.SEL_GRADE[i].value;
                         }
                     }
 
-                    f.GRADE_LIST.value = strLIST;
+                    f.SEL_GRADE_LIST.value = strLIST;
                 }
             </script>
 
+            <script>
+                var glCALENDAR_MAPPING_Obj = $("#SEL_DATE_FROM"); //default DATE Text 칼럼
+                function fSetDateTextFromCal(glCALENDAR_MAPPING_ELEMEMT_ID, argDATE_STRING) {
+                    //var f = document.frmSearch;
+                    glCALENDAR_MAPPING_Obj.val(argDATE_STRING);
+                    //$("#SEL_DATE_FROM").val(argDATE_STRING);
+
+
+                }
+
+                function fCanendarShow(argTargetObj,e)
+                {
+                    glCALENDAR_MAPPING_Obj = argTargetObj;
+
+
+                    //달력 위치 잡기
+                    //alert("e.pageX:" + e.pageX + ",e.pageY:" + e.pageY)
+                    //$("#calendar").style.left = e.pageX + "px";
+                    //$("#calendar").style.top = (e.pageY + 20) + "px";
+                    $('#calendar').css('left', e.pageX + "px");
+                    $('#calendar').css('top', (e.pageY + 20) + "px");
+
+                    //달력 기존값 유지 처리 :없을시 오늘
+                    var strDATE_OLD = argTargetObj.val() + "--";
+                    var arrDATE_OLD = strDATE_OLD.split("-");
+                    var strYYYY = arrDATE_OLD[0];
+                    var strMM = arrDATE_OLD[1];
+                    var strDD = arrDATE_OLD[2];
+
+                    var defaultDate = new Date();  //일단 오늘
+                    if (strYYYY != "" && strMM != "" && strDD != "")
+                        defaultDate = new Date(strYYYY, strMM - 1, strDD);  //기존 값이 있으면 기존 값으로 변경
+                    //var defaultDate = kendo.toString(kendo.parseDate(new Date()), 'yyyy-MM-dd');
+                    $("#calendar").data("kendoCalendar").value(defaultDate); //달력의 기본값설정
+
+
+                    $("#calendar").show();
+                }
+
+                function fCanendarHide() {
+                    $("#calendar").hide();
+                }
+
+                function search_date_change(v) {
+                    //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
+
+                    var from_date, to_date;
+
+                    if (v == "1") //오늘
+                    {
+                        from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                    }
+                    else if (v == "2") //-7 ~오늘
+                    {
+                        from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                    }
+                    else if (v == "3") //-30~오늘
+                    {
+                        from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                    }
+                    else if (v == "4") // --60일~오늘
+                    {
+                        from_date = '@DateTime.Now.AddMonths(-2).ToString("yyyy-MM-dd")';
+                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                    }
+                    else if (v == "5") //  -90일~오늘
+                    {
+                        from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
+                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                    }
+                    else//  전체기간
+                    {
+                        from_date = '';
+                        to_date = '';
+                    }
+
+                    $('#SEL_DATE_FROM').val(from_date);
+                    $('#SEL_DATE_TO').val(to_date);
+                    /*
+                    if (v) {
+                        $('#SEL_DATE_FROM').removeAttr("disabled");
+                        $('#SEL_DATE_TO').removeAttr("disabled");
+                        $('#SEL_DATE_FROM').css("background-color", "#ffffff");
+                        $('#SEL_DATE_TO').css("background-color", "#ffffff");
+                    }
+                    else {
+                        $('#SEL_DATE_FROM').attr("disabled", "disabled");
+                        $('#SEL_DATE_TO').attr("disabled", "disabled");
+                        $('#SEL_DATE_FROM').css("background-color", "#c0c0c0");
+                        $('#SEL_DATE_TO').css("background-color", "#c0c0c0");
+                    }
+                    */
+
+                    fCanendarHide();
+                }
+
+
+
+                $(document).ready(function () {
+                    // create Calendar from div HTML element
+                    $("#calendar").kendoCalendar({
+                        format: "yyyy-MM-dd"
+                        , parseFormats: ["yyyy-MM-dd"]
+                        //,value: moment(value).format('MM/DD/YYYY')
+                        ,change: function () {
+                            var selectedDate = new Date($("#calendar").data("kendoCalendar").value());
+                            var strYEAR = selectedDate.getFullYear();
+                            var strMONTH = selectedDate.getMonth() +1;
+                            var strDAY = selectedDate.getDate();
+                            strMONTH = "00" + strMONTH;
+                            strMONTH = strMONTH.substr(strMONTH.length -2);
+                            strDAY = "00" + strDAY;
+                            strDAY = strDAY.substr(strDAY.length - 2);
+
+
+
+                            var selectedDateString = strYEAR  + '-' + strMONTH + '-' + strDAY;
+                            //alert(selectedDateString);
+                            fSetDateTextFromCal(glCALENDAR_MAPPING_Obj, selectedDateString); //yyyy-mm-dd
+                            fCanendarHide();
+                        }
+                    });
+
+                    $("#calendar").hide();  // 최기화면 : 달력 숨김
+
+                });
+            </script>
+
+
+            <div id="calendar" style="position:absolute;top:100px;left:100px; z-index:10000;"></div> <!--kendo달력-->
+
+
             <form name="frmSearch" method="post" action="">
                 <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
-                <input type="hidden" name="GRADE_LIST" value="@ViewBag.GRADE_LIST">
+                <input type="hidden" name="SEL_GRADE_LIST" value="@ViewBag.GRADE_LIST">
 
                 <table class="table table_row">
                     <colgroup><col style="width:12%" /><col style="width:auto" /></colgroup>
@@ -188,9 +344,19 @@
                         <tr>
                             <th scope="row" class="vam">가입기간</th>
                             <td class="condition_seacth">
-                                <input type="text" class="input-sm text-left" name="DATE_FROM" value="@ViewBag.DATE_FROM">
+                                <input type="text" class="input-sm text-left" id="SEL_DATE_FROM" name="SEL_DATE_FROM" value="@ViewBag.SEL_DATE_FROM" maxlength="10" onclick="javascript: $('#calendar').hide();">
+                                <a href="#none" onclick="javascript: fCanendarShow($('#SEL_DATE_FROM'), event);" class="btn btn-default small">C</a>
                                 ~
-                                <input type="text" class="input-sm text-left" name="DATE_TO" value="@ViewBag.DATE_TO">  (YYYY-MM-DD)  <==추후 Calendar
+                                <input type="text" class="input-sm text-left" id="SEL_DATE_TO" name="SEL_DATE_TO" value="@ViewBag.SEL_DATE_TO" maxlength="10" onclick="javascript: $('#calendar').hide();">
+                                <a href="#none" onclick="javascript: fCanendarShow($('#SEL_DATE_TO'), event);" class="btn btn-default small">C</a>  (YYYY-MM-DD)
+
+                                <a href="javascript:search_date_change('1');" class="btn btn-default small">오늘</a>
+                                <a href="javascript:search_date_change('2');" class="btn btn-default small">7일</a>
+                                <a href="javascript:search_date_change('3');" class="btn btn-default small">1개월</a>
+                                <a href="javascript:search_date_change('4');" class="btn btn-default small">2개월</a>
+                                <a href="javascript:search_date_change('5');" class="btn btn-default small">3개월</a>
+                                <a href="javascript:search_date_change('6');" class="btn btn-default small">전체</a>
+
                             </td>
                             <td class="condition_seacth" rowspan="4">
                                 <a href="javascript:fGoSearch();" class="btn btn-default small">search</a> 
@@ -206,31 +372,31 @@
                                     <option value="M_EMAIL" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_EMAIL") >EMAIL</option>
                                     <option value="M_MOBILE" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_MOBILE") >핸드폰</option>
                                     <option value="M_PHONE" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_PHONE")>전화번호</option>
-                                </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD" />
+                                </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" maxlength="20"  value="@ViewBag.SEARCH_KEYWORD" />
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="vam">임직원구분/등급</th>
                             <td class="condition_seacth">
-                                <select name="GBN" style="width:170px;">
-                                    <option value="" @fSelectBoxSelecteded(ViewBag.GBN, "") >전체(임직원+일반회원)</option>
-                                    <option value="A" @fSelectBoxSelecteded(ViewBag.GBN, "A") >일반회원</option>
-                                    <option value="S" @fSelectBoxSelecteded(ViewBag.GBN, "S") >임직원</option>
+                                <select name="SEL_GBN" style="width:170px;">
+                                    <option value="" @fSelectBoxSelecteded(ViewBag.SEL_GBN, "")>전체(임직원+일반회원)</option>
+                                    <option value="A" @fSelectBoxSelecteded(ViewBag.SEL_GBN, "A")>일반회원</option>
+                                    <option value="S" @fSelectBoxSelecteded(ViewBag.SEL_GBN, "S")>임직원</option>
                                 </select>
                                 &nbsp;/&nbsp;
-                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="B" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "B") /><span class="txt mr5">브론즈</span></label>
-                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="S" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "S") /><span class="txt mr5">실버</span></label>
-                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="G" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "G") /><span class="txt mr5">골드</span></label>
-                                <label for="icon1"><input type="checkbox" id="icon1" name="GRADE" value="V" @fCheckBoxChecked(@ViewBag.GRADE_LIST, "V") /><span class="txt mr5">VIP</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="SEL_GRADE" value="B" @fCheckBoxChecked(@ViewBag.SEL_GRADE_LIST, "B") /><span class="txt mr5">브론즈</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="SEL_GRADE" value="S" @fCheckBoxChecked(@ViewBag.SEL_GRADE_LIST, "S") /><span class="txt mr5">실버</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="SEL_GRADE" value="G" @fCheckBoxChecked(@ViewBag.SEL_GRADE_LIST, "G") /><span class="txt mr5">골드</span></label>
+                                <label for="icon1"><input type="checkbox" id="icon1" name="SEL_GRADE" value="V" @fCheckBoxChecked(@ViewBag.SEL_GRADE_LIST, "V") /><span class="txt mr5">VIP</span></label>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="vam">탈퇴여부</th>
                             <td class="condition_seacth">
-                                <select name="IS_RETIRE" style="width:170px;">
-                                    <option value="" @fSelectBoxSelecteded(ViewBag.IS_RETIRE, "") >전체(활동+탈퇴)</option>
-                                    <option value="N" @fSelectBoxSelecteded(ViewBag.IS_RETIRE, "N")>활동회원</option>
-                                    <option value="Y" @fSelectBoxSelecteded(ViewBag.IS_RETIRE, "Y")>탈퇴회원</option>
+                                <select name="SEL_IS_RETIRE" style="width:170px;">
+                                    <option value="" @fSelectBoxSelecteded(ViewBag.SEL_IS_RETIRE, "")>전체(활동+탈퇴)</option>
+                                    <option value="N" @fSelectBoxSelecteded(ViewBag.SEL_IS_RETIRE, "N")>활동회원</option>
+                                    <option value="Y" @fSelectBoxSelecteded(ViewBag.SEL_IS_RETIRE, "Y")>탈퇴회원</option>
                                 </select>
 
                             </td>
@@ -307,7 +473,7 @@
                             <tr>
                                 <td class="brnone">@count.ToString("#,##0")</td>
                                 <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID" class="btn btn-primary small">@item.M_ID</a></td>
-                                <td><a href="/AdminFrontMember/Edit?SEL_ADM_ID=@item.M_ID" class="btn btn-primary small">@item.M_NAME</a></td>
+                                <td><a href="/AdminFrontMember/Edit?SEL_M_ID=@item.M_ID" class="btn btn-primary small">@item.M_NAME</a></td>
                                 <td>@fM_GBN_NAME(@item.M_GBN)</td>
                                 <td>@fGradeName(@item.M_GRADE)</td>
                                 <td>@item.M_EMAIL</td>

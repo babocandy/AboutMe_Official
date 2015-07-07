@@ -41,6 +41,39 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_FRONT_MEMBER_PWD_UPD", m_IDParameter, m_PWDParameter, eRR_CODE);
         }
     
+        public virtual ObjectResult<SP_ADMIN_FRONT_COMMON_CNT_Result> SP_ADMIN_FRONT_MEMBER_CNT(string dATE_FROM, string dATE_TO, string gRADE_LIST, string gBN, string iS_RETIRE, string sEARCH_COL, string sEARCH_KEYWORD)
+        {
+            var dATE_FROMParameter = dATE_FROM != null ?
+                new ObjectParameter("DATE_FROM", dATE_FROM) :
+                new ObjectParameter("DATE_FROM", typeof(string));
+    
+            var dATE_TOParameter = dATE_TO != null ?
+                new ObjectParameter("DATE_TO", dATE_TO) :
+                new ObjectParameter("DATE_TO", typeof(string));
+    
+            var gRADE_LISTParameter = gRADE_LIST != null ?
+                new ObjectParameter("GRADE_LIST", gRADE_LIST) :
+                new ObjectParameter("GRADE_LIST", typeof(string));
+    
+            var gBNParameter = gBN != null ?
+                new ObjectParameter("GBN", gBN) :
+                new ObjectParameter("GBN", typeof(string));
+    
+            var iS_RETIREParameter = iS_RETIRE != null ?
+                new ObjectParameter("IS_RETIRE", iS_RETIRE) :
+                new ObjectParameter("IS_RETIRE", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_FRONT_MEMBER_CNT", dATE_FROMParameter, dATE_TOParameter, gRADE_LISTParameter, gBNParameter, iS_RETIREParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
+        }
+    
         public virtual ObjectResult<SP_ADMIN_FRONT_MEMBER_VIEW_Result> SP_ADMIN_FRONT_MEMBER_SEL(string dATE_FROM, string dATE_TO, string gRADE_LIST, string gBN, string iS_RETIRE, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
         {
             var dATE_FROMParameter = dATE_FROM != null ?
@@ -90,7 +123,7 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_MEMBER_VIEW_Result>("SP_ADMIN_FRONT_MEMBER_SEL", dATE_FROMParameter, dATE_TOParameter, gRADE_LISTParameter, gBNParameter, iS_RETIREParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
         }
     
-        public virtual int SP_ADMIN_FRONT_MEMBER_UPD(string m_ID, string m_GRADE, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, string m_SKIN_TROUBLE_CD, string m_GBN, string m_STAFF_COMAPNY, string m_STAFF_ID, string m_IS_RETIRE, string m_DEL_REASON, ObjectParameter eRR_CODE)
+        public virtual int SP_ADMIN_FRONT_MEMBER_UPD(string m_ID, string m_GRADE, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, string m_SKIN_TROUBLE_CD, string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID, string m_IS_RETIRE, string m_DEL_REASON, ObjectParameter eRR_CODE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -144,9 +177,9 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
                 new ObjectParameter("M_GBN", m_GBN) :
                 new ObjectParameter("M_GBN", typeof(string));
     
-            var m_STAFF_COMAPNYParameter = m_STAFF_COMAPNY != null ?
-                new ObjectParameter("M_STAFF_COMAPNY", m_STAFF_COMAPNY) :
-                new ObjectParameter("M_STAFF_COMAPNY", typeof(string));
+            var m_STAFF_COMPANYParameter = m_STAFF_COMPANY != null ?
+                new ObjectParameter("M_STAFF_COMPANY", m_STAFF_COMPANY) :
+                new ObjectParameter("M_STAFF_COMPANY", typeof(string));
     
             var m_STAFF_IDParameter = m_STAFF_ID != null ?
                 new ObjectParameter("M_STAFF_ID", m_STAFF_ID) :
@@ -160,7 +193,7 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
                 new ObjectParameter("M_DEL_REASON", m_DEL_REASON) :
                 new ObjectParameter("M_DEL_REASON", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_FRONT_MEMBER_UPD", m_IDParameter, m_GRADEParameter, m_MOBILEParameter, m_PHONEParameter, m_EMAILParameter, m_ZIPCODEParameter, m_ADDR1Parameter, m_ADDR2Parameter, m_ISSMSParameter, m_ISEMAILParameter, m_ISDMParameter, m_SKIN_TROUBLE_CDParameter, m_GBNParameter, m_STAFF_COMAPNYParameter, m_STAFF_IDParameter, m_IS_RETIREParameter, m_DEL_REASONParameter, eRR_CODE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_FRONT_MEMBER_UPD", m_IDParameter, m_GRADEParameter, m_MOBILEParameter, m_PHONEParameter, m_EMAILParameter, m_ZIPCODEParameter, m_ADDR1Parameter, m_ADDR2Parameter, m_ISSMSParameter, m_ISEMAILParameter, m_ISDMParameter, m_SKIN_TROUBLE_CDParameter, m_GBNParameter, m_STAFF_COMPANYParameter, m_STAFF_IDParameter, m_IS_RETIREParameter, m_DEL_REASONParameter, eRR_CODE);
         }
     
         public virtual ObjectResult<SP_ADMIN_FRONT_MEMBER_VIEW_Result> SP_ADMIN_FRONT_MEMBER_VIEW(string m_ID)
@@ -170,39 +203,6 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
                 new ObjectParameter("M_ID", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_MEMBER_VIEW_Result>("SP_ADMIN_FRONT_MEMBER_VIEW", m_IDParameter);
-        }
-    
-        public virtual ObjectResult<SP_ADMIN_FRONT_COMMON_CNT_Result> SP_ADMIN_FRONT_MEMBER_CNT(string dATE_FROM, string dATE_TO, string gRADE_LIST, string gBN, string iS_RETIRE, string sEARCH_COL, string sEARCH_KEYWORD)
-        {
-            var dATE_FROMParameter = dATE_FROM != null ?
-                new ObjectParameter("DATE_FROM", dATE_FROM) :
-                new ObjectParameter("DATE_FROM", typeof(string));
-    
-            var dATE_TOParameter = dATE_TO != null ?
-                new ObjectParameter("DATE_TO", dATE_TO) :
-                new ObjectParameter("DATE_TO", typeof(string));
-    
-            var gRADE_LISTParameter = gRADE_LIST != null ?
-                new ObjectParameter("GRADE_LIST", gRADE_LIST) :
-                new ObjectParameter("GRADE_LIST", typeof(string));
-    
-            var gBNParameter = gBN != null ?
-                new ObjectParameter("GBN", gBN) :
-                new ObjectParameter("GBN", typeof(string));
-    
-            var iS_RETIREParameter = iS_RETIRE != null ?
-                new ObjectParameter("IS_RETIRE", iS_RETIRE) :
-                new ObjectParameter("IS_RETIRE", typeof(string));
-    
-            var sEARCH_COLParameter = sEARCH_COL != null ?
-                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
-                new ObjectParameter("SEARCH_COL", typeof(string));
-    
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_FRONT_MEMBER_CNT", dATE_FROMParameter, dATE_TOParameter, gRADE_LISTParameter, gBNParameter, iS_RETIREParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
         }
     }
 }

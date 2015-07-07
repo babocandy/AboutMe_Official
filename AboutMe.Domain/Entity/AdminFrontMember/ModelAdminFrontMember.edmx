@@ -46,7 +46,7 @@
           <Parameter Name="M_ISDM" Type="char" Mode="In" />
           <Parameter Name="M_SKIN_TROUBLE_CD" Type="char" Mode="In" />
           <Parameter Name="M_GBN" Type="varchar" Mode="In" />
-          <Parameter Name="M_STAFF_COMAPNY" Type="varchar" Mode="In" />
+          <Parameter Name="M_STAFF_COMPANY" Type="varchar" Mode="In" />
           <Parameter Name="M_STAFF_ID" Type="varchar" Mode="In" />
           <Parameter Name="M_IS_RETIRE" Type="varchar" Mode="In" />
           <Parameter Name="M_DEL_REASON" Type="varchar" Mode="In" />
@@ -65,6 +65,15 @@
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="M_PWD" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="GRADE_LIST" Mode="In" Type="String" />
+            <Parameter Name="GBN" Mode="In" Type="String" />
+            <Parameter Name="IS_RETIRE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_SEL" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result)">
             <Parameter Name="DATE_FROM" Mode="In" Type="String" />
@@ -93,25 +102,19 @@
             <Parameter Name="M_ISDM" Mode="In" Type="String" />
             <Parameter Name="M_SKIN_TROUBLE_CD" Mode="In" Type="String" />
             <Parameter Name="M_GBN" Mode="In" Type="String" />
-            <Parameter Name="M_STAFF_COMAPNY" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_COMPANY" Mode="In" Type="String" />
             <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
             <Parameter Name="M_IS_RETIRE" Mode="In" Type="String" />
             <Parameter Name="M_DEL_REASON" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_VIEW" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result)">
-          <Parameter Name="M_ID" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_FRONT_MEMBER_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
-            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
-            <Parameter Name="DATE_TO" Mode="In" Type="String" />
-            <Parameter Name="GRADE_LIST" Mode="In" Type="String" />
-            <Parameter Name="GBN" Mode="In" Type="String" />
-            <Parameter Name="IS_RETIRE" Mode="In" Type="String" />
-            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
-            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="SP_ADMIN_FRONT_MEMBER_VIEW_Result">
           <Property Type="Int32" Name="M_NO" Nullable="false" />
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
@@ -140,16 +143,13 @@
           <Property Type="String" Name="M_AGREE" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="M_AGREE2" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="M_GBN" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="M_STAFF_COMAPNY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="M_STAFF_COMPANY" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="M_STAFF_ID" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="M_SFAFF_APPROV_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="M_STAFF_APPROV_DATE" Nullable="true" Precision="23" />
           <Property Type="String" Name="M_IS_RETIRE" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="M_DEL_DATE" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="M_DEL_POINT" Nullable="false" />
           <Property Type="String" Name="M_DEL_REASON" Nullable="true" MaxLength="2000" />
-        </ComplexType>
-        <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
-          <Property Type="Int32" Name="COUNT" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -158,6 +158,13 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AboutMeModelStoreContainer" CdmEntityContainer="AdminFrontMemberEntities" >
           <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_PWD_UPD" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_PWD_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_SEL" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_SEL" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result">
@@ -188,9 +195,9 @@
                 <ScalarProperty Name="M_AGREE" ColumnName="M_AGREE" />
                 <ScalarProperty Name="M_AGREE2" ColumnName="M_AGREE2" />
                 <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
-                <ScalarProperty Name="M_STAFF_COMAPNY" ColumnName="M_STAFF_COMAPNY" />
+                <ScalarProperty Name="M_STAFF_COMPANY" ColumnName="M_STAFF_COMPANY" />
                 <ScalarProperty Name="M_STAFF_ID" ColumnName="M_STAFF_ID" />
-                <ScalarProperty Name="M_SFAFF_APPROV_DATE" ColumnName="M_SFAFF_APPROV_DATE" />
+                <ScalarProperty Name="M_STAFF_APPROV_DATE" ColumnName="M_STAFF_APPROV_DATE" />
                 <ScalarProperty Name="M_IS_RETIRE" ColumnName="M_IS_RETIRE" />
                 <ScalarProperty Name="M_DEL_DATE" ColumnName="M_DEL_DATE" />
                 <ScalarProperty Name="M_DEL_POINT" ColumnName="M_DEL_POINT" />
@@ -229,20 +236,13 @@
                 <ScalarProperty Name="M_AGREE" ColumnName="M_AGREE" />
                 <ScalarProperty Name="M_AGREE2" ColumnName="M_AGREE2" />
                 <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
-                <ScalarProperty Name="M_STAFF_COMAPNY" ColumnName="M_STAFF_COMAPNY" />
+                <ScalarProperty Name="M_STAFF_COMPANY" ColumnName="M_STAFF_COMPANY" />
                 <ScalarProperty Name="M_STAFF_ID" ColumnName="M_STAFF_ID" />
-                <ScalarProperty Name="M_SFAFF_APPROV_DATE" ColumnName="M_SFAFF_APPROV_DATE" />
+                <ScalarProperty Name="M_STAFF_APPROV_DATE" ColumnName="M_STAFF_APPROV_DATE" />
                 <ScalarProperty Name="M_IS_RETIRE" ColumnName="M_IS_RETIRE" />
                 <ScalarProperty Name="M_DEL_DATE" ColumnName="M_DEL_DATE" />
                 <ScalarProperty Name="M_DEL_POINT" ColumnName="M_DEL_POINT" />
                 <ScalarProperty Name="M_DEL_REASON" ColumnName="M_DEL_REASON" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_CNT" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
-                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -117,7 +117,7 @@
                                 <select name="SEARCH_COL" style="width:170px;">
                                     <option value="ADM_ID" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "ADM_ID")>아이디</option>
                                     <option value="ADM_NAME" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "ADM_NAME")>이름</option>
-                                </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD" />
+                                </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" maxlength="20"  value="@ViewBag.SEARCH_KEYWORD" />
                                 <a href="javascript:fGoSearch();" class="btn btn-default small">search</a>
                             </td>
                         </tr>

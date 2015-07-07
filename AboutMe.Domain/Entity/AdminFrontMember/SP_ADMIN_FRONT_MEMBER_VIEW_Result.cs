@@ -40,9 +40,9 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
         public string M_AGREE { get; set; }
         public string M_AGREE2 { get; set; }
         public string M_GBN { get; set; }
-        public string M_STAFF_COMAPNY { get; set; }
+        public string M_STAFF_COMPANY { get; set; }
         public string M_STAFF_ID { get; set; }
-        public Nullable<System.DateTime> M_SFAFF_APPROV_DATE { get; set; }
+        public Nullable<System.DateTime> M_STAFF_APPROV_DATE { get; set; }
         public string M_IS_RETIRE { get; set; }
         public Nullable<System.DateTime> M_DEL_DATE { get; set; }
         public int M_DEL_POINT { get; set; }
