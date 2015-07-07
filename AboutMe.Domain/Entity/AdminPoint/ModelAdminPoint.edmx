@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_POINT_SAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="AMOUNT" Type="int" Mode="In" />
+          <Parameter Name="ADDITION_REASON" Type="varchar" Mode="In" />
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="REVIEW_IDX" Type="int" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_POINT_USE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="USE_POINT" Type="int" Mode="In" />
+          <Parameter Name="ADDITION_REASON" Type="varchar" Mode="In" />
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_POINT_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_VALUE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_POINT_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_VALUE" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AboutMeModel1StoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AboutMeModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AdminPointEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_POINT_SAVE">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="AMOUNT" Mode="In" Type="Int32" />
+            <Parameter Name="ADDITION_REASON" Mode="In" Type="String" />
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="REVIEW_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POINT_USE">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="USE_POINT" Mode="In" Type="Int32" />
+            <Parameter Name="ADDITION_REASON" Mode="In" Type="String" />
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_POINT_MEMBER_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_VALUE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_POINT_MEMBER_SEL" ReturnType="Collection(AboutMeModel1.SP_POINT_MEMBER_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_VALUE" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_POINT_MEMBER_SEL_Result">
+          <Property Type="Int32" Name="M_NO" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="M_GRADE" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="M_POINT" Nullable="false" />
+          <Property Type="String" Name="M_GBN" Nullable="false" MaxLength="1" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel1StoreContainer" CdmEntityContainer="AdminPointEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POINT_SAVE" FunctionName="AboutMeModel1.Store.SP_ADMIN_POINT_SAVE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POINT_USE" FunctionName="AboutMeModel1.Store.SP_ADMIN_POINT_USE" />
+          <FunctionImportMapping FunctionImportName="SP_POINT_MEMBER_CNT" FunctionName="AboutMeModel1.Store.SP_POINT_MEMBER_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_POINT_MEMBER_SEL" FunctionName="AboutMeModel1.Store.SP_POINT_MEMBER_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel1.SP_POINT_MEMBER_SEL_Result">
+                <ScalarProperty Name="M_NO" ColumnName="M_NO" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_POINT" ColumnName="M_POINT" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

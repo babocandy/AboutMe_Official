@@ -45,7 +45,6 @@
  
             @using (Html.BeginForm("Index", "Faq", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
             {
-                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
                 @Html.Hidden("PageSize", @pagesize)
                 @Html.Hidden("Page", "1")
 
@@ -108,6 +107,7 @@
                 columns.Bound(p => p.TITLE)
                     .Title("제목")
                      .ClientTemplate("#= toggleLink(data) #");
+                
                    //.Template(p => Html.ActionLink("Faq", "Edit", new { IDX = p.IDX }))
                    // .ClientTemplate("<a href=\"/Faq/Edit?IDX=#=IDX#&Page=#=datasource.page# \" >#=TITLE#</a>");
                 columns.Bound(p => p.DISPLAY_YN).Title("게시여부").Width(100);
@@ -119,6 +119,9 @@
             .Pageable(x => x.PageSizes(new int[] { 10, 20, 30, 50 }).Refresh(true))
             .Scrollable()
             .HtmlAttributes(new { style = "height:100%;" })
+            .Selectable(selectable => selectable
+                    .Mode(GridSelectionMode.Single)
+            )
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .PageSize(@pagesizeint)

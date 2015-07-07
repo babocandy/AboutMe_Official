@@ -13,10 +13,13 @@ using Kendo.Mvc;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
+using AboutMe.Web.Admin.Common.Filters;
+using AboutMe.Web.Admin.Common;
+
 namespace AboutMe.Web.Admin.Controllers.ContentsManager
 {
-    
-     public class FaqSearchModel
+    #region 검색조건Model
+    public class FaqSearchModel
     {
          private string searchcol;
          private string searchkeyword;
@@ -83,21 +86,18 @@ namespace AboutMe.Web.Admin.Controllers.ContentsManager
              }
          }
     }
+    #endregion
 
+    [CustomAuthorize]
     public class FaqController : Controller
     {
-       
-
         private IFaqService _faqservice;
-
-
         public FaqController(IFaqService _faqservice)
         {
             this._faqservice = _faqservice;
         }
 
         // GET: Faq
-        
         public ActionResult FaqGridList(DataSourceRequest request, FaqSearchModel searchModel)
         {
            
@@ -164,12 +164,12 @@ namespace AboutMe.Web.Admin.Controllers.ContentsManager
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult FaqAction(TB_FAQ itemFaq, FaqSearchModel searchModel, string Mode)
         {
             if (ModelState.IsValid)
             {
-                //ToBe: 관리자계정 
-                itemFaq.M_ID = "bckang";
+                itemFaq.M_ID = AdminUserInfo.GetAdmId();
 
                 if (Mode == "NEW")
                 {
