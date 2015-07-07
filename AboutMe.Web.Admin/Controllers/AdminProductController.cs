@@ -375,6 +375,31 @@ namespace AboutMe.Web.Admin.Controllers
         }
         #endregion
 
+        #region 상품 할인정책 리스트
+        public ActionResult ProductPriceIndex(ProductSearch_Entity productSearch_Entity)
+        {
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+
+            int TotalRecord = 0;
+            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
+
+            this.ViewBag.TotalRecord = TotalRecord;
+            this.ViewBag.Page = productSearch_Entity.Page;
+
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+
+            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+        }
+        #endregion
+
         #region 상품 등록
 
         public ActionResult ProductInsert()
@@ -672,6 +697,91 @@ namespace AboutMe.Web.Admin.Controllers
             }
         }
         #endregion
+
+        #region 상품 가격 일괄 수정
+        public ActionResult ProductPriceUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity productSearch_Entity)
+        {
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+
+
+            try
+            {
+                foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
+                {
+                    if (!string.IsNullOrEmpty(tb_product.P_CODE))
+                    {
+                        _AdminProductService.UpdateAdminProductPrice(tb_product);
+
+                        #region 상품가격 일괄 수정 로그 생성
+                        var serialised = JsonConvert.SerializeObject(tb_product);
+                        serialised += JsonConvert.SerializeObject(productSearch_Entity);
+                        AdminLog adminlog = new AdminLog();
+                        adminlog.AdminLogSave(serialised, "관리자상품가격일괄수정");
+                        #endregion
+                    }
+                }
+
+                return RedirectToAction("ProductPriceIndex");
+            }
+            catch
+            {
+                return RedirectToAction("ProductPriceIndex");
+            }
+
+            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+        }
+        #endregion
+
+        #region 상품 정보 일괄 수정
+        public ActionResult ProductBatchUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity productSearch_Entity)
+        {
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+
+
+            try
+            {
+                foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
+                {
+                    if (!string.IsNullOrEmpty(tb_product.P_CODE))
+                    {
+                        _AdminProductService.UpdateAdminProductBatch(tb_product);
+
+                        #region 상품가격 일괄 수정 로그 생성
+                        var serialised = JsonConvert.SerializeObject(tb_product);
+                        serialised += JsonConvert.SerializeObject(productSearch_Entity);
+                        AdminLog adminlog = new AdminLog();
+                        adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
+                        #endregion
+                    }
+                }
+
+                return RedirectToAction("ProductIndex");
+            }
+            catch
+            {
+                return RedirectToAction("ProductIndex");
+            }
+
+            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+        }
+        #endregion
+
         
         #endregion
 
