@@ -187,6 +187,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelAdminPoint.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminPoint\SP_ADMIN_POINT_HISTORY_SEL_Result.cs">
+      <DependentUpon>ModelAdminPoint.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminPoint\SP_POINT_MEMBER_SEL_Result.cs">
       <DependentUpon>ModelAdminPoint.tt</DependentUpon>
     </Compile>
@@ -273,6 +276,35 @@
     <Compile Include="Entity\Faq\TB_FAQ.cs">
       <DependentUpon>ModelFaq.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Notice\ModelNotice_EntityPartial.cs" />
+    <Compile Include="Entity\Notice\ModelNotice_Metadata.cs" />
+    <Compile Include="Entity\Notice\ModelNotice.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNotice.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Notice\ModelNotice.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNotice.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Notice\ModelNotice.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNotice.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Notice\SP_TB_NOTICE_CNT_Result.cs">
+      <DependentUpon>ModelNotice.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Notice\SP_TB_NOTICE_SEL_Result.cs">
+      <DependentUpon>ModelNotice.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Notice\SP_TB_NOTICE_VIEW_Result.cs">
+      <DependentUpon>ModelNotice.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Notice\TB_NOTICE.cs">
+      <DependentUpon>ModelNotice.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
@@ -284,6 +316,8 @@
     <Compile Include="Service\AdminPoint\IAdminPointService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
+    <Compile Include="Service\Notice\NoticeService.cs" />
+    <Compile Include="Service\Notice\INoticeService.cs" />
     <Compile Include="Service\Faq\FaqService.cs" />
     <Compile Include="Service\Faq\IFaqService.cs" />
   </ItemGroup>
@@ -386,6 +420,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelFaq.edmx</DependentUpon>
       <LastGenOutput>ModelFaq.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Notice\ModelNotice.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelNotice.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Notice\ModelNotice.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelNotice.edmx</DependentUpon>
+      <LastGenOutput>ModelNotice.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Notice\ModelNotice.edmx.diagram">
+      <DependentUpon>ModelNotice.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Notice\ModelNotice.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelNotice.edmx</DependentUpon>
+      <LastGenOutput>ModelNotice.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

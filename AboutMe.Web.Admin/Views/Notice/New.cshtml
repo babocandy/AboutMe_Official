@@ -1,0 +1,191 @@
+﻿@model AboutMe.Domain.Entity.Notice.TB_NOTICE
+
+@{
+    ViewBag.Title = "Notice";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    
+    string mode = "NEW";
+    string btn_caption = "등록";
+    string confirm_message = "등록 하시겠습니까?";
+    
+    if (Model.IDX > 0 && !String.IsNullOrEmpty(Model.IDX.ToString()))
+    {
+        mode = "EDIT";
+    }
+
+    if (mode == "EDIT")
+    {
+        btn_caption = "수정";
+        confirm_message = "수정 하시겠습니까?";
+    }
+    
+    if (ViewBag.DisplayYn == "")
+    {
+        ViewBag.DisplayYn = "A";
+    }
+
+    string pagesize = Convert.ToString(ViewBag.PageSize);
+    string page = Convert.ToString(ViewBag.Page);
+}
+
+@section Scripts{
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+
+
+@using (Html.BeginForm("NoticeAction", "Notice", FormMethod.Post, new { id = "noticeform", name = "noticeform", onsubmit = "return frmCheck();" })) 
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("Mode",mode)
+    @Html.Hidden("IDX", Model.IDX.ToString())
+    @Html.Hidden("DisplayYn", (String)ViewBag.DisplayYn)
+    @Html.Hidden("SearchCol", (String)ViewBag.SearchCol)
+    @Html.Hidden("SearchKeyword", (String)ViewBag.SearchKeyword)
+    @Html.Hidden("PageSize", @pagesize)
+    @Html.Hidden("Page", @page)
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>공지사항</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">공지사항</h3>
+        </div>
+
+        <div class="form-horizontal">
+             <table class="table table_row">
+                <colgroup><col width="250px" /><col width="*" /></colgroup>
+                <tbody>
+                    @if (mode == "EDIT")
+                    {
+                    <tr>
+                        <th scope="row" class="vam"><label for="Idx">ID</label></th>
+                        <td class="condition_seacth">
+                          
+                            @Html.Label(Model.IDX.ToString())
+                          
+                        </td>
+                    </tr>
+                    }
+                    <tr>
+                        <th scope="row" class="vam"><label for="TITLE">제목</label></th>
+                        <td class="condition_seacth">
+                            @(Html.Kendo().TextBox()
+                                .Name("TITLE")
+                                .HtmlAttributes(new { @style = "width:500px" })
+                                .Value(Model.TITLE)
+                            )
+
+                            @Html.ValidationMessageFor(model => model.TITLE, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="DISPLAY_YN">게시여부</label></th>
+                        <td class="condition_seacth">
+                            @Html.RadioButtonFor(model => model.DISPLAY_YN, "Y") 게시  
+                            @Html.RadioButtonFor(model => model.DISPLAY_YN, "N") 미게시
+                        </td>
+                    </tr>
+
+                @if (mode == "EDIT")
+                {
+
+                    <tr>
+                        <th scope="row" class="vam"><label for="VIEW_CNT">조회수</label></th>
+                        <td class="condition_seacth">
+                            @Html.Label(Model.VIEW_CNT.ToString())
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row" class="vam"><label for="REG_DATE">등록일</label></th>
+                        <td class="condition_seacth">
+                         @Html.Label(Model.REG_DATE.ToString())
+                        </td>
+                    </tr>
+                 }
+                    <tr>
+                        <th scope="row" class="vam"><label for="CONTENTS">내용</label></th>
+                        <td class="condition_seacth">
+                            @(Html.Kendo().Editor()
+                                    .Name("CONTENTS")
+                                    .HtmlAttributes(new { @style = "width:800px; height:400px" })
+                                    .Value(HttpUtility.HtmlDecode(Model.CONTENTS))
+        //                                    .Tools(tools => tools.Clear())
+                            )
+
+                            @Html.ValidationMessageFor(model => model.CONTENTS, "", new { @class = "text-danger" })
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-0 col-md-10">
+                    @(Html.Kendo().Button()
+                    .Name("submit")
+                    .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                    .Content(@btn_caption))
+                    
+                    @if (mode == "EDIT")
+                    {
+
+                        @(Html.Kendo().Button()
+                            .Name("delete")
+                            .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+                            .Content("삭제")
+                            .Events(ev => ev.Click("onDeleteClick"))
+                        )
+                    }
+
+                    @(Html.Kendo().Button()
+                    .Name("list")
+                    .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+                    .Content("목록")
+                    .Events(ev => ev.Click("onListClick"))
+                    )
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    function onListClick() {
+        location.href = '@Html.Raw(Url.Action("Index", new { SearchCol = @ViewBag.SearchCol, SearchKeyword = @ViewBag.SearchKeyword, DisplayYn = @ViewBag.DisplayYn, Page = @ViewBag.Page, PageSize = @ViewBag.PageSize }))';
+
+        }
+
+        function frmCheck() {
+            if (confirm('@confirm_message')) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        function onDeleteClick() {
+            if (confirm("삭제하시겠습니까?")) {
+                location.href = '@Html.Raw(Url.Action("NoticeDelete", new { IDX = Model.IDX, SearchCol = @ViewBag.SearchCol, SearchKeyword = @ViewBag.SearchKeyword, DisplayYn = @ViewBag.DisplayYn, Page = @ViewBag.Page, PageSize = @ViewBag.PageSize }))';
+            }
+        }
+    </script>
+
+}
+
+    
