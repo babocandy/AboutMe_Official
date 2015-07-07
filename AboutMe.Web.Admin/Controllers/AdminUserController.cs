@@ -69,6 +69,17 @@ namespace AboutMe.Web.Admin.Controllers
         //관리자 로그인 처리
         public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "")
         {
+            //로그 기록
+            string memo = "관리자-로그인";
+            string comment = "관리자-로그인";
+            memo = memo + "|ID:" + ID;
+            memo = memo + "|PW:" + PW;
+            memo = memo + "|RedirectUrl:" + RedirectUrl;
+            AdminLog adminlog = new AdminLog();
+            //adminlog.AdminLogSave(memo, comment);
+
+
+
             //1.넘어온 인자값 확인 
             if (ID == "" || PW == "")
             {
@@ -89,11 +100,27 @@ namespace AboutMe.Web.Admin.Controllers
             List<SP_ADMIN_ADMIN_LOGIN_Result> result_list = _AdminUserService.GetAdminLoginList(ID).ToList();
             if(result_list.Count <1)
             {
+                memo = "관리자-로그인실패-계정부재";
+                comment = "관리자-로그인실패-계정부재";
+                memo = memo + "|ID:" + ID;
+                memo = memo + "|PW:" + PW;
+                memo = memo + "|RedirectUrl:" + RedirectUrl;
+                //AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(memo, comment);
+
                 return Content("<script language='javascript' type='text/javascript'>alert('아이디가 존재하지 않습니다.');history.go(-1);;</script>");
             }
 
             if (result_list[0].ADM_PWD != ADM_PWD_SHA256_HASH)  //인코딩 비교 필요
             {
+                memo = "관리자-로그인실패-패스워드불일치";
+                comment = "관리자-로그인실패-패스워드불일치";
+                memo = memo + "|ID:" + ID;
+                memo = memo + "|PW:" + PW;
+                memo = memo + "|RedirectUrl:" + RedirectUrl;
+                //AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(memo, comment);
+
                 return Content("<script language='javascript' type='text/javascript'>alert('아이디 or 패스워드가 일치하지 않습니다.');history.go(-1);</script>");
             }
             else
@@ -110,6 +137,8 @@ namespace AboutMe.Web.Admin.Controllers
                 cookiesession.SetSecretSession("ADM_EMAIL", result_list[0].ADM_EMAIL);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("ADM_PHONE", result_list[0].ADM_PHONE);  //로그인 세션 세팅
 
+                cookiesession.SetSession("ADM_NAME_TXT", result_list[0].ADM_NAME);  //로그인 세션 세팅 <--평문 이름
+
 
                 if (RedirectUrl!="")
                     return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
@@ -124,6 +153,14 @@ namespace AboutMe.Web.Admin.Controllers
 
             }
 
+            memo = "관리자-로그인성공";
+            comment = "관리자-로그인성공";
+            memo = memo + "|ID:" + ID;
+            memo = memo + "|PW:" + PW;
+            memo = memo + "|RedirectUrl:" + RedirectUrl;
+            //AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment); 
+            
             return RedirectToAction("Index", "AdminFrontMember"); // 로그인 성공
             //return View();
         }
@@ -131,9 +168,12 @@ namespace AboutMe.Web.Admin.Controllers
         //관리자 로그아웃 처리
         public ActionResult Logout()
         {
+            string LOGOUT_ADM_ID = AdminUserInfo.GetAdmId();
+
             CookieSessionStore cookiesession = new CookieSessionStore();
             cookiesession.SetSecretSession("ADM_ID", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("ADM_NAME", "");  //로그인 세션 세팅
+            cookiesession.SetSecretSession("ADM_NAME_TXT", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("ADM_GRADE", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("ADM_EMAIL", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("ADM_PHONE", "");  //로그인 세션 세팅
@@ -155,6 +195,15 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.ADM_GRADE = AdminUserInfo.GetAdmGrade();
             this.ViewBag.ADM_EMAIL = AdminUserInfo.GetAdmEmail();
             this.ViewBag.ADM_PHONE = AdminUserInfo.GetAdmPhone();
+
+
+            //로그 기록
+            string memo = "관리자-로그아웃";
+            string comment = "관리자-로그아웃";
+            memo = memo + "|ADM_ID:" + LOGOUT_ADM_ID;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
 
             return RedirectToAction("Login", "AdminUser"); // 로그인 페이지로 이동
             //return View();
@@ -228,6 +277,20 @@ namespace AboutMe.Web.Admin.Controllers
 
             }
 
+            //로그 기록
+            string memo = "관리자-관리자등록";
+            string comment = "관리자-관리자등록";
+            memo = memo + "|ADM_ID:" + ADM_ID;
+            memo = memo + "|ADM_NAME:" + ADM_NAME;
+            memo = memo + "|ADM_PWD:" + ADM_PWD;
+            memo = memo + "|ADM_GRADE:" + ADM_GRADE;
+            memo = memo + "|ADM_EMAIL:" + ADM_EMAIL;
+            memo = memo + "|ADM_PHONE:" + ADM_PHONE;
+            memo = memo + "|ADM_USE_YN:" + ADM_USE_YN;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+
             //정상 등록저장
             return RedirectToAction("Index", "AdminUser"); // 로그인 페이지로 이동
         }
@@ -291,10 +354,26 @@ namespace AboutMe.Web.Admin.Controllers
 
                 ERR_MSG = "==저장중 오류발생!==";
                 ERR_MSG = ERR_MSG + "\\n ERR_CODE:" + iERR_CODE.ToString();
+
+
                 return Content("<script language='javascript' type='text/javascript'>alert('" + ERR_MSG + "');history.go(-1);</script>");
 
 
             }
+
+
+            //로그 기록
+            string memo = "관리자-관리자수정";
+            string comment = "관리자-관리자수정";
+            memo = memo + "|ADM_ID:" + ADM_ID;
+            memo = memo + "|ADM_NAME:" + ADM_NAME;
+            memo = memo + "|ADM_PWD:" + ADM_PWD;
+            memo = memo + "|ADM_GRADE:" + ADM_GRADE;
+            memo = memo + "|ADM_EMAIL:" + ADM_EMAIL;
+            memo = memo + "|ADM_PHONE:" + ADM_PHONE;
+            memo = memo + "|ADM_USE_YN:" + ADM_USE_YN;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
 
             //정상 수정저장
             return RedirectToAction("Index", "AdminUser"); // 목록 페이지로 이동
@@ -347,6 +426,15 @@ namespace AboutMe.Web.Admin.Controllers
             //Response.End();
 
             //return View("MyView");
+
+            //로그 기록
+            string memo = "관리자-관리자엑셀다운";
+            string comment = "관리자-관리자엑셀다운";
+            memo = memo + "|SEARCH_COL:" + SEARCH_COL;
+            memo = memo + "|SEARCH_KEYWORD:" + SEARCH_KEYWORD;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
 
             return Content(sw.ToString(), "application/ms-excel");
 

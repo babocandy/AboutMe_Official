@@ -1,8 +1,30 @@
-﻿
+﻿@{
+
+@helper fTopMenuCSSOn(string argMENU_DEPTH1="")
+{
+    var Path = Request.Url.LocalPath +"////";  // ex /Control/Action/
+    var arrPATH = Path.Split('/');
+    
+    var strControl = arrPATH[1];
+    var strAction = arrPATH[2];
+
+    if (argMENU_DEPTH1 != null && argMENU_DEPTH1 == strControl)
+    {
+        @(" class=active ")
+    }
+} //fTopMenuCSSOn()
+
+@helper fTopMenuGetAdminName()
+{
+    @(Session["ADM_NAME_TXT"])
+}//fTopMenuGetAdminName()
+
+}
+
 <div class="navbar_top">
     <div class="pull-left">
-        <span class="user"><strong>관리자</strong>님 안녕하세요.</span>
-        <span class="date"><strong>Today</strong>2015. 04. 29</span>
+        <span class="user"><strong>@fTopMenuGetAdminName()</strong>님 안녕하세요.</span>
+        <span class="date"><strong>Today</strong>@DateTime.Now.ToString("yyyy. MM. dd")</span>
     </div>
     <div class="pull-right">
         <a href="#" class="btn btn-primary small mr5">HTML 변환하기</a>
@@ -12,22 +34,17 @@
         <a href="/AdminUser/Logout" class="btn btn-primary small">로그아웃</a>
     </div>
 </div>
-페이지코드:@ViewBag.BodyPageCode 
-<br />
-@{
-    var Path = Request.Url.LocalPath;
-}
 <div class="navbar_menu">
     <!--활성화 페이지시 active class 사용합니다.-->
     <ul>
         <li><a href="/basic/index.html">기본설정</a></li>
-        <li><a href="/AdminUser/Index">관리자관리</a></li>
-        <li class="active"><a href="/AdminProduct/ProductIndex">상품관리</a></li>
+        <li @fTopMenuCSSOn("AdminUser") ><a href="/AdminUser/Index">관리자관리</a></li>
+        <li><a href="/AdminProduct/ProductIndex">상품관리</a></li>
         <li><a href="/display/index.html">전시관리</a></li>
         <li><a href="/promotion/index.html">프로모션관리</a></li>
         <li><a href="/odersale/index.html">주문/매출</a></li>
         <li><a href="/contents/index.html">컨텐츠관리</a></li>
-        <li><a href="/AdminFrontMember/Index">회원관리</a></li>
+        <li @fTopMenuCSSOn("AdminFrontMember") ><a href="/AdminFrontMember/Index">회원관리</a></li>
         <li><a href="/cs/index.html">C/S관리</a></li>
         <li><a href="/stats/index.html">통계</a></li>
     </ul>
