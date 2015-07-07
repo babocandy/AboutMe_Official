@@ -138,28 +138,31 @@ namespace AboutMe.Web.Admin.Controllers
                 cookiesession.SetSecretSession("ADM_PHONE", result_list[0].ADM_PHONE);  //로그인 세션 세팅
 
                 cookiesession.SetSession("ADM_NAME_TXT", result_list[0].ADM_NAME);  //로그인 세션 세팅 <--평문 이름
+                cookiesession.SetSession("ADM_GRADE_TXT", result_list[0].ADM_GRADE);  //로그인 세션 세팅 <--평문 등급
 
+
+                memo = "관리자-로그인성공";
+                comment = "관리자-로그인성공";
+                memo = memo + "|ID:" + ID;
+                memo = memo + "|PW:" + PW;
+                memo = memo + "|RedirectUrl:" + RedirectUrl;
+                //AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(memo, comment); 
 
                 if (RedirectUrl!="")
                     return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
 
 
                 //세션 확인용-ssw
+                /*
                 this.ViewBag.ADM_ID = AdminUserInfo.GetAdmId();
                 this.ViewBag.ADM_NAME = AdminUserInfo.GetAdmName();
                 this.ViewBag.ADM_GRADE = AdminUserInfo.GetAdmGrade();
                 this.ViewBag.ADM_EMAIL = AdminUserInfo.GetAdmEmail();
                 this.ViewBag.ADM_PHONE = AdminUserInfo.GetAdmPhone();
-
+                */
             }
 
-            memo = "관리자-로그인성공";
-            comment = "관리자-로그인성공";
-            memo = memo + "|ID:" + ID;
-            memo = memo + "|PW:" + PW;
-            memo = memo + "|RedirectUrl:" + RedirectUrl;
-            //AdminLog adminlog = new AdminLog();
-            adminlog.AdminLogSave(memo, comment); 
             
             return RedirectToAction("Index", "AdminFrontMember"); // 로그인 성공
             //return View();
