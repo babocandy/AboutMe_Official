@@ -600,7 +600,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <a class="btn btn-default small" href="#" onclick="formChk4();">LINE_TYPE<br />일괄수정</a>
+                            <a class="btn btn-default small" href="#" onclick="formChk5();">SKIN_TYPE<br />일괄수정</a>
                         </th>
                         <th>순서</th>
                         <th>노출</th>
@@ -631,12 +631,14 @@
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
                     <tr>
-                        <th><a class="btn btn-default small" href="#" onclick="formChk5();">SKIN_TYPE<br />일괄수정</a>
+                        <th>
+                            <a class="btn btn-default small" href="#" onclick="formChk4();">LINE_TYPE<br />일괄수정</a>
                         </th>
                         <th>순서</th>
                         <th>노출</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     @{ i = 0; }
                     @foreach (var item in ViewData["categoryLine"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)

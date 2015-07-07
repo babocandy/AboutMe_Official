@@ -1,0 +1,38 @@
+﻿@if (IsSectionDefined("Head"))
+{
+    @RenderSection("Head")
+}
+<script src="/aboutCom/js/main.js" type="text/javascript"></script>
+<title>ABOUT ME</title>
+</head>
+<body>
+    <div class="wrap main">
+        <!--header-->
+        @if (IsSectionDefined("Header"))
+        {
+            @RenderSection("Header")
+        }
+        <!--//header-->
+        <!--container-->
+        @if (IsSectionDefined("Body"))
+        {
+            @RenderSection("Body")
+        }
+        else
+        {
+            @RenderBody()
+        }
+        <!--//container-->
+        <!--footer-->
+        @if (IsSectionDefined("footer"))
+        {
+            @RenderSection("footer")
+        }
+        <!--//footer-->
+    </div>
+</body>
+</html>
+
+
+
+
