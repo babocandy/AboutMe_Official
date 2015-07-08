@@ -637,5 +637,22 @@ namespace AboutMe.Domain.Entity.AdminProduct
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_BATCH_UPD", p_CODEParameter, p_NAMEParameter, dISPLAY_YNParameter, sOLDOUT_YNParameter, p_OUTLET_YNParameter);
         }
+
+        public virtual int SP_ADMIN_PRODUCT_DISPLAY_RE_SORT(Nullable<int> iDX, Nullable<int> rE_SORT, string cLICKCHK)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            var rE_SORTParameter = rE_SORT.HasValue ?
+                new ObjectParameter("RE_SORT", rE_SORT) :
+                new ObjectParameter("RE_SORT", typeof(int));
+
+            var cLICKCHKParameter = cLICKCHK != null ?
+                new ObjectParameter("CLICKCHK", cLICKCHK) :
+                new ObjectParameter("CLICKCHK", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_DISPLAY_RE_SORT", iDXParameter, rE_SORTParameter, cLICKCHKParameter);
+        }
     }
 }

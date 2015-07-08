@@ -10,7 +10,7 @@
 }
 
 @section Header{
-    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+  @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");} 
 }
 
 @section Body{
@@ -36,10 +36,6 @@
 
         <div class="panel">
             <h4>회원 검색</h4>
-
-            @Model.SearchKey
-            <br />
-            @Model.SearchValue
             @using (Html.BeginForm("Index", "AdminPoint/Index", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
@@ -51,21 +47,43 @@
                                             <tr>
                                                 <th scope="row" class="vam">검색</th>
                                                 <td class="condition_seacth">
-                                                    <select name="SearchKey" style="width:170px;">
-                                                        <option value="">-선택하세요-</option>
-                                                        @if (Model.SearchKey.IsEmpty())
-                                                        {
-                                                            <option value="M_ID">아이디</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="M_ID" selected>아이디</option>
-                                                        }
 
-                                                    </select>
-                                                    <input type="text" class="input-sm text-left" name="SearchValue" value="@Model.SearchValue" />
+                                                    @{
+                                                        List<SelectListItem> items = new List<SelectListItem>();
+                                                        items.Add(new SelectListItem{Text="아이디", Value="M_ID"});
+                                                        items.Add(new SelectListItem{Text="이름", Value="M_NAME"});
+
+                                                        if (Model.SearchKey == "M_ID")
+                                                        {
+                                                            items[0].Selected = true;
+                                                        }
+                                                        else if (Model.SearchKey == "M_NAME")
+                                                        {
+                                                            items[1].Selected = true;
+                                                        }
+                                                    }
+                                                    @Html.DropDownList("searchKey", items, "-대상 선택-")
+                       
+
+                                                    <input type="text" class="input-sm text-left" name="searchValue" value="@Model.SearchValue" />
                                                     <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
-                                                    <!--<input type="submit" value=" Search >> ">-->
+                                                    <a href="@(Request.Url.PathAndQuery)" class="btn btn-default small">초기화</a>
+
+                                                    @{
+                                                        List<SelectListItem> pageSizeItems = new List<SelectListItem>();
+                                                        pageSizeItems.Add(new SelectListItem { Text = "10개씩", Value = "10" });
+                                                        pageSizeItems.Add(new SelectListItem { Text = "20개씩", Value = "20" });
+
+                                                        if (Model.PageSize == 10)
+                                                        {
+                                                            pageSizeItems[0].Selected = true;
+                                                        }
+                                                        else if (Model.PageSize == 20)
+                                                        {
+                                                            pageSizeItems[1].Selected = true;
+                                                        }
+                                                    }
+                                                    @Html.DropDownList("pageSize", pageSizeItems, new { style = "margin-left:50px" })
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -109,10 +127,10 @@
             </table>
         </div>
 
-
+        @Model.PageSize;
 
         @{
-            var queryStr = "";
+            string queryStr = null;
             if (!Model.SearchKey.IsEmpty())
             {
                 queryStr += "searchKey=" + Model.SearchKey;
@@ -120,18 +138,19 @@
 
             if (!Model.SearchValue.IsEmpty())
             {
-                queryStr += "searchValue=" + Model.SearchValue;
+                queryStr += "&searchValue=" + Model.SearchValue;
             }
-            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = 1, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
+            
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
         }
 
         <script>
         function popupPointUpdate(mid) {
-            var myWindow = window.open("/AdminPoint/PopupMemberPoint?M_ID=" + mid, "MsgWindow", "width=400, height=400,scrollbars=0");
+            var myWindow = window.open("/AdminPoint/PopupMemberPoint?M_ID=" + mid, "popupPointUpdate", "width=400, height=400,scrollbars=0");
         }
 
         function popupPointHistory(mid) {
-            var myWindow = window.open("/AdminPoint/MyPointHistory?M_ID=" + mid, "MsgWindow", "width=800, height=500,scrollbars=0");
+            var myWindow = window.open("/AdminPoint/MyPointHistory?M_ID=" + mid, "popupPointHistory", "width=800, height=500,scrollbars=0");
         }
         </script>
 

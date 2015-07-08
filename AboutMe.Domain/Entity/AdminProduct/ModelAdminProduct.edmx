@@ -147,6 +147,11 @@
         <Function Name="SP_ADMIN_PRODUCT_DETAIL_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="RE_SORT" Type="int" Mode="In" />
+          <Parameter Name="CLICKCHK" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_PRODUCT_IMG_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
           <Parameter Name="imgColumName" Type="varchar" Mode="In" />
@@ -427,6 +432,11 @@
             <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
             <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
             <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+            <Parameter Name="CLICKCHK" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
@@ -881,6 +891,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PRICE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PRICE_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
