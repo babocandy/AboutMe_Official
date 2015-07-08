@@ -58,6 +58,8 @@ namespace AboutMe.Domain.Service.AdminProduct
         void UpdateAdminProductPrice(TB_PRODUCT_INFO tb_product);
         //상품정보 일괄수정
         void UpdateAdminProductBatch(TB_PRODUCT_INFO tb_product);
+        //상품전시 순서 바꾸기
+        void UpdateAdminProductReSort(int IDX, int RE_SORT, string CLICKCHK);
 
         //void InsertAdminCategoryOne(string DEPTH1_NAME);
         //List<SP_ADM_ADMIN_DEPT_SEL_Result> GetAdmDeptList();
