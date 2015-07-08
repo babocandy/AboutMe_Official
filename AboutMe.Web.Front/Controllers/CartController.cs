@@ -38,11 +38,10 @@ namespace AboutMe.Web.Front.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-
+        /*
         [HttpPost]
         public ActionResult CartInput(string data)
         {
-            /*
             Json
             SP_TB_CART_PRODUCT_ADD_Param newItem = new SP_TB_CART_PRODUCT_ADD_Param{
                 
@@ -52,9 +51,8 @@ namespace AboutMe.Web.Front.Controllers
             var jsonData = new { cart_count = cnt };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
-             * */
         }
-
+        */
         
     }
 }
