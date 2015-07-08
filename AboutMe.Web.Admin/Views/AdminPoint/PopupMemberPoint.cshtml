@@ -16,6 +16,16 @@
             width: 100%;
             min-width: inherit;
         }
+
+        .field-validation-error
+        {
+            color: red;
+        }
+
+        .validation-summary-errors
+        {
+            color: Red;
+        }
     </style>
 }
 @section Scripts{
@@ -61,11 +71,12 @@
 
 @section Body{
     <h4>포인트 관리</h4>
-    <div>회원아이디 : @Model.Mid</div>
+    
     @using (Html.BeginForm("PopupMemberPoint", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div><span>@Model.Mid</span>@Html.ValidationSummary(true, "", new { @style= "display:inline;" })</div>
+        
         <div>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
@@ -77,6 +88,7 @@
                         <td>
                             <input type="radio" name="Type" value="1" />적립
                             <input type="radio" name="Type" value="2" />차감
+                            <br />
                             @Html.ValidationMessageFor(model => model.Type)
                         </td>
                     </tr>
@@ -84,6 +96,7 @@
                         <td>적립/차감사유</td>
                         <td>
                             <input type="text" name="Reason" value="" />
+                            <br />
                             @Html.ValidationMessageFor(model => model.Reason)
                         </td>
                     </tr>
@@ -91,6 +104,7 @@
                         <td>적립금 입력</td>
                         <td>
                             <input type="text" name="Point" value="" />
+                            <br />
                             @Html.ValidationMessageFor(model => model.Point)
                         </td>
 
