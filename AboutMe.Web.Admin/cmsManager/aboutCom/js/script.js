@@ -1,3 +1,18 @@
+// 새창 센터띄우기 scroll no
+function openScrollNo(xurl, tar, wid, hei){
+   var winl = (screen.width - wid) / 2;
+   var wint = (screen.height - hei) / 2;
+   set = 'width='+wid+',height='+hei+',top='+wint+',left='+winl+', toolbar=no,location=no,directory=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no';
+   win = window.open(xurl,tar,set);
+};
+// 새창 센터띄우기 scroll yes
+function openScrollYes(xurl, tar, wid, hei){
+   var winl = (screen.width - wid) / 2;
+   var wint = (screen.height - hei) / 2;
+   set = 'width='+wid+',height='+hei+',top='+wint+',left='+winl+', toolbar=no,location=no,directory=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no';
+   win = window.open(xurl,tar,set);
+};
+
 $(function(){
 
 	/* 왼쪽 사이드바 메뉴 열고 닫기 */

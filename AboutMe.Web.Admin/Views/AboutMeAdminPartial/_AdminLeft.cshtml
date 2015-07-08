@@ -8,10 +8,9 @@
         <a href="#" class="btn btn-primary small btnclose">전체닫기</a>
     </div>
     <!-- //왼쪽 메뉴 열고 닫기 -->
-
+<!--
     <h2>상품관리</h2>
     <ul class="nav nav-sidebar depth1">
-        <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
         <li class="active">
             <a href="/AdminProduct/Index" class="menu ">카테고리관리</a>
         </li>
@@ -19,9 +18,101 @@
             <a href="/AdminProduct/ProductIndex" class="menu">상품관리</a>
             <ul class="depth2">
                 <li><a href="/AdminProduct/ProductIndex">상품목록</a></li>
-                <li><a href="#">상품진열설정</a></li>
+                <li><a href="/AdminProduct/ProductPriceIndex">상품가격설정</a></li>
                 <li><a href="#">사은품관리</a></li>
             </ul>
         </li>
     </ul>
+-->
+@{
+
+//Left메뉴 ON 처리
+ @helper fLeftMenuCSSOn(string argMENU_DEPTH2_List = "")
+{
+    var Path = Request.Url.LocalPath + "////"; // ex)/Control/Action/
+    var arrPATH = Path.Split('/');
+
+    argMENU_DEPTH2_List = argMENU_DEPTH2_List + ",";
+    var arrMenu_Depth2 = argMENU_DEPTH2_List.Split(',');
+
+    //var strAction = Path.Substring(1, 1);
+    var strControl = arrPATH[1];
+    var strAction = arrPATH[2];
+
+    if (argMENU_DEPTH2_List != null)
+    {
+        foreach (string word in arrMenu_Depth2)
+        {
+            if (word != "" && word == strAction)
+            { 
+                @(" class=active ")
+                break;    
+            }
+    
+        } //for
+    } //if outter
+} //fLeftMenuCSSOn
+
+    //상단 1Dept 메뉴 에 따라 Left메뉴 처리
+@helper fLeftMenuMake()
+{
+    var Path = Request.Url.LocalPath + "////"; // ex)/Control/Action/
+    var arrPATH = Path.Split('/');
+
+    //var strAction = Path.Substring(1, 1);
+    var strControl = arrPATH[1];
+    var strAction = arrPATH[2];
+
+    switch (strControl)
+    {
+        case "AdminUser":  //관리자 관리
+            <h2>관리자관리</h2>
+            <ul class="nav nav-sidebar depth1">
+                <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                <li @fLeftMenuCSSOn("Index,Insert,Edit")>
+                    <a href="/AdminUser/Index" class="menu ">관리자관리</a>
+                </li>
+            </ul>
+            break;
+        case "AdminProduct":  //상품관리
+                <h2>상품관리</h2>
+                <ul class="nav nav-sidebar depth1">
+                    <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("Index") >
+                        <a href="/AdminProduct/Index" class="menu ">카테고리관리</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("ProductIndex")>
+                        <a href="/AdminProduct/ProductIndex" class="menu">상품관리</a>
+                        <ul class="depth2">
+                            <li><a href="/AdminProduct/ProductIndex">상품목록</a></li>
+                            <li><a href="/AdminProduct/ProductPriceIndex">상품가격관리</a></li>
+                            <li><a href="#">사은품관리</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            break;
+       case "AdminFrontMember":  //회원관리
+                <h2>회원관리</h2>
+                <ul class="nav nav-sidebar depth1">
+                    <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("Index,Edit")>
+                        <a href="/AdminFrontMember/Index" class="menu ">회원관리</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("StaffRequestIndex,StaffRequestEdit")>
+                        <a href="/AdminFrontMember/StaffRequestIndex" class="menu ">임직원신청내역</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("StaffBaseIndex,StaffBaseInsert,StaffBaseEdit")>
+                        <a href="/AdminFrontMember/StaffBaseIndex" class="menu ">임직원DB관리</a>
+                    </li>
+                </ul>
+            break;
+
+    } //switch
+
+} //fLeftMenuMake()
+
+}
+
+ <!-- LEft 메뉴 만들기-->
+@fLeftMenuMake()
 </div>

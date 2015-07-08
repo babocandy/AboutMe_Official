@@ -1,0 +1,99 @@
+﻿@model AboutMe.Web.Admin.Models.AdminPointMemberViewModel
+
+@{
+    ViewBag.Title = "PointIndex";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+<h2>TestPoint</h2>
+<br />
+<form name="frm1" method="post" action="SavePointOnOrder">
+    <h4>구매 확정후 포인트 적립</h4>
+    <table>
+
+        <tr>
+            <td> 회원아이디</td>
+            <td> <input type="text" name="M_ID" /></td>
+        </tr>
+        <tr>
+            <td> 주문금액</td>
+            <td> <input type="text" name="AMOUNT" /></td>
+        </tr>
+        <tr>
+            <td> 주문번호</td>
+            <td> <input type="text" name="ORDER_IDX" /></td>
+        </tr>
+    </table>
+
+    <input type="submit" name="" value="제출" />
+</form>
+
+<br /><br />
+
+<form name="frm2" method="post" action="UsePointOnOrder">
+    <h4>구매 수단으로 포인트 사용</h4>
+    <table>
+
+        <tr>
+            <td> 회원아이디</td>
+            <td> <input type="text" name="M_ID" /></td>
+        </tr>
+        <tr>
+            <td> 포인트</td>
+            <td> <input type="text" name="POINT" /></td>
+        </tr>
+        <tr>
+            <td> 주문번호</td>
+            <td> <input type="text" name="ORDER_IDX" /></td>
+        </tr>
+    </table>
+    <input type="submit" name="" value="제출" />
+</form>
+<br />
+<form name="frm2" method="post" action="CancelAllOfOrder">
+    <h4>주문전체 취소</h4>
+    <table>
+
+        <tr>
+            <td> 회원아이디</td>
+            <td> <input type="text" name="M_ID" /></td>
+        </tr>
+        <tr>
+            <td> 포인트</td>
+            <td> <input type="text" name="POINT" /></td>
+        </tr>
+        <tr>
+            <td> 주문번호</td>
+            <td> <input type="text" name="ORDER_IDX" /></td>
+        </tr>
+    </table>
+    <input type="submit" name="" value="제출" />
+</form>
+<br />
+<form name="frm2" method="post" action="CancelPartOfOrder">
+    <h4>주문부분 취소</h4>
+    <table>
+
+        <tr>
+            <td> 회원아이디</td>
+            <td> <input type="text" name="M_ID" /></td>
+        </tr>
+        <tr>
+            <td> 포인트</td>
+            <td> <input type="text" name="POINT" /></td>
+        </tr>
+        <tr>
+            <td> 주문번호</td>
+            <td> <input type="text" name="ORDER_IDX" /></td>
+        </tr>
+    </table>
+    <input type="submit" name="" value="제출" />
+</form>

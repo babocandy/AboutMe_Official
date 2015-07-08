@@ -1,7 +1,303 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutMasterA.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+        <!--container-->
+
+            <div id="container">
+                <h2>본문시작</h2>
+                <div class="container100per mainvisual">
+                    <div class="inner">
+                        <!--영상-->
+                        <div class="mv_area">
+                            <a href="#" class="btn_mv"><img src="/aboutCom/images/common/btn_mainmv.png" alt="영상보기" /></a>
+                            <div class="lymv">
+                                <span class="movie_close"><img src="/aboutCom/images/common/btn_movieclose.png" alt="영상닫기" /></span>
+                                <div class="mv">
+                                    <img src="/aboutCom/images/common/temp_mv.jpg" alt="" />
+                                    <!-- <iframe width="640" height="360" src="//www.youtube.com/embed/gO73J7wkFq8?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--//영상-->
+                        <!--mainvisual_banner-->
+                        <div class="mainvisual_banner">
+                            <span class="mainvisual_frame"><img src="/aboutCom/images/common/bg_mainvisual.png" alt="" /></span>
+                            <ul class="slider">
+                                <li><a href="#"><img src="/aboutCom/images/common/visual_1.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/common/visual_2.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/common/visual_3.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/common/visual_4.jpg" alt="" /></a></li>
+                            </ul>
+                            <ul class="nav">
+                                <!--슬라이드갯수만큼 자동생성-->
+                            </ul>
+                        </div>
+                        <!--//mainvisual_banner-->
+                        <!--
+                            timesale, beauty  둘 중 하나 사용
+                        -->
+                        <!--timesale-->
+                        <div class="timesale">
+                            <p class="tit"><img src="/aboutCom/images/common/txt_timesale.png" alt="TIME SALE" /></p>
+                            <p id="timesale" class="remain_time"></p>
+                            <p class="item"><img src="/aboutCom/images/common/timesale_item.png" alt="" /></p>
+                            <div class="lytimesale">
+                                <a href="#" class="laytime_close" id="btnClose"><img src="/aboutCom/images/common/laytime_close.gif" alt="" /></a>
+                                <!--이미지 사이즈 268 x 468-->
+                                <img src="/aboutCom/images/common/timesale268468.jpg" class="lyitem_img" alt="늦가을 자외선으로부터 내 피부를 보호하자" />
+                                <p id="ly_timesale" class="lyremain_time"></p>
+                            </div>
+                            <script type="text/javascript">
+							$(function(){
+								//타임세일 현재날짜와 종료날짜를 입력해주세요.
+								$('#timesale').countdown({
+									starttimestamp	: "2014,07,12,12,00,00",	//현재날짜
+									endtimestamp	: "2014,07,13,10,20,30",	//종료날짜
+									callback	: function(m){
+										$('#timesale').html(m);
+									}
+								});
+								//레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
+								$('#ly_timesale').countdown({
+									starttimestamp	: "2014,07,12,12,00,00",	//현재날짜
+									endtimestamp	: "2014,07,13,10,20,30",	//종료날짜
+									callback	: function(m){
+										$('#ly_timesale').html(m);
+									}
+								});
+							});
+                            </script>
+                        </div>
+                        <!--//timesale-->
+                        <!--beauty
+                        <div class="beauty">
+                            <a href="#" class="btn_beauty"><img src="/aboutCom/images/common/btn_beauty.gif" alt="" /></a>
+                            <div class="lybeauty">
+                                <a href="#" class="laybeauty_close" id="btnClose"><img src="/aboutCom/images/common/laytime_close.gif" alt="" /></a>
+                                <!--이미지 사이즈 268 x 468
+                                <p class="lybeauty_img"><a href="#"><img src="/aboutCom/images/common/beauty_item.png" alt="뷰티테스터신청하기" /></a></p>
+                            </div>
+                        </div>
+                        <!--beauty-->
+                    </div>
+                </div>
+
+                <div class="container1080">
+                    <!--기획배너, 날씨-->
+                    <div class="top_bnr">
+                        <!--기획배너-->
+                        <div class="pl_banner">
+                            <a href="#"><img src="/aboutCom/images/common/pl_bnr.jpg" alt="" /></a>
+                        </div>
+                        <!--//기획배너-->
+                        <!--날씨-->
+                        <div class="weather">
+                            <!--
+                                날씨타입 총 8개
+                                맑음 : weathertype1,
+                            -->
+                            <div class="weathertype1">
+                                <a href="#">
+                                    <span class="tit"><img src="/aboutCom/images/common/tit_weather.png" alt="weather pick" /></span>
+                                    <span class="temperature">30℃</span>
+                                    <span class="txt">깜빡 잊은 선크림<br />순식간에 얼굴 탈 수 있어요</span>
+                                    <span class="ico"><img src="/aboutCom/images/common/weather_arrow.png" alt="" /></span>
+                                </a>
+                            </div>
+                            <div class="weather_detail">
+                                도너츠 슈르륵
+                            </div>
+                        </div>
+                        <!--//날씨-->
+                    </div>
+                    <!--//기획배너,날씨-->
+
+                    <div class="middle_bnr">
+                        <!--뷰티배너-->
+                        <div class="beauty_banner">
+                            <div class="bnr_subj">
+                                <span class="ico"><img src="/aboutCom/images/common/ico_1p1.gif" alt="1+1" /></span>
+                                <a href="#" class="btn_more">더보기<i></i></a>
+                            </div>
+                            <div class="bnr_list">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <!--200x200사이즈로 들어갑니다.-->
+                                            <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
+                                            <span class="tit">스킨톤업마사지크림</span>
+                                            <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
+                                            <span class="price"><em>23,000</em>원</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <!--200x200사이즈로 들어갑니다.-->
+                                            <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
+                                            <span class="tit">스킨톤업마사지크림</span>
+                                            <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
+                                            <span class="price"><em>23,000</em>원</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <!--200x200사이즈로 들어갑니다.-->
+                                            <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
+                                            <span class="tit">스킨톤업마사지크림</span>
+                                            <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
+                                            <span class="price"><em>23,000</em>원</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--//뷰티배너-->
+                        <!--건강배너-->
+                        <div class="health_banner">
+                            <div class="bnr_subj">
+                                <span class="ico"><img src="/aboutCom/images/common/ico_dc30per.gif" alt="30%" /></span>
+                                <a href="#" class="btn_more">더보기<i></i></a>
+                            </div>
+                            <div class="bnr_list">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <!--200x200사이즈로 들어갑니다.-->
+                                            <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
+                                            <span class="tit">스킨톤업마사지크림</span>
+                                            <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
+                                            <span class="price"><em>23,000</em>원</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <!--200x200사이즈로 들어갑니다.-->
+                                            <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
+                                            <span class="tit">스킨톤업마사지크림</span>
+                                            <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
+                                            <span class="price"><em>23,000</em>원</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <!--200x200사이즈로 들어갑니다.-->
+                                            <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
+                                            <span class="tit">스킨톤업마사지크림</span>
+                                            <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
+                                            <span class="price"><em>23,000</em>원</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--//건강배너-->
+                    </div>
+                </div>
+
+                <!--모션배너-->
+                <div class="container100per m_banner">
+                    <div class="m_banner_list">
+                        <ul>
+                            <li class="list1">
+                                <div class="inner"><img src="/aboutCom/images/sample/mbnr1.jpg" alt="" /></div>
+                            </li>
+                            <li class="list2">
+                                <div class="inner"><img src="/aboutCom/images/sample/mbnr2.jpg" alt="" /></div>
+                            </li>
+                            <li class="list3">
+                                <div class="inner"><img src="/aboutCom/images/sample/mbnr3.jpg" alt="" /></div>
+                            </li>
+                            <li class="list4">
+                                <div class="inner"><img src="/aboutCom/images/sample/mbnr4.jpg" alt="" /></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m_banner_thumb">
+                        <div class="inner">
+                            <ul>
+                                <li><a href="#"><img src="/aboutCom/images/sample/mbnr_thum1.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/sample/mbnr_thum1.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/sample/mbnr_thum1.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/sample/mbnr_thum1.jpg" alt="" /></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--//모션배너-->
+                <!--하단배너-->
+                <div class="container1080">
+                    <div class="bottom_banner">
+                        <div class="left_banner">
+                            <!--520X245사이즈 이미지가 업로드 됩니다.-->
+                            <a href="#"><img src="/aboutCom/images/common/bottom_bnr1.jpg" alt="6월 최다 리뷰 상품은?" /></a>
+                        </div>
+                        <div class="right_banner">
+                            <!--520X245사이즈 이미지가 업로드 됩니다.-->
+                            <a href="#"><img src="/aboutCom/images/common/bottom_bnr2.jpg" alt="믿고 보고 체험단 리뷰" /></a>
+                        </div>
+                    </div>
+                </div>
+                <!--//하단배너-->
+                <!--하단 어바웃미 정보제공-->
+                <div class="container100per bottom_info">
+                    <div class="inner">
+                        <!--news-->
+                        <div class="news">
+                            <h3><img src="/aboutCom/images/common/h3_news.gif" alt="NEWS" /></h3>
+                            <ul>
+                                <li>
+                                    <span class="subject txtdotdot">
+                                        <a href="#">어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체</a>
+                                    </span>
+                                    <span class="date">2014-01-27</span>
+                                </li>
+                                <li>
+                                    <span class="subject txtdotdot">
+                                        <a href="#">어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체</a>
+                                    </span>
+                                    <span class="date">2014-01-27</span>
+                                </li>
+                                <li>
+                                    <span class="subject txtdotdot">
+                                        <a href="#">어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체어바웃미 쇼핑몰관리업체</a>
+                                    </span>
+                                    <span class="date">2014-01-27</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--//news-->
+                        <!--cscenter-->
+                        <div class="cscenter">
+                            <h3><img src="/aboutCom/images/common/h3_cscenter.gif" alt="CS CENTER" /></h3>
+                            <p class="tel"><img src="/aboutCom/images/common/tel.gif" alt="080.740.7983" /></p>
+                            <p class="txt">
+                                평일 오전 10시 ~ 12시, 오후 2시 ~ 5시<br />
+                                (토,일 공휴일 휴무)
+                            </p>
+                        </div>
+                        <!--//cscenter-->
+                        <!--letsbefriend-->
+                        <div class="letsbefriend">
+                            <h3><img src="/aboutCom/images/common/h3_letsfritnd.gif" alt="LETS BE FRIEND" /></h3>
+                            <ul>
+                                <li><span class="num">01</span>회원가입 시 사은품 증정</li>
+                                <li><span class="num">02</span>회원가입 시 10,000원 쿠폰 증정</li>
+                                <li><span class="num">03</span>전 회원 생일쿠폰 증정</li>
+                            </ul>
+                        </div>
+                        <!--//letsbefriend-->
+                        <!--mobileshop-->
+                        <div class="mobileshop">
+                            <h3><img src="/aboutCom/images/common/h3_mobileshop.gif" alt="MOBILE SHOP" /></h3>
+                            <span class="txt"><a href="#"><img src="/aboutCom/images/common/txt_mshop.gif" alt="m.aboutmeshop.com모바일 어바웃미샵을 만나보세요." /></a></span>
+                            <span class="qrcode"><img src="/aboutCom/images/common/img_qrcode.gif" alt="" /></span>
+                        </div>
+                        <!--//mobileshop-->
+                    </div>
+                </div>
+                <!--//하단 어바웃미 정보제공-->
+            </div>
+        <!--//container-->

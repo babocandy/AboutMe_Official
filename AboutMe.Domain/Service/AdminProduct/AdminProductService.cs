@@ -275,6 +275,39 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
+        #region 상품 가격 일괄 수정
+        public void UpdateAdminProductPrice(TB_PRODUCT_INFO tb_product_info)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                AdminProductContext.SP_ADMIN_PRODUCT_PRICE_UPD(tb_product_info.P_CODE, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_PRICE, tb_product_info.DISCOUNT_RATE);
+            }
+        }
+        #endregion
+
+        #region 상품 정보 일괄 수정
+        public void UpdateAdminProductBatch(TB_PRODUCT_INFO tb_product_info)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                AdminProductContext.SP_ADMIN_PRODUCT_BATCH_UPD(tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.DISPLAY_YN, tb_product_info.SOLDOUT_YN, tb_product_info.P_OUTLET_YN);
+            }
+        }
+        #endregion
+
+        #region 상품전시 순서 바꾸기
+        public void UpdateAdminProductReSort(int IDX, int RE_SORT, string CLICKCHK)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                AdminProductContext.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT(IDX, RE_SORT, CLICKCHK);
+            }
+        }
+        #endregion 
+        
+
        
 
     }

@@ -9,6 +9,11 @@
 
     <script language="javascript">
 
+        $(function () {
+            var str = $('#hiddenDepth1Name').val() +'>>'+ $('#hiddenDepth2Name').val();
+            $('#categoryLineMap').html(' (' + str +') ');
+        });
+
         function formChk1() {
 
             var deny_pattern_hp = /[^(0-9)]/;
@@ -465,7 +470,8 @@
                 out += str.charAt(common_i);
             }
             return out.length;
-        }
+        }
+
 
     </script>
 
@@ -481,11 +487,13 @@
 }
 
 @section Body{
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 @{ var i = 0; }
-        <h3 class="sub-header">카테고리관리</h3>
+    <br/>
+        <h3 class="sub-header">카테고리관리<span id="categoryLineMap"></span></h3>
+ <div class="tar" >
+    <a class="btn btn-default middium" href="/AdminProduct/Create">카테고리등록</a>
+    @*<a class="btn btn-default middium" href="javascript:fExcel();">EXEL 다운로드</a>*@
+</div>
         <div class="panel" style="overflow:hidden;">    
 @using (Html.BeginForm("CategoryOneUpdate", "AdminProduct", FormMethod.Post, new { id = "bform1", name = "bform1" }))
 {
@@ -510,7 +518,7 @@
                                 <input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
                                 <input id="DEPTH1_NAME" name="tb_category[@i].DEPTH1_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH1_NAME" />
                             <br/>@if (@item.DEPTH1_CODE == ViewBag.depth1_code)
-                                 {<text><b></text> }<a href="/AdminProduct/Index?depth1_code=@item.DEPTH1_CODE">하위DEPTH</a>
+                                 {<text><b><input type="hidden" id="hiddenDepth1Name" value="@item.DEPTH1_NAME" /></text>  }><a href="/AdminProduct/Index?depth1_code=@item.DEPTH1_CODE">하위DEPTH</a>
 </td>
                             <td >
                                 <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="2" value="@item.RE_SORT" maxlength="20" />
@@ -545,7 +553,7 @@
                                 <input id="IDX" name="tb_category[@i].IDX" type="hidden" size="1" maxlength="30" value="@item.IDX" />
                                 <input id="DEPTH2_NAME" name="tb_category[@i].DEPTH2_NAME" type="text" size="12" maxlength="30" value="@item.DEPTH2_NAME" />
                                 <br />@if (@item.DEPTH2_CODE == ViewBag.depth2_code)
-                                      {<text><b></text> }<a href="/AdminProduct/Index?depth1_code=@item.DEPTH1_CODE&depth2_code=@item.DEPTH2_CODE">하위DEPTH</a>
+                                      {<text><b><input type="hidden" id="hiddenDepth2Name" value="@item.DEPTH2_NAME" /></text> }<a href="/AdminProduct/Index?depth1_code=@item.DEPTH1_CODE&depth2_code=@item.DEPTH2_CODE">하위DEPTH</a>
                             </td>
                             <td>
                                 <input id="RE_SORT" name="tb_category[@i].RE_SORT" type="text" size="3" value="@item.RE_SORT" maxlength="20" />
@@ -600,7 +608,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <a class="btn btn-default small" href="#" onclick="formChk4();">LINE_TYPE<br />일괄수정</a>
+                            <a class="btn btn-default small" href="#" onclick="formChk5();">SKIN_TYPE<br />일괄수정</a>
                         </th>
                         <th>순서</th>
                         <th>노출</th>
@@ -631,12 +639,14 @@
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
                     <tr>
-                        <th><a class="btn btn-default small" href="#" onclick="formChk5();">SKIN_TYPE<br />일괄수정</a>
+                        <th>
+                            <a class="btn btn-default small" href="#" onclick="formChk4();">LINE_TYPE<br />일괄수정</a>
                         </th>
                         <th>순서</th>
                         <th>노출</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     @{ i = 0; }
                     @foreach (var item in ViewData["categoryLine"] as List<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_CATEGORY_DEPTH_SEL_ALL_Result>)

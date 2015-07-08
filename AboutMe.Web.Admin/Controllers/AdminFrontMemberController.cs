@@ -83,13 +83,231 @@ namespace AboutMe.Web.Admin.Controllers
                 return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
 
 
+            //회원 써머리 정보  : 초기화
+            this.ViewBag.TOTAL_ORDER_CNT = 0; //총구매건수
+            this.ViewBag.TOTAL_ORDER_PRICE = 0; //총 구매액
+            this.ViewBag.TOTAL_COUPON_CNT = 0; //보유쿠폰
+            this.ViewBag.TOTAL_QNA_CNT = 0; //1:1문의
+
             return View(_AdminFrontMemberService.GetAdminFrontMemberView(SEL_M_ID));
         }
+
+        //관리자 - 회원  수정 -기본정보: ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult EditOK_Basic(string M_ID = "", string M_GRADE = "", string M_MOBILE = "--", string M_PHONE = "--", string M_EMAIL = "@", string M_ZIPCODE = "", string M_ADDR1 = "", string M_ADDR2 = "", string M_ISSMS = "", string M_ISEMAIL = "", string M_ISDM = "")
+        {
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+            //return View();
+            if (M_ID == "")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+            //DB저장: 회원  수정 -기본정보-----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminFrontMemberUpdate_Basic(M_ID, M_GRADE, M_MOBILE, M_PHONE, M_EMAIL, M_ZIPCODE, M_ADDR1, M_ADDR2, M_ISSMS, M_ISEMAIL, M_ISDM);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 회원정보를 찾을수 없습니다..";
+            }
+
+
+            //로그 기록
+            string memo = "관리자-회원정보수정-기본정보";
+            string comment= "관리자-회원정보수정-기본정보" ;
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|M_ID:" + M_ID;
+            memo = memo + "|M_GRADE:" + M_GRADE;
+            memo = memo + "|M_PHONE:" + M_PHONE;
+            memo = memo + "|M_EMAIL:" + M_EMAIL;
+            memo = memo + "|M_ZIPCODE:" + M_ZIPCODE;
+            memo = memo + "|M_ADDR1:" + M_ADDR1;
+            memo = memo + "|M_ADDR2:" + M_ADDR1;
+            memo = memo + "|M_ISSMS:" + M_ISSMS;
+            memo = memo + "|M_ISEMAIL:" + M_ISEMAIL;
+            memo = memo + "|M_ISDM:" + M_ISDM;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+            //결과 리턴
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG }); 
+
+        }
+
+        //관리자 - 회원  수정 -암호변경: ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult EditOK_PWD(string M_ID = "", string M_PWD="")
+        {
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+            //return View();
+            if (M_ID == "")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+            if (M_PWD == "")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 2;
+                strERR_MSG = "암호가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+            AES256Cipher objEnc = new AES256Cipher();
+            //string ENC_key = "abcdefghijklmnopqrstuvwxyz123456"; // 
+            //string ENC_key = Config.GetConfigValue("AES256_KEY"); //암호화에 필요한 기본키값을 가져온다.
+            string M_PWD_MD5_HASH = objEnc.MD5Hash(M_PWD);   //MD5: ADM_PWD -> ADM_PWD_MD5_HASH
+            string M_PWD_SHA256_HASH = objEnc.SHA256Hash(M_PWD_MD5_HASH);   //MD5: ADM_PWD_MD5_HASH -> ADM_PWD_SHA256_HASH
+
+
+            //DB저장: 회원  수정 -암호변경-----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminFrontMemberUpdate_PWD(M_ID, M_PWD_SHA256_HASH);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 회원정보를 찾을수 없습니다..";
+            }
+
+            //로그 기록
+            string memo = "관리자-회원정보수정-암호변경";
+            string comment = "관리자-회원정보수정-암호변경";
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|M_ID:" + M_ID;
+            memo = memo + "|M_PWD:" + M_PWD;
+            memo = memo + "|M_PWD_MD5_HASH:" + M_PWD_MD5_HASH;
+            memo = memo + "|M_PWD_SHA256_HASH:" + M_PWD_SHA256_HASH;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+            //결과 리턴
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+
+        }
+
+        //관리자 - 회원  수정 -임직원: ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult EditOK_Staff(string M_ID = "", string M_GBN = "", string M_STAFF_COMPANY = "", string M_STAFF_ID = "")
+        {
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+            //return View();
+            if (M_ID == "")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+
+            //DB저장: 회원  수정 -임직원-----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminFrontMemberUpdate_Staff(M_ID, M_GBN, M_STAFF_COMPANY, M_STAFF_ID);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 회원정보를 찾을수 없습니다..";
+            }
+
+            //로그 기록
+            string memo = "관리자-회원정보수정-임직원";
+            string comment = "관리자-회원정보수정-임직원";
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|M_ID:" + M_ID;
+            memo = memo + "|M_GBN:" + M_GBN;
+            memo = memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
+            memo = memo + "|M_STAFF_ID:" + M_STAFF_ID;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+
+        }
+
+        //관리자 - 회원  수정 -탈퇴: ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult EditOK_Retire(string M_ID = "", string M_DEL_REASON = "")
+        {
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+            //return View();
+            if (M_ID == "")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+            string strIS_RETIRE = "Y";
+
+            //DB저장: 회원  수정 -탈퇴-----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminFrontMemberUpdate_Retire(M_ID, strIS_RETIRE, M_DEL_REASON);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 회원정보를 찾을수 없습니다..";
+            }
+
+            //로그 기록
+            string memo = "관리자-회원정보수정-탈퇴";
+            string comment = "관리자-회원정보수정-탈퇴";
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|strIS_RETIRE:" + strIS_RETIRE;
+            memo = memo + "|M_DEL_REASON:" + M_DEL_REASON;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+
+
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+
+        }
+
+        //관리자 - 회원 상세 팝업
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult PopMemberInfo(string M_ID = "")
+        {
+            if (M_ID == "")
+                return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');self.close();</script>");
+
+            this.ViewBag.M_ID = M_ID;
+            return View();
+        }
+
 
         // 관리자 - 회원 목록엑셀  /AdminUser/Excel/
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Excel(string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEL_GRADE_LIST = "", string SEL_GBN = "", string SEL_IS_RETIRE = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "M_CREDATE", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10000000)
         {
+
+
 
             var products = new System.Data.DataTable("test");
             //헤더 구성
@@ -123,6 +341,7 @@ namespace AboutMe.Web.Admin.Controllers
             products.Columns.Add("탈퇴시잔여포인트", typeof(string));
             products.Columns.Add("탈퇴사유", typeof(string));
 
+            int nDOWN_ROW_CNT = 0;
             var Data = _AdminFrontMemberService.GetAdminFrontMemberList(SEL_DATE_FROM, SEL_DATE_TO, SEL_GRADE_LIST, SEL_GBN, SEL_IS_RETIRE, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, 1, 10000000).ToList(); //데이타 가져오기
             if (Data != null && Data.Any())
             {
@@ -134,6 +353,8 @@ namespace AboutMe.Web.Admin.Controllers
                                        , result.M_ISSMS, result.M_ISEMAIL, result.M_ISDM, result.M_AGREE, result.M_AGREE2
                                        , result.M_CREDATE, result.M_LASTVISITDATE, result.M_IS_RETIRE, result.M_DEL_DATE, result.M_DEL_POINT, result.M_DEL_REASON
                         );
+
+                    nDOWN_ROW_CNT++;
                 } //for
             } //if
 
@@ -159,6 +380,21 @@ namespace AboutMe.Web.Admin.Controllers
             //Response.End();
 
             //return View("MyView");
+
+            //로그 기록
+            string memo = "관리자-회원정보-엑셀다운";
+            string comment = "관리자-회원정보-엑셀다운";
+            memo = memo + "|nDOWN_ROW_CNT:" + nDOWN_ROW_CNT.ToString();
+            memo = memo + "|SEL_DATE_FROM:" + SEL_DATE_FROM;
+            memo = memo + "|SEL_DATE_TO:" + SEL_DATE_TO;
+            memo = memo + "|SEL_GRADE_LIST:" + SEL_GRADE_LIST;
+            memo = memo + "|SEL_GBN:" + SEL_GBN;
+            memo = memo + "|SEL_IS_RETIRE:" + SEL_IS_RETIRE;
+            memo = memo + "|SEARCH_COL:" + SEARCH_COL;
+            memo = memo + "|SEARCH_KEYWORD:" + SEARCH_KEYWORD;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
 
             return Content(sw.ToString(), "application/ms-excel");
 

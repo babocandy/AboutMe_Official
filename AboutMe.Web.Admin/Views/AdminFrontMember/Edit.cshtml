@@ -37,7 +37,7 @@
             break;
 
     }
-    <div>@grade_name</div>
+    @(@grade_name)
 }
 
 @helper fIsRerireNAME(string is_retire)
@@ -45,13 +45,14 @@
     var isretire_name = is_retire;
     switch (is_retire)
     {
-        case "Y": isretire_name = "탈퇴";
+        case "Y": isretire_name = "탈퇴회원";
             break;
-        case "N": isretire_name = "활동";
+        case "N": isretire_name = "활동중";
             break;
 
     }
-    <div>@isretire_name</div>
+        @(@isretire_name)
+
 }
 
 @helper fM_GBN_NAME(string m_gbn)
@@ -68,6 +69,52 @@
     <div>@m_gbn_name</div>
 }
 
+@helper fM_SEX_NAME(string m_sex)
+{
+    var m_sex_name = m_sex;
+    switch (m_sex)
+    {
+        case "1" : m_sex_name = "남자";
+            break;
+        case "3": m_sex_name = "남자";
+            break;
+        case "2": m_sex_name = "여자";
+            break;
+        case "4": m_sex_name = "여자";
+            break;
+
+    }
+    <div>@m_sex_name <span>(@m_sex)</span></div>
+}
+
+    @helper fM_SKIN_TROUBLE_NAME(string code)
+{
+    var m_trouble_name = code;
+    switch (code)
+    {
+        case "101201100" : m_trouble_name = "보습";
+            break;
+        case "101202100": m_trouble_name = "탄력/주름";
+            break;
+        case "101203100": m_trouble_name = "브라이트닝";
+            break;
+        case "101204100": m_trouble_name = "화이트닝";
+            break;
+        case "101205100": m_trouble_name = "안티에이징";
+            break;
+        case "101206100": m_trouble_name = "피지,모공";
+            break;
+        case "101207100": m_trouble_name = "생기,활력";
+            break;
+        case "101208100": m_trouble_name = "자외선 차단";
+            break;
+
+    }
+    <div>@m_trouble_name <span>(@code)</span></div>
+}
+
+
+
 @helper fCheckBoxChecked(string strList, string strChked)
 {
     if (strList != null && strChked != null)
@@ -75,7 +122,7 @@
         if (strList.Contains(strChked))
         {
             @(" checked")
-        }
+}
     }
 
 }
@@ -214,27 +261,260 @@
 <div class="content">
     <!--path-->
     <div class="path">
-        <a href="/index.asp">HOME</a> &gt; <a href="#">수퍼어드민</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원수정</strong>
+        <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원수정</strong>
     </div>
+    <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
     <script>
-            function fGoSave()
+        function fReload() {
+            window.location.reload();
+        }
+
+        function fGoList() {
+            var f = document.frmFORM;
+            f.target = "";
+            f.action = "/AdminFrontMember/Index";
+            f.submit();
+        }
+
+        //기능별 상세팝업 :
+        function fPopPersonalDetail(argKIND){
+            var f = document.frmFORM;
+            var strM_ID = f.SEL_M_ID.value;
+            var xurl="";
+            var wid="1000";
+            var hei = "600";
+            var tar ="PERSONAL_POP";
+
+            xurl="/AdminOrder/Index?M_ID=" +strM_ID ;  //default
+            if(argKIND=="ORDER")
             {
-                var f = document.frmFORM;
-                //if (f.ADM_ID.value.length < 4) {
-                //    alert("아이디를 입력하세요.");
-                //    return;
-                //}
-                if (f.ADM_NAME.value.length < 1) {
-                    alert("이름을 입력하세요.");
-                    return;
-                }
-                if (f.ADM_PWD.value.length > 1 && f.ADM_PWD.value.length < 4) {
-                    alert("암호를 수정하려면 4자이상 입력하세요.\n 수정하지않으려면 공란으로 두세요");
-                    return;
-                }
-                f.action = "/AdminUser/EditOK";
-                f.submit();
+                xurl="/AdminOrder/Index?M_ID=" +strM_ID ;
             }
+            else if(argKIND=="POINT")
+            {
+                xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
+            }
+            else if (argKIND == "COUPON") {
+                xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
+            }
+            else if (argKIND == "QNA")
+            {
+                xurl="/AdminQna/Index?M_ID=" +strM_ID ;
+            }
+            else if (argKIND == "MEMBER_INFO") {
+                xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
+            }
+    ow_yes(xurl, tar, wid, hei); //팝업
+        }
+
+
+        //기본정보 수정-------------------------------------------------
+    function fGoSaveBasic()
+    {
+        var f = document.frmFORM;
+        if (f.SEL_M_ID.value.length < 4) {
+            alert("아이디가 없습니다..");
+            return;
+        }
+        if (f.M_MOBILE.value.length < 1) {
+            alert("휴대폰을 입력하세요.");
+            return;
+        }
+        //f.action = "/AdminFrontMember/EditOK_Basic";
+        //f.submit();
+
+        var strM_ID = f.SEL_M_ID.value;
+        var strM_GRADE = f.M_GRADE.value;
+        var strM_MOBILE = f.M_MOBILE.value;
+        var strM_PHONE = f.M_PHONE.value;
+        var strM_EMAIL = f.M_EMAIL.value;
+        var strM_ZIPCODE = f.M_ZIPCODE.value;
+        var strM_ADDR1 = f.M_ADDR1.value;
+        var strM_ADDR2 = f.M_ADDR2.value;
+        var strM_ISSMS = f.M_ISSMS.value;
+        var strM_ISEMAIL = f.M_ISEMAIL.value;
+        var strM_ISDM = f.M_ISDM.value;
+
+        var strURL = "/AdminFrontMember/EditOK_Basic"; //기본정보 수정
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                M_ID: strM_ID
+                , M_GRADE: strM_GRADE
+                , M_MOBILE: strM_MOBILE
+                , M_PHONE: strM_PHONE
+                , M_EMAIL: strM_EMAIL
+                , M_ZIPCODE: strM_ZIPCODE
+                , M_ADDR1: strM_ADDR1
+                , M_ADDR2: strM_ADDR2
+                , M_ISSMS: strM_ISSMS
+                , M_ISEMAIL: strM_ISEMAIL
+                , M_ISDM: strM_ISDM
+            },
+            success: function (retDATA) {
+                if(retDATA.ERR_CODE=="0")
+                {
+                    alert("수정되었습니다.\n 페이지를 새로고칩니다.");
+                    fReload();
+                }
+                else
+                {
+                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생2-1");
+            }
+        }); //ajax
+
+    } //function
+
+     //비밀번호 변경--------------------------------------------------
+    function fGoSavePWD() {
+        var f = document.frmFORM;
+        if (f.SEL_M_ID.value.length < 4) {
+            alert("아이디가 없습니다..");
+            return;
+        }
+        if (f.M_PWD.value.length < 6) {
+            alert("비밀번호를 변경하려면 6자이상 입력하세요.");
+            return;
+        }
+        //f.action = "/AdminFrontMember/EditOK_PWD";
+        //f.submit();
+        var strM_ID = f.SEL_M_ID.value;
+        var strM_PWD = f.M_PWD.value;
+
+        var strURL = "/AdminFrontMember/EditOK_PWD"; //비밀번호 수정
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                M_ID: strM_ID
+                , M_PWD: strM_PWD
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    alert("수정되었습니다.\n 페이지를 새로고칩니다.");
+                    fReload();
+                }
+                else {
+                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생2-2");
+            }
+        }); //ajax
+
+    } //function
+
+        //임직원정보 수정-------------------------------------------------
+    function fGoSaveStaff() {
+        var f = document.frmFORM;
+        var strM_GBN = f.M_GBN[f.M_GBN.selectedIndex].value;
+        //alert("strM_GBN:" + strM_GBN);
+        if (f.SEL_M_ID.value.length < 4) {
+            alert("아이디가 없습니다..");
+            return;
+        }
+        if (strM_GBN == "S" && (f.M_STAFF_COMPANY.value.length < 2 || f.M_STAFF_ID.value.length < 2)) {
+            alert("임직원의 경우 소속회사 및 사번을 반드시 입력하셔야 합니다.");
+            return;
+        }
+        if (strM_GBN != "S" && (f.M_STAFF_COMPANY.value.length > 0 || f.M_STAFF_ID.value.length > 0)) {
+            alert("임직원이 아닌 경우 소속회사 및 사번을 입력하시면 안됩니다.");
+            return;
+        }
+        //f.action = "/AdminFrontMember/EditOK_Staff";
+        //f.submit();
+        var strM_ID = f.SEL_M_ID.value;
+        //var strM_GBN = f.M_GBN[f.M_GBN.selectedIndex].value;
+        var strM_STAFF_COMPANY = f.M_STAFF_COMPANY.value;
+        var strM_STAFF_ID = f.M_STAFF_ID.value;
+
+        var strURL = "/AdminFrontMember/EditOK_Staff"; //임직원정보 수정
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                M_ID: strM_ID
+                , M_GBN: strM_GBN
+                , M_STAFF_COMPANY: strM_STAFF_COMPANY
+                , M_STAFF_ID: strM_STAFF_ID
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    alert("수정되었습니다.\n 페이지를 새로고칩니다.");
+                    fReload();
+                }
+                else {
+                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생2-3");
+            }
+        }); //ajax
+
+    } //function
+
+    //탈퇴 처리-------------------------------------------------
+    function fGoSaveRetire() {
+        var f = document.frmFORM;
+        if (f.SEL_M_ID.value.length < 4) {
+            alert("아이디가 없습니다.");
+            return;
+        }
+        if (confirm("탈퇴후 복구 불가능합니다. 정말 탈퇴처리 하시겠습니까?"))
+        {; }
+        else
+        { return; }
+        
+        //f.action = "/AdminFrontMember/EditOK_Retire";
+        //f.submit();
+        var strM_ID = f.SEL_M_ID.value;
+        var strM_DEL_REASON = f.M_DEL_REASON .value;
+
+        var strURL = "/AdminFrontMember/EditOK_Retire"; //탈퇴 수정
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                M_ID: strM_ID
+                , M_IS_RETIRE: 'Y'
+                , M_DEL_REASON: strM_DEL_REASON
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    alert("탈퇴처리 되었습니다.\n 페이지를 새로고칩니다.");
+                    fReload();
+                }
+                else {
+                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생2-4");
+            }
+        }); //ajax
+
+    } //function
+
     </script>
 
     <div class="panel">
@@ -247,9 +527,19 @@
     </div>
 
 @{ var selected_str = "selected";}
-@using (Html.BeginForm("EditOK", "AdminUser", FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
+@using (Html.BeginForm("EditOK", "AdminFrontMember", FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
 {
     @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+    <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
+    <input type="hidden" name="PAGESIZE" value="@ViewBag.PAGESIZE">
+    <input type="hidden" name="SEL_DATE_FROM" value="@ViewBag.SEL_DATE_FROM">
+    <input type="hidden" name="SEL_DATE_TO" value="@ViewBag.SEL_DATE_TO">
+    <input type="hidden" name="SEARCH_COL" value="@ViewBag.SEARCH_COL">
+    <input type="hidden" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD">
+    <input type="hidden" name="SEL_GBN" value="@ViewBag.SEL_GBN">
+    <input type="hidden" name="SEL_GRADE_LIST" value="@ViewBag.GRADE_LIST">
+    <input type="hidden" name="SEL_IS_RETIRE" value="@ViewBag.SEL_IS_RETIRE">
 
     <input type="hidden" name="SEL_M_ID" value="@Html.DisplayFor(model =>model.M_ID)" />
     <input type="hidden" name="M_GRADE" value="@Html.DisplayFor(model =>model.M_GRADE)" />
@@ -258,7 +548,7 @@
 
 
     <div class="panel">
-        <h4 class="sub-header">1.기본정보 수정</h4>
+        <h4 class="sub-header">1.기본정보 수정 [@fIsRerireNAME(@Model.M_IS_RETIRE)]</h4>
 
         <table class="table table_row">
             <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
@@ -273,19 +563,37 @@
                 </tr>
                 <tr>
                     <th>성별</th>
-                    <td>@Model.M_SEX</td>
+                    <td>@fM_SEX_NAME(@Model.M_SEX)</td>
                     <th>생년월일</th>
                     <td>@Model.M_BIRTHDAY</td>
                     <th>가입일</th>
                     <td>@Model.M_CREDATE.ToString("yyyy-MM-dd HH:mm")</td>
                 </tr>
                 <tr>
+                    <th>약관동의1</th>
+                    <td>(개인정보 제 3자 제공에 동의):@Model.M_AGREE </td>
+                    <th>약관동의2</th>
+                    <td>(고유식별정보 수집 및 이용):@Model.M_AGREE2</td>
+                    <th>최종정보수정일</th>
+                    <td>@Model.M_UPDATEDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+                <tr>
+                    <th>피부트러블</th>
+                    <td>@fM_SKIN_TROUBLE_NAME(@Model.M_SKIN_TROUBLE_CD)</td>
+                    <th>방문회수</th>
+                    <td>@Model.M_VISITCNT 회</td>
+                    <th>최종방문일</th>
+                    <td>@Model.M_LASTVISITDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+
+
+                <tr>
                     <th>휴대폰</th>
                     <td><input type="text" name="M_MOBILE" value="@Model.M_MOBILE" maxlength="15" /> 000-0000-0000</td>
                     <th>집전화</th>
                     <td><input type="text" name="M_PHONE" value="@Model.M_PHONE" maxlength="15" /> 00-0000-0000</td>
                     <th>EMAIL</th>
-                    <td><input type="text" name="M_EMAIL" value="@Model.M_EMAIL" maxlength="80" /> aaa@bbb.co.kr</td>
+                    <td><input type="text" name="M_EMAIL" value="@Model.M_EMAIL" maxlength="80" style="width:200px" /></td>
                 </tr>
                 <tr>
                     <th>우편번호</th>
@@ -313,7 +621,7 @@
                             <option value="Y" @fSelectBoxSelecteded(@Model.M_ISEMAIL, "Y")>Yes</option>
                         </select>
                     </td>
-                    <th>DM일수신</th>
+                    <th>DM수신</th>
                     <td>
                         <select name="M_ISDM" style="width:170px;">
                             <option value="N" @fSelectBoxSelecteded(@Model.M_ISDM, "N")>No</option>
@@ -325,9 +633,17 @@
             </tbody>
         </table>
     </div>
-    <div class="btn_area">
-        <a class="btn btn-default small" href="javascript:fGoSaveBasic();">기본정보 수정</a>
-    </div>
+
+        if (@Model.M_IS_RETIRE != "Y")
+        {
+            <div class="btn_area">
+                <a class="btn btn-default small" href="javascript:fGoSaveBasic();">기본정보 수정</a>
+            </div>
+        }
+        else
+        { 
+            <span>*.탈퇴한 회원입니다.</span>
+        }
 
 
 
@@ -359,7 +675,18 @@
             <tbody>
                 <tr>
                     <th style="width:12%">비밀번호 변경</th>
-                    <td style="width:21%"><input type="text" value="@Model.M_PWD" maxlength="12" /> <a class="btn btn-default small" href="javascript:fGoSavePWD();">비밀번호 변경</a></td>
+                    <td style="width:21%"><input type="text" name="M_PWD" value="" maxlength="12" /> 
+                    
+                            @if (@Model.M_IS_RETIRE != "Y")
+                            {
+                                <a class="btn btn-default small" href="javascript:fGoSavePWD();">비밀번호 변경</a>
+                            }
+                            else
+                            { 
+                                <span>*.탈퇴한 회원입니다.</span>
+                            }
+
+                    </td>
                     <td style="width:66%" colspan="4" >*.영문숫자조합 6~12자리로 만들어 주세요.</td>
                 </tr>
             </tbody>
@@ -382,20 +709,29 @@
                         </select>
                     </td>
                     <th>소속회사</th>
-                    <td><input type="text" value="@Model.M_STAFF_COMPANY" maxlength="40" /></td>
+                    <td><input type="text" name="M_STAFF_COMPANY" value="@Model.M_STAFF_COMPANY" maxlength=" 40" /></td>
                     <th>사번</th>
-                    <td><input type="text" value="@Model.M_STAFF_ID" maxlength="40" /></td>
+                    <td><input type="text" name="M_STAFF_ID" value="@Model.M_STAFF_ID" maxlength="40" /></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="btn_area">
-        <a class="btn btn-default small" href="javascript:fGoSaveStaff();">임직원정보 수정</a>
-    </div>
+        if (@Model.M_IS_RETIRE != "Y")
+        {
+            <div class="btn_area">
+                <a class="btn btn-default small" href="javascript:fGoSaveStaff();">임직원정보 수정</a>
+            </div>
+        }
+        else
+        { 
+            <span>*.탈퇴한 회원입니다.</span>
+        }
+    
+
 
     
     <div class="panel">
-        <h4 class="sub-header">5.탈퇴여부</h4>
+        <h4 class="sub-header">5.탈퇴여부 (*.탈퇴처리 후 복원 불가)</h4>
 
         <table class="table table_row">
             <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
@@ -412,7 +748,14 @@
                     <th>탈퇴사유</th>
                     <td colspan="5">
                         <textarea name="M_DEL_REASON" cols="80" rows="4">@Model.M_DEL_REASON</textarea>
-                        <a class="btn btn-default small" href="javascript:fGoSaveRetire();">탈퇴처리</a>
+                        @{
+                            if (@Model.M_IS_RETIRE != "Y")
+                            { <a class="btn btn-default small" href="javascript:fGoSaveRetire();">탈퇴처리</a>}
+                            else
+                            { <span>*.탈퇴한 회원입니다.</span>}
+
+                        }
+                        
                     </td>
                 </tr>
             </tbody>
@@ -421,41 +764,64 @@
 
 
     <div class="panel">
-        <h4 class="sub-header">6.쇼핑정보/활동내역</h4>
+        <h4 class="sub-header">6.쇼핑정보/활동내역 (*.클릭시 상세팝업 링크)</h4>
 
         <table class="table table_row">
             <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
             <tbody>
                 <tr>
                     <th>회원등급</th>
-                    <td>@fGradeName(@Model.M_GRADE)</td>
+                    <td>@fGradeName(@Model.M_GRADE)
+                        <input type="button" value="회원기본정보" onclick="javascript: fPopPersonalDetail('MEMBER_INFO');" />                    
+                    </td>
                     <th>총구매건수</th>
-                    <td>(구현)@ViewBag.TOTAL_ORDER_CNT</td>
-                    <th>총 구매액</th>
-                    <td>(구현)@ViewBag.TOTAL_ORDER_PRICE</td>
+                    <td>(담당자구현필요)@ViewBag.TOTAL_ORDER_CNT.ToString("#,##0")
+                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('ORDER');" />
+                    </td>
+                    <th>총구매액</th>
+                    <td>(담당자구현필요)@ViewBag.TOTAL_ORDER_PRICE.ToString("#,##0")
+                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('ORDER');" />
+                    </td>
                 </tr>
                 <tr>
                     <th>보유포인트</th>
-                    <td>@Model.M_POINT</td>
+                    <td>@Model.M_POINT.ToString("#,##0")
+                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('POINT');" />
+                    </td>
                     <th>보유쿠폰</th>
-                    <td>(구현)@ViewBag.TOTAL_CUPON_CNT</td>
+                    <td>(담당자구현필요)@ViewBag.TOTAL_COUPON_CNT.ToString("#,##0")
+                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('COUPON');" />
+                    
+                    </td>
                     <th>1:1문의</th>
-                    <td>@ViewBag.TOTAL_QNA_CNT</td>
+                    <td>(담당자구현필요)@ViewBag.TOTAL_QNA_CNT.ToString("#,##0")
+                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('QNA');" />
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <span>*.클릭시 상세팝업 링크.</span>
+
 }
+
+
 
     </div>
 
+<div class="btn_area">
+   <!--
+    <a class="btn btn-default small" href="javascript:fGoSave();">수정</a>
+    <a class="btn btn-default small" href="#">수정</a>
+    <a class="btn btn-success small" href="#">삭제</a>
+ -->
+    <a class="btn btn-primary small" href="javascript:fGoList();">목록</a>
+
+    <a class="btn btn-primary small" href="javascript:fPopPersonalDetail('MEMBER_INFO');">회원 상세보기 팝업 테스트</a>
+     
+</div>
 
 
 
 
-
-
-
-        }
+}
 

@@ -1,0 +1,130 @@
+﻿@model AboutMe.Web.Admin.Models.AdminPointInsertViewModel
+@{
+    ViewBag.Title = "PointIndex";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Other{
+    <style>
+        .container {
+            padding: 10px;
+            width: 100%;
+            min-width: inherit;
+        }
+
+        .table {
+            width: 100%;
+            min-width: inherit;
+        }
+
+        .field-validation-error
+        {
+            color: red;
+        }
+
+        .validation-summary-errors
+        {
+            color: Red;
+        }
+    </style>
+}
+@section Scripts{
+    <script>
+        function closePopup() {
+            //alert("closePopup");
+            //window.opener.location.href = window.opener.location.href;
+            //window.opener.location.reload(false);
+            if (window.opener) {
+                window.opener.location.reload(true);
+            }
+            self.close();
+
+        }
+
+
+    </script>
+
+    @if (!Model.ResultNum.IsEmpty() && Model.ResultNum != "0")
+    {
+        <script>
+             alert("@(Model.ResultMessage)");
+        </script>
+    }
+    else if (Model.ResultNum == "0")
+    {
+        <script>
+                window.opener.location.reload(true);
+                self.close();
+        </script>
+    }
+}
+
+@section Left {
+
+}
+
+@section Header{
+
+}
+
+
+
+@section Body{
+    <h4>포인트 관리</h4>
+    
+    @using (Html.BeginForm("PopupMemberPoint", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div><span>@Model.Mid</span>@Html.ValidationSummary(true, "", new { @style= "display:inline;" })</div>
+        
+        <div>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup><col width="50%" /><col width="50%" /></colgroup>
+
+                <tbody>
+                    <tr>
+                        <td>구분</td>
+                        <td>
+                            <input type="radio" name="Type" value="1" />적립
+                            <input type="radio" name="Type" value="2" />차감
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Type)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>적립/차감사유</td>
+                        <td>
+                            <input type="text" name="Reason" value="" />
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Reason)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>적립금 입력</td>
+                        <td>
+                            <input type="text" name="Point" value="" />
+                            <br />
+                            @Html.ValidationMessageFor(model => model.Point)
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>처리자</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" name="Mid" value="@(Model.Mid)" />
+        </div>
+
+        <div style="text-align:center">
+            <a href="#" class="btn btn-danger small" onclick="document.frm.submit(); return false;">등록</a>
+            <a href="#" class="btn btn-default small" onclick="closePopup(); return false;">취소</a>
+        </div>
+
+    }
+
+
+
+}

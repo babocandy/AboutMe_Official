@@ -591,5 +591,68 @@ namespace AboutMe.Domain.Entity.AdminProduct
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_LIST_Result>("SP_ADMIN_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cATE_CODEParameter, iCON_YNParameter, sEARCH_DISPLAY_YParameter, sEARCH_DISPLAY_NParameter, sOLDOUT_YNParameter, p_OUTLET_YNParameter);
         }
+
+        public virtual int SP_ADMIN_PRODUCT_PRICE_UPD(string p_CODE, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_PRICE, Nullable<int> dISCOUNT_RATE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+
+            var sELLING_PRICEParameter = sELLING_PRICE.HasValue ?
+                new ObjectParameter("SELLING_PRICE", sELLING_PRICE) :
+                new ObjectParameter("SELLING_PRICE", typeof(int));
+
+            var dISCOUNT_PRICEParameter = dISCOUNT_PRICE.HasValue ?
+                new ObjectParameter("DISCOUNT_PRICE", dISCOUNT_PRICE) :
+                new ObjectParameter("DISCOUNT_PRICE", typeof(int));
+
+            var dISCOUNT_RATEParameter = dISCOUNT_RATE.HasValue ?
+                new ObjectParameter("DISCOUNT_RATE", dISCOUNT_RATE) :
+                new ObjectParameter("DISCOUNT_RATE", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_PRICE_UPD", p_CODEParameter, sELLING_PRICEParameter, dISCOUNT_PRICEParameter, dISCOUNT_RATEParameter);
+        }
+
+        public virtual int SP_ADMIN_PRODUCT_BATCH_UPD(string p_CODE, string p_NAME, string dISPLAY_YN, string sOLDOUT_YN, string p_OUTLET_YN)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+
+            var sOLDOUT_YNParameter = sOLDOUT_YN != null ?
+                new ObjectParameter("SOLDOUT_YN", sOLDOUT_YN) :
+                new ObjectParameter("SOLDOUT_YN", typeof(string));
+
+            var p_OUTLET_YNParameter = p_OUTLET_YN != null ?
+                new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
+                new ObjectParameter("P_OUTLET_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_BATCH_UPD", p_CODEParameter, p_NAMEParameter, dISPLAY_YNParameter, sOLDOUT_YNParameter, p_OUTLET_YNParameter);
+        }
+
+        public virtual int SP_ADMIN_PRODUCT_DISPLAY_RE_SORT(Nullable<int> iDX, Nullable<int> rE_SORT, string cLICKCHK)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            var rE_SORTParameter = rE_SORT.HasValue ?
+                new ObjectParameter("RE_SORT", rE_SORT) :
+                new ObjectParameter("RE_SORT", typeof(int));
+
+            var cLICKCHKParameter = cLICKCHK != null ?
+                new ObjectParameter("CLICKCHK", cLICKCHK) :
+                new ObjectParameter("CLICKCHK", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_DISPLAY_RE_SORT", iDXParameter, rE_SORTParameter, cLICKCHKParameter);
+        }
     }
 }

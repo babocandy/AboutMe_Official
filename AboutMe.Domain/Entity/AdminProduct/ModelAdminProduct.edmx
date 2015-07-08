@@ -127,6 +127,13 @@
           <Parameter Name="userAgent" Type="varchar" Mode="In" />
           <Parameter Name="urlReFerrer" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_PRODUCT_BATCH_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="P_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+          <Parameter Name="SOLDOUT_YN" Type="varchar" Mode="In" />
+          <Parameter Name="P_OUTLET_YN" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_PRODUCT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
@@ -139,6 +146,11 @@
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_DETAIL_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="RE_SORT" Type="int" Mode="In" />
+          <Parameter Name="CLICKCHK" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_IMG_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
@@ -170,6 +182,12 @@
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_PCODE_CHK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PRODUCT_PRICE_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="SELLING_PRICE" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_PRICE" Type="int" Mode="In" />
+          <Parameter Name="DISCOUNT_RATE" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
@@ -401,6 +419,24 @@
             <Parameter Name="SEARCH_DISPLAY_N" Mode="In" Type="String" />
             <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
             <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_PRICE_UPD">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_BATCH_UPD">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_NAME" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
+            <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+            <Parameter Name="CLICKCHK" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
@@ -853,6 +889,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PRICE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PRICE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
