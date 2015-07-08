@@ -11,9 +11,11 @@ using System.Data.Entity.Core.Objects;
 using AboutMe.Common.Data;
 using Newtonsoft.Json;
 using AboutMe.Web.Admin.Common;
+using AboutMe.Web.Admin.Common.Filters;
 
 namespace AboutMe.Web.Admin.Controllers
 {
+    [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
     public class AdminProductController : BaseAdminController
     {
 
@@ -354,7 +356,16 @@ namespace AboutMe.Web.Admin.Controllers
         {
             this.ViewBag.PageSize = productSearch_Entity.PageSize;
             this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            if (!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword))
+            {
+                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
+                productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
+            }
+            else
+            {
+                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            }
+
             this.ViewBag.cateCode = productSearch_Entity.cateCode;
             this.ViewBag.iconYn = productSearch_Entity.iconYn;
             this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
@@ -380,7 +391,15 @@ namespace AboutMe.Web.Admin.Controllers
         {
             this.ViewBag.PageSize = productSearch_Entity.PageSize;
             this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            if (!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword))
+            {
+                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
+                productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
+            }
+            else
+            {
+                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            }
             this.ViewBag.cateCode = productSearch_Entity.cateCode;
             this.ViewBag.iconYn = productSearch_Entity.iconYn;
             this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
@@ -779,6 +798,42 @@ namespace AboutMe.Web.Admin.Controllers
             }
 
             return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+        }
+        #endregion
+
+        #region 상품전시 순서 바꾸기
+        public ActionResult display_re_sort(int IDX, int RE_SORT, string CLICKCHK, ProductSearch_Entity productSearch_Entity)
+        {
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+
+
+             try
+            {
+                _AdminProductService.UpdateAdminProductReSort(IDX, RE_SORT, CLICKCHK);
+
+                #region 로그 생성
+                var serialised = "idx:"+IDX.ToString();
+                serialised += "RE_SORT:" + RE_SORT.ToString();
+                serialised += "CLICKCHK:" + CLICKCHK.ToString();
+                serialised += JsonConvert.SerializeObject(productSearch_Entity);
+                AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(serialised, "관리자_상품전시_순서_바꾸기");
+                #endregion
+            return RedirectToAction("ProductIndex");
+            }
+             catch
+             {
+                 return RedirectToAction("ProductIndex");
+             }
+
         }
         #endregion
 

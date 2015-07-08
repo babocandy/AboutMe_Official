@@ -271,7 +271,13 @@
                 $('#ajaxPCateCode2').html(result);
 
                 //category 3depth load
-                ajaxSelectCateCodeJavascriptProductType2();
+                if (DEPTH1_CODE == '101') { //뷰티만 3depth까지 있음
+                    $("#ajaxPCateCode3").show(); //ProductType 3
+                    ajaxSelectCateCodeJavascriptProductType2();
+                } else {
+                    $("#ajaxPCateCode3").hide(); //ProductType 3
+                }
+                
 
             },
             error: function (errorData) {
@@ -280,7 +286,7 @@
         });
     }
 
-    //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+    //카테고리 유형별(PRODUCT_TYPE) ProductType 3
     function ajaxSelectCateCodeJavascriptProductType2() {
 
         var f = document.bform;

@@ -286,7 +286,7 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
-         #region 상품 정보 일괄 수정
+        #region 상품 정보 일괄 수정
         public void UpdateAdminProductBatch(TB_PRODUCT_INFO tb_product_info)
         {
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
@@ -297,7 +297,15 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
-        
+        #region 상품전시 순서 바꾸기
+        public void UpdateAdminProductReSort(int IDX, int RE_SORT, string CLICKCHK)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                AdminProductContext.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT(IDX, RE_SORT, CLICKCHK);
+            }
+        }
+        #endregion 
         
 
        
