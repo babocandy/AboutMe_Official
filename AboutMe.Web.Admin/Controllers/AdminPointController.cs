@@ -103,5 +103,61 @@ namespace AboutMe.Web.Admin.Controllers
             model.TotalItem = _AdminPointService.GetMyPointHistoryListCnt(M_ID);
             return View(model);
         }
+
+        [CustomAuthorize]
+        public ActionResult TestPoint()
+        {
+            return View();
+        }
+
+        [CustomAuthorize]
+        public ActionResult SavePointOnOrder()
+        {
+
+            Tuple<string,string> result = _AdminPointService.SavePointOnOrder(Request.Form["M_ID"], Convert.ToInt32( Request.Form["AMOUNT"]), Convert.ToInt32(Request.Form["ORDER_IDX"]));
+
+            Debug.WriteLine("에러번호 : "+result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+
+            return RedirectToAction("TestPoint");
+        }
+
+        [CustomAuthorize]
+        public ActionResult UsePointOnOrder()
+        {
+
+            Tuple<string, string> result = _AdminPointService.UsePointOnOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Convert.ToInt32(Request.Form["ORDER_IDX"]));
+
+            Debug.WriteLine("에러번호 : " + result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+
+            return RedirectToAction("TestPoint");
+        }
+
+        [CustomAuthorize]
+        public ActionResult CancelAllOfOrder()
+        {
+            /**/
+            Tuple<string, string> result = _AdminPointService.CancelAllOfOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Convert.ToInt32(Request.Form["ORDER_IDX"]));
+
+            Debug.WriteLine("에러번호 : " + result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+
+            return RedirectToAction("TestPoint");
+        }
+
+        [CustomAuthorize]
+        public ActionResult CancelPartOfOrder()
+        {
+            /**/
+            Tuple<string, string> result = _AdminPointService.CancelPartOfOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Convert.ToInt32(Request.Form["ORDER_IDX"]));
+
+            Debug.WriteLine("에러번호 : " + result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+           
+            return RedirectToAction("TestPoint");
+        }
+
+        
     }
 }
