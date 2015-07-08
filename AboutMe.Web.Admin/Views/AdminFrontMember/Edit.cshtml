@@ -37,7 +37,7 @@
             break;
 
     }
-    <div>@grade_name</div>
+    @(@grade_name)
 }
 
 @helper fIsRerireNAME(string is_retire)
@@ -45,13 +45,14 @@
     var isretire_name = is_retire;
     switch (is_retire)
     {
-        case "Y": isretire_name = "탈퇴";
+        case "Y": isretire_name = "탈퇴회원";
             break;
-        case "N": isretire_name = "활동";
+        case "N": isretire_name = "활동중";
             break;
 
     }
-    <div>@isretire_name</div>
+        @(@isretire_name)
+
 }
 
 @helper fM_GBN_NAME(string m_gbn)
@@ -281,7 +282,7 @@
             var f = document.frmFORM;
             var strM_ID = f.SEL_M_ID.value;
             var xurl="";
-            var wid="800";
+            var wid="1000";
             var hei = "600";
             var tar ="PERSONAL_POP";
 
@@ -301,7 +302,10 @@
             {
                 xurl="/AdminQna/Index?M_ID=" +strM_ID ;
             }
-            ow_yes(xurl, tar, wid, hei); //팝업
+            else if (argKIND == "MEMBER_INFO") {
+                xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
+            }
+    ow_yes(xurl, tar, wid, hei); //팝업
         }
 
 
@@ -544,7 +548,7 @@
 
 
     <div class="panel">
-        <h4 class="sub-header">1.기본정보 수정</h4>
+        <h4 class="sub-header">1.기본정보 수정 [@fIsRerireNAME(@Model.M_IS_RETIRE)]</h4>
 
         <table class="table table_row">
             <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
@@ -705,7 +709,7 @@
                         </select>
                     </td>
                     <th>소속회사</th>
-                    <td><input type="text" name="M_STAFF_COMPANY" value=" @Model.M_STAFF_COMPANY " maxlength=" 40" /></td>
+                    <td><input type="text" name="M_STAFF_COMPANY" value="@Model.M_STAFF_COMPANY" maxlength=" 40" /></td>
                     <th>사번</th>
                     <td><input type="text" name="M_STAFF_ID" value="@Model.M_STAFF_ID" maxlength="40" /></td>
                 </tr>
@@ -767,7 +771,9 @@
             <tbody>
                 <tr>
                     <th>회원등급</th>
-                    <td>@fGradeName(@Model.M_GRADE)</td>
+                    <td>@fGradeName(@Model.M_GRADE)
+                        <input type="button" value="회원기본정보" onclick="javascript: fPopPersonalDetail('MEMBER_INFO');" />                    
+                    </td>
                     <th>총구매건수</th>
                     <td>(담당자구현필요)@ViewBag.TOTAL_ORDER_CNT.ToString("#,##0")
                         <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('ORDER');" />
@@ -798,6 +804,8 @@
 
 }
 
+
+
     </div>
 
 <div class="btn_area">
@@ -807,6 +815,8 @@
     <a class="btn btn-success small" href="#">삭제</a>
  -->
     <a class="btn btn-primary small" href="javascript:fGoList();">목록</a>
+
+    <a class="btn btn-primary small" href="javascript:fPopPersonalDetail('MEMBER_INFO');">회원 상세보기 팝업 테스트</a>
      
 </div>
 

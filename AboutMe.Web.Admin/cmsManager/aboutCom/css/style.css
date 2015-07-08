@@ -145,15 +145,16 @@ html, body {height:100%}
 .path {text-align:right;font-size:11px;color:#888; margin-bottom:10px;}
 .path a {color:#888;font-weight:normal;}
 .path strong {color:#000;}
-.container {min-width:1654px; width:100%; margin-left:0; padding:0 0 0 210px; box-sizing:border-box;}
+.container {min-width:1200px; width:100%; margin-left:0; padding:0 0 0 210px; box-sizing:border-box;}
 .container  h3 {padding-left:26px; margin-bottom:8px;  font-size:16px; font-weight:700; color:#000; line-height:20px; background:url("/cmsManager/aboutCom/images/ico_bul1.gif") 0 0 no-repeat;}
 .container  h4 {padding-left:18px; padding-bottom:6px;font-size:12px; font-weight:700; background:url("/cmsManager/aboutCom/images/ico_bul2.gif") 0 0 no-repeat; }
 .content {padding:18px 20px;}
-.table {font-size:12px; min-width:1404px }
+.table {font-size:12px; width:100%;}
 .table thead th {background:#f5f5f5; border:1px solid #dcdcdc; border-bottom:1px solid #dcdcdc; font-weight:normal; }
 .table tbody th {background:#f5f5f5; border:1px solid #dcdcdc; font-weight:normal;}
 .table tfoot th {background:#f5f5f5; border:1px solid #dcdcdc;}
 .table.table_row td {border:1px solid #dcdcdc; font-weight:normal;}
+.table_row.v2 {border-top:1px solid #dcdcdc;}
 .table.table_col th {text-align:center; vertical-align:middle;}
 .table.table_col td {border:1px solid #dcdcdc; background:#fff; font-weight:normal; text-align:center;}
 .table.table_col .brnone {border-left:none; border-right:none;}
@@ -210,3 +211,44 @@ html, body {height:100%}
 .paging strong {display:inline-block; font-weight:bold; text-align:center; padding:0 9px 0 10px; color:#33b08a}
 .paging a {display:inline-block; color:#737373; font-weight:bold; text-align:center; padding:0 9px 0 10px; }
 
+/**/
+.panel {position:relative;}
+.alert.alert-info span {color:#33b08a}
+.sub-header span {font-size:12px; font-weight:normal;}
+.abr_position {position:absolute; right:0; top:0;}
+.tablesort_list {margin-bottom:10px;}
+.tablesort_list:after {display:block; clear:both; content:'';}
+.tablesort_list li {float:left; margin-left:10px; padding-left:10px; font-size:11px;}
+.tablesort_list li:first-child {margin-left:0; padding-left:0;}
+.tablesort_list li span {color:#33b08a}
+
+.boxtyped {
+    border: 5px solid #efe8e6;
+    padding: 30px 20px;
+    position: relative;
+}
+.saleapply{background-color:#fff;padding-bottom:27px; min-width:940px;}
+.saleapply ul:after{content:"";display:block;clear:both;}
+.saleapply ul li{float:left;position:relative;margin-left:75px;padding:0 15px;/* width:250px; */width:27%;box-sizing:border-box;}
+.saleapply ul li:first-child{margin-left:0;}
+.saleapply ul li:after{content:"";position:absolute;top:33px;left:-52px;width:30px;height:30px;background:url("/aboutCom/images/common/bul30.png") 0 -120px no-repeat;}
+.saleapply ul li:first-child:after{background:none;}
+.saleapply ul li.total:after{background-position:0 -150px;}
+.saleapply ul li p{padding-top:10px;line-height:1;}
+.saleapply ul li p:after{content:"";display:block;clear:both;}
+.saleapply ul li p .tit{float:left;font-size:14px;color:#696361;}
+.saleapply ul li p .price{float:right;text-align:right;font-size:14px;color:#696361;}
+.saleapply ul li p .price.point{color:#9aca3c;}
+.saleapply ul li p .price.point i{margin:-2px 5px 0 0;width:17px;height:17px;background:url("/aboutCom/images/common/bul20.png") 0 -64px no-repeat;}
+.saleapply ul li p.tot{margin-bottom:6px;padding:0 0 11px;border-bottom:1px dotted #bbb5b4;}
+.saleapply ul li p.tot .tit{margin-top:12px;font-size:16px;color:#1b1818;}
+.saleapply ul li p.tot .price{font-size:22px;color:#1b1818;}
+.saleapply ul li p.tot .price strong{font-size:30px;}
+
+.textarea {border:1px solid #efe8e6; padding:10px;}
+
+/*popup*/
+.popcontainer {padding:15px;}
+.popcontainer h1 {padding-left:26px; margin-bottom:8px;  font-size:16px; font-weight:700; color:#000; line-height:20px; background:url("/cmsManager/aboutCom/images/ico_bul1.gif") 0 0 no-repeat;}
+.popcontainer h2 {padding-left:18px; padding-bottom:6px;font-size:12px; font-weight:700; background:url("/cmsManager/aboutCom/images/ico_bul2.gif") 0 0 no-repeat; }
+.popcontainer table {min-width:100%;}

@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/cmsManager/aboutCom/css/bootstrap.css" rel="stylesheet">
+    <link href="/cmsManager/aboutCom/css/style.css" rel="stylesheet">
+    <script src="/cmsManager/aboutCom/js/jquery-1.11.3.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/bootstrap.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/script.js"></script>
+    <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+    <title>ABOUT ME</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!--container-->
+            <div class="col-md-12 popcontainer">
+                <h1>활동내역</h1>
+                <br />
+                <!-- tabs -->
+                <ul class="nav nav-tabs">
+                    <li><a href="pop_order.html">주문 내역</a></li>
+                    <li><a href="pop_point.html">포인트 내역</a></li>
+                    <li><a href="pop_coupon.html">쿠폰 내역</a></li>
+                    <li><a href="pop_ask.html">1:1 문의 내역</a></li>
+                    <li class="active"><a href="/AdminFrontMember/PopMemberInfo?M_ID=@ViewBag.M_ID">기본정보</a></li>
+                </ul>
+                <!-- //tabs -->
+                <br />
+                <!-- 회원 상세 보기-->
+                @{Html.RenderAction("ChildFrontMemberInfo", "CommonChildAction", new { M_ID = @ViewBag.M_ID });}
+
+
+            </div>
+                <!--//container-->
+            </div>
+    </div>
+</body>
+</html>
