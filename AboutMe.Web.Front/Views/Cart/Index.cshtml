@@ -1,0 +1,51 @@
+﻿@model List<AboutMe.Domain.Entity.Cart.SP_TB_CART_LIST_Result>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/cart_script.js"></script>
+
+
+</head>
+<body>
+    <div>
+        sessionid :  @ViewBag.SessionId
+    </div>
+    <div>
+        <a class="btn btn-default middium" href="#" onclick="AddCartClick()">Insert Cart</a>
+    </div>
+    <script language="javascript">
+        $(document).ready(function(){
+            Cart_Count();
+            //Wish_Count();
+
+            //바로구매 하기 테스트
+            // var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
+            // Now_Order_Input(arr);
+
+            // 장바구니담기
+            //var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
+            //Cart_Input(arr);
+        });
+
+        function AddCartClick() {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = '1111111';//f.opt_p_code.value//P_CODE
+            obj.p_count = 1;
+            arrP.push(obj);
+            Cart_Input(arrP);
+        }
+    </script>
+</body>
+</html>

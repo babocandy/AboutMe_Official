@@ -30,6 +30,9 @@ namespace AboutMe.Web.Front.DI_Core
             //container.RegisterType<IController, StoreController>("Store");
 
             container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리
+            container.RegisterType<AboutMe.Domain.Service.Faq.IFaqService, AboutMe.Domain.Service.Faq.FaqService>(); //Faq
+            container.RegisterType<AboutMe.Domain.Service.Notice.INoticeService, AboutMe.Domain.Service.Notice.NoticeService>(); //Notice
+            container.RegisterType<AboutMe.Domain.Service.Cart.ICartService, AboutMe.Domain.Service.Cart.CartService>(); //Cart
 
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));

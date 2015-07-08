@@ -226,6 +226,31 @@
     <Compile Include="Entity\AdminProduct\TB_PRODUCT_INFO.cs">
       <DependentUpon>ModelAdminProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Cart\CartUserModel.cs" />
+    <Compile Include="Entity\Cart\ModelCart.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelCart.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Cart\ModelCart.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelCart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Cart\ModelCart.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelCart.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Cart\SP_TB_CART_CNT_Result.cs">
+      <DependentUpon>ModelCart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Cart\SP_TB_CART_LIST_Result.cs">
+      <DependentUpon>ModelCart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Cart\TB_CART.cs">
+      <DependentUpon>ModelCart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Faq\ModelFaq_EntityPartial.cs" />
     <Compile Include="Entity\Faq\ModelFaq_Metadata.cs" />
     <Compile Include="Entity\Faq\ModelFaq.Context.cs">
@@ -293,6 +318,8 @@
     <Compile Include="Service\AdminFrontMember\IAdminFrontMemberService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
+    <Compile Include="Service\Cart\CartService.cs" />
+    <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Notice\NoticeService.cs" />
     <Compile Include="Service\Notice\INoticeService.cs" />
     <Compile Include="Service\Faq\FaqService.cs" />
@@ -368,6 +395,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelFaq.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Cart\ModelCart.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelCart.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Cart\ModelCart.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelCart.edmx</DependentUpon>
+      <LastGenOutput>ModelCart.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Cart\ModelCart.edmx.diagram">
+      <DependentUpon>ModelCart.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Cart\ModelCart.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelCart.edmx</DependentUpon>
+      <LastGenOutput>ModelCart.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Faq\ModelFaq.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelFaq.edmx</DependentUpon>
