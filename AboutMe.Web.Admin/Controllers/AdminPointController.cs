@@ -27,23 +27,26 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         // GET: AdminPoint
-        public ActionResult Index(string SearchKey, string SearchValue, int Page = 1, int PageSize = 10)
+        public ActionResult Index(string searchKey, string searchValue, int page = 1, int pageSize = 10)
         {
             AdminPointMemberViewModel viewModel = new AdminPointMemberViewModel();
 
-            Debug.WriteLine("SearchKey: " + SearchKey);
-            Debug.WriteLine("SearchValue: " + SearchValue);
+            Debug.WriteLine("Page: " + page);
+            Debug.WriteLine("PageSize: " + pageSize);
+            Debug.WriteLine("SearchKey: " + searchKey);
+            Debug.WriteLine("SearchValue: " + searchValue);
 
-            viewModel.MemberList = _AdminPointService.GetMemberList(Page, PageSize, SearchKey, SearchValue);
-            viewModel.PageNo = Page;
-            viewModel.SearchKey = SearchKey;
+            viewModel.MemberList = _AdminPointService.GetMemberList(page, pageSize, aearchKey, SaearchValue);
+            viewModel.PageNo = page;
+            viewModel.PageSize = pageSize;
+            viewModel.SearchKey = searchKey;
 
-            if (SearchKey == null || SearchKey.Length == 0)
+            if (searchKey == null || searchKey.Length == 0)
             {
-                SearchValue = "";
-            }/**/
-            viewModel.SearchValue = SearchValue;
-            viewModel.TotalItem = _AdminPointService.GeMemberListCnt(SearchKey, SearchValue);
+                searchValue = "";
+            }
+            viewModel.SearchValue = searchValue;
+            viewModel.TotalItem = _AdminPointService.GeMemberListCnt(searchKey, searchValue);
 
             return View(viewModel);
         }

@@ -10,7 +10,7 @@
 }
 
 @section Header{
-    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+   @* @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");} *@
 }
 
 @section Body{
@@ -109,7 +109,7 @@
             </table>
         </div>
 
-
+        @Model.PageSize;
 
         @{
             var queryStr = "";
@@ -122,7 +122,7 @@
             {
                 queryStr += "searchValue=" + Model.SearchValue;
             }
-            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = 1, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
         }
 
         <script>
