@@ -21,7 +21,11 @@
 
 @helper fAdminAdminMenuDisplay()
 {
-    string strGRADE = Session["ADM_GRADE_TXT"].ToString() ;
+    string strGRADE = "";
+    if(Session["ADM_GRADE_TXT"] !=null)
+    {
+        strGRADE = Session["ADM_GRADE_TXT"].ToString() ;
+    }
     if (@strGRADE == "S") 
     { 
         <li @fTopMenuCSSOn("AdminUser")><a href="/AdminUser/Index">관리자관리</a></li>
