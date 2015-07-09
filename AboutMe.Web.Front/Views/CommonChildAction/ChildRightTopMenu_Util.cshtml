@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+
+//상단 우측 util 메뉴 만들기
+ @helper fMakeRightTopMenu_Util()
+{
+    bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
+    if (bLogin)  //로그인 상황
+    {
+        <div class="util">
+            <ul>
+                <li><a href="/Member/Logout"><img src="/aboutCom/images/common/util_logout.gif" alt="LOGOUT" /></a></li>
+                <li><a href="/Mypage/Main"><img src="/aboutCom/images/common/util_mypage.gif" alt="MY PAGE" /></a></li>
+            </ul>
+        </div>
+    }
+    else //비 로그인 상황
+    {
+        <div class="util">
+            <ul>
+                <li><a href="/Member/Login"><img src="/aboutCom/images/common/util_login.gif" alt="LOGIN" /></a></li>
+                <li><a href="/MemberShip/JoinStep1"><img src="/aboutCom/images/common/util_joinus.gif" alt="JOIN US" /></a></li>
+            </ul>
+        </div>
+    }
+} //fMakeRightTopMenu_Util()
+    
+}
+
+<!-- RightTop Util html 만들기-->
+@fMakeRightTopMenu_Util()

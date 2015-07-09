@@ -301,6 +301,24 @@
     <Compile Include="Entity\Faq\TB_FAQ.cs">
       <DependentUpon>ModelFaq.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Member\ModelMember.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMember.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Member\ModelMember.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMember.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Member\ModelMember.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMember.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Member\SP_MEMBER_VIEW_Result.cs">
+      <DependentUpon>ModelMember.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Notice\ModelNotice_EntityPartial.cs" />
     <Compile Include="Entity\Notice\ModelNotice_Metadata.cs" />
     <Compile Include="Entity\Notice\ModelNotice.Context.cs">
@@ -343,6 +361,8 @@
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
+    <Compile Include="Service\Member\IMemberService.cs" />
+    <Compile Include="Service\Member\MemberService.cs" />
     <Compile Include="Service\Notice\NoticeService.cs" />
     <Compile Include="Service\Notice\INoticeService.cs" />
     <Compile Include="Service\Faq\FaqService.cs" />
@@ -351,11 +371,9 @@
   <ItemGroup>
     <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
-    <Folder Include="Entity\Member\" />
     <Folder Include="Entity\Order\" />
     <Folder Include="Entity\Product\" />
     <Folder Include="Service\Etc\" />
-    <Folder Include="Service\Member\" />
     <Folder Include="Service\Order\" />
     <Folder Include="Service\Product\" />
   </ItemGroup>
@@ -469,6 +487,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelNotice.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Member\ModelMember.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelMember.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Member\ModelMember.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelMember.edmx</DependentUpon>
+      <LastGenOutput>ModelMember.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Member\ModelMember.edmx.diagram">
+      <DependentUpon>ModelMember.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Member\ModelMember.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelMember.edmx</DependentUpon>
+      <LastGenOutput>ModelMember.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Notice\ModelNotice.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelNotice.edmx</DependentUpon>
