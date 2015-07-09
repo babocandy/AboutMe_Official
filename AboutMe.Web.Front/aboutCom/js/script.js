@@ -12,7 +12,10 @@ function PopupCenter(popNM, parms, width, height){
 	window.name="pop";
 	window.open (popNM + parms , '' , set) ;
 }
-
+/*새창팝업닫기*/
+function PopupClose(){
+	self.close();
+}
 $(function(){
 	if( $("*").is(".txtdotdot") ){
 		$(".txtdotdot").dotdotdot();

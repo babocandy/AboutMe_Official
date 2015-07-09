@@ -184,14 +184,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
-    <Compile Include="Common\FrontUserInfo.cs" />
     <Compile Include="Common\Filters\CustomAuthorizeAttr.cs" />
+    <Compile Include="Common\MemberInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseFrontController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CommonChildActionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\Mypage\MypageController.cs" />
     <Compile Include="DI_Core\Bootstraper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -391,6 +393,7 @@
     <Content Include="aboutCom\images\common\txt_timesale.png" />
     <Content Include="aboutCom\images\common\util_joinus.gif" />
     <Content Include="aboutCom\images\common\util_login.gif" />
+    <Content Include="aboutCom\images\common\util_logout.gif" />
     <Content Include="aboutCom\images\common\util_mypage.gif" />
     <Content Include="aboutCom\images\common\util_staff.gif" />
     <Content Include="aboutCom\images\common\visual_1.jpg" />
@@ -686,10 +689,12 @@
     <Content Include="Views\AboutMePartial\_Header.cshtml" />
     <Content Include="Views\AboutMePartial\_Footer.cshtml" />
     <Content Include="Views\Shared\_AboutMeLayoutMasterA.cshtml" />
+    <Content Include="Views\Member\Login.cshtml" />
+    <Content Include="Views\CommonChildAction\ChildRightTopMenu_Util.cshtml" />
+    <Content Include="Views\Mypage\Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CommonChildAction\" />
     <Folder Include="Views\Shopping\" />
   </ItemGroup>
   <ItemGroup>
