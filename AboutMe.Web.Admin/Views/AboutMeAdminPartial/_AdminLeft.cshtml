@@ -27,7 +27,7 @@
 @{
 
 //Left메뉴 ON 처리
- @helper fLeftMenuCSSOn(string argMENU_DEPTH2_List = "")
+ @helper fLeftMenuCSSOn(string argMENU_DEPTH2_List = "", string controllerNm = "")
 {
     var Path = Request.Url.LocalPath + "////"; // ex)/Control/Action/
     var arrPATH = Path.Split('/');
@@ -37,18 +37,28 @@
 
     //var strAction = Path.Substring(1, 1);
     var strControl = arrPATH[1];
-    var strAction = arrPATH[2];
+    var strAction = (String.IsNullOrEmpty(arrPATH[2]) ? "Index" : arrPATH[2]);
 
     if (argMENU_DEPTH2_List != null)
     {
         foreach (string word in arrMenu_Depth2)
         {
-            if (word != "" && word == strAction)
-            { 
-                @(" class=active ")
-                break;    
+            if (!string.IsNullOrEmpty(controllerNm))
+            {
+                if (word != "" && word == strAction && controllerNm == strControl)
+                {
+                    @(" class=active ")      
+                    break;
+                }
             }
-    
+            else
+            {
+                if (word != "" && word == strAction)
+                {
+                    @(" class=active ")
+                    break;    
+                }
+            }
         } //for
     } //if outter
 } //fLeftMenuCSSOn
@@ -62,7 +72,13 @@
     //var strAction = Path.Substring(1, 1);
     var strControl = arrPATH[1];
     var strAction = arrPATH[2];
+    var controllerNm = arrPATH[1];
 
+    if (strControl == "Faq" || strControl == "Notice")
+    {
+        strControl = "Contents";
+    }
+    
     switch (strControl)
     {
         case "AdminUser":  //관리자 관리
@@ -103,6 +119,33 @@
                     </li>
                     <li @fLeftMenuCSSOn("StaffBaseIndex,StaffBaseInsert,StaffBaseEdit")>
                         <a href="/AdminFrontMember/StaffBaseIndex" class="menu ">임직원DB관리</a>
+                    </li>
+                </ul>
+            break;
+            
+       case "Contents" :  //컨텐츠관리
+                <h2>컨텐츠관리</h2>
+                <ul class="nav nav-sidebar depth1">
+                    <li @fLeftMenuCSSOn("Index,New,Edit", "Faq")>
+                        <a href="/Faq/" class="menu ">Faq</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("Index,New,Edit", "Notice")>
+                        <a href="/Notice/" class="menu ">공지사항</a>
+                    </li>
+                </ul>
+            break;
+       case "Order":  //주문
+                <h2>주문/매출</h2>
+                <ul class="nav nav-sidebar depth1">
+                    <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("Index,Detail")>
+                        <a href="/Order/" class="menu ">주문관리</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("StaffRequestIndex,StaffRequestEdit")>
+                        <a href="/Order/" class="menu ">송장등록</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("StaffBaseIndex,StaffBaseInsert,StaffBaseEdit")>
+                        <a href="/Order/" class="menu ">취소/교환/반품관리</a>
                     </li>
                 </ul>
             break;
