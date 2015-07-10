@@ -1,0 +1,193 @@
+﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_TOTAL*@
+
+@model AboutMe.Web.Admin.Controllers.AdminPromotionController.MyMultiModelForCreate
+
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+  CdPromotionTotal
+    <script language="javascript">
+
+        function frmCheck() {
+            //alert("여기입니다");
+
+            var f = document.frm01;
+            
+            if (f.SEL_PMO_TOTAL_CATEGORY.value == '') {
+                alert("프로모션 종류를 선택하세요.");
+                f.SEL_PMO_TOTAL_CATEGORY.focus();
+                return false;
+            }
+            
+        }
+
+        function setTotalCategory(obj_selectbox, sel_index) {
+            //alert(obj_selectbox[sel_index].value);
+            var f = document.frm01;
+            f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_CATEGORY.value = obj_selectbox.options[sel_index].value;
+
+            //alert(obj_selectbox[sel_index].value);
+
+            if (obj_selectbox[sel_index].value == "01") //일반회원 전용할인
+            {
+          
+                f.CheckMemGrade[0].disabled = false;
+                f.CheckMemGrade[1].disabled = false;
+                f.CheckMemGrade[2].disabled = false;
+                f.CheckMemGrade[3].disabled = false;
+
+                f.CheckMemGrade[4].disabled = true;
+                f.CheckMemGrade[5].disabled = true;
+                f.CheckMemGrade[6].disabled = true;
+                f.CheckMemGrade[7].disabled = true;
+
+            }
+                
+            if (obj_selectbox[sel_index].value == "00") //임직원 전용할인
+            {
+                f.CheckMemGrade[0].disabled = true;
+                f.CheckMemGrade[1].disabled = true;
+                f.CheckMemGrade[2].disabled = true;
+                f.CheckMemGrade[3].disabled = true;
+
+                f.CheckMemGrade[4].disabled = false;
+                f.CheckMemGrade[5].disabled = false;
+                f.CheckMemGrade[6].disabled = false;
+                f.CheckMemGrade[7].disabled = false;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "03") //등급할인
+            {
+                f.CheckMemGrade[0].disabled = false;
+                f.CheckMemGrade[1].disabled = false;
+                f.CheckMemGrade[2].disabled = false;
+                f.CheckMemGrade[3].disabled = false;
+
+                f.CheckMemGrade[4].disabled = false;
+                f.CheckMemGrade[5].disabled = false;
+                f.CheckMemGrade[6].disabled = false;
+                f.CheckMemGrade[7].disabled = false;
+
+            }
+           
+        }
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">전체할인 프로모션 등록</h3>
+
+            @using (Html.BeginForm("Create", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                                  
+
+
+                                    <table class="table table_row">
+                                        <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                        <tbody>
+
+                                            <tr>
+                                                <th>프로모션명 </th>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_NAME)</font></td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>프로모션 종류 </th>
+                                                <td>@Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_CATEGORY, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_CATEGORY)</font>
+                                                    <select name="SEL_PMO_TOTAL_CATEGORY" style="width:270px;" onchange="setTotalCategory(this,this.selectedIndex);">
+                                                        <option value="">==선택==</option>
+                                                        <option value="00">임직원 전용 할인</option>
+                                                        <option value="01">일반회원 전용 할인</option>
+                                                        <option value="03">등급기준 할인</option>
+                                                    </select>
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>프로모션 적용 회원등급 </th>
+                                                <td><b>일반</b>   <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$B" />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$S" />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$G" />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$V" /> VIP
+                                                    <br><b>임직원</b> <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$B" />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$S" />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$G" />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$V" /> VIP
+                                                </td>
+
+                                            </tr>
+
+<!--                                        
+                                             <tr>
+                                                <th>정률/정액 </th>
+                                                <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_RATE_OR_MONEY)</font></td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>할인율 </th>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE)</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>할인액 </th>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY)</td>
+
+                                            </tr>
+    -->
+                                        
+                                            <tr>
+                                                <th>프로모션시작일시 (YYYY-MM-DD) </th>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_FROM)</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>프로모션종료일시 (YYYY-MM-DD) </th>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_TO, new { cssClass = "input-sm text-left" , value = "2015-09-20 23:59:59"  })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_TO)</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>활성화/비활성화 </th>
+                                                <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN)</td>
+
+                                            </tr>
+                    
+                                           
+                                        <tr>
+                                            <th>저장</th>
+                                            <td>
+                                                <input type="submit" value="저장" class="btn btn-default middium" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+            }
+        </div>
+
+        <div class="btn_area">
+            <a class="btn btn-primary small" href="/AdminMember/Index">목록</a>
+        </div>
+
+
+    </div>
+}
+
