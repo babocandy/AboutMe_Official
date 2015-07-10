@@ -5,6 +5,7 @@
 using System.Web.Mvc;
 using AboutMe.Common.Helper;
 using AboutMe.Web.Front.Common;
+using AboutMe.Domain.Entity.Common;
 
 //using AboutMe.Web.Front.Common.Filters;
 

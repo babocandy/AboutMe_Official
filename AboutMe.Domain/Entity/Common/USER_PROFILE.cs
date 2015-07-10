@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AboutMe.Common.Helper
+namespace AboutMe.Domain.Entity.Common
 {
     public class USER_PROFILE
     {
