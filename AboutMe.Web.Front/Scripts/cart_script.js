@@ -60,17 +60,18 @@ function Cart_Input(arrayOfObjects) {
 
     var src_url = "/Cart/CartInput";
     var param = "data=" + jobj;
-    var result = jQuery.parseJSON(getHttpRequest(src_url, 'POST', param));
-
+    //var result = jQuery.parseJSON(getHttpRequest(src_url, 'POST', param));
+    
     $.ajax({
         cache: false,
         type: "POST",
         url: src_url,
+        data: param,
         success: function (data) {
             console.log(data);
 
-            if (result.cart_count > -1) {
-                $("#div_QUICK_CART_CNT").text(result.cart_count);
+            if (data.cart_count > -1) {
+                $("#div_QUICK_CART_CNT").text(data.cart_count);
             }
 
             if (data.result == "true") {
@@ -86,7 +87,7 @@ function Cart_Input(arrayOfObjects) {
         complete: function (jqXHR, textStatus) {
         }
     });
-
+    
 
 }
 // 장바구니 개수
