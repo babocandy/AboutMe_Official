@@ -46,6 +46,11 @@ namespace AboutMe.Domain.Service.AdminPromotion
         int InsAdminPromotionByProductPricing(TB_PROMOTION_BY_PRODUCT_PRICE Tb, string CdPromotionProduct, string[] CheckCdPromotiontTotal);
         int GetAdminPromotionProductCodeCheck(string Pcode);
 
+
+        int UpdateAdminPromotionByProduct(TB_PROMOTION_BY_PRODUCT Tb, string CdPromotionProduct);
+        int GetAdminPromotionByProductForUpdateAllProductCheckDupSel(string CdPromotionProduct, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo);
+        int GetAdminPromotionByProductForUpdateDupSel(string PmoProductCategory, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo, string CdPromotionProduct);
+
         #endregion --------------------------------------------------------------------------
     }
 

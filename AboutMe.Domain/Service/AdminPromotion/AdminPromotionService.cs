@@ -301,7 +301,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
 
         }
 
-        //전체할인 프로모션 row수 가져오기 
+        //상품별할인 프로모션 row수 가져오기 
         public int GetAdminPromotionByProductListCnt(string SearchCol, string SearchKeyword)
         {
 
@@ -407,6 +407,100 @@ namespace AboutMe.Domain.Service.AdminPromotion
 
         }
 
+        //상품별할인 프로모션 정보수정
+        public int UpdateAdminPromotionByProduct(TB_PROMOTION_BY_PRODUCT Tb, string CdPromotionProduct)
+        {
+
+            int IsSuccess = 1;
+            //string NewCdPromotionProduct = ""; //신규생성된 프로모션코드
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+
+                    using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+                    {
+                        //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                        
+                        AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_MAIN_TITLE, Tb.PMO_PRODUCT_SUB_TITLE, Tb.PMO_PRODUCT_SHOPPING_TIP, Tb.PMO_PRODUCT_RATE_OR_MONEY, Tb.PMO_PRODUCT_DISCOUNT_RATE, Tb.PMO_PRODUCT_DISCOUNT_MONEY,
+                            Tb.PMO_SET_DISCOUNT_CNT, Tb.PMO_ONEONE_MULTIPLE_CNT,
+                            Tb.PMO_PRODUCT_DATE_FROM, Tb.PMO_PRODUCT_DATE_TO, Tb.USABLE_YN, CdPromotionProduct);
+
+                        //NewCdPromotionProduct = objOutParam.Value.ToString();
+                    }
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                    IsSuccess = -1;
+
+                }
+
+            }
+
+
+            return IsSuccess;
+        }
+
+
+
+        //상품별 할인 프로모션 기간 정보 수정시 ....타프로모션에 중복된 상품이 있는지의 여부 확인 
+        public int GetAdminPromotionByProductForUpdateAllProductCheckDupSel(string CdPromotionProduct, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo)
+        {
+
+            //PmoProductDateFrom
+
+
+            List<SP_ADMIN_PROMOTION_COMMON_CNT_Result> lst = new List<SP_ADMIN_PROMOTION_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+            {
+                /**try {**/
+                lst = AdmPromotionContext.SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL(CdPromotionProduct, TargetPmoProductDateFrom, TargetPmoProductDateTo).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
+        }
+
+
+
+        //상품별 할인 프로모션 중복여부 확인 
+        public int GetAdminPromotionByProductForUpdateDupSel(string PmoProductCategory, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo,string CdPromotionProduct)
+        {
+
+            //PmoProductDateFrom
+
+
+            List<SP_ADMIN_PROMOTION_COMMON_CNT_Result> lst = new List<SP_ADMIN_PROMOTION_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+            {
+                /**try {**/
+                lst = AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL(PmoProductCategory, TargetPmoProductDateFrom, TargetPmoProductDateTo, CdPromotionProduct).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
+        }
 
         #region 상품별 Pricing ==================================================================
        
@@ -459,7 +553,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
             using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
             {
                 /**try {**/
-                lst = AdmPromotionContext.SP_ADMIN_PROMOTION_ALL_PRODUCT_PRICE_DUP_SEL(CdPromotionProduct,Pcode).ToList();
+                lst = AdmPromotionContext.SP_ADMIN_PROMOTION_ALL_PRODUCT_PRICE_DUP_SEL(Pcode,CdPromotionProduct).ToList();
                 if (lst != null && lst.Count > 0)
                     list_cnt = lst[0].CNT;
                 /** }catch()

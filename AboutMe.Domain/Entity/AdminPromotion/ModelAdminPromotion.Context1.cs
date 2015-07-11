@@ -14,19 +14,19 @@ namespace AboutMe.Domain.Entity.AdminPromotion
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class AdminPromotion3Entities : DbContext
     {
         public AdminPromotion3Entities()
             : base("name=AdminPromotion3Entities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<TB_PROMOTION_BY_TOTAL_MEM_GRADE> TB_PROMOTION_BY_TOTAL_MEM_GRADE { get; set; }
         public virtual DbSet<TB_PROMOTION_BY_TOTAL_CATEGORY> TB_PROMOTION_BY_TOTAL_CATEGORY { get; set; }
         public virtual DbSet<TB_PROMOTION_BY_TOTAL> TB_PROMOTION_BY_TOTAL { get; set; }
@@ -34,424 +34,519 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public virtual DbSet<TB_PROMOTION_PRODUCT_CATEGORY> TB_PROMOTION_PRODUCT_CATEGORY { get; set; }
         public virtual DbSet<TB_PROMOTION_BY_PRODUCT> TB_PROMOTION_BY_PRODUCT { get; set; }
         public virtual DbSet<TB_PROMOTION_PRODUCT_VS_TOTAL> TB_PROMOTION_PRODUCT_VS_TOTAL { get; set; }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_TOTAL_CNT(string sEARCH_KEY, string sEARCH_KEYWORD)
         {
             var sEARCH_KEYParameter = sEARCH_KEY != null ?
                 new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
                 new ObjectParameter("SEARCH_KEY", typeof(string));
-
+    
             var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
                 new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
                 new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_INS(string cD_PROMOTION_TOTAL, string m_GBN, string m_GRAGE, string uSABLE_YN)
         {
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             var m_GBNParameter = m_GBN != null ?
                 new ObjectParameter("M_GBN", m_GBN) :
                 new ObjectParameter("M_GBN", typeof(string));
-
+    
             var m_GRAGEParameter = m_GRAGE != null ?
                 new ObjectParameter("M_GRAGE", m_GRAGE) :
                 new ObjectParameter("M_GRAGE", typeof(string));
-
+    
             var uSABLE_YNParameter = uSABLE_YN != null ?
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_INS", cD_PROMOTION_TOTALParameter, m_GBNParameter, m_GRAGEParameter, uSABLE_YNParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_TOTAL_DUP_SEL(string pMO_TOTAL_CATETORY, Nullable<System.DateTime> pMO_TOTAL_DATE_FROM, Nullable<System.DateTime> pMO_TOTAL_DATE_TO)
         {
             var pMO_TOTAL_CATETORYParameter = pMO_TOTAL_CATETORY != null ?
                 new ObjectParameter("PMO_TOTAL_CATETORY", pMO_TOTAL_CATETORY) :
                 new ObjectParameter("PMO_TOTAL_CATETORY", typeof(string));
-
+    
             var pMO_TOTAL_DATE_FROMParameter = pMO_TOTAL_DATE_FROM.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", pMO_TOTAL_DATE_FROM) :
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", typeof(System.DateTime));
-
+    
             var pMO_TOTAL_DATE_TOParameter = pMO_TOTAL_DATE_TO.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_TO", pMO_TOTAL_DATE_TO) :
                 new ObjectParameter("PMO_TOTAL_DATE_TO", typeof(System.DateTime));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_DUP_SEL", pMO_TOTAL_CATETORYParameter, pMO_TOTAL_DATE_FROMParameter, pMO_TOTAL_DATE_TOParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_TOTAL_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
         {
             var pAGEParameter = pAGE.HasValue ?
                 new ObjectParameter("PAGE", pAGE) :
                 new ObjectParameter("PAGE", typeof(int));
-
+    
             var pAGESIZEParameter = pAGESIZE.HasValue ?
                 new ObjectParameter("PAGESIZE", pAGESIZE) :
                 new ObjectParameter("PAGESIZE", typeof(int));
-
+    
             var sEARCH_KEYParameter = sEARCH_KEY != null ?
                 new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
                 new ObjectParameter("SEARCH_KEY", typeof(string));
-
+    
             var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
                 new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
                 new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_COMMON_CNT()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_COMMON_CNT");
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_BY_TOTAL_INS(string pMO_TOTAL_NAME, string pMO_TOTAL_CATEGORY, string pMO_TOTAL_RATE_OR_MONEY, Nullable<byte> pMO_TOTAL_DISCOUNT_RATE, Nullable<int> pMO_TOTAL_DISCOUNT_MONEY, Nullable<System.DateTime> pMO_TOTAL_DATE_FROM, Nullable<System.DateTime> pMO_TOTAL_DATE_TO, string uSABLE_YN, ObjectParameter cD_PROMOTION_TOTAL)
         {
             var pMO_TOTAL_NAMEParameter = pMO_TOTAL_NAME != null ?
                 new ObjectParameter("PMO_TOTAL_NAME", pMO_TOTAL_NAME) :
                 new ObjectParameter("PMO_TOTAL_NAME", typeof(string));
-
+    
             var pMO_TOTAL_CATEGORYParameter = pMO_TOTAL_CATEGORY != null ?
                 new ObjectParameter("PMO_TOTAL_CATEGORY", pMO_TOTAL_CATEGORY) :
                 new ObjectParameter("PMO_TOTAL_CATEGORY", typeof(string));
-
+    
             var pMO_TOTAL_RATE_OR_MONEYParameter = pMO_TOTAL_RATE_OR_MONEY != null ?
                 new ObjectParameter("PMO_TOTAL_RATE_OR_MONEY", pMO_TOTAL_RATE_OR_MONEY) :
                 new ObjectParameter("PMO_TOTAL_RATE_OR_MONEY", typeof(string));
-
+    
             var pMO_TOTAL_DISCOUNT_RATEParameter = pMO_TOTAL_DISCOUNT_RATE.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_RATE", pMO_TOTAL_DISCOUNT_RATE) :
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_RATE", typeof(byte));
-
+    
             var pMO_TOTAL_DISCOUNT_MONEYParameter = pMO_TOTAL_DISCOUNT_MONEY.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_MONEY", pMO_TOTAL_DISCOUNT_MONEY) :
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_MONEY", typeof(int));
-
+    
             var pMO_TOTAL_DATE_FROMParameter = pMO_TOTAL_DATE_FROM.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", pMO_TOTAL_DATE_FROM) :
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", typeof(System.DateTime));
-
+    
             var pMO_TOTAL_DATE_TOParameter = pMO_TOTAL_DATE_TO.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_TO", pMO_TOTAL_DATE_TO) :
                 new ObjectParameter("PMO_TOTAL_DATE_TO", typeof(System.DateTime));
-
+    
             var uSABLE_YNParameter = uSABLE_YN != null ?
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_TOTAL_INS", pMO_TOTAL_NAMEParameter, pMO_TOTAL_CATEGORYParameter, pMO_TOTAL_RATE_OR_MONEYParameter, pMO_TOTAL_DISCOUNT_RATEParameter, pMO_TOTAL_DISCOUNT_MONEYParameter, pMO_TOTAL_DATE_FROMParameter, pMO_TOTAL_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_TOTAL);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result> SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL(string cD_PROMOTION_TOTAL)
         {
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL", cD_PROMOTION_TOTALParameter);
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_BY_TOTAL_UPDATE(string pMO_TOTAL_NAME, Nullable<byte> pMO_TOTAL_DISCOUNT_RATE, Nullable<int> pMO_TOTAL_DISCOUNT_MONEY, Nullable<System.DateTime> pMO_TOTAL_DATE_FROM, Nullable<System.DateTime> pMO_TOTAL_DATE_TO, string uSABLE_YN, string cD_PROMOTION_TOTAL)
         {
             var pMO_TOTAL_NAMEParameter = pMO_TOTAL_NAME != null ?
                 new ObjectParameter("PMO_TOTAL_NAME", pMO_TOTAL_NAME) :
                 new ObjectParameter("PMO_TOTAL_NAME", typeof(string));
-
+    
             var pMO_TOTAL_DISCOUNT_RATEParameter = pMO_TOTAL_DISCOUNT_RATE.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_RATE", pMO_TOTAL_DISCOUNT_RATE) :
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_RATE", typeof(byte));
-
+    
             var pMO_TOTAL_DISCOUNT_MONEYParameter = pMO_TOTAL_DISCOUNT_MONEY.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_MONEY", pMO_TOTAL_DISCOUNT_MONEY) :
                 new ObjectParameter("PMO_TOTAL_DISCOUNT_MONEY", typeof(int));
-
+    
             var pMO_TOTAL_DATE_FROMParameter = pMO_TOTAL_DATE_FROM.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", pMO_TOTAL_DATE_FROM) :
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", typeof(System.DateTime));
-
+    
             var pMO_TOTAL_DATE_TOParameter = pMO_TOTAL_DATE_TO.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_TO", pMO_TOTAL_DATE_TO) :
                 new ObjectParameter("PMO_TOTAL_DATE_TO", typeof(System.DateTime));
-
+    
             var uSABLE_YNParameter = uSABLE_YN != null ?
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
-
+    
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_TOTAL_UPDATE", pMO_TOTAL_NAMEParameter, pMO_TOTAL_DISCOUNT_RATEParameter, pMO_TOTAL_DISCOUNT_MONEYParameter, pMO_TOTAL_DATE_FROMParameter, pMO_TOTAL_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_TOTALParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_TOTAL_DUP_AT_UPDATE_SEL(string pMO_TOTAL_CATETORY, Nullable<System.DateTime> pMO_TOTAL_DATE_FROM, Nullable<System.DateTime> pMO_TOTAL_DATE_TO, string cD_PROMOTION_TOTAL)
         {
             var pMO_TOTAL_CATETORYParameter = pMO_TOTAL_CATETORY != null ?
                 new ObjectParameter("PMO_TOTAL_CATETORY", pMO_TOTAL_CATETORY) :
                 new ObjectParameter("PMO_TOTAL_CATETORY", typeof(string));
-
+    
             var pMO_TOTAL_DATE_FROMParameter = pMO_TOTAL_DATE_FROM.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", pMO_TOTAL_DATE_FROM) :
                 new ObjectParameter("PMO_TOTAL_DATE_FROM", typeof(System.DateTime));
-
+    
             var pMO_TOTAL_DATE_TOParameter = pMO_TOTAL_DATE_TO.HasValue ?
                 new ObjectParameter("PMO_TOTAL_DATE_TO", pMO_TOTAL_DATE_TO) :
                 new ObjectParameter("PMO_TOTAL_DATE_TO", typeof(System.DateTime));
-
+    
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_DUP_AT_UPDATE_SEL", pMO_TOTAL_CATETORYParameter, pMO_TOTAL_DATE_FROMParameter, pMO_TOTAL_DATE_TOParameter, cD_PROMOTION_TOTALParameter);
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_DEL(string cD_PROMOTION_TOTAL)
         {
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_DEL", cD_PROMOTION_TOTALParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_CNT(string sEARCH_KEY, string sEARCH_KEYWORD)
         {
             var sEARCH_KEYParameter = sEARCH_KEY != null ?
                 new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
                 new ObjectParameter("SEARCH_KEY", typeof(string));
-
+    
             var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
                 new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
                 new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_DUP_SEL(string pMO_PRODUCT_CATETORY, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO)
         {
             var pMO_PRODUCT_CATETORYParameter = pMO_PRODUCT_CATETORY != null ?
                 new ObjectParameter("PMO_PRODUCT_CATETORY", pMO_PRODUCT_CATETORY) :
                 new ObjectParameter("PMO_PRODUCT_CATETORY", typeof(string));
-
+    
             var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
                 new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
                 new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
-
+    
             var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
                 new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
                 new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_DUP_SEL", pMO_PRODUCT_CATETORYParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
         {
             var pAGEParameter = pAGE.HasValue ?
                 new ObjectParameter("PAGE", pAGE) :
                 new ObjectParameter("PAGE", typeof(int));
-
+    
             var pAGESIZEParameter = pAGESIZE.HasValue ?
                 new ObjectParameter("PAGESIZE", pAGESIZE) :
                 new ObjectParameter("PAGESIZE", typeof(int));
-
+    
             var sEARCH_KEYParameter = sEARCH_KEY != null ?
                 new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
                 new ObjectParameter("SEARCH_KEY", typeof(string));
-
+    
             var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
                 new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
                 new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL(string cD_PROMOTION_PRODUCT)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL", cD_PROMOTION_PRODUCTParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL(string cD_PROMOTION_TOTAL)
         {
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL", cD_PROMOTION_TOTALParameter);
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_INS(string pMO_PRODUCT_NAME, string pMO_PRODUCT_CATEGORY, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, ObjectParameter cD_PROMOTION_PRODUCT)
         {
             var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
                 new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
                 new ObjectParameter("PMO_PRODUCT_NAME", typeof(string));
-
+    
             var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
                 new ObjectParameter("PMO_PRODUCT_CATEGORY", pMO_PRODUCT_CATEGORY) :
                 new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
-
+    
             var pMO_PRODUCT_MAIN_TITLEParameter = pMO_PRODUCT_MAIN_TITLE != null ?
                 new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", pMO_PRODUCT_MAIN_TITLE) :
                 new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", typeof(string));
-
+    
             var pMO_PRODUCT_SUB_TITLEParameter = pMO_PRODUCT_SUB_TITLE != null ?
                 new ObjectParameter("PMO_PRODUCT_SUB_TITLE", pMO_PRODUCT_SUB_TITLE) :
                 new ObjectParameter("PMO_PRODUCT_SUB_TITLE", typeof(string));
-
+    
             var pMO_PRODUCT_SHOPPING_TIPParameter = pMO_PRODUCT_SHOPPING_TIP != null ?
                 new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", pMO_PRODUCT_SHOPPING_TIP) :
                 new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", typeof(string));
-
+    
             var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
                 new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
                 new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
-
+    
             var pMO_PRODUCT_DISCOUNT_RATEParameter = pMO_PRODUCT_DISCOUNT_RATE.HasValue ?
                 new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", pMO_PRODUCT_DISCOUNT_RATE) :
                 new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", typeof(byte));
-
+    
             var pMO_PRODUCT_DISCOUNT_MONEYParameter = pMO_PRODUCT_DISCOUNT_MONEY.HasValue ?
                 new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", pMO_PRODUCT_DISCOUNT_MONEY) :
                 new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", typeof(int));
-
+    
             var pMO_SET_DISCOUNT_CNTParameter = pMO_SET_DISCOUNT_CNT.HasValue ?
                 new ObjectParameter("PMO_SET_DISCOUNT_CNT", pMO_SET_DISCOUNT_CNT) :
                 new ObjectParameter("PMO_SET_DISCOUNT_CNT", typeof(byte));
-
+    
             var pMO_ONEONE_MULTIPLE_CNTParameter = pMO_ONEONE_MULTIPLE_CNT.HasValue ?
                 new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", pMO_ONEONE_MULTIPLE_CNT) :
                 new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", typeof(byte));
-
+    
             var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
                 new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
                 new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
-
+    
             var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
                 new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
                 new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
-
+    
             var uSABLE_YNParameter = uSABLE_YN != null ?
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_INS", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_CATEGORYParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCT);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL(string cD_PROMOTION_PRODUCT)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL", cD_PROMOTION_PRODUCTParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL(string cD_PROMOTION_PRODUCT)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL", cD_PROMOTION_PRODUCTParameter);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result> SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL");
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_ALL_PRODUCT_PRICE_DUP_SEL(string p_CODE, string cD_PROMOTION_PRODUCT)
         {
             var p_CODEParameter = p_CODE != null ?
                 new ObjectParameter("P_CODE", p_CODE) :
                 new ObjectParameter("P_CODE", typeof(string));
-
+    
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_ALL_PRODUCT_PRICE_DUP_SEL", p_CODEParameter, cD_PROMOTION_PRODUCTParameter);
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_PRODUCT_PRICE_VS_TOTAL_INS(string cD_PROMOTION_PRODUCT, string cD_PROMOTION_TOTAL, Nullable<int> pRODUCT_PRICE_IDX, string p_CODE, string uSABLE_YN)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-
+    
             var cD_PROMOTION_TOTALParameter = cD_PROMOTION_TOTAL != null ?
                 new ObjectParameter("CD_PROMOTION_TOTAL", cD_PROMOTION_TOTAL) :
                 new ObjectParameter("CD_PROMOTION_TOTAL", typeof(string));
-
+    
             var pRODUCT_PRICE_IDXParameter = pRODUCT_PRICE_IDX.HasValue ?
                 new ObjectParameter("PRODUCT_PRICE_IDX", pRODUCT_PRICE_IDX) :
                 new ObjectParameter("PRODUCT_PRICE_IDX", typeof(int));
-
+    
             var p_CODEParameter = p_CODE != null ?
                 new ObjectParameter("P_CODE", p_CODE) :
                 new ObjectParameter("P_CODE", typeof(string));
-
+    
             var uSABLE_YNParameter = uSABLE_YN != null ?
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_PRODUCT_PRICE_VS_TOTAL_INS", cD_PROMOTION_PRODUCTParameter, cD_PROMOTION_TOTALParameter, pRODUCT_PRICE_IDXParameter, p_CODEParameter, uSABLE_YNParameter);
         }
-
+    
         public virtual int SP_ADMIN_PROMOTION_PRODUCT_PRICE_INS(string cD_PROMOTION_PRODUCT, string p_CODE, Nullable<int> p_DISCOUNT_PRICE, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<int> pMO_PRICE, string pMO_ONE_ONE_P_CODE, Nullable<int> pMO_ONE_ONE_PRICE, string uSABLE_YN, ObjectParameter oUTPUT_PRODUCT_PRICE_IDX)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-
+    
             var p_CODEParameter = p_CODE != null ?
                 new ObjectParameter("P_CODE", p_CODE) :
                 new ObjectParameter("P_CODE", typeof(string));
-
+    
             var p_DISCOUNT_PRICEParameter = p_DISCOUNT_PRICE.HasValue ?
                 new ObjectParameter("P_DISCOUNT_PRICE", p_DISCOUNT_PRICE) :
                 new ObjectParameter("P_DISCOUNT_PRICE", typeof(int));
-
+    
             var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
                 new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
                 new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
-
+    
             var pMO_PRICEParameter = pMO_PRICE.HasValue ?
                 new ObjectParameter("PMO_PRICE", pMO_PRICE) :
                 new ObjectParameter("PMO_PRICE", typeof(int));
-
+    
             var pMO_ONE_ONE_P_CODEParameter = pMO_ONE_ONE_P_CODE != null ?
                 new ObjectParameter("PMO_ONE_ONE_P_CODE", pMO_ONE_ONE_P_CODE) :
                 new ObjectParameter("PMO_ONE_ONE_P_CODE", typeof(string));
-
+    
             var pMO_ONE_ONE_PRICEParameter = pMO_ONE_ONE_PRICE.HasValue ?
                 new ObjectParameter("PMO_ONE_ONE_PRICE", pMO_ONE_ONE_PRICE) :
                 new ObjectParameter("PMO_ONE_ONE_PRICE", typeof(int));
-
+    
             var uSABLE_YNParameter = uSABLE_YN != null ?
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_PRODUCT_PRICE_INS", cD_PROMOTION_PRODUCTParameter, p_CODEParameter, p_DISCOUNT_PRICEParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRICEParameter, pMO_ONE_ONE_P_CODEParameter, pMO_ONE_ONE_PRICEParameter, uSABLE_YNParameter, oUTPUT_PRODUCT_PRICE_IDX);
         }
-
+    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_PRODUCT_CODE_CHECK_SEL(string p_CODE)
         {
             var p_CODEParameter = p_CODE != null ?
                 new ObjectParameter("P_CODE", p_CODE) :
                 new ObjectParameter("P_CODE", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_PRODUCT_CODE_CHECK_SEL", p_CODEParameter);
+        }
+    
+        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(string pMO_PRODUCT_NAME, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, string cD_PROMOTION_PRODUCT)
+        {
+            var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
+                new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
+                new ObjectParameter("PMO_PRODUCT_NAME", typeof(string));
+    
+            var pMO_PRODUCT_MAIN_TITLEParameter = pMO_PRODUCT_MAIN_TITLE != null ?
+                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", pMO_PRODUCT_MAIN_TITLE) :
+                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", typeof(string));
+    
+            var pMO_PRODUCT_SUB_TITLEParameter = pMO_PRODUCT_SUB_TITLE != null ?
+                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", pMO_PRODUCT_SUB_TITLE) :
+                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", typeof(string));
+    
+            var pMO_PRODUCT_SHOPPING_TIPParameter = pMO_PRODUCT_SHOPPING_TIP != null ?
+                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", pMO_PRODUCT_SHOPPING_TIP) :
+                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", typeof(string));
+    
+            var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
+                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
+                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
+    
+            var pMO_PRODUCT_DISCOUNT_RATEParameter = pMO_PRODUCT_DISCOUNT_RATE.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", pMO_PRODUCT_DISCOUNT_RATE) :
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", typeof(byte));
+    
+            var pMO_PRODUCT_DISCOUNT_MONEYParameter = pMO_PRODUCT_DISCOUNT_MONEY.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", pMO_PRODUCT_DISCOUNT_MONEY) :
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", typeof(int));
+    
+            var pMO_SET_DISCOUNT_CNTParameter = pMO_SET_DISCOUNT_CNT.HasValue ?
+                new ObjectParameter("PMO_SET_DISCOUNT_CNT", pMO_SET_DISCOUNT_CNT) :
+                new ObjectParameter("PMO_SET_DISCOUNT_CNT", typeof(byte));
+    
+            var pMO_ONEONE_MULTIPLE_CNTParameter = pMO_ONEONE_MULTIPLE_CNT.HasValue ?
+                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", pMO_ONEONE_MULTIPLE_CNT) :
+                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", typeof(byte));
+    
+            var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
+                new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
+    
+            var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
+                new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
+    
+            var uSABLE_YNParameter = uSABLE_YN != null ?
+                new ObjectParameter("USABLE_YN", uSABLE_YN) :
+                new ObjectParameter("USABLE_YN", typeof(string));
+    
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCTParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL(string cD_PROMOTION_PRODUCT, Nullable<System.DateTime> tARGET_PMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> tARGET_PMO_PRODUCT_DATE_TO)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            var tARGET_PMO_PRODUCT_DATE_FROMParameter = tARGET_PMO_PRODUCT_DATE_FROM.HasValue ?
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_FROM", tARGET_PMO_PRODUCT_DATE_FROM) :
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
+    
+            var tARGET_PMO_PRODUCT_DATE_TOParameter = tARGET_PMO_PRODUCT_DATE_TO.HasValue ?
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_TO", tARGET_PMO_PRODUCT_DATE_TO) :
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL", cD_PROMOTION_PRODUCTParameter, tARGET_PMO_PRODUCT_DATE_FROMParameter, tARGET_PMO_PRODUCT_DATE_TOParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL(string pMO_PRODUCT_CATETORY, Nullable<System.DateTime> tARGET_PMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> tARGET_PMO_PRODUCT_DATE_TO, string cD_PROMOTION_PRODUCT)
+        {
+            var pMO_PRODUCT_CATETORYParameter = pMO_PRODUCT_CATETORY != null ?
+                new ObjectParameter("PMO_PRODUCT_CATETORY", pMO_PRODUCT_CATETORY) :
+                new ObjectParameter("PMO_PRODUCT_CATETORY", typeof(string));
+    
+            var tARGET_PMO_PRODUCT_DATE_FROMParameter = tARGET_PMO_PRODUCT_DATE_FROM.HasValue ?
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_FROM", tARGET_PMO_PRODUCT_DATE_FROM) :
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
+    
+            var tARGET_PMO_PRODUCT_DATE_TOParameter = tARGET_PMO_PRODUCT_DATE_TO.HasValue ?
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_TO", tARGET_PMO_PRODUCT_DATE_TO) :
+                new ObjectParameter("TARGET_PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
+    
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL", pMO_PRODUCT_CATETORYParameter, tARGET_PMO_PRODUCT_DATE_FROMParameter, tARGET_PMO_PRODUCT_DATE_TOParameter, cD_PROMOTION_PRODUCTParameter);
         }
     }
 }

@@ -109,7 +109,7 @@
                         <tr>
                             <td class="brnone">@item.IDX</td>
 
-                            <td class="brnone">@Html.ActionLink(item.PMO_PRODUCT_NAME, "PrdUpdate", new { CdPromotionPRODUCT = item.CD_PROMOTION_PRODUCT })</td>
+                            <td class="brnone"><b>@Html.ActionLink(item.PMO_PRODUCT_NAME, "PrdUpdate", new { CdPromotionPRODUCT = item.CD_PROMOTION_PRODUCT })</b></td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_CATEGORY_NAME)</td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
                             
@@ -122,7 +122,7 @@
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DATE_TO)</td>
                             <td>@item.INS_DATE</td>
                             <td>@item.USABLE_YN</td>
-                            <td > @Html.ActionLink("Edit", "PrdPricingIndex", new { CdPromotionProduct = item.CD_PROMOTION_PRODUCT })
+                            <td > <b>@Html.ActionLink("[상품가격정책추가/편집]", "PrdPricingIndex", new { CdPromotionProduct = item.CD_PROMOTION_PRODUCT })</b></td>
                         </tr>
                     }
                 </tbody>
