@@ -56,7 +56,7 @@
             <h4>배송정책</h4>
 
             @{ var selected_str = "selected";}
-            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("PrdIndex", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 

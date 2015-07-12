@@ -335,7 +335,8 @@ namespace AboutMe.Web.Admin.Controllers
 
             var mMyMultiModelForCreateProduct = new MyMultiModelForCreateProduct
             {
-                inst_TB_PROMOTION_BY_PRODUCT = new TB_PROMOTION_BY_PRODUCT(),
+                inst_TB_PROMOTION_BY_PRODUCT = new TB_PROMOTION_BY_PRODUCT()
+               
             };
 
 
@@ -350,7 +351,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PrdUpdate([Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
+        public ActionResult PrdUpdate([Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
         {
             
             /**
@@ -366,21 +367,21 @@ namespace AboutMe.Web.Admin.Controllers
             {
                 //string StrDateFrom = "", StrDateTo = "";
                 string PmoProductCategory = "";
-                DateTime DateFrom, DateTo;
+                DateTime TargetDateFrom, TargetDateTo;
 
-                DateFrom = tb_promotion_by_product.PMO_PRODUCT_DATE_FROM.Value;
-                DateTo = tb_promotion_by_product.PMO_PRODUCT_DATE_TO.Value;
+                TargetDateFrom = tb_promotion_by_product.PMO_PRODUCT_DATE_FROM.Value;
+                TargetDateTo = tb_promotion_by_product.PMO_PRODUCT_DATE_TO.Value;
                 PmoProductCategory = tb_promotion_by_product.PMO_PRODUCT_CATEGORY.ToString();
 
-                if (DateTime.Compare(DateFrom, DateTo) < 0) //시작날짜가 끝날짜보다 먼저이면
+                if (DateTime.Compare(TargetDateFrom, TargetDateTo) < 0) //시작날짜가 끝날짜보다 먼저이면
                 {
-                    if (DateTime.Compare(DateFrom, orgin_date_from) != 0 && DateTime.Compare(DateTime.Now, orgin_date_from) > 0) //시작일자를 현재보다 이전으로 변경하려 하면?
+                    if (DateTime.Compare(TargetDateFrom, orgin_date_from) != 0 && DateTime.Compare(DateTime.Now, TargetDateFrom) > 0) //시작일자를 현재보다 이전으로 변경하려 하면?
                     {
                         @TempData["jsMessage"] = "-5"; //시작일시를 현재보다 이전으로 변경할 수 없습니다.           
                     }
                     else
                     {
-                        if (DateTime.Compare(DateTo, orgin_date_to) != 0 && DateTime.Compare(DateTime.Now, orgin_date_to) > 0) //종료일자를 현재보다 이전으로 변경하려 하면?
+                        if (DateTime.Compare(TargetDateTo, orgin_date_to) != 0 && DateTime.Compare(DateTime.Now, TargetDateTo) > 0) //종료일자를 현재보다 이전으로 변경하려 하면?
                         {
 
                             @TempData["jsMessage"] = "-6"; //종료일시를 현재보다 이전으로 변경할 수 없습니다.   
@@ -389,14 +390,14 @@ namespace AboutMe.Web.Admin.Controllers
                         {
 
                             // 동일 날짜대에 같은 종류의 프로모션이 없거나, 지금 수정하려는 프로모션이 활성화상태가 비활성화(N)이면 
-                            if (_AdminPromotionService.GetAdminPromotionByProductForUpdateDupSel(PmoProductCategory, DateFrom, DateTo,CdPromotionProduct) == 0 || tb_promotion_by_product.USABLE_YN == "N")
+                            if (_AdminPromotionService.GetAdminPromotionByProductForUpdateDupSel(PmoProductCategory, TargetDateFrom, TargetDateTo, CdPromotionProduct) == 0 || tb_promotion_by_product.USABLE_YN == "N")
                             {
                                 bool FromToCheck = true ; // 기간 변경이 있었을때 의 중복상품 검증결과 
-                                if((DateTime.Compare(DateFrom, orgin_date_from) != 0 || DateTime.Compare(DateTo, orgin_date_to) != 0))//프로모션 기간이 변경되었으면 
+                                if ((DateTime.Compare(TargetDateFrom, orgin_date_from) != 0 || DateTime.Compare(TargetDateTo, orgin_date_to) != 0))//프로모션 기간이 변경되었으면 
                                 {
                                     //프로모션 기간이 변경되었으면 
                                     // 변경하고자 하는 시간대의 다른 프로모션들에 겹치는 상품이 있는지 확인
-                                    if (_AdminPromotionService.GetAdminPromotionByProductForUpdateAllProductCheckDupSel(CdPromotionProduct,DateFrom, DateTo) != 0 || tb_promotion_by_product.USABLE_YN == "N")
+                                    if (_AdminPromotionService.GetAdminPromotionByProductForUpdateAllProductCheckDupSel(CdPromotionProduct, TargetDateFrom, TargetDateTo) != 0 || tb_promotion_by_product.USABLE_YN == "N")
                                     {
                                         FromToCheck = false;
                                          @TempData["jsMessage"] = "-7"; //변경하고자 하는 시간대의 다른 프로모션들에 중복된 상품이 있습니다.
@@ -407,7 +408,7 @@ namespace AboutMe.Web.Admin.Controllers
                                 if(FromToCheck == true)
                                 {
                                     //프로모션 정보 업데이트 실행
-                                    is_success = _AdminPromotionService.InsAdminPromotionByProduct(tb_promotion_by_product);
+                                    is_success = _AdminPromotionService.UpdateAdminPromotionByProduct(tb_promotion_by_product,CdPromotionProduct);
 
                                     if (is_success == 1)
                                     {
@@ -434,7 +435,7 @@ namespace AboutMe.Web.Admin.Controllers
                 
             }
 
-            return View();
+            return RedirectToAction("PrdUpdate", new { CdPromotionProduct = CdPromotionProduct });
 
         }
 
@@ -460,12 +461,19 @@ namespace AboutMe.Web.Admin.Controllers
 
             //프로모션 시작시간 가져오기 
             Nullable<DateTime> PmoProductDateFrom  = null ;
+            //프로모션 종료시간 가져오기
+            Nullable<DateTime> PmoProductDateTo = null;
+
             List<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> TotalLst  = _AdminPromotionService.GetAdminPromotionByProductDetail(CdPromotionProduct).ToList();
             if (TotalLst.Count > 0)
             {
                 PmoProductDateFrom = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_FROM) ;
+                PmoProductDateTo = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_TO);
             }
+           
             ViewData["PromotionStartTime"] = PmoProductDateFrom;
+            ViewData["PromotionEndTime"] = PmoProductDateTo;
+            ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
 
 
 
@@ -496,6 +504,27 @@ namespace AboutMe.Web.Admin.Controllers
                 inst_TB_PROMOTION_BY_PRODUCT_PRICE = new TB_PROMOTION_BY_PRODUCT_PRICE(),
                 inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList()
             };
+
+
+            //[1]프로모션 마스터 정보 가져오기 ===========================================================
+            //프로모션 시작시간 가져오기 
+            Nullable<DateTime> PmoProductDateFrom = null;
+            //프로모션 종료시간 가져오기
+            Nullable<DateTime> PmoProductDateTo = null;
+
+            List<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> TotalLst = _AdminPromotionService.GetAdminPromotionByProductDetail(CdPromotionProduct).ToList();
+            if (TotalLst.Count > 0)
+            {
+                PmoProductDateFrom = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_FROM);
+                PmoProductDateTo = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_TO);
+            }
+
+            ViewData["PromotionStartTime"] = PmoProductDateFrom;
+            ViewData["PromotionEndTime"] = PmoProductDateTo;
+            ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
+            //==============================================================================================
+
+
 
             
             return View(mMyMultiModelForProductPricing);
@@ -562,7 +591,76 @@ namespace AboutMe.Web.Admin.Controllers
             }
 
 
-            return View(mMyMultiModelForProductPricing);
+            //return View(mMyMultiModelForProductPricing);
+            return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
+
+
+        }
+
+
+
+
+        /**
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PrdPricingUpdate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT_PRICE", Include = "P_CODE,PMO_PRICE,PMO_ONE_ONE_P_CODE,PMO_ONE_ONE_PRICE,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
+        **/
+
+        /**
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PrdPricingUpdate([Bind(Include = "USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
+        {
+         * **/
+   
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PrdPricingUpdate(string UsableYN, string PCode, string CdPromotionProduct, string[] CheckCdPromotionTotal)
+        {
+
+            /**
+            var mMyMultiModelForProductPricing = new MyMultiModelForProductPricing
+            {
+                inst_TB_PROMOTION_BY_PRODUCT_PRICE = new TB_PROMOTION_BY_PRODUCT_PRICE(),
+                inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList()
+            };
+             * **/
+
+
+            int is_success = 1;
+            //int isPcodeExist = 0; //상품코드 유효성 검증여부 
+            int PcodeDupCnt = 0;
+
+            string _CdPromotionProduct = CdPromotionProduct;
+
+            if (ModelState.IsValid)
+            {
+
+                //모든 활성화된 프로모션에 소속된 상품들을 뒤져서, 중복된 상품이 있는지 조회
+                PcodeDupCnt = _AdminPromotionService.GetAdminPromotionByProductPricingAllDupSel(CdPromotionProduct, PCode);
+
+                // 동일시간대 활성화된 프로모션에 소속된 상품들중, 중복상품이 없음 OR  지금 입력한 가격정책의 UsableYN = 'N'이면 
+                if (PcodeDupCnt == 0 || UsableYN == "N")
+                 {
+                     is_success = _AdminPromotionService.UpdateAdminPromotionByProductPricing(UsableYN, CdPromotionProduct, CheckCdPromotionTotal);
+                        if (is_success == 1) // INSERT가 성공했으면 
+                        {
+                            return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = _CdPromotionProduct });
+                        }
+                        else
+                        {
+                            @TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
+                        }
+                  }
+                  else
+                  {
+                        @TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
+                  }
+            }
+
+            return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
+
 
         }
 

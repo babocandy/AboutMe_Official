@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel3.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_KIND_CATEGORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_COUPON_KIND_CATEGORY">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CD_COUPON_KIND" Type="varchar" MaxLength="2" />
+          <Property Name="MEMO" Type="varchar" MaxLength="200" />
+          <Property Name="PLURAL_YN" Type="varchar" MaxLength="1" />
+          <Property Name="INS_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TB_COUPON_MASTER">
+          <Key>
+            <PropertyRef Name="CD_COUPON" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CD_COUPON" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="COUPON_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="RATE_OR_MONEY" Type="varchar" MaxLength="1" />
+          <Property Name="SERVICE_LIFE_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="FIXED_PERIOD_FROM" Type="datetime" />
+          <Property Name="FIXED_PERIOD_TO" Type="datetime" />
+          <Property Name="EXRIRED_DAY_FROM_ISSUE_DT" Type="int" />
+          <Property Name="USABLE_DEVICE_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="PRODUCT_APP_SCOPE_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="MEMBER_APP_SCOPE_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="ISSUE_METHOD_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="ISSUE_METHOD_WITH_AUTO" Type="varchar" MaxLength="1" />
+          <Property Name="COUPON_NUM_CHECK_TF" Type="varchar" MaxLength="1" />
+          <Property Name="ISSUE_MAX_LIMIT" Type="int" />
+          <Property Name="MASTER_FROM_DATE" Type="datetime" />
+          <Property Name="MASTER_TO_DATE" Type="datetime" />
+          <Property Name="USABLE_YN" Type="datetime" />
+          <Property Name="INS_DATE" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_MEMBER_GRADE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_COUPON_MEMBER_GRADE">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CD_COUPON" Type="varchar" MaxLength="6" />
+          <Property Name="M_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="M_GRADE" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_MONEY_DETAIL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_COUPON_MONEY_DETAIL">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COUPON_MASTER_IDX" Type="varchar" MaxLength="6" />
+          <Property Name="COUPON_MONEY" Type="int" />
+          <Property Name="COUPON_DISCOUNT_RATE" Type="tinyint" />
+          <Property Name="COUPON_GBN" Type="varchar" MaxLength="1" />
+          <Property Name="ADMIN_MEMO" Type="varchar" MaxLength="200" />
+          <Property Name="INS_DATE" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_COUPON_PRODUCT">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CD_COUPON" Type="varchar" MaxLength="6" />
+          <Property Name="PRODUCT_CODE" Type="int" />
+          <Property Name="USABLE_FL" Type="varchar" MaxLength="1" />
+          <Property Name="INS_DATE" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="AboutMeModel3StoreContainer">
+          <EntitySet Name="TB_COUPON_MASTER" EntityType="Self.TB_COUPON_MASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_COUPON_KIND_CATEGORY" EntityType="Self.TB_COUPON_KIND_CATEGORY" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_COUPON_KIND_CATEGORY].[IDX] AS [IDX], 
+    [TB_COUPON_KIND_CATEGORY].[CD_COUPON_KIND] AS [CD_COUPON_KIND], 
+    [TB_COUPON_KIND_CATEGORY].[MEMO] AS [MEMO], 
+    [TB_COUPON_KIND_CATEGORY].[PLURAL_YN] AS [PLURAL_YN], 
+    [TB_COUPON_KIND_CATEGORY].[INS_DATE] AS [INS_DATE]
+    FROM [dbo].[TB_COUPON_KIND_CATEGORY] AS [TB_COUPON_KIND_CATEGORY]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_COUPON_MEMBER_GRADE" EntityType="Self.TB_COUPON_MEMBER_GRADE" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_COUPON_MEMBER_GRADE].[IDX] AS [IDX], 
+    [TB_COUPON_MEMBER_GRADE].[CD_COUPON] AS [CD_COUPON], 
+    [TB_COUPON_MEMBER_GRADE].[M_GBN] AS [M_GBN], 
+    [TB_COUPON_MEMBER_GRADE].[M_GRADE] AS [M_GRADE]
+    FROM [dbo].[TB_COUPON_MEMBER_GRADE] AS [TB_COUPON_MEMBER_GRADE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_COUPON_MONEY_DETAIL" EntityType="Self.TB_COUPON_MONEY_DETAIL" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_COUPON_MONEY_DETAIL].[IDX] AS [IDX], 
+    [TB_COUPON_MONEY_DETAIL].[COUPON_MASTER_IDX] AS [COUPON_MASTER_IDX], 
+    [TB_COUPON_MONEY_DETAIL].[COUPON_MONEY] AS [COUPON_MONEY], 
+    [TB_COUPON_MONEY_DETAIL].[COUPON_DISCOUNT_RATE] AS [COUPON_DISCOUNT_RATE], 
+    [TB_COUPON_MONEY_DETAIL].[COUPON_GBN] AS [COUPON_GBN], 
+    [TB_COUPON_MONEY_DETAIL].[ADMIN_MEMO] AS [ADMIN_MEMO], 
+    [TB_COUPON_MONEY_DETAIL].[INS_DATE] AS [INS_DATE]
+    FROM [dbo].[TB_COUPON_MONEY_DETAIL] AS [TB_COUPON_MONEY_DETAIL]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TB_COUPON_PRODUCT" EntityType="Self.TB_COUPON_PRODUCT" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_COUPON_PRODUCT].[IDX] AS [IDX], 
+    [TB_COUPON_PRODUCT].[CD_COUPON] AS [CD_COUPON], 
+    [TB_COUPON_PRODUCT].[PRODUCT_CODE] AS [PRODUCT_CODE], 
+    [TB_COUPON_PRODUCT].[USABLE_FL] AS [USABLE_FL], 
+    [TB_COUPON_PRODUCT].[INS_DATE] AS [INS_DATE]
+    FROM [dbo].[TB_COUPON_PRODUCT] AS [TB_COUPON_PRODUCT]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AboutMeModel3" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_COUPON_KIND_CATEGORY">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CD_COUPON_KIND" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="MEMO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PLURAL_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TB_COUPON_MEMBER_GRADE">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CD_COUPON" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="M_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="M_GRADE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_COUPON_MONEY_DETAIL">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COUPON_MASTER_IDX" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="COUPON_MONEY" Type="Int32" />
+          <Property Name="COUPON_DISCOUNT_RATE" Type="Byte" />
+          <Property Name="COUPON_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ADMIN_MEMO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TB_COUPON_PRODUCT">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CD_COUPON" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCT_CODE" Type="Int32" />
+          <Property Name="USABLE_FL" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="AdminCouponEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_COUPON_KIND_CATEGORY" EntityType="Self.TB_COUPON_KIND_CATEGORY" />
+          <EntitySet Name="TB_COUPON_MEMBER_GRADE" EntityType="Self.TB_COUPON_MEMBER_GRADE" />
+          <EntitySet Name="TB_COUPON_MONEY_DETAIL" EntityType="Self.TB_COUPON_MONEY_DETAIL" />
+          <EntitySet Name="TB_COUPON_PRODUCT" EntityType="Self.TB_COUPON_PRODUCT" />
+          <EntitySet Name="TB_COUPON_MASTER" EntityType="AboutMeModel3.TB_COUPON_MASTER" />
+        </EntityContainer>
+        <EntityType Name="TB_COUPON_MASTER">
+          <Key>
+            <PropertyRef Name="CD_COUPON" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CD_COUPON" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="COUPON_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RATE_OR_MONEY" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="SERVICE_LIFE_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FIXED_PERIOD_FROM" Type="DateTime" Precision="3" />
+          <Property Name="FIXED_PERIOD_TO" Type="DateTime" Precision="3" />
+          <Property Name="EXRIRED_DAY_FROM_ISSUE_DT" Type="Int32" />
+          <Property Name="USABLE_DEVICE_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCT_APP_SCOPE_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="MEMBER_APP_SCOPE_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ISSUE_METHOD_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ISSUE_METHOD_WITH_AUTO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="COUPON_NUM_CHECK_TF" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ISSUE_MAX_LIMIT" Type="Int32" />
+          <Property Name="MASTER_FROM_DATE" Type="DateTime" Precision="3" />
+          <Property Name="MASTER_TO_DATE" Type="DateTime" Precision="3" />
+          <Property Name="USABLE_YN" Type="DateTime" Precision="3" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel3StoreContainer" CdmEntityContainer="AdminCouponEntities">
+          <EntitySetMapping Name="TB_COUPON_KIND_CATEGORY">
+            <EntityTypeMapping TypeName="AboutMeModel3.TB_COUPON_KIND_CATEGORY">
+              <MappingFragment StoreEntitySet="TB_COUPON_KIND_CATEGORY">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CD_COUPON_KIND" ColumnName="CD_COUPON_KIND" />
+                <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+                <ScalarProperty Name="PLURAL_YN" ColumnName="PLURAL_YN" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_COUPON_MEMBER_GRADE">
+            <EntityTypeMapping TypeName="AboutMeModel3.TB_COUPON_MEMBER_GRADE">
+              <MappingFragment StoreEntitySet="TB_COUPON_MEMBER_GRADE">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_COUPON_MONEY_DETAIL">
+            <EntityTypeMapping TypeName="AboutMeModel3.TB_COUPON_MONEY_DETAIL">
+              <MappingFragment StoreEntitySet="TB_COUPON_MONEY_DETAIL">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="COUPON_MASTER_IDX" ColumnName="COUPON_MASTER_IDX" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="ADMIN_MEMO" ColumnName="ADMIN_MEMO" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_COUPON_PRODUCT">
+            <EntityTypeMapping TypeName="AboutMeModel3.TB_COUPON_PRODUCT">
+              <MappingFragment StoreEntitySet="TB_COUPON_PRODUCT">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="PRODUCT_CODE" ColumnName="PRODUCT_CODE" />
+                <ScalarProperty Name="USABLE_FL" ColumnName="USABLE_FL" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_COUPON_MASTER">
+            <EntityTypeMapping TypeName="AboutMeModel3.TB_COUPON_MASTER">
+              <MappingFragment StoreEntitySet="TB_COUPON_MASTER">
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
+                <ScalarProperty Name="MASTER_TO_DATE" ColumnName="MASTER_TO_DATE" />
+                <ScalarProperty Name="MASTER_FROM_DATE" ColumnName="MASTER_FROM_DATE" />
+                <ScalarProperty Name="ISSUE_MAX_LIMIT" ColumnName="ISSUE_MAX_LIMIT" />
+                <ScalarProperty Name="COUPON_NUM_CHECK_TF" ColumnName="COUPON_NUM_CHECK_TF" />
+                <ScalarProperty Name="ISSUE_METHOD_WITH_AUTO" ColumnName="ISSUE_METHOD_WITH_AUTO" />
+                <ScalarProperty Name="ISSUE_METHOD_GBN" ColumnName="ISSUE_METHOD_GBN" />
+                <ScalarProperty Name="MEMBER_APP_SCOPE_GBN" ColumnName="MEMBER_APP_SCOPE_GBN" />
+                <ScalarProperty Name="PRODUCT_APP_SCOPE_GBN" ColumnName="PRODUCT_APP_SCOPE_GBN" />
+                <ScalarProperty Name="USABLE_DEVICE_GBN" ColumnName="USABLE_DEVICE_GBN" />
+                <ScalarProperty Name="EXRIRED_DAY_FROM_ISSUE_DT" ColumnName="EXRIRED_DAY_FROM_ISSUE_DT" />
+                <ScalarProperty Name="FIXED_PERIOD_TO" ColumnName="FIXED_PERIOD_TO" />
+                <ScalarProperty Name="FIXED_PERIOD_FROM" ColumnName="FIXED_PERIOD_FROM" />
+                <ScalarProperty Name="SERVICE_LIFE_GBN" ColumnName="SERVICE_LIFE_GBN" />
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

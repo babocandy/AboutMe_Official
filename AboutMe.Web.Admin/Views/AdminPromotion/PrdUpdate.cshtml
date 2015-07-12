@@ -65,6 +65,27 @@
                 <script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
             </text>
         }
+
+        
+        if (TempData["jsMessage"] == "-5")
+        {
+            <text>
+                <script language='javascript'>alert('시작일시를 현재보다 이전으로 변경할 수 없습니다.')</script>
+            </text>
+        }
+        if (TempData["jsMessage"] == "-6")
+        {
+            <text>
+                <script language='javascript'>alert('종료일시를 현재보다 이전으로 변경할 수 없습니다.')</script>
+            </text>
+        }
+
+        if (TempData["jsMessage"] == "-7")
+        {
+            <text>
+                <script language='javascript'>alert('변경하고자 하는 시간대의 다른 프로모션들에 중복된 상품이 있습니다.')</script>
+            </text>
+        }
     }
 
 
@@ -75,11 +96,13 @@
 
             var f = document.frm01;
 
+            /**
             if (f.SEL_PMO_PRODUCT_CATEGORY.value == '') {
                 alert("프로모션 종류를 선택하세요.");
                 f.SEL_PMO_PRODUCT_CATEGORY.focus();
                 return false;
             }
+            **/
 
         }
 
@@ -147,7 +170,7 @@
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
 
-                                        @Html.HiddenFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].CD_PROMOTION_PRODUCT)
+            <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"]" />
             <input type="hidden" name="orgin_date_from" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM" />
             <input type="hidden" name="orgin_date_to" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO" />
 
@@ -228,7 +251,7 @@
                                                         }
                                                         else
                                                         {
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_SET_DISCOUNT_CNT, new { cssClass = "input-sm text-left", Readonly = true }) <TEXT>종류 구매시 할인(수정불가)</TEXT>
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_SET_DISCOUNT_CNT, new { cssClass = "input-sm text-left", Readonly = true }) <TEXT><font color="red"><b>수정불가</b></font> 종류 구매시 할인</TEXT>
                                                         }
                                                     </td>
 
@@ -243,10 +266,10 @@
                                                         }
                                                         else
                                                         {
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_ONEONE_MULTIPLE_CNT, new { cssClass = "input-sm text-left", Readonly = true }) <text> 수정불가 ( <font color="red">ex:</font> ) (*)1+1의 경우 기본적으로 '2' 를 입력합니다</text>
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_ONEONE_MULTIPLE_CNT, new { cssClass = "input-sm text-left", Readonly = true }) <text> <font color="red"><b>수정불가</b></font>  (*) 1+1의 경우 기본적으로 '2' 를 입력합니다</text>
 
                                                         }
-                                                    </td>
+</td>
 
                                                 </tr>
 
@@ -255,11 +278,11 @@
                                                     <td>
 
                                                         @if (IsOverStartTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)) != true)
-                                                        {  //이미 시작한 프로모션이면 수정불가능
+                                                        {  
                                                             @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
                                                         }
                                                         else
-                                                        {  //Readonly
+                                                        {  //이미 시작한 프로모션이면 수정불가능 => Readonly
                                                             @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left",ReadOnly =true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
 
                                                         }
@@ -275,7 +298,7 @@
                                                         }
                                                         else
                                                         { //Readonly
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left",Readonly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO)
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left",Readonly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO) <text><font color="red"><b>수정불가</b></font></text>
                                                         }
 
                                                     </td>

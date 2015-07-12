@@ -540,7 +540,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
         }
 
 
-        //상품별 할인 프로모션 중복여부 확인 
+        //상품별 할인 프로모션 중복여부 확인 - 타 프로모션에 활성화된 상품이 있는지 모두 SCAN
         public int GetAdminPromotionByProductPricingAllDupSel(string CdPromotionProduct , string Pcode)
         {
 
@@ -647,6 +647,61 @@ namespace AboutMe.Domain.Service.AdminPromotion
 
             return list_cnt;
         }
+
+
+
+        //상품별할인 상품별 정보 업데이트
+        //public int UpdateAdminPromotionByProductPricing(TB_PROMOTION_BY_PRODUCT_PRICE Tb, string CdPromotionProduct, string[] CheckCdPromotiontTotal)
+        public int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal)
+        {
+
+            int IsSuccess = 1;
+          
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+
+                    using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+                    {
+                        AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE(
+                              CdPromotionProduct
+                              , UsableYN
+                            );
+                      
+                    }
+
+
+                    /**
+                    if (CheckCdPromotiontTotal != null)
+                    {
+                        using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+                        {
+                            for (int i = 0; i < CheckCdPromotiontTotal.Length; i++)
+                            {
+                                AdmPromotionContext.SP_ADMIN_PROMOTION_PRODUCT_PRICE_VS_TOTAL_INS(CdPromotionProduct, CheckCdPromotiontTotal[i], NewPricingIdx, Tb.P_CODE, Tb.USABLE_YN);
+                            }
+                        }
+                    }
+                     * **/
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                    IsSuccess = -1;
+
+                }
+
+            }
+
+
+            return IsSuccess;
+        }
+
 
 
 

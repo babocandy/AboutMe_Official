@@ -548,5 +548,18 @@ namespace AboutMe.Domain.Entity.AdminPromotion
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL", pMO_PRODUCT_CATETORYParameter, tARGET_PMO_PRODUCT_DATE_FROMParameter, tARGET_PMO_PRODUCT_DATE_TOParameter, cD_PROMOTION_PRODUCTParameter);
         }
+    
+        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE(string cD_PROMOTION_PRODUCT, string uSABLE_YN)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            var uSABLE_YNParameter = uSABLE_YN != null ?
+                new ObjectParameter("USABLE_YN", uSABLE_YN) :
+                new ObjectParameter("USABLE_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE", cD_PROMOTION_PRODUCTParameter, uSABLE_YNParameter);
+        }
     }
 }

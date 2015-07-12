@@ -51,6 +51,9 @@ namespace AboutMe.Domain.Service.AdminPromotion
         int GetAdminPromotionByProductForUpdateAllProductCheckDupSel(string CdPromotionProduct, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo);
         int GetAdminPromotionByProductForUpdateDupSel(string PmoProductCategory, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo, string CdPromotionProduct);
 
+
+        int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal);
+
         #endregion --------------------------------------------------------------------------
     }
 

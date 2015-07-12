@@ -105,6 +105,38 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Entity\AdminCoupon\AdminCoupon_EntitiePartial.cs" />
+    <Compile Include="Entity\AdminCoupon\AdminCoupon_Metadata.cs" />
+    <Compile Include="Entity\AdminCoupon\ModelAdminCoupon.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminCoupon.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\ModelAdminCoupon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\ModelAdminCoupon.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminCoupon.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\TB_COUPON_KIND_CATEGORY.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\TB_COUPON_MASTER.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\TB_COUPON_MEMBER_GRADE.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\TB_COUPON_MONEY_DETAIL.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\TB_COUPON_PRODUCT.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminEtc\AdminEtc_EntityPartial.cs" />
     <Compile Include="Entity\AdminEtc\AdminEtc_Metadata.cs" />
     <Compile Include="Entity\AdminEtc\ADMIN_MEMBER.cs">
@@ -413,6 +445,8 @@
       <DependentUpon>ModelNotice.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
+    <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
     <Compile Include="Service\AdminEtc\IAdminMemberService.cs" />
@@ -452,6 +486,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelAdminEtc.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\AdminCoupon\ModelAdminCoupon.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminCoupon.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminCoupon\ModelAdminCoupon.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminCoupon.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminCoupon.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminCoupon\ModelAdminCoupon.edmx.diagram">
+      <DependentUpon>ModelAdminCoupon.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminCoupon\ModelAdminCoupon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminCoupon.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminCoupon.cs</LastGenOutput>
+    </None>
     <None Include="Entity\AdminEtc\ModelAdminEtc.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelAdminEtc.edmx</DependentUpon>

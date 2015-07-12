@@ -158,6 +158,10 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
+          <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
           <Parameter Name="PAGESIZE" Type="int" Mode="In" />
@@ -514,6 +518,10 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <Parameter Name="TARGET_PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
             <Parameter Name="TARGET_PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
             <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE">
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_PROMOTION_BY_TOTAL_CATEGORY">
@@ -1019,6 +1027,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
