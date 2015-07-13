@@ -33,7 +33,7 @@ namespace AboutMe.Web.Admin
 
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
             "~/Content/kendo/2015.1.318/kendo.common.min.css",
-            "~/Content/kendo/2015.1.318/kendo.default.min.css"));
+            "~/Content/kendo/2015.1.318/kendo.Bootstrap.min.css"));
         }
     }
 }

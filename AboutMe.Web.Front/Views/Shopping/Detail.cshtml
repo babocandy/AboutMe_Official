@@ -1,0 +1,859 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/shoping.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+}
+<!--//header-->
+<!--container-->
+@section Body{
+    <div class="wrap detail">
+     <div id="container">
+            <h2>본문시작</h2>
+            <div class="container1080">
+                <!--path-->
+                <div class="path">
+                    <a href="#" class="home"><img src="/aboutCom/images/common/ico_home.png" alt="home" /></a>
+                    <a href="#">Beauty</a>
+                    <span>클렌징</span>
+                </div>
+                <!--//path-->
+                <!--detail_top : 상품정보-->
+                <div class="detail_top">
+                    <!--상품사진-->
+                    <div class="photo_area">
+                        <div class="thumb_area">
+                            <!--썸네일 이미지 등록 시 ul의 li 사용-->
+                            <!--
+                            작은 이미지 클릭 시 큰 이미지가 보여집니다. 작은 썸네일의 기본크기는 64X64입니다.
+                        -->
+                            <ul>
+                                <li class="cnt"><img src="/aboutCom/images/shopping/thumb_detail1.jpg" data-pic="/aboutCom/images/shopping/thumb_detail1_big.jpg" alt="" /><i></i></li>
+                                <li><img src="/aboutCom/images/shopping/thumb_detail2.jpg" data-pic="/aboutCom/images/shopping/thumb_detail2_big.jpg" alt="" /><i></i></li>
+                                <li><img src="/aboutCom/images/shopping/thumb_detail3.jpg" data-pic="/aboutCom/images/shopping/thumb_detail3_big.jpg" alt="" /><i></i></li>
+                                <li><img src="/aboutCom/images/shopping/thumb_detail4.jpg" data-pic="/aboutCom/images/shopping/thumb_detail4_big.jpg" alt="" /><i></i></li>
+                            </ul>
+                            <!--동영상 업로드가 있을 시 사용-->
+                            <div class="movie_thumb">
+                                <img src="/aboutCom/images/shopping/thumb_move.jpg" class="viewmv" alt="" /><i></i>
+                                <!--해당영상-->
+                                <div class="lydim"></div>
+                                <div class="lymv">
+                                    <a href="#" class="mv_close">닫기</a>
+                                    <div class="mv">
+                                        <iframe width="640" height="390" src="https://www.youtube.com/embed/bhFjdi-J57Q?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <!--//해당영상-->
+                            </div>
+                            <!--//동영상 업로드가 있을 시 사용-->
+                        </div>
+                        <div class="large_area">
+                            <!--500 x 500 이미지 사용-->
+                            <img src="/aboutCom/images/shopping/thumb_detail1_big.jpg" alt="" />
+                        </div>
+                    </div>
+                    <!--//상품사진-->
+                    <!--상품정보-->
+                    <div class="info_area">
+                        <!--sns버튼-->
+                        <div class="sns">
+                            <ul>
+                                <li><a href="#"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/common/sns_weibo.gif" alt="웨이보" /></a></li>
+                            </ul>
+                        </div>
+                        <!--//sns버튼-->
+                        <!--상품해당아이콘-->
+                        <div class="ico_area">
+                            <span class="ico_time">TIME</span>
+                            <!--- 각 종류별 아이콘
+                        <span class="ico_new">NEW</span>
+                        <span class="ico_coupon">COUPON</span>
+                        <span class="ico_1_1">1+1</span>
+                        <span class="ico_best">BEST</span>
+                        <span class="ico_soldout">SOLD OUT</span>
+                        <span class="ico_soldout">SET</span>
+                        <span class="ico_sale">SALE</span>
+                        <span class="ico_custom">커스텀</span>
+                        -->
+                        </div>
+                        <!--//상품해당아이콘-->
+                        <div class="pro_tit">
+                            <!--각각 2줄씩 제한-->
+                            <p class="tit">노폐물을 눈으로<br />직접 확인하는 휘핑 크림 제형</p>
+                            <p class="stit">스킨 톤업 마사지 크림<br />스킨 톤업 마사지 크림</p>
+                        </div>
+                        <div class="pro_info">
+                            <ul>
+                                <li class="price">
+                                    <strong>판매가</strong>
+                                    <del>32,000원</del><span class="curprice"><em>25,000</em>원</span>
+                                </li>
+                                <li>
+                                    <strong>임직원가</strong>
+                                    <span class="staff_price">22,400원</span>
+                                </li>
+                                <li>
+                                    <strong>즉시할인</strong>
+                                    <span class="discount_num">10</span>% 할인쿠폰
+                                    <a href="#" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="" /></a>
+                                </li>
+                                <li>
+                                    <strong>용량 및 중량</strong>
+                                    <span class="vol_num">140</span>ml
+                                </li>
+                                <li>
+                                    <strong>구입개수</strong>
+                                    <div class="counttypeb">
+                                        <input type='text' name='count' value='1' size='3' />
+                                        <span class="btn_updown">
+                                            <a href="javascript:fncAdd(1);" class="up"><i>up</i></a>
+                                            <a href="javascript:fncAdd(-1);" class="down"><i>down</i></a>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="btn_group">
+                                <a href="#" class="btn_brown_w170h60">바로 구매</a>
+                                <a href="#" class="btn_white_w148h60"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
+                                <a href="#" class="btn_white_w148h60"><img src="/aboutCom/images/common/ico_heart.png" class="wishimg" alt="" />찜하기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--//상품정보-->
+                    <!-- cartinfo -->
+                    <div class="ly cartinfo boxtypee">
+                        <div class="top"></div>
+                        <div class="middle">
+                            <p class="txt"><em>8</em>명 고객님이<br />쇼핑백에 담았습니다.</p>
+                            <a href="javascript:void(0)" class="ly_close"></a>
+                        </div>
+                        <div class="bottom"></div>
+                    </div>
+                    <!-- //cartinfo -->
+                </div>
+                <!--//detail_top : 상품정보-->
+                <!--detail_bottom : 사용자 보유정보 , 제품상세정보 -->
+                <div class="detail_bottom">
+                    <!--왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
+                    <div class="left_area">
+                        <!--event_banner : 이벤트 상세페이지로 이동-->
+                        <div class="event_banner">
+                            <ul class="slide">
+                                <li><a href="#"><img src="/aboutCom/images/sample/detailevent_ban_760152.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/sample/detailevent_ban_760152.jpg" alt="" /></a></li>
+                                <li><a href="#"><img src="/aboutCom/images/sample/detailevent_ban_760152.jpg" alt="" /></a></li>
+                                <!-- <li style="background:red">1</li>
+                            <li style="background:blue">2</li>
+                            <li style="background:#ccc">3</li> -->
+
+                            </ul>
+                            <ul class="nav"></ul>
+                        </div>
+                        <!--//event_banner : 이벤트 상세페이지로 이동-->
+                        <!--상세정보, 리뷰, 품질보증/배송관련 tab-->
+                        <div class="product_tab">
+
+                            <!--상세정보-->
+                            <div class="menu" id="tabCon1">
+                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                <!--tab메뉴-->
+                                <ul class="protabs">
+                                    <li class="cnt"><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                    <li><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                    <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                </ul>
+                                <!--//tab메뉴-->
+                            </div>
+
+                            <!--관련상품-->
+                            <div class="related_product">
+                                <p class="tit"><img src="/aboutCom/images/shopping/tit_related_product.gif" alt="함께 하용하면 더 좋은 어바웃미, 이렇게 시작해보세요!" /></p>
+                                <div class="boxtypee">
+                                    <div class="top"></div>
+                                    <div class="middle">
+                                        <p class="tit">디톡스 마사지 케어  Skin tone up + 멀티비타 에센스 3step</p>
+                                        <p class="txt">레몬의 비타민C,플라보노이드 성분으로  피부정화마사지+ 여신의 물 셀릭워터를 담은 멀티비타 에센스로 피부 tone-up</p>
+                                    </div>
+                                    <div class="bottom"></div>
+                                </div>
+
+                                <!--사용자가 올리는 부분-->
+                                <div class="product_admin">
+                                    <img src="/aboutCom/images/sample/sample_detailadmin.jpg" alt="" />
+                                </div>
+                                <!--//사용자가 올리는 부분-->
+                            </div>
+                            <!--//관련상품-->
+
+                            <div class="pro_content">
+                                <!--사용자가 올리는 이미지-->
+                                <div class="admin_img">
+                                    <img src="/aboutCom/images/sample/sample_detailadmin2.jpg" alt="" />
+                                </div>
+                                <!--//사용자가 올리는 이미지-->
+                                <!--성분표시-->
+                                <div class="admin_ingredient">
+                                    <table summary="용량, 제조국, 피부타입, 제조자 및 제조판매자, 사용기간, 식품의약안정청 심사유무, 주요성분, 전성분">
+                                        <caption>성분표시 표</caption>
+                                        <colgroup>
+                                            <col width="90" />
+                                            <col width="290" />
+                                            <col width="165" />
+                                            <col width="215" />
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th>용량</th>
+                                                <td>150ml</td>
+                                                <th>제조국</th>
+                                                <td>한국</td>
+                                            </tr>
+                                            <tr>
+                                                <th>피부타입</th>
+                                                <td>모든 피부타입</td>
+                                                <th>제조자 및 제조판매자</th>
+                                                <td>-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>사용기간</th>
+                                                <td>개봉전 30개월/개봉 후 12개월</td>
+                                                <th>식품의약안정청 심사유무</th>
+                                                <td>무</td>
+                                            </tr>
+                                            <tr>
+                                                <th>주요성분</th>
+                                                <td colspan="3">
+                                                    모링가추출물, 레몬, 호박 등의 성분이 노폐물과 각질 케어에 도움을 주며 대나무 수와 로얄제리 성분의 함유로 피부에 필요한 수분과 영양을 공급해 줍니다
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>전성분</th>
+                                                <td colspan="3">
+                                                    정제수,미네랄오일,옥틸도데칸올,글리세린,부틸렌글라이콜,폴리소르베이트60,세틸알코올,느릅나무뿌리추출물,
+                                                    줄맨드라미씨추출물,카바잎/뿌리/줄기추출물,드럼스틱나무씨추출물,레몬추출물,로얄젤리추출물,호박추출물,마치현추출물,칡뿌리추출물,감초추출물,작약추출물,천궁추출물,양송이버섯추출물,키위추출물,레몬껍질오일,대나무수,수용성콜라겐,알로에베라잎즙,하이드로제네이티드레시틴,소듐하이알루로네이트,글리세릴스테아레이트,피이지-100스테아레이트,1,2-헥산디올,디메치콘,프룩토올리고사카라이드,소듐폴리아크릴레이트,소르비탄스테아레이트,
+                                                    암모늄아크릴로일디메칠타우레이트/브이피코폴리머,소르비탄세스퀴올리에이트,하이드록시에칠아크릴레이트/소듐아크릴로일디메칠타우레이트코폴리머,스쿠알란,에칠헥실글리세린,티타늄디옥사이드,토코페릴아세테이트,만니톨,디소듐이디티에이,아크릴레이트/암모늄메타크릴레이트코폴리머,바이오플라보노이드,잔탄검,페녹시에탄올,황색산화철
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--//성분표시-->
+                            </div>
+                            <!--//상세정보-->
+                            <!--리뷰-->
+                            <div class="menu" id="tabCon2">
+                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                <!--tab메뉴-->
+                                <ul class="protabs">
+                                    <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                    <li class="cnt"><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                    <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                </ul>
+                                <!--//tab메뉴-->
+                            </div>
+                            <div class="pro_content">
+                                <div class="review_tab">
+                                    <ul class="tabs">
+                                        <li class="cnt"><a href="#review1"><img src="/aboutCom/images/shopping/review_tab1.gif" alt="" /></a></li>
+                                        <li><a href="#review2"><img src="/aboutCom/images/shopping/review_tab2.gif" alt="" /></a></li>
+                                    </ul>
+
+                                    <div id="review1" class="tab_content" style="display:block">
+                                        <div class="btn_riviewenroll">
+                                            <a href="#" class="btn_white_w120h38">상품리뷰 등록</a>
+                                        </div>
+                                        <!--리뷰 슬라이드-->
+                                        <div class="pur_review accordion">
+                                            <!---
+                                            처음과 마지막  .pur_review .cont에 각각 "first", "last" class가 붙습니다.
+                                        -->
+                                            <div class="cont first  accordcont cnt">
+                                                <div class="subj accordsubject">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <!--사진이 등록된 리뷰일 때 사용-->
+                                                        <span class="ico_photo">포토리뷰</span>
+                                                        <!--//사진이 등록된 리뷰일 때 사용-->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <p class="txtdotdot">
+                                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
+                                                    </p>
+                                                </div>
+                                                <div class="contxt accordtxt">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! <br />
+                                                    <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
+                                                </div>
+                                            </div>
+
+                                            <div class="cont accordcont">
+                                                <div class="subj accordsubject">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin normal"></em></span>
+                                                    </div>
+                                                    <p class="txtdotdot">
+                                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
+                                                    </p>
+                                                </div>
+                                                <div class="contxt accordtxt">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin normal"></em></span>
+                                                    </div>
+                                                    마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!
+                                                </div>
+                                            </div>
+
+                                            <div class="cont accordcont">
+                                                <div class="subj accordsubject">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <!--사진이 등록된 리뷰일 때 사용-->
+                                                        <span class="ico_photo">포토리뷰</span>
+                                                        <!--//사진이 등록된 리뷰일 때 사용-->
+                                                        <!--
+                                                        skin type class
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oliy
+                                                    -->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <p class="txtdotdot">
+                                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
+                                                    </p>
+                                                </div>
+                                                <div class="contxt accordtxt">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! <br />
+                                                    <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
+                                                </div>
+                                            </div>
+
+                                            <div class="cont accordcont">
+                                                <div class="subj accordsubject">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <!--사진이 등록된 리뷰일 때 사용-->
+                                                        <span class="ico_photo">포토리뷰</span>
+                                                        <!--//사진이 등록된 리뷰일 때 사용-->
+                                                        <span class="userage">30대, 여<em class="skin normal"></em></span>
+                                                    </div>
+                                                    <p class="txtdotdot">
+                                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
+                                                    </p>
+                                                </div>
+                                                <div class="contxt accordtxt">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin normal"></em></span>
+                                                    </div>
+                                                    마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!</br />
+                                                    <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
+                                                </div>
+                                            </div>
+
+                                            <div class="cont last accordcont">
+                                                <div class="subj accordsubject">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin olily"></em></span>
+                                                    </div>
+                                                    <p class="txtdotdot">
+                                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
+                                                    </p>
+                                                </div>
+                                                <div class="contxt accordtxt">
+                                                    <div class="writer">
+                                                        <span class="id">Kkon***</span>
+                                                        <span class="userage">30대, 여<em class="skin olily"></em></span>
+                                                    </div>
+                                                    마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--//리뷰 슬라이드-->
+                                        <!--페이징-->
+                                        <div class="paging">
+                                            <a href="#" class="prev">이전</a>
+                                            <!--현재 페이지-->
+                                            <strong>1</strong>
+                                            <!--//현재 페이지-->
+                                            <a href="#">2</a>
+                                            <a href="#">3</a>
+                                            <a href="#">4</a>
+                                            <a href="#">5</a>
+                                            <a href="#">6</a>
+                                            <a href="#">7</a>
+                                            <a href="#">8</a>
+                                            <a href="#">9</a>
+                                            <a href="#">10</a>
+                                            <a href="#" class="next">다음</a>
+                                        </div>
+                                        <!--//페이징-->
+                                    </div>
+
+                                    <div id="review2" class="tab_content">
+                                        <div class="btn_riviewenroll">
+                                            <a href="#" class="btn_white_w120h38">체험단 신청</a>
+                                        </div>
+                                        <!--체험단리뷰-->
+                                        <div class="exp_review">
+                                            <!--마지막 li에 last class 붙습니다.-->
+                                            <ul>
+                                                <li>
+                                                    <div class="writer">
+                                                        <span class="id">kkon***</span>
+                                                        <span class="hits">조회수 252</span>
+                                                        <!--
+                                                        skin type class
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oliy
+                                                    -->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <div onclick="reviewpop_view()" class="reviewcont">
+                                                        <div class="photo">
+                                                            <!--120x120 이미지 사용-->
+                                                            <img src="/aboutCom/images/shopping/thumb120.jpg" alt="" />
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="tag">
+                                                                <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
+                                                            </div>
+                                                            <div class="reviewtxt">
+                                                                <p class="tit">콜라겐 섭취에 대한 효과와 그에 대한 착각 </p>
+                                                                <p class="txt txtdotdot">
+                                                                    콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="writer">
+                                                        <span class="id">kkon***</span>
+                                                        <span class="hits">조회수 252</span>
+                                                        <!--
+                                                        skin type class
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oliy
+                                                    -->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <div onclick="reviewpop_view()" class="reviewcont">
+                                                        <div class="photo">
+                                                            <!--120x120 이미지 사용-->
+                                                            <img src="/aboutCom/images/shopping/thumb120.jpg" alt="" />
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="tag">
+                                                                <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
+                                                            </div>
+                                                            <div class="reviewtxt">
+                                                                <p class="tit">콜라겐 섭취에 대한 효과와 그에 대한 착각 </p>
+                                                                <p class="txt txtdotdot">
+                                                                    콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="writer">
+                                                        <span class="id">kkon***</span>
+                                                        <span class="hits">조회수 252</span>
+                                                        <!--
+                                                        skin type class
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oliy
+                                                    -->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <div onclick="reviewpop_view()" class="reviewcont">
+                                                        <div class="photo">
+                                                            <!--120x120 이미지 사용-->
+                                                            <img src="/aboutCom/images/shopping/thumb120.jpg" alt="" />
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="tag">
+                                                                <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
+                                                            </div>
+                                                            <div class="reviewtxt">
+                                                                <p class="tit">콜라겐 섭취에 대한 효과와 그에 대한 착각 </p>
+                                                                <p class="txt txtdotdot">
+                                                                    콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="writer">
+                                                        <span class="id">kkon***</span>
+                                                        <span class="hits">조회수 252</span>
+                                                        <!--
+                                                        skin type class
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oliy
+                                                    -->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <div onclick="reviewpop_view()" class="reviewcont">
+                                                        <div class="photo">
+                                                            <!--120x120 이미지 사용-->
+                                                            <img src="/aboutCom/images/shopping/thumb120.jpg" alt="" />
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="tag">
+                                                                <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
+                                                            </div>
+                                                            <div class="reviewtxt">
+                                                                <p class="tit">콜라겐 섭취에 대한 효과와 그에 대한 착각 </p>
+                                                                <p class="txt txtdotdot">
+                                                                    콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="last">
+                                                    <div class="writer">
+                                                        <span class="id">kkon***</span>
+                                                        <span class="hits">조회수 252</span>
+                                                        <!--
+                                                        skin type class
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oliy
+                                                    -->
+                                                        <span class="userage">30대, 여<em class="skin dry"></em></span>
+                                                    </div>
+                                                    <div onclick="reviewpop_view()" class="reviewcont">
+                                                        <div class="photo">
+                                                            <!--120x120 이미지 사용-->
+                                                            <img src="/aboutCom/images/shopping/thumb120.jpg" alt="" />
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="tag">
+                                                                <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
+                                                            </div>
+                                                            <div class="reviewtxt">
+                                                                <p class="tit">콜라겐 섭취에 대한 효과와 그에 대한 착각 </p>
+                                                                <p class="txt txtdotdot">
+                                                                    콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각 콜라겐 섭취에 대한 효과와 그에 대한 착각
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!--//체험단리뷰-->
+                                        <!--리뷰상세팝업-->
+                                        <div class="reviewpop_wrap">
+                                            <div class="dim"></div>
+                                            <div class="reviewpop">
+                                                <a href="#none" class="reviewpop_close" onclick="reviewpop_close()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="" /></a>
+                                                <!--reviewpop_top-->
+                                                <div class="reviewpop_top">
+                                                    <div class="title_area">
+                                                        <p class="title">스킨 톤업 마사지 크림 완전 강추에요!</p>
+                                                        <div class="tag">
+                                                            <span>#마사지</span> <span>#촉촉</span> <span>#미백</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="writer">
+                                                        <span class="id">kkon***</span>
+                                                        <span class="hits">조회수 <em>253</em></span>
+                                                        <span class="date">2015.06.06</span>
+                                                        <!-- <span class="otherreview">사용자 다른 리뷰 <a href="#">12</a>개</span> -->
+                                                    </div>
+                                                </div>
+                                                <!--//reviewpop_top-->
+                                                <!--reviewpop_bottom-->
+                                                <div class="reviewpop_bottom">
+                                                    <div class="userinfo">
+                                                        <!--
+                                                        피부타입 css
+                                                        건성 : dry
+                                                        중성 : normal
+                                                        지성 : oily
+                                                    -->
+                                                        <span class="skin normal">중성</span>
+                                                        <span class="age_gender">40대, 여</span>
+                                                    </div>
+                                                    <div class="reviewtxt">
+                                                        <p>
+                                                            어바웃미 스킨 톤업 마사지크림 리뷰입니다.<br />
+                                                            지금까지 여러 화장품을 써봤지만 이런 화장품은 처음이에요!
+                                                        </p>
+                                                        <img src="/aboutCom/images/review/thumb640.jpg" alt="" />
+                                                        <p>
+                                                            제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요.
+                                                            그냥 상큼한 레몬향이 나는 정도? 그래서 이때만해도 이 마사지크림에 제가 이렇게 빠져들거라고는 생각을 못했어요ㅋㅋ
+                                                            그치만 크림을 얼굴에 바르고 마사지하는 순간 완전 신세계였어요!
+                                                        </p>
+                                                        <p>
+                                                            처음에는 그냥 크림으로 마사지하는거랑 별다를게 없었는데 어느순간 크림이 다 사라지고 약간 뻑뻑해지다가 오일로 마사지하는 것처럼 변해요!
+                                                            시간에 따라서 촉촉한 마사지크림-피부에 다 흡수되서 약간 뻑뻑한 느낌 -오일 마사지하는 것처럼 변하는게 너무 신기했어요
+                                                        </p>
+                                                        <img src="/aboutCom/images/review/thumb640.jpg" alt="" />
+                                                        <p>
+                                                            그리고 마사지를 다하고 화장솜으로 닦아내면 창피하지만 이렇게 노랗게 노폐물이 나옵니다ㅋㅋ
+                                                            사진이 너무 노골적이긴하지만 실제로 마사지하고 닦아내면 내 피부에 이렇게 노폐물이 많았나하고 놀라게되실거에요ㅋㅋ
+                                                            신기하기도하고 그동안 각질제거도 하고, 마스크팩이나 모델링팩으로 나름 피부관리를 한다고 생각했는데 이렇게 제 피부에 노폐물이 많을줄 몰랐어요.
+                                                            그래도 다행인건 요샌 스킨 톤업 마사지 크림을 사용하면서 처음보다 노폐물이 조금 나오고있어요.
+                                                            (색깔이 처음했을때랑 엄청 달라져요ㅋㅋ)
+                                                        </p>
+                                                        <p>
+                                                            그리고 의외로 용량도 많은 편이라서 가격대비 정말 좋은 마사지 크림인 것 같아요, 저는 지금 쓰는 제품 다 쓰면 재구매할 예정입니다
+                                                            완전 강추에용ㅋㅋ
+                                                        </p>
+                                                    </div>
+                                                    <div class="reviewproduct">
+                                                        <p class="title"><img src="/aboutCom/images/review/txt_review.gif" alt="리뷰상품" /></p>
+                                                        <div class="pro_info">
+                                                            <!--이미지사이즈 96x96-->
+                                                            <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt4.jpg" alt="" /></div>
+                                                            <div class="detail">
+                                                                <p class="tit">리얼 프레쉬팩 [로즈]</p>
+                                                                <p class="stit">맑고 촉촉한 피부를 위한 100%천연유래 <br />Real fresh pack</p>
+                                                                <p class="price">4,000원</p>
+                                                            </div>
+                                                        </div>
+                                                        <!--상품관련 기획전-->
+                                                        <div class="plbanr">
+
+                                                        </div>
+                                                        <!--//상품관련 기획전-->
+                                                    </div>
+                                                </div>
+                                                <!--//reviewpop_bottom-->
+                                            </div>
+                                        </div>
+                                        <!--//리뷰상세팝업-->
+                                        <script type="text/javascript">
+										//리뷰팝업
+											function reviewpop_view(){
+												$("html").css({"overflow-y":"hidden"});
+												$(".reviewpop_wrap").show();
+												$(".reviewpop_wrap").css({"overflow-y":"auto"});
+											}
+											function reviewpop_close(){
+												$(".reviewpop_wrap").hide();
+												$(".reviewpop_wrap").css({"overflow-y":"hidden"});
+												$("html").css({"overflow-y":"auto"});
+											}
+                                        </script>
+
+                                        <!--페이징-->
+                                        <div class="paging">
+                                            <a href="#" class="prev">이전</a>
+                                            <!--현재 페이지-->
+                                            <strong>1</strong>
+                                            <!--//현재 페이지-->
+                                            <a href="#">2</a>
+                                            <a href="#">3</a>
+                                            <a href="#">4</a>
+                                            <a href="#">5</a>
+                                            <a href="#">6</a>
+                                            <a href="#">7</a>
+                                            <a href="#">8</a>
+                                            <a href="#">9</a>
+                                            <a href="#">10</a>
+                                            <a href="#" class="next">다음</a>
+                                        </div>
+                                        <!--//페이징-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--//리뷰-->
+                            <!--품질보증-->
+                            <div class="menu" id="tabCon3">
+                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                <!--tab메뉴-->
+                                <ul class="protabs">
+                                    <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                    <li><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                    <li class="cnt"><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                </ul>
+                                <!--//tab메뉴-->
+                            </div>
+                            <div class="pro_content">
+                                <div class="quality_assurance">
+                                    <ul>
+                                        <li>
+                                            <div class="cont">
+                                                <p class="quality_tit">품질 보증 기준</p>
+                                                <p class="quality_txt">
+                                                    본 제품은 구입 시 유통기한이 경과 되었거나 유통 과정 중 변질, 변패 또는 파손된 제품일 경우에는 소비자기본법에 따른 소비자분쟁해결기준에 의거 교환 또는 보상을 받을 수 있습니다.
+                                                </p>
+                                            </div>
+                                            <div class="cont">
+                                                <p class="quality_tit">소비자 상담 연락처</p>
+                                                <p class="quality_txt">
+                                                    080-740-7983
+                                                </p>
+                                            </div>
+                                            <div class="cont">
+                                                <p class="quality_tit">사용시 주의사항</p>
+                                                <p class="quality_txt">
+                                                    1. 화장품을 사용하여 다음과 같은 이상이 있는 경우에는 사용을 중지하여야 하며, 계속 사용하면 증상이 악화되므로 피부과 전문의 등에게 상담할 것<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;가) 사용 중 붉은 반점, 부어오름, 가려움증, 자극 등의 이상이 있는 경우<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;나) 적용부위가 직사광선에 의하여 위와 같은 이상이 있는 경우<br />
+                                                    2. 상처가 있는 부위, 습진 및 피부염 등의 이상이 있는 부위에는 사용을 하지 말 것<br />
+                                                    3.(스크럽 제품의 경우) 사용시 입자가 눈에 들어가지 아니하도록 할 것<br />
+                                                    4. 보관 및 취급 시의 주의사항<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;가) 사용후에는 반드시 마개를 닫아둘 것<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;나) 유아,소아의 손이 닿지 않는 곳에 보관할 것<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;다) 고온 또는 저온의 장소 및 직사광선이 닿는 곳에는 보관하지 말 것<br />
+                                                    5.(자외선 차단 기능이 포함된 제품의 경우) 이 제품의 자외선차단지수 및 자외선 A 차단등급은 식품의약품안전청고시 자외선 차단 효과 측정방법 및<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;기준에 따라 측정하였음<br />
+                                                    6. (버블워시의 경우) 살리실릭애씨드 및 그 염류를 함유하고 있으므로 만3세 이하 어린이에게는 사용하지 말 것<br />
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="cont">
+                                                <p class="quality_tit">배송 안내</p>
+                                                <p class="quality_txt">
+                                                    배송사 : 00택배(0000-0000) <br />
+                                                    배송비 : 2500원(단, 제주도 및 도서산간지역은 추가 운임료 발생) <br />
+                                                    배송기간 : 입금완료 확인 후 2-5일 이내에 배송됩니다.(단, 제주도 및 도서산간지역은 추가기간 발생)<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객님의 연락두절 및 부재 등으로 인하여 반송된 경우에는 왕복 택배비가 부과 됩니다.<br />
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;연락처 및 주소를 정확히 기입해 주시기 바랍니다.<br />
+                                                    배송전 취소 및 변경 : 게시판 또는 웹상에서 접수하신 경우 처리가 지연.(누락)될 수 있사오니, 신속한 처리를 위하여 고객센터로 문의 부탁드립니다.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="cont">
+                                                <p class="quality_tit">주문 취소/교환 / 반품 안내</p>
+                                                <p class="quality_txt">
+                                                    교환 및 반품은 물품 수령 후 <strong>7일 이내</strong>에 접수(전화 및 게시판)후 당사에 입고된 상품에 한하여 처리됩니다.<br />
+                                                    시일이 지난 상품에 대해서는 처리가 되지 않습니다.(물품훼손/ 빈 포장폐기 및 물품가치를 상실할 경우에는 불가합니다.)<br />
+                                                    교환 및 반품 신청 시에는 <strong>해당구매 사이트</strong>를 통하여 해주시길 바랍니다. 신청하지 않고 임의 발송하신 경우 처리가 지연될 수 있습니다.<br />
+                                                    (상품을 보내실 때 발송 시 동봉되었던 교환/반품 요청서를 작성하여 함께 보내주시면 신속하고 원활한 처리가 이루어집니다.)
+                                                </p>
+                                                <p class="quality_txt mt25">
+                                                    <strong class="stit">불량 및 오배송 등으로 인한 교환</strong><br />
+                                                    맞교환은 불가하며 교환 상품이 물류센터에 도착하여 상품 확인 후 처리가 가능합니다.<br />
+                                                    왕복운송료는 모두 ㈜삼양제넥스에서 부담합니다. 단, 동일상품이 아닌 다른 칼라나 사이즈 등으로 교환 원하시는 경우에는 고객 변심으로 처리됩니다.(교환택배 구매자 부담)
+                                                </p>
+                                                <p class="quality_txt mt25">
+                                                    <strong class="stit">교환 및 반품이 불가한 상품</strong><br />
+                                                    0000000<br />
+                                                    00000
+                                                </p>
+                                                <p class="quality_txt mt25">
+                                                    <strong class="stit">교환 및 반품 배송비 결제시</strong><br />
+                                                    무료배송 상품, 단순교환일 경우 5000원(동봉 또는 계좌)을 지불하셔야 합니다.<br />
+                                                    선결제, 착불, 단순 반품 및 교환일 경우 모두 5000원을 지불하셔야 하며, 선결제 배송비는 상품금액+배송료 모두 함께 환불됩니다.
+                                                </p>
+                                                <p class="quality_txt mt25">
+                                                    <strong class="stit">교환 및 반품 배송비 계좌</strong><br />
+                                                    교환 및 반품 배송비는 아래 계좌로 입금해 주십시오.<br />
+                                                    은행명 : 00은행 / 계좌번호 000-000-00000 예금주 00000 (동봉시 분실 및 분쟁의 소지가 있사오니 가급적 계좌로 입금 부탁 드립니다.)
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--//품질보증-->
+                        </div>
+                        <!--//상세정보, 리뷰, 품질보증/배송관련 tab-->
+                    </div>
+                    <!--//왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
+                    <!--오른쪽영역 : 사용자 보유 정보-->
+                    <div class="right_area">
+                        <div class="promotion">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <img src="/aboutCom/images/sample/thum_270_pro1.jpg" alt="" />
+                                        <span class="date"><em>2015.09.01</em>~<em>2015.09.05</em></span>
+                                        <strong>효린의 파우치 속 그 아이템</strong>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="/aboutCom/images/sample/thum_270_pro2.jpg" alt="" />
+                                        <span class="date"><em>2015.09.01</em>~<em>2015.09.05</em></span>
+                                        <strong>효린의 파우치 속 그 아이템</strong>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="setgoods">
+                            <a href="#"><img src="/aboutCom/images/shopping/tit_setgoods.gif" alt="" /></a>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <img src="/aboutCom/images/sample/thum_recommend1.jpg" alt="" />
+                                        <span class="tag"><span class="ico_new">NEW</span></span>
+                                        <strong class="gti">스킨톤업마사지크림</strong>
+                                        <span class="desc">매끈한 피부결을 위한 100%천연유래</span>
+                                        <span class="price"><strong>23,000</strong>원</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="/aboutCom/images/sample/thum_recommend2.jpg" alt="" />
+                                        <span class="tag"><span class="ico_new">NEW</span></span>
+                                        <strong class="gti">어바웃미 화장솜</strong>
+                                        <span class="desc">이중압축 </span>
+                                        <span class="price"><strong>950</strong>원</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="/aboutCom/images/sample/thum_recommend2.jpg" alt="" />
+                                        <span class="tag"><span class="ico_new">NEW</span></span>
+                                        <strong class="gti">어바웃미 화장솜</strong>
+                                        <span class="desc">이중압축 </span>
+                                        <span class="price"><strong>950</strong>원</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--오른쪽영역 : //사용자 보유 정보-->
+                </div>
+                <!--//detail_bottom : 사용자 보유정보 , 제품상세정보 -->
+
+            </div>
+        </div>
+    </div>
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+}
+<!--//footer-->

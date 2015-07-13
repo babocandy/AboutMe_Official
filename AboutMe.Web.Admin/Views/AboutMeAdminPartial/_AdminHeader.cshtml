@@ -2,16 +2,27 @@
 
 @helper fTopMenuCSSOn(string argMENU_DEPTH1="")
 {
-    var Path = Request.Url.LocalPath +"////";  // ex /Control/Action/
+    var Path = Request.Url.LocalPath + "////";  // ex /Control/Action/
     var arrPATH = Path.Split('/');
-    
+
     var strControl = arrPATH[1];
     var strAction = arrPATH[2];
 
-    if (argMENU_DEPTH1 != null && argMENU_DEPTH1 == strControl)
+    var arrMenu = argMENU_DEPTH1.Split(',');
+    
+    if (argMENU_DEPTH1 != null)
     {
-        @(" class=active ")
-    }
+        foreach (string word in arrMenu)
+        {
+            if (word != "" && word == strControl)
+            {
+                @(" class=active ")
+                break;
+            }
+
+        } //for
+    } //if outter
+    
 } //fTopMenuCSSOn()
 
 @helper fTopMenuGetAdminName()
@@ -59,8 +70,8 @@
         <li @fTopMenuCSSOn("AdminProduct")><a href="/AdminProduct/ProductIndex">상품관리</a></li>
         <li><a href="/display/index.html">전시관리</a></li>
         <li><a href="/promotion/index.html">프로모션관리</a></li>
-        <li><a href="/odersale/index.html">주문/매출</a></li>
-        <li><a href="/contents/index.html">컨텐츠관리</a></li>
+        <li @fTopMenuCSSOn("Order")><a href="/Order/">주문/매출</a></li>
+        <li @fTopMenuCSSOn("Faq,Notice")><a href="/Faq/">컨텐츠관리</a></li>
         <li @fTopMenuCSSOn("AdminFrontMember") ><a href="/AdminFrontMember/Index">회원관리</a></li>
         <li><a href="/cs/index.html">C/S관리</a></li>
         <li><a href="/stats/index.html">통계</a></li>

@@ -1,0 +1,189 @@
+﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_PRODUCT*@
+
+@model AboutMe.Web.Admin.Controllers.AdminPromotionController.MyMultiModelForProductPricing
+
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+
+
+    @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+    {
+        if (TempData["jsMessage"] == "-1")
+        {
+            <text>
+                <script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>
+            </text>
+        }
+
+        if (TempData["jsMessage"] == "-2")
+        {
+            <text>
+                <script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
+            </text>
+        }
+
+        if (TempData["jsMessage"] == "-3")
+        {
+            <text>
+                <script language='javascript'>alert('입력한 상품코드가 존재하지 않거나 비전시 상태입니다.')</script>
+            </text>
+        }
+    }
+
+
+    <script language="javascript">
+
+        function frmCheck() {
+            //alert("여기입니다");
+
+            var f = document.frm01;
+
+            if (f.SEL_PMO_PRODUCT_CATEGORY.value == '') {
+                alert("프로모션 종류를 선택하세요.");
+                f.SEL_PMO_PRODUCT_CATEGORY.focus();
+                return false;
+            }
+
+        }
+
+
+
+        function setProductCategory(obj_selectbox, sel_index) {
+
+            // alert(obj_selectbox[sel_index].value);
+            var f = document.frm01;
+            f.inst_TB_PROMOTION_BY_PRODUCT_PMO_PRODUCT_CATEGORY.value = obj_selectbox.options[sel_index].value;
+
+            //alert(obj_selectbox[sel_index].value);
+
+            if (obj_selectbox[sel_index].value == "01") //세트상품
+            {
+
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = false;
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = true;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "02") //1+1
+            {
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = true;
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = false;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "03") //일반품별할인
+            {
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = true;
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = true;
+            }
+
+        }
+
+
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">상품별 프로모션 가격정보 등록</h3>
+
+            @using (Html.BeginForm("PrdPricingCreate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                                        <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()" />
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                            <tbody>
+
+                                                <tr>
+                                                    <th>상품코드</th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.P_CODE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.P_CODE)</font></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>프로모션 종류 </th>
+                                                    <td>
+                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+                                                        {
+                                                            <text>
+                                                                <input type="checkbox" id="CheckCdPromotiontTotal" name="CheckCdPromotionTotal" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
+                                                            </text>
+
+                                                        }
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <th>최종할인가(수기입력)</th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_PRICE, new { cssClass = "input-sm text-left" }) @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_PRICE)</td>
+
+                                                </tr>
+
+
+
+                                                <tr>
+                                                    <th>1+1 증정품 상품코드</th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_ONE_ONE_P_CODE, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_ONE_ONE_P_CODE)</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>1+1 증정품 가격</th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_ONE_ONE_PRICE, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_ONE_ONE_PRICE)</td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <th>활성화/비활성화 </th>
+                                                    <td>
+                                                        @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "N") 비활성화
+                                                    </td>
+
+                                                </tr>
+
+
+                                                <tr>
+                                                    <th>저장</th>
+                                                    <td>
+                                                        <input type="submit" value="저장" class="btn btn-default middium" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+            }
+        </div>
+
+        <div class="btn_area">
+            <a class="btn btn-primary small" href="/AdminPromotion/PrdPricingIndex?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">목록</a>
+        </div>
+
+
+    </div>
+}
+
