@@ -28,6 +28,7 @@ namespace AboutMe.Domain.Entity.Cart
         }
     
         public virtual DbSet<TB_CART> TB_CART { get; set; }
+        public virtual DbSet<TB_WISHLIST> TB_WISHLIST { get; set; }
     
         public virtual ObjectResult<SP_TB_CART_CNT_Result> SP_TB_CART_CNT(string m_ID, string sESSION_ID)
         {
@@ -97,7 +98,7 @@ namespace AboutMe.Domain.Entity.Cart
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_CART_PRODUCT_ADD", m_IDParameter, sESSION_IDParameter, p_CODE_LISTParameter, p_COUNT_LISTParameter, mERGY_OPTParameter);
         }
     
-        public virtual int SP_TB_CART_PRODUCT_DEL(string m_ID, string sESSION_ID, string p_CODE_LIST)
+        public virtual int SP_TB_CART_PRODUCT_DEL(string m_ID, string sESSION_ID, string cART_IDX)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -107,14 +108,14 @@ namespace AboutMe.Domain.Entity.Cart
                 new ObjectParameter("SESSION_ID", sESSION_ID) :
                 new ObjectParameter("SESSION_ID", typeof(string));
     
-            var p_CODE_LISTParameter = p_CODE_LIST != null ?
-                new ObjectParameter("P_CODE_LIST", p_CODE_LIST) :
-                new ObjectParameter("P_CODE_LIST", typeof(string));
+            var cART_IDXParameter = cART_IDX != null ?
+                new ObjectParameter("CART_IDX", cART_IDX) :
+                new ObjectParameter("CART_IDX", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_CART_PRODUCT_DEL", m_IDParameter, sESSION_IDParameter, p_CODE_LISTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_CART_PRODUCT_DEL", m_IDParameter, sESSION_IDParameter, cART_IDXParameter);
         }
     
-        public virtual int SP_TB_CART_COUNT_CHANGE(string m_ID, string sESSION_ID, string p_CODE, Nullable<int> p_COUNT)
+        public virtual int SP_TB_CART_COUNT_CHANGE(string m_ID, string sESSION_ID, Nullable<int> cART_IDX, Nullable<int> p_COUNT)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -124,15 +125,50 @@ namespace AboutMe.Domain.Entity.Cart
                 new ObjectParameter("SESSION_ID", sESSION_ID) :
                 new ObjectParameter("SESSION_ID", typeof(string));
     
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
+            var cART_IDXParameter = cART_IDX.HasValue ?
+                new ObjectParameter("CART_IDX", cART_IDX) :
+                new ObjectParameter("CART_IDX", typeof(int));
     
             var p_COUNTParameter = p_COUNT.HasValue ?
                 new ObjectParameter("P_COUNT", p_COUNT) :
                 new ObjectParameter("P_COUNT", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_CART_COUNT_CHANGE", m_IDParameter, sESSION_IDParameter, p_CODEParameter, p_COUNTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_CART_COUNT_CHANGE", m_IDParameter, sESSION_IDParameter, cART_IDXParameter, p_COUNTParameter);
+        }
+    
+        public virtual ObjectResult<SP_TB_WISH_CNT_Result> SP_TB_WISHLIST_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_WISH_CNT_Result>("SP_TB_WISHLIST_CNT", m_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_TB_WISH_CNT_Result> SP_TB_WISHLIST_PRODUCT_ADD(string m_ID, string p_CODE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_WISH_CNT_Result>("SP_TB_WISHLIST_PRODUCT_ADD", m_IDParameter, p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_TB_WISH_CNT_Result> SP_TB_WISHLIST_PRODUCT_DEL(string m_ID, Nullable<int> iDX)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_WISH_CNT_Result>("SP_TB_WISHLIST_PRODUCT_DEL", m_IDParameter, iDXParameter);
         }
     }
 }
