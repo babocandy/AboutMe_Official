@@ -1,39 +1,12 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminPointInsertViewModel
 @{
-    ViewBag.Title = "PointIndex";
-    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
 }
 
-@section Other{
-    <style>
-        .container {
-            padding: 10px;
-            width: 100%;
-            min-width: inherit;
-        }
 
-        .table {
-            width: 100%;
-            min-width: inherit;
-        }
-
-        .field-validation-error
-        {
-            color: red;
-        }
-
-        .validation-summary-errors
-        {
-            color: Red;
-        }
-    </style>
-}
 @section Scripts{
     <script>
         function closePopup() {
-            //alert("closePopup");
-            //window.opener.location.href = window.opener.location.href;
-            //window.opener.location.reload(false);
             if (window.opener) {
                 window.opener.location.reload(true);
             }
@@ -59,20 +32,77 @@
     }
 }
 
-@section Left {
-
-}
-
-@section Header{
-
-}
 
 
 
 @section Body{
-    <h4>포인트 관리</h4>
-    
-    @using (Html.BeginForm("PopupMemberPoint", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
+<h1>포인트 관리</h1>
+<br />
+<h2>회원기본정보</h2>
+<table class="table table_row">
+    <colgroup><col width="20%" /><col width="*" /><col width="20%" /><col width="*" /></colgroup>
+    <tbody>
+        <tr>
+            <th scope="row" class="vam">이름</th>
+            <td>정재연</td>
+            <th scope="row" class="vam">ID</th>
+            <td>babo</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">휴대폰</th>
+            <td>000-000-0000</td>
+            <th scope="row" class="vam">전화번호</th>
+            <td>000-000-0000</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">이메일</th>
+            <td>babo@cstone.co.kr</td>
+            <th scope="row" class="vam">회원등급</th>
+            <td>브론즈</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">보유포인트</th>
+            <td colspan="3">0</td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<h2>포인트 적립/차감</h2>
+<table class="table table_row">
+    <colgroup><col width="20%" /><col width="*" /></colgroup>
+    <tbody>
+        <tr>
+            <th scope="row" class="vam">적립/차감</th>
+            <td>
+                <label class="mr15"><input type="radio" name="rdio" /><span class="txt">적립</span></label>
+                <label class="mr15"><input type="radio" name="rdio" /><span class="txt">차감</span></label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">설명</th>
+            <td>관리자 적립/차감</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">포인트</th>
+            <td>
+                <input type="text" class="input-sm" title="포인트" />
+                (+,- 기호없이 숫자만입력)
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">메모</th>
+            <td>
+                <textarea class="input-sm" rows="8" style="width:100%;" title="메모"></textarea>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="tar">
+    <a href="#" class="btn btn-default " onclick="document.frm.submit(); return false;">저장</a>
+    <a href="#" class=" btn btn-primary " onclick="closePopup(); return false;">취소</a>
+</div>
+
+    @using (Html.BeginForm("PopupMemberPointUpdate", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
     {
         @Html.AntiForgeryToken()
         <div><span>@Model.Mid</span>@Html.ValidationSummary(true, "", new { @style= "display:inline;" })</div>
@@ -111,7 +141,7 @@
                     </tr>
                     <tr>
                         <td>처리자</td>
-                        <td></td>
+                        <td>@Model.AdminName</td>
                     </tr>
                 </tbody>
             </table>

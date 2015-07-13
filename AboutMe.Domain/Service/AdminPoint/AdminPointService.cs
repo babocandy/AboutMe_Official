@@ -39,7 +39,7 @@ namespace AboutMe.Domain.Service.AdminPoint
             return ret;
         }
 
-        public Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, string orderCode = null)
+        public Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, string adminId = null, string adminName = null, string orderCode = null)
         {
 
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
@@ -47,9 +47,9 @@ namespace AboutMe.Domain.Service.AdminPoint
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_ADMIN_POINT_USE(mid, point, addition, orderCode, retNum, retMsg);
+                context.SP_ADMIN_POINT_USE(mid, point, addition, adminId, adminName, orderCode, retNum, retMsg);
             }
-
+            
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
             Debug.WriteLine("UpdateMemberPointUse retNum:  " + retNum.Value);
             Debug.WriteLine("UpdateMemberPointUse retMsg:  " + retMsg.Value);
@@ -57,16 +57,14 @@ namespace AboutMe.Domain.Service.AdminPoint
             return tp;
         }
 
-        public Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition, string orderCode = null, int? revieweIdx = null)
+        public Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition = null, string adminId=null, string adminName=null ,string orderCode = null, int? revieweIdx = null)
         {
-            Debug.WriteLine("UpdateMemberPointSaveUpdateMemberPointSave");
-
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_ADMIN_POINT_SAVE(mid, point, addition, orderCode, revieweIdx, retNum, retMsg);
+                context.SP_ADMIN_POINT_SAVE(mid, point, addition, adminId, adminName, orderCode, revieweIdx, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());

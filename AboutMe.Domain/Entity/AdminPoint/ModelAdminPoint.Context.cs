@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.AdminPoint
         }
     
     
-        public virtual int SP_ADMIN_POINT_SAVE(string m_ID, Nullable<int> sAVE_POINT, string aDDITION_REASON, string oRDER_CODE, Nullable<int> rEVIEW_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_ADMIN_POINT_SAVE(string m_ID, Nullable<int> sAVE_POINT, string aDDITION_REASON, string aDMIN_ID, string aDMIN_NAME, string oRDER_CODE, Nullable<int> rEVIEW_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -42,6 +42,14 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("ADDITION_REASON", aDDITION_REASON) :
                 new ObjectParameter("ADDITION_REASON", typeof(string));
     
+            var aDMIN_IDParameter = aDMIN_ID != null ?
+                new ObjectParameter("ADMIN_ID", aDMIN_ID) :
+                new ObjectParameter("ADMIN_ID", typeof(string));
+    
+            var aDMIN_NAMEParameter = aDMIN_NAME != null ?
+                new ObjectParameter("ADMIN_NAME", aDMIN_NAME) :
+                new ObjectParameter("ADMIN_NAME", typeof(string));
+    
             var oRDER_CODEParameter = oRDER_CODE != null ?
                 new ObjectParameter("ORDER_CODE", oRDER_CODE) :
                 new ObjectParameter("ORDER_CODE", typeof(string));
@@ -50,10 +58,10 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("REVIEW_IDX", rEVIEW_IDX) :
                 new ObjectParameter("REVIEW_IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_SAVE", m_IDParameter, sAVE_POINTParameter, aDDITION_REASONParameter, oRDER_CODEParameter, rEVIEW_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_SAVE", m_IDParameter, sAVE_POINTParameter, aDDITION_REASONParameter, aDMIN_IDParameter, aDMIN_NAMEParameter, oRDER_CODEParameter, rEVIEW_IDXParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_ADMIN_POINT_USE(string m_ID, Nullable<int> uSE_POINT, string aDDITION_REASON, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_ADMIN_POINT_USE(string m_ID, Nullable<int> uSE_POINT, string aDDITION_REASON, string aDMIN_ID, string aDMIN_NAME, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -67,11 +75,19 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("ADDITION_REASON", aDDITION_REASON) :
                 new ObjectParameter("ADDITION_REASON", typeof(string));
     
+            var aDMIN_IDParameter = aDMIN_ID != null ?
+                new ObjectParameter("ADMIN_ID", aDMIN_ID) :
+                new ObjectParameter("ADMIN_ID", typeof(string));
+    
+            var aDMIN_NAMEParameter = aDMIN_NAME != null ?
+                new ObjectParameter("ADMIN_NAME", aDMIN_NAME) :
+                new ObjectParameter("ADMIN_NAME", typeof(string));
+    
             var oRDER_CODEParameter = oRDER_CODE != null ?
                 new ObjectParameter("ORDER_CODE", oRDER_CODE) :
                 new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_USE", m_IDParameter, uSE_POINTParameter, aDDITION_REASONParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_USE", m_IDParameter, uSE_POINTParameter, aDDITION_REASONParameter, aDMIN_IDParameter, aDMIN_NAMEParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<Nullable<int>> SP_POINT_MEMBER_CNT(string sEARCH_KEY, string sEARCH_VALUE)

@@ -16,13 +16,20 @@ namespace AboutMe.Web.Admin.Models
 
     public class AdminPointInsertViewModel
     {
+        [Required(ErrorMessage = "필수사항입니다")]
         public string Mid { get; set; }
+        
         [Required(ErrorMessage = "필수사항입니다")]
         public string Type { get; set; }
+        
         [Required(ErrorMessage = "필수사항입니다")]
         public string Reason { get; set; }
+        
         [Required(ErrorMessage = "필수사항입니다")]
         public int Point { get; set; }
+
+        public string AdminId { get; set; }
+        public string AdminName { get; set; }
 
         public string ResultNum { get; set; }
         public string ResultMessage { get; set; }

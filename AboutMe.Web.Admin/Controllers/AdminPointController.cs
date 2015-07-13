@@ -13,6 +13,7 @@ using AboutMe.Common.Data;
 using System.Diagnostics;
 using AboutMe.Web.Admin.Models;
 using AboutMe.Web.Admin.Common.Filters;
+using AboutMe.Web.Admin.Common;
 
 
 namespace AboutMe.Web.Admin.Controllers
@@ -61,6 +62,8 @@ namespace AboutMe.Web.Admin.Controllers
         {
             AdminPointInsertViewModel model = new AdminPointInsertViewModel();
             model.Mid = M_ID;
+            model.AdminId = AdminUserInfo.GetAdmId();
+            model.AdminName = AdminUserInfo.GetAdmName();
 
             return View(model);
         }
@@ -80,14 +83,14 @@ namespace AboutMe.Web.Admin.Controllers
             {
                 if (model.Type == "1") // 관리자 적립
                 {
-                    Tuple<string, string> ret = _AdminPointService.UpdateMemberPointSave(model.Mid, model.Point, model.Reason);
+                    Tuple<string, string> ret = _AdminPointService.UpdateMemberPointSave(model.Mid, model.Point, model.Reason, AdminUserInfo.GetAdmId(), AdminUserInfo.GetAdmName() );
                     model.ResultMessage = ret.Item2;
                     model.ResultNum = ret.Item1;
 
                 }
                 else if (model.Type == "2") // 관리자 사용
                 {
-                    Tuple<string, string> ret = _AdminPointService.UpdateMemberPointUse(model.Mid, model.Point, model.Reason);
+                    Tuple<string, string> ret = _AdminPointService.UpdateMemberPointUse(model.Mid, model.Point, model.Reason, AdminUserInfo.GetAdmId(), AdminUserInfo.GetAdmName());
                     model.ResultMessage = ret.Item2;
                     model.ResultNum = ret.Item1;
                 }
