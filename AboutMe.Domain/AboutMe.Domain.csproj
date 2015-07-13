@@ -66,6 +66,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -247,6 +248,65 @@
     <Compile Include="Entity\AdminProduct\TB_PRODUCT_INFO.cs">
       <DependentUpon>ModelAdminProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminPromotion\AdminPromotion_EntytyPartial.cs" />
+    <Compile Include="Entity\AdminPromotion\AdminPromotion_Metadata.cs" />
+    <Compile Include="Entity\AdminPromotion\ModelAdminPromotion.Context.cs" />
+    <Compile Include="Entity\AdminPromotion\ModelAdminPromotion.cs" />
+    <Compile Include="Entity\AdminPromotion\ModelAdminPromotion.Designer.cs">
+      <DependentUpon>ModelAdminPromotion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\ModelAdminPromotion1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\ModelAdminPromotion1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminPromotion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_ADMIN_PROMOTION_COMMON_CNT_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_BY_PRODUCT.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_BY_PRODUCT_PRICE.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_BY_TOTAL.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_BY_TOTAL_CATEGORY.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_BY_TOTAL_MEM_GRADE.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_PRODUCT_CATEGORY.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\TB_PROMOTION_PRODUCT_VS_TOTAL.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Cart\CartUserModel.cs" />
     <Compile Include="Entity\Cart\ModelCart.Context.cs">
       <AutoGen>True</AutoGen>
@@ -354,6 +414,33 @@
     <Compile Include="Entity\Notice\TB_NOTICE.cs">
       <DependentUpon>ModelNotice.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Product\ModelProduct.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelProduct.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\ModelProduct.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\ModelProduct.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_CNT_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_DETAIL_VIEW_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\TB_LOG_USER.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
@@ -365,6 +452,8 @@
     <Compile Include="Service\AdminPoint\IAdminPointService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
     <Compile Include="Service\AdminProduct\IAdminProductService.cs" />
+    <Compile Include="Service\AdminPromotion\AdminPromotionService.cs" />
+    <Compile Include="Service\AdminPromotion\IAdminPromotionService.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Member\IMemberService.cs" />
@@ -374,15 +463,15 @@
     <Compile Include="Service\Faq\FaqService.cs" />
     <Compile Include="Service\Faq\IFaqService.cs" />
     <Compile Include="Entity\Common\USER_PROFILE.cs" />
+    <Compile Include="Service\Product\IProductService.cs" />
+    <Compile Include="Service\Product\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Order\" />
-    <Folder Include="Entity\Product\" />
     <Folder Include="Service\Etc\" />
     <Folder Include="Service\Order\" />
-    <Folder Include="Service\Product\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
@@ -464,6 +553,21 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelCart.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Entity\AdminPromotion\ModelAdminPromotion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelAdminPromotion.Context1.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\AdminPromotion\ModelAdminPromotion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminPromotion1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminPromotion\ModelAdminPromotion.edmx.diagram">
+      <DependentUpon>ModelAdminPromotion.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminPromotion\ModelAdminPromotion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelAdminPromotion1.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Cart\ModelCart.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelCart.edmx</DependentUpon>
@@ -523,6 +627,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelNotice.edmx</DependentUpon>
       <LastGenOutput>ModelNotice.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Product\ModelProduct.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelProduct.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Product\ModelProduct.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+      <LastGenOutput>ModelProduct.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Product\ModelProduct.edmx.diagram">
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Product\ModelProduct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+      <LastGenOutput>ModelProduct.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -15,12 +15,12 @@ namespace AboutMe.Domain.Service.AdminPoint
          List<SP_ADMIN_POINT_HISTORY_SEL_Result> GetMyPointHistoryList(string mid, int pageNo = 1, int pageSize = 10);
         int GetMyPointHistoryListCnt(string mid);
        
-        Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition, int? orderIdx = null, int? revieweIdx = null);
-        Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, int? orderIdx = null);
+        Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition, string orderCode = null, int? revieweIdx = null);
+        Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, string orderCode = null);
 
-        Tuple<string, string> SavePointOnOrder(string mid, int amount, int orderIdx);
-        Tuple<string, string> UsePointOnOrder(string mid, int point, int orderIdx);
-        Tuple<string, string> CancelAllOfOrder(string mid, int point, int orderIdx);
-        Tuple<string, string> CancelPartOfOrder(string mid, int point, int orderIdx);
+        Tuple<string, string> SavePointOnOrder(string mid, int amount, string orderCode);
+        Tuple<string, string> UsePointOnOrder(string mid, int point, string orderCode);
+        Tuple<string, string> CancelAllOfOrder(string mid, int point, string orderCode);
+        Tuple<string, string> CancelPartOfOrder(string mid, int point, string orderCode);
     }
 }

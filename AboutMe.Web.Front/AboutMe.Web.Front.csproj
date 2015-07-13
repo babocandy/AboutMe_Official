@@ -186,12 +186,14 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Common\Filters\CustomAuthorizeAttr.cs" />
     <Compile Include="Common\MemberInfo.cs" />
+    <Compile Include="Common\UserLog.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseFrontController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CommonChildActionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\Mypage\MypageController.cs" />
     <Compile Include="DI_Core\Bootstraper.cs" />
@@ -691,12 +693,17 @@
     <Content Include="Views\Shared\_AboutMeLayoutMasterA.cshtml" />
     <Content Include="Views\Member\Login.cshtml" />
     <Content Include="Views\CommonChildAction\ChildRightTopMenu_Util.cshtml" />
+    <Content Include="Views\Shopping\Index.cshtml" />
+    <Content Include="Views\Shopping\Detail.cshtml" />
     <Content Include="Views\Mypage\Main.cshtml" />
     <Content Include="Views\Shared\_AboutMeLayoutB.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailReviewInfo.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailLeftEvent.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailRightSetGoods.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailRightPromotion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shopping\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

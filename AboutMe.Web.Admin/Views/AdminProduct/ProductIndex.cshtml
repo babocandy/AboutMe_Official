@@ -368,6 +368,7 @@
     @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
         <div class="tar mb10">
             <a class="btn btn-default middium" href="/AdminProduct/ProductInsert">상품등록</a>
+            <a class="btn btn-default middium" href="/AdminProduct/ProductExcel">엑셀다운로드</a>
 @if (!string.IsNullOrEmpty(ViewBag.SearchKeyword))
 {
             <a class="btn btn-default middium" href="/AdminProduct/ProductIndex">검색초기화</a>
@@ -522,7 +523,7 @@
                     <td><input id="P_NAME" name="tb_product_info[@i].P_NAME" type="text" size="10" maxlength="50" value="@item.P_NAME" onkeyup="selectedChk('@i');" /></td>
                     <td>@string.Format("{0:C}",item.SELLING_PRICE)</td>
                     <td>@string.Format("{0:C}", item.DISCOUNT_PRICE)</td>
-                    <td>@item.DISCOUNT_RATE</td>
+                    <td>@item.DISCOUNT_RATE%</td>
                     <td><input type="checkbox" name="tb_product_info[@i].DISPLAY_YN" @if (item.DISPLAY_YN == "Y") { <text> checked </text> } value="Y" id="DISPLAY_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
                     <td><input type="checkbox" name="tb_product_info[@i].SOLDOUT_YN" @if (item.SOLDOUT_YN == "Y") { <text> checked </text>  } value="Y" id="SOLDOUT_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
                     <td><input type="checkbox" name="tb_product_info[@i].P_OUTLET_YN" @if (item.P_OUTLET_YN == "Y") { <text> checked </text>  } value="Y" id="P_OUTLET_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
