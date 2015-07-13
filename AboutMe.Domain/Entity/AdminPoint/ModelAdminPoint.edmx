@@ -15,7 +15,7 @@
         </Function>
         <Function Name="SP_ADMIN_POINT_SAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
-          <Parameter Name="POINT" Type="int" Mode="In" />
+          <Parameter Name="SAVE_POINT" Type="int" Mode="In" />
           <Parameter Name="ADDITION_REASON" Type="varchar" Mode="In" />
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="REVIEW_IDX" Type="int" Mode="In" />
@@ -56,7 +56,7 @@
         </Function>
         <Function Name="SP_POINT_SAVE_ON_ORDER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
-          <Parameter Name="AMOUNT" Type="int" Mode="In" />
+          <Parameter Name="SAVE_POINT" Type="int" Mode="In" />
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
           <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
@@ -76,7 +76,7 @@
         <EntityContainer Name="AdminPointEntities" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="SP_ADMIN_POINT_SAVE">
             <Parameter Name="M_ID" Mode="In" Type="String" />
-            <Parameter Name="POINT" Mode="In" Type="Int32" />
+            <Parameter Name="SAVE_POINT" Mode="In" Type="Int32" />
             <Parameter Name="ADDITION_REASON" Mode="In" Type="String" />
             <Parameter Name="ORDER_CODE" Mode="In" Type="String" />
             <Parameter Name="REVIEW_IDX" Mode="In" Type="Int32" />
@@ -111,7 +111,7 @@
           </FunctionImport>
           <FunctionImport Name="SP_POINT_SAVE_ON_ORDER">
             <Parameter Name="M_ID" Mode="In" Type="String" />
-            <Parameter Name="AMOUNT" Mode="In" Type="Int32" />
+            <Parameter Name="SAVE_POINT" Mode="In" Type="Int32" />
             <Parameter Name="ORDER_CODE" Mode="In" Type="String" />
             <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
             <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
