@@ -10,9 +10,8 @@
 namespace AboutMe.Domain.Entity.AdminCoupon
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_COUPON_MASTER
+    public partial class SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result
     {
         public int IDX { get; set; }
         public string CD_COUPON { get; set; }
@@ -27,7 +26,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> FIXED_PERIOD_TO { get; set; }
         public Nullable<int> EXRIRED_DAY_FROM_ISSUE_DT { get; set; }
         public Nullable<System.DateTime> DOWNLOAD_DATE_FROM { get; set; }
-        public Nullable<System.DateTime> DOWNLOAD_DATE_TO { get; set; }
+        public Nullable<System.DateTime> FIXED_PERIOD_TO1 { get; set; }
         public string USABLE_DEVICE_GBN { get; set; }
         public string PRODUCT_APP_SCOPE_GBN { get; set; }
         public string MEMBER_APP_SCOPE_GBN { get; set; }

@@ -1,0 +1,183 @@
+﻿@model  IEnumerable<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            var bSuccess = '@TempData["bSuccess"]';
+            if(bSuccess){
+                alert("프로모션정보가 등록되었습니다!");
+            }
+        });
+    </script>
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="tar mb10">
+            <a class="btn btn-default middium" href="/AdminCoupon/Create">신규 쿠폰정책 등록</a>
+            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+        </div>
+
+        <div class="panel">
+            <h3 class="sub-header">기본설정</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
+                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>쿠폰정책 리스트</h4>
+            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="vam">검색</th>
+                                                    <td class="condition_seacth">
+                                                        <select name="SearchCol" style="width:170px;">
+                                                            <option>-선택하세요-</option>
+                                                            <option value="COUPON_NAME" @if (ViewBag.SearchCol == "PMO_TOTAL_NAME") 
+                                                                                        { 
+                                                                                                      <text>selected</text> 
+   
+                                                                                        }>쿠폰정책명</option>
+                                                        </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
+                                                        <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                        <input type="submit" value=" Search >> ">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+            }
+        </div>
+
+        <div class="panel">
+            <h4>쿠폰정책 리스트</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup>
+                   <col width="5%" />
+                   <col width="12%" />
+                   <col width="9%" />
+                   <col width="9%" />
+                   <col width="*" />
+                   <col width="7%" />
+                   <col width="9%" />
+                   <col width="9%" />
+                   <col width="7%" />
+                   <col width="7%" />
+                   <col width="7%" />
+                   <col width="7%" />
+                
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone">No</th>
+                        <th scope="col">쿠폰명</th>
+                        <th scope="col">용도구분</th>
+
+
+                        <th scope="col">정률/정액</th>
+                        <th scope="col">사용가능매체</th>
+                        <th scope="col">발행방법</th>
+
+                        <th scope="col">발행가능기간(From)</th>
+                        <th scope="col">발행가능기간(To)</th>
+                        <th scope="col">작성일자</th>
+                        <th scope="col">활성화</th>
+                        <th scope="col">상품등록</th>
+                        <th scope="col">발행</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="brnone">@item.IDX</td>
+
+                            <td class="brnone">@Html.ActionLink(item.COUPON_NAME, "Update", new { CdCoupon = item.CD_COUPON })</td>
+                            <td>@if(item.COUPON_GBN == "M") { <text>지불쿠폰</text> } else { <text>배송쿠폰</text>} </td>
+                            <td>@if(item.RATE_OR_MONEY == "R") {<text>정률</text> } else {<text>정액</text>}</td>
+                            <td>@if(item.USABLE_DEVICE_GBN == "P") {<text>PC</text> } else {<text>Mobile</text>} </td>
+                            <td>@{if(item.ISSUE_METHOD_GBN == "A") {<text>자동</text> } else {<text>수동</text>}} </td>
+
+
+                            <td>@Html.DisplayFor(modelItem => item.MASTER_FROM_DATE)</td>
+                            <td>@Html.DisplayFor(modelItem => item.MASTER_TO_DATE)</td>
+                            <td>@item.INS_DATE</td>
+                            <td>@item.USABLE_YN</td>
+                            <td>@if(item.COUPON_GBN == "M") { Html.ActionLink("Edit", "EditCoponProduct", new { CdCoupon = item.CD_COUPON  }); } else { <text>--</text> }  </td>
+                            <td>
+                                @if(item.USABLE_YN == "Y" )
+                                 {
+                                    Html.ActionLink("Edit", "EditCoponProduct", new { CdCoupon = item.CD_COUPON  });
+                                 }
+                                 else
+                                 {
+                                   <text>--</text>
+                                 }
+                                        
+                           </td>
+
+                        </tr>
+                      }
+                </tbody>
+            </table>
+        </div>
+
+
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+
+
+        <!--버튼모음--
+        ************************************************<br />
+        버튼가이드 <br /><br />
+        대버튼 : <br />
+        <a href="#" class="btn btn-default large">확인</a>
+        <a href="#" class="btn btn-primary large">취소</a>
+        <br /><br />
+        중버튼 : <br />
+        <a href="#" class="btn btn-default middium">편집중인 설정으로 저장</a>
+        <br /><br />
+        소버튼 : <br />
+        <a href="#" class="btn btn-default small">저장</a>
+        <a href="#" class="btn btn-success small">수정</a>
+        <a href="#" class="btn btn-primary small">삭제</a><br />
+        ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑<br />
+        3가지 타입 버튼이 필요할때 적용<br />
+        <a href="#" class="btn btn-info small">추가</a>
+        --//버튼모음-->
+
+    </div>
+}

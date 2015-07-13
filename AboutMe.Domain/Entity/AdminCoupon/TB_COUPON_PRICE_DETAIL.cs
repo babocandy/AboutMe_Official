@@ -12,7 +12,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_COUPON_MONEY_DETAIL
+    public partial class TB_COUPON_PRICE_DETAIL
     {
         public int IDX { get; set; }
         public string COUPON_MASTER_IDX { get; set; }
