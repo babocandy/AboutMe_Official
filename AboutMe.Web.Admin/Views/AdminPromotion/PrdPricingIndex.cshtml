@@ -1,0 +1,234 @@
+﻿@*@model  IEnumerable<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>*@
+
+@model  IEnumerable<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result>
+
+
+@functions{
+    protected string DisplayPromotionByTotalCheck(string CdPromotionTotal, int PRODUCT_PRICE_IDX)
+    {
+
+        string rtn = "";
+
+        //string[] Gv = GradeVal.Split('$');
+
+        List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result> PRD_VS_TOTAL =
+       ViewData["SP_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result>;
+
+
+        var qry = from PT in PRD_VS_TOTAL
+                  where PT.CD_PROMOTION_TOTAL == CdPromotionTotal && PT.PRODUCT_PRICE_IDX == PRODUCT_PRICE_IDX
+                  select PT;
+
+        if (qry.Count() > 0)
+        {
+            rtn = "checked";
+        }
+
+
+        return rtn;
+    }
+    
+    //---------------------------------------------------------------------------------------------
+
+    protected bool IsOverStartTime(DateTime StartDate)
+    {
+
+        bool rtn = false;
+
+        if(DateTime.Now > StartDate )
+        {
+            rtn = true ;
+        }
+
+
+        return rtn;
+    }
+}
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            var bSuccess = '@TempData["bSuccess"]';
+            if(bSuccess){
+                alert("프로모션정보가 등록되었습니다!");
+            }
+        });
+    </script>
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="tar mb10">
+            <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 Pricing 등록 </a>
+            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+        </div>
+
+        <div class="panel">
+            <h3 class="sub-header">기본설정</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
+                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>배송정책</h4>
+
+        
+         
+        </div>
+
+        <div class="panel">
+            <h4>상품별 프로모션 소속 상품 Pricing</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup>
+                    <col width="4%" />
+                    <col width="8%" />
+                    <col width="8%" />
+                    <col width="8%" />
+                    <col width="8%" />
+                    <col width="8%" />
+                    <col width="8%" />
+                    <col width="10%" />
+                    <col width="12%" />
+                    <col width="12%" />
+                    <col width="*" />
+                    <col width="10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone">No</th>
+                        <th scope="col">상품코드</th>
+                        <th scope="col">상품명</th>
+                        
+                        <th scope="col">정상가</th>
+                        <!--
+                        <th scope="col">정률/정액</th>
+                        <th scope="col">할인율</th>
+                        <th scope="col">할인액</th>
+                        -->
+                        <th scope="col">최종가</th>
+
+                        <th scope="col">1+1 증정품 상품코드</th>
+                        <th scope="col">1+1 증정품 가격</th>
+                        <th scope="col">생성일자</th>
+                        <th scope="col">활성화</th>
+                        <th scope="col">전체할인 적용</th>
+                        <th scope="col">Edit</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        
+                        int xx = 1;
+                     }
+                    @foreach (var item in Model)
+                    {
+                        using (Html.BeginForm("PrdPricingIndex", "AdminPromotion", FormMethod.Post, new { id = "frm" + xx.ToString(), name = "frm" + xx.ToString(), onsubmit = "return frmCheck();" }))
+                        {
+                            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                            
+                        <tr>
+                            <td class="brnone">@item.IDX</td>
+
+                            <td class="brnone">@Html.DisplayFor(modelItem => item.P_CODE)</td>
+                            <td>상품명</td>
+                            <td>정상가</td>
+
+                            <!--
+                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DISCOUNT_RATE)%</td>
+                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DISCOUNT_MONEY)</td>
+                            -->
+                            
+                            <td>@Html.TextBoxFor(modelItem => item.PMO_PRICE, new { cssClass = "input-sm text-left" })</td>
+                            <td>@Html.DisplayFor(modelItem => item.PMO_ONE_ONE_P_CODE)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PMO_ONE_ONE_PRICE)</td>
+                            <td>-</td>
+                        
+                            <td>@Html.RadioButtonFor(modelItem => item.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(modelItem => item.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(modelItem => item.USABLE_YN, "Y")</td>
+
+                            <td>
+                                @foreach (var item2 in ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result>)
+                                {
+                                    <text>
+                                        <input type="checkbox" id="CheckCdPromotionTotal" name="CheckCdPromotionTotal" value="@item2.CD_PROMOTION_TOTAL" @DisplayPromotionByTotalCheck(item2.CD_PROMOTION_TOTAL,item.IDX) /> @item2.PMO_TOTAL_NAME <br />
+                                    </text>
+
+                                }
+                            </td>
+                   
+                            <td>
+                              @if(IsOverStartTime( Convert.ToDateTime(ViewData["PromotionStartTime"]) ) == false )
+                              { 
+                                   @:<input type="submit" value="수정" class="btn btn-default middium" />
+                              }
+                              else
+                              {
+                                  @:<font color="red">수정불가</font>
+                              }
+                            </td>
+                        </tr>
+                        }
+                    }
+                    
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!--버튼모음--
+        ************************************************<br />
+        버튼가이드 <br /><br />
+        대버튼 : <br />
+        <a href="#" class="btn btn-default large">확인</a>
+        <a href="#" class="btn btn-primary large">취소</a>
+        <br /><br />
+        중버튼 : <br />
+        <a href="#" class="btn btn-default middium">편집중인 설정으로 저장</a>
+        <br /><br />
+        소버튼 : <br />
+        <a href="#" class="btn btn-default small">저장</a>
+        <a href="#" class="btn btn-success small">수정</a>
+        <a href="#" class="btn btn-primary small">삭제</a><br />
+        ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑<br />
+        3가지 타입 버튼이 필요할때 적용<br />
+        <a href="#" class="btn btn-info small">추가</a>
+        --//버튼모음-->
+
+    </div>
+}

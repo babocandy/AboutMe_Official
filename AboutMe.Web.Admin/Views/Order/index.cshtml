@@ -1,0 +1,487 @@
+﻿@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+@section Scripts{
+    <script language="javascript">
+        function ChangeDate(d)
+        {
+            var from_date, to_date;
+
+            if (d == "1") //오늘
+            {
+                from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "7") 
+            {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "15")
+            {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "31")
+            {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $("#FROM_DATE").val(from_date);
+            $("#TO_DATE").val(to_date);
+
+        }
+
+        function ChangeDeliveryDate(d) {
+            var from_date, to_date;
+
+            if (d == "1") //오늘
+            {
+                from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "7") {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "15") {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "31") {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $("#DELIVERY_FROM_DATE").val(from_date);
+            $("#DELIVERY_TO_DATE").val(to_date);
+
+        }
+
+        function StatusAllClick(c)
+        {
+            $(".order_check").each(function (idx) {
+                if (c.checked) {
+                    $(this).prop('checked', true);
+                }
+                else {
+                    $(this).prop('checked', false);
+                }
+            });
+        
+            if (!c.checked) {
+                $("#DETAIL_STATUS_20").prop('checked', true);
+            }
+        
+        }
+
+        function onFormReset()
+        {
+            $("#sform")[0].reset();
+        }
+
+        function frmCheck()
+        {
+            if (!($("#PAT_GUBUN_W").prop('checked') || $("#PAT_GUBUN_M").prop('checked') )) {
+                alert('주문구분를 하나라도 선택하세요');
+                $("#PAT_GUBUN_W").focus();
+                return false;
+            }
+
+            if (!($("#DETAIL_STATUS_ALL").prop('checked') || $("#DETAIL_STATUS_10").prop('checked') || $("#DETAIL_STATUS_20").prop('checked') || $("#DETAIL_STATUS_30").prop('checked') || $("#DETAIL_STATUS_40").prop('checked') || $("#DETAIL_STATUS_50").prop('checked') || $("#DETAIL_STATUS_60").prop('checked') || $("#DETAIL_STATUS_70").prop('checked') || $("#DETAIL_STATUS_80").prop('checked') || $("#DETAIL_STATUS_90").prop('checked'))) {
+                alert('주문상태를 하나라도 선택하세요');
+                return false;
+            }
+
+            return true;
+        }
+
+        function changePageSize()
+        {
+            $("#sform").submit();
+        }
+    </script>
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+<!--content-->
+<div class="content">
+    @using (Html.BeginForm("Index", "Order", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+    {
+        @Html.Hidden("PAGE", "1")
+		<!--path-->
+		<div class="path">
+		<a href="/">HOME</a> &gt; <a href="/Order/">주문/매출</a> &gt; <strong>주문관리</strong>
+		</div>
+		<!--//path-->
+		<div class="panel">
+		<h3 class="sub-header">주문관리</h3>
+		<div class="alert alert-info">
+			<ul>
+				<li>· 기본 데이터는 현재 월의 데이터가 노출됩니다.</li>
+				<li>· 기간 검색 날짜 수기 입력 시 <span>“YYYY-MM-DD”</span>형태로 입력하시기 바랍니다.(외에 다른 형태는 검색이 안됨.)</li>
+				<li>· 다중 상품 구매일 경우 주문 번호는 동일하게 표기됩니다.</li>
+				<li>· 부분 취소 / 부분 반품일 경우 PG사 결제 취소, 포인트, 마일리지 회수는 시스템에 의해 자동으로만 처리됩니다</li>
+				<li>· <span>실시간계좌이체 전체 취소는 고객이 입금한 계좌로 바로 자동 송금되며, 부분취소일 경우 고객에게 환급되는 기간은 은행별 영업일 기준 1~2일 정도 소요됩니다.(이니시스사 정책)</span></li>
+				<li>· 출고일은 송장번호가 등록된 일자입니다. / 교환일 경우 변경 등록된 송장번호 등록 일자가 출고일 입니다.<br />
+				&nbsp;&nbsp;임직원 매장 배송 주문일 경우 송장번호 란에 <span>“매장배송”</span>으로 입력해 주세요</li>
+				<li>· 주문 취소는 상세 페이지를 통해 진행 하세요.</li>
+				<li>· <span>주문 상태 일괄 변경은 개별 주문상태 값과 무관하게 선택하신 값으로 모두 변경되오니 변경 시 다시 한번 검토하시기 바랍니다.</span></li>
+			</ul>	
+		</div>
+	</div>
+						 
+	<div class="panel">
+		<h3 class="sub-header">주문리스트</h3>
+		<div class="">
+       
+			<table class="table table_row">
+			<colgroup></colgroup>
+			<tbody>
+				<tr>
+					<th>주문일자</th>
+					<td colspan="3">
+                        @(Html.Kendo().DatePicker()
+                          .Name("FROM_DATE")
+                          .Value(DateTime.Today)
+                          .HtmlAttributes(new { style = "width:120px" })
+                        )
+						~ 
+                        @(Html.Kendo().DatePicker()
+                          .Name("TO_DATE")
+                          .Value(DateTime.Today)
+                          .HtmlAttributes(new { style = "width:120px" })
+                        )
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDate('1')">오늘</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDate('7')">7일</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
+					</td>
+				</tr>
+				<tr>
+					<th>회원구분</th>
+					<td>
+						@(Html.Kendo().DropDownList()
+                            .Name("MEMBER_GBN")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .HtmlAttributes(new { style = "width:200px" })
+                            .BindTo(new List<SelectListItem>() {
+                                new SelectListItem() {
+                                    Text = "전체(비회원,일반,임직원)",
+                                    Value = "A"
+                                },
+                                new SelectListItem() {
+                                    Text = "비회원",
+                                    Value = "2"
+                                },
+                                new SelectListItem() {
+                                    Text = "일반",
+                                    Value = "1"
+                                },
+                                new SelectListItem() {
+                                    Text = "임직원",
+                                    Value = "3"
+                                }
+                            })
+                            .Value("A")
+                        )
+
+                        <label for="MEMBER_GRADE_B"> @Html.CheckBox("MEMBER_GRADE_B", Model == null ? false : (Model.MEMBER_GRADE_B == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">브론즈</span> </label>
+                        <label for="MEMBER_GRADE_S"> @Html.CheckBox("MEMBER_GRADE_S", Model == null ? false : (Model.MEMBER_GRADE_S == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">실버</span> </label>
+                        <label for="MEMBER_GRADE_G"> @Html.CheckBox("MEMBER_GRADE_G", Model == null ? false : (Model.MEMBER_GRADE_G == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">골드</span> </label>
+                        <label for="MEMBER_GRADE_V"> @Html.CheckBox("MEMBER_GRADE_V", Model == null ? false : (Model.MEMBER_GRADE_V == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">VIP</span> </label>
+
+					</td>
+					<th>결제수단</th>
+					<td>
+						@(Html.Kendo().DropDownList()
+                            .Name("PAY_GBN")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .HtmlAttributes(new { style = "width:200px" })
+                            .BindTo(new List<SelectListItem>() {
+                                new SelectListItem() {
+                                    Text = "전체",
+                                    Value = "A"
+                                },
+                                new SelectListItem() {
+                                    Text = "신용카드",
+                                    Value = "1"
+                                },
+                                new SelectListItem() {
+                                    Text = "실시간계좌이체",
+                                    Value = "2"
+                                },
+                                new SelectListItem() {
+                                    Text = "가상계좌",
+                                    Value = "3"
+                                },
+                                new SelectListItem() {
+                                    Text = "포인트결제",
+                                    Value = "4"
+                                }
+                            })
+                            .Value("A")
+                        )
+					</td>
+				</tr>
+				<tr>
+					<th>주문구분</th>
+					<td colspan="3">
+                        <label for="PAT_GUBUN_W"> @Html.CheckBox("PAT_GUBUN_W", Model == null ? true : (Model.PAT_GUBUN_W == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">Web</span> </label>
+                        <label for="PAT_GUBUN_M"> @Html.CheckBox("PAT_GUBUN_M", Model == null ? true : (Model.PAT_GUBUN_M == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">Mobile</span> </label>
+					</td>
+				</tr>
+				<tr>
+					<th>주문상태</th>
+					<td colspan="3">
+                        <label for="DETAIL_STATUS_ALL"> @Html.CheckBox("DETAIL_STATUS_ALL", Model == null ? false : (Model.DETAIL_STATUS_ALL == 1 ? true : false), new { @value = "true", @onclick = "StatusAllClick(this)" }) <span class="txt mr5">전체</span> </label>
+                        <label for="DETAIL_STATUS_20"> @Html.CheckBox("DETAIL_STATUS_20", Model == null ? true : (Model.DETAIL_STATUS_20 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">결재완료</span> </label>
+                        <label for="DETAIL_STATUS_10"> @Html.CheckBox("DETAIL_STATUS_10", Model == null ? false : (Model.DETAIL_STATUS_10 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">결재대기</span> </label>
+                        <label for="DETAIL_STATUS_30"> @Html.CheckBox("DETAIL_STATUS_30", Model == null ? false : (Model.DETAIL_STATUS_30 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">상품준비중</span> </label>
+                        <label for="DETAIL_STATUS_40"> @Html.CheckBox("DETAIL_STATUS_40", Model == null ? false : (Model.DETAIL_STATUS_40 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">배송중</span> </label>
+                        <label for="DETAIL_STATUS_50"> @Html.CheckBox("DETAIL_STATUS_50", Model == null ? false : (Model.DETAIL_STATUS_50 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">배송완료</span> </label>
+                        <label for="DETAIL_STATUS_60"> @Html.CheckBox("DETAIL_STATUS_60", Model == null ? false : (Model.DETAIL_STATUS_60 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">구매확정</span> </label>
+                        <label for="DETAIL_STATUS_90"> @Html.CheckBox("DETAIL_STATUS_90", Model == null ? false : (Model.DETAIL_STATUS_90 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">취소</span> </label>
+                        <label for="DETAIL_STATUS_80"> @Html.CheckBox("DETAIL_STATUS_80", Model == null ? false : (Model.DETAIL_STATUS_80 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">반품</span> </label>
+                        <label for="DETAIL_STATUS_70"> @Html.CheckBox("DETAIL_STATUS_70", Model == null ? false : (Model.DETAIL_STATUS_70 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">교환</span> </label>
+
+					</td>
+				</tr>
+				<tr>
+					<th>출고일</th>
+					<td colspan="3">
+                        @(Html.Kendo().DatePicker()
+                          .Name("DELIVERY_FROM_DATE")
+                          .Value("")
+                          .HtmlAttributes(new { style = "width:120px" })
+                        )
+						~ 
+                        @(Html.Kendo().DatePicker()
+                          .Name("DELIVERY_TO_DATE")
+                          .Value("")
+                          .HtmlAttributes(new { style = "width:120px" })
+                        )
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDeliveryDate('')">전체</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDeliveryDate('1')">오늘</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDeliveryDate('7')">7일</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDeliveryDate('15')">15일</a>
+                        <a href="#" class="btn btn-primary small" onclick="ChangeDeliveryDate('31')">1개월</a><br />
+					</td>
+				</tr>
+                <tr>
+                    <th>조건검색</th>
+                    <td colspan="3">
+                        @(Html.Kendo().DropDownList()
+                            .Name("SEARCH_COL")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                                //  .Events(e => e.Change("change"))
+                            .BindTo(new List<SelectListItem>() {
+                                new SelectListItem() {
+                                    Text = "주문번호",
+                                    Value = "a.ORDER_IDX"
+                                },
+                                new SelectListItem() {
+                                    Text = "아이디",
+                                    Value = "a.MEMBER_ID"
+                                },
+                                new SelectListItem() {
+                                    Text = "상품명",
+                                    Value = "b.P_NAME"
+                                },
+                                new SelectListItem() {
+                                    Text = "주문자명",
+                                    Value = "a.MEMBER_NM"
+                                },
+                                new SelectListItem() {
+                                    Text = "수취인명",
+                                    Value = "a.RECEIVER_NAME"
+                                },
+                                new SelectListItem() {
+                                    Text = "보낸사람HP",
+                                    Value = "a.SENDER_HP"
+                                },
+                                new SelectListItem() {
+                                    Text = "보낸사람TEL",
+                                    Value = "a.SENDER_TEL"
+                                },
+                                new SelectListItem() {
+                                    Text = "수취인HP",
+                                    Value = "a.RECEIVER_HP"
+                                },
+                                new SelectListItem() {
+                                    Text = "수취인TEL",
+                                    Value = "a.RECEIVER_TEL"
+                                }
+                            })
+                            .Value("a.ORDER_IDX")
+                        )
+                        @(Html.Kendo().TextBox()
+                        .Name("SEARCH_KEYWORD")
+                        .Value(ViewBag.SearchKeyword)
+                        .HtmlAttributes(new { @style = "width:250px" })
+                        )
+
+                        @(Html.Kendo().Button()
+                        .Name("submit")
+                        .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                        .Content("검색"))
+
+                        @(Html.Kendo().Button()
+                        .Name("resetform")
+                        .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+                        .Events(ev => ev.Click("onFormReset"))
+                        .Content("초기화"))
+                    </td>
+                </tr>
+			</tbody>
+			</table>
+            
+		</div>
+	</div>
+
+    <div class="tar">
+            <label>페이징 </label>
+            @(Html.Kendo().DropDownList()
+                        .Name("PAGE_COUNT")
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .HtmlAttributes(new { style = "width:100px" })
+                        .Events(ev => ev.Change("changePageSize"))
+                        .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                                Text = "20",
+                                Value = "20"
+                            },
+                            new SelectListItem() {
+                                Text = "30",
+                                Value = "30"
+                            },
+                            new SelectListItem() {
+                                Text = "50",
+                                Value = "50"
+                            },
+                            new SelectListItem() {
+                                Text = "100",
+                                Value = "100"
+                            }
+                        })
+                        .Value("20")
+            )
+    </div>
+    <!--//end form-->
+    }
+  
+    <div class="panel " >
+		<h3 class="sub-header">주문현황 <span>(기간 : 2015-06-29 ~ 2015-07-07)</span></h3>
+		
+		<ul class="tablesort_list">
+			<li>총:<span>@Html.Raw("30")</span>건</li>
+			<li>결제 대기:<span>@Html.Raw("30")</span>건</li>
+			<li>결제 완료:<span>@Html.Raw("30")</span>건</li>
+			<li>상품 준비중:<span>@Html.Raw("30")</span>건</li>
+			<li>배송 중:<span>@Html.Raw("30")</span>건</li>
+			<li>배송완료:<span>@Html.Raw("30")</span>건</li>
+			<li>구매확정:<span>@Html.Raw("30")</span>건</li>
+			<li>취소:<span>@Html.Raw("30")</span>건</li>
+			<li>반품:<span>@Html.Raw("30")</span>건</li>
+			<li>기타:<span>@Html.Raw("30")</span>건</li>
+		</ul>
+		<table class="table table_col" style="min-width:1220px;">
+		<colgroup></colgroup>
+			<thead>
+				<tr>
+					<th scope="col"><input type="checkbox" /></th>
+					<th scope="col">주문일시</th>
+					<th scope="col">주문번호</th>
+					<th scope="col">주문구분</th>
+					<th scope="col">주문상태<br />(상태만 변경)</th>
+					<th scope="col">주문자<br />이름(ID)</th>
+					<th scope="col">받는분<br />이름</th>
+					<th scope="col">주문자휴대전화</th>
+					<th scope="col">주문상품</th>
+					<th scope="col">수량</th>
+					<th scope="col">결제금액</th>
+					<th scope="col">적립포인트</th>
+					<th scope="col">비고</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input type="checkbox" /></td>
+					<td>201304011</td>
+					<td>@Html.ActionLink("Y20150542e93fsd", "Detail", new { OrderId = 1 })</td>
+					<td>WEB</td>
+					<td>
+						<select style="width:120px;">
+							<option selected="selected">결제완료</option>
+							<option>결제완료</option>
+							<option>결제완료</option>
+						</select>
+					</td>
+					<td>홍길동<br />userId</td>
+					<td>010-0000-0000</td>
+					<td>홍길동친구</td>
+					<td>PL2642HM외 3건</td>
+					<td>4건</td>
+					<td>150,000</td>
+					<td>4,500</td>
+					<td><a href="#" class="btn btn-default small">저장</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="tar mt10">
+			<span class="fs11">
+				선택 주문 상태 변경 : 
+				<select style="width:120px;">
+					<option selected="selected">선택완료</option>
+					<option>선택완료</option>
+					<option>선택완료</option>
+				</select>
+			</span>
+			<a href="#" class="btn btn-default middium">송장양식 Excel Download</a>
+			<a href="#" class="btn btn-default middium">데이터 Excel Download</a>
+		</div>
+	</div>
+        
+	<div class="paging">
+		<a href="#" class="prev">«</a>
+		<strong>1</strong>
+		<a href="#">2</a>
+		<a href="#">3</a>
+		<a href="#">4</a>
+		<a href="#">5</a>
+		<a href="#">6</a>
+		<a href="#">7</a>
+		<a href="#">8</a>
+		<a href="#">9</a>
+		<a href="#">10</a>
+		<a href="#" class="next">»</a>
+	</div>
+
+    
+</div>
+<!--//content-->
+        }
+}

@@ -28,15 +28,15 @@ namespace AboutMe.Domain.Entity.AdminPoint
         }
     
     
-        public virtual int SP_ADMIN_POINT_SAVE(string m_ID, Nullable<int> aMOUNT, string aDDITION_REASON, Nullable<int> oRDER_IDX, Nullable<int> rEVIEW_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_ADMIN_POINT_SAVE(string m_ID, Nullable<int> pOINT, string aDDITION_REASON, Nullable<int> oRDER_IDX, Nullable<int> rEVIEW_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
                 new ObjectParameter("M_ID", typeof(string));
     
-            var aMOUNTParameter = aMOUNT.HasValue ?
-                new ObjectParameter("AMOUNT", aMOUNT) :
-                new ObjectParameter("AMOUNT", typeof(int));
+            var pOINTParameter = pOINT.HasValue ?
+                new ObjectParameter("POINT", pOINT) :
+                new ObjectParameter("POINT", typeof(int));
     
             var aDDITION_REASONParameter = aDDITION_REASON != null ?
                 new ObjectParameter("ADDITION_REASON", aDDITION_REASON) :
@@ -50,7 +50,7 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("REVIEW_IDX", rEVIEW_IDX) :
                 new ObjectParameter("REVIEW_IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_SAVE", m_IDParameter, aMOUNTParameter, aDDITION_REASONParameter, oRDER_IDXParameter, rEVIEW_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_SAVE", m_IDParameter, pOINTParameter, aDDITION_REASONParameter, oRDER_IDXParameter, rEVIEW_IDXParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual int SP_ADMIN_POINT_USE(string m_ID, Nullable<int> uSE_POINT, string aDDITION_REASON, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
@@ -132,6 +132,74 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("M_ID", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_POINT_HISTORY_CNT", m_IDParameter);
+        }
+    
+        public virtual int SP_POINT_SAVE_ON_ORDER(string m_ID, Nullable<int> aMOUNT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var aMOUNTParameter = aMOUNT.HasValue ?
+                new ObjectParameter("AMOUNT", aMOUNT) :
+                new ObjectParameter("AMOUNT", typeof(int));
+    
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_SAVE_ON_ORDER", m_IDParameter, aMOUNTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_USE_ON_ORDER(string m_ID, Nullable<int> uSE_POINT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var uSE_POINTParameter = uSE_POINT.HasValue ?
+                new ObjectParameter("USE_POINT", uSE_POINT) :
+                new ObjectParameter("USE_POINT", typeof(int));
+    
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_USE_ON_ORDER", m_IDParameter, uSE_POINTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_CANCEL_PART_ORDER(string m_ID, Nullable<int> pOINT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pOINTParameter = pOINT.HasValue ?
+                new ObjectParameter("POINT", pOINT) :
+                new ObjectParameter("POINT", typeof(int));
+    
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_PART_ORDER", m_IDParameter, pOINTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_CANCEL_ALL_ORDER(string m_ID, Nullable<int> pOINT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pOINTParameter = pOINT.HasValue ?
+                new ObjectParameter("POINT", pOINT) :
+                new ObjectParameter("POINT", typeof(int));
+    
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_ALL_ORDER", m_IDParameter, pOINTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
         }
     }
 }

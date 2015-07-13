@@ -1,0 +1,295 @@
+﻿
+@model AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_FRONT_MEMBER_VIEW_Result
+
+@{
+    ViewBag.Title = "FrontMemberInfo";
+    Layout = null;
+}
+
+@{
+
+
+    @helper fGradeName(string gradeCode)
+{
+    var grade_name = gradeCode;
+    switch (gradeCode)
+    {
+        case "B": grade_name = "브론즈";
+            break;
+        case "S": grade_name = "실버";
+            break;
+        case "G": grade_name = "골드";
+            break;
+        case "V": grade_name = "VIP";
+            break;
+
+    }
+    <div>@grade_name</div>
+}
+
+    @helper fIsRerireNAME(string is_retire)
+{
+    var isretire_name = is_retire;
+    switch (is_retire)
+    {
+        case "Y": isretire_name = "탈퇴회원";
+            break;
+        case "N": isretire_name = "활동중";
+            break;
+
+    }
+    @(@isretire_name)
+}
+
+    @helper fM_GBN_NAME(string m_gbn)
+{
+    var m_gbn_name = m_gbn;
+    switch (m_gbn)
+    {
+        case "A": m_gbn_name = "일반회원";
+            break;
+        case "S": m_gbn_name = "임직원";
+            break;
+
+    }
+    <div>@m_gbn_name</div>
+}
+
+    @helper fM_SEX_NAME(string m_sex)
+{
+    var m_sex_name = m_sex;
+    switch (m_sex)
+    {
+        case "1": m_sex_name = "남자";
+            break;
+        case "3": m_sex_name = "남자";
+            break;
+        case "2": m_sex_name = "여자";
+            break;
+        case "4": m_sex_name = "여자";
+            break;
+
+    }
+    <div>@m_sex_name <span>(@m_sex)</span></div>
+}
+
+    @helper fM_SKIN_TROUBLE_NAME(string code)
+{
+    var m_trouble_name = code;
+    switch (code)
+    {
+        case "101201100": m_trouble_name = "보습";
+            break;
+        case "101202100": m_trouble_name = "탄력/주름";
+            break;
+        case "101203100": m_trouble_name = "브라이트닝";
+            break;
+        case "101204100": m_trouble_name = "화이트닝";
+            break;
+        case "101205100": m_trouble_name = "안티에이징";
+            break;
+        case "101206100": m_trouble_name = "피지,모공";
+            break;
+        case "101207100": m_trouble_name = "생기,활력";
+            break;
+        case "101208100": m_trouble_name = "자외선 차단";
+            break;
+
+    }
+    <div>@m_trouble_name <span>(@code)</span></div>
+}
+
+
+
+    @helper fIS_RENAME_YN(string strDI)
+{
+    if (strDI != null && strDI != "")
+    {
+        @("인증")
+    }
+    else
+    {
+        @("미인증")
+    }
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+            <div class="panel">
+                <h4 class="sub-header">1.기본정보 [@fIsRerireNAME(@Model.M_IS_RETIRE)]</h4>
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>아이디</th>
+                            <td>@Model.M_ID</td>
+                            <th>이름</th>
+                            <td>@Model.M_NAME</td>
+                            <th>회원등급</th>
+                            <td>@fGradeName(@Model.M_GRADE)</td>
+                        </tr>
+                        <tr>
+                            <th>성별</th>
+                            <td>@fM_SEX_NAME(@Model.M_SEX)</td>
+                            <th>생년월일</th>
+                            <td>@Model.M_BIRTHDAY</td>
+                            <th>가입일</th>
+                            <td>@Model.M_CREDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                        <tr>
+                            <th>약관동의1</th>
+                            <td>(개인정보 제 3자 제공에 동의):@Model.M_AGREE </td>
+                            <th>약관동의2</th>
+                            <td>(고유식별정보 수집 및 이용):@Model.M_AGREE2</td>
+                            <th>최종정보수정일</th>
+                            <td>@Model.M_UPDATEDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                        <tr>
+                            <th>피부트러블</th>
+                            <td>@fM_SKIN_TROUBLE_NAME(@Model.M_SKIN_TROUBLE_CD)</td>
+                            <th>방문회수</th>
+                            <td>@Model.M_VISITCNT 회</td>
+                            <th>최종방문일</th>
+                            <td>@Model.M_LASTVISITDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+
+
+                        <tr>
+                            <th>휴대폰</th>
+                            <td>@Model.M_MOBILE</td>
+                            <th>집전화</th>
+                            <td>@Model.M_PHONE</td>
+                            <th>EMAIL</th>
+                            <td>@Model.M_EMAIL</td>
+                        </tr>
+                        <tr>
+                            <th>우편번호</th>
+                            <td>@Model.M_ZIPCODE</td>
+                            <th>주소/나머지</th>
+                            <td colspan="3">@Model.M_ADDR1 / @Model.M_ADDR2 </td>
+                        </tr>
+                        <tr>
+                            <th>SMS수신</th>
+                            <td>@Model.M_ISSMS</td>
+                            <th>이메일수신</th>
+                            <td>@Model.M_ISEMAIL</td>
+                            <th>DM수신</th>
+                            <td>@Model.M_ISDM</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <div class="panel">
+                <h4 class="sub-header">2.실명인증</h4>
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>실명인증 여부</th>
+                            <td>@fIS_RENAME_YN(@Model.M_DI)</td>
+                            <th>인증방식</th>
+                            <td>@Model.M_JOIN_MODE</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel">
+                <h4 class="sub-header">4.임직원정보</h4>
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>임직원 여부</th>
+                            <td>@fM_GBN_NAME(@Model.M_GBN)</td>
+                            <th>소속회사</th>
+                            <td>@Model.M_STAFF_COMPANY</td>
+                            <th>사번</th>
+                            <td>@Model.M_STAFF_ID</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel">
+                <h4 class="sub-header">5.탈퇴여부</h4>
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>탈퇴 여부</th>
+                            <td>@Model.M_IS_RETIRE</td>
+                            <th>탈퇴일</th>
+                            <td>@Model.M_DEL_DATE</td>
+                            <th>탈퇴시 잔여포인트</th>
+                            <td>@Model.M_DEL_POINT</td>
+                        </tr>
+                        <tr>
+                            <th>탈퇴사유</th>
+                            <td colspan="5">@Model.M_DEL_REASON</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel">
+                <h4 class="sub-header">6.쇼핑정보/활동내역 (*.클릭시 상세팝업 링크)</h4>
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>회원등급</th>
+                            <td>@fGradeName(@Model.M_GRADE)</td>
+                            <th>총구매건수</th>
+                            <td>
+                                (담당자구현필요)@ViewBag.TOTAL_ORDER_CNT.ToString("#,##0")
+                            </td>
+                            <th>총구매액</th>
+                            <td>
+                                (담당자구현필요)@ViewBag.TOTAL_ORDER_PRICE.ToString("#,##0")
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>보유포인트</th>
+                            <td>
+                                @Model.M_POINT.ToString("#,##0")
+                        </td>
+                        <th>보유쿠폰</th>
+                        <td>
+                            (담당자구현필요)@ViewBag.TOTAL_COUPON_CNT.ToString("#,##0")
+                        </td>
+                        <th>1:1문의</th>
+                        <td>
+                            (담당자구현필요)@ViewBag.TOTAL_QNA_CNT.ToString("#,##0")
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+

@@ -4,10 +4,10 @@
   font-family: 'NanumBarunGothicLight';
   font-style: normal;
   font-weight: 400;
-  src: url(/cmsManager/aboutCom/fonts/NanumBarunGothicLight.eot);
-  src: url(/cmsManager/aboutCom/fonts/NanumBarunGothicLight.eot?#iefix) format('embedded-opentype'),
-       url(/cmsManager/aboutCom/fonts/NanumBarunGothicLight.woff) format('woff'),
-       url(/cmsManager/aboutCom/fonts/NanumBarunGothicLight.ttf) format('truetype');
+  src: url(/aboutCom/fonts/NanumBarunGothicLight.eot);
+  src: url(/aboutCom/fonts/NanumBarunGothicLight.eot?#iefix) format('embedded-opentype'),
+       url(/aboutCom/fonts/NanumBarunGothicLight.woff) format('woff'),
+       url(/aboutCom/fonts/NanumBarunGothicLight.ttf) format('truetype');
 }
 
 /* base style */
@@ -405,6 +405,15 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 .reviewpop .reviewpop_bottom .reviewproduct .pro_info .detail .stit {margin-top:7px;font-size:11px; font-family:"Dotum"; letter-spacing:-1px; color:#bbb5b4;}
 .reviewpop .reviewpop_bottom .reviewproduct .pro_info .detail .price  {margin-top:13px;font-size:16px; color:#1b1818}
 .reviewpop .reviewpop_bottom .reviewproduct .plbanr {position:absolute; right:18px; top:18px;width:310px; height:140px; background:#ccc; }
+
+/* popup : 새창 */
+body.popup {min-width:0;}
+.popupwrap .pop {position:absolute;left:0;top:0;padding:40px;}
+.popupwrap .pop .pop_close {position:absolute;right:60px;top:67px;}
+.popupwrap .pop .pop_top .title_area {padding-bottom:16px;text-align:center;border-top:2px solid #696361;border-bottom:1px solid #bbb5b4;}
+.popupwrap .pop .pop_top .title_area .title {margin-top:24px;font-size:26px;color:#1b1818;}
+.popupwrap .pop .pop_bottom {padding-top:35px;height:380px;font-size:14px;line-height:22px;color:#696361;overflow-y:scroll;}
+
 
 /* IE8 only */
 @media \0screen {

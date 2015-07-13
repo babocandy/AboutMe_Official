@@ -117,6 +117,7 @@
         </div>
         <!--gnb-->
         <!--util-->
+<!--
         <div class="util">
             <ul>
                 <li><a href="/membership/login.asp"><img src="/aboutCom/images/common/util_login.gif" alt="LOGIN" /></a></li>
@@ -124,7 +125,12 @@
                 <li><a href="/mypage/main.asp"><img src="/aboutCom/images/common/util_mypage.gif" alt="MY PAGE" /></a></li>
             </ul>
         </div>
+-->
+        <!-- RightTopMenu Util : 로그인/JoinUS | 로그아웃/Mypage-->
+        @{Html.RenderAction("ChildRightTopMenu_Util", "CommonChildAction");}
         <!--//util-->
+
+
         <!--쇼핑백-->
         <div class="cart">
             <a href="#" class="viewcart">

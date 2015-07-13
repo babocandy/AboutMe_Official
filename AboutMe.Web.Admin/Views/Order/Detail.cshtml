@@ -1,0 +1,272 @@
+﻿@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+@section Scripts{
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+
+<!--content-->
+<div class="content">
+	<!--path-->
+	<div class="path">
+        <a href="/">HOME</a> &gt; <a href="/Order/">주문/매출</a> &gt; <strong>주문관리</strong>
+	</div>
+	<!--//path-->
+	<div class="panel">
+	<h3 class="sub-header">주문관리</h3>
+	<div class="alert alert-info">
+		<ul>
+			<li>· 주문 상태가 “결제완료”인 상태에서는 사용자도 마이페이지 > 주문 내역 페이지에서 결제 취소가 가능합니다.</li>
+			<li>· 주문 상태가 “상품준비중” 부터 사용자는 자동 취소가 불가하며, 주문 취소/교환/반품 메뉴를 통해 요청을 하게 됩니다.</li>
+			<li>· 부분 취소 / 부분 반품일 경우 PG사 결제 취소, 포인트, 마일리지 회수는 시스템에 의해 자동으로만 처리됩니다.</li>
+			<li>· <span>실시간계좌이체 전체 취소는 고객이 입금한 계좌로 바로 자동 송금되며, 부분취소일 경우 고객에게 환급되는 기간은 은행별 영업일 기준 1~2일 정도 소요됩니다.(이니시스사 정책)</span></li>
+			<li>·주문 상태 변경 값은 현재의 상태 이후 변경 가능한 시점의 상태만 노출됩니다.</li>
+			<li>· 출고일은 송장번호가 등록된 일자입니다. / 교환일 경우 변경 등록된 송장번호 등록 일자가 출고일 입니다.<br />임직원 매장 배송 주문일 경우 송장번호 란에 “매장배송”으로 입력해 주세요</li>
+			<li>· <span>현 주문 상태 일괄 변경은 개별 주문상태 값과 무관하게 선택하신 값으로 모두 변경되오니 변경 시 다시 한번 검토하시기 바랍니다.</span></li>
+		</ul>	
+	</div>
+</div>
+						 
+	<div class="panel">
+	<h3 class="sub-header">주문리스트</h3>
+	<table class="table table_col" style="min-width:1400px;">
+		<thead>
+			<tr>
+				<th>상품명</th>
+				<th>주문<br />구분</th>
+				<th>수량</th>
+				<th>적용<br />프로모션</th>
+				<th>상품금액</th>
+				<th>임직원<br />할인액</th>
+				<th>쿠폰<br />할인액</th>
+				<th>사용쿠폰</th>
+				<th>포인트<br />사용액</th>
+				<th>결제금액</th>
+				<th>적립예정<br />포인트</th>
+				<th>송장번호</th>
+				<th>주문상태</th>
+				<th>주문상태<br />변경일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<img src="/cmsManager/aboutCom/images/thumb.gif" alt="" /><br/>
+					상품명
+				</td>
+				<td>WEB</td>
+				<td>1</td>
+				<td>Time Sale</td>
+				<td>248,000원</td>
+				<td>6,000</td>
+				<td>69,900</td>
+				<td>생일쿠폰</td>
+				<td>2,700</td>
+				<td>169,400 원</td>
+				<td>4,700(적립)</td>
+				<td>
+					<input type="text" class="input-sm"  value="12454475" /><br />
+					<a class="btn btn-info small mt5" href="#">변경</a><br />
+					<a class="btn btn-info small mt5" href="#">배송추적</a>
+				</td>
+				<td>
+					<select style="width:120px;">
+						<option selected="selected">반품</option>
+						<option>반품</option>
+						<option>반품</option>
+					</select><br />
+					<a class="btn btn-info small mt5" href="#">변경</a>
+				</td>
+				<td>20130404</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="/cmsManager/aboutCom/images/thumb.gif" alt="" /><br/>
+					상품명
+				</td>
+				<td>WEB</td>
+				<td>1</td>
+				<td>Time Sale</td>
+				<td>248,000원</td>
+				<td>6,000</td>
+				<td>69,900</td>
+				<td>생일쿠폰</td>
+				<td>2,700</td>
+				<td>169,400 원</td>
+				<td>4,700(적립)</td>
+				<td>
+					<input type="text" class="input-sm"  /><br />
+					<a class="btn btn-info small mt5" href="#">입력</a>
+				</td>
+				<td>
+					<select style="width:120px;">
+						<option selected="selected">배송중</option>
+						<option>반품</option>
+						<option>반품</option>
+					</select><br />
+					<a class="btn btn-info small mt5" href="#">변경</a>
+				</td>
+				<td>20130404</td>
+			</tr>
+		</tbody>
+	</table>
+							
+	<div class="tar mt10">
+		<a class="btn btn-default middium" href="#">포인트 수동 관리</a>
+		<a class="btn btn-default middium" href="#">PG사 부분 취소</a>
+		<a class="btn btn-default middium" href="#">주문전체취소</a>
+		<a class="btn btn-default middium" href="#">주문전체반품</a>
+	</div>
+</div>
+
+<div class="panel">
+	<div class="saleapply boxtyped mt20">
+		<ul>
+			<li class="product">
+				<p class="tot"><span class="tit">상품 금액</span><span class="price"><strong>82,000</strong>원</span></p>
+				<p><span class="tit">취소/반품</span><span class="price"><strong>82,000</strong> 원</span></p>
+				<p><span class="tit">상품금액</span><span class="price"><strong>0</strong> 원</span></p>
+			</li>
+			<li class="sale">
+				<p class="tot"><span class="tit">할인 금액</span><span class="price"><strong>10,190</strong>원</span></p>
+				<p><span class="tit">임직원 할인</span><span class="price"><strong>190</strong> 원</span></p>
+				<p><span class="tit">쿠폰 할인</span><span class="price point"><i></i><strong>0</strong></span></p>
+				<p><span class="tit">보유포인트사용</span><span class="price"><strong>190</strong> 원</span></p>
+				<p><span class="tit">회원등급(VIP)확인</span><span class="price"><strong>190</strong> 원</span></p>
+			</li>
+			<li class="total">
+				<p class="tot"><span class="tit">포인트</span><span class="price"><strong>ⓟ71,810</strong></span></p>
+			</li>
+		</ul>
+	</div>
+	<div class="tal mt10">
+		<span class="fs11">
+			현 주문 상태 일괄 변경 : 
+			<select style="width:120px;">
+				<option selected="selected">선택완료</option>
+				<option>선택완료</option>
+				<option>선택완료</option>
+			</select>
+		</span>
+		<a href="#" class="btn btn-default small">변경</a>
+	</div>
+</div>
+
+<div class="panel">
+	<h3 class="sub-header">결제 정보</h3>
+	<table class="table table_row v2">
+		<tr>
+			<th>주문번호</th>
+			<td class="fcred">20121218110751</td>
+			<th>주문일시</th>
+			<td>2013-01-01 오후 5:07:00</td>
+		</tr>
+		<tr>
+			<th>결제 수단</th>
+			<td>신용카드(3개월 할부)</td>
+			<th>승인 번호</th>
+			<td class="fcred">20121218110751</td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td colspan="3">bckang@nate.com</td>
+		</tr>
+	</table>
+
+	<h3 class="sub-header mt20">주문자 정보</h3>
+	<table class="table table_row v2">
+		<tr>
+			<th>받으시는 분</th>
+			<td  colspan="3">홍길동 (hong123) <a href="#" class="btn btn-success small">회원정보보기</a></td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td colspan="3">
+				123-456<br />
+				서울시 마포구 신공덕동 146-59 신보빌딩 4F
+			</td>
+		</tr>
+		<tr>
+			<th>휴대전화</th>
+			<td>010-1234-5678</td>
+			<th>기타 연락처</th>
+			<td>010-1234-5678</td>
+		</tr>
+	</table>
+
+	<h3 class="sub-header mt20">주문자 정보</h3>
+	<table class="table table_row v2">
+		<tr>
+			<th>받으시는 분</th>
+			<td  colspan="3"><input type="text" value="홍길동" class="input-sm" style="120px" /></td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td  colspan="3">
+				<input type="text" class="input-sm" value="123-456" style="width:120px;"/> <a href="#" onclick="PopupCenter('/popoldlogin.html', '', '476', '380'); return false;" class="btn btn-success small">우편번호</a> <br />
+				<input type="text" class="input-sm mt5" value="서울시 마포구 신공덕동 146-59 신보빌딩 4F" style="width:390px;"/>
+			</td>
+		</tr>
+		<tr>
+			<th>휴대전화</th>
+			<td><input type="text" class="input-sm" value="010-1234-5678" style="width:120px;"/></td>
+			<th>기타 연락처</th>
+			<td><input type="text" class="input-sm" value="010-1234-5678" style="width:120px;"/></td>
+		</tr>
+		<tr>
+			<th>배송시 요청사항</th>
+			<td  colspan="3">
+				<input type="text" class="input-sm" value="부재시 핸드폰 연락주세요" style="width:390px;"/>
+			</td>
+		</tr>
+	</table>
+	<div class="tar mt10">
+		<a href="#" class="btn btn-default middium">변경</a>
+	</div>
+	<div class="mt10">
+		<h4>관리자메모</h4>
+		<textarea class="textarea" style="width:100%; height:150px;"></textarea>
+		<div class="tar mt10">
+			<a href="#" class="btn btn-default middium">저장</a>
+		</div>
+	</div>
+								
+	<h4 class="mt20">주문관련로그</h4>
+	<div class="alert alert-info">
+		<ul>
+			<li>· 주문서생성 (2013.01.23 12:55)</li>
+			<li>· 상품준비중으로 일괄변경 (관리자 cstone) (2013.01.24 13:55)</li>
+			<li>· 배송지 정보변경 “서울시 마포구 신공덕동 1234 번지“ 에서 “서울시 마포구 서교동 123”으로 변경(관리자 cstone) (2013.01.24 15:42)</li>
+			<li>· 제품명 AM0340BM 발송완료 (관리자 cstone) (송장번호 12355) (2013.01.24 05:45)</li>
+		</ul>	
+	</div>
+	<div class="tar mt10">
+		<a href="#" class="btn btn-default middium">해당 주문 건 취소/교환/반품 신청 내역 보기</a>
+		<a href="#" class="btn btn-default middium">출력</a>
+		<a href="#" class="btn btn-default middium">닫기</a>
+	</div>
+</div>
+<script type="text/javascript">
+	function PopupCenter(popNM, parms, width, height){
+		var sw  = screen.availWidth ;
+		var sh  = screen.availHeight ;
+		px=(sw - width)/2 ;
+		py=(sh - height)/2 ;
+		var set  = 'top=' + py + ',left=' + px ;
+		set += ',width=' + width + ',height=' + height + ',menubar = no, toolbar = no, location = no, status = no, scrollbars = yes, resizable = yes' ;
+		window.name="pop";
+		window.open (popNM + parms , '' , set) ;
+	}
+</script>
+
+</div>
+<!--//content-->
+}

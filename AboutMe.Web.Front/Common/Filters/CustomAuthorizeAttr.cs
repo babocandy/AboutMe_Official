@@ -98,9 +98,9 @@ namespace AboutMe.Web.Front.Common.Filters
             //UserType role  = (UserType)Convert.ToInt32(httpContext.Session[mvc_SessionAuthorize.claGlobal.SessionString_UserType]);
 
 
-            string UserId = FrontUserInfo.GetFrontUserId();
-            string UserGrade = FrontUserInfo.GetFrontUserGrade(); //회원 등급 varchar(1) (B/S/G/V) 브론즈/실버/골드/VIP
-            string UserGBN = FrontUserInfo.GetFrontUserGBN();  ////회원 구분  S:임직원 , A or기타:일반회원 
+            string UserId = MemberInfo.GetMemberId();
+            string UserGrade = MemberInfo.GetMemberGrade(); //회원 등급 varchar(1) (B/S/G/V) 브론즈/실버/골드/VIP
+            string UserGBN = MemberInfo.GetMemberGBN();  ////회원 구분  S:임직원 , A or기타:일반회원 
            
 
             // you could get User role or user type from session.

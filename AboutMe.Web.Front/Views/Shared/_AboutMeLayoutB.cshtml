@@ -1,0 +1,36 @@
+﻿@{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+@if (IsSectionDefined("Scripts"))
+{
+    @RenderSection("Scripts")
+}
+<title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="wrap @ViewBag.TopClass">
+        <!--header-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <!--//header-->
+        <!--container-->
+        @if (IsSectionDefined("Body"))
+        {
+            @RenderSection("Body")
+        }
+        else
+        {
+            @RenderBody()
+        }
+        <!--//container-->
+        <!--footer-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--//footer-->
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -290,6 +290,17 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
 
+        //관리자 - 회원 상세 팝업
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult PopMemberInfo(string M_ID = "")
+        {
+            if (M_ID == "")
+                return Content("<script language='javascript' type='text/javascript'>alert('회원원아이디가 전달되지 않았습니다.');self.close();</script>");
+
+            this.ViewBag.M_ID = M_ID;
+            return View();
+        }
+
 
         // 관리자 - 회원 목록엑셀  /AdminUser/Excel/
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 

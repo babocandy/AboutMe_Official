@@ -1,0 +1,305 @@
+﻿@{
+    ViewBag.Title = "Mypage";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <!-- 각 페이지별 코딩에 따라 css or js 변경필요-->
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+}
+
+
+<!--header-->
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+}
+<!--//header-->
+<!--container-->
+@section Body{
+
+<!--container-->
+<div id="container" class="mymain">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>마이<br />페이지<i></i></h2>
+                <!--mypage_menu-->
+                <div class="mypage_menu">
+                    <ul>
+                        <li><a href="#">배송/주문조회</a></li>
+                        <li><a href="#">교환/반품 신청</a></li>
+                        <li><a href="#">내 포인트</a></li>
+                        <li><a href="#">내 쿠폰북</a></li>
+                        <li><a href="#">1:1문의</a></li>
+                        <li><a href="#">찜목록</a></li>
+                        <li><a href="#">임직원인증->미정</a></li>
+                        <li><a href="#">개인정보관리</a></li>
+                        <li><a href="#">회원탈퇴</a></li>
+                    </ul>
+                </div>
+                <!--//mypage_menu-->
+            </div>
+            <!--//h2_area-->
+            <!--user_area-->
+            <div class="user_area">
+                <!--
+                    회원 등급 class
+                    브론즈 : bronze
+                    실버 : silver
+                    골드 : gold
+                    vip : vip
+                -->
+                <div class="info @ViewBag.M_GRADE_NAME.ToLower()">
+                    @ViewBag.M_NAME 님은<br /><span class="grade">@ViewBag.M_GRADE_NAME 클래스</span>입니다.
+                    <a class="benefitview" href="#">회원혜택 보기<i></i></a>
+                </div>
+                <div class="userbenefit">
+                    <ul>
+                        <li class="downcoupon">
+                            <span class="ico"></span>
+                            <span class="num">123,456</span>
+                            <span class="tit">다운로드 가능 쿠폰</span>
+                        </li>
+                        <li class="havecoupon">
+                            <span class="ico"></span>
+                            <span class="num">123,456</span>
+                            <span class="tit">보유 쿠폰</span>
+                        </li>
+                        <li class="downpoint">
+                            <span class="ico"></span>
+                            <span class="num">123,456</span>
+                            <span class="tit">포인트</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--//user_area-->
+        </div>
+        <!--//mypage_top-->
+        <!--배송현황-->
+        <div class="contypea">
+            <h3><img src="/aboutCom/images/mypage/h3_delivery.gif" alt="배송현황" /></h3>
+            <div class="delivery">
+                <p class="delitxt">
+                    진행중인<br />주문/배송현황이<br /><span>02</span>건 입니다.
+                </p>
+                <ul class="delilist">
+                    <li class="status1"> <span class="num">0</span><span class="statustxt">입금대기</span></li>
+                    <li class="status2"><span class="num">2</span><span class="statustxt">결제완료</span></li>
+                    <li class="status3"><span class="num">2</span><span class="statustxt">상품준비중</span></li>
+                    <li class="status4"><span class="num">0</span><span class="statustxt">배송중</span></li>
+                    <li class="status5"><span class="num">0</span><span class="statustxt">배송완료</span></li>
+                </ul>
+            </div>
+        </div>
+        <!--//배송현황-->
+        <!--나의 리뷰, 1:1문의, 교환/반품신청-->
+        <div class="contypewrap fltype num3 mt20">
+            <!--나의 리뷰-->
+            <div class="contypea">
+                <h3><img src="/aboutCom/images/mypage/h3_review.gif" alt="나의 리뷰" /></h3>
+                <dl class="dltypea">
+                    <dt>작성할 리뷰</dt>
+                    <dd><strong>13</strong>건</dd>
+                    <dt>작성한 리뷰</dt>
+                    <dd><strong>3</strong>건</dd>
+                </dl>
+            </div>
+            <!--//나의 리뷰-->
+            <!--1:1문의-->
+            <div class="contypea">
+                <h3><img src="/aboutCom/images/mypage/h3_1_1qna.gif" alt="1:1 문의" /></h3>
+                <dl class="dltypea">
+                    <dt>진행중인 문의</dt>
+                    <dd><strong>3</strong>건</dd>
+                    <dt>완료된 문의</dt>
+                    <dd><strong>13</strong>건</dd>
+                </dl>
+            </div>
+            <!--//1:1문의-->
+            <!--교환/반품 신청-->
+            <div class="contypea">
+                <h3><img src="/aboutCom/images/mypage/h3_return.gif" alt="교환/반품 신청" /></h3>
+                <dl class="dltypea">
+                    <dt>진행중인 신청</dt>
+                    <dd><strong>3</strong>건</dd>
+                    <dt>완료된 신청</dt>
+                    <dd><strong>13</strong>건</dd>
+                </dl>
+            </div>
+            <!--//교환/반품 신청-->
+        </div>
+        <!--//나의 리뷰, 1:1문의, 교환/반품신청-->
+        <!--제품추천-->
+        <div class="recommendation_goods">
+            <div class="contypea listslider">
+                <h3><strong>홍길동</strong>님 피부고민에 이 제품 어떠세요?</h3>
+                <a href="#none" class="setting_skin" onclick="viewSettingSkin()">내 피부 고민 설정</a>
+                <div class="btn_area listsliderbtn">
+                    <a href="#" class="prev">이전</a>
+                    <a href="#" class="next">다음</a>
+                </div>
+                <div class="listwrap">
+                    <ul class="list listslidercon">
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+                                <span class="detail">
+                                    <em class="ico ico_new">new</em>
+                                    <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게1</em>
+                                    <em class="stit">스킨 톤업 버블 워시</em>
+                                    <em class="price">
+                                        <del>32,000원</del>
+                                        25,000원
+                                    </em>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+                                <span class="detail">
+                                    <em class="ico ico_new">new</em>
+                                    <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게2</em>
+                                    <em class="stit">스킨 톤업 버블 워시</em>
+                                    <em class="price">
+                                        <del>32,000원</del>
+                                        25,000원
+                                    </em>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+                                <span class="detail">
+                                    <em class="ico ico_new">new</em>
+                                    <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게3</em>
+                                    <em class="stit">스킨 톤업 버블 워시</em>
+                                    <em class="price">
+                                        <del>32,000원</del>
+                                        25,000원
+                                    </em>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+                                <span class="detail">
+                                    <em class="ico ico_new">new</em>
+                                    <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게4</em>
+                                    <em class="stit">스킨 톤업 버블 워시</em>
+                                    <em class="price">
+                                        <del>32,000원</del>
+                                        25,000원
+                                    </em>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--내 피부고민 설정 팝업-->
+        <div class="skinsetting_popwrap">
+            <div class="dimd"></div>
+            <div class="skinsetting_pop">
+                <a href="#none" class="btn_close" onclick="closeSettingSkin()"><img src="/aboutCom/images/mypage/btn_close.gif" alt="" /></a>
+                <p class="title">내 피부 고민 설정</p>
+                <div class="list">
+                    <!--
+                    보습 :skintype1,
+                    탄력/주름 : skintype2,
+                    브라이트닝 :skintype3,
+                    화이트닝 : skintype4,
+                    안티에이징 : skintyp5,
+                    피지, 모공 : skintype6,
+                    생기, 활력 : skintype7,
+                    자외선 차단 :skintype8
+                    -->
+                    <ul>
+                        <li class="skintype1">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">보습</span>
+                            </a>
+                        </li>
+                        <li class="skintype2">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">탄력/주름</span>
+                            </a>
+                        </li>
+                        <li class="skintype3">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">브라이트닝</span>
+                            </a>
+                        </li>
+                        <li class="skintype4 lst">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">화이트닝</span>
+                            </a>
+                        </li>
+                        <li class="skintype5">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">안티에이징</span>
+                            </a>
+                        </li>
+                        <li class="skintype6">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">피지, 모공</span>
+                            </a>
+                        </li>
+                        <li class="skintype7">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">생기, 활력</span>
+                            </a>
+                        </li>
+                        <li class="skintype8 lst">
+                            <a href="#">
+                                <span class="ico"></span>
+                                <span class="txt">자외선 차단</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btngroup">
+                    <a href="#" class="btn_brown_w96h38">설정</a>
+                    <a href="#" class="btn_white_w96h38">취소</a>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function viewSettingSkin() {
+                $("html").css({ "overflow-y": "hidden" });
+                $(".skinsetting_popwrap").show();
+            }
+            function closeSettingSkin() {
+                $("html").css({ "overflow-y": "auto" });
+                $(".skinsetting_popwrap").hide();
+            }
+        </script>
+        <!--//내 피부고민 설정 팝업-->
+        <!--//제품추천-->
+    </div>
+</div>
+<!--//container-->
+
+
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+}
+<!--//footer-->

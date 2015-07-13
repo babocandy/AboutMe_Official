@@ -1,0 +1,217 @@
+﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_PRODUCT*@
+
+@model AboutMe.Web.Admin.Controllers.AdminPromotionController.MyMultiModelForCreateProduct
+
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+   @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+   {
+         if(TempData["jsMessage"] == "-1")
+         {  
+             <text>
+                <script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>
+             </text>
+         }
+
+        if (TempData["jsMessage"] == "-2")
+        {
+            <text>
+               <script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
+            </text>
+        }
+
+        if (TempData["jsMessage"] == "-3")
+        {
+            <text>
+                <script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
+            </text>
+        }
+   }
+
+
+    <script language="javascript">
+
+        function frmCheck() {
+            //alert("여기입니다");
+
+            var f = document.frm01;
+
+            if (f.SEL_PMO_PRODUCT_CATEGORY.value == '') {
+                alert("프로모션 종류를 선택하세요.");
+                f.SEL_PMO_PRODUCT_CATEGORY.focus();
+                return false;
+            }
+
+        }
+
+
+
+        function setProductCategory(obj_selectbox, sel_index) {
+
+           // alert(obj_selectbox[sel_index].value);
+            var f = document.frm01;
+            f.inst_TB_PROMOTION_BY_PRODUCT_PMO_PRODUCT_CATEGORY.value = obj_selectbox.options[sel_index].value;
+
+            //alert(obj_selectbox[sel_index].value);
+
+            if (obj_selectbox[sel_index].value == "01") //세트상품
+            {
+
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = false;
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = true;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "02") //1+1 
+            {
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = true;
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = false;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "03") //일반품별할인
+            {
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = true;
+                f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = true;
+            }
+
+        }
+
+  
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">상품별 할인 프로모션 등록</h3>
+
+            @using (Html.BeginForm("PrdCreate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                            <tbody>
+
+                                                <tr>
+                                                    <th>프로모션명 </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_NAME)</font></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>프로모션 종류 </th>
+                                                    <td>
+                                                        @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_CATEGORY, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_CATEGORY)</font>
+                                                        <select name="SEL_PMO_PRODUCT_CATEGORY" style="width:270px;" onchange="setProductCategory(this,this.selectedIndex);">
+                                                            <option value="">==선택==</option>
+                                                            <option value="01">세트상품</option>
+                                                            <option value="02">1+1 프로모션</option>
+                                                            <option value="03">일반 품별할인(타임세일포함)</option>
+                                                        </select>
+
+                                                    </td>
+
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <th>프로모션 Main Title </th>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" }) </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>프로모션 Sub Title </th>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SUB_TITLE, new { cssClass = "input-sm text-left" })</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>프로모션 쇼핑팁 </th>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left" })</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>정률/정액 </th>
+                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_RATE_OR_MONEY)</font></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>할인율 </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DISCOUNT_RATE)</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>할인액 </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DISCOUNT_MONEY)</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>세트상품 할인적용 기준 종류수 </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_SET_DISCOUNT_CNT, new { cssClass = "input-sm text-left" }) 종류 구매시 할인  </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>1+1 추가증정 배수  </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_ONEONE_MULTIPLE_CNT, new { cssClass = "input-sm text-left" }) ( <font color="red">ex:</font> ) (*)1+1의 경우 기본적으로 '2' 를 입력합니다  </td>
+
+                                                </tr>
+                    
+                                                <tr>
+                                                    <th>프로모션시작일시 (YYYY-MM-DD) </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DATE_FROM)</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>프로모션종료일시 (YYYY-MM-DD) </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DATE_TO)</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <th>활성화/비활성화 </th>
+                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.USABLE_YN)</td>
+
+                                                </tr>
+
+
+                                                <tr>
+                                                    <th>저장</th>
+                                                    <td>
+                                                        <input type="submit" value="저장" class="btn btn-default middium" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+            }
+        </div>
+
+        <div class="btn_area">
+            <a class="btn btn-primary small" href="/AdminMember/Index">목록</a>
+        </div>
+
+
+    </div>
+}
+
