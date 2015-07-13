@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.AdminPoint
         }
     
     
-        public virtual int SP_ADMIN_POINT_SAVE(string m_ID, Nullable<int> pOINT, string aDDITION_REASON, Nullable<int> oRDER_IDX, Nullable<int> rEVIEW_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_ADMIN_POINT_SAVE(string m_ID, Nullable<int> pOINT, string aDDITION_REASON, string oRDER_CODE, Nullable<int> rEVIEW_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -42,18 +42,18 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("ADDITION_REASON", aDDITION_REASON) :
                 new ObjectParameter("ADDITION_REASON", typeof(string));
     
-            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
-                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
-                new ObjectParameter("ORDER_IDX", typeof(int));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
             var rEVIEW_IDXParameter = rEVIEW_IDX.HasValue ?
                 new ObjectParameter("REVIEW_IDX", rEVIEW_IDX) :
                 new ObjectParameter("REVIEW_IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_SAVE", m_IDParameter, pOINTParameter, aDDITION_REASONParameter, oRDER_IDXParameter, rEVIEW_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_SAVE", m_IDParameter, pOINTParameter, aDDITION_REASONParameter, oRDER_CODEParameter, rEVIEW_IDXParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_ADMIN_POINT_USE(string m_ID, Nullable<int> uSE_POINT, string aDDITION_REASON, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_ADMIN_POINT_USE(string m_ID, Nullable<int> uSE_POINT, string aDDITION_REASON, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -67,11 +67,11 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("ADDITION_REASON", aDDITION_REASON) :
                 new ObjectParameter("ADDITION_REASON", typeof(string));
     
-            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
-                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
-                new ObjectParameter("ORDER_IDX", typeof(int));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_USE", m_IDParameter, uSE_POINTParameter, aDDITION_REASONParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POINT_USE", m_IDParameter, uSE_POINTParameter, aDDITION_REASONParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<Nullable<int>> SP_POINT_MEMBER_CNT(string sEARCH_KEY, string sEARCH_VALUE)
@@ -134,7 +134,7 @@ namespace AboutMe.Domain.Entity.AdminPoint
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_POINT_HISTORY_CNT", m_IDParameter);
         }
     
-        public virtual int SP_POINT_SAVE_ON_ORDER(string m_ID, Nullable<int> aMOUNT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_POINT_SAVE_ON_ORDER(string m_ID, Nullable<int> aMOUNT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -144,14 +144,14 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("AMOUNT", aMOUNT) :
                 new ObjectParameter("AMOUNT", typeof(int));
     
-            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
-                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
-                new ObjectParameter("ORDER_IDX", typeof(int));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_SAVE_ON_ORDER", m_IDParameter, aMOUNTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_SAVE_ON_ORDER", m_IDParameter, aMOUNTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_POINT_USE_ON_ORDER(string m_ID, Nullable<int> uSE_POINT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_POINT_USE_ON_ORDER(string m_ID, Nullable<int> uSE_POINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -161,14 +161,14 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("USE_POINT", uSE_POINT) :
                 new ObjectParameter("USE_POINT", typeof(int));
     
-            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
-                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
-                new ObjectParameter("ORDER_IDX", typeof(int));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_USE_ON_ORDER", m_IDParameter, uSE_POINTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_USE_ON_ORDER", m_IDParameter, uSE_POINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_POINT_CANCEL_PART_ORDER(string m_ID, Nullable<int> pOINT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_POINT_CANCEL_PART_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -178,14 +178,14 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("POINT", pOINT) :
                 new ObjectParameter("POINT", typeof(int));
     
-            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
-                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
-                new ObjectParameter("ORDER_IDX", typeof(int));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_PART_ORDER", m_IDParameter, pOINTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_PART_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_POINT_CANCEL_ALL_ORDER(string m_ID, Nullable<int> pOINT, Nullable<int> oRDER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_POINT_CANCEL_ALL_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -195,11 +195,11 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("POINT", pOINT) :
                 new ObjectParameter("POINT", typeof(int));
     
-            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
-                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
-                new ObjectParameter("ORDER_IDX", typeof(int));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_ALL_ORDER", m_IDParameter, pOINTParameter, oRDER_IDXParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_ALL_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     }
 }
