@@ -28,8 +28,8 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminMemberService, AboutMe.Domain.Service.AdminEtc.AdminMemberService>();   //샘플용임
             container.RegisterType<AboutMe.Domain.Service.AdminProduct.IAdminProductService, AboutMe.Domain.Service.AdminProduct.AdminProductService>();
             //container.RegisterType<IController, StoreController>("Store");
-
             container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminUserService, AboutMe.Domain.Service.AdminEtc.AdminUserService>(); //관리자관리
+            container.RegisterType<AboutMe.Domain.Service.Product.IProductService, AboutMe.Domain.Service.Product.ProductService>(); //상품관리
 
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));

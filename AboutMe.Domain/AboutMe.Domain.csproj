@@ -305,6 +305,33 @@
     <Compile Include="Entity\Notice\TB_NOTICE.cs">
       <DependentUpon>ModelNotice.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Product\ModelProduct.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelProduct.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\ModelProduct.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\ModelProduct.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_CNT_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_DETAIL_VIEW_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\VIEW_PRODUCT_VS_PROMOTION_LIST.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
@@ -320,17 +347,17 @@
     <Compile Include="Service\Notice\INoticeService.cs" />
     <Compile Include="Service\Faq\FaqService.cs" />
     <Compile Include="Service\Faq\IFaqService.cs" />
+    <Compile Include="Service\Product\IProductService.cs" />
+    <Compile Include="Service\Product\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Member\" />
     <Folder Include="Entity\Order\" />
-    <Folder Include="Entity\Product\" />
     <Folder Include="Service\Etc\" />
     <Folder Include="Service\Member\" />
     <Folder Include="Service\Order\" />
-    <Folder Include="Service\Product\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
@@ -437,6 +464,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelNotice.edmx</DependentUpon>
       <LastGenOutput>ModelNotice.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Product\ModelProduct.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelProduct.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Product\ModelProduct.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+      <LastGenOutput>ModelProduct.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Product\ModelProduct.edmx.diagram">
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Product\ModelProduct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelProduct.edmx</DependentUpon>
+      <LastGenOutput>ModelProduct.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

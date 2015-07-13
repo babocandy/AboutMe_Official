@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelProduct.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AboutMe.dbo.VIEW_PRODUCT_VS_PROMOTION_LIST' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VIEW_PRODUCT_VS_PROMOTION_LIST">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="RESULT_PRICE" Type="int" />
+          <Property Name="IDX" Type="int" Nullable="false" />
+          <Property Name="P_CATE_CODE" Type="char" MaxLength="9" />
+          <Property Name="C_CATE_CODE" Type="char" MaxLength="9" />
+          <Property Name="L_CATE_CODE" Type="char" MaxLength="9" />
+          <Property Name="P_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="P_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="P_COUNT" Type="int" />
+          <Property Name="SELLING_PRICE" Type="int" />
+          <Property Name="DISCOUNT_RATE" Type="int" />
+          <Property Name="DISCOUNT_PRICE" Type="int" />
+          <Property Name="SOLDOUT_YN" Type="varchar" MaxLength="1" />
+          <Property Name="P_INFO_DETAIL_WEB" Type="text" />
+          <Property Name="P_INFO_DETAIL_MOBILE" Type="text" />
+          <Property Name="MV_URL" Type="varchar" MaxLength="200" />
+          <Property Name="P_COMPONENT_INFO" Type="varchar" MaxLength="1000" />
+          <Property Name="P_TAG" Type="varchar" MaxLength="300" />
+          <Property Name="MAIN_IMG" Type="varchar" MaxLength="100" />
+          <Property Name="OTHER_IMG1" Type="varchar" MaxLength="100" />
+          <Property Name="OTHER_IMG2" Type="varchar" MaxLength="100" />
+          <Property Name="OTHER_IMG3" Type="varchar" MaxLength="100" />
+          <Property Name="OTHER_IMG4" Type="varchar" MaxLength="100" />
+          <Property Name="OTHER_IMG5" Type="varchar" MaxLength="100" />
+          <Property Name="RE_SORT" Type="int" />
+          <Property Name="DISPLAY_YN" Type="varchar" MaxLength="1" />
+          <Property Name="ICON_YN" Type="varchar" MaxLength="20" />
+          <Property Name="SELLING_COUNT" Type="int" />
+          <Property Name="P_VIEW_COUNT" Type="int" />
+          <Property Name="WITH_PRODUCT_LIST" Type="varchar" MaxLength="100" />
+          <Property Name="P_OUTLET_YN" Type="varchar" MaxLength="1" />
+          <Property Name="UPD_DATE" Type="datetime" />
+          <Property Name="INS_DATE" Type="datetime" />
+          <Property Name="PMO_PRICE" Type="int" />
+          <Property Name="PRODUCT_PRICE_IDX" Type="int" />
+          <Property Name="CD_PROMOTION_PRODUCT" Type="varchar" MaxLength="7" />
+          <Property Name="PMO_PRODUCT_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="PMO_SET_DISCOUNT_CNT" Type="tinyint" />
+          <Property Name="PMO_ONEONE_MULTIPLE_CNT" Type="tinyint" />
+          <Property Name="PMO_PRODUCT_DATE_FROM" Type="datetime" />
+          <Property Name="PMO_PRODUCT_DATE_TO" Type="datetime" />
+        </EntityType>
+        <Function Name="SP_PRODUCT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_PRODUCT_DETAIL_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ModelProductStoreContainer">
+          <EntitySet Name="VIEW_PRODUCT_VS_PROMOTION_LIST" EntityType="Self.VIEW_PRODUCT_VS_PROMOTION_LIST" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[RESULT_PRICE] AS [RESULT_PRICE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[IDX] AS [IDX], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_CATE_CODE] AS [P_CATE_CODE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[C_CATE_CODE] AS [C_CATE_CODE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[L_CATE_CODE] AS [L_CATE_CODE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_CODE] AS [P_CODE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_NAME] AS [P_NAME], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_COUNT] AS [P_COUNT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[SELLING_PRICE] AS [SELLING_PRICE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[DISCOUNT_RATE] AS [DISCOUNT_RATE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[DISCOUNT_PRICE] AS [DISCOUNT_PRICE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[SOLDOUT_YN] AS [SOLDOUT_YN], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_INFO_DETAIL_WEB] AS [P_INFO_DETAIL_WEB], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_INFO_DETAIL_MOBILE] AS [P_INFO_DETAIL_MOBILE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[MV_URL] AS [MV_URL], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_COMPONENT_INFO] AS [P_COMPONENT_INFO], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_TAG] AS [P_TAG], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[MAIN_IMG] AS [MAIN_IMG], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[OTHER_IMG1] AS [OTHER_IMG1], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[OTHER_IMG2] AS [OTHER_IMG2], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[OTHER_IMG3] AS [OTHER_IMG3], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[OTHER_IMG4] AS [OTHER_IMG4], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[OTHER_IMG5] AS [OTHER_IMG5], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[RE_SORT] AS [RE_SORT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[DISPLAY_YN] AS [DISPLAY_YN], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[ICON_YN] AS [ICON_YN], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[SELLING_COUNT] AS [SELLING_COUNT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_VIEW_COUNT] AS [P_VIEW_COUNT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[WITH_PRODUCT_LIST] AS [WITH_PRODUCT_LIST], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[P_OUTLET_YN] AS [P_OUTLET_YN], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[UPD_DATE] AS [UPD_DATE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[INS_DATE] AS [INS_DATE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PMO_PRICE] AS [PMO_PRICE], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PRODUCT_PRICE_IDX] AS [PRODUCT_PRICE_IDX], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[CD_PROMOTION_PRODUCT] AS [CD_PROMOTION_PRODUCT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PMO_PRODUCT_NAME] AS [PMO_PRODUCT_NAME], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PMO_SET_DISCOUNT_CNT] AS [PMO_SET_DISCOUNT_CNT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PMO_ONEONE_MULTIPLE_CNT] AS [PMO_ONEONE_MULTIPLE_CNT], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PMO_PRODUCT_DATE_FROM] AS [PMO_PRODUCT_DATE_FROM], 
+    [VIEW_PRODUCT_VS_PROMOTION_LIST].[PMO_PRODUCT_DATE_TO] AS [PMO_PRODUCT_DATE_TO]
+    FROM [dbo].[VIEW_PRODUCT_VS_PROMOTION_LIST] AS [VIEW_PRODUCT_VS_PROMOTION_LIST]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ModelProduct" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="VIEW_PRODUCT_VS_PROMOTION_LIST">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="RESULT_PRICE" Type="Int32" />
+          <Property Name="IDX" Type="Int32" Nullable="false" />
+          <Property Name="P_CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="C_CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="L_CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="P_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="P_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="P_COUNT" Type="Int32" />
+          <Property Name="SELLING_PRICE" Type="Int32" />
+          <Property Name="DISCOUNT_RATE" Type="Int32" />
+          <Property Name="DISCOUNT_PRICE" Type="Int32" />
+          <Property Name="SOLDOUT_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="P_INFO_DETAIL_WEB" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="P_INFO_DETAIL_MOBILE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MV_URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="P_COMPONENT_INFO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="P_TAG" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="MAIN_IMG" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OTHER_IMG1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OTHER_IMG2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OTHER_IMG3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OTHER_IMG4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OTHER_IMG5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RE_SORT" Type="Int32" />
+          <Property Name="DISPLAY_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ICON_YN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SELLING_COUNT" Type="Int32" />
+          <Property Name="P_VIEW_COUNT" Type="Int32" />
+          <Property Name="WITH_PRODUCT_LIST" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="P_OUTLET_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UPD_DATE" Type="DateTime" Precision="3" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+          <Property Name="PMO_PRICE" Type="Int32" />
+          <Property Name="PRODUCT_PRICE_IDX" Type="Int32" />
+          <Property Name="CD_PROMOTION_PRODUCT" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_SET_DISCOUNT_CNT" Type="Byte" />
+          <Property Name="PMO_ONEONE_MULTIPLE_CNT" Type="Byte" />
+          <Property Name="PMO_PRODUCT_DATE_FROM" Type="DateTime" Precision="3" />
+          <Property Name="PMO_PRODUCT_DATE_TO" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="ProductEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="VIEW_PRODUCT_VS_PROMOTION_LIST" EntityType="Self.VIEW_PRODUCT_VS_PROMOTION_LIST" />
+          <FunctionImport Name="SP_PRODUCT_CNT" ReturnType="Collection(ModelProduct.SP_PRODUCT_CNT_Result)" />
+          <FunctionImport Name="SP_PRODUCT_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_SEL_Result)" />
+          <FunctionImport Name="SP_PRODUCT_DETAIL_VIEW" ReturnType="Collection(ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_PRODUCT_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG4" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG5" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="SELLING_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="P_VIEW_COUNT" Nullable="true" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_OUTLET_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="REGDATE" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCT_CNT_Result" >
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCT_DETAIL_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG4" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG5" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelProductStoreContainer" CdmEntityContainer="ProductEntities">
+          <EntitySetMapping Name="VIEW_PRODUCT_VS_PROMOTION_LIST">
+            <EntityTypeMapping TypeName="ModelProduct.VIEW_PRODUCT_VS_PROMOTION_LIST">
+              <MappingFragment StoreEntitySet="VIEW_PRODUCT_VS_PROMOTION_LIST">
+                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
+                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
+                <ScalarProperty Name="OTHER_IMG4" ColumnName="OTHER_IMG4" />
+                <ScalarProperty Name="OTHER_IMG5" ColumnName="OTHER_IMG5" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="SELLING_COUNT" ColumnName="SELLING_COUNT" />
+                <ScalarProperty Name="P_VIEW_COUNT" ColumnName="P_VIEW_COUNT" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="P_OUTLET_YN" ColumnName="P_OUTLET_YN" />
+                <ScalarProperty Name="UPD_DATE" ColumnName="UPD_DATE" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="PMO_PRICE" ColumnName="PMO_PRICE" />
+                <ScalarProperty Name="PRODUCT_PRICE_IDX" ColumnName="PRODUCT_PRICE_IDX" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
+                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
+                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_CNT" FunctionName="ModelProduct.Store.SP_PRODUCT_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_SEL" FunctionName="ModelProduct.Store.SP_PRODUCT_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
+                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
+                <ScalarProperty Name="OTHER_IMG4" ColumnName="OTHER_IMG4" />
+                <ScalarProperty Name="OTHER_IMG5" ColumnName="OTHER_IMG5" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="SELLING_COUNT" ColumnName="SELLING_COUNT" />
+                <ScalarProperty Name="P_VIEW_COUNT" ColumnName="P_VIEW_COUNT" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="P_OUTLET_YN" ColumnName="P_OUTLET_YN" />
+                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_DETAIL_VIEW" FunctionName="ModelProduct.Store.SP_PRODUCT_DETAIL_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
+                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
+                <ScalarProperty Name="OTHER_IMG4" ColumnName="OTHER_IMG4" />
+                <ScalarProperty Name="OTHER_IMG5" ColumnName="OTHER_IMG5" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
