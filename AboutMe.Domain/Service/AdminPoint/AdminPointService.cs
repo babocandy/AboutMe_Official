@@ -39,7 +39,7 @@ namespace AboutMe.Domain.Service.AdminPoint
             return ret;
         }
 
-        public Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, int? orderIdx = null)
+        public Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, string orderCode = null)
         {
 
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
@@ -47,7 +47,7 @@ namespace AboutMe.Domain.Service.AdminPoint
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_ADMIN_POINT_USE(mid, point, addition, orderIdx, retNum, retMsg);
+                context.SP_ADMIN_POINT_USE(mid, point, addition, orderCode, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
@@ -57,7 +57,7 @@ namespace AboutMe.Domain.Service.AdminPoint
             return tp;
         }
 
-        public Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition, int? orderIdx = null, int? revieweIdx = null)
+        public Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition, string orderCode = null, int? revieweIdx = null)
         {
             Debug.WriteLine("UpdateMemberPointSaveUpdateMemberPointSave");
 
@@ -66,7 +66,7 @@ namespace AboutMe.Domain.Service.AdminPoint
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_ADMIN_POINT_SAVE(mid, point, addition, orderIdx, revieweIdx, retNum, retMsg);
+                context.SP_ADMIN_POINT_SAVE(mid, point, addition, orderCode, revieweIdx, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
@@ -100,14 +100,14 @@ namespace AboutMe.Domain.Service.AdminPoint
             return ret;
         }
 
-        public Tuple<string, string> SavePointOnOrder(string mid, int amount, int orderIdx)
+        public Tuple<string, string> SavePointOnOrder(string mid, int amount, string orderCode)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_POINT_SAVE_ON_ORDER(mid, amount, orderIdx, retNum, retMsg);
+                context.SP_POINT_SAVE_ON_ORDER(mid, amount, orderCode, retNum, retMsg);
 
             }
 
@@ -119,14 +119,14 @@ namespace AboutMe.Domain.Service.AdminPoint
         }
 
 
-        public Tuple<string, string> UsePointOnOrder(string mid, int point, int orderIdx)
+        public Tuple<string, string> UsePointOnOrder(string mid, int point, string orderCode)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_POINT_USE_ON_ORDER(mid, point, orderIdx, retNum, retMsg);
+                context.SP_POINT_USE_ON_ORDER(mid, point, orderCode, retNum, retMsg);
 
             }
 
@@ -137,14 +137,14 @@ namespace AboutMe.Domain.Service.AdminPoint
             return tp;
         }
 
-        public Tuple<string, string> CancelAllOfOrder(string mid, int point, int orderIdx)
+        public Tuple<string, string> CancelAllOfOrder(string mid, int point, string orderCode)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_POINT_CANCEL_ALL_ORDER(mid, point, orderIdx, retNum, retMsg);
+                context.SP_POINT_CANCEL_ALL_ORDER(mid, point, orderCode, retNum, retMsg);
 
             }
 
@@ -155,14 +155,14 @@ namespace AboutMe.Domain.Service.AdminPoint
             return tp;
         }
 
-        public Tuple<string, string> CancelPartOfOrder(string mid, int point, int orderIdx)
+        public Tuple<string, string> CancelPartOfOrder(string mid, int point, string orderCode)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_POINT_CANCEL_PART_ORDER(mid, point, orderIdx, retNum, retMsg);
+                context.SP_POINT_CANCEL_PART_ORDER(mid, point, orderCode, retNum, retMsg);
 
             }
 
