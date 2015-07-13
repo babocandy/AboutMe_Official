@@ -5,14 +5,32 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ModelProduct.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'AboutMe.dbo.VIEW_PRODUCT_VS_PROMOTION_LIST' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_LOG_USER">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="varchar" MaxLength="20" />
+          <Property Name="MEMO" Type="varchar" MaxLength="8000" />
+          <Property Name="COMMENT" Type="varchar" MaxLength="100" />
+          <Property Name="USERIP" Type="varchar" MaxLength="30" />
+          <Property Name="URL" Type="varchar" MaxLength="500" />
+          <Property Name="INS_DATE" Type="datetime" />
+        </EntityType>
         <Function Name="SP_PRODUCT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_PRODUCT_DETAIL_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_USER_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="memo" Type="varchar" Mode="In" />
+          <Parameter Name="comment" Type="varchar" Mode="In" />
+          <Parameter Name="url" Type="varchar" Mode="In" />
+          <Parameter Name="userip" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelProductStoreContainer">
+          <EntitySet Name="TB_LOG_USER" EntityType="Self.TB_LOG_USER" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -22,7 +40,15 @@ warning 6002: The table/view 'AboutMe.dbo.VIEW_PRODUCT_VS_PROMOTION_LIST' does n
           <FunctionImport Name="SP_PRODUCT_CNT" ReturnType="Collection(ModelProduct.SP_PRODUCT_CNT_Result)" />
           <FunctionImport Name="SP_PRODUCT_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_SEL_Result)" />
           <FunctionImport Name="SP_PRODUCT_DETAIL_VIEW" ReturnType="Collection(ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result)">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TB_LOG_USER" EntityType="ModelProduct.TB_LOG_USER" />
+          <FunctionImport Name="SP_USER_LOG_INS">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="memo" Mode="In" Type="String" />
+            <Parameter Name="comment" Mode="In" Type="String" />
+            <Parameter Name="url" Mode="In" Type="String" />
+            <Parameter Name="userip" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_PRODUCT_SEL_Result">
@@ -88,6 +114,18 @@ warning 6002: The table/view 'AboutMe.dbo.VIEW_PRODUCT_VS_PROMOTION_LIST' does n
           <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="TB_LOG_USER">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MEMO" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="USERIP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -169,6 +207,20 @@ warning 6002: The table/view 'AboutMe.dbo.VIEW_PRODUCT_VS_PROMOTION_LIST' does n
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TB_LOG_USER">
+            <EntityTypeMapping TypeName="ModelProduct.TB_LOG_USER">
+              <MappingFragment StoreEntitySet="TB_LOG_USER">
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="USERIP" ColumnName="USERIP" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_USER_LOG_INS" FunctionName="ModelProduct.Store.SP_USER_LOG_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

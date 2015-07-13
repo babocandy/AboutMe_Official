@@ -56,6 +56,14 @@ namespace AboutMe.Web.Front.Controllers
 
             SP_PRODUCT_DETAIL_VIEW_Result productView = _ProductService.ViewProduct(pcode);
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+
+
+            #region 로그 
+            UserLog userlog = new UserLog();
+            userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
+            #endregion
+
+
             return View(productView);
             //return View();
         }
