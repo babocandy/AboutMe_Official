@@ -1,32 +1,219 @@
-﻿@model List<AboutMe.Domain.Entity.Cart.SP_TB_CART_LIST_Result>
+﻿@model AboutMe.Domain.Entity.Cart.CART_INDEX_MODEL
 @{
     ViewBag.Title = "쇼핑백 - ABOUT ME";
-    ViewBag.TopClass = "cart nonmb";
+    ViewBag.TopClass = "cart";
+    
+    if (!Model.UserProfile.IS_LOGIN)
+    {
+        ViewBag.TopClass += " nonmb";   
+    }
+
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 }
 @section Scripts {
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
     <script src="/Scripts/cart_script.js"></script>
     <script language="javascript">
-        function GridCheckAll(c)
-        {
-            
-            $("input:checkbox[name='gridchk']").each(function (idx) {
-                var chk = $(this);
-                if (c.checked) {
-                    chk.prop('checked', true);
-                    chk.parent().parent().find(".chkcon").addClass("chkcon_on");
+    function GridCheckAll(c) {
+
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            var chk = $(this);
+            if (c.checked) {
+                chk.prop('checked', true);
+                chk.parent().parent().find(".chkcon").addClass("chkcon_on");
+            }
+            else {
+                chk.prop('checked', false);
+                chk.parent().parent().find(".chkcon").removeClass("chkcon_on");
+            }
+        });
+        chkPriceCalculate();
+    }
+
+    function GridCheck(c) {
+        chkPriceCalculate();
+    }
+
+    function chkPriceCalculate() {
+
+        var arrP = new Array;
+        var obj = new Object();
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            if (this.checked) {
+                arrP.push(parseInt($(this).val()));
+            }
+        });
+
+        var jobj = encodeURIComponent(jQuery.stringify(arrP));
+
+        var src_url = "/Cart/CartCalculatePrice";
+        var param = "data=" + jobj;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.result == "true") {
+                    $("#SumPointTxt").text(data.sum_point);
+                    $("#SumPriceTxt").text(data.sum_price);
+                    if (data.chk_count > 0) {
+                        $("#WishCntTxt").text("(" + data.chk_count + ")");
+                        $("#DelCntTxt").text("(" + data.chk_count + ")");
+                        $("#WishCntTxt").parent().parent().parent().find(".wish").addClass("on");
+                        $("#DelCntTxt").parent().parent().parent().find(".del").addClass("on");
+                    }
+                    else {
+                        $("#WishCntTxt").text("");
+                        $("#DelCntTxt").text("");
+                        $("#WishCntTxt").parent().parent().parent().find(".wish").removeClass("on");
+                        $("#DelCntTxt").parent().parent().parent().find(".del").removeClass("on");
+                    }
                 }
                 else {
-                    chk.prop('checked', false);
-                    chk.parent().parent().find(".chkcon").removeClass("chkcon_on");
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+
+    //cart 수량변경
+    function count_change(idx) {
+        var f = document.cartform;
+        var txtname = 'count_txt_' + idx
+        var txtbox = $("#" + txtname);
+        var cnt = txtbox.val();
+        if (cnt == "" || cnt == "0" || cnt < 1) {
+            alert('수량을 입력해주세요.');
+            txtbox.focus();
+            return;
+        }
+
+        if (confirm("수량을 변경하시겠습니까?")) {
+            f.IDX.value = idx;
+            f.CNT.value = cnt;
+            f.action = "/Cart/CartUpdateCnt";
+            f.submit();
+        }
+
+    }
+
+    //cart 삭제
+    function cart_delete(idx) {
+        var f = document.cartform;
+
+        if (confirm("삭제하시겠습니까?")) {
+            f.IDX.value = idx;
+            f.CNT.value = '';
+            f.action = "/Cart/CartDelete";
+            f.submit();
+        }
+
+    }
+
+    //선택 모두 삭제
+    function CheckAllDelete(b) {
+        if ($(b).hasClass("on")) {
+
+            var cnt = 0;
+            var idxstr = "";
+
+            $("input:checkbox[name='gridchk']").each(function (idx) {
+                if (this.checked) {
+                    if (idxstr != "") {
+                        idxstr += ",";
+                    }
+                    idxstr += $(this).val();
+                    cnt++;
                 }
             });
+
+            if (cnt == 0) {
+                alert("삭제할 상품을 선택해주세요.");
+                return false;
+            }
+
+            var f = document.cartform;
+
+            if (confirm(cnt + "개의 상품을 장바구니에서 삭제하시겠습니까?")) {
+                f.IDX.value = idxstr;
+                f.CNT.value = '';
+                f.action = "/Cart/CartDelete";
+                f.submit();
+            }
         }
+    }
+
+    function jjim_insert(pcode) {
+
+        @if (Model.UserProfile.IS_LOGIN)
+            {
+                @Html.Raw(new HtmlString("var arrP = new Array; "));
+                @Html.Raw(new HtmlString("arrP.push(pcode); "));
+                @Html.Raw(new HtmlString("Wish_Input(arrP); "));
+            }
+            else
+            {
+                @Html.Raw(new HtmlString("isJJimLogin();"));
+            }
+
+    }
+
+    function jjim_chkinsert(b) {
+
+        @if (Model.UserProfile.IS_LOGIN)
+        {
+                @Html.Raw(new HtmlString("CheckAllWishInsert(b); "));
+        }
+        else
+        {
+                @Html.Raw(new HtmlString("isJJimLogin();"));
+        }
+
+    }
+
+    //선택전체 찜
+    function CheckAllWishInsert(b)
+    {
+        if ($(b).hasClass("on")) {
+
+            var cnt = 0;
+            var arrP = new Array;
+
+            $("input:checkbox[name='gridchk']").each(function (idx) {
+                if (this.checked) {
+                    arrP.push($(this).attr('data-pcode'));
+                }
+            });
+
+            if (arrP.length == 0) {
+                alert("찜할 상품을 선택해주세요.");
+                return false;
+            }
+
+            Wish_Input(arrP);
+
+        }
+    }
+
+    function isJJimLogin() {
+        if (confirm('로그인 후 찜을 저장할 수 있습니다.\n로그인페이지로 이동하시겠습니까?'))
+        {
+            location.href = '/Member/Login';
+            return;
+        }
+    }
     </script>
 }
 
 @helper MemberTop() {
+    string gradeclass =  Model.UserProfile.M_GRADE_NAME.ToString().ToLower();
+
     <div class="user_area">
         <!--
             회원 등급 class
@@ -35,30 +222,30 @@
             골드 : gold
             vip : vip
         -->
-        <div class="info vip">
-            홍길동[임직원] 님은<br /><a href="#" class="grade">VIP 클래스</a>입니다.
+        <div class="info @gradeclass">
+            @Model.UserProfile.M_NAME @if (@Model.UserProfile.M_GBN == "S") { @Html.Raw("[임직원]") } 님은<br /><a href="#" class="grade">@Model.UserProfile.M_GRADE_NAME.ToString().ToUpper() 클래스</a>입니다.
             <a class="benefitview" href="#">회원혜택 보기<i></i></a>
         </div>
         <div class="userbenefit">
             <ul>
                 <li class="downcoupon">
                     <span class="ico"></span>
-                    <span class="num">123,456</span>
+                    <span class="num">@Model.DownloadCouponCnt</span>
                     <span class="tit">다운로드 가능 쿠폰</span>
                 </li>
                 <li class="havecoupon">
                     <span class="ico"></span>
-                    <span class="num">123,456</span>
+                    <span class="num">@Model.DownloadedCouponCnt</span>
                     <span class="tit">보유 쿠폰</span>
                 </li>
                 <li class="downpoint">
                     <span class="ico"></span>
-                    <span class="num">123,456</span>
+                    <span class="num">@Model.MyPoint</span>
                     <span class="tit">포인트</span>
                 </li>
             </ul>
         </div>
-    </div>    
+    </div>
 }
 
 @helper NoMemberTop() {
@@ -77,11 +264,11 @@
 </div>
 }
 
-@helper MemberBanner()
+@helper MemberBanner(string banner_url)
 {
     <div class="banner mt40">
         <h3>배너 이미지</h3>
-        <a href="#"><img src="/aboutCom/images/sample/thum_banner.jpg" alt="" /></a>
+        <a href="#"><img src="@banner_url" alt="" /></a>
     </div>
 }
 
@@ -153,6 +340,7 @@
         </div>
     </div>
 }
+
 <div id="container">
     <div class="container1080">
         <!--cart_top-->
@@ -163,9 +351,23 @@
             </div>
             <!--//h2_area-->
             <!--user_area-->
+        @if (Model.UserProfile.IS_LOGIN == true)
+        {
+            @MemberTop()
+        }
+        else
+        {
             @NoMemberTop()
+        }
+
             <!--//user_area-->
         </div>
+        <form action="" method="post" name="cartform">
+            <input type="hidden" name="IDX" />
+            <input type="hidden" name="CNT" />
+            <input type="hidden" name="GUBUN" />
+        </form>
+
         <!--//cart_top-->
         <div class="cartform mt40">
             <form name="frm" action="">
@@ -186,7 +388,7 @@
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th class="chkbox"><label class="chkcon"><input type="checkbox" name="" value="" onclick="GridCheckAll(this)" /></label></th>
+                                    <th class="chkbox"><label class="chkcon chkcon_on"><input type="checkbox" name="" value="" onclick="GridCheckAll(this)" checked="true" /></label></th>
                                     <th colspan="2">상품명</th>
                                     <th>상품금액</th>
                                     <th>수량</th>
@@ -196,47 +398,56 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="chkbox"><label class="chkcon"><input type="checkbox" name="gridchk" value="" /></label></td>
-                                    <td>
-                                        <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
-                                    </td>
-                                    <td class="product">
-                                        <dl>
-                                            <dt>
-                                                <a href="#">
-                                                    <span class="tag"><span class="ico_new">NEW</span></span>
-                                                    퓨어 화이트 토너
-                                                </a>
-                                            </dt>
-                                            <dd>제주 참마 유래성분으로 미백기능성</dd>
-                                        </dl>
-                                    </td>
-                                    <td class="proprice">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </td>
-                                    <td class="count">
-                                        <div class="counttypea">
-                                            <input type='text' name='count' value='1' size='3' />
-                                            <p class="btn_updown">
-                                                <a href="javascript:void(0);" class="up"><i>up</i></a>
-                                                <a href="javascript:void(0);" class="down"><i>down</i></a>
+
+
+                                @foreach (var item in @Model.CartList)
+                                {
+                                    <tr>
+                                        <td class="chkbox"><label class="chkcon chkcon_on"><input type="checkbox" name="gridchk" value="@item.CART_IDX" data-pcode="@item.P_CODE" onclick="GridCheck(this)" checked="true" /></label></td>
+                                        <td>
+                                            <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        <span class="tag"><span class="ico_new">NEW</span></span>
+                                                        @item.P_NAME
+                                                    </a>
+                                                </dt>
+                                                <dd>제주 참마 유래성분으로 미백기능성</dd>
+                                            </dl>
+                                        </td>
+                                        <td class="proprice">
+                                            @if (@item.SELLING_PRICE > 0)
+                                            {
+                                                <del>@item.SELLING_PRICE.ToString("#,#0.") 원</del>
+                                            }
+                                            <strong>@String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)</strong>원
+                                        </td>
+                                        <td class="count">
+                                            <div class="counttypea">
+                                                <input type='text' name="count" id='count_txt_@item.CART_IDX' value='@item.P_COUNT' size='3' />
+                                                <p class="btn_updown">
+                                                    <a href="javascript:void(0);" class="up"><i>up</i></a>
+                                                    <a href="javascript:void(0);" class="down"><i>down</i></a>
+                                                </p>
+                                            </div>
+                                            <a href="#none" class="btn_white_w74h28" onclick="count_change('@item.CART_IDX')">변경</a>
+                                        </td>
+                                        <td class="point">
+                                            <span class="val">@item.P_POINT.ToString("#,#0.")</span>
+                                        </td>
+                                        <td class="ordprice"><strong>@String.Format("{0:#,#0.}", item.ORDER_PRICE)</strong>원</td>
+                                        <td class="wishdel">
+                                            <p class="btn_group">
+                                                <a href="#none" class="wish" onclick="jjim_insert('@item.P_CODE')"><i>찜하기</i></a>
+                                                <a href="#none" class="del" onclick="cart_delete('@item.CART_IDX')"><i>삭제</i></a>
                                             </p>
-                                        </div>
-                                        <a href="#" class="btn_white_w74h28">변경</a>
-                                    </td>
-                                    <td class="point">
-                                        <span class="val">380</span>
-                                    </td>
-                                    <td class="ordprice"><strong>25,000</strong>원</td>
-                                    <td class="wishdel">
-                                        <p class="btn_group">
-                                            <a href="#" class="wish"><i>찜하기</i></a>
-                                            <a href="#" class="del"><i>삭제</i></a>
-                                        </p>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                }
+@*
                                 <tr>
                                     <td class="chkbox"><label class="chkcon"><input type="checkbox" name="gridchk" title="" /></label></td>
                                     <td>
@@ -252,7 +463,7 @@
                                             <span class="ico_set">SET</span>
                                             <span class="ico_sale">SALE</span>
                                             <span class="ico_custom">커스텀</span>
-    
+
                                         </div>
 
                                     </td>
@@ -373,45 +584,60 @@
                                         </p>
                                     </td>
                                 </tr>
+*@
                             </tbody>
                         </table>
                     </div>
                     <div class="row2 mt20">
-                        <div class="btn_group">
-                            <!-- [Desc] 항목 선택 시 <a>태그 "on"클래스 추가 및 <strong>태그 안에 갯수 "(000)" 입력 -->
-                            <a href="javascript:void(0)" class="wish">
-                                <span class="ico"><i></i></span>
-                                <span class="txt">찜하기<strong></strong></span>
-                            </a>
-                            <a href="javascript:void(0)" class="del on">
-                                <span class="ico"><i></i></span>
-                                <span class="txt">선택삭제<strong>(999)</strong></span>
-                            </a>
-                        </div>
-                        <div class="totinfo">
-                            <div class="point">
-                                <p class="bubhelp">할인 혜택을 더 적용할 경우<br />예상 적립 표인트가 달라질 수 있습니다.</p>
-                                <i></i>예상 적립 포인트<strong>2,100P</strong>
-                            </div>
-                            <p class="totprice">총 주문 금액<strong>107,000</strong><span>원</span></p>
-                        </div>
+                    <div class="btn_group">
+                        <!-- [Desc] 항목 선택 시 <a>태그 "on"클래스 추가 및 <strong>태그 안에 갯수 "(000)" 입력 -->
+                        <a href="javascript:void(0)" class="wish @if (Model.CartCnt > 0) { @Html.Raw(new HtmlString("on")); }" onclick="jjim_chkinsert(this);">
+                            <span class="ico"><i></i></span>
+                            <span class="txt">찜하기<strong id="WishCntTxt">@if (Model.CartCnt > 0) { @Html.Raw(new HtmlString("(" + Model.CartCnt + ")")); }</strong></span>
+                        </a>
+                        <a href="javascript:void(0)" class="del @if (Model.CartCnt > 0){ @Html.Raw(new HtmlString("on")); }" onclick="CheckAllDelete(this);">
+                            <span class="ico"><i></i></span>
+                            <span class="txt">선택삭제<strong id="DelCntTxt">@if (Model.CartCnt > 0) { @Html.Raw(new HtmlString("("+Model.CartCnt+")")); } </strong></span>
+                        </a>
                     </div>
+                    <div class="totinfo">
+                        <div class="point">
+                            <p class="bubhelp">할인 혜택을 더 적용할 경우<br />예상 적립 표인트가 달라질 수 있습니다.</p>
+                            <i></i>예상 적립 포인트<strong id="SumPointTxt">@String.Format("{0:#,#0.}", Model.SumPoint)P</strong>
+                        </div>
+                        <p class="totprice">총 주문 금액<strong id="SumPriceTxt">@String.Format("{0:#,#0.}", Model.SumPrice)</strong><span>원</span></p>
+                    </div>
+                </div>
                     <div class="row3 mt40">
-                        <div class="btn_group">
-                            <a href="/cart/order_nonmb.asp" class="btn_gray_w185h60">선택 상품 주문</a>
-                            <a href="/cart/order_nonmb.asp" class="btn_brown_w185h60">전체 상품 주문</a>
-                        </div>
+                    <div class="btn_group">
+                        <a href="/cart/order_nonmb.asp" class="btn_gray_w185h60">선택 상품 주문</a>
+                        <a href="/cart/order_nonmb.asp" class="btn_brown_w185h60">전체 상품 주문</a>
                     </div>
+                </div>
                 </fieldset>
             </form>
         </div>
-       @NoMemberBanner()
+        @if (Model.UserProfile.IS_LOGIN == true)
+        {
+            if (!string.IsNullOrEmpty(Model.BannerUrl))
+            {
+                @MemberBanner(Model.BannerUrl)
+            }
+        }
+        else
+        {
+            @NoMemberBanner()
+        }
+
+
        @BuyAsGoods()
-        @ViewBag.SessionId
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">장바구니담기</a>
+
+        @Model.UserProfile.SESSION_ID
+        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니담기</a>
+        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니담기</a>
     </div>
     <div class="container100per notify">
-        <div class="inner">
+    <div class="inner">
             <div class="boxtyped">
                 <h3>알려<br />드립니다.</h3>
                 <ul>
@@ -427,25 +653,23 @@
     <script language="javascript">
         $(document).ready(function(){
             Cart_Count();
-            //Wish_Count();
+                //Wish_Count();
 
-            //바로구매 하기 테스트
-            // var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
-            // Now_Order_Input(arr);
+                //바로구매 하기 테스트
+                // var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
+                // Now_Order_Input(arr);
 
-            // 장바구니담기
-            //var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
-            //Cart_Input(arr);
-        });
+                // 장바구니담기
+                //var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
+                //Cart_Input(arr);
+            });
 
-        function AddCartClick(b) {
-            var arrP = new Array;
-            var obj = new Object();
-            console.log(b);
-            obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
-            obj.p_count = $(b).attr('data-pcount');
-            console.log(obj);
-            arrP.push(obj);
-            Cart_Input(arrP);
+    function AddCartClick(b) {
+        var arrP = new Array;
+        var obj = new Object();
+        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+        obj.p_count = $(b).attr('data-pcount');
+        arrP.push(obj);
+        Cart_Input(arrP);
         }
-    </script>
+</script>

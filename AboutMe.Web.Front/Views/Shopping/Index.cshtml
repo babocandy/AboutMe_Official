@@ -96,9 +96,9 @@
 @foreach (var item in Model)
 {
                         <li>
-                            <a href="/shopping/detail.asp" class="list">
+                            <a href="/shopping/detail?pcode=@item.P_CODE" class="list">
                                 <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
+                                    <img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" data-pic="@ViewBag.PRODUCT_PATH@item.OTHER_IMG1" class="item" alt="" />
                                 </span>
                                 <span class="info">
                                     <span class="ico ico_new">NEW</span>
@@ -107,8 +107,8 @@
                                         <em class="product_name">에센셜 석류 마스크 시트</em>
                                     </span>
                                     <em class="price">
-                                        <del>@item.SELLING_PRICE 원</del>
-                                        @item.DISCOUNT_PRICE 원
+                                        <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                                        @string.Format("{0:#,##0}", item.DISCOUNT_PRICE)원
                                     </em>
                                 </span>
                             </a>

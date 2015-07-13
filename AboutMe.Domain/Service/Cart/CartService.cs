@@ -46,11 +46,11 @@ namespace AboutMe.Domain.Service.Cart
         #endregion
 
         #region Delete
-        public void CartDelete(string m_id, string session_id, string p_code_list)
+        public void CartDelete(string m_id, string session_id, string cart_idx)
         {
             using (CartEntities EfContext = new CartEntities())
             {
-                EfContext.SP_TB_CART_PRODUCT_DEL(m_id, session_id, p_code_list);
+                EfContext.SP_TB_CART_PRODUCT_DEL(m_id, session_id, cart_idx);
             }
         }
         #endregion
@@ -67,12 +67,49 @@ namespace AboutMe.Domain.Service.Cart
         #endregion
 
         #region Update Count
-        public void CartUpdateCnt(string m_id, string session_id, string p_code, int? p_count = 1)
+        public void CartUpdateCnt(string m_id, string session_id, int cart_idx, int? p_count = 1)
         {
             using (CartEntities EfContext = new CartEntities())
             {
-                EfContext.SP_TB_CART_COUNT_CHANGE(m_id, session_id, p_code, p_count);
+                EfContext.SP_TB_CART_COUNT_CHANGE(m_id, session_id, cart_idx, p_count);
             }
+        }
+        #endregion
+
+
+        #region Wish Count
+        public int WishListCount(string m_id)
+        {
+            SP_TB_WISH_CNT_Result result;
+            using (CartEntities EfContext = new CartEntities())
+            {
+                result = EfContext.SP_TB_WISHLIST_CNT(m_id).FirstOrDefault();
+            }
+            return result.COUNT;
+        }
+        #endregion
+
+        #region Wish Insert
+        public int WishInsert(string m_id, string p_code)
+        {
+            SP_TB_WISH_CNT_Result result;
+            using (CartEntities EfContext = new CartEntities())
+            {
+                result = EfContext.SP_TB_WISHLIST_PRODUCT_ADD(m_id, p_code).FirstOrDefault();
+            }
+            return result.COUNT;
+        }
+        #endregion
+
+        #region Wish delete
+        public int WishDelete(string m_id, int idx)
+        {
+            SP_TB_WISH_CNT_Result result;
+            using (CartEntities EfContext = new CartEntities())
+            {
+                result = EfContext.SP_TB_WISHLIST_PRODUCT_DEL(m_id, idx).FirstOrDefault();
+            }
+            return result.COUNT;
         }
         #endregion
     }

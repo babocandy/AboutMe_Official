@@ -18,10 +18,16 @@ namespace AboutMe.Domain.Service.Cart
         //Insert
         void CartInsert(SP_TB_CART_PRODUCT_ADD_Param newItem);
         //Delete
-        void CartDelete(string m_id, string session_id, string p_code_list);
+        void CartDelete(string m_id, string session_id, string cart_idx);
         //Merge
         void CartMerge(string m_id, string session_id, string merge_opt);
         //Update Count
-        void CartUpdateCnt(string m_id, string session_id, string p_code, int? p_count = 1);
+        void CartUpdateCnt(string m_id, string session_id, int cart_idx, int? p_count = 1);
+
+        int WishListCount(string m_id);
+        //Insert
+        int WishInsert(string m_id, string p_code);
+        //Delete
+        int WishDelete(string m_id, int idx);
     }
 }
