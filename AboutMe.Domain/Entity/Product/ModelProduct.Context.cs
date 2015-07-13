@@ -27,7 +27,6 @@ namespace AboutMe.Domain.Entity.Product
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<VIEW_PRODUCT_VS_PROMOTION_LIST> VIEW_PRODUCT_VS_PROMOTION_LIST { get; set; }
     
         public virtual ObjectResult<SP_PRODUCT_CNT_Result> SP_PRODUCT_CNT()
         {
