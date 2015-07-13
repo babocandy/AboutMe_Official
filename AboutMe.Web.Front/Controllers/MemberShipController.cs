@@ -18,29 +18,17 @@ using System.Web.UI;
 using AboutMe.Web.Front.Common.Filters;
 
 
-//회원관련 ctl --jsh
 namespace AboutMe.Web.Front.Controllers
 {
-    public class MemberController : BaseFrontController
+    public class MemberShipController : BaseFrontController
     {
-
         private IMemberService _MemberService;
 
 
-        public MemberController(IMemberService _memberService)
+        public MemberShipController(IMemberService _memberService)
         {
             this._MemberService = _memberService;
         }
-
-
-
-        // GET: Member
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
 
         //사용자 로그인 폼
         public ActionResult Login(string RedirectUrl = "")
@@ -186,11 +174,49 @@ namespace AboutMe.Web.Front.Controllers
 
             //return RedirectToAction("Login", "Member"); // 로그인 페이지로 이동
 
-            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='/Member/Login';</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='/MemberShip/Login';</script>");
         }
 
 
 
+        //사용자 회원가입- Step1 -실명인증
+        public ActionResult JoinStep1()
+        {
+            return View();
+        }
+        //사용자 회원가입- Step1 -실명인증 결과 
+        public ActionResult RealNameResult(string WORK_TMP_ID = "", string M_JOIN_MODE="")
+        {
+            if (WORK_TMP_ID == null || WORK_TMP_ID == "" || M_JOIN_MODE == "" || M_JOIN_MODE == null)
+                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
 
+            //실명인증 정상여부 판단.<<<<<<<<<<<<<<<<<<<<<<
+
+            //DB임시 저장 필요<<<<<<<<<<<<<<<<<<<<<<
+
+            //다음 스텝 이동<<<<<<<<<<<<<<<<<<<<<<
+            return RedirectToAction("JoinStep2", "MemberShip", new { WORK_TMP_ID = WORK_TMP_ID }); // 실명인증 성공 -> Go Step2
+        }
+        
+
+        //사용자 회원가입- Step2 -약관동의
+        public ActionResult JoinStep2(string WORK_TMP_ID="")
+        {
+            if (WORK_TMP_ID == null || WORK_TMP_ID == "")
+                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+
+            this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
+            return View();
+        }
+
+        //사용자 회원가입- Step3 -회원정보 입력
+        public ActionResult JoinStep3(string WORK_TMP_ID = "")
+        {
+            if (WORK_TMP_ID == null || WORK_TMP_ID == "")
+                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+
+            this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
+            return View();
+        }
     }
 }

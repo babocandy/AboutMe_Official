@@ -5,6 +5,8 @@ using System.Web;
 
 using AboutMe.Common.Helper;
 
+
+
 namespace AboutMe.Web.Front.Common
 {
     public class MemberInfo
@@ -94,6 +96,8 @@ namespace AboutMe.Web.Front.Common
             string M_SKIN_TROUBLE_CD = cookiesession.GetSecretSession("M_SKIN_TROUBLE_CD");
             return M_SKIN_TROUBLE_CD;
         }
+
+
 
     }
 }
