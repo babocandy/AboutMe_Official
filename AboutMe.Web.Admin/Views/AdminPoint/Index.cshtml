@@ -1,4 +1,5 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminPointMemberViewModel
+@using AboutMe.Common.Helper          
 
 @{
     ViewBag.Title = "PointIndex";
@@ -108,13 +109,11 @@
                         <tr>
                             <!--<td class="brnone"><input type="checkbox" value="50,000" title="선택" /></td>-->
                             <td>@item.M_NO</td>
-                            <!--<td>@Html.DisplayFor(modelItem => item.M_ID)</td>-->
                             <td>@Html.ActionLink(item.M_ID.ToString(), null, null, new { onclick = string.Format("popupPointHistory('{0}'); return false;", @item.M_ID), @class = "btn" })</td>
                             <td>@Html.DisplayFor(modelItem => item.M_NAME)</td>
-                            <!--<td><input type="text" class="input-sm wper100" value="@Html.DisplayFor(modelItem => item.M_NAME)" title="이름" /></td>                        -->
-                            <td>@Html.DisplayFor(modelItem => item.M_GRADE)</td>
+                            <td>@MemberCode2Label.Grade2Label(item.M_GRADE)</td>
                             <td>@Html.ActionLink(item.M_POINT.ToString(), null, null, new { onclick = string.Format("popupPointUpdate('{0}'); return false;", @item.M_ID) , @class="btn"})</td>
-                            <td>@item.M_GBN</td>
+                            <td>@MemberCode2Label.Gbn2Label( item.M_GBN )</td>
                         </tr>
                     }
                 </tbody>
@@ -140,7 +139,7 @@
 
         <script>
         function popupPointUpdate(mid) {
-            var myWindow = window.open("/AdminPoint/PopupMemberPoint?M_ID=" + mid, "popupPointUpdate", "width=400, height=400,scrollbars=0");
+            var myWindow = window.open("/AdminPoint/PopupMemberPointUpdate?M_ID=" + mid, "popupPointUpdate", "width=400, height=400,scrollbars=0");
         }
 
         function popupPointHistory(mid) {

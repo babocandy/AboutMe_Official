@@ -26,6 +26,9 @@ namespace AboutMe.Web.Admin.Controllers
             this._AdminPointService = _adminPointService;
         }
 
+        /**
+         * 포인트 관리자 목록
+         */
         // GET: AdminPoint
         [CustomAuthorize]
         public ActionResult Index(string searchKey, string searchValue, int page = 1, int pageSize = 10)
@@ -50,8 +53,11 @@ namespace AboutMe.Web.Admin.Controllers
             return View(viewModel);
         }
 
+        /**
+         *  팝업-회원 포인트 적립/차감 수정  
+         */
         [CustomAuthorize]
-        public ActionResult PopupMemberPoint(string M_ID)
+        public ActionResult PopupMemberPointUpdate(string M_ID)
         {
             AdminPointInsertViewModel model = new AdminPointInsertViewModel();
             model.Mid = M_ID;
@@ -62,7 +68,7 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult PopupMemberPoint(AdminPointInsertViewModel model)
+        public ActionResult PopupMemberPointUpdate(AdminPointInsertViewModel model)
         {
             Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
             Debug.WriteLine("Type - " + model.Mid);
@@ -93,6 +99,10 @@ namespace AboutMe.Web.Admin.Controllers
             return View(model);
         }
 
+
+        /**
+         * 팝업 - 마이 페이지> 나의 포인트 내역
+         */
         [CustomAuthorize]
         public ActionResult MyPointHistory(string M_ID, int page = 1)
         {
@@ -104,12 +114,20 @@ namespace AboutMe.Web.Admin.Controllers
             return View(model);
         }
 
+
+        /**
+         * 샘플 - 주문 관련 테스트 페이지
+         */
         [CustomAuthorize]
         public ActionResult TestPoint()
         {
             return View();
         }
 
+
+        /**
+         * 샘플 - 구매 확정후 포인트 적립
+         */
         [CustomAuthorize]
         public ActionResult SavePointOnOrder()
         {
@@ -122,6 +140,9 @@ namespace AboutMe.Web.Admin.Controllers
             return RedirectToAction("TestPoint");
         }
 
+        /**
+         * 샘플 - 구매시 포인트 사용
+         */
         [CustomAuthorize]
         public ActionResult UsePointOnOrder()
         {
@@ -134,6 +155,9 @@ namespace AboutMe.Web.Admin.Controllers
             return RedirectToAction("TestPoint");
         }
 
+        /**
+         * 샘플 - 주문 전체 취소
+         */
         [CustomAuthorize]
         public ActionResult CancelAllOfOrder()
         {
@@ -146,6 +170,9 @@ namespace AboutMe.Web.Admin.Controllers
             return RedirectToAction("TestPoint");
         }
 
+        /**
+         * 샘플 - 주문 부분 취소 샘플
+         */
         [CustomAuthorize]
         public ActionResult CancelPartOfOrder()
         {
@@ -156,8 +183,6 @@ namespace AboutMe.Web.Admin.Controllers
             Debug.WriteLine("에러메세지 : " + result.Item2);
            
             return RedirectToAction("TestPoint");
-        }
-
-        
+        }        
     }
 }
