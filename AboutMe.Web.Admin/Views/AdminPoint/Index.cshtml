@@ -34,23 +34,22 @@
                             <div class="form-group">
 
                                 @{
-                    List<SelectListItem> items = new List<SelectListItem>();
-                    items.Add(new SelectListItem { Text = "아이디", Value = "M_ID" });
-                    items.Add(new SelectListItem { Text = "이름", Value = "M_NAME" });
-                    items.Add(new SelectListItem { Text = "등급", Value = "M_GRADE" });
+                                    List<SelectListItem> items = new List<SelectListItem>();
+                                    items.Add(new SelectListItem { Text = "아이디", Value = "M_ID" });
+                                    items.Add(new SelectListItem { Text = "이름", Value = "M_NAME" });
+                                    items.Add(new SelectListItem { Text = "등급", Value = "M_GRADE" });
 
-                    if (Model.SearchKey == "M_ID")
-                    {
-                        items[0].Selected = true;
-                    }
-                    else if (Model.SearchKey == "M_NAME")
-                    {
-                        items[1].Selected = true;
-                    }
-                    else if (Model.SearchKey == "M_GRADE")
-                    {
-                        items[3].Selected = true;
-                    }
+
+                                    foreach (var xx in items)
+                                    {
+                                        if (xx.Value == Model.SearchKey)
+                                        {
+                                            xx.Selected = true;
+                                            break;
+                                        }
+                                    }
+
+     
                                 }
                                 @Html.DropDownList("searchKey", items, "-대상 선택-", new { style = "width:100px;" })
 
@@ -64,18 +63,19 @@
                         <div class="col-md-4  text-right">
                             <div class="form-group">
                                 @{
-                    List<SelectListItem> pageSizeItems = new List<SelectListItem>();
-                    pageSizeItems.Add(new SelectListItem { Text = "10개씩", Value = "10" });
-                    pageSizeItems.Add(new SelectListItem { Text = "20개씩", Value = "20" });
+                                    List<SelectListItem> pageSizeItems = new List<SelectListItem>();
+                                    pageSizeItems.Add(new SelectListItem { Text = "10개씩", Value = "10" });
+                                    pageSizeItems.Add(new SelectListItem { Text = "20개씩", Value = "20" });
 
-                    if (Model.PageSize == 10)
-                    {
-                        pageSizeItems[0].Selected = true;
-                    }
-                    else if (Model.PageSize == 20)
-                    {
-                        pageSizeItems[1].Selected = true;
-                    }
+                                    foreach (var xx in pageSizeItems)
+                                    {
+                                        if ( xx.Value.AsInt() == Model.PageSize)
+                                        {
+                                            xx.Selected = true;
+                                            break;
+                                        }
+                                    }
+
                                 }
                                 @Html.DropDownList("pageSize", pageSizeItems, new { style = "width:150px;" })
                             </div>
@@ -99,6 +99,7 @@
                 </tr>
             </thead>
             <tbody>
+
                 @foreach (var item in Model.MemberList)
                 {
                     <tr>

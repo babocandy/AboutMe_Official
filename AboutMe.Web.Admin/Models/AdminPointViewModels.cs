@@ -21,7 +21,8 @@ namespace AboutMe.Web.Admin.Models
         
         [Required(ErrorMessage = "필수사항입니다")]
         public string Type { get; set; }
-        
+
+        [StringLength(150, ErrorMessage = "메모는 150자 이상을 초과할 수 없습니다.")]
         [Required(ErrorMessage = "필수사항입니다")]
         public string Reason { get; set; }
         
@@ -30,6 +31,7 @@ namespace AboutMe.Web.Admin.Models
 
         public string AdminId { get; set; }
         public string AdminName { get; set; }
+        public SP_POINT_MEMBER_PROFILE_Result MemberProfile { get; set; }
 
         public string ResultNum { get; set; }
         public string ResultMessage { get; set; }

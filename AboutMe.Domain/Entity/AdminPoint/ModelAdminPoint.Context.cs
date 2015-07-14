@@ -217,5 +217,14 @@ namespace AboutMe.Domain.Entity.AdminPoint
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_ALL_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
+    
+        public virtual ObjectResult<SP_POINT_MEMBER_PROFILE_Result> SP_POINT_MEMBER_PROFILE(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POINT_MEMBER_PROFILE_Result>("SP_POINT_MEMBER_PROFILE", m_IDParameter);
+        }
     }
 }

@@ -64,6 +64,7 @@ namespace AboutMe.Web.Admin.Controllers
             model.Mid = M_ID;
             model.AdminId = AdminUserInfo.GetAdmId();
             model.AdminName = AdminUserInfo.GetAdmName();
+            model.MemberProfile = _AdminPointService.GetMemberProfile(M_ID);
 
             return View(model);
         }
@@ -78,6 +79,8 @@ namespace AboutMe.Web.Admin.Controllers
             Debug.WriteLine("Type - " + model.Type);
             Debug.WriteLine("Reason - " + model.Reason);
             Debug.WriteLine("Point - " + model.Point);
+
+            model.MemberProfile = _AdminPointService.GetMemberProfile(model.Mid);
 
             if (ModelState.IsValid)
             {
@@ -104,7 +107,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         /**
-         * 팝업 - 마이 페이지> 나의 포인트 내역
+         * 팝업 - 회원관리>포인트 내역 조회
          */
         [CustomAuthorize]
         public ActionResult MyPointHistory(string M_ID, int page = 1)

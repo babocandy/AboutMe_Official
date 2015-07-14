@@ -52,6 +52,9 @@
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_VALUE" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_POINT_MEMBER_PROFILE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_POINT_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
           <Parameter Name="PAGESIZE" Type="int" Mode="In" />
@@ -145,6 +148,9 @@
             <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
             <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_POINT_MEMBER_PROFILE" ReturnType="Collection(AboutMeModel1.SP_POINT_MEMBER_PROFILE_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_POINT_MEMBER_SEL_Result">
           <Property Type="Int32" Name="M_NO" Nullable="false" />
@@ -164,6 +170,15 @@
           <Property Type="Int32" Name="POINT" Nullable="true" />
           <Property Type="String" Name="KIND" Nullable="true" MaxLength="4" />
           <Property Type="String" Name="ADM_NAME" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="SP_POINT_MEMBER_PROFILE_Result">
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="M_GRADE" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="M_POINT" Nullable="false" />
+          <Property Type="String" Name="M_EMAIL" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_PHONE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="M_MOBILE" Nullable="true" MaxLength="15" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -206,6 +221,19 @@
           <FunctionImportMapping FunctionImportName="SP_POINT_USE_ON_ORDER" FunctionName="AboutMeModel1.Store.SP_POINT_USE_ON_ORDER" />
           <FunctionImportMapping FunctionImportName="SP_POINT_CANCEL_PART_ORDER" FunctionName="AboutMeModel1.Store.SP_POINT_CANCEL_PART_ORDER" />
           <FunctionImportMapping FunctionImportName="SP_POINT_CANCEL_ALL_ORDER" FunctionName="AboutMeModel1.Store.SP_POINT_CANCEL_ALL_ORDER" />
+          <FunctionImportMapping FunctionImportName="SP_POINT_MEMBER_PROFILE" FunctionName="AboutMeModel1.Store.SP_POINT_MEMBER_PROFILE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel1.SP_POINT_MEMBER_PROFILE_Result">
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_POINT" ColumnName="M_POINT" />
+                <ScalarProperty Name="M_EMAIL" ColumnName="M_EMAIL" />
+                <ScalarProperty Name="M_PHONE" ColumnName="M_PHONE" />
+                <ScalarProperty Name="M_MOBILE" ColumnName="M_MOBILE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
