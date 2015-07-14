@@ -106,7 +106,8 @@ namespace AboutMe.Web.Admin.Controllers
                 //return View(Index("" ,"", "","", 1, 10));
                 //ViewBag.resultVal = i;
                 //return RedirectToAction("Index", new { SearchCol = ViewBag.resultVal });
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return View();
             }
             catch
             {
