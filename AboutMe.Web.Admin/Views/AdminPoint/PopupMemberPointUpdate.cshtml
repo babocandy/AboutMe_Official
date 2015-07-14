@@ -1,0 +1,129 @@
+﻿@model AboutMe.Web.Admin.Models.AdminPointInsertViewModel
+
+@using AboutMe.Common.Helper
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
+}
+
+
+@section Scripts{
+
+    <style>
+        .field-validation-error,validation-summary-errors{
+            color:red;
+        }
+    </style>
+    <script>
+        function closePopup() {
+            if (window.opener) {
+                window.opener.location.reload(true);
+            }
+            self.close();
+
+        }
+
+
+    </script>
+
+    @if (!Model.ResultNum.IsEmpty() && Model.ResultNum != "0")
+    {
+        <script>
+             alert("@(Model.ResultMessage)");
+        </script>
+    }
+    else if (Model.ResultNum == "0")
+    {
+        <script>
+                window.opener.location.reload(true);
+                self.close();
+        </script>
+    }
+}
+
+
+
+
+@section Body{
+<h1>포인트 관리</h1>
+<br />
+<h2>회원기본정보</h2>
+<table class="table table_row">
+    <colgroup><col width="20%" /><col width="*" /><col width="20%" /><col width="*" /></colgroup>
+    <tbody>
+        <tr>
+            <th scope="row" class="vam">이름</th>
+            <td>@Model.MemberProfile.M_NAME</td>
+            <th scope="row" class="vam">ID</th>
+            <td>@Model.MemberProfile.M_ID</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">휴대폰</th>
+            <td>@Model.MemberProfile.M_MOBILE</td>
+            <th scope="row" class="vam">전화번호</th>
+            <td>@Model.MemberProfile.M_PHONE</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">이메일</th>
+            <td>@Model.MemberProfile.M_EMAIL</td>
+            <th scope="row" class="vam">회원등급</th>
+            <td>@MemberCode2Label.Grade2Label(Model.MemberProfile.M_GRADE)</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">보유포인트</th>
+            <td colspan="3">@Model.MemberProfile.M_POINT</td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<h2>포인트 적립/차감</h2>
+
+@using (Html.BeginForm("PopupMemberPointUpdate", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
+{
+    @Html.AntiForgeryToken()
+    <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+    
+<table class="table table_row">
+    <colgroup><col width="20%" /><col width="*" /></colgroup>
+    <tbody>
+        <tr>
+            <th scope="row" class="vam">적립/차감</th>
+            <td>
+                <label class="mr15"><input type="radio" name="Type" value="1" /><span class="txt">적립</span></label>
+                <label class="mr15"><input type="radio" name="Type" value="2" /><span class="txt">차감</span></label>
+                <span>@Html.ValidationMessageFor(model => model.Type)</span> 
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">설명</th>
+            <td>관리자 적립/차감</td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">포인트</th>
+            <td>
+                <input type="text" class="input-sm" title="포인트" name="Point" />
+                (+,- 기호없이 숫자만입력)
+                <br />
+                @Html.ValidationMessageFor(model => model.Point)
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="vam">메모(최대 150자)</th>
+            <td>
+                <textarea class="input-sm" rows="8" style="width:100%;" title="메모" name="Reason" maxlength="150"></textarea>
+                <br />
+                @Html.ValidationMessageFor(model => model.Reason)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<input type="hidden" name="Mid" value="@Model.Mid" />
+@Html.ValidationMessageFor(model => model.Mid)
+    
+<div class="tar">
+    <a href="#" class="btn btn-default " onclick="document.frm.submit(); return false;">저장</a>
+    <a href="#" class=" btn btn-primary " onclick="closePopup(); return false;">취소</a>
+</div>
+
+}
+}
