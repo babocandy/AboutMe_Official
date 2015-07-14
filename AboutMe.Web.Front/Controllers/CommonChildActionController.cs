@@ -46,6 +46,42 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
+        #region 상품상세의 상품리뷰 페이지
+        [ChildActionOnly]
+        public ActionResult ShoppingDetailReviewInfo(string P_CODE)
+        {
+            this.ViewBag.P_CODE = P_CODE; //상품코드
+            return View();
+        }
+        #endregion
+
+        #region 상품상세의 right 프로모션
+        [ChildActionOnly]
+        public ActionResult ShoppingDetailRightPromotion(string P_CODE)
+        {
+            this.ViewBag.P_CODE = P_CODE; //상품코드
+            return View();
+        }
+        #endregion
+
+        #region 상품상세의 right 세트상품
+        [ChildActionOnly]
+        public ActionResult ShoppingDetailRightSetGoods(string P_CODE)
+        {
+            this.ViewBag.P_CODE = P_CODE; //상품코드
+            return View();
+        }
+        #endregion
+
+        #region 상품상세의 left 이벤트
+        [ChildActionOnly]
+        public ActionResult ShoppingDetailLeftEvent(string P_CODE)
+        {
+            this.ViewBag.P_CODE = P_CODE; //상품코드
+            return View();
+        }
+        #endregion
+
 
     }
 }

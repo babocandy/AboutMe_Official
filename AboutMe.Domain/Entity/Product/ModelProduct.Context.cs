@@ -27,7 +27,7 @@ namespace AboutMe.Domain.Entity.Product
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<VIEW_PRODUCT_VS_PROMOTION_LIST> VIEW_PRODUCT_VS_PROMOTION_LIST { get; set; }
+        public virtual DbSet<TB_LOG_USER> TB_LOG_USER { get; set; }
     
         public virtual ObjectResult<SP_PRODUCT_CNT_Result> SP_PRODUCT_CNT()
         {
@@ -46,6 +46,31 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("P_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
+        }
+    
+        public virtual int SP_USER_LOG_INS(string uid, string memo, string comment, string url, string userip)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("uid", uid) :
+                new ObjectParameter("uid", typeof(string));
+    
+            var memoParameter = memo != null ?
+                new ObjectParameter("memo", memo) :
+                new ObjectParameter("memo", typeof(string));
+    
+            var commentParameter = comment != null ?
+                new ObjectParameter("comment", comment) :
+                new ObjectParameter("comment", typeof(string));
+    
+            var urlParameter = url != null ?
+                new ObjectParameter("url", url) :
+                new ObjectParameter("url", typeof(string));
+    
+            var useripParameter = userip != null ?
+                new ObjectParameter("userip", userip) :
+                new ObjectParameter("userip", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_LOG_INS", uidParameter, memoParameter, commentParameter, urlParameter, useripParameter);
         }
     }
 }

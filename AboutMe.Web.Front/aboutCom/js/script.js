@@ -108,6 +108,7 @@ $(function(){
 			$(this).addClass("chkcon_on");
 		}
 	});
+
 	$(".chkcon").click(function(){
 		if($(this).children(":checked").length == 0){
 			$(this).removeClass("chkcon_on");
@@ -115,6 +116,7 @@ $(function(){
 			$(this).addClass("chkcon_on");
 		}
 	});
+
 	/* form - radio */
 	$(".racon").each(function(){
 		$(this).append("<span class='bl'></span>");
