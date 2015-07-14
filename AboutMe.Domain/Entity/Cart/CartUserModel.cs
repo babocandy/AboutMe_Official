@@ -27,7 +27,7 @@ namespace AboutMe.Domain.Entity.Cart
         public string MERGY_OPT { get; set; }
     }
 
-    
+
     public class CART_INDEX_MODEL
     {
         public Int32 DownloadCouponCnt { set; get; }
@@ -40,5 +40,14 @@ namespace AboutMe.Domain.Entity.Cart
         public USER_PROFILE UserProfile { get; set; }
         public List<SP_TB_CART_LIST_Result> CartList { get; set; }
         public List<SP_TB_CART_LIST_Result> BuyWillList { get; set; }
+    }
+    public class CART_FLYING_MODEL
+    {
+        public Int32 CartCnt { get; set; }
+        public Int32 CurrentPage { get; set; }
+        public Int32 PrevPage { get; set; }
+        public Int32 NextPage { get; set; }
+        public Int32 TotalPage { get; set; }
+        public IEnumerable<SP_TB_CART_LIST_Result> CartList { get; set; }
     }
 }

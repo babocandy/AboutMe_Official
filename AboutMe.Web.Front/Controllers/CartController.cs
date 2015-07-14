@@ -21,7 +21,7 @@ namespace AboutMe.Web.Front.Controllers
         {
             this._cartservice = _cartservice;
         }
-        
+
         // GET: Cart
         public ActionResult Index()
         {
@@ -37,7 +37,7 @@ namespace AboutMe.Web.Front.Controllers
             viewModel.SumPrice = (lst.Count() < 1) ? 0 : lst.Sum(x => x.ORDER_PRICE);
             return View(viewModel);
         }
-        
+
         public ActionResult CartCount()
         {
             int cnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
@@ -84,6 +84,7 @@ namespace AboutMe.Web.Front.Controllers
             return RedirectToAction("Index");
 
         }
+
         [HttpPost]
         public ActionResult CartCalculatePrice(string data)
         {
@@ -109,6 +110,15 @@ namespace AboutMe.Web.Front.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
+        
+        #region 로그인시 장바구니 합치기 test용
+        public void CartMerge()
+        {
+            _cartservice.CartMerge(_user_profile.M_ID, _user_profile.SESSION_ID, "Y");
+            //var jsonData = new { result = "true" };
+            //return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
 
         [HttpPost]
         [CustomAuthorize]
@@ -165,6 +175,39 @@ namespace AboutMe.Web.Front.Controllers
             var jsonData = new { wish_count = cnt };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FlyingCart(int page=1)
+        {
+            int PageSize = 1;
+            List<SP_TB_CART_LIST_Result> lst = new List<SP_TB_CART_LIST_Result>();
+            lst = _cartservice.CartList(_user_profile.M_ID, _user_profile.SESSION_ID);
+
+            var cart_list = lst.Skip((page - 1) * PageSize).Take(PageSize);
+            int cartCnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
+            int totalPage = cartCnt / PageSize;
+
+            CART_FLYING_MODEL viewModel = new CART_FLYING_MODEL();
+            viewModel.CurrentPage = page;
+            viewModel.TotalPage = totalPage;
+            viewModel.PrevPage = (page > 1) ? page - 1 : 1;
+            viewModel.NextPage = (page < totalPage) ? page + 1 : totalPage;
+            viewModel.CartCnt = cartCnt;
+            viewModel.CartList = cart_list;
+
+            return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult FlyCartDelete(string IDX)
+        {
+            _cartservice.CartDelete(_user_profile.M_ID, _user_profile.SESSION_ID, IDX);
+
+            int cnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
+            var jsonData = new { result = "true", cart_count = cnt };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

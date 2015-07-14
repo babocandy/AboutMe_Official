@@ -12,7 +12,7 @@
 }
 @section Scripts {
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
-    <script src="/Scripts/cart_script.js"></script>
+    <!--script src="/Scripts/cart_script.js"></script-->
     <script language="javascript">
     function GridCheckAll(c) {
 
@@ -257,8 +257,8 @@
             <a href="/customer/benefit.asp" class="benefitview">회원혜택 보기<i></i></a>
         </p>
         <div class="btn_nonmb">
-            <a href="/membership/joinstep1.asp" class="btn_white_w155h48">회원가입</a>
-            <a href="/membership/login.asp" class="btn_white_w155h48 mt5">로그인</a>
+            <a href="/Member/Join" class="btn_white_w155h48">회원가입</a>
+            <a href="/Member/Login" class="btn_white_w155h48 mt5">로그인</a>
         </div>
     </div>
 </div>
@@ -279,8 +279,8 @@
         <a href="#" class="jointxt"><img src="/aboutCom/images/cart/nonmb_jointxt.png" alt="지금 어바웃미 멤버십에 가입 하세요" /></a>
         <span class="benefittxt"><img src="/aboutCom/images/cart/nonmb_bannertxt.png" alt="특별한 회원 혜택 - 구매 금액의 최대 5%  적립 - 회원가입 시 10,000원 할인쿠폰 - 구매금액별 사은품 지급 - 생일쿠폰 지급 VIP 추가 혜택 - 추가 5% 할인 - 무료배송 쿠폰(월 기준)" /></span>
         <div class="btn_nonmb">
-            <a href="/membership/joinstep1.asp" class="btn_white_w155h48">회원가입</a>
-            <a href="/membership/login.asp" class="btn_white_w155h48 mt5">로그인</a>
+            <a href="/Member/Join" class="btn_white_w155h48">회원가입</a>
+            <a href="/Member/Login" class="btn_white_w155h48 mt5">로그인</a>
         </div>
     </div>
 }
@@ -635,6 +635,7 @@
         @Model.UserProfile.SESSION_ID
         <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니담기</a>
         <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니담기</a>
+        <a href="#none" class="btn_gray_w185h60" onclick="CartMerge(this)" data-pcode="1111112" data-pcount="1">로그인Merge</a>
     </div>
     <div class="container100per notify">
     <div class="inner">
@@ -651,25 +652,36 @@
     </div>
 </div>
     <script language="javascript">
-        $(document).ready(function(){
-            Cart_Count();
-                //Wish_Count();
+        
 
-                //바로구매 하기 테스트
-                // var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
-                // Now_Order_Input(arr);
+        function AddCartClick(b) {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+            obj.p_count = $(b).attr('data-pcount');
+            arrP.push(obj);
+            Cart_Input(arrP);
+        }
 
-                // 장바구니담기
-                //var arr = [ {"p_code":"JBSV130E-M664TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }, {"p_code":"JQSVA500-I544TR", "display_gbn":"brand", "p_count":"1", "option2_idx":"" }];
-                //Cart_Input(arr);
+        function CartMerge(b) {
+            var src_url = "/Cart/CartMerge";
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                success: function (data) {
+                    if (data.result == "true") {
+                        alert("장바구니합치기, 성공적!!");
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
             });
-
-    function AddCartClick(b) {
-        var arrP = new Array;
-        var obj = new Object();
-        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
-        obj.p_count = $(b).attr('data-pcount');
-        arrP.push(obj);
-        Cart_Input(arrP);
         }
 </script>
