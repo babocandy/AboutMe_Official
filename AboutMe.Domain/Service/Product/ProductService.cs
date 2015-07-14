@@ -12,6 +12,7 @@ namespace AboutMe.Domain.Service.Product
     public class ProductService : IProductService
     {
 
+        #region 상품
 
         #region 상품 리스트
         public List<SP_PRODUCT_SEL_Result> GetProductList()
@@ -72,5 +73,23 @@ namespace AboutMe.Domain.Service.Product
 
         #endregion
 
+        #endregion
+
+        #region 카테고리
+
+        #region 카테고리 리스트
+        public List<SP_CATEGORY_DEPTH_SEL_Result> GetCategoryDeptList(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE)
+        {
+            List<SP_CATEGORY_DEPTH_SEL_Result> lst = new List<SP_CATEGORY_DEPTH_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_CATEGORY_DEPTH_SEL(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE).ToList();
+            }
+            return lst;
+
+        }
+        #endregion
+
+        #endregion
     }
 }

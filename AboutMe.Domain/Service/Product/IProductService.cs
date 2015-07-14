@@ -18,6 +18,10 @@ namespace AboutMe.Domain.Service.Product
         int GetProductCnt();
         //상품 보기
         SP_PRODUCT_DETAIL_VIEW_Result ViewProduct(string PCODE);
+
+        //카테고리 리스트
+        List<SP_CATEGORY_DEPTH_SEL_Result> GetCategoryDeptList(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE);
+
         #endregion
     }
 }
