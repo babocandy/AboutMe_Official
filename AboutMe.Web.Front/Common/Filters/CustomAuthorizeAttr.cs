@@ -142,7 +142,7 @@ namespace AboutMe.Web.Front.Common.Filters
                  * **/
              
                 filterContext.Result = new RedirectToRouteResult(new
-                    RouteValueDictionary(new { controller = "Member", action = "Login", RedirectUrl = HttpContext.Current.Request.Url }));
+                    RouteValueDictionary(new { controller = "MemberShip", action = "Login", RedirectUrl = HttpContext.Current.Request.Url }));
                 
             }
         }
