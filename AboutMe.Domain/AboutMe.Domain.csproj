@@ -61,9 +61,16 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Json">
+      <HintPath>..\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
@@ -338,6 +345,7 @@
     <Compile Include="Entity\Cart\TB_WISHLIST.cs">
       <DependentUpon>ModelCart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Common\ReturnDic.cs" />
     <Compile Include="Entity\Faq\ModelFaq_EntityPartial.cs" />
     <Compile Include="Entity\Faq\ModelFaq_Metadata.cs" />
     <Compile Include="Entity\Faq\ModelFaq.Context.cs">
@@ -381,6 +389,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelMember.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Member\SP_MEMBER_REALNAME_LOG_VIEW_Result.cs">
+      <DependentUpon>ModelMember.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Member\SP_MEMBER_VIEW_Result.cs">
       <DependentUpon>ModelMember.tt</DependentUpon>
