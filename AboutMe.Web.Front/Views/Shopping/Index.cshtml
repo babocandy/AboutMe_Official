@@ -31,8 +31,16 @@
                             <div class="sort">
                                 <p class="tit">브랜드별</p>
                                 <!--현재 소팅된 소분류 class "cnt" 사용합니다.-->
-                                <ul>
-                                    <li class="cnt"><a href="#">전체</a></li>
+                                <ul><li class="cnt"><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)100100">전체</a></li>
+                                    @{ var i = 0; }
+                                    @foreach (var item in ViewData["P_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                    {
+
+                                        <li><a href="/shopping/Index?P_CATE_CODE=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+
+                                        i++;
+                                    }
+                                    @*<li class="cnt"><a href="#">전체</a></li>
                                     <li><a href="#">엘라바쉐</a></li>
                                     <li><a href="#">립스메이커</a></li>
                                     <li><a href="#">페탈프레쉬</a></li>
@@ -40,26 +48,44 @@
                                     <li><a href="#">피그콜라겐</a></li>
                                     <li><a href="#">뷰크로스</a></li>
                                     <li><a href="#">키스 에버레스트</a></li>
-                                    <li><a href="#">기타</a></li>
+                                    <li><a href="#">기타</a></li>*@
                                 </ul>
                             </div>
                             <div class="sort">
                                 <p class="tit">피부고민별</p>
                                 <ul>
-                                    <li><a href="#">전체</a></li>
+                                    <li><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)200100">전체</a></li>
+                                    @{ i = 0; }
+                                    @foreach (var item in ViewData["C_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                    {
+
+                                        <li><a href="/shopping/Index?P_CATE_CODE=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+
+                                        i++;
+                                    }
+                                    @*<li><a href="#">전체</a></li>
                                     <li><a href="#">수분/보습</a></li>
                                     <li><a href="#">탄력/주름</a></li>
                                     <li><a href="#">브라이트닝</a></li>
                                     <li><a href="#">화이트닝</a></li>
                                     <li><a href="#">안티에이징</a></li>
                                     <li><a href="#">모공/트러블</a></li>
-                                    <li><a href="#">생기/활력</a></li>
+                                    <li><a href="#">생기/활력</a></li>*@
                                 </ul>
                             </div>
                             <div class="sort">
                                 <p class="tit">라인별</p>
                                 <ul>
-                                    <li><a href="#">전체</a></li>
+                                    <li><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)300100">전체</a></li>
+                                    @{ i = 0; }
+                                    @foreach (var item in ViewData["L_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                    {
+
+                                        <li><a href="/shopping/Index?P_CATE_CODE=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+
+                                        i++;
+                                    }
+                                    @*<li><a href="#">전체</a></li>
                                     <li><a href="#">수퍼아쿠아</a></li>
                                     <li><a href="#">뉴트리워터</a></li>
                                     <li><a href="#">브라이트닝</a></li>
@@ -69,7 +95,7 @@
                                     <li><a href="#">이뮤젠</a></li>
                                     <li><a href="#">멀티사인즈</a></li>
                                     <li><a href="#">멀티비타</a></li>
-                                    <li><a href="#">더블리페어클래식</a></li>
+                                    <li><a href="#">더블리페어클래식</a></li>*@
                                 </ul>
                             </div>
                         </div>
@@ -81,21 +107,32 @@
                 <div class="display_bottom">
                     <!--상품리스트-->
                     <div class="product_area">
-                        <!-- filter -->
+                        @if (ViewBag.CATE_CODE.Substring(0, 3) == "101")
+                        {
+                         <!-- filter -->
                         <div class="filter">
                             <span class="fti">스킨케어</span>
                             <ul>
-                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
+                                
+                                @{ i = 0; }
+                                @foreach (var item in ViewData["3DEPTH"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                {
+
+                                    <li><label class="chkcon"><input type="checkbox" name="DEPTH3_CODE" title=""> <span class="txt">@item.DEPTH3_NAME</span></label></li>
+                                    i++;
+                                }
+                                @*<li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">로션</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">세럼/에센스</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">크림</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">아이크림</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">마사지</span></label></li>
-                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">미스트</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">미스트</span></label></li>*@
                             </ul>
                         </div>
                         <!-- filter -->
+                        }
                         <div class="product_top">
                             <span class="totaltxt">총 100개의 상품이 있습니다.</span>
                             <!--분류-->

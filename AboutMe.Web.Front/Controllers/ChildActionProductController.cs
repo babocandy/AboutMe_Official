@@ -36,8 +36,8 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult HeaderCategoryMenu()
         {
             ViewData["category1"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", "101", "").ToList(); //뷰티
-            ViewData["category2"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", "201", "").ToList(); //헬스
-            ViewData["category3"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", "301", "").ToList(); //수입브랜드(셀렉샵)
+            ViewData["category2"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", "102", "").ToList(); //헬스
+            ViewData["category3"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", "103", "").ToList(); //수입브랜드(셀렉샵)
             return View();
         }
         #endregion
