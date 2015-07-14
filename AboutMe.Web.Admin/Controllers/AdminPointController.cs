@@ -32,7 +32,7 @@ namespace AboutMe.Web.Admin.Controllers
          */
         // GET: AdminPoint
         [CustomAuthorize]
-        public ActionResult Index(string searchKey, string searchValue, int page = 1, int pageSize = 10)
+        public ActionResult PointIndex(string searchKey, string searchValue, int page = 1, int pageSize = 10)
         {
             AdminPointMemberViewModel viewModel = new AdminPointMemberViewModel();
 
