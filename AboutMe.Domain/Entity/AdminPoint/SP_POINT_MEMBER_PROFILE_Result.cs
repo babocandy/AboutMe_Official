@@ -11,14 +11,14 @@ namespace AboutMe.Domain.Entity.AdminPoint
 {
     using System;
     
-    public partial class SP_POINT_MEMBER_SEL_Result
+    public partial class SP_POINT_MEMBER_PROFILE_Result
     {
-        public int M_NO { get; set; }
         public string M_ID { get; set; }
         public string M_NAME { get; set; }
         public string M_GRADE { get; set; }
         public int M_POINT { get; set; }
-        public string M_GBN { get; set; }
-        public System.DateTime M_CREDATE { get; set; }
+        public string M_EMAIL { get; set; }
+        public string M_PHONE { get; set; }
+        public string M_MOBILE { get; set; }
     }
 }

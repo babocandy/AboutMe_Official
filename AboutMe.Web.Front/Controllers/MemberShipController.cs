@@ -5,15 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 
 using AboutMe.Common.Helper;
+
 using AboutMe.Web.Front.Common;
+
+using AboutMe.Domain.Service.Cart;
 
 using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
+using AboutMe.Domain.Entity.Common;
 
 using System.Text;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.UI;
+
+
 
 using AboutMe.Web.Front.Common.Filters;
 
@@ -23,11 +29,13 @@ namespace AboutMe.Web.Front.Controllers
     public class MemberShipController : BaseFrontController
     {
         private IMemberService _MemberService;
+        private ICartService _Cartservice;
 
 
-        public MemberShipController(IMemberService _memberService)
+        public MemberShipController(IMemberService _memberService, ICartService _cartservice)
         {
             this._MemberService = _memberService;
+            this._Cartservice = _cartservice;
         }
 
         //사용자 로그인 폼
@@ -51,11 +59,12 @@ namespace AboutMe.Web.Front.Controllers
             //로그 기록
             string memo = "사용자-로그인";
             string comment = "사용자-로그인";
-            memo = memo + "|ID:" + ID;
-            memo = memo + "|PW:" + PW;
-            memo = memo + "|RedirectUrl:" + RedirectUrl;
-            //FrontLog frontlog = new FrontLog();
-            //frontlog.FrontLogSave(memo, comment);
+            //memo = memo + "|ID:" + ID;
+            //memo = memo + "|PW:" + PW;
+            //memo = memo + "|RedirectUrl:" + RedirectUrl;
+            //UserLog userlog = new UserLog();
+            //userlog.UserLogSave(memo, comment);
+
 
 
 
@@ -85,8 +94,9 @@ namespace AboutMe.Web.Front.Controllers
                 memo = memo + "|ID:" + ID;
                 memo = memo + "|PW:" + PW;
                 memo = memo + "|RedirectUrl:" + RedirectUrl;
-                //FrontLog frontlog = new FrontLog();
-                //frontlog.FrontLogSave(memo, comment);
+                UserLog userlog = new UserLog();
+                userlog.UserLogSave(memo, comment);
+
 
                 return Content("<script language='javascript' type='text/javascript'>alert('아이디가 존재하지 않습니다.');history.go(-1);;</script>");
             }
@@ -98,8 +108,9 @@ namespace AboutMe.Web.Front.Controllers
                 memo = memo + "|ID:" + ID;
                 memo = memo + "|PW:" + PW;
                 memo = memo + "|RedirectUrl:" + RedirectUrl;
-                //FrontLog frontlog = new FrontLog();
-                //frontlog.FrontLogSave(memo, comment);
+                UserLog userlog = new UserLog();
+                userlog.UserLogSave(memo, comment);
+
 
                 return Content("<script language='javascript' type='text/javascript'>alert('아이디 or 패스워드가 일치하지 않습니다.');history.go(-1);</script>");
             }
@@ -116,11 +127,14 @@ namespace AboutMe.Web.Front.Controllers
                 cookiesession.SetSecretSession("M_GRADE", result.M_GRADE);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_EMAIL", result.M_EMAIL);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_PHONE", result.M_PHONE);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("M_GBN", result.M_GBN);  //로그인 세션 세팅
+
                 cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅
 
                 cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅 -평문
 
-                
+
+                _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "Y");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청
 
 
                 memo = "사용자-로그인성공";
@@ -128,8 +142,9 @@ namespace AboutMe.Web.Front.Controllers
                 memo = memo + "|ID:" + ID;
                 memo = memo + "|PW:" + PW;
                 memo = memo + "|RedirectUrl:" + RedirectUrl;
-                //FrontLog frontlog = new FrontLog();
-                //frontlog.FrontLogSave(memo, comment);
+                UserLog userlog = new UserLog();
+                userlog.UserLogSave(memo, comment);
+
 
                 if (RedirectUrl != "")
                     return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
@@ -168,8 +183,9 @@ namespace AboutMe.Web.Front.Controllers
             string memo = "사용자-로그아웃";
             string comment = "사용자-로그아웃";
             memo = memo + "|M_ID:" + LOGOUT_M_ID;
-            //FrontLog frontlog = new FrontLog();
-            //frontlog.FrontLogSave(memo, comment);
+            UserLog userlog = new UserLog();
+            userlog.UserLogSave(memo, comment);
+
 
 
             //return RedirectToAction("Login", "Member"); // 로그인 페이지로 이동
@@ -218,5 +234,29 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
             return View();
         }
-    }
-}
+
+        //사용자 회원가입- Step3-1 --ID중복체크
+        public ActionResult AjaxID_DUPCheck(string M_ID = "")
+        {
+            string strERR_CODE = "0";
+            string strERR_MSG = "";
+            if (M_ID == "")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                strERR_CODE = "1";
+                strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+            }
+
+            //DB저장: 회원 가입시 ID중복체크
+            ReturnDic rObj = _MemberService.GetMemberID_Dup_Check(M_ID);
+
+            return Json(new { ERR_CODE = rObj.ERR_CODE, ERR_MSG =rObj.ERR_MSG });
+           
+
+        }
+
+        
+
+    } //class
+}//namespace
