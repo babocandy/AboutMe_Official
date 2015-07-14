@@ -26,7 +26,6 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> FIXED_PERIOD_TO { get; set; }
         public Nullable<int> EXRIRED_DAY_FROM_ISSUE_DT { get; set; }
         public Nullable<System.DateTime> DOWNLOAD_DATE_FROM { get; set; }
-        public Nullable<System.DateTime> FIXED_PERIOD_TO1 { get; set; }
         public string USABLE_DEVICE_GBN { get; set; }
         public string PRODUCT_APP_SCOPE_GBN { get; set; }
         public string MEMBER_APP_SCOPE_GBN { get; set; }
@@ -38,5 +37,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> MASTER_TO_DATE { get; set; }
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_MONEY { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_RATE { get; set; }
     }
 }

@@ -34,5 +34,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> RE_ISSUE_DATE { get; set; }
         public Nullable<System.DateTime> DOWNLOAD_DATE_FROM { get; set; }
         public Nullable<System.DateTime> DOWNLOAD_DATE_TO { get; set; }
+        public string ISSUED_GBN { get; set; }
+        public string ISSUED_MEMO { get; set; }
     }
 }

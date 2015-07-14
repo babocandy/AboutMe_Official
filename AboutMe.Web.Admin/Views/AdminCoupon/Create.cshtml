@@ -16,41 +16,43 @@
 
             var f = document.frm01;
 
+      
             //용도구분값이 지불쿠폰 일때 
             //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN'));
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
             {
                 if (getRadioVal(f, 'inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN') == '') {
                     alert("[용도구분]이 -지불-일때는 [상품적용범위]를 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN.focus();
+                    f.inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN[0].focus();
                     return false;
                 }
 
                 if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == '')
                 {
                     alert("[용도구분]이 -지불-일때는 [정률/정액 구분]을 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_RATE_OR_MONEY.focus();
+                    f.inst_TB_COUPON_MASTER_RATE_OR_MONEY[0].focus();
                     return false;
                 }
             }
-
-            //alert('inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN');
-            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN'));
-            //발행방법이 자동발행일때 
+              
+       
+           //발행방법이 자동발행일때
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_GBN') == 'A') {
                 if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO') == '') 
                 {
                     alert("[발행방법]이 -자동발행-일때는 [자동발행TYPE]을 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO.focus();
+                    f.inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO[0].focus();
                     return false;
                 }
             }
+         
+       
 
 
-            //사용기간 기준구분
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
-                if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value == '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value == '' )
-                {
+
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value == '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value == '') {
                     alert("[사용기간 기준구분이]이 -고정기간 기준-일때는 [고정기간 일자]를 선택해야 합니다.");
                     f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
                     return false;
@@ -58,13 +60,43 @@
             }
 
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
-                if (f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.value == '') {
+
+
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.value == '' ) {
                     alert("[사용기간 기준구분이]이 -발행일 기준-일때는 [발행일 기준 유효기간]을 선택해야 합니다.");
                     f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.focus();
                     return false;
                 }
             }
 
+
+
+           
+            //alert("여기 " + getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+            //사용기간 기준구분 - 정상
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'R') {
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.value == '' )
+                {
+                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 할인율]를 입력해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.focus();
+                    return false;
+                }
+            }
+
+
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'M') {
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.value == '') {
+                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 금액]을 입력해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.focus();
+                    return false;
+                }
+            }
+
+
+       
             if (f.CheckMemGrade.checked == false) {
               
                  alert("적용회원등급을 선택하세요");
@@ -73,7 +105,7 @@
                 
             }
 
-
+           
 
 
             /**
@@ -83,17 +115,21 @@
                 return false;
             }
             **/
+            
+            return true;
 
         }
 
         function getRadioVal(form, name) {
-            var val;
+            var val = "";
             // get list of radio buttons with specified name
             var radios = form.elements[name];
-            alert(name + ':' + radios[0].value);
+          
 
             // loop through list of radio buttons
+            // for (var i = 0; radios.length < i; i++)
             for (var i = 0, len = radios.length; i < len; i++) {
+                //alert('in:   ' +name + ':' + radios[i].value);
                 if (radios[i].checked) { // radio checked?
                     val = radios[i].value; // if so, hold its value in val
                     break; // and break out of for loop
@@ -208,6 +244,21 @@
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.RATE_OR_MONEY)</font></td>
 
                                                 </tr>
+
+                                                <tr>
+                                                    <th>쿠폰 할인율(%) </th>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_RATE)</font>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>쿠폰 할인금액 </th>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_MONEY)</font>
+                                                    </td>
+                                                </tr>
+
+
   
                                                 <tr>
                                                     <th>사용기간기준 구분 </th>

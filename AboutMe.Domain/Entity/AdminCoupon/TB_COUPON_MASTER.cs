@@ -37,6 +37,8 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<int> ISSUE_MAX_LIMIT { get; set; }
         public Nullable<System.DateTime> MASTER_FROM_DATE { get; set; }
         public Nullable<System.DateTime> MASTER_TO_DATE { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_MONEY { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_RATE { get; set; }
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
     }

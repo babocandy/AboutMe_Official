@@ -40,6 +40,34 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
+        public class MyMultiModelForProduct
+        {
+            public TB_COUPON_PRODUCT inst_TB_COUPON_PRODUCT { get; set; }
+            public List<SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result> inst_SP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result { get; set; }
+            /**
+            public TB_PROMOTION_BY_TOTAL_MEM_GRADE inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE { get; set; }
+            public List<SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result> inst_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result { get; set; }
+            **/
+
+        }
+
+
+        public class MyMultiModelForProductForCreate
+        {
+            public TB_COUPON_PRODUCT inst_TB_COUPON_PRODUCT { get; set; }
+            public List<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result> inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result { get; set; }
+            /**
+            public TB_PROMOTION_BY_TOTAL_MEM_GRADE inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE { get; set; }
+            public List<SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result> inst_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result { get; set; }
+            **/
+
+        }
+
+
+
+
+
+
 
         // GET: AdminCoupon
         public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
@@ -72,7 +100,6 @@ namespace AboutMe.Web.Admin.Controllers
                 //inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE = new TB_PROMOTION_BY_TOTAL_MEM_GRADE()
             };
 
-
             return View(mMyMultiModelForCreate);
 
         }
@@ -81,21 +108,156 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
-        public ActionResult Create([Bind(Prefix = "inst_TB_COUPON_MASTER", Exclude = "CD_COUPON,INS_DATE")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade)
+        public ActionResult Create([Bind(Prefix = "inst_TB_COUPON_MASTER", Exclude = "IDX,CD_COUPON,COUPON_NUM_CHECK_TF,ISSUE_MAX_LIMIT,INS_DATE")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade)
         {
 
 
             int is_success = 1;
 
-
             if (ModelState.IsValid)
             {
-                _AdminCouponService.InsAdminCouponMaster(tb_coupon_master, CheckMemGrade);
+                is_success= _AdminCouponService.InsAdminCouponMaster(tb_coupon_master, CheckMemGrade);
+
+                return RedirectToAction("Index");
             }
 
             return View();
+            
+            //return RedirectToAction("Index", new { CdPromotionTotal = _CdPromotionTotal });
 
         }
+
+
+
+
+        public ActionResult CouponProductList(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX"
+            , string SortDir = "DESC", int Page = 1, int PageSize = 10 , string CdCoupon = "0")
+        {
+
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.SortCol = SortCol;
+            this.ViewBag.SortDir = SortDir;
+
+            //AdminMemberService srv =  new AdminMemberService();
+            int TotalRecord = 0;
+            TotalRecord = _AdminCouponService.GetAdminCouponProductListCnt(SearchCol, SearchKeyword,CdCoupon);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+
+
+
+
+            var mMyMultiModelForProduct = new MyMultiModelForProduct
+            {
+                //inst_TB_COUPON_PRODUCT = new TB_COUPON_PRODUCT() 
+                inst_SP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result = new List<SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result>()
+                //inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE = new TB_PROMOTION_BY_TOTAL_MEM_GRADE()
+            };
+            
+            mMyMultiModelForProduct.inst_SP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result = _AdminCouponService.GetAdminCouponProeuctList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+
+            return View(mMyMultiModelForProduct);
+
+        }
+
+        //CouponProductCreate
+
+        //쿠폰 적용할 대상상품 리스트 -- 생성페이지
+        public ActionResult CouponProductCreate(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX"
+        , string SortDir = "DESC", int Page = 1, int PageSize = 10, string CdCoupon = "0")
+        {
+
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.SortCol = SortCol;
+            this.ViewBag.SortDir = SortDir;
+
+            //AdminMemberService srv =  new AdminMemberService();
+            int TotalRecord = 0;
+            TotalRecord = _AdminCouponService.GetAdminCouponProductForCreateListCnt(SearchCol, SearchKeyword, CdCoupon);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+
+
+
+
+            var mMyMultiModelForProductForCreate = new MyMultiModelForProductForCreate
+            {
+                //inst_TB_COUPON_PRODUCT = new TB_COUPON_PRODUCT() 
+                inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result= new List<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result>()
+                //inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE = new TB_PROMOTION_BY_TOTAL_MEM_GRADE()
+            };
+
+            mMyMultiModelForProductForCreate.inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result 
+                = _AdminCouponService.GetAdminCouponProductForCreateList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+
+            return View(mMyMultiModelForProductForCreate);
+
+        }
+
+
+
+
+        //쿠폰 적용할 대상상품 리스트 -- 생성페이지
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CouponProductCreateProc(string CdCoupon, string[] Check_ins_cd_coupon)
+        {
+
+
+           // string[] CdCouponVsPcodeForIns = new string[CdCouponVsPCode.Length];
+
+            List<Tuple<string,string>> ListCdCouponVsPcodeForIns = new List<Tuple<string,string>>() ; 
+
+            string[] temp;
+            string PCode = "";
+
+
+            for (int i = 0; i < Check_ins_cd_coupon.Length; i++)
+            {
+                temp = Check_ins_cd_coupon[i].Split('$');
+                PCode = temp[1] ;
+
+                ListCdCouponVsPcodeForIns.Add(Tuple.Create(CdCoupon, PCode));
+            }
+
+
+            int IsSuccess = _AdminCouponService.InsAdminCouponProduct(ListCdCouponVsPcodeForIns);
+
+            if(IsSuccess == 1)
+            {
+                return RedirectToAction("CouponProductList", new { CdCoupon = CdCoupon });
+            }
+            /**
+            var mMyMultiModelForProductForCreate = new MyMultiModelForProductForCreate
+            {
+                //inst_TB_COUPON_PRODUCT = new TB_COUPON_PRODUCT() 
+                inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result = new List<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result>()
+                //inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE = new TB_PROMOTION_BY_TOTAL_MEM_GRADE()
+            };
+
+            mMyMultiModelForProductForCreate.inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result
+                = _AdminCouponService.GetAdminCouponProductForCreateList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+
+            return View(mMyMultiModelForProductForCreate);
+            **/
+
+            return RedirectToAction("CouponProductListCreate", new { CdCoupon = CdCoupon });
+        }
+
+
+        
 
     }
 }

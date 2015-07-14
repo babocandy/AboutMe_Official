@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AboutMe.Domain.Entity.AdminCoupon
 {
 
-    public partial class TB_COUPON_MASTER_Meatadata
+    public class TB_COUPON_MASTER_Meatadata
     {
         public int IDX { get; set; }
         public string CD_COUPON { get; set; }
@@ -29,7 +29,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> FIXED_PERIOD_FROM { get; set; }
         [DataType(DataType.Date, ErrorMessage = "YYYY-MM-DD HH:MM:SS 형식으로 입력하세요.")]
         public Nullable<System.DateTime> FIXED_PERIOD_TO { get; set; }
-        [Range(0, 1000, ErrorMessage = "0~1000사이의 값을 입력하세요")]
+        [Range(0, 100, ErrorMessage = "0~100사이의 값을 입력하세요")]
         public Nullable<int> EXRIRED_DAY_FROM_ISSUE_DT { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "YYYY-MM-DD HH:MM:SS 형식으로 입력하세요.")]
@@ -58,6 +58,11 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         [Required(ErrorMessage = "활성화여부를 선택하세요.")]
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+
+        [Range(0, 100000, ErrorMessage = "0~100000사이의 값을 입력하세요")]
+        public Nullable<int> COUPON_DISCOUNT_MONEY { get; set; }
+        [Range(0, 100, ErrorMessage = "0~100사이의 값을 입력하세요")]
+        public Nullable<int> COUPON_DISCOUNT_RATE { get; set; }
 
         /**
         public int IDX { get; set; }

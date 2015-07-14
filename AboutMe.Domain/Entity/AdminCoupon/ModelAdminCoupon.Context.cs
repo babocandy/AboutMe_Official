@@ -29,10 +29,10 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
         public virtual DbSet<TB_COUPON_KIND_CATEGORY> TB_COUPON_KIND_CATEGORY { get; set; }
         public virtual DbSet<TB_COUPON_MEMBER_GRADE> TB_COUPON_MEMBER_GRADE { get; set; }
-        public virtual DbSet<TB_COUPON_PRODUCT> TB_COUPON_PRODUCT { get; set; }
         public virtual DbSet<TB_COUPON_PRICE_DETAIL> TB_COUPON_PRICE_DETAIL { get; set; }
-        public virtual DbSet<TB_COUPON_ISSUED_DETAIL> TB_COUPON_ISSUED_DETAIL { get; set; }
         public virtual DbSet<TB_COUPON_MASTER> TB_COUPON_MASTER { get; set; }
+        public virtual DbSet<TB_COUPON_ISSUED_DETAIL> TB_COUPON_ISSUED_DETAIL { get; set; }
+        public virtual DbSet<TB_COUPON_PRODUCT> TB_COUPON_PRODUCT { get; set; }
     
         public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_COMMON_CNT()
         {
@@ -61,28 +61,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>("SP_ADMIN_COUPON_MASTER_DETAIL_SEL", cD_COUPONParameter);
         }
     
-        public virtual ObjectResult<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
-        {
-            var pAGEParameter = pAGE.HasValue ?
-                new ObjectParameter("PAGE", pAGE) :
-                new ObjectParameter("PAGE", typeof(int));
-    
-            var pAGESIZEParameter = pAGESIZE.HasValue ?
-                new ObjectParameter("PAGESIZE", pAGESIZE) :
-                new ObjectParameter("PAGESIZE", typeof(int));
-    
-            var sEARCH_KEYParameter = sEARCH_KEY != null ?
-                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
-                new ObjectParameter("SEARCH_KEY", typeof(string));
-    
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>("SP_ADMIN_COUPON_MASTER_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
-        }
-    
-        public virtual int SP_ADMIN_COUPON_MASTER_INS(string cOUPON_NAME, string cOUPON_AD_MSG, string cOUPON_USE_DESCRIPTION, string cOUPON_GBN, string cOUPON_GBN_M, string rATE_OR_MONEY, string sERVICE_LIFE_GBN, Nullable<System.DateTime> fIXED_PERIOD_FROM, Nullable<System.DateTime> fIXED_PERIOD_TO, Nullable<int> eXRIRED_DAY_FROM_ISSUE_DT, Nullable<System.DateTime> dOWNLOAD_DATE_FROM, Nullable<System.DateTime> dOWNLOAD_DATE_TO, string uSABLE_DEVICE_GBN, string pRODUCT_APP_SCOPE_GBN, string mEMBER_APP_SCOPE_GBN, string iSSUE_METHOD_GBN, string iSSUE_METHOD_WITH_AUTO, string cOUPON_NUM_CHECK_TF, Nullable<int> iSSUE_MAX_LIMIT, Nullable<System.DateTime> mASTER_FROM_DATE, Nullable<System.DateTime> mASTER_TO_DATE, string uSABLE_YN)
+        public virtual int SP_ADMIN_COUPON_MASTER_INS(string cOUPON_NAME, string cOUPON_AD_MSG, string cOUPON_USE_DESCRIPTION, string cOUPON_GBN, string cOUPON_GBN_M, string rATE_OR_MONEY, string sERVICE_LIFE_GBN, Nullable<System.DateTime> fIXED_PERIOD_FROM, Nullable<System.DateTime> fIXED_PERIOD_TO, Nullable<int> eXRIRED_DAY_FROM_ISSUE_DT, Nullable<System.DateTime> dOWNLOAD_DATE_FROM, Nullable<System.DateTime> dOWNLOAD_DATE_TO, string uSABLE_DEVICE_GBN, string pRODUCT_APP_SCOPE_GBN, string mEMBER_APP_SCOPE_GBN, string iSSUE_METHOD_GBN, string iSSUE_METHOD_WITH_AUTO, string cOUPON_NUM_CHECK_TF, Nullable<int> iSSUE_MAX_LIMIT, Nullable<System.DateTime> mASTER_FROM_DATE, Nullable<System.DateTime> mASTER_TO_DATE, string uSABLE_YN, Nullable<int> cOUPON_DISCOUNT_MONEY, Nullable<int> cOUPON_DISCOUNT_RATE)
         {
             var cOUPON_NAMEParameter = cOUPON_NAME != null ?
                 new ObjectParameter("COUPON_NAME", cOUPON_NAME) :
@@ -172,7 +151,155 @@ namespace AboutMe.Domain.Entity.AdminCoupon
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MASTER_INS", cOUPON_NAMEParameter, cOUPON_AD_MSGParameter, cOUPON_USE_DESCRIPTIONParameter, cOUPON_GBNParameter, cOUPON_GBN_MParameter, rATE_OR_MONEYParameter, sERVICE_LIFE_GBNParameter, fIXED_PERIOD_FROMParameter, fIXED_PERIOD_TOParameter, eXRIRED_DAY_FROM_ISSUE_DTParameter, dOWNLOAD_DATE_FROMParameter, dOWNLOAD_DATE_TOParameter, uSABLE_DEVICE_GBNParameter, pRODUCT_APP_SCOPE_GBNParameter, mEMBER_APP_SCOPE_GBNParameter, iSSUE_METHOD_GBNParameter, iSSUE_METHOD_WITH_AUTOParameter, cOUPON_NUM_CHECK_TFParameter, iSSUE_MAX_LIMITParameter, mASTER_FROM_DATEParameter, mASTER_TO_DATEParameter, uSABLE_YNParameter);
+            var cOUPON_DISCOUNT_MONEYParameter = cOUPON_DISCOUNT_MONEY.HasValue ?
+                new ObjectParameter("COUPON_DISCOUNT_MONEY", cOUPON_DISCOUNT_MONEY) :
+                new ObjectParameter("COUPON_DISCOUNT_MONEY", typeof(int));
+    
+            var cOUPON_DISCOUNT_RATEParameter = cOUPON_DISCOUNT_RATE.HasValue ?
+                new ObjectParameter("COUPON_DISCOUNT_RATE", cOUPON_DISCOUNT_RATE) :
+                new ObjectParameter("COUPON_DISCOUNT_RATE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MASTER_INS", cOUPON_NAMEParameter, cOUPON_AD_MSGParameter, cOUPON_USE_DESCRIPTIONParameter, cOUPON_GBNParameter, cOUPON_GBN_MParameter, rATE_OR_MONEYParameter, sERVICE_LIFE_GBNParameter, fIXED_PERIOD_FROMParameter, fIXED_PERIOD_TOParameter, eXRIRED_DAY_FROM_ISSUE_DTParameter, dOWNLOAD_DATE_FROMParameter, dOWNLOAD_DATE_TOParameter, uSABLE_DEVICE_GBNParameter, pRODUCT_APP_SCOPE_GBNParameter, mEMBER_APP_SCOPE_GBNParameter, iSSUE_METHOD_GBNParameter, iSSUE_METHOD_WITH_AUTOParameter, cOUPON_NUM_CHECK_TFParameter, iSSUE_MAX_LIMITParameter, mASTER_FROM_DATEParameter, mASTER_TO_DATEParameter, uSABLE_YNParameter, cOUPON_DISCOUNT_MONEYParameter, cOUPON_DISCOUNT_RATEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>("SP_ADMIN_COUPON_MASTER_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result> SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL(string cD_COUPON, string p_CODE)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result>("SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL", cD_COUPONParameter, p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_PRODUCT_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_PRODUCT_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result> SP_ADMIN_COUPON_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result>("SP_ADMIN_COUPON_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result> SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result>("SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL", cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result> SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result>("SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_PRODUCT_CREATE_INS(string cD_COUPON, string p_CODE)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_PRODUCT_CREATE_INS", cD_COUPONParameter, p_CODEParameter);
         }
     }
 }

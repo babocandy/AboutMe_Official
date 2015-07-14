@@ -10,14 +10,20 @@
 namespace AboutMe.Domain.Entity.AdminCoupon
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_COUPON_PRODUCT
+    public partial class SP_ADMIN_COUPON_PRODUCT_DEATIL_SEL_Result
     {
         public int IDX { get; set; }
         public string CD_COUPON { get; set; }
         public string P_CODE { get; set; }
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public string P_NAME { get; set; }
+        public string DEPTH1_NAME { get; set; }
+        public string DEPTH2_NAME { get; set; }
+        public string DEPTH3_NAME { get; set; }
+        public Nullable<int> DISCOUNT_PRICE { get; set; }
+        public string P_OUTLET_YN { get; set; }
+        public string DISPLAY_YN { get; set; }
     }
 }
