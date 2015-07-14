@@ -134,8 +134,8 @@ namespace AboutMe.Web.Front.Controllers
                 cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅 -평문
 
 
-                _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "Y");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청
-
+                _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "Y");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청 :  HttpContext.Session.SessionID???
+                
 
                 memo = "사용자-로그인성공";
                 comment = "사용자-로그인성공";

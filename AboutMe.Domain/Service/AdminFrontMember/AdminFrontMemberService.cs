@@ -231,7 +231,103 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         }
 
 
+        //---임직원 신청----------------------------------------------------------------------------------------
+
+        //관리자 - 임직원 신청 목록
+        public List<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result> GetAdminMemberStaffRequestList(string dATE_FROM = "", string dATE_TO = "", string sTATUS = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "", string sORT_COL = "", string sORT_DIR = "", int pAGE = 1, int pAGESIZE = 10)
+        {
+
+            List<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result> lst = new List<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                //lst = AdmEtcContext.SP_ADMIN_ADMIN_MEMBER_SEL(sEARCH_COL, sEARCH_KEYWORD, sORT_COL, sORT_DIR, pAGE, pAGESIZE).ToList();
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_SEL(dATE_FROM, dATE_TO, sTATUS,sEARCH_COL, sEARCH_KEYWORD, sORT_COL, sORT_DIR, pAGE, pAGESIZE).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //관리자-임직원 신청 목록 COUNT
+        public int GetAdminMemberStaffRequestListCount(string dATE_FROM = "", string dATE_TO = "", string sTATUS = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "")
+        {
+
+            List<SP_ADMIN_FRONT_COMMON_CNT_Result> lst = new List<SP_ADMIN_FRONT_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_CNT(dATE_FROM, dATE_TO, sTATUS, sEARCH_COL, sEARCH_KEYWORD).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+        }
+
+        //관리자 -임직원 신청 수정 
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminMemberStaffRequestUpdate(int iDX = -1, string sTATUS = "", string pROC_COMMENT = "", string pROC_ADM_ID = "")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_UPD(iDX, sTATUS, pROC_COMMENT, pROC_ADM_ID, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
 
 
-    }
-}
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+        //관리자 임직원 신청 - 상세 1건
+        public SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result GetAdminMemberStaffRequestView(int iDX = -1)
+        {
+
+            SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result row1 = new SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                row1 = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW(iDX).FirstOrDefault();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return row1;
+
+        }
+
+
+
+
+    } //class
+} //namespace

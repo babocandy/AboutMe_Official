@@ -304,5 +304,101 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_FRONT_MEMBER_UPD_STAFF", m_IDParameter, m_GBNParameter, m_STAFF_COMPANYParameter, m_STAFF_IDParameter, eRR_CODE);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_FRONT_COMMON_CNT_Result> SP_ADMIN_MEMBER_STAFF_REQUST_CNT(string dATE_FROM, string dATE_TO, string sTATUS, string sEARCH_COL, string sEARCH_KEYWORD)
+        {
+            var dATE_FROMParameter = dATE_FROM != null ?
+                new ObjectParameter("DATE_FROM", dATE_FROM) :
+                new ObjectParameter("DATE_FROM", typeof(string));
+    
+            var dATE_TOParameter = dATE_TO != null ?
+                new ObjectParameter("DATE_TO", dATE_TO) :
+                new ObjectParameter("DATE_TO", typeof(string));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_CNT", dATE_FROMParameter, dATE_TOParameter, sTATUSParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result> SP_ADMIN_MEMBER_STAFF_REQUST_SEL(string dATE_FROM, string dATE_TO, string sTATUS, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var dATE_FROMParameter = dATE_FROM != null ?
+                new ObjectParameter("DATE_FROM", dATE_FROM) :
+                new ObjectParameter("DATE_FROM", typeof(string));
+    
+            var dATE_TOParameter = dATE_TO != null ?
+                new ObjectParameter("DATE_TO", dATE_TO) :
+                new ObjectParameter("DATE_TO", typeof(string));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var sORT_COLParameter = sORT_COL != null ?
+                new ObjectParameter("SORT_COL", sORT_COL) :
+                new ObjectParameter("SORT_COL", typeof(string));
+    
+            var sORT_DIRParameter = sORT_DIR != null ?
+                new ObjectParameter("SORT_DIR", sORT_DIR) :
+                new ObjectParameter("SORT_DIR", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_SEL", dATE_FROMParameter, dATE_TOParameter, sTATUSParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual int SP_ADMIN_MEMBER_STAFF_REQUST_UPD(Nullable<int> iDX, string sTATUS, string pROC_COMMENT, string pROC_ADM_ID, ObjectParameter eRR_CODE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var sTATUSParameter = sTATUS != null ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(string));
+    
+            var pROC_COMMENTParameter = pROC_COMMENT != null ?
+                new ObjectParameter("PROC_COMMENT", pROC_COMMENT) :
+                new ObjectParameter("PROC_COMMENT", typeof(string));
+    
+            var pROC_ADM_IDParameter = pROC_ADM_ID != null ?
+                new ObjectParameter("PROC_ADM_ID", pROC_ADM_ID) :
+                new ObjectParameter("PROC_ADM_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_MEMBER_STAFF_REQUST_UPD", iDXParameter, sTATUSParameter, pROC_COMMENTParameter, pROC_ADM_IDParameter, eRR_CODE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result> SP_ADMIN_MEMBER_STAFF_REQUST_VIEW(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_VIEW", iDXParameter);
+        }
     }
 }
