@@ -131,28 +131,15 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
-        /**
-         * 샘플 - 구매 확정후 포인트 적립
-         */
-        [CustomAuthorize]
-        public ActionResult SavePointOnOrder()
-        {
 
-            Tuple<string,string> result = _AdminPointService.SavePointOnOrder(Request.Form["M_ID"], Convert.ToInt32( Request.Form["AMOUNT"]), Request.Form["ORDER_CODE"]);
-
-            Debug.WriteLine("에러번호 : "+result.Item1);
-            Debug.WriteLine("에러메세지 : " + result.Item2);
-
-            return RedirectToAction("TestPoint");
-        }
 
         /**
          * 샘플 - 구매시 포인트 사용
          */
         [CustomAuthorize]
-        public ActionResult UsePointOnOrder()
+        public ActionResult UsePointOnOrder(string mid, int point, string orderCode)
         {
-
+            Debug.WriteLine("mid :" + mid);
             Tuple<string, string> result = _AdminPointService.UsePointOnOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"]);
 
             Debug.WriteLine("에러번호 : " + result.Item1);
@@ -189,6 +176,21 @@ namespace AboutMe.Web.Admin.Controllers
             Debug.WriteLine("에러메세지 : " + result.Item2);
            
             return RedirectToAction("TestPoint");
-        }        
+        }
+
+        /**
+         * 샘플 - 구매 확정후 포인트 적립
+         */
+        [CustomAuthorize]
+        public ActionResult SavePointOnOrder()
+        {
+
+            Tuple<string, string> result = _AdminPointService.SavePointOnOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"]);
+
+            Debug.WriteLine("에러번호 : " + result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+
+            return RedirectToAction("TestPoint");
+        }
     }
 }
