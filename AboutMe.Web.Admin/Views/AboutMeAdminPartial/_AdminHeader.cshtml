@@ -65,7 +65,7 @@
 <div class="navbar_menu">
     <!--활성화 페이지시 active class 사용합니다.-->
     <ul>
-        <li><a href="/basic/index.html">기본설정</a></li>
+        <li @fTopMenuCSSOn("AdminPoint")><a href="/basic/index.html">기본설정</a></li>
         @fAdminAdminMenuDisplay() <!--관리자관리:권한 체크 -->
         <li @fTopMenuCSSOn("AdminProduct")><a href="/AdminProduct/ProductIndex">상품관리</a></li>
         <li><a href="/display/index.html">전시관리</a></li>

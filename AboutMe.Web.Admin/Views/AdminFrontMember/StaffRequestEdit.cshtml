@@ -1,0 +1,368 @@
+﻿@model AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result
+
+@{
+    ViewBag.Title = "StaffRequestEdit";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+
+@{
+
+    var QueryStr = "";
+    QueryStr = QueryStr + "PAGESIZE=" + ViewBag.PAGESIZE;
+    QueryStr = QueryStr + "&SORTCOL=" + ViewBag.SORTCOL;
+    QueryStr = QueryStr + "&SORTDIR=" + ViewBag.SORTDIR;
+
+    QueryStr = QueryStr + "&SEL_DATE_FROM=" + ViewBag.SEL_DATE_FROM;
+    QueryStr = QueryStr + "&SEL_DATE_TO=" + ViewBag.SEL_DATE_TO;
+    QueryStr = QueryStr + "&SEL_STATUS=" + ViewBag.SEL_STATUS;
+
+    QueryStr = QueryStr + "&SEARCH_COL=" + ViewBag.SEARCH_COL;
+    QueryStr = QueryStr + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
+
+    @helper fGradeName(string gradeCode)
+{
+    var grade_name = gradeCode;
+    switch (gradeCode)
+    {
+        case "B": grade_name = "브론즈";
+            break;
+        case "S": grade_name = "실버";
+            break;
+        case "G": grade_name = "골드";
+            break;
+        case "V": grade_name = "VIP";
+            break;
+
+    }
+    @(@grade_name)
+}
+
+    @helper fIsRerireNAME(string is_retire)
+{
+    var isretire_name = is_retire;
+    switch (is_retire)
+    {
+        case "Y": isretire_name = "탈퇴회원";
+            break;
+        case "N": isretire_name = "활동중";
+            break;
+
+    }
+    @(@isretire_name)
+
+}
+
+    @helper fM_GBN_NAME(string m_gbn)
+{
+    var m_gbn_name = m_gbn;
+    switch (m_gbn)
+    {
+        case "A": m_gbn_name = "일반회원";
+            break;
+        case "S": m_gbn_name = "임직원";
+            break;
+
+    }
+    <div>@m_gbn_name</div>
+}
+
+    @helper fM_SEX_NAME(string m_sex)
+{
+    var m_sex_name = m_sex;
+    switch (m_sex)
+    {
+        case "1": m_sex_name = "남자";
+            break;
+        case "3": m_sex_name = "남자";
+            break;
+        case "2": m_sex_name = "여자";
+            break;
+        case "4": m_sex_name = "여자";
+            break;
+
+    }
+    <div>@m_sex_name <span>(@m_sex)</span></div>
+}
+
+    @helper fM_SKIN_TROUBLE_NAME(string code)
+{
+    var m_trouble_name = code;
+    switch (code)
+    {
+        case "101201100": m_trouble_name = "보습";
+            break;
+        case "101202100": m_trouble_name = "탄력/주름";
+            break;
+        case "101203100": m_trouble_name = "브라이트닝";
+            break;
+        case "101204100": m_trouble_name = "화이트닝";
+            break;
+        case "101205100": m_trouble_name = "안티에이징";
+            break;
+        case "101206100": m_trouble_name = "피지,모공";
+            break;
+        case "101207100": m_trouble_name = "생기,활력";
+            break;
+        case "101208100": m_trouble_name = "자외선 차단";
+            break;
+
+    }
+    <div>@m_trouble_name <span>(@code)</span></div>
+}
+
+
+
+    @helper fCheckBoxChecked(string strList, string strChked)
+{
+    if (strList != null && strChked != null)
+    {
+        if (strList.Contains(strChked))
+        {
+            @(" checked")
+        }
+    }
+
+}
+
+    @helper fSelectBoxSelecteded(string str1, string str2)
+{
+    if (str1 != null && str2 != null)
+    {
+        if (str1 == str2)
+        {
+            @(" selected")
+        }
+    }
+
+}
+
+    @helper fIS_RENAME_YN(string strDI)
+{
+    if (strDI != null && strDI != "")
+    {
+        @("인증")
+    }
+    else
+    {
+        @("미인증")
+    }
+
+}
+
+
+
+}
+
+
+
+
+
+
+@section Scripts{
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+ 
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">임직원신청내역</a> &gt; <strong>임직원신청내역</strong>
+        </div>
+        <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
+        <script>
+        function fReload() {
+            window.location.reload();
+        }
+
+        function fGoList() {
+            var f = document.frmFORM;
+            f.target = "";
+            f.action = "/AdminFrontMember/StaffRequestIndex";
+            f.submit();
+        }
+
+
+
+        //임직원 신청내역 수정-------------------------------------------------
+    function fGoSave()
+    {
+        var f = document.frmFORM;
+        if (f.SEL_IDX.value.length < 1) {
+            alert("문서번호가 없습니다..");
+            return;
+        }
+        //f.action = "/AdminFrontMember/StaffRequestEditOK_Basic";
+        //f.submit();
+
+        var strIDX = f.SEL_IDX.value;
+        var strSTATUS = f.STATUS.value;
+        var strPROC_COMMENT = f.PROC_COMMENT.value;
+
+        var strURL = "/AdminFrontMember/StaffRequestEditOK_Basic"; //임직원 신청내역 수정
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                IDX: strIDX
+                , STATUS: strSTATUS
+                , PROC_COMMENT: strPROC_COMMENT
+            },
+            success: function (retDATA) {
+                if(retDATA.ERR_CODE=="0")
+                {
+                    alert("수정되었습니다.\n 페이지를 새로고칩니다.");
+                    fReload();
+                }
+                else
+                {
+                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생2-1");
+            }
+        }); //ajax
+
+    } //function
+
+
+        </script>
+
+        <div class="panel">
+            <h3 class="sub-header">임직원 신청내역</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 임직원 신청내역 입니다.</li>
+                </ul>
+            </div>
+        </div>
+
+
+        @using (Html.BeginForm("EditOK", "AdminFrontMember", FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                             <input type="hidden" name="SEL_IDX" value="@Html.DisplayFor(model =>model.IDX)" />
+
+                            <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
+                            <input type="hidden" name="PAGESIZE" value="@ViewBag.PAGESIZE">
+                            <input type="hidden" name="SEL_DATE_FROM" value="@ViewBag.SEL_DATE_FROM">
+                            <input type="hidden" name="SEL_DATE_TO" value="@ViewBag.SEL_DATE_TO">
+                            <input type="hidden" name="SEARCH_COL" value="@ViewBag.SEARCH_COL">
+                            <input type="hidden" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD">
+                            <input type="hidden" name="SEL_STATUS" value="@ViewBag.SEL_STATUS">
+
+
+                            <div class="panel">
+                                <h4 class="sub-header">1.임직원 신청내역 </h4>
+
+                                <table class="table table_row">
+                                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>접수번호</th>
+                                            <td>@Model.IDX</td>
+                                            <th>신청일</th>
+                                            <td>@Model.INS_DATE.ToString("yyyy-MM-dd HH:mm")</td>
+                                            <th>처리일</th>
+                                            <td>@Model.PROC_DATE</td>
+                                        </tr>
+                                        <tr>
+                                            <th>신청자아이디</th>
+                                            <td>@Model.M_ID</td>
+                                            <th>신청자이름</th>
+                                            <td>@Model.M_NAME</td>
+                                            <th>신청자회원등급</th>
+                                            <td>@fGradeName(@Model.M_GRADE)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>임직원신청사번</th>
+                                            <td>@Model.STAFF_ID</td>
+                                            <th>임직원신청이름</th>
+                                            <td>@Model.STAFF_NAME</td>
+                                            <th>소속회사</th>
+                                            <td>@Model.STAFF_COMPANY</td>
+                                        </tr>                                        
+                                        <tr>
+                                            <th>처리</th>
+                                            <td colspan="5">
+
+                                                코멘트:<input type="text" name="PROC_COMMENT" value="@Model.PROC_COMMENT" maxlength="300" style="width:600px;"/> *.사용자에 노출됨.
+                                                <br />
+                                                현재상태:@Model.STATUS ->
+                                                <select name="STATUS">
+                                                    <option value="승인">승인</option>
+                                                    <option value="반려">반려</option>
+                                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                
+                                                @if (@Model.STATUS == "접수")
+                                                {
+                                                    <a class="btn btn-default small" href="javascript:fGoSave();">처리</a>
+                                                }
+                                                else
+                                                {
+                                                <span>*.이미 처리된 건은 재처리할 수 없습니다.</span>
+                                                }
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+<!--신청자 기본정보-->
+    <div class="panel">
+        <h3 class="sub-header">신청자 기본정보</h3>
+    </div>
+        {Html.RenderAction("ChildFrontMemberInfo", "CommonChildAction", new { M_ID = @Model.M_ID });}
+
+
+<!--사번기준 기타정보-->
+    <div class="panel">
+        <h3 class="sub-header">[<font color="ff0000">@Model.STAFF_ID</font>]사번기준  기타정보 참조</h3>
+    </div>
+
+
+            
+            
+
+        }
+
+
+
+    </div>
+
+    <div class="btn_area">
+        <!--
+           <a class="btn btn-default small" href="javascript:fGoSave();">수정</a>
+           <a class="btn btn-default small" href="#">수정</a>
+           <a class="btn btn-success small" href="#">삭제</a>
+        -->
+        <a class="btn btn-primary small" href="javascript:fGoList();">목록</a>
+
+
+    </div>
+
+
+
+
+}
+

@@ -11,6 +11,7 @@ namespace AboutMe.Domain.Service.AdminFrontMember
 {
     public interface IAdminFrontMemberService
     {
+        //관리자 > 회원------------------------------------------
         List<SP_ADMIN_FRONT_MEMBER_VIEW_Result> GetAdminFrontMemberList(string dATE_FROM, string dATE_TO, string gRADE_LIST, string gBN, string iS_RETIRE, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, int pAGE, int pAGESIZE); //관리자-회원 목록 
         int GetAdminFrontMemberListCount(string dATE_FROM, string dATE_TO, string gRADE_LIST, string gBN, string iS_RETIRE, string sEARCH_COL, string sEARCH_KEYWORD); //관리자 -회원 목록 COUNT
 
@@ -22,5 +23,10 @@ namespace AboutMe.Domain.Service.AdminFrontMember
 
         SP_ADMIN_FRONT_MEMBER_VIEW_Result GetAdminFrontMemberView(string m_ID);  //관리자-회원 상세 1명
 
+        //관리자 > 임직원 신청 -----------------------------
+        List<SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result> GetAdminMemberStaffRequestList(string dATE_FROM, string dATE_TO, string sTATUS, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, int pAGE, int pAGESIZE); //임직원 신청목록
+        int GetAdminMemberStaffRequestListCount(string dATE_FROM, string dATE_TO, string sTATUS, string sEARCH_COL, string sEARCH_KEYWORD); //임직원 신청목록 COUNT
+        int SetAdminMemberStaffRequestUpdate(int iDX, string sTATUS, string pROC_COMMENT, string pROC_ADM_ID);//임직원 신청-수정
+        SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result GetAdminMemberStaffRequestView(int iDX); //임직원 신청-상세 1건
     }
 }

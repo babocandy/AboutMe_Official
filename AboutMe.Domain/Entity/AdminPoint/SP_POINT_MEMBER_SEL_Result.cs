@@ -19,5 +19,6 @@ namespace AboutMe.Domain.Entity.AdminPoint
         public string M_GRADE { get; set; }
         public int M_POINT { get; set; }
         public string M_GBN { get; set; }
+        public System.DateTime M_CREDATE { get; set; }
     }
 }

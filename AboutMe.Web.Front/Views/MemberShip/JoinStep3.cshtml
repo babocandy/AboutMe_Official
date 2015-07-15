@@ -160,7 +160,7 @@ function fID_DupCheck()
             }
             else {
                 glID_DUP_CHECKED = false;
-                alert("이미 사용중이거나 사용할수 없는 아이디 입니다.다른 아이디를 입력하세요");
+                alert("이미 사용중이거나 사용할수 없는 아이디 입니다.다른 아이디를 입력하세요.\n" + retDATA);
             }
         },
         error: function (e) {
@@ -288,22 +288,22 @@ function fID_DupCheck()
                                     <tr>
                                         <th><span class="essential">SMS 수신</span></th>
                                         <td colspan="3" class="selectradio">
-                                            <label class="racon"><input type="radio" name="sms" title="수신" name="M_ISSMS" value="Y" /> <span class="txt">수신</span></label>
-                                            <label class="racon"><input type="radio" name="sms" title="미수신" name="M_ISSMS" value="N" /> <span class="txt">미수신</span></label>
+                                            <label class="racon"><input type="radio"  title="수신" name="M_ISSMS" value="Y" /> <span class="txt">수신</span></label>
+                                            <label class="racon"><input type="radio"  title="미수신" name="M_ISSMS" value="N" /> <span class="txt">미수신</span></label>
     </td>
                                     </tr>
                                     <tr>
                                         <th><span class="essential">이메일 수신</span></th>
                                         <td colspan="3" class="selectradio">
-                                            <label class="racon"><input type="radio" name="email" title="수신" name="M_ISEMAIL" value="Y" /> <span class="txt">수신</span></label>
-                                            <label class="racon"><input type="radio" name="email" title="미수신" name="M_ISEMAIL" value="N" /> <span class="txt">미수신</span></label>
+                                            <label class="racon"><input type="radio"  title="수신" name="M_ISEMAIL" value="Y" /> <span class="txt">수신</span></label>
+                                            <label class="racon"><input type="radio" title="미수신" name="M_ISEMAIL" value="N" /> <span class="txt">미수신</span></label>
     </td>
                                     </tr>
                                     <tr>
                                         <th><span class="essential">DM 수신</span></th>
                                         <td colspan="3" class="selectradio">
-                                            <label class="racon"><input type="radio" name="dm" title="수신" name="M_ISDM" value="Y" /> <span class="txt">수신</span></label>
-                                            <label class="racon"><input type="radio" name="dm" title="미수신" name="M_ISDM" value="N" /> <span class="txt">미수신</span></label>
+                                            <label class="racon"><input type="radio"  title="수신" name="M_ISDM" value="Y" /> <span class="txt">수신</span></label>
+                                            <label class="racon"><input type="radio"  title="미수신" name="M_ISDM" value="N" /> <span class="txt">미수신</span></label>
     </td>
                                     </tr>
                                 </table>

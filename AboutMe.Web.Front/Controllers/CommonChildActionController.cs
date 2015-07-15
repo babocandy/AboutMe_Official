@@ -46,6 +46,8 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
+        #region HSW
+
         #region 상품상세의 상품리뷰 페이지
         [ChildActionOnly]
         public ActionResult ShoppingDetailReviewInfo(string P_CODE)
@@ -82,6 +84,7 @@ namespace AboutMe.Web.Front.Controllers
         }
         #endregion
 
-
+        
+        #endregion
     }
 }
