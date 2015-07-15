@@ -1,0 +1,366 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.Product.SP_PRODUCT_SEL_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/shoping.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+    
+}
+<!--//header-->
+
+@section Scripts{
+
+    <script language="javascript">
+
+        $(function () {
+            //ajaxSelectCateCodeJavascriptInit();
+        });
+
+        function bsearch() {
+            var f = document.bform;
+            //alert('ok');
+            f.target = "";
+            f.PAGE.value = 1;
+            f.submit();
+        }
+
+        function pCateCode(code) {
+            //alert(code);
+            var f = document.bform;
+            f.P_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function cCateCode(code) {
+            var f = document.bform;
+            f.C_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function lCateCode(code) {
+            var f = document.bform;
+            f.L_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function sortGbn(code) {
+            var f = document.bform;
+            f.SORT_GBN.value = code;
+            bsearch();
+        }
+
+        function rePageSize() {
+            var f = document.aform;
+
+            f.target = "";
+            f.page.value = 1;
+            f.submit();
+        }
+
+    </script>
+}
+
+<!--container-->
+@section Body{
+
+    <div class="wrap">
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <div id="container" class="display">
+            <div class="container100per beauty">
+                <div class="inner">
+                    <!--display_top-->
+                    <div class="display_top">
+                        <h2><img src="/aboutCom/images/shopping/h2_selectshop.png" alt="SELECT SHOP 셀렉샵" /></h2>
+                        <div class="selecttypeC">
+                            <!--현재 소팅 대분류 class "on" 사용-->
+                            <div class="sort">
+                                <p class="tit">브랜드별</p>
+                                <!--현재 소팅된 소분류 class "cnt" 사용합니다.-->
+                                <ul><li class="cnt"><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)100100">전체</a></li>
+                                    @{ var i = 0; }
+                                    @foreach (var item in ViewData["P_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                    {
+
+                                        <li><a href="javascript:pCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
+
+                                        i++;
+                                    }
+                                    @*<li class="cnt"><a href="#">전체</a></li>
+                                    <li><a href="#">엘라바쉐</a></li>
+                                    <li><a href="#">립스메이커</a></li>
+                                    <li><a href="#">페탈프레쉬</a></li>
+                                    <li><a href="#">베이비가닉스</a></li>
+                                    <li><a href="#">피그콜라겐</a></li>
+                                    <li><a href="#">뷰크로스</a></li>
+                                    <li><a href="#">키스 에버레스트</a></li>
+                                    <li><a href="#">기타</a></li>*@
+                                </ul>
+                            </div>
+                            <div class="sort">
+                                <p class="tit">피부고민별</p>
+                                <ul>
+                                    <li><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)200100">전체</a></li>
+                                    @{ i = 0; }
+                                    @foreach (var item in ViewData["C_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                    {
+
+                                        <li><a href="javascript:cCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
+
+                                        i++;
+                                    }
+                                    @*<li><a href="#">전체</a></li>
+                                    <li><a href="#">수분/보습</a></li>
+                                    <li><a href="#">탄력/주름</a></li>
+                                    <li><a href="#">브라이트닝</a></li>
+                                    <li><a href="#">화이트닝</a></li>
+                                    <li><a href="#">안티에이징</a></li>
+                                    <li><a href="#">모공/트러블</a></li>
+                                    <li><a href="#">생기/활력</a></li>*@
+                                </ul>
+                            </div>
+                            <div class="sort">
+                                <p class="tit">라인별</p>
+                                <ul>
+                                    <li><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)300100">전체</a></li>
+                                    @{ i = 0; }
+                                    @foreach (var item in ViewData["L_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                    {
+
+                                        <li><a href="javascript:lCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
+
+                                        i++;
+                                    }
+                                    @*<li><a href="#">전체</a></li>
+                                    <li><a href="#">수퍼아쿠아</a></li>
+                                    <li><a href="#">뉴트리워터</a></li>
+                                    <li><a href="#">브라이트닝</a></li>
+                                    <li><a href="#">초보습</a></li>
+                                    <li><a href="#">스킨톤업</a></li>
+                                    <li><a href="#">퓨어화이트</a></li>
+                                    <li><a href="#">이뮤젠</a></li>
+                                    <li><a href="#">멀티사인즈</a></li>
+                                    <li><a href="#">멀티비타</a></li>
+                                    <li><a href="#">더블리페어클래식</a></li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--//display_top-->
+                </div>
+            </div>
+            <div class="container1080">
+                <div class="display_bottom">
+                    <!--상품리스트-->
+                    <div class="product_area">
+                        @if (ViewBag.CATE_CODE.Substring(0, 3) == "101")
+                        {
+                         <!-- filter -->
+                        <div class="filter">
+                            <span class="fti">스킨케어</span>
+                            <ul>
+                                
+                                @{ i = 0; }
+                                @foreach (var item in ViewData["3DEPTH"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                                {
+
+                                    <li><label class="chkcon"><input type="checkbox" name="product_front_search_entity[@i].P_CATE_CODE_3DEPTH" title="" value="@item.CATE_CODE"> <span class="txt">@item.DEPTH3_NAME</span></label></li>
+                                    i++;
+                                }
+                                @*<li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">로션</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">세럼/에센스</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">크림</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">아이크림</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">마사지</span></label></li>
+                                <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">미스트</span></label></li>*@
+                            </ul>
+                        </div>
+                        <!-- filter -->
+                        }
+                        <div class="product_top">
+                            <span class="totaltxt">총 100개의 상품이 있습니다.</span>
+                            <!--분류-->
+                            <ul class="sort">
+                                <li class="cnt"><a href="javascript:sortGbn('NEW');" onclick="javascript:sortGbn('NEW');">신상품순</a></li>
+                                <li><a href="javascript:sortGbn('LIKE');" onclick="javascript:sortGbn('LIKE');">인기순</a></li>
+                                <li><a href="javascript:sortGbn('UP');" onclick="javascript:sortGbn('UP');">최고가순 ↑</a></li>
+                                <li><a href="javascript:sortGbn('DOWN');" onclick="javascript:sortGbn('DOWN');">최저가순 ↓</a></li>
+                            </ul>
+                            <!--//분류-->
+                        </div>
+@using (Html.BeginForm("Index", "Shopping", FormMethod.Post, new { id = "bform", name = "bform" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+    <input type="hidden" name="PAGE" value="">
+    <input type="hidden" name="P_CATE_CODE" value="">
+    <input type="hidden" name="L_CATE_CODE" value="">
+    <input type="hidden" name="C_CATE_CODE" value="">
+    <input type="hidden" name="SORT_GBN" value="">
+} 
+                        <!--상품리스트-->
+                        <ul class="product_list">
+                            @foreach (var item in Model)
+                            {
+                                <li>
+                                    <a href="/shopping/detail?pcode=@item.P_CODE" class="list">
+                                        <span class="photo">
+                                            <img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" data-pic="@ViewBag.PRODUCT_PATH@item.OTHER_IMG1" class="item" alt="" />
+                                        </span>
+                                        <span class="info">
+                                            <span class="ico ico_new">NEW</span>
+                                            <span class="title">
+                                                <em class="product_tit">@item.P_NAME<br />피부탱탱&amp;탄력 마스크</em>
+                                                <em class="product_name">에센셜 석류 마스크 시트</em>
+                                            </span>
+                                            <em class="price">
+                                                <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                                                @string.Format("{0:#,##0}", item.DISCOUNT_PRICE)원
+                                            </em>
+                                        </span>
+                                    </a>
+                                    <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                    <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                                </li>
+                            }
+                            @*<li>
+                                <a href="/shopping/detail.asp" class="list">
+                                    <span class="photo">
+                                        <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
+                                    </span>
+                                    <span class="info">
+                                        <span class="ico ico_new">NEW</span>
+                                        <span class="title">
+                                            <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
+                                            <em class="product_name">에센셜 석류 마스크 시트</em>
+                                        </span>
+                                        <em class="price">
+                                            <del>32,000원</del>
+                                            25,000원
+                                        </em>
+                                    </span>
+                                </a>
+                                <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                            </li>
+                            <li>
+                                <a href="/shopping/detail.asp" class="list">
+                                    <span class="photo">
+                                        <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
+                                    </span>
+                                    <span class="info">
+                                        <span class="ico ico_new">NEW</span>
+                                        <span class="title">
+                                            <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
+                                            <em class="product_name">에센셜 석류 마스크 시트</em>
+                                        </span>
+                                        <em class="price">
+                                            <del>32,000원</del>
+                                            25,000원
+                                        </em>
+                                    </span>
+                                </a>
+                                <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                            </li>
+                            <li>
+                                <a href="/shopping/detail.asp" class="list">
+                                    <span class="photo">
+                                        <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
+                                    </span>
+                                    <span class="info">
+                                        <span class="ico ico_new">NEW</span>
+                                        <span class="title">
+                                            <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
+                                            <em class="product_name">에센셜 석류 마스크 시트</em>
+                                        </span>
+                                        <em class="price">
+                                            <del>32,000원</del>
+                                            25,000원
+                                        </em>
+                                    </span>
+                                </a>
+                                <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                            </li>
+                            <li>
+                                <a href="/shopping/detail.asp" class="list">
+                                    <span class="photo">
+                                        <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
+                                    </span>
+                                    <span class="info">
+                                        <span class="ico ico_new">NEW</span>
+                                        <span class="title">
+                                            <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
+                                            <em class="product_name">에센셜 석류 마스크 시트</em>
+                                        </span>
+                                        <em class="price">
+                                            <del>32,000원</del>
+                                            25,000원
+                                        </em>
+                                    </span>
+                                </a>
+                                <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                            </li>
+                            <li>
+                                <a href="/shopping/detail.asp" class="list">
+                                    <span class="photo">
+                                        <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
+                                    </span>
+                                    <span class="info">
+                                        <span class="ico ico_new">NEW</span>
+                                        <span class="title">
+                                            <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
+                                            <em class="product_name">에센셜 석류 마스크 시트</em>
+                                        </span>
+                                        <em class="price">
+                                            <del>32,000원</del>
+                                            25,000원
+                                        </em>
+                                    </span>
+                                </a>
+                                <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                            </li>*@
+                        </ul>
+                        <!--//상품리스트-->
+                    </div>
+                    <!--//상품리스트-->
+                    <!--페이징-->
+                    <div class="paging">
+                        <a href="#" class="prev">이전</a>
+                        <!--현재 페이지-->
+                        <strong>1</strong>
+                        <!--//현재 페이지-->
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">6</a>
+                        <a href="#">7</a>
+                        <a href="#">8</a>
+                        <a href="#">9</a>
+                        <a href="#">10</a>
+                        <a href="#" class="next">다음</a>
+                    </div>
+                    <!--//페이징-->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+}
+<!--//footer-->

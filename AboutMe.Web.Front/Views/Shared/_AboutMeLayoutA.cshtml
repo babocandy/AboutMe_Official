@@ -2,11 +2,14 @@
 {
     @RenderSection("Head")
 }
-
+@if (IsSectionDefined("Scripts"))
+{
+    @RenderSection("Scripts")
+}
 <title>ABOUT ME</title>
 </head>
 <body>
-    <div class="wrap main">
+
         <!--header-->
         @if (IsSectionDefined("Header"))
         {
@@ -29,7 +32,7 @@
             @RenderSection("footer")
         }
         <!--//footer-->
-    </div>
+
 </body>
 </html>
 

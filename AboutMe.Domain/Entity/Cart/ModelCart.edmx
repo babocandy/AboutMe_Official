@@ -16,6 +16,15 @@
           <Property Name="P_COUNT" Type="int" Nullable="false" />
           <Property Name="REG_DATE" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="TB_WISHLIST">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="M_ID" Type="varchar" MaxLength="13" />
+          <Property Name="P_CODE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="REG_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
         <Function Name="SP_TB_CART_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="SESSION_ID" Type="varchar" Mode="In" />
@@ -23,7 +32,7 @@
         <Function Name="SP_TB_CART_COUNT_CHANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="SESSION_ID" Type="varchar" Mode="In" />
-          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="CART_IDX" Type="int" Mode="In" />
           <Parameter Name="P_COUNT" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_TB_CART_GOTO_WISH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -51,10 +60,22 @@
         <Function Name="SP_TB_CART_PRODUCT_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="SESSION_ID" Type="varchar" Mode="In" />
-          <Parameter Name="P_CODE_LIST" Type="varchar" Mode="In" />
+          <Parameter Name="CART_IDX" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_TB_WISHLIST_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_TB_WISHLIST_PRODUCT_ADD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_TB_WISHLIST_PRODUCT_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="CartStoreContainer">
           <EntitySet Name="TB_CART" EntityType="Self.TB_CART" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_WISHLIST" EntityType="Self.TB_WISHLIST" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -96,13 +117,25 @@
           <FunctionImport Name="SP_TB_CART_PRODUCT_DEL">
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="SESSION_ID" Mode="In" Type="String" />
-            <Parameter Name="P_CODE_LIST" Mode="In" Type="String" />
+            <Parameter Name="CART_IDX" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_TB_CART_COUNT_CHANGE">
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="SESSION_ID" Mode="In" Type="String" />
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="CART_IDX" Mode="In" Type="Int32" />
             <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TB_WISHLIST" EntityType="Cart.TB_WISHLIST" />
+          <FunctionImport Name="SP_TB_WISHLIST_CNT" ReturnType="Collection(Cart.SP_TB_WISH_CNT_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WISHLIST_PRODUCT_ADD" ReturnType="Collection(Cart.SP_TB_WISH_CNT_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WISHLIST_PRODUCT_DEL" ReturnType="Collection(Cart.SP_TB_WISH_CNT_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_TB_CART_CNT_Result" >
@@ -128,6 +161,21 @@
           <Property Type="Int32" Name="P_POINT" Nullable="false" />
           <Property Type="Int32" Name="PROMOTION_TYPE" Nullable="false" DefaultValue="99" />
           <Property Type="Int32" Name="EMP_DISCOUNT" Nullable="false" DefaultValue="1" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="false" DefaultValue="1" />
+          <Property Type="Int32" Name="ORDER_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="CART_IDX" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="TB_WISHLIST">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="M_ID" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="P_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="REG_DATE" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <ComplexType Name="SP_TB_WISH_CNT_Result">
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -163,6 +211,37 @@
           <FunctionImportMapping FunctionImportName="SP_TB_CART_PRODUCT_ADD" FunctionName="Cart.Store.SP_TB_CART_PRODUCT_ADD" />
           <FunctionImportMapping FunctionImportName="SP_TB_CART_PRODUCT_DEL" FunctionName="Cart.Store.SP_TB_CART_PRODUCT_DEL" />
           <FunctionImportMapping FunctionImportName="SP_TB_CART_COUNT_CHANGE" FunctionName="Cart.Store.SP_TB_CART_COUNT_CHANGE" />
+          <EntitySetMapping Name="TB_WISHLIST">
+            <EntityTypeMapping TypeName="Cart.TB_WISHLIST">
+              <MappingFragment StoreEntitySet="TB_WISHLIST">
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_TB_WISHLIST_CNT" FunctionName="Cart.Store.SP_TB_WISHLIST_CNT" >
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="Cart.SP_TB_WISH_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TB_WISHLIST_PRODUCT_ADD" FunctionName="Cart.Store.SP_TB_WISHLIST_PRODUCT_ADD" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Cart.SP_TB_WISH_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TB_WISHLIST_PRODUCT_DEL" FunctionName="Cart.Store.SP_TB_WISHLIST_PRODUCT_DEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Cart.SP_TB_WISH_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

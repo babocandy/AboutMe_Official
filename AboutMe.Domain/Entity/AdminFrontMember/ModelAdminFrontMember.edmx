@@ -14,11 +14,6 @@
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="SP_ADMIN_FRONT_MEMBER_PWD_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="M_ID" Type="varchar" Mode="In" />
-          <Parameter Name="M_PWD" Type="varchar" Mode="In" />
-          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
-        </Function>
         <Function Name="SP_ADMIN_FRONT_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
           <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
@@ -86,6 +81,34 @@
         </Function>
         <Function Name="SP_ADMIN_FRONT_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
+          <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
+          <Parameter Name="STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
+          <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
+          <Parameter Name="STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="PROC_COMMENT" Type="varchar" Mode="In" />
+          <Parameter Name="PROC_ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="AboutMeModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -175,6 +198,34 @@
             <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="STATUS" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_SEL" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="STATUS" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="STATUS" Mode="In" Type="String" />
+            <Parameter Name="PROC_COMMENT" Mode="In" Type="String" />
+            <Parameter Name="PROC_ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_VIEW" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -215,13 +266,27 @@
           <Property Type="Int32" Name="M_DEL_POINT" Nullable="false" />
           <Property Type="String" Name="M_DEL_REASON" Nullable="true" MaxLength="2000" />
         </ComplexType>
+        <ComplexType Name="SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="M_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="STAFF_COMPANY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="REQ_COMMENT" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="STATUS" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="PROC_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PROC_COMMENT" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PROC_ADM_ID" Nullable="true" MaxLength="13" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AboutMeModelStoreContainer" CdmEntityContainer="AdminFrontMemberEntities" >
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_PWD_UPD" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_PWD_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_CNT" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
@@ -314,6 +379,52 @@
           <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_PWD" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_PWD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_RETIRE" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_RETIRE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_FRONT_MEMBER_UPD_STAFF" FunctionName="AboutMeModel.Store.SP_ADMIN_FRONT_MEMBER_UPD_STAFF" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_SEL" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="REQ_COMMENT" ColumnName="REQ_COMMENT" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="PROC_DATE" ColumnName="PROC_DATE" />
+                <ScalarProperty Name="PROC_COMMENT" ColumnName="PROC_COMMENT" />
+                <ScalarProperty Name="PROC_ADM_ID" ColumnName="PROC_ADM_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_UPD" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_VIEW" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="REQ_COMMENT" ColumnName="REQ_COMMENT" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="PROC_DATE" ColumnName="PROC_DATE" />
+                <ScalarProperty Name="PROC_COMMENT" ColumnName="PROC_COMMENT" />
+                <ScalarProperty Name="PROC_ADM_ID" ColumnName="PROC_ADM_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

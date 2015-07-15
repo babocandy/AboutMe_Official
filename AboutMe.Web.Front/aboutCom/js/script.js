@@ -24,29 +24,40 @@ $(function(){
 
 	/*gnb 드롭다운*/
 	$(".gnb li a.menu").mouseenter(function(){
-		if ( $(this).hasClass("dropmenu") ){
+		if ( $(this).hasClass("dropmenu2") ){
 			$(".depth2").fadeIn("fast", function(){
 				$(".depth2 .list").slideDown("fast");
 			});
+			$(".depth1_2").fadeOut("fast");
+		}else if( $(this).hasClass("dropmenu1") ){
+			$(".depth2 .list").slideUp("fast", function(){
+				$(".depth2").slideUp("fast")
+			});
+			$(".depth1_2").fadeIn("fast");
 		}else{
 			$(".depth2 .list").slideUp("fast", function(){
 				$(".depth2").slideUp("fast")
-			})
+			});
+			$(".depth1_2").fadeOut("fast");
 		}
 	});
 	$(document).mousemove(function(e){
 		if(e.pageY < 50 || e.pageY >430){
 			$(".depth2 .list").slideUp("fast", function(){
 				$(".depth2").slideUp("fast")
-			})
+			});
+		}else if(e.pageY < 50 || e.pageY >330){
+			$(".depth1_2").fadeOut("fast");
 		}
 	})
 
 	/*닫기*/
-	$("#btnClose").live("click", function(e){
-		e.preventDefault();
-		$(this).parent().hide();
-	});
+	if( $("#btnClose").length ){
+		$("#btnClose").live("click", function(e){
+			e.preventDefault();
+			$(this).parent().hide();
+		});	
+	}
 
 	/*tabs*/
 	$(".flight .tab_content").eq(0).show();
@@ -446,39 +457,36 @@ $(function(){
 		$(this).find("img.item").attr("src",productImgUrl)
 	});
 
-	var isSelcVal =true;
+	//
 	$(".selecttypeC .sort .tit").on("click",function(e){
 		e.preventDefault();
 		$(".selecttypeC .sort").find("ul").stop().slideUp(300);
-		if($(this).parent().hasClass("on")){
-			if(!isSelcVal){
-				$(this).parent().find("ul").stop().slideDown(300, function(){
-					$(this).parent().addClass("on");
-				});
-			}else{
-				$(".selecttypeC .sort").removeClass("on");
-				$(this).parent().find("ul").stop().slideUp(300);
-			}
-		}else{
-			if(!isSelcVal){
-				$(".selecttypeC .sort").removeClass("on");
-				$(this).parent().find("ul").stop().slideDown(300, function(){
-					$(this).parent().addClass("on");
-				});
-			}else{
-				$(".selecttypeC .sort").removeClass("on");
-				$(this).parent().find("ul").stop().slideDown(300, function(){
-					$(this).parent().addClass("on");
-				});
-			}
+		$(".selecttypeC .sort").removeClass("on");
+
+		$(this).parent().find("ul li").each(function(){
+			if($(this).hasClass("cnt")){ 
+				$(this).parent().parent().addClass("on");
+			} 
+		})
+		if(!$(this).parent().hasClass("open")){ 
+			$(this).parent().find("ul").stop().slideDown(300, function(){ 
+				$(".selecttypeC .sort").removeClass("open"); 
+				$(this).parent().addClass("on");   
+				$(this).parent().addClass("open");   
+			}); 
 		}
+		else{
+			$(".selecttypeC .sort").removeClass("open"); 
+		}  
 	});
+
 	$(".selecttypeC .sort ul li").click(function(e){
 		e.preventDefault();
 		$(".selecttypeC .sort ul li").removeClass("cnt");
 		$(this).addClass("cnt");
-		$(".selecttypeC .sort ul").delay(40).stop().slideUp(200);
-		isSelcVal = false;
+		$(".selecttypeC .sort ul").delay(40).stop().slideUp(200); 
+		$(".selecttypeC .sort").removeClass("open"); 
+ 
 	})
 
 	if( $("*").is(".wrap.order") ){

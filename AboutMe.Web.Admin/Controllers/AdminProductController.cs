@@ -12,6 +12,9 @@ using AboutMe.Common.Data;
 using Newtonsoft.Json;
 using AboutMe.Web.Admin.Common;
 using AboutMe.Web.Admin.Common.Filters;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.UI;
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -103,7 +106,8 @@ namespace AboutMe.Web.Admin.Controllers
                 //return View(Index("" ,"", "","", 1, 10));
                 //ViewBag.resultVal = i;
                 //return RedirectToAction("Index", new { SearchCol = ViewBag.resultVal });
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return View();
             }
             catch
             {
@@ -354,6 +358,7 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 리스트
         public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
+
             this.ViewBag.PageSize = productSearch_Entity.PageSize;
             this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
             if (!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword))
@@ -372,10 +377,10 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
             this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
             this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-            
+
             int TotalRecord = 0;
             TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
-            
+
             this.ViewBag.TotalRecord = TotalRecord;
             this.ViewBag.Page = productSearch_Entity.Page;
 
@@ -837,7 +842,67 @@ namespace AboutMe.Web.Admin.Controllers
         }
         #endregion
 
-        
+        #region 상품 엑셀 다운로드
+        public ActionResult ProductExcel(ProductSearch_Entity productSearch_Entity)
+        {
+            
+            var products = new System.Data.DataTable("Product");
+            //헤더 구성
+            products.Columns.Add("IDX", typeof(string));
+            products.Columns.Add("P_CODE", typeof(string));
+            products.Columns.Add("P_NAME", typeof(string));
+            products.Columns.Add("MAIN_IMG", typeof(string));
+            products.Columns.Add("MV_URL", typeof(string));
+            products.Columns.Add("SELLING_PRICE", typeof(string));
+            products.Columns.Add("DISCOUNT_PRICE", typeof(string));
+            products.Columns.Add("DISCOUNT_RATE", typeof(string));
+            
+            var Data = _AdminProductService.GetAdminProductList(productSearch_Entity).ToList(); //데이타 가져오기
+            if (Data != null && Data.Any())
+            {
+
+                foreach (var result in Data)
+                {
+                    products.Rows.Add(result.IDX, result.P_CODE, result.P_NAME, result.MAIN_IMG, result.MV_URL, result.SELLING_PRICE, result.DISCOUNT_PRICE, result.DISCOUNT_RATE);
+                } //for
+            } //if
+
+            var grid = new GridView();
+            grid.DataSource = products;
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=AdminProduct.xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "euc-kr";  //UTF-8 ,euc-kr
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding("euc-kr");
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htw);
+
+            //Response.Output.Write(sw.ToString());
+            //Response.Flush();
+            //Response.End();
+
+            //return View("MyView");
+
+
+            #region 로그 생성
+            var serialised = JsonConvert.SerializeObject(productSearch_Entity);
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(serialised, "관리자_상품엑셀다운");
+            #endregion
+
+            return Content(sw.ToString(), "application/ms-excel");
+
+        }
+        #endregion
+
+
         #endregion
 
     }

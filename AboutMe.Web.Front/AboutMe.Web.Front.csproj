@@ -61,9 +61,16 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Json">
+      <HintPath>..\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,9 +134,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -186,13 +190,16 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Common\Filters\CustomAuthorizeAttr.cs" />
     <Compile Include="Common\MemberInfo.cs" />
+    <Compile Include="Common\UserLog.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseFrontController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ChildActionProductController.cs" />
     <Compile Include="Controllers\CommonChildActionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MemberShipController.cs" />
+    <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\Mypage\MypageController.cs" />
     <Compile Include="DI_Core\Bootstraper.cs" />
     <Compile Include="Global.asax.cs">
@@ -603,6 +610,7 @@
     <Content Include="aboutCom\include\footer.asp" />
     <Content Include="aboutCom\include\head.asp" />
     <Content Include="aboutCom\include\header.asp" />
+    <Content Include="aboutCom\js\common_member.js" />
     <Content Include="aboutCom\js\lib\dropdown.js" />
     <Content Include="aboutCom\js\lib\imagesloaded.pkgd.min.js" />
     <Content Include="aboutCom\js\lib\jquery-1.8.3.min.js" />
@@ -620,6 +628,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="RealName\hp\hs_cnfrm_popup1.aspx" />
+    <Content Include="RealName\hp\hs_cnfrm_popup2.aspx" />
+    <Content Include="RealName\hp\hs_cnfrm_popup3.aspx" />
+    <Content Include="RealName\hp\hs_cnfrm_popup4.aspx" />
+    <Content Include="RealName\ipin\ipin1.aspx" />
+    <Content Include="RealName\ipin\ipin2.aspx" />
+    <Content Include="RealName\ipin\ipin3.aspx" />
+    <Content Include="RealName\ipin\ipin4.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="aboutCom\fonts\NanumBarunGothicLight.eot" />
@@ -632,7 +648,6 @@
     <Content Include="aboutCom\images\sample\Thumbs.db" />
     <Content Include="aboutCom\images\shopping\Thumbs.db" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\cart_script.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -689,15 +704,25 @@
     <Content Include="Views\AboutMePartial\_Header.cshtml" />
     <Content Include="Views\AboutMePartial\_Footer.cshtml" />
     <Content Include="Views\Shared\_AboutMeLayoutMasterA.cshtml" />
-    <Content Include="Views\Member\Login.cshtml" />
     <Content Include="Views\CommonChildAction\ChildRightTopMenu_Util.cshtml" />
+    <Content Include="Views\Shopping\Index.cshtml" />
+    <Content Include="Views\Shopping\Detail.cshtml" />
     <Content Include="Views\Mypage\Main.cshtml" />
     <Content Include="Views\Shared\_AboutMeLayoutB.cshtml" />
+    <Content Include="Views\MemberShip\Login.cshtml" />
     <Content Include="Views\Mypage\test.cshtml" />
+    <Content Include="Views\MemberShip\JoinStep1.cshtml" />
+    <Content Include="Views\MemberShip\JoinStep2.cshtml" />
+    <Content Include="Views\MemberShip\JoinStep3.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailReviewInfo.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailLeftEvent.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailRightSetGoods.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailRightPromotion.cshtml" />
+    <Content Include="Views\Cart\FlyingCart.cshtml" />
+    <Content Include="Views\ChildActionProduct\HeaderCategoryMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shopping\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

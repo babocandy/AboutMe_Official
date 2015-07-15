@@ -1,0 +1,773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ACBC178B-5C83-4BBF-A81E-C21D5D0ADAA7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AboutMe.Web.Front</RootNamespace>
+    <AssemblyName>AboutMe.Web.Front</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\packages\Unity.Interception.3.5.1404.0\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc">
+      <HintPath>..\packages\Unity.Mvc.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Common\Filters\CustomAuthorizeAttr.cs" />
+    <Compile Include="Common\MemberInfo.cs" />
+    <Compile Include="Common\UserLog.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseFrontController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CommonChildActionController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MemberShipController.cs" />
+    <Compile Include="Controllers\ShoppingController.cs" />
+    <Compile Include="Controllers\Mypage\MypageController.cs" />
+    <Compile Include="DI_Core\Bootstraper.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="aboutCom\css\aboutme.css" />
+    <Content Include="aboutCom\css\brand.css" />
+    <Content Include="aboutCom\css\cart.css" />
+    <Content Include="aboutCom\css\common.css" />
+    <Content Include="aboutCom\css\customer.css" />
+    <Content Include="aboutCom\css\event.css" />
+    <Content Include="aboutCom\css\import.css" />
+    <Content Include="aboutCom\css\jquery-ui.css" />
+    <Content Include="aboutCom\css\layout.css" />
+    <Content Include="aboutCom\css\membership.css" />
+    <Content Include="aboutCom\css\mypage.css" />
+    <Content Include="aboutCom\css\review.css" />
+    <Content Include="aboutCom\css\shoping.css" />
+    <Content Include="aboutCom\images\aboutme\bg_address.png" />
+    <Content Include="aboutCom\images\aboutme\bg_bar.gif" />
+    <Content Include="aboutCom\images\aboutme\bg_bar2.gif" />
+    <Content Include="aboutCom\images\aboutme\bg_bar3.gif" />
+    <Content Include="aboutCom\images\aboutme\bg_book.png" />
+    <Content Include="aboutCom\images\aboutme\bg_con1.jpg" />
+    <Content Include="aboutCom\images\aboutme\bg_con1_w100.jpg" />
+    <Content Include="aboutCom\images\aboutme\bg_dotted.png" />
+    <Content Include="aboutCom\images\aboutme\bg_magazinbar.gif" />
+    <Content Include="aboutCom\images\aboutme\bg_movie.png" />
+    <Content Include="aboutCom\images\aboutme\bg_movie_on.png" />
+    <Content Include="aboutCom\images\aboutme\bg_thumb_off.png" />
+    <Content Include="aboutCom\images\aboutme\bg_thumb_on.png" />
+    <Content Include="aboutCom\images\aboutme\btn_updown.png" />
+    <Content Include="aboutCom\images\aboutme\go_magazin.jpg" />
+    <Content Include="aboutCom\images\aboutme\go_store.jpg" />
+    <Content Include="aboutCom\images\aboutme\h2_aboutme.png" />
+    <Content Include="aboutCom\images\aboutme\h2_magazin.png" />
+    <Content Include="aboutCom\images\aboutme\h2_store.png" />
+    <Content Include="aboutCom\images\aboutme\h3_concept.png" />
+    <Content Include="aboutCom\images\aboutme\h3_philosophy.png" />
+    <Content Include="aboutCom\images\aboutme\ico_map.png" />
+    <Content Include="aboutCom\images\aboutme\img1.png" />
+    <Content Include="aboutCom\images\aboutme\img2.png" />
+    <Content Include="aboutCom\images\aboutme\map.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_2.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_2_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_3.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_3_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_4.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_4_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_5.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_5_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_6.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_6_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_7.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_7_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\mazinthum118156_big.jpg" />
+    <Content Include="aboutCom\images\aboutme\shopban_hongdae.jpg" />
+    <Content Include="aboutCom\images\aboutme\txt1.png" />
+    <Content Include="aboutCom\images\brand\bg_bar.gif" />
+    <Content Include="aboutCom\images\brand\bg_bar2.gif" />
+    <Content Include="aboutCom\images\brand\bg_con1.jpg" />
+    <Content Include="aboutCom\images\brand\bg_con1_w100.jpg" />
+    <Content Include="aboutCom\images\brand\bg_dotted.png" />
+    <Content Include="aboutCom\images\brand\h2_aboutme.png" />
+    <Content Include="aboutCom\images\brand\h3_concept.png" />
+    <Content Include="aboutCom\images\brand\h3_philosophy.png" />
+    <Content Include="aboutCom\images\brand\img1.png" />
+    <Content Include="aboutCom\images\brand\img2.png" />
+    <Content Include="aboutCom\images\brand\shopban_hongdae.jpg" />
+    <Content Include="aboutCom\images\brand\txt1.png" />
+    <Content Include="aboutCom\images\cart\h2_order.png" />
+    <Content Include="aboutCom\images\cart\h2_orderend.png" />
+    <Content Include="aboutCom\images\cart\h3_recommend.png" />
+    <Content Include="aboutCom\images\cart\h4_buyerinfo.png" />
+    <Content Include="aboutCom\images\cart\h4_deliveryinfo.png" />
+    <Content Include="aboutCom\images\cart\h4_payinfo.png" />
+    <Content Include="aboutCom\images\cart\h4_receiveinfo.png" />
+    <Content Include="aboutCom\images\cart\h4_returninfo.png" />
+    <Content Include="aboutCom\images\cart\h4_saleinfo.png" />
+    <Content Include="aboutCom\images\cart\ico_essential_sm.gif" />
+    <Content Include="aboutCom\images\cart\nonmb_bannertxt.png" />
+    <Content Include="aboutCom\images\cart\nonmb_jointxt.png" />
+    <Content Include="aboutCom\images\cart\onenone_img.png" />
+    <Content Include="aboutCom\images\cart\orderstep_img.png" />
+    <Content Include="aboutCom\images\cart\paymentstep_credit.gif" />
+    <Content Include="aboutCom\images\cart\paymentstep_realtime.gif" />
+    <Content Include="aboutCom\images\cart\paymentstep_virtual.gif" />
+    <Content Include="aboutCom\images\cart\progress_arrow_10x14.png" />
+    <Content Include="aboutCom\images\cart\tooltip_bg.png" />
+    <Content Include="aboutCom\images\cart\tooltip_bg2.png" />
+    <Content Include="aboutCom\images\common\beauty_item.png" />
+    <Content Include="aboutCom\images\common\bg_bar.gif" />
+    <Content Include="aboutCom\images\common\bg_bar2.gif" />
+    <Content Include="aboutCom\images\common\bg_beauty_bnr.gif" />
+    <Content Include="aboutCom\images\common\bg_boxtypef.gif" />
+    <Content Include="aboutCom\images\common\bg_chkbox.gif" />
+    <Content Include="aboutCom\images\common\bg_chkbox2.gif" />
+    <Content Include="aboutCom\images\common\bg_counttypeb_btn.gif" />
+    <Content Include="aboutCom\images\common\bg_couponpoint.gif" />
+    <Content Include="aboutCom\images\common\bg_delivery.gif" />
+    <Content Include="aboutCom\images\common\bg_gnb.gif" />
+    <Content Include="aboutCom\images\common\bg_health_bnr.gif" />
+    <Content Include="aboutCom\images\common\bg_lytimesale.png" />
+    <Content Include="aboutCom\images\common\bg_mainvisual.png" />
+    <Content Include="aboutCom\images\common\bg_paging.gif" />
+    <Content Include="aboutCom\images\common\bg_paging2.gif" />
+    <Content Include="aboutCom\images\common\bg_path.png" />
+    <Content Include="aboutCom\images\common\bg_radio.gif" />
+    <Content Include="aboutCom\images\common\bg_select.png" />
+    <Content Include="aboutCom\images\common\bg_select2.gif" />
+    <Content Include="aboutCom\images\common\bg_select3.gif" />
+    <Content Include="aboutCom\images\common\bg_test.gif" />
+    <Content Include="aboutCom\images\common\bg_weather1.jpg" />
+    <Content Include="aboutCom\images\common\bottom_bnr1.jpg" />
+    <Content Include="aboutCom\images\common\bottom_bnr2.jpg" />
+    <Content Include="aboutCom\images\common\boxtypee_bottom.gif" />
+    <Content Include="aboutCom\images\common\boxtypee_side.gif" />
+    <Content Include="aboutCom\images\common\boxtypee_top.gif" />
+    <Content Include="aboutCom\images\common\btn_beauty.gif" />
+    <Content Include="aboutCom\images\common\btn_mainmv.png" />
+    <Content Include="aboutCom\images\common\btn_movieclose.png" />
+    <Content Include="aboutCom\images\common\btn_slide.png" />
+    <Content Include="aboutCom\images\common\btn_slide2.png" />
+    <Content Include="aboutCom\images\common\bul10.png" />
+    <Content Include="aboutCom\images\common\bul20.png" />
+    <Content Include="aboutCom\images\common\bul30.png" />
+    <Content Include="aboutCom\images\common\bul60.png" />
+    <Content Include="aboutCom\images\common\bul_detph2.gif" />
+    <Content Include="aboutCom\images\common\cart_arrow.jpg" />
+    <Content Include="aboutCom\images\common\f_address.gif" />
+    <Content Include="aboutCom\images\common\f_copy.gif" />
+    <Content Include="aboutCom\images\common\f_link1.gif" />
+    <Content Include="aboutCom\images\common\f_link2.gif" />
+    <Content Include="aboutCom\images\common\f_link3.gif" />
+    <Content Include="aboutCom\images\common\f_link4.gif" />
+    <Content Include="aboutCom\images\common\f_logo.gif" />
+    <Content Include="aboutCom\images\common\f_payico.gif" />
+    <Content Include="aboutCom\images\common\h3_cscenter.gif" />
+    <Content Include="aboutCom\images\common\h3_letsfritnd.gif" />
+    <Content Include="aboutCom\images\common\h3_mobileshop.gif" />
+    <Content Include="aboutCom\images\common\h3_news.gif" />
+    <Content Include="aboutCom\images\common\h_cart.gif" />
+    <Content Include="aboutCom\images\common\h_logo.jpg" />
+    <Content Include="aboutCom\images\common\ico_1p1.gif" />
+    <Content Include="aboutCom\images\common\ico_arrow.png" />
+    <Content Include="aboutCom\images\common\ico_cart.png" />
+    <Content Include="aboutCom\images\common\ico_cart2.png" />
+    <Content Include="aboutCom\images\common\ico_cart3.png" />
+    <Content Include="aboutCom\images\common\ico_change.gif" />
+    <Content Include="aboutCom\images\common\ico_dc30per.gif" />
+    <Content Include="aboutCom\images\common\ico_down.gif" />
+    <Content Include="aboutCom\images\common\ico_down2.gif" />
+    <Content Include="aboutCom\images\common\ico_essential.gif" />
+    <Content Include="aboutCom\images\common\ico_heart.png" />
+    <Content Include="aboutCom\images\common\ico_home.png" />
+    <Content Include="aboutCom\images\common\ico_lock.png" />
+    <Content Include="aboutCom\images\common\ico_main.gif" />
+    <Content Include="aboutCom\images\common\img_qrcode.gif" />
+    <Content Include="aboutCom\images\common\laytime_close.gif" />
+    <Content Include="aboutCom\images\common\m_brand.gif" />
+    <Content Include="aboutCom\images\common\m_brand_on.gif" />
+    <Content Include="aboutCom\images\common\m_event.gif" />
+    <Content Include="aboutCom\images\common\m_event_on.gif" />
+    <Content Include="aboutCom\images\common\m_review.gif" />
+    <Content Include="aboutCom\images\common\m_review_on.gif" />
+    <Content Include="aboutCom\images\common\m_shoping.gif" />
+    <Content Include="aboutCom\images\common\m_vip.gif" />
+    <Content Include="aboutCom\images\common\m_vip_on.gif" />
+    <Content Include="aboutCom\images\common\nav_ban.png" />
+    <Content Include="aboutCom\images\common\nav_banner.gif" />
+    <Content Include="aboutCom\images\common\pl_bnr.jpg" />
+    <Content Include="aboutCom\images\common\sns_facebook.gif" />
+    <Content Include="aboutCom\images\common\sns_kakaostory.gif" />
+    <Content Include="aboutCom\images\common\sns_kakaotalk.gif" />
+    <Content Include="aboutCom\images\common\sns_weibo.gif" />
+    <Content Include="aboutCom\images\common\sp_badge.png" />
+    <Content Include="aboutCom\images\common\tcolon.gif" />
+    <Content Include="aboutCom\images\common\tel.gif" />
+    <Content Include="aboutCom\images\common\temp_gnbbanner1_260228.jpg" />
+    <Content Include="aboutCom\images\common\temp_gnbbanner1_260228_2.jpg" />
+    <Content Include="aboutCom\images\common\temp_gnbbanner1_260228_3.jpg" />
+    <Content Include="aboutCom\images\common\temp_mv.jpg" />
+    <Content Include="aboutCom\images\common\thumb200200.jpg" />
+    <Content Include="aboutCom\images\common\thumb200200_2.jpg" />
+    <Content Include="aboutCom\images\common\thumb200200_3.jpg" />
+    <Content Include="aboutCom\images\common\timesale268468.jpg" />
+    <Content Include="aboutCom\images\common\timesale_item.png" />
+    <Content Include="aboutCom\images\common\tit_weather.png" />
+    <Content Include="aboutCom\images\common\txt_mshop.gif" />
+    <Content Include="aboutCom\images\common\txt_timesale.png" />
+    <Content Include="aboutCom\images\common\util_joinus.gif" />
+    <Content Include="aboutCom\images\common\util_login.gif" />
+    <Content Include="aboutCom\images\common\util_logout.gif" />
+    <Content Include="aboutCom\images\common\util_mypage.gif" />
+    <Content Include="aboutCom\images\common\util_staff.gif" />
+    <Content Include="aboutCom\images\common\visual_1.jpg" />
+    <Content Include="aboutCom\images\common\visual_2.jpg" />
+    <Content Include="aboutCom\images\common\visual_3.jpg" />
+    <Content Include="aboutCom\images\common\visual_4.jpg" />
+    <Content Include="aboutCom\images\common\weather_arrow.png" />
+    <Content Include="aboutCom\images\customer\bl_accordarrow.png" />
+    <Content Include="aboutCom\images\customer\bl_resetfaq.gif" />
+    <Content Include="aboutCom\images\customer\contact.jpg" />
+    <Content Include="aboutCom\images\customer\h3_notice.gif" />
+    <Content Include="aboutCom\images\customer\ico_attention.gif" />
+    <Content Include="aboutCom\images\customer\ico_notice.png" />
+    <Content Include="aboutCom\images\customer\storeinfo.jpg" />
+    <Content Include="aboutCom\images\customer\Untitled-3.png" />
+    <Content Include="aboutCom\images\event\bg_limitqty30per.png" />
+    <Content Include="aboutCom\images\event\bg_limitqty50per.png" />
+    <Content Include="aboutCom\images\event\bg_limitqty70per.png" />
+    <Content Include="aboutCom\images\event\bg_tipdetail.png" />
+    <Content Include="aboutCom\images\event\h3_endevent.png" />
+    <Content Include="aboutCom\images\event\h3_ingevent.png" />
+    <Content Include="aboutCom\images\event\h3_timesale.png" />
+    <Content Include="aboutCom\images\event\ico_cart.png" />
+    <Content Include="aboutCom\images\event\ico_tip.png" />
+    <Content Include="aboutCom\images\mail\mail_bl_call.gif" />
+    <Content Include="aboutCom\images\mail\mail_bl_point.gif" />
+    <Content Include="aboutCom\images\mail\mail_btn_aboutmego.gif" />
+    <Content Include="aboutCom\images\mail\mail_callnum_hanjin.gif" />
+    <Content Include="aboutCom\images\mail\mail_hlogo.jpg" />
+    <Content Include="aboutCom\images\mail\mail_ico_equal.gif" />
+    <Content Include="aboutCom\images\mail\mail_ico_min.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_hanjin.jpg" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt1.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt2.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt3.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt4.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt5.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt6.gif" />
+    <Content Include="aboutCom\images\mail\mail_orderend_txt7.gif" />
+    <Content Include="aboutCom\images\mail\mail_tag_best.gif" />
+    <Content Include="aboutCom\images\mail\mail_tag_coupon.gif" />
+    <Content Include="aboutCom\images\mail\mail_tag_new.gif" />
+    <Content Include="aboutCom\images\mail\product_im96x96.jpg" />
+    <Content Include="aboutCom\images\membership\bg_membership.gif" />
+    <Content Include="aboutCom\images\membership\h2_join.gif" />
+    <Content Include="aboutCom\images\membership\h2_login.png" />
+    <Content Include="aboutCom\images\membership\h3_agree1.gif" />
+    <Content Include="aboutCom\images\membership\h3_agree2.gif" />
+    <Content Include="aboutCom\images\membership\h3_agree3.gif" />
+    <Content Include="aboutCom\images\membership\h3_agree4.gif" />
+    <Content Include="aboutCom\images\membership\h3_agree5.gif" />
+    <Content Include="aboutCom\images\membership\h3_agree6.gif" />
+    <Content Include="aboutCom\images\membership\h3_memberlogin.gif" />
+    <Content Include="aboutCom\images\membership\h3_membership.gif" />
+    <Content Include="aboutCom\images\membership\h3_nomember_check.gif" />
+    <Content Include="aboutCom\images\membership\h3_userinfo.gif" />
+    <Content Include="aboutCom\images\membership\ico_check.gif" />
+    <Content Include="aboutCom\images\membership\ico_ipin.gif" />
+    <Content Include="aboutCom\images\membership\ico_phone.gif" />
+    <Content Include="aboutCom\images\membership\joinstep1.gif" />
+    <Content Include="aboutCom\images\membership\joinstep2.gif" />
+    <Content Include="aboutCom\images\membership\joinstep3.gif" />
+    <Content Include="aboutCom\images\membership\joinstep4.gif" />
+    <Content Include="aboutCom\images\membership\txt_callnum.gif" />
+    <Content Include="aboutCom\images\mypage\bg_h2.gif" />
+    <Content Include="aboutCom\images\mypage\bg_h2_on.gif" />
+    <Content Include="aboutCom\images\mypage\bg_point.gif" />
+    <Content Include="aboutCom\images\mypage\bg_skintype.gif" />
+    <Content Include="aboutCom\images\mypage\bl_cal.gif" />
+    <Content Include="aboutCom\images\mypage\bl_info.gif" />
+    <Content Include="aboutCom\images\mypage\btn_close.gif" />
+    <Content Include="aboutCom\images\mypage\btn_prevnext.gif" />
+    <Content Include="aboutCom\images\mypage\btn_qnaclose.gif" />
+    <Content Include="aboutCom\images\mypage\btn_slider.png" />
+    <Content Include="aboutCom\images\mypage\coupontype1.gif" />
+    <Content Include="aboutCom\images\mypage\coupontype1_s.gif" />
+    <Content Include="aboutCom\images\mypage\coupontype2.gif" />
+    <Content Include="aboutCom\images\mypage\coupontype2_s.gif" />
+    <Content Include="aboutCom\images\mypage\coupontype3.gif" />
+    <Content Include="aboutCom\images\mypage\coupontype3_s.gif" />
+    <Content Include="aboutCom\images\mypage\h2_expwrite.gif" />
+    <Content Include="aboutCom\images\mypage\h3_1_1qna.gif" />
+    <Content Include="aboutCom\images\mypage\h3_delivery.gif" />
+    <Content Include="aboutCom\images\mypage\h3_dropout.gif" />
+    <Content Include="aboutCom\images\mypage\h3_modify.gif" />
+    <Content Include="aboutCom\images\mypage\h3_orderdetail.gif" />
+    <Content Include="aboutCom\images\mypage\h3_return.gif" />
+    <Content Include="aboutCom\images\mypage\h3_review.gif" />
+    <Content Include="aboutCom\images\mypage\ico_a.gif" />
+    <Content Include="aboutCom\images\mypage\ico_arrow1.gif" />
+    <Content Include="aboutCom\images\mypage\ico_arrow2.gif" />
+    <Content Include="aboutCom\images\mypage\ico_bronze.png" />
+    <Content Include="aboutCom\images\mypage\ico_coupon.gif" />
+    <Content Include="aboutCom\images\mypage\ico_coupongoods.gif" />
+    <Content Include="aboutCom\images\mypage\ico_gold.png" />
+    <Content Include="aboutCom\images\mypage\ico_q.gif" />
+    <Content Include="aboutCom\images\mypage\ico_savepoint.gif" />
+    <Content Include="aboutCom\images\mypage\ico_setting.gif" />
+    <Content Include="aboutCom\images\mypage\ico_sliver.png" />
+    <Content Include="aboutCom\images\mypage\ico_userread.gif" />
+    <Content Include="aboutCom\images\mypage\ico_vip.png" />
+    <Content Include="aboutCom\images\mypage\ico_warning.gif" />
+    <Content Include="aboutCom\images\mypage\ico_wish.gif" />
+    <Content Include="aboutCom\images\mypage\temp_textediter.jpg" />
+    <Content Include="aboutCom\images\review\bg_bar.gif" />
+    <Content Include="aboutCom\images\review\bg_bar2.gif" />
+    <Content Include="aboutCom\images\review\bg_dotted.gif" />
+    <Content Include="aboutCom\images\review\bg_skintype.gif" />
+    <Content Include="aboutCom\images\review\ico_best.png" />
+    <Content Include="aboutCom\images\review\reviewpop_close.gif" />
+    <Content Include="aboutCom\images\review\thumb308.gif" />
+    <Content Include="aboutCom\images\review\thumb308.jpg" />
+    <Content Include="aboutCom\images\review\thumb640.jpg" />
+    <Content Include="aboutCom\images\review\txt_review.gif" />
+    <Content Include="aboutCom\images\sample\bg_mbnr1.jpg" />
+    <Content Include="aboutCom\images\sample\bg_mbnr2.jpg" />
+    <Content Include="aboutCom\images\sample\bg_mbnr3.jpg" />
+    <Content Include="aboutCom\images\sample\bg_mbnr4.jpg" />
+    <Content Include="aboutCom\images\sample\btn_pause.gif" />
+    <Content Include="aboutCom\images\sample\btn_play.gif" />
+    <Content Include="aboutCom\images\sample\detailevent_ban_760152.jpg" />
+    <Content Include="aboutCom\images\sample\event_beautytest.jpg" />
+    <Content Include="aboutCom\images\sample\event_slide1.jpg" />
+    <Content Include="aboutCom\images\sample\event_slide2.jpg" />
+    <Content Include="aboutCom\images\sample\event_slide3.jpg" />
+    <Content Include="aboutCom\images\sample\event_thum1.jpg" />
+    <Content Include="aboutCom\images\sample\event_thum2.jpg" />
+    <Content Include="aboutCom\images\sample\event_thum3.jpg" />
+    <Content Include="aboutCom\images\sample\event_timesale.jpg" />
+    <Content Include="aboutCom\images\sample\event_timesale2.jpg" />
+    <Content Include="aboutCom\images\sample\item_b.gif" />
+    <Content Include="aboutCom\images\sample\item_f.gif" />
+    <Content Include="aboutCom\images\sample\joinend_banner.jpg" />
+    <Content Include="aboutCom\images\sample\mask.png" />
+    <Content Include="aboutCom\images\sample\mask2.png" />
+    <Content Include="aboutCom\images\sample\mbnr1.jpg" />
+    <Content Include="aboutCom\images\sample\mbnr2.jpg" />
+    <Content Include="aboutCom\images\sample\mbnr3.jpg" />
+    <Content Include="aboutCom\images\sample\mbnr4.jpg" />
+    <Content Include="aboutCom\images\sample\mbnr_thum1.jpg" />
+    <Content Include="aboutCom\images\sample\sample_detailadmin.jpg" />
+    <Content Include="aboutCom\images\sample\sample_detailadmin2.jpg" />
+    <Content Include="aboutCom\images\sample\sample_detailadmin3.jpg" />
+    <Content Include="aboutCom\images\sample\thumb240240.jpg" />
+    <Content Include="aboutCom\images\sample\thumb240240_2.jpg" />
+    <Content Include="aboutCom\images\sample\thumb240240_b.jpg" />
+    <Content Include="aboutCom\images\sample\thumb240240_f.jpg" />
+    <Content Include="aboutCom\images\sample\thumb310140.png" />
+    <Content Include="aboutCom\images\sample\thumb_500500.jpg" />
+    <Content Include="aboutCom\images\sample\thumb_6464.gif" />
+    <Content Include="aboutCom\images\sample\thum_270_pro1.jpg" />
+    <Content Include="aboutCom\images\sample\thum_270_pro2.jpg" />
+    <Content Include="aboutCom\images\sample\thum_banner.jpg" />
+    <Content Include="aboutCom\images\sample\thum_cartpdt1.jpg" />
+    <Content Include="aboutCom\images\sample\thum_cartpdt2.jpg" />
+    <Content Include="aboutCom\images\sample\thum_cartpdt3.jpg" />
+    <Content Include="aboutCom\images\sample\thum_cartpdt4.jpg" />
+    <Content Include="aboutCom\images\sample\thum_event1.jpg" />
+    <Content Include="aboutCom\images\sample\thum_eventdetail.jpg" />
+    <Content Include="aboutCom\images\sample\thum_exhibition1.jpg" />
+    <Content Include="aboutCom\images\sample\thum_hanjin.jpg" />
+    <Content Include="aboutCom\images\sample\thum_recommend1.jpg" />
+    <Content Include="aboutCom\images\sample\thum_recommend2.jpg" />
+    <Content Include="aboutCom\images\sample\thum_recommend3.jpg" />
+    <Content Include="aboutCom\images\sample\thum_recommend4.jpg" />
+    <Content Include="aboutCom\images\sample\txt_setgoods.png" />
+    <Content Include="aboutCom\images\shopping\bg_bar.gif" />
+    <Content Include="aboutCom\images\shopping\bg_bar2.gif" />
+    <Content Include="aboutCom\images\shopping\bg_bar3.gif" />
+    <Content Include="aboutCom\images\shopping\bg_pur_review.gif" />
+    <Content Include="aboutCom\images\shopping\bg_skintype.png" />
+    <Content Include="aboutCom\images\shopping\btn_lyclose.gif" />
+    <Content Include="aboutCom\images\shopping\btn_mvclose.png" />
+    <Content Include="aboutCom\images\shopping\bul_arrow.gif" />
+    <Content Include="aboutCom\images\shopping\frame.png" />
+    <Content Include="aboutCom\images\shopping\frame_.png" />
+    <Content Include="aboutCom\images\shopping\frame_cnt.png" />
+    <Content Include="aboutCom\images\shopping\frame_move.png" />
+    <Content Include="aboutCom\images\shopping\h2_beauty.png" />
+    <Content Include="aboutCom\images\shopping\h2_health.png" />
+    <Content Include="aboutCom\images\shopping\h2_selectshop.png" />
+    <Content Include="aboutCom\images\shopping\ico_cart.png" />
+    <Content Include="aboutCom\images\shopping\ico_down.gif" />
+    <Content Include="aboutCom\images\shopping\ico_photo.png" />
+    <Content Include="aboutCom\images\shopping\ico_up.gif" />
+    <Content Include="aboutCom\images\shopping\img_top.gif" />
+    <Content Include="aboutCom\images\shopping\ingredient_tit1.gif" />
+    <Content Include="aboutCom\images\shopping\ingredient_tit2.gif" />
+    <Content Include="aboutCom\images\shopping\review_tab1.gif" />
+    <Content Include="aboutCom\images\shopping\review_tab2.gif" />
+    <Content Include="aboutCom\images\shopping\thumb120.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail1.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail1_big.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail2.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail2_big.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail3.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail3_big.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail4.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_detail4_big.jpg" />
+    <Content Include="aboutCom\images\shopping\thumb_move.jpg" />
+    <Content Include="aboutCom\images\shopping\tit_related_product.gif" />
+    <Content Include="aboutCom\images\shopping\tit_setgoods.gif" />
+    <Content Include="aboutCom\images\shopping\txt_tab1.gif" />
+    <Content Include="aboutCom\images\shopping\txt_tab2.gif" />
+    <Content Include="aboutCom\images\shopping\txt_tab3.gif" />
+    <Content Include="aboutCom\images\shopping\Untitled-3.png" />
+    <Content Include="aboutCom\include\footer.asp" />
+    <Content Include="aboutCom\include\head.asp" />
+    <Content Include="aboutCom\include\header.asp" />
+    <Content Include="aboutCom\js\common_member.js" />
+    <Content Include="aboutCom\js\lib\dropdown.js" />
+    <Content Include="aboutCom\js\lib\imagesloaded.pkgd.min.js" />
+    <Content Include="aboutCom\js\lib\jquery-1.8.3.min.js" />
+    <Content Include="aboutCom\js\lib\jquery-ui.js" />
+    <Content Include="aboutCom\js\lib\jquery.countdown.js" />
+    <Content Include="aboutCom\js\lib\jquery.dotdotdot.js" />
+    <Content Include="aboutCom\js\lib\jquery.easing-1.3.min.js" />
+    <Content Include="aboutCom\js\lib\masonry.pkgd.min.js" />
+    <Content Include="aboutCom\js\lib\ui.datepicker-ko.js" />
+    <Content Include="aboutCom\js\main.js" />
+    <Content Include="aboutCom\js\script.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="RealName\hp\hs_cnfrm_popup1.aspx" />
+    <Content Include="RealName\hp\hs_cnfrm_popup2.aspx" />
+    <Content Include="RealName\hp\hs_cnfrm_popup3.aspx" />
+    <Content Include="RealName\hp\hs_cnfrm_popup4.aspx" />
+    <Content Include="RealName\ipin\ipin1.aspx" />
+    <Content Include="RealName\ipin\ipin2.aspx" />
+    <Content Include="RealName\ipin\ipin3.aspx" />
+    <Content Include="RealName\ipin\ipin4.aspx" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="aboutCom\fonts\NanumBarunGothicLight.eot" />
+    <Content Include="aboutCom\fonts\NanumBarunGothicLight.ttf" />
+    <Content Include="aboutCom\fonts\NanumBarunGothicLight.woff" />
+    <Content Include="aboutCom\images\aboutme\Thumbs.db" />
+    <Content Include="aboutCom\images\brand\Thumbs.db" />
+    <Content Include="aboutCom\images\cart\Thumbs.db" />
+    <Content Include="aboutCom\images\membership\Thumbs.db" />
+    <Content Include="aboutCom\images\sample\Thumbs.db" />
+    <Content Include="aboutCom\images\shopping\Thumbs.db" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\cart_script.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="test\test1.xml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="test\test1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Shared\_AboutMeLayoutA.cshtml" />
+    <Content Include="Views\AboutMePartial\_Head.cshtml" />
+    <Content Include="Views\AboutMePartial\_Header.cshtml" />
+    <Content Include="Views\AboutMePartial\_Footer.cshtml" />
+    <Content Include="Views\Shared\_AboutMeLayoutMasterA.cshtml" />
+    <Content Include="Views\CommonChildAction\ChildRightTopMenu_Util.cshtml" />
+    <Content Include="Views\Shopping\Index.cshtml" />
+    <Content Include="Views\Shopping\Detail.cshtml" />
+    <Content Include="Views\Mypage\Main.cshtml" />
+    <Content Include="Views\Shared\_AboutMeLayoutB.cshtml" />
+    <Content Include="Views\MemberShip\Login.cshtml" />
+    <Content Include="Views\MemberShip\JoinStep1.cshtml" />
+    <Content Include="Views\MemberShip\JoinStep2.cshtml" />
+    <Content Include="Views\MemberShip\JoinStep3.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailReviewInfo.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailLeftEvent.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailRightSetGoods.cshtml" />
+    <Content Include="Views\CommonChildAction\ShoppingDetailRightPromotion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AboutMe.Common\AboutMe.Common.csproj">
+      <Project>{7f9cf5b3-0a68-4bfa-a035-45895ac02feb}</Project>
+      <Name>AboutMe.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AboutMe.Domain\AboutMe.Domain.csproj">
+      <Project>{1c6378e7-6069-4915-946c-1eee9ef3ffe0}</Project>
+      <Name>AboutMe.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54569</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54569/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

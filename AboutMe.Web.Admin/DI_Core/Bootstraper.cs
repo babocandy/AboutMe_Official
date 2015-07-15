@@ -35,6 +35,7 @@ namespace AboutMe.Web.Admin.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Notice.INoticeService, AboutMe.Domain.Service.Notice.NoticeService>(); //Notice
             container.RegisterType<AboutMe.Domain.Service.AdminPoint.IAdminPointService, AboutMe.Domain.Service.AdminPoint.AdminPointService>(); //관리자 포인트
             container.RegisterType<AboutMe.Domain.Service.AdminPromotion.IAdminPromotionService, AboutMe.Domain.Service.AdminPromotion.AdminPromotionService>(); //프로모션관리
+            container.RegisterType<AboutMe.Domain.Service.AdminOrder.IAdminOrderService, AboutMe.Domain.Service.AdminOrder.AdminOrderService>(); //주문관리
 
             container.RegisterType<AboutMe.Domain.Service.AdminCoupon.IAdminCouponService, AboutMe.Domain.Service.AdminCoupon.AdminCouponService>(); //쿠폰관리
 

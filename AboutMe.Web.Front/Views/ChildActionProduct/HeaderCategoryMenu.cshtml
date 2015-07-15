@@ -1,0 +1,88 @@
+﻿@model List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>
+@{
+    Layout = null;
+}
+ <!--list1-->
+<div class="list list1">
+    <p class="tit"><a href="/shopping/Index?p_cate_code=101100100">뷰티</a></p>
+    <div class="sublist">
+        <ul>
+            @{ var i = 0; }
+            @foreach (var item in ViewData["category1"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+            {
+
+                <li><a href="/shopping/Index?p_cate_code=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+                if (i == 4)
+                {
+                    @Html.Raw("</ul><ul>"); }
+
+                i++;
+            }
+
+        </ul>
+
+    </div>
+    <div class="banner">
+        <a href="#">
+            <span class="ban_tit">그녀의 화장대</span>
+            <span class="ban_txt">40대 워킹맘 필수아이템!</span>
+        </a>
+    </div>
+</div>
+<!--//list1-->
+<!--list2-->
+<div class="list list2">
+    <p class="tit"><a href="/shopping/Index?p_cate_code=101200100">헬스</a></p>
+    <div class="sublist">
+        <ul>
+            @{ i = 0; }
+            @foreach (var item in ViewData["category2"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+            {
+
+                <li><a href="/shopping/Index?p_cate_code=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+
+                i++;
+            }
+        </ul>
+    </div>
+    <div class="banner">
+        <a href="#">
+            <span class="ban_tit">신상품 출시</span>
+            <span class="ban_txt">나른한 가을 에너지충전!</span>
+        </a>
+    </div>
+</div>
+<!--//list2-->
+<!--list3-->
+<div class="list list3">
+    <p class="tit"><a href="/shopping/Index?p_cate_code=101300100">수입브랜드</a></p>
+    <div class="sublist">
+        <ul>
+            @{ i = 0; }
+            @foreach (var item in ViewData["category3"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+            {
+
+                <li><a href="/shopping/Index?p_cate_code=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+                if (i == 4)
+                {
+                    @Html.Raw("</ul><ul>");
+                }
+
+                i++;
+            }
+            @*<li><a href="#">엘라바쉐</a></li>
+            <li><a href="#">립스메이커</a></li>
+            <li><a href="#">페탈프레쉬</a></li>
+            <li><a href="#">베이비가닉스</a></li>
+            <li><a href="#">피그콜라겐</a></li>
+        </ul>
+        <ul>
+            <li><a href="#">뷰크로스</a></li>
+            <li><a href="#">키스 에버레스트</a></li>
+            <li><a href="#">기타</a></li>
+            <li><a href="#">엘라바쉐</a></li>
+            <li><a href="#">립스메이커</a></li>*@
+        </ul>
+    </div>
+</div>
+<!--//list3-->
