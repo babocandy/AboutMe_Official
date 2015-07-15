@@ -399,8 +399,105 @@ namespace AboutMe.Web.Admin.Controllers
             return Content(sw.ToString(), "application/ms-excel");
 
         }
-    
-    
+
+        //-임직원 신청  =============================================================================================================================
+        //관리자 - 임직원 신청 - 목록
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult StaffRequestIndex(string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEL_STATUS = "",  string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "IDX", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
+        {
+            //return View();
+
+            this.ViewBag.SEL_DATE_FROM = SEL_DATE_FROM;
+            this.ViewBag.SEL_DATE_TO = SEL_DATE_TO;
+            this.ViewBag.SEL_STATUS = SEL_STATUS;
+
+            this.ViewBag.SEARCH_COL = SEARCH_COL;
+            this.ViewBag.SEARCH_KEYWORD = SEARCH_KEYWORD;
+            this.ViewBag.SORT_COL = SORT_COL;
+            this.ViewBag.SORT_DIR = SORT_DIR;
+            this.ViewBag.PAGE = PAGE;
+            this.ViewBag.PAGESIZE = PAGESIZE;
+
+            int TotalRecord = 0;
+            //TotalRecord = 999;
+            TotalRecord = _AdminFrontMemberService.GetAdminMemberStaffRequestListCount(SEL_DATE_FROM, SEL_DATE_TO, SEL_STATUS, SEARCH_COL, SEARCH_KEYWORD);
+
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+
+            return View(_AdminFrontMemberService.GetAdminMemberStaffRequestList(SEL_DATE_FROM, SEL_DATE_TO, SEL_STATUS, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, PAGE, PAGESIZE).ToList());
+        }
+
+        //관리자 - 임직원 신청 - 상세
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult StaffRequestEdit(int SEL_IDX = -1, string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEL_STATUS = "",  string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "IDX", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
+        {
+            //return View();
+
+            this.ViewBag.SEL_IDX = SEL_IDX;
+
+            this.ViewBag.SEL_DATE_FROM = SEL_DATE_FROM;
+            this.ViewBag.SEL_DATE_TO = SEL_DATE_TO;
+            this.ViewBag.SEL_STATUS = SEL_STATUS;
+
+            this.ViewBag.SEARCH_COL = SEARCH_COL;
+            this.ViewBag.SEARCH_KEYWORD = SEARCH_KEYWORD;
+            this.ViewBag.SORT_COL = SORT_COL;
+            this.ViewBag.SORT_DIR = SORT_DIR;
+            this.ViewBag.PAGE = PAGE;
+            this.ViewBag.PAGESIZE = PAGESIZE;
+            if (SEL_IDX == null || SEL_IDX<1)
+                return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
+
+
+            return View(_AdminFrontMemberService.GetAdminMemberStaffRequestView(SEL_IDX));
+        }
+
+        //관리자 - 임직원 신청- 수정 : ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult StaffRequestEditOK(int IDX = -1, string STATUS = "", string PROC_COMMENT = "", string PROC_ADM_ID = "")
+        {
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+            //return View();
+            if (IDX == null || IDX<1)
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "문서번호가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+
+            //DB저장: 임직원 신청  수정 -----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminMemberStaffRequestUpdate(IDX, STATUS, PROC_COMMENT, PROC_ADM_ID);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 문서를 찾을수 없습니다..";
+            }
+
+            //로그 기록
+            string memo = "관리자-임직원신청수정";
+            string comment = "관리자-임직원신청수정";
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|IDX:" + IDX.ToString();
+            memo = memo + "|STATUS:" + STATUS;
+            memo = memo + "|PROC_COMMENT:" + PROC_COMMENT;
+            memo = memo + "|PROC_ADM_ID:" + PROC_ADM_ID;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+
+        }
+
+      
     
     }
 }
