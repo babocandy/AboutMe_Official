@@ -1,0 +1,170 @@
+﻿@model AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result
+
+@{
+    ViewBag.Title = "FrontMemberInfo";
+    Layout = null;
+}
+
+@{
+
+
+    @helper fGradeName(string gradeCode)
+{
+    var grade_name = gradeCode;
+    switch (gradeCode)
+    {
+        case "B": grade_name = "브론즈";
+            break;
+        case "S": grade_name = "실버";
+            break;
+        case "G": grade_name = "골드";
+            break;
+        case "V": grade_name = "VIP";
+            break;
+
+    }
+    <div>@grade_name</div>
+}
+
+    @helper fIsRerireNAME(string is_retire)
+{
+    var isretire_name = is_retire;
+    switch (is_retire)
+    {
+        case "Y": isretire_name = "탈퇴회원";
+            break;
+        case "N": isretire_name = "활동중";
+            break;
+
+    }
+    @(@isretire_name)
+}
+
+    @helper fM_GBN_NAME(string m_gbn)
+{
+    var m_gbn_name = m_gbn;
+    switch (m_gbn)
+    {
+        case "A": m_gbn_name = "일반회원";
+            break;
+        case "S": m_gbn_name = "임직원";
+            break;
+
+    }
+    <div>@m_gbn_name</div>
+}
+
+    @helper fM_SEX_NAME(string m_sex)
+{
+    var m_sex_name = m_sex;
+    switch (m_sex)
+    {
+        case "1": m_sex_name = "남자";
+            break;
+        case "3": m_sex_name = "남자";
+            break;
+        case "2": m_sex_name = "여자";
+            break;
+        case "4": m_sex_name = "여자";
+            break;
+
+    }
+    <div>@m_sex_name <span>(@m_sex)</span></div>
+}
+
+    @helper fM_SKIN_TROUBLE_NAME(string code)
+{
+    var m_trouble_name = code;
+    switch (code)
+    {
+        case "101201100": m_trouble_name = "보습";
+            break;
+        case "101202100": m_trouble_name = "탄력/주름";
+            break;
+        case "101203100": m_trouble_name = "브라이트닝";
+            break;
+        case "101204100": m_trouble_name = "화이트닝";
+            break;
+        case "101205100": m_trouble_name = "안티에이징";
+            break;
+        case "101206100": m_trouble_name = "피지,모공";
+            break;
+        case "101207100": m_trouble_name = "생기,활력";
+            break;
+        case "101208100": m_trouble_name = "자외선 차단";
+            break;
+
+    }
+    <div>@m_trouble_name <span>(@code)</span></div>
+}
+
+
+
+    @helper fIS_RENAME_YN(string strDI)
+{
+    if (strDI != null && strDI != "")
+    {
+        @("인증")
+    }
+    else
+    {
+        @("미인증")
+    }
+
+}
+
+
+
+}
+
+
+
+
+<div class="panel">
+    <h4>임직원DB조회</h4>
+    <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+    <table class="table table_col">
+        <colgroup><col /><col /><col /><col /><col /><col /><col /><col /><col /><col /></colgroup>
+        <thead>
+            <tr>
+                <th scope="col" class="brnone">No</th>
+                <th scope="col">임직원사번</th>
+                <th scope="col">회사</th>
+                <th scope="col" class="brnone">임직원이름</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                if (@Model.Count() < 1)
+                {
+                    <tr>
+                        <td colspan="4" class="brnone">No data...</td>
+                    </tr>
+                }
+            }
+
+            @{
+                var count = ViewBag.TotalRecord - (ViewBag.PAGE - 1) * ViewBag.PAGESIZE;
+                foreach (var item in @Model)
+                {
+                    <tr>
+                        <td class="brnone">@count.ToString("#,##0")</td>
+                        <td>@item.STAFF_ID</td>
+                        <td>@item.STAFF_COMPANY</td>
+                        <td class="brnone">@item.STAFF_NAME</td>
+                    </tr>
+                    count = count - 1;
+                }
+
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+

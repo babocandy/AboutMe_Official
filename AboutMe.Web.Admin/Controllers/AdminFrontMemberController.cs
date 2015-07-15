@@ -455,11 +455,14 @@ namespace AboutMe.Web.Admin.Controllers
 
         //관리자 - 임직원 신청- 수정 : ajax > JSON리턴
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult StaffRequestEditOK(int IDX = -1, string STATUS = "", string PROC_COMMENT = "", string PROC_ADM_ID = "")
+        public ActionResult StaffRequestEditOK(int IDX = -1, string STATUS = "", string PROC_COMMENT = "")
         {
             int nERR_CODE = 0;
             int nERR_CODE_SP = 0;
             string strERR_MSG = "";
+
+            string PROC_ADM_ID = AdminUserInfo.GetAdmId();  //처리자 계정 (관리자 로그인계정)
+
             //return View();
             if (IDX == null || IDX<1)
             {

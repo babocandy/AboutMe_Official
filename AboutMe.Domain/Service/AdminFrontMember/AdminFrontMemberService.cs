@@ -326,7 +326,64 @@ namespace AboutMe.Domain.Service.AdminFrontMember
 
         }
 
+        //----------------------------------------------------------------------------------------------------
+        //관리자  -임직원신청 상세>  연관정보 :임직원DB
+        public List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result> GetAdminMemberStaffRequest_REF_BASEDB(string sTAFF_ID="")
+        {
 
+            List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result> lst = new List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB(sTAFF_ID).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+        }
+
+        //관리자  -임직원신청 상세>  연관정보 : 회원TBL
+        public List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> GetAdminMemberStaffRequest_REF_MEMBER(string sTAFF_ID = "")
+        {
+
+            List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> lst = new List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER(sTAFF_ID).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+        }
+
+        //관리자  -임직원신청 상세>  연관정보 : 임직원신청이력
+        public List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result> GetAdminMemberStaffRequest_REF_REQUEST(string sTAFF_ID = "")
+        {
+
+            List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result> lst = new List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST(sTAFF_ID).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+        }
+ 
 
 
     } //class

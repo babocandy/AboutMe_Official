@@ -211,7 +211,7 @@
         var strSTATUS = f.STATUS.value;
         var strPROC_COMMENT = f.PROC_COMMENT.value;
 
-        var strURL = "/AdminFrontMember/StaffRequestEditOK_Basic"; //임직원 신청내역 수정
+        var strURL = "/AdminFrontMember/StaffRequestEditOK"; //임직원 신청내역 수정
 
         $.ajax({
             url: strURL,
@@ -339,10 +339,13 @@
     <div class="panel">
         <h3 class="sub-header">[<font color="ff0000">@Model.STAFF_ID</font>]사번기준  기타정보 참조</h3>
     </div>
+            
+  <!-- 사번기준 기타정보1:임직원DB -->
 
 
-            
-            
+
+
+
 
         }
 

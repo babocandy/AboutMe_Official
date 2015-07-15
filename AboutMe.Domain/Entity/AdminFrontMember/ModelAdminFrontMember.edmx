@@ -89,6 +89,15 @@
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
           <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
@@ -224,7 +233,16 @@
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_VIEW" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result)">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result)">
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result)">
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result)">
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
@@ -280,6 +298,35 @@
           <Property Type="DateTime" Name="PROC_DATE" Nullable="true" Precision="23" />
           <Property Type="String" Name="PROC_COMMENT" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="PROC_ADM_ID" Nullable="true" MaxLength="13" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result">
+          <Property Type="String" Name="STAFF_COMPANY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result">
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="M_GRADE" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="M_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="M_STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="M_STAFF_COMPANY" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="M_STAFF_APPROV_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="M_IS_RETIRE" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="M_DEL_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result">
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="M_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_COMPANY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="STATUS" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="PROC_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PROC_COMMENT" Nullable="true" MaxLength="500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -422,6 +469,47 @@
                 <ScalarProperty Name="PROC_DATE" ColumnName="PROC_DATE" />
                 <ScalarProperty Name="PROC_COMMENT" ColumnName="PROC_COMMENT" />
                 <ScalarProperty Name="PROC_ADM_ID" ColumnName="PROC_ADM_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result">
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result">
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="M_STAFF_ID" ColumnName="M_STAFF_ID" />
+                <ScalarProperty Name="M_STAFF_COMPANY" ColumnName="M_STAFF_COMPANY" />
+                <ScalarProperty Name="M_STAFF_APPROV_DATE" ColumnName="M_STAFF_APPROV_DATE" />
+                <ScalarProperty Name="M_IS_RETIRE" ColumnName="M_IS_RETIRE" />
+                <ScalarProperty Name="M_DEL_DATE" ColumnName="M_DEL_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result">
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="PROC_DATE" ColumnName="PROC_DATE" />
+                <ScalarProperty Name="PROC_COMMENT" ColumnName="PROC_COMMENT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

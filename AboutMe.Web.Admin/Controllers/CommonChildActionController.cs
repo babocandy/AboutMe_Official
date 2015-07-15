@@ -56,5 +56,28 @@ namespace AboutMe.Web.Admin.Controllers
             return View(_AdminFrontMemberService.GetAdminFrontMemberView(M_ID));
         }
 
-    }
-}
+        //임직원신청 연관정보 : 임직원DB- ChildView제공을 위한 Ctl
+        [ChildActionOnly]
+        public ActionResult ChildStaffRequest_REF_BASEDB(string STAFF_ID = "")
+        {
+            return View(_AdminFrontMemberService.GetAdminMemberStaffRequest_REF_BASEDB(STAFF_ID));
+        }
+
+        //임직원신청 연관정보 : 회원TBL- ChildView제공을 위한 Ctl
+        [ChildActionOnly]
+        public ActionResult ChildStaffRequest_REF_MEMBER(string STAFF_ID = "")
+        {
+            return View(_AdminFrontMemberService.GetAdminMemberStaffRequest_REF_MEMBER(STAFF_ID));
+        }
+
+        //임직원신청 연관정보 : 임직원신청이력- ChildView제공을 위한 Ctl
+        [ChildActionOnly]
+        public ActionResult ChildStaffRequest_REF_REQUEST(string STAFF_ID = "")
+        {
+            return View(_AdminFrontMemberService.GetAdminMemberStaffRequest_REF_REQUEST(STAFF_ID));
+        }
+
+
+
+    }//class
+} //namespace

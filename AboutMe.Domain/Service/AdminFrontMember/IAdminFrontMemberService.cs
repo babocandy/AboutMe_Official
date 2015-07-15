@@ -28,5 +28,10 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         int GetAdminMemberStaffRequestListCount(string dATE_FROM, string dATE_TO, string sTATUS, string sEARCH_COL, string sEARCH_KEYWORD); //임직원 신청목록 COUNT
         int SetAdminMemberStaffRequestUpdate(int iDX, string sTATUS, string pROC_COMMENT, string pROC_ADM_ID);//임직원 신청-수정
         SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result GetAdminMemberStaffRequestView(int iDX); //임직원 신청-상세 1건
+
+        //관리자 > 임직원 신청 연관정보-----------------------------
+        List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result> GetAdminMemberStaffRequest_REF_BASEDB(string sTAFF_ID ); //임직원 신청 연관정보 : 임직원DB
+        List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> GetAdminMemberStaffRequest_REF_MEMBER(string sTAFF_ID); //임직원 신청 연관정보 : 회원TBL
+        List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result> GetAdminMemberStaffRequest_REF_REQUEST(string sTAFF_ID); //임직원 신청 연관정보 : 임직원신청이력
     }
 }

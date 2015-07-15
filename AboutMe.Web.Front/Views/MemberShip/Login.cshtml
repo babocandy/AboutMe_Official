@@ -54,7 +54,7 @@
                                 <a href="javascript:fGoLogin();" class="btn_login btn_brown_w175h80"><img src="/aboutCom/images/common/ico_lock.png" class="lockimg" alt="">로그인</a>
                                 <label for="idsave" class="chkcon idsave"><input type="checkbox" id="idsave" /><span class="txt">아이디 저장</span></label>
                             </div>
-
+                            SessionID:@Session.SessionID  ,M_ID:@ViewBag.M_ID
                             <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
 
                         </form>
