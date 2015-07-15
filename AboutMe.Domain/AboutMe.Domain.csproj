@@ -173,6 +173,46 @@
     <Compile Include="Entity\AdminFrontMember\SP_ADMIN_FRONT_MEMBER_VIEW_Result.cs">
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminOrder\AdminOrderUserModel.cs" />
+    <Compile Include="Entity\AdminOrder\ModelAdminOrder.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminOrder.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\ModelAdminOrder.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\ModelAdminOrder.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminOrder.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDERLIST_DETAIL_BODY_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDERLIST_DETAIL_LIST_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_LIST_Cnt.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_LIST_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\TB_ORDER_CODE.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\TB_ORDER_DETAIL.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\TB_ORDER_LOG.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\TB_ORDER_MASTER.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminPoint\ModelAdminPoint.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -448,6 +488,8 @@
     <Compile Include="Service\AdminEtc\IAdminUserService.cs" />
     <Compile Include="Service\AdminFrontMember\AdminFrontMemberService.cs" />
     <Compile Include="Service\AdminFrontMember\IAdminFrontMemberService.cs" />
+    <Compile Include="Service\AdminOrder\AdminOrderService.cs" />
+    <Compile Include="Service\AdminOrder\IAdminOrderService.cs" />
     <Compile Include="Service\AdminPoint\AdminPointService.cs" />
     <Compile Include="Service\AdminPoint\IAdminPointService.cs" />
     <Compile Include="Service\AdminProduct\AdminProductService.cs" />
@@ -467,7 +509,6 @@
     <Compile Include="Service\Product\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Order\" />
     <Folder Include="Service\Etc\" />
@@ -519,6 +560,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelAdminPoint.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\AdminOrder\ModelAdminOrder.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminOrder.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminOrder\ModelAdminOrder.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminOrder.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminOrder.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminOrder\ModelAdminOrder.edmx.diagram">
+      <DependentUpon>ModelAdminOrder.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminOrder\ModelAdminOrder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminOrder.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminOrder.cs</LastGenOutput>
+    </None>
     <None Include="Entity\AdminPoint\ModelAdminPoint.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelAdminPoint.edmx</DependentUpon>

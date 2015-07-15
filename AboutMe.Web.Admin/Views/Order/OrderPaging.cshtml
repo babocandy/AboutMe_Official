@@ -1,0 +1,49 @@
+﻿@model AboutMe.Common.Data.PagingProps
+
+<script language="javascript">
+    function gotoPage(p) {
+        $("#sform")[0].reset();
+        var f = document.sform;
+        f.PAGE.value = p;
+        f.action = "/Order";
+        f.submit();
+    }
+</script>
+<br />
+<div class="paging">
+
+
+    <br />
+
+    @if (Model.HasPreviousBlock)
+    {
+        <a href="#none" class="prev" onclick="gotoPage('@Model.GoPageOfPrevBlock');">«</a>
+    }
+    else
+    {
+        <a href="#none" class="prev">«</a>
+    }
+
+    @for (var i = Model.StartPage; i <= Model.EndPage; i++)
+    {
+        if (i == Model.CurrentPage)
+        {
+            <strong>[@i]</strong>
+        }
+        else
+        {
+            @*<a href="@Url.Action(Request.Url.LocalPath, new { page = i, page_size = Model.page_size })" class="btn btn-default">*@
+            <a href="#none" onclick="gotoPage('@i');">@i</a>
+        }
+    }
+
+    @if (Model.HasNextBlock)
+    {
+        <a href="#none" class="next" onclick="gotoPage('@Model.GoPageOfNextBlock');">»</a>
+    }
+    else
+    {
+        <a href="#none" class="next">»</a>
+    }
+
+</div>
