@@ -2,6 +2,10 @@
 {
     @RenderSection("Head")
 }
+@if (IsSectionDefined("Scripts"))
+{
+    @RenderSection("Scripts")
+}
 <title>ABOUT ME</title>
 </head>
 <body>

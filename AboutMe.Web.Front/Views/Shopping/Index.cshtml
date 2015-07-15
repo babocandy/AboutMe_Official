@@ -15,6 +15,59 @@
     
 }
 <!--//header-->
+
+@section Scripts{
+
+    <script language="javascript">
+
+        $(function () {
+            //ajaxSelectCateCodeJavascriptInit();
+        });
+
+        function bsearch() {
+            var f = document.bform;
+            //alert('ok');
+            f.target = "";
+            f.PAGE.value = 1;
+            f.submit();
+        }
+
+        function pCateCode(code) {
+            //alert(code);
+            var f = document.bform;
+            f.P_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function cCateCode(code) {
+            var f = document.bform;
+            f.C_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function lCateCode(code) {
+            var f = document.bform;
+            f.L_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function sortGbn(code) {
+            var f = document.bform;
+            f.SORT_GBN.value = code;
+            bsearch();
+        }
+
+        function rePageSize() {
+            var f = document.aform;
+
+            f.target = "";
+            f.page.value = 1;
+            f.submit();
+        }
+
+    </script>
+}
+
 <!--container-->
 @section Body{
 
@@ -36,7 +89,7 @@
                                     @foreach (var item in ViewData["P_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
-                                        <li><a href="/shopping/Index?P_CATE_CODE=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+                                        <li><a href="javascript:pCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
 
                                         i++;
                                     }
@@ -59,7 +112,7 @@
                                     @foreach (var item in ViewData["C_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
-                                        <li><a href="/shopping/Index?P_CATE_CODE=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+                                        <li><a href="javascript:cCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
 
                                         i++;
                                     }
@@ -81,7 +134,7 @@
                                     @foreach (var item in ViewData["L_CATE_CODE"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
-                                        <li><a href="/shopping/Index?P_CATE_CODE=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+                                        <li><a href="javascript:lCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
 
                                         i++;
                                     }
@@ -118,7 +171,7 @@
                                 @foreach (var item in ViewData["3DEPTH"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                 {
 
-                                    <li><label class="chkcon"><input type="checkbox" name="DEPTH3_CODE" title=""> <span class="txt">@item.DEPTH3_NAME</span></label></li>
+                                    <li><label class="chkcon"><input type="checkbox" name="product_front_search_entity[@i].P_CATE_CODE_3DEPTH" title="" value="@item.CATE_CODE"> <span class="txt">@item.DEPTH3_NAME</span></label></li>
                                     i++;
                                 }
                                 @*<li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
@@ -137,14 +190,22 @@
                             <span class="totaltxt">총 100개의 상품이 있습니다.</span>
                             <!--분류-->
                             <ul class="sort">
-                                <li class="cnt"><a href="#">신상품순</a></li>
-                                <li><a href="#">인기순</a></li>
-                                <li><a href="#">최고가순 ↑</a></li>
-                                <li><a href="#">최저가순 ↓</a></li>
+                                <li class="cnt"><a href="javascript:sortGbn('NEW');" onclick="javascript:sortGbn('NEW');">신상품순</a></li>
+                                <li><a href="javascript:sortGbn('LIKE');" onclick="javascript:sortGbn('LIKE');">인기순</a></li>
+                                <li><a href="javascript:sortGbn('UP');" onclick="javascript:sortGbn('UP');">최고가순 ↑</a></li>
+                                <li><a href="javascript:sortGbn('DOWN');" onclick="javascript:sortGbn('DOWN');">최저가순 ↓</a></li>
                             </ul>
                             <!--//분류-->
                         </div>
-
+@using (Html.BeginForm("Index", "Shopping", FormMethod.Post, new { id = "bform", name = "bform" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+    <input type="hidden" name="PAGE" value="">
+    <input type="hidden" name="P_CATE_CODE" value="">
+    <input type="hidden" name="L_CATE_CODE" value="">
+    <input type="hidden" name="C_CATE_CODE" value="">
+    <input type="hidden" name="SORT_GBN" value="">
+} 
                         <!--상품리스트-->
                         <ul class="product_list">
                             @foreach (var item in Model)
