@@ -1,0 +1,159 @@
+﻿@model AboutMe.Web.Admin.Controllers.AdminCouponController.MyMultiModelForProduct
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            var bSuccess = '@TempData["bSuccess"]';
+            if(bSuccess){
+                alert("프로모션정보가 등록되었습니다!");
+            }
+        });
+    </script>
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="tar mb10">
+            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductCreate?CdCoupon=@Request["CdCoupon"]">상품 등록</a>
+            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+        </div>
+
+        <div class="panel">
+            <h3 class="sub-header">기본설정</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
+                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>쿠폰적용 상품 리스트</h4>
+            @using (Html.BeginForm("CouponProductList", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="vam">검색</th>
+                                                    <td class="condition_seacth">
+                                                        <select name="SearchCol" style="width:170px;">
+                                                            <option>-선택하세요-</option>
+                                                            <option value="P_NAME" @if (ViewBag.SearchCol == "P_NAME")
+                                                                                   {  <text> selected</text> }>상품명</option>
+                                                            <option value="P_CODE" @if (ViewBag.SearchCol == "P_CODE") {  <text> selected</text> }>상품코드</option>
+
+                                                        </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
+                                                        <!--<a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>-->
+                                                        <input type="submit" value=" Search >> ">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+            }
+        </div>
+
+        <div class="panel">
+            <h4>쿠폰적용 상품 리스트</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup>
+                    <col width="5%" />
+                    <col width="12%" />
+                    <col width="9%" />
+                    <col width="9%" />
+                    <col width="*" />
+                    <col width="7%" />
+                    <col width="9%" />
+                    <col width="9%" />
+                    <col width="7%" />
+                    <col width="7%" />
+                    <col width="7%" />
+                    <col width="7%" />
+
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone">No</th>
+                        <th scope="col">상품코드</th>
+                        <th scope="col">상품명</th>
+
+                        <th scope="col">DEPTH1_NAME</th>
+                        <th scope="col">DEPTH2_NAME</th>
+                        <th scope="col">DEPTH3_NAME</th>
+
+                        <th scope="col">생성일자</th>
+                        <th scope="col">활성화/비활성화</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.inst_SP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result)
+                    {
+                        <tr>
+                            <td class="brnone">@item.IDX</td>
+                            <td>@Html.DisplayFor(modelItem => item.P_CODE)</td>
+                            <td>@Html.DisplayFor(modelItem => item.P_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH1_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH2_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH3_NAME)</td>
+                            <td>@item.INS_DATE</td>
+                            <td>@item.USABLE_YN</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+
+
+        <!--버튼모음--
+        ************************************************<br />
+        버튼가이드 <br /><br />
+        대버튼 : <br />
+        <a href="#" class="btn btn-default large">확인</a>
+        <a href="#" class="btn btn-primary large">취소</a>
+        <br /><br />
+        중버튼 : <br />
+        <a href="#" class="btn btn-default middium">편집중인 설정으로 저장</a>
+        <br /><br />
+        소버튼 : <br />
+        <a href="#" class="btn btn-default small">저장</a>
+        <a href="#" class="btn btn-success small">수정</a>
+        <a href="#" class="btn btn-primary small">삭제</a><br />
+        ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑<br />
+        3가지 타입 버튼이 필요할때 적용<br />
+        <a href="#" class="btn btn-info small">추가</a>
+        --//버튼모음-->
+
+    </div>
+}

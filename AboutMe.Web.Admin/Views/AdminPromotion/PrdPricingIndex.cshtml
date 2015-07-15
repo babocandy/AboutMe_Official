@@ -43,6 +43,21 @@
 
         return rtn;
     }
+
+
+    protected bool IsOverEndingTime(DateTime EndDate)
+    {
+
+        bool rtn = false;
+
+        if (DateTime.Now > EndDate )
+        {
+            rtn = true;
+        }
+
+
+        return rtn;
+    }
 }
 
 
@@ -65,6 +80,31 @@
             }
         });
     </script>
+
+
+        @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+        {
+            if (TempData["jsMessage"] == "-1")
+            {
+                <text>
+                    <script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>
+                </text>
+            }
+
+            if (TempData["jsMessage"] == "-2")
+            {
+                <text>
+                    <script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
+                </text>
+            }
+
+            if (TempData["jsMessage"] == "-3")
+            {
+                <text>
+                    <script language='javascript'>alert('입력한 상품코드가 존재하지 않거나 비전시 상태입니다.')</script>
+                </text>
+            }
+        }
 }
 
 @section Left {
@@ -86,7 +126,16 @@
         <!--//path-->
 
         <div class="tar mb10">
-            <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 Pricing 등록 </a>
+            
+            @if (IsOverEndingTime(Convert.ToDateTime(ViewData["PromotionEndTime"])) != true )
+            { 
+                <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 등록 </a>
+            }
+            else
+            {
+                <a class="btn btn-default middium" href="javascript:alert('종료된 프로모션에는 상품등록이 불가합니다.')">신규 상품 가격정보 등록 </a>
+            }
+            <a class="btn btn-default middium" href="/AdminPromotion/PrdIndex">상위리스트로</a>
             <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
         </div>
 
@@ -155,14 +204,15 @@
                      }
                     @foreach (var item in Model)
                     {
-                        using (Html.BeginForm("PrdPricingIndex", "AdminPromotion", FormMethod.Post, new { id = "frm" + xx.ToString(), name = "frm" + xx.ToString(), onsubmit = "return frmCheck();" }))
+                        using (Html.BeginForm("PrdPricingUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm" + xx.ToString(), name = "frm" + xx.ToString(), onsubmit = "return frmCheck();" }))
                         {
-                            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                            @Html.AntiForgeryToken()                      //폼 데이터 위조 방지 토큰 생성
 
-                            
-                        <tr>
+                                                    <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()">
+                           <tr>
                             <td class="brnone">@item.IDX</td>
-
+                          
+                               <input type="hidden" name="Pcode" value="@item.P_CODE">
                             <td class="brnone">@Html.DisplayFor(modelItem => item.P_CODE)</td>
                             <td>상품명</td>
                             <td>정상가</td>
@@ -172,27 +222,67 @@
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DISCOUNT_RATE)%</td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DISCOUNT_MONEY)</td>
                             -->
-                            
-                            <td>@Html.TextBoxFor(modelItem => item.PMO_PRICE, new { cssClass = "input-sm text-left" })</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_ONE_ONE_P_CODE)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_ONE_ONE_PRICE)</td>
-                            <td>-</td>
-                        
-                            <td>@Html.RadioButtonFor(modelItem => item.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(modelItem => item.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(modelItem => item.USABLE_YN, "Y")</td>
 
                             <td>
+                                @Html.DisplayFor(modelItem => item.PMO_PRICE, new { cssClass = "input-sm text-left" })
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.PMO_ONE_ONE_P_CODE)
+                            </td>
+
+                            <td>
+
+                                   @Html.DisplayFor(modelItem => item.PMO_ONE_ONE_PRICE)
+
+                            </td>
+
+                            <td>-</td>
+
+                            <td>
+                                 @*
+                                    @Html.RadioButtonFor(modelItem => item.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(modelItem => item.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(modelItem => item.USABLE_YN, "Y")
+                                 *@
+
+                                @if (ViewData["PromotionUsableYN"].ToString() == "N")
+                                {
+                                    
+                                    <input type="radio" name="UsableYN" value="Y" disabled="true"   @if (item.USABLE_YN == "Y") { <text> checked</text> } /> @:활성화
+                                    <input type="radio" name="UsableYN" value="N" @if (item.USABLE_YN == "N") { <text> checked</text> } /> @:비활성화 
+                                    <br>
+                                    <text><font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 변경 할 수 없습니다</font></text>
+                                }
+                                else
+                                {
+                                     <input type="radio" name="UsableYN" value="Y" @if(item.USABLE_YN == "Y"){ <text>Checked</text> } /> @:활성화 
+                                     <input type="radio" name="UsableYN" value="N" @if (item.USABLE_YN == "N") { <text> checked</text> } /> @:비활성화 
+                                }                                                                                                                                                                                                             
+                                <font color="RED">@Html.ValidationMessageFor(modelItem => item.USABLE_YN)</font>
+                               </td>
+
+                            <td>
+                            <!--
+                             @foreach (var item2 in ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result>)
+                              {
+                                   <text>
+                                      <input type="checkbox" id="CheckCdPromotionTotal" name="CheckCdPromotionTotal" value="@item2.CD_PROMOTION_TOTAL" @DisplayPromotionByTotalCheck(item2.CD_PROMOTION_TOTAL,item.IDX) /> @item2.PMO_TOTAL_NAME <br />
+                                   </text>
+                             }
+                            -->
+
                                 @foreach (var item2 in ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result>)
                                 {
                                     <text>
-                                        <input type="checkbox" id="CheckCdPromotionTotal" name="CheckCdPromotionTotal" value="@item2.CD_PROMOTION_TOTAL" @DisplayPromotionByTotalCheck(item2.CD_PROMOTION_TOTAL,item.IDX) /> @item2.PMO_TOTAL_NAME <br />
+                                    @item2.PMO_TOTAL_NAME <br />
                                     </text>
-
                                 }
+
+
                             </td>
-                   
+
                             <td>
-                              @if(IsOverStartTime( Convert.ToDateTime(ViewData["PromotionStartTime"]) ) == false )
-                              { 
+                              @if (IsOverEndingTime(Convert.ToDateTime(ViewData["PromotionEndTime"])) == false)
+                              {
                                    @:<input type="submit" value="수정" class="btn btn-default middium" />
                               }
                               else

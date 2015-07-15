@@ -133,6 +133,12 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Parameter Name="PMO_PRODUCT_DATE_FROM" Type="datetime" Mode="In" />
           <Parameter Name="PMO_PRODUCT_DATE_TO" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PMO_PRODUCT_CATETORY" Type="varchar" Mode="In" />
+          <Parameter Name="TARGET_PMO_PRODUCT_DATE_FROM" Type="datetime" Mode="In" />
+          <Parameter Name="TARGET_PMO_PRODUCT_DATE_TO" Type="datetime" Mode="In" />
+          <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PMO_PRODUCT_NAME" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_CATEGORY" Type="varchar" Mode="In" />
@@ -152,11 +158,30 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
+          <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
           <Parameter Name="PAGESIZE" Type="int" Mode="In" />
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PMO_PRODUCT_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_SUB_TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Type="tinyint" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="int" Mode="In" />
+          <Parameter Name="PMO_SET_DISCOUNT_CNT" Type="tinyint" Mode="In" />
+          <Parameter Name="PMO_ONEONE_MULTIPLE_CNT" Type="tinyint" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_DATE_FROM" Type="datetime" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_DATE_TO" Type="datetime" Mode="In" />
+          <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
+          <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
@@ -239,6 +264,11 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Parameter Name="PRODUCT_PRICE_IDX" Type="int" Mode="In" />
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
           <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
+          <Parameter Name="TARGET_PMO_PRODUCT_DATE_FROM" Type="datetime" Mode="In" />
+          <Parameter Name="TARGET_PMO_PRODUCT_DATE_TO" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="ModelAdminPromotionStoreContainer">
           <EntitySet Name="TB_PROMOTION_BY_TOTAL" EntityType="Self.TB_PROMOTION_BY_TOTAL" Schema="dbo" store:Type="Tables" />
@@ -461,7 +491,37 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <Parameter Name="OUTPUT_PRODUCT_PRICE_IDX" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PROMOTION_PRODUCT_CODE_CHECK_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE">
+            <Parameter Name="PMO_PRODUCT_NAME" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Mode="In" Type="Int32" />
+            <Parameter Name="PMO_SET_DISCOUNT_CNT" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_ONEONE_MULTIPLE_CNT" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+            <Parameter Name="TARGET_PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="TARGET_PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
+            <Parameter Name="PMO_PRODUCT_CATETORY" Mode="In" Type="String" />
+            <Parameter Name="TARGET_PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="TARGET_PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE">
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_PROMOTION_BY_TOTAL_CATEGORY">
@@ -952,6 +1012,22 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

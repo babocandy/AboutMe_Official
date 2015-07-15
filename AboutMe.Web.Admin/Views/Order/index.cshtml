@@ -1,4 +1,6 @@
-﻿@{
+﻿@model AboutMe.Domain.Entity.AdminOrder.ORDER_INDEX_MODEL 
+@using System.Reflection;
+@{
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 
@@ -106,12 +108,25 @@
                 return false;
             }
 
+            var f = document.sform;
+            f.PAGE.value = 1;
+            f.action = "/Order";
+
             return true;
         }
 
         function changePageSize()
         {
-            $("#sform").submit();
+            $("#sform")[0].reset();
+            var f = document.sform;
+            f.PAGE.value = 1;
+            f.action = "/Order";
+            f.submit();
+        }
+
+        function chkAll(c)
+        {
+            $(".chkclass").prop("checked", c.checked);
         }
     </script>
 }
@@ -124,9 +139,10 @@
 @section Body{
 <!--content-->
 <div class="content">
-    @using (Html.BeginForm("Index", "Order", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
-    {
-        @Html.Hidden("PAGE", "1")
+@using (Html.BeginForm("Index", "Order", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+{
+
+       @Html.Hidden("PAGE", "1")
 		<!--path-->
 		<div class="path">
 		<a href="/">HOME</a> &gt; <a href="/Order/">주문/매출</a> &gt; <strong>주문관리</strong>
@@ -161,13 +177,13 @@
 					<td colspan="3">
                         @(Html.Kendo().DatePicker()
                           .Name("FROM_DATE")
-                          .Value(DateTime.Today)
+                          .Value(Model.SearchOption.FROM_DATE)
                           .HtmlAttributes(new { style = "width:120px" })
                         )
 						~ 
                         @(Html.Kendo().DatePicker()
                           .Name("TO_DATE")
-                          .Value(DateTime.Today)
+                          .Value(Model.SearchOption.TO_DATE)
                           .HtmlAttributes(new { style = "width:120px" })
                         )
                         <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
@@ -187,8 +203,8 @@
                             .HtmlAttributes(new { style = "width:200px" })
                             .BindTo(new List<SelectListItem>() {
                                 new SelectListItem() {
-                                    Text = "전체(비회원,일반,임직원)",
-                                    Value = "A"
+                                    Text = "전체",
+                                    Value = "0"
                                 },
                                 new SelectListItem() {
                                     Text = "비회원",
@@ -203,13 +219,13 @@
                                     Value = "3"
                                 }
                             })
-                            .Value("A")
+                            .Value(Model.SearchOption.MEMBER_GBN)
                         )
 
-                        <label for="MEMBER_GRADE_B"> @Html.CheckBox("MEMBER_GRADE_B", Model == null ? false : (Model.MEMBER_GRADE_B == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">브론즈</span> </label>
-                        <label for="MEMBER_GRADE_S"> @Html.CheckBox("MEMBER_GRADE_S", Model == null ? false : (Model.MEMBER_GRADE_S == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">실버</span> </label>
-                        <label for="MEMBER_GRADE_G"> @Html.CheckBox("MEMBER_GRADE_G", Model == null ? false : (Model.MEMBER_GRADE_G == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">골드</span> </label>
-                        <label for="MEMBER_GRADE_V"> @Html.CheckBox("MEMBER_GRADE_V", Model == null ? false : (Model.MEMBER_GRADE_V == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">VIP</span> </label>
+                        <label for="MEMBER_GRADE_B"> @Html.CheckBox("MEMBER_GRADE_B", Model == null ? false : (Model.SearchOption.MEMBER_GRADE_B == true ? true : false), new { @value = "true" }) <span class="txt mr5">브론즈</span> </label>
+                        <label for="MEMBER_GRADE_S"> @Html.CheckBox("MEMBER_GRADE_S", Model == null ? false : (Model.SearchOption.MEMBER_GRADE_S == true ? true : false), new { @value = "true" }) <span class="txt mr5">실버</span> </label>
+                        <label for="MEMBER_GRADE_G"> @Html.CheckBox("MEMBER_GRADE_G", Model == null ? false : (Model.SearchOption.MEMBER_GRADE_G == true ? true : false), new { @value = "true" }) <span class="txt mr5">골드</span> </label>
+                        <label for="MEMBER_GRADE_V"> @Html.CheckBox("MEMBER_GRADE_V", Model == null ? false : (Model.SearchOption.MEMBER_GRADE_V == true ? true : false), new { @value = "true" }) <span class="txt mr5">VIP</span> </label>
 
 					</td>
 					<th>결제수단</th>
@@ -241,30 +257,30 @@
                                     Value = "4"
                                 }
                             })
-                            .Value("A")
+                            .Value(Model.SearchOption.PAY_GBN)
                         )
 					</td>
 				</tr>
 				<tr>
 					<th>주문구분</th>
 					<td colspan="3">
-                        <label for="PAT_GUBUN_W"> @Html.CheckBox("PAT_GUBUN_W", Model == null ? true : (Model.PAT_GUBUN_W == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">Web</span> </label>
-                        <label for="PAT_GUBUN_M"> @Html.CheckBox("PAT_GUBUN_M", Model == null ? true : (Model.PAT_GUBUN_M == 1 ? true : false), new { @value = "true" }) <span class="txt mr5">Mobile</span> </label>
+                        <label for="PAT_GUBUN_W"> @Html.CheckBox("PAT_GUBUN_W", Model == null ? true : (Model.SearchOption.PAT_GUBUN_W == true ? true : false), new { @value = "true" }) <span class="txt mr5">Web</span> </label>
+                        <label for="PAT_GUBUN_M"> @Html.CheckBox("PAT_GUBUN_M", Model == null ? true : (Model.SearchOption.PAT_GUBUN_M == true ? true : false), new { @value = "true" }) <span class="txt mr5">Mobile</span> </label>
 					</td>
 				</tr>
 				<tr>
 					<th>주문상태</th>
 					<td colspan="3">
-                        <label for="DETAIL_STATUS_ALL"> @Html.CheckBox("DETAIL_STATUS_ALL", Model == null ? false : (Model.DETAIL_STATUS_ALL == 1 ? true : false), new { @value = "true", @onclick = "StatusAllClick(this)" }) <span class="txt mr5">전체</span> </label>
-                        <label for="DETAIL_STATUS_20"> @Html.CheckBox("DETAIL_STATUS_20", Model == null ? true : (Model.DETAIL_STATUS_20 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">결재완료</span> </label>
-                        <label for="DETAIL_STATUS_10"> @Html.CheckBox("DETAIL_STATUS_10", Model == null ? false : (Model.DETAIL_STATUS_10 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">결재대기</span> </label>
-                        <label for="DETAIL_STATUS_30"> @Html.CheckBox("DETAIL_STATUS_30", Model == null ? false : (Model.DETAIL_STATUS_30 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">상품준비중</span> </label>
-                        <label for="DETAIL_STATUS_40"> @Html.CheckBox("DETAIL_STATUS_40", Model == null ? false : (Model.DETAIL_STATUS_40 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">배송중</span> </label>
-                        <label for="DETAIL_STATUS_50"> @Html.CheckBox("DETAIL_STATUS_50", Model == null ? false : (Model.DETAIL_STATUS_50 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">배송완료</span> </label>
-                        <label for="DETAIL_STATUS_60"> @Html.CheckBox("DETAIL_STATUS_60", Model == null ? false : (Model.DETAIL_STATUS_60 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">구매확정</span> </label>
-                        <label for="DETAIL_STATUS_90"> @Html.CheckBox("DETAIL_STATUS_90", Model == null ? false : (Model.DETAIL_STATUS_90 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">취소</span> </label>
-                        <label for="DETAIL_STATUS_80"> @Html.CheckBox("DETAIL_STATUS_80", Model == null ? false : (Model.DETAIL_STATUS_80 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">반품</span> </label>
-                        <label for="DETAIL_STATUS_70"> @Html.CheckBox("DETAIL_STATUS_70", Model == null ? false : (Model.DETAIL_STATUS_70 == 1 ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">교환</span> </label>
+                        <label for="DETAIL_STATUS_ALL"> @Html.CheckBox("DETAIL_STATUS_ALL", Model == null ? false : false, new { @value = "true", @onclick = "StatusAllClick(this)" }) <span class="txt mr5">전체</span> </label>
+                        <label for="DETAIL_STATUS_20"> @Html.CheckBox("DETAIL_STATUS_20", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_20 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">결제완료</span> </label>
+                        <label for="DETAIL_STATUS_10"> @Html.CheckBox("DETAIL_STATUS_10", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_10 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">결제대기</span> </label>
+                        <label for="DETAIL_STATUS_30"> @Html.CheckBox("DETAIL_STATUS_30", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_30 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">상품준비중</span> </label>
+                        <label for="DETAIL_STATUS_40"> @Html.CheckBox("DETAIL_STATUS_40", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_40 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">배송중</span> </label>
+                        <label for="DETAIL_STATUS_50"> @Html.CheckBox("DETAIL_STATUS_50", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_50 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">배송완료</span> </label>
+                        <label for="DETAIL_STATUS_60"> @Html.CheckBox("DETAIL_STATUS_60", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_60 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">구매확정</span> </label>
+                        <label for="DETAIL_STATUS_90"> @Html.CheckBox("DETAIL_STATUS_90", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_90 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">취소</span> </label>
+                        <label for="DETAIL_STATUS_80"> @Html.CheckBox("DETAIL_STATUS_80", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_80 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">반품</span> </label>
+                        <label for="DETAIL_STATUS_70"> @Html.CheckBox("DETAIL_STATUS_70", Model == null ? false : (Model.SearchOption.DETAIL_STATUS_70 == true ? true : false), new { @value = "true", @class = "order_check" }) <span class="txt mr5">교환</span> </label>
 
 					</td>
 				</tr>
@@ -273,13 +289,13 @@
 					<td colspan="3">
                         @(Html.Kendo().DatePicker()
                           .Name("DELIVERY_FROM_DATE")
-                          .Value("")
+                          .Value(Model.SearchOption.DELIVERY_FROM_DATE.ToString())
                           .HtmlAttributes(new { style = "width:120px" })
                         )
 						~ 
                         @(Html.Kendo().DatePicker()
                           .Name("DELIVERY_TO_DATE")
-                          .Value("")
+                          .Value(Model.SearchOption.DELIVERY_TO_DATE.ToString())
                           .HtmlAttributes(new { style = "width:120px" })
                         )
                         <a href="#" class="btn btn-primary small" onclick="ChangeDeliveryDate('')">전체</a>
@@ -300,31 +316,31 @@
                             .BindTo(new List<SelectListItem>() {
                                 new SelectListItem() {
                                     Text = "주문번호",
-                                    Value = "a.ORDER_IDX"
+                                    Value = "A.ORDER_CODE"
                                 },
                                 new SelectListItem() {
                                     Text = "아이디",
-                                    Value = "a.MEMBER_ID"
+                                    Value = "A.M_ID"
                                 },
                                 new SelectListItem() {
                                     Text = "상품명",
-                                    Value = "b.P_NAME"
+                                    Value = "B.P_NAME"
                                 },
                                 new SelectListItem() {
                                     Text = "주문자명",
-                                    Value = "a.MEMBER_NM"
+                                    Value = "A.SENDER_NAME"
                                 },
                                 new SelectListItem() {
                                     Text = "수취인명",
-                                    Value = "a.RECEIVER_NAME"
+                                    Value = "A.RECEIVER_NAME"
                                 },
                                 new SelectListItem() {
                                     Text = "보낸사람HP",
-                                    Value = "a.SENDER_HP"
+                                    Value = "A.SENDER_HP"
                                 },
                                 new SelectListItem() {
                                     Text = "보낸사람TEL",
-                                    Value = "a.SENDER_TEL"
+                                    Value = "A.SENDER_TEL"
                                 },
                                 new SelectListItem() {
                                     Text = "수취인HP",
@@ -332,28 +348,29 @@
                                 },
                                 new SelectListItem() {
                                     Text = "수취인TEL",
-                                    Value = "a.RECEIVER_TEL"
+                                    Value = "A.RECEIVER_TEL"
                                 }
                             })
-                            .Value("a.ORDER_IDX")
+                            .Value(Model.SearchOption.SEARCH_COL)
                         )
                         @(Html.Kendo().TextBox()
                         .Name("SEARCH_KEYWORD")
-                        .Value(ViewBag.SearchKeyword)
+                        .Value(Model.SearchOption.SEARCH_KEYWORD)
                         .HtmlAttributes(new { @style = "width:250px" })
                         )
 
                         @(Html.Kendo().Button()
-                        .Name("submit")
+                        .Name("submitbtn")
                         .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
                         .Content("검색"))
-
-                        @(Html.Kendo().Button()
-                        .Name("resetform")
-                        .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
-                        .Events(ev => ev.Click("onFormReset"))
-                        .Content("초기화"))
-                    </td>
+@*
+    @(Html.Kendo().Button()
+    .Name("resetform")
+    .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+    .Events(ev => ev.Click("onFormReset"))
+    .Content("초기화"))
+*@  
+                      </td>
                 </tr>
 			</tbody>
 			</table>
@@ -364,12 +381,20 @@
     <div class="tar">
             <label>페이징 </label>
             @(Html.Kendo().DropDownList()
-                        .Name("PAGE_COUNT")
+                        .Name("PAGESIZE")
                         .DataTextField("Text")
                         .DataValueField("Value")
                         .HtmlAttributes(new { style = "width:100px" })
                         .Events(ev => ev.Change("changePageSize"))
                         .BindTo(new List<SelectListItem>() {
+                             new SelectListItem() {
+                                Text = "1",
+                                Value = "1"
+                            },
+                             new SelectListItem() {
+                                Text = "5",
+                                Value = "5"
+                            },
                             new SelectListItem() {
                                 Text = "20",
                                 Value = "20"
@@ -387,32 +412,33 @@
                                 Value = "100"
                             }
                         })
-                        .Value("20")
+                        .Value(Model.SearchOption.PAGESIZE.ToString())
             )
     </div>
     <!--//end form-->
-    }
+}
   
     <div class="panel " >
-		<h3 class="sub-header">주문현황 <span>(기간 : 2015-06-29 ~ 2015-07-07)</span></h3>
+		<h3 class="sub-header">주문현황 <span>(기간 : @Model.SearchOption.FROM_DATE ~ @Model.SearchOption.TO_DATE)</span></h3>
 		
 		<ul class="tablesort_list">
-			<li>총:<span>@Html.Raw("30")</span>건</li>
-			<li>결제 대기:<span>@Html.Raw("30")</span>건</li>
-			<li>결제 완료:<span>@Html.Raw("30")</span>건</li>
-			<li>상품 준비중:<span>@Html.Raw("30")</span>건</li>
-			<li>배송 중:<span>@Html.Raw("30")</span>건</li>
-			<li>배송완료:<span>@Html.Raw("30")</span>건</li>
-			<li>구매확정:<span>@Html.Raw("30")</span>건</li>
-			<li>취소:<span>@Html.Raw("30")</span>건</li>
-			<li>반품:<span>@Html.Raw("30")</span>건</li>
-			<li>기타:<span>@Html.Raw("30")</span>건</li>
+			<li>총:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_ALL)</span>건</li>
+			<li>결제대기:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_10)</span>건</li>
+			<li>결제완료:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_20)</span>건</li>
+			<li>상품준비중:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_30)</span>건</li>
+			<li>배송중:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_40)</span>건</li>
+			<li>배송완료:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_50)</span>건</li>
+			<li>구매확정:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_60)</span>건</li>
+            <li>교환:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_70)</span>건</li>
+            <li>취소:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_90)</span>건</li>
+            <li>반품:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_80)</span>건</li>
+			<li>기타:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_99)</span>건</li>
 		</ul>
 		<table class="table table_col" style="min-width:1220px;">
 		<colgroup></colgroup>
 			<thead>
 				<tr>
-					<th scope="col"><input type="checkbox" /></th>
+					<th scope="col"><input type="checkbox" onclick="chkAll(this);"/></th>
 					<th scope="col">주문일시</th>
 					<th scope="col">주문번호</th>
 					<th scope="col">주문구분</th>
@@ -428,27 +454,87 @@
 				</tr>
 			</thead>
 			<tbody>
+        @foreach (var item in @Model.OrderList)
+        {
+            //query string만들기 order_idx를 맨처음으로
+            RouteValueDictionary param = new RouteValueDictionary();
+            param.Add("ORDER_IDX", item.ORDER_IDX);
+            
+            Type type = Model.SearchOption.GetType();
+            PropertyInfo[] properties = type.GetProperties();
+
+            foreach (PropertyInfo property in properties)
+            {
+                param.Add(property.Name , property.GetValue(Model.SearchOption) );
+            }
+            //query string만들기 order_idx를 맨처음으로 End
 				<tr>
-					<td><input type="checkbox" /></td>
-					<td>201304011</td>
-					<td>@Html.ActionLink("Y20150542e93fsd", "Detail", new { OrderId = 1 })</td>
+					<td><input type="checkbox" class="chkclass" /></td>
+					<td>@item.ORDER_DATE</td>
+					<td>@Html.ActionLink(@item.ORDER_CODE, "Detail", param)</td>
 					<td>WEB</td>
 					<td>
-						<select style="width:120px;">
-							<option selected="selected">결제완료</option>
-							<option>결제완료</option>
-							<option>결제완료</option>
-						</select>
+                        @(Html.Kendo().DropDownList()
+                        .Name("ORDER_STATUS_"+@item.ORDER_IDX)
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .HtmlAttributes(new { style = "width:120px" })
+                        .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                                Text = "결제대기",
+                                Value = "10"
+                            },
+                            new SelectListItem() {
+                                Text = "결제완료",
+                                Value = "20"
+                            },
+                            new SelectListItem() {
+                                Text = "상품준비중",
+                                Value = "30"
+                            },
+                            new SelectListItem() {
+                                Text = "배송중",
+                                Value = "40"
+                            },
+                            new SelectListItem() {
+                                Text = "배송완료",
+                                Value = "50"
+                            },
+                            new SelectListItem() {
+                                Text = "구매확정",
+                                Value = "60"
+                            },
+                            new SelectListItem() {
+                                Text = "교환",
+                                Value = "70"
+                            },
+                            new SelectListItem() {
+                                Text = "반품",
+                                Value = "80"
+                            },
+                            new SelectListItem() {
+                                Text = "취소",
+                                Value = "90"
+                            },
+                            new SelectListItem() {
+                                Text = "기타",
+                                Value = "99"
+                            }
+                        })
+                        .Value(@item.ORDER_STATUS)
+                        )
+
 					</td>
-					<td>홍길동<br />userId</td>
-					<td>010-0000-0000</td>
-					<td>홍길동친구</td>
-					<td>PL2642HM외 3건</td>
-					<td>4건</td>
-					<td>150,000</td>
-					<td>4,500</td>
+                    <td>@item.ORDER_NAME<br />@item.ORDER_ID</td>
+                    <td>@item.RECEIVER_NAME</td>
+					<td>@item.SENDER_HP</td>
+					<td>@item.P_NAME</td>
+					<td>@item.P_COUNT.ToString("#,#0.")개</td>
+					<td>@item.TOTAL_PAY_PRICE.ToString("#,#0.")원</td>
+					<td>@item.ACCML_POINT.ToString("#,#0.")P</td>
 					<td><a href="#" class="btn btn-default small">저장</a></td>
 				</tr>
+        }
 			</tbody>
 		</table>
 		<div class="tar mt10">
@@ -464,21 +550,9 @@
 			<a href="#" class="btn btn-default middium">데이터 Excel Download</a>
 		</div>
 	</div>
-        
-	<div class="paging">
-		<a href="#" class="prev">«</a>
-		<strong>1</strong>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-		<a href="#">6</a>
-		<a href="#">7</a>
-		<a href="#">8</a>
-		<a href="#">9</a>
-		<a href="#">10</a>
-		<a href="#" class="next">»</a>
-	</div>
+
+    @{Html.RenderAction("OrderPaging", "Order", new { TotalRecord = Model.TotalCount, RecordPerPage = Model.SearchOption.PAGESIZE, PagePerBlock = 10, CurrentPage = Model.SearchOption.PAGE, QueryStr = "" });}
+
 
     
 </div>

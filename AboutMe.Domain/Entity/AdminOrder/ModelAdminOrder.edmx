@@ -1,0 +1,844 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AdminOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_ORDER_CODE">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REG_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_ORDER_DETAIL">
+          <Key>
+            <PropertyRef Name="ORDER_DETAIL_IDX" />
+          </Key>
+          <Property Name="ORDER_DETAIL_IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDER_IDX" Type="int" Nullable="false" />
+          <Property Name="ORDER_CODE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ORDER_DETAIL_STATUS" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="DELIVERY_NUM" Type="varchar" MaxLength="40" />
+          <Property Name="DELIVERY_DATE" Type="datetime" />
+          <Property Name="P_CODE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="P_CATE_CODE" Type="char" MaxLength="9" />
+          <Property Name="P_CATE_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="C_CATE_CODE" Type="char" MaxLength="9" />
+          <Property Name="C_CATE_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="L_CATE_CODE" Type="char" MaxLength="9" />
+          <Property Name="L_CATE_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="P_NAME" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="P_IMG1_S" Type="varchar" MaxLength="100" />
+          <Property Name="PROMOTION_ID" Type="int" />
+          <Property Name="SELLING_PRICE" Type="int" Nullable="false" />
+          <Property Name="DISCOUNT_RATE" Type="int" />
+          <Property Name="DISCOUNT_PRICE" Type="int" />
+          <Property Name="COUPON_CODE" Type="int" />
+          <Property Name="COUPON_DISCOUNT" Type="int" />
+          <Property Name="GRADE_DISCOUNT_PRICE" Type="int" />
+          <Property Name="EMP_DISCOUNT_PRICE" Type="int" />
+          <Property Name="USE_POINT" Type="int" Nullable="false" />
+          <Property Name="POINT_ACCML" Type="int" Nullable="false" />
+          <Property Name="POINT_ACCML_DATE" Type="datetime" />
+          <Property Name="P_COUNT" Type="int" Nullable="false" />
+          <Property Name="REAL_PAY_PRICE" Type="int" />
+          <Property Name="REG_DATE" Type="datetime" Nullable="false" />
+          <Property Name="ORDER_DETAIL_STATUS_DATE" Type="datetime" Nullable="false" />
+          <Property Name="EXCHANGE_YN" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EXCHANGE_DATE" Type="datetime" />
+          <Property Name="EXCHANGE_COUNT" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_ORDER_LOG">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDER_IDX" Type="int" Nullable="false" />
+          <Property Name="ORDER_CODE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PROCESS_MEMO" Type="varchar" MaxLength="2000" />
+          <Property Name="REG_ID" Type="varchar" MaxLength="20" />
+          <Property Name="REG_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_ORDER_MASTER">
+          <Key>
+            <PropertyRef Name="ORDER_IDX" />
+          </Key>
+          <Property Name="ORDER_IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDER_CODE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MEMBER_ORDER_GBN" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="M_ID" Type="varchar" MaxLength="13" />
+          <Property Name="M_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="M_GRADE" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="M_GBN" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="SESSION_ID" Type="varchar" MaxLength="50" />
+          <Property Name="NOMEMBER_PASS" Type="varchar" MaxLength="20" />
+          <Property Name="ORDER_DATE" Type="datetime" Nullable="false" />
+          <Property Name="ORDER_STATUS" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="TOTAL_ORDER_PRICE" Type="int" Nullable="false" />
+          <Property Name="TRANS_PRICE" Type="int" Nullable="false" />
+          <Property Name="TRANS_COUPON" Type="int" />
+          <Property Name="POINT_USE_PRICE" Type="int" Nullable="false" />
+          <Property Name="COUPON_DISCOUNT_PRICE" Type="int" Nullable="false" />
+          <Property Name="GRADE_DISCOUNT_PRICE" Type="int" Nullable="false" />
+          <Property Name="EMP_DISCOUNT_PRICE" Type="int" Nullable="false" />
+          <Property Name="DISCOUNT_PRICE" Type="int" Nullable="false" />
+          <Property Name="TOTAL_PAY_PRICE" Type="int" Nullable="false" />
+          <Property Name="FREEGIFT_GBN" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FREEGIFT_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="ACCML_POINT" Type="int" Nullable="false" />
+          <Property Name="PAY_GBN" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CARD_GBN" Type="char" MaxLength="2" />
+          <Property Name="INSTLMT_AT" Type="char" MaxLength="1" />
+          <Property Name="BANK_CODE" Type="char" MaxLength="2" />
+          <Property Name="PAT_TID" Type="varchar" MaxLength="250" />
+          <Property Name="REAL_ACCOUNT_AT" Type="char" MaxLength="1" />
+          <Property Name="CASHRECEIPT_SE_CODE" Type="char" MaxLength="1" />
+          <Property Name="CASHRECEIPT_RESULT_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="SENDER_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="SENDER_POST" Type="varchar" MaxLength="7" />
+          <Property Name="SENDER_ADDR1" Type="varchar" MaxLength="255" />
+          <Property Name="SENDER_ADDR2" Type="varchar" MaxLength="255" />
+          <Property Name="SENDER_TEL" Type="varchar" MaxLength="20" />
+          <Property Name="SENDER_HP" Type="varchar" MaxLength="20" />
+          <Property Name="SENDER_EMAIL" Type="varchar" MaxLength="200" />
+          <Property Name="RECEIVER_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="RECEIVER_POST" Type="varchar" MaxLength="7" />
+          <Property Name="RECEIVER_ADDR1" Type="varchar" MaxLength="255" />
+          <Property Name="RECEIVER_ADDR2" Type="varchar" MaxLength="255" />
+          <Property Name="RECEIVER_TEL" Type="varchar" MaxLength="20" />
+          <Property Name="RECEIVER_HP" Type="varchar" MaxLength="20" />
+          <Property Name="ORDER_MEMO" Type="varchar" MaxLength="500" />
+          <Property Name="MANAGER_MEMO" Type="varchar" MaxLength="2000" />
+          <Property Name="REFUN_ACCOUNT" Type="varchar" MaxLength="20" />
+          <Property Name="REFUN_BANKCODE" Type="char" MaxLength="2" />
+          <Property Name="REFUN_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="REFUN_DATE" Type="datetime" />
+          <Property Name="REFUN_PRICE" Type="int" />
+          <Property Name="OLD_ORDER_IDX" Type="int" />
+          <Property Name="REG_DATE" Type="datetime" Nullable="false" />
+          <Property Name="HTTP_USER_AGENT" Type="varchar" MaxLength="1000" />
+          <Property Name="PAT_GUBUN" Type="varchar" MaxLength="10" />
+          <Property Name="SVR_DOMAIN" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="SP_ADMIN_ORDER_DETAIL_DELIVERY_NUM_INPUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
+          <Parameter Name="DELIVERY_NUM" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
+          <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="MEMBER_GBN" Type="char" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_B" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_S" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_G" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_V" Type="bit" Mode="In" />
+          <Parameter Name="PAY_GBN" Type="char" Mode="In" />
+          <Parameter Name="PAT_GUBUN_W" Type="bit" Mode="In" />
+          <Parameter Name="PAT_GUBUN_M" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_20" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_10" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_30" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_40" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_50" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_60" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_90" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_80" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_70" Type="bit" Mode="In" />
+          <Parameter Name="DELIVERY_FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="DELIVERY_TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_LIST_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="MEMBER_GBN" Type="char" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_B" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_S" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_G" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_V" Type="bit" Mode="In" />
+          <Parameter Name="PAY_GBN" Type="char" Mode="In" />
+          <Parameter Name="PAT_GUBUN_W" Type="bit" Mode="In" />
+          <Parameter Name="PAT_GUBUN_M" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_20" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_10" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_30" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_40" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_50" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_60" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_90" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_80" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_70" Type="bit" Mode="In" />
+          <Parameter Name="DELIVERY_FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="DELIVERY_TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MANAGER_MEMO_EDIT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="MANAGER_MEMO" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_RECEIVER_EDIT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="RECEIVER_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="RECEIVER_POST" Type="varchar" Mode="In" />
+          <Parameter Name="RECEIVER_ADDR1" Type="varchar" Mode="In" />
+          <Parameter Name="RECEIVER_ADDR2" Type="varchar" Mode="In" />
+          <Parameter Name="RECEIVER_TEL" Type="varchar" Mode="In" />
+          <Parameter Name="RECEIVER_HP" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_STATUS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="MEMBER_GBN" Type="char" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_B" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_S" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_G" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GRADE_V" Type="bit" Mode="In" />
+          <Parameter Name="PAY_GBN" Type="char" Mode="In" />
+          <Parameter Name="PAT_GUBUN_W" Type="bit" Mode="In" />
+          <Parameter Name="PAT_GUBUN_M" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_20" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_10" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_30" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_40" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_50" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_60" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_90" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_80" Type="bit" Mode="In" />
+          <Parameter Name="DETAIL_STATUS_70" Type="bit" Mode="In" />
+          <Parameter Name="DELIVERY_FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="DELIVERY_TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDERLIST_DETAIL_BODY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDERLIST_DETAIL_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDERLIST_DETAIL_LOG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="AdminOrderModelStoreContainer">
+          <EntitySet Name="TB_ORDER_CODE" EntityType="Self.TB_ORDER_CODE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ORDER_DETAIL" EntityType="Self.TB_ORDER_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ORDER_LOG" EntityType="Self.TB_ORDER_LOG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ORDER_MASTER" EntityType="Self.TB_ORDER_MASTER" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdminOrderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_ORDER_CODE">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REG_DATE" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="TB_ORDER_DETAIL">
+          <Key>
+            <PropertyRef Name="ORDER_DETAIL_IDX" />
+          </Key>
+          <Property Name="ORDER_DETAIL_IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDER_IDX" Type="Int32" Nullable="false" />
+          <Property Name="ORDER_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ORDER_DETAIL_STATUS" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DELIVERY_NUM" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DELIVERY_DATE" Type="DateTime" Precision="3" />
+          <Property Name="P_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="P_CATE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="C_CATE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="L_CATE_CODE" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="L_CATE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="P_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_IMG1_S" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PROMOTION_ID" Type="Int32" />
+          <Property Name="SELLING_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="DISCOUNT_RATE" Type="Int32" />
+          <Property Name="DISCOUNT_PRICE" Type="Int32" />
+          <Property Name="COUPON_CODE" Type="Int32" />
+          <Property Name="COUPON_DISCOUNT" Type="Int32" />
+          <Property Name="GRADE_DISCOUNT_PRICE" Type="Int32" />
+          <Property Name="EMP_DISCOUNT_PRICE" Type="Int32" />
+          <Property Name="USE_POINT" Type="Int32" Nullable="false" />
+          <Property Name="POINT_ACCML" Type="Int32" Nullable="false" />
+          <Property Name="POINT_ACCML_DATE" Type="DateTime" Precision="3" />
+          <Property Name="P_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="REAL_PAY_PRICE" Type="Int32" />
+          <Property Name="REG_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ORDER_DETAIL_STATUS_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EXCHANGE_YN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EXCHANGE_DATE" Type="DateTime" Precision="3" />
+          <Property Name="EXCHANGE_COUNT" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_ORDER_LOG">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDER_IDX" Type="Int32" Nullable="false" />
+          <Property Name="ORDER_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PROCESS_MEMO" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="REG_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="REG_DATE" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="TB_ORDER_MASTER">
+          <Key>
+            <PropertyRef Name="ORDER_IDX" />
+          </Key>
+          <Property Name="ORDER_IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDER_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MEMBER_ORDER_GBN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="M_ID" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="M_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="M_GRADE" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="M_GBN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SESSION_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NOMEMBER_PASS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ORDER_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ORDER_STATUS" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TOTAL_ORDER_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="TRANS_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="TRANS_COUPON" Type="Int32" />
+          <Property Name="POINT_USE_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="COUPON_DISCOUNT_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="GRADE_DISCOUNT_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="EMP_DISCOUNT_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="DISCOUNT_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="TOTAL_PAY_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="FREEGIFT_GBN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FREEGIFT_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACCML_POINT" Type="Int32" Nullable="false" />
+          <Property Name="PAY_GBN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CARD_GBN" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="INSTLMT_AT" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BANK_CODE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="PAT_TID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="REAL_ACCOUNT_AT" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CASHRECEIPT_SE_CODE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CASHRECEIPT_RESULT_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_POST" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_ADDR1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_ADDR2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_TEL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_HP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER_EMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_POST" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_ADDR1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_ADDR2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_TEL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER_HP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ORDER_MEMO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MANAGER_MEMO" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="REFUN_ACCOUNT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="REFUN_BANKCODE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="REFUN_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="REFUN_DATE" Type="DateTime" Precision="3" />
+          <Property Name="REFUN_PRICE" Type="Int32" />
+          <Property Name="OLD_ORDER_IDX" Type="Int32" />
+          <Property Name="REG_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HTTP_USER_AGENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PAT_GUBUN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SVR_DOMAIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="AdminOrderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_ORDER_CODE" EntityType="Self.TB_ORDER_CODE" />
+          <EntitySet Name="TB_ORDER_DETAIL" EntityType="Self.TB_ORDER_DETAIL" />
+          <EntitySet Name="TB_ORDER_LOG" EntityType="Self.TB_ORDER_LOG" />
+          <EntitySet Name="TB_ORDER_MASTER" EntityType="Self.TB_ORDER_MASTER" />
+          <FunctionImport Name="SP_ADMIN_ORDER_DETAIL_DELIVERY_NUM_INPUT">
+            <Parameter Name="ORDER_DETAIL_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="DELIVERY_NUM" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE">
+            <Parameter Name="ORDER_DETAIL_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_LIST" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_LIST_Result)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_GBN" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_GRADE_B" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_S" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_G" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_V" Mode="In" Type="Boolean" />
+            <Parameter Name="PAY_GBN" Mode="In" Type="String" />
+            <Parameter Name="PAT_GUBUN_W" Mode="In" Type="Boolean" />
+            <Parameter Name="PAT_GUBUN_M" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_20" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_10" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_30" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_40" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_50" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_60" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_90" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_80" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_70" Mode="In" Type="Boolean" />
+            <Parameter Name="DELIVERY_FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="DELIVERY_TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MANAGER_MEMO_EDIT">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="MANAGER_MEMO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_RECEIVER_EDIT">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RECEIVER_NAME" Mode="In" Type="String" />
+            <Parameter Name="RECEIVER_POST" Mode="In" Type="String" />
+            <Parameter Name="RECEIVER_ADDR1" Mode="In" Type="String" />
+            <Parameter Name="RECEIVER_ADDR2" Mode="In" Type="String" />
+            <Parameter Name="RECEIVER_TEL" Mode="In" Type="String" />
+            <Parameter Name="RECEIVER_HP" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_STATUS" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_STATUS_Result)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_GBN" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_GRADE_B" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_S" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_G" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_V" Mode="In" Type="Boolean" />
+            <Parameter Name="PAY_GBN" Mode="In" Type="String" />
+            <Parameter Name="PAT_GUBUN_W" Mode="In" Type="Boolean" />
+            <Parameter Name="PAT_GUBUN_M" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_20" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_10" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_30" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_40" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_50" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_60" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_90" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_80" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_70" Mode="In" Type="Boolean" />
+            <Parameter Name="DELIVERY_FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="DELIVERY_TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDERLIST_DETAIL_BODY" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDERLIST_DETAIL_BODY_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDERLIST_DETAIL_LIST" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDERLIST_DETAIL_LIST_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDERLIST_DETAIL_LOG" ReturnType="Collection(String)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_LIST_CNT" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_LIST_Cnt)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_GBN" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_GRADE_B" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_S" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_G" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GRADE_V" Mode="In" Type="Boolean" />
+            <Parameter Name="PAY_GBN" Mode="In" Type="String" />
+            <Parameter Name="PAT_GUBUN_W" Mode="In" Type="Boolean" />
+            <Parameter Name="PAT_GUBUN_M" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_20" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_10" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_30" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_40" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_50" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_60" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_90" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_80" Mode="In" Type="Boolean" />
+            <Parameter Name="DETAIL_STATUS_70" Mode="In" Type="Boolean" />
+            <Parameter Name="DELIVERY_FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="DELIVERY_TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_BODY_Result">
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
+          <Property Type="String" Name="ORDER_CODE" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="ORDER_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ORDER_STATUS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="ORDER_STATUS_NM" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="PAT_TID" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SENDER_EMAIL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ORDER_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ORDER_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="SENDER_POST" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="SENDER_ADDR1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SENDER_ADDR2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SENDER_HP" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="SENDER_TEL" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RECEIVER_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="RECEIVER_POST" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="RECEIVER_ADDR1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RECEIVER_ADDR2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RECEIVER_TEL" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RECEIVER_HP" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ORDER_MEMO" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="MANAGER_MEMO" Nullable="true" MaxLength="2000" />
+          <Property Type="Int32" Name="TOTAL_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="ING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="CANCEL_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="TOTAL_DISCOUNT" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT" Nullable="true" />
+          <Property Type="Int32" Name="GRADE_DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="USE_POINT" Nullable="true" />
+          <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="POINT_ACCML" Nullable="true" />
+          <Property Type="Int32" Name="TRANS_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="TRANS_COUPON" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_LIST_Result">
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
+          <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="false" />
+          <Property Type="Int32" Name="PROMOTION" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT" Nullable="true" />
+          <Property Type="Int32" Name="COUPON" Nullable="true" />
+          <Property Type="Int32" Name="USE_POINT" Nullable="false" />
+          <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="POINT_ACCML" Nullable="false" />
+          <Property Type="String" Name="POINT_ACCML_DATE" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="DELIVERY_NUM" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="ORDER_DETAIL_STATUS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="ORDER_DETAIL_STATUS_NM" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="ORDER_DETAIL_STATUS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_LIST_Result" >
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
+          <Property Type="DateTime" Name="ORDER_DATE" Nullable="false" />
+          <Property Type="String" Name="ORDER_CODE" Nullable="false" />
+          <Property Type="String" Name="PAT_GUBUN" Nullable="false" />
+          <Property Type="String" Name="ORDER_STATUS" Nullable="false" />
+          <Property Type="String" Name="ORDER_STATUS_NM" Nullable="false" />
+          <Property Type="String" Name="ORDER_NAME" Nullable="false" />
+          <Property Type="String" Name="ORDER_ID" Nullable="false" />
+          <Property Type="String" Name="SENDER_HP" Nullable="false" />
+          <Property Type="String" Name="RECEIVER_NAME" Nullable="false" />
+          <Property Type="String" Name="P_NAME" Nullable="false" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="false" />
+          <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_LIST_Cnt" >
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_STATUS_Result" >
+          <Property Type="Int32" Name="ORDER_STATUS_ALL" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_10" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_20" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_30" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_40" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_50" ConcurrencyMode="None" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_60" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_70" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_80" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_90" ConcurrencyMode="None" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_99" DefaultValue="0" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdminOrderModelStoreContainer" CdmEntityContainer="AdminOrderEntities">
+          <EntitySetMapping Name="TB_ORDER_CODE">
+            <EntityTypeMapping TypeName="AdminOrderModel.TB_ORDER_CODE">
+              <MappingFragment StoreEntitySet="TB_ORDER_CODE">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ORDER_DETAIL">
+            <EntityTypeMapping TypeName="AdminOrderModel.TB_ORDER_DETAIL">
+              <MappingFragment StoreEntitySet="TB_ORDER_DETAIL">
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="ORDER_DETAIL_STATUS" ColumnName="ORDER_DETAIL_STATUS" />
+                <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
+                <ScalarProperty Name="DELIVERY_DATE" ColumnName="DELIVERY_DATE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="P_CATE_NAME" ColumnName="P_CATE_NAME" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_NAME" ColumnName="C_CATE_NAME" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_NAME" ColumnName="L_CATE_NAME" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
+                <ScalarProperty Name="PROMOTION_ID" ColumnName="PROMOTION_ID" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
+                <ScalarProperty Name="COUPON_DISCOUNT" ColumnName="COUPON_DISCOUNT" />
+                <ScalarProperty Name="GRADE_DISCOUNT_PRICE" ColumnName="GRADE_DISCOUNT_PRICE" />
+                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
+                <ScalarProperty Name="USE_POINT" ColumnName="USE_POINT" />
+                <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
+                <ScalarProperty Name="POINT_ACCML_DATE" ColumnName="POINT_ACCML_DATE" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="ORDER_DETAIL_STATUS_DATE" ColumnName="ORDER_DETAIL_STATUS_DATE" />
+                <ScalarProperty Name="EXCHANGE_YN" ColumnName="EXCHANGE_YN" />
+                <ScalarProperty Name="EXCHANGE_DATE" ColumnName="EXCHANGE_DATE" />
+                <ScalarProperty Name="EXCHANGE_COUNT" ColumnName="EXCHANGE_COUNT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ORDER_LOG">
+            <EntityTypeMapping TypeName="AdminOrderModel.TB_ORDER_LOG">
+              <MappingFragment StoreEntitySet="TB_ORDER_LOG">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="PROCESS_MEMO" ColumnName="PROCESS_MEMO" />
+                <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ORDER_MASTER">
+            <EntityTypeMapping TypeName="AdminOrderModel.TB_ORDER_MASTER">
+              <MappingFragment StoreEntitySet="TB_ORDER_MASTER">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="MEMBER_ORDER_GBN" ColumnName="MEMBER_ORDER_GBN" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
+                <ScalarProperty Name="NOMEMBER_PASS" ColumnName="NOMEMBER_PASS" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="ORDER_STATUS" ColumnName="ORDER_STATUS" />
+                <ScalarProperty Name="TOTAL_ORDER_PRICE" ColumnName="TOTAL_ORDER_PRICE" />
+                <ScalarProperty Name="TRANS_PRICE" ColumnName="TRANS_PRICE" />
+                <ScalarProperty Name="TRANS_COUPON" ColumnName="TRANS_COUPON" />
+                <ScalarProperty Name="POINT_USE_PRICE" ColumnName="POINT_USE_PRICE" />
+                <ScalarProperty Name="COUPON_DISCOUNT_PRICE" ColumnName="COUPON_DISCOUNT_PRICE" />
+                <ScalarProperty Name="GRADE_DISCOUNT_PRICE" ColumnName="GRADE_DISCOUNT_PRICE" />
+                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
+                <ScalarProperty Name="FREEGIFT_GBN" ColumnName="FREEGIFT_GBN" />
+                <ScalarProperty Name="FREEGIFT_NAME" ColumnName="FREEGIFT_NAME" />
+                <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="CARD_GBN" ColumnName="CARD_GBN" />
+                <ScalarProperty Name="INSTLMT_AT" ColumnName="INSTLMT_AT" />
+                <ScalarProperty Name="BANK_CODE" ColumnName="BANK_CODE" />
+                <ScalarProperty Name="PAT_TID" ColumnName="PAT_TID" />
+                <ScalarProperty Name="REAL_ACCOUNT_AT" ColumnName="REAL_ACCOUNT_AT" />
+                <ScalarProperty Name="CASHRECEIPT_SE_CODE" ColumnName="CASHRECEIPT_SE_CODE" />
+                <ScalarProperty Name="CASHRECEIPT_RESULT_CODE" ColumnName="CASHRECEIPT_RESULT_CODE" />
+                <ScalarProperty Name="SENDER_NAME" ColumnName="SENDER_NAME" />
+                <ScalarProperty Name="SENDER_POST" ColumnName="SENDER_POST" />
+                <ScalarProperty Name="SENDER_ADDR1" ColumnName="SENDER_ADDR1" />
+                <ScalarProperty Name="SENDER_ADDR2" ColumnName="SENDER_ADDR2" />
+                <ScalarProperty Name="SENDER_TEL" ColumnName="SENDER_TEL" />
+                <ScalarProperty Name="SENDER_HP" ColumnName="SENDER_HP" />
+                <ScalarProperty Name="SENDER_EMAIL" ColumnName="SENDER_EMAIL" />
+                <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+                <ScalarProperty Name="RECEIVER_POST" ColumnName="RECEIVER_POST" />
+                <ScalarProperty Name="RECEIVER_ADDR1" ColumnName="RECEIVER_ADDR1" />
+                <ScalarProperty Name="RECEIVER_ADDR2" ColumnName="RECEIVER_ADDR2" />
+                <ScalarProperty Name="RECEIVER_TEL" ColumnName="RECEIVER_TEL" />
+                <ScalarProperty Name="RECEIVER_HP" ColumnName="RECEIVER_HP" />
+                <ScalarProperty Name="ORDER_MEMO" ColumnName="ORDER_MEMO" />
+                <ScalarProperty Name="MANAGER_MEMO" ColumnName="MANAGER_MEMO" />
+                <ScalarProperty Name="REFUN_ACCOUNT" ColumnName="REFUN_ACCOUNT" />
+                <ScalarProperty Name="REFUN_BANKCODE" ColumnName="REFUN_BANKCODE" />
+                <ScalarProperty Name="REFUN_NAME" ColumnName="REFUN_NAME" />
+                <ScalarProperty Name="REFUN_DATE" ColumnName="REFUN_DATE" />
+                <ScalarProperty Name="REFUN_PRICE" ColumnName="REFUN_PRICE" />
+                <ScalarProperty Name="OLD_ORDER_IDX" ColumnName="OLD_ORDER_IDX" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="HTTP_USER_AGENT" ColumnName="HTTP_USER_AGENT" />
+                <ScalarProperty Name="PAT_GUBUN" ColumnName="PAT_GUBUN" />
+                <ScalarProperty Name="SVR_DOMAIN" ColumnName="SVR_DOMAIN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_DELIVERY_NUM_INPUT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_DETAIL_DELIVERY_NUM_INPUT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_LIST" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_LIST" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_LIST_Result">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="PAT_GUBUN" ColumnName="PAT_GUBUN" />
+                <ScalarProperty Name="ORDER_STATUS" ColumnName="ORDER_STATUS" />
+                <ScalarProperty Name="ORDER_STATUS_NM" ColumnName="ORDER_STATUS_NM" />
+                <ScalarProperty Name="ORDER_NAME" ColumnName="ORDER_NAME" />
+                <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+                <ScalarProperty Name="SENDER_HP" ColumnName="SENDER_HP" />
+                <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
+                <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MANAGER_MEMO_EDIT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MANAGER_MEMO_EDIT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_RECEIVER_EDIT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_RECEIVER_EDIT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_STATUS" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_STATUS" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_STATUS_Result">
+                <ScalarProperty Name="ORDER_STATUS_ALL" ColumnName="ORDER_STATUS_ALL" />
+                <ScalarProperty Name="ORDER_STATUS_10" ColumnName="ORDER_STATUS_10" />
+                <ScalarProperty Name="ORDER_STATUS_20" ColumnName="ORDER_STATUS_20" />
+                <ScalarProperty Name="ORDER_STATUS_30" ColumnName="ORDER_STATUS_30" />
+                <ScalarProperty Name="ORDER_STATUS_40" ColumnName="ORDER_STATUS_40" />
+                <ScalarProperty Name="ORDER_STATUS_50" ColumnName="ORDER_STATUS_50" />
+                <ScalarProperty Name="ORDER_STATUS_60" ColumnName="ORDER_STATUS_60" />
+                <ScalarProperty Name="ORDER_STATUS_70" ColumnName="ORDER_STATUS_70" />
+                <ScalarProperty Name="ORDER_STATUS_80" ColumnName="ORDER_STATUS_80" />
+                <ScalarProperty Name="ORDER_STATUS_90" ColumnName="ORDER_STATUS_90" />
+                <ScalarProperty Name="ORDER_STATUS_99" ColumnName="ORDER_STATUS_99" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDERLIST_DETAIL_BODY" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDERLIST_DETAIL_BODY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDERLIST_DETAIL_BODY_Result">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="ORDER_STATUS" ColumnName="ORDER_STATUS" />
+                <ScalarProperty Name="ORDER_STATUS_NM" ColumnName="ORDER_STATUS_NM" />
+                <ScalarProperty Name="PAY_GBN_NM" ColumnName="PAY_GBN_NM" />
+                <ScalarProperty Name="PAT_TID" ColumnName="PAT_TID" />
+                <ScalarProperty Name="SENDER_EMAIL" ColumnName="SENDER_EMAIL" />
+                <ScalarProperty Name="ORDER_NAME" ColumnName="ORDER_NAME" />
+                <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+                <ScalarProperty Name="SENDER_POST" ColumnName="SENDER_POST" />
+                <ScalarProperty Name="SENDER_ADDR1" ColumnName="SENDER_ADDR1" />
+                <ScalarProperty Name="SENDER_ADDR2" ColumnName="SENDER_ADDR2" />
+                <ScalarProperty Name="SENDER_HP" ColumnName="SENDER_HP" />
+                <ScalarProperty Name="SENDER_TEL" ColumnName="SENDER_TEL" />
+                <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+                <ScalarProperty Name="RECEIVER_POST" ColumnName="RECEIVER_POST" />
+                <ScalarProperty Name="RECEIVER_ADDR1" ColumnName="RECEIVER_ADDR1" />
+                <ScalarProperty Name="RECEIVER_ADDR2" ColumnName="RECEIVER_ADDR2" />
+                <ScalarProperty Name="RECEIVER_TEL" ColumnName="RECEIVER_TEL" />
+                <ScalarProperty Name="RECEIVER_HP" ColumnName="RECEIVER_HP" />
+                <ScalarProperty Name="ORDER_MEMO" ColumnName="ORDER_MEMO" />
+                <ScalarProperty Name="MANAGER_MEMO" ColumnName="MANAGER_MEMO" />
+                <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
+                <ScalarProperty Name="ING_PRICE" ColumnName="ING_PRICE" />
+                <ScalarProperty Name="CANCEL_PRICE" ColumnName="CANCEL_PRICE" />
+                <ScalarProperty Name="TOTAL_DISCOUNT" ColumnName="TOTAL_DISCOUNT" />
+                <ScalarProperty Name="COUPON_DISCOUNT" ColumnName="COUPON_DISCOUNT" />
+                <ScalarProperty Name="GRADE_DISCOUNT_PRICE" ColumnName="GRADE_DISCOUNT_PRICE" />
+                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
+                <ScalarProperty Name="USE_POINT" ColumnName="USE_POINT" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+                <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
+                <ScalarProperty Name="TRANS_PRICE" ColumnName="TRANS_PRICE" />
+                <ScalarProperty Name="TRANS_COUPON" ColumnName="TRANS_COUPON" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDERLIST_DETAIL_LIST" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDERLIST_DETAIL_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDERLIST_DETAIL_LIST_Result">
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="PROMOTION" ColumnName="PROMOTION" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
+                <ScalarProperty Name="COUPON_DISCOUNT" ColumnName="COUPON_DISCOUNT" />
+                <ScalarProperty Name="COUPON" ColumnName="COUPON" />
+                <ScalarProperty Name="USE_POINT" ColumnName="USE_POINT" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+                <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
+                <ScalarProperty Name="POINT_ACCML_DATE" ColumnName="POINT_ACCML_DATE" />
+                <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
+                <ScalarProperty Name="ORDER_DETAIL_STATUS" ColumnName="ORDER_DETAIL_STATUS" />
+                <ScalarProperty Name="ORDER_DETAIL_STATUS_NM" ColumnName="ORDER_DETAIL_STATUS_NM" />
+                <ScalarProperty Name="ORDER_DETAIL_STATUS_DATE" ColumnName="ORDER_DETAIL_STATUS_DATE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDERLIST_DETAIL_LOG" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDERLIST_DETAIL_LOG" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_LIST_CNT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_LIST_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_LIST_Cnt">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

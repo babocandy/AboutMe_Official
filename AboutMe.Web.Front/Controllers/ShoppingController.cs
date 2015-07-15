@@ -32,33 +32,58 @@ namespace AboutMe.Web.Front.Controllers
 
         // GET: Shopping
         #region 상품리스트
-        public ActionResult Index(string P_CATE_CODE)
+        public ActionResult Index(IEnumerable<string> P_CATE_CODE_3DEPTH, Product_front_search_entity product_front_search_entity)
         {
-            int TotalRecord = 0;
-            //TotalRecord = _ProductService.GetProductCnt();
 
-            this.ViewBag.TotalRecord = TotalRecord;
-            //this.ViewBag.Page = productSearch_Entity.Page;
+            product_front_search_entity.P_CATE_CODE_3DEPTH = Request.Form["P_CATE_CODE_3DEPTH"];
+            if (!string.IsNullOrEmpty(product_front_search_entity.P_CATE_CODE_3DEPTH))  //다중검색 3depth 할경우 넣어준다
+            {
+                product_front_search_entity.P_CATE_CODE = product_front_search_entity.P_CATE_CODE_3DEPTH;
+            }
+
+            int TotalRecord = 0;
+            product_front_search_entity.P_OUTLET_YN = "N"; //아울렛 상품 제외
+            TotalRecord = _ProductService.GetProductCnt(product_front_search_entity);
+
+            this.ViewBag.TotalRecord = TotalRecord;                                             //총카운트
+            this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            if (string.IsNullOrEmpty(product_front_search_entity.SORT_GBN)){
+                product_front_search_entity.SORT_GBN = "NEW";
+            }
+            this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
+            if (string.IsNullOrEmpty(product_front_search_entity.P_CATE_CODE))
+            {
+                product_front_search_entity.P_CATE_CODE = "101100100"; //뷰티 default
+            }
+            if (string.IsNullOrEmpty(product_front_search_entity.C_CATE_CODE))
+            {
+                product_front_search_entity.C_CATE_CODE = ""; //피부고민 DEFAULT
+            }
+            if (string.IsNullOrEmpty(product_front_search_entity.L_CATE_CODE))
+            {
+                product_front_search_entity.L_CATE_CODE = ""; //라인 default
+            }
+            this.ViewBag.P_CATE_CODE = product_front_search_entity.P_CATE_CODE;                 //P_CATE_CODE
+            this.ViewBag.C_CATE_CODE = product_front_search_entity.C_CATE_CODE;                 //C_CATE_CODE
+            this.ViewBag.L_CATE_CODE = product_front_search_entity.L_CATE_CODE;                 //L_CATE_CODE
+            this.ViewBag.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;   //P_CATE_CODE_3DEPTH
 
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
-            if (string.IsNullOrEmpty(P_CATE_CODE))
+           
+
+            this.ViewBag.CATE_CODE = product_front_search_entity.P_CATE_CODE;//선택한 카테고리 코드값
+
+            ViewData["CateCodeP"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), "").ToList(); //유형별
+            ViewData["CateCodeC"] = _ProductService.GetCategoryDeptList("SKIN_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), "").ToList(); //피부타입별
+            ViewData["CateCodeL"] = _ProductService.GetCategoryDeptList("LINE_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), "").ToList(); //라인별
+
+            if (product_front_search_entity.P_CATE_CODE.Substring(0, 3) == "101") //뷰티인경우 3depth도 보여준다
             {
-                P_CATE_CODE = "101100100"; //뷰티 default
+                ViewData["3DEPTH"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), product_front_search_entity.P_CATE_CODE.Substring(3, 3)).ToList(); //뷰티 3depth
             }
 
-            this.ViewBag.CATE_CODE = P_CATE_CODE;//선택한 카테고리 코드값
-
-            ViewData["P_CATE_CODE"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", P_CATE_CODE.Substring(0, 3), "").ToList(); //유형별
-            ViewData["C_CATE_CODE"] = _ProductService.GetCategoryDeptList("SKIN_TYPE", P_CATE_CODE.Substring(0, 3), "").ToList(); //피부타입별
-            ViewData["L_CATE_CODE"] = _ProductService.GetCategoryDeptList("LINE_TYPE", P_CATE_CODE.Substring(0, 3), "").ToList(); //라인별
-
-            if (P_CATE_CODE.Substring(0,3) == "101") //뷰티인경우 3depth도 보여준다
-            {
-                ViewData["3DEPTH"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", P_CATE_CODE.Substring(0, 3), P_CATE_CODE.Substring(3, 3)).ToList(); //뷰티 3depth
-            }
-
-            return View(_ProductService.GetProductList().ToList());
+            return View(_ProductService.GetProductList(product_front_search_entity).ToList());
             //return View();
         }
         #endregion

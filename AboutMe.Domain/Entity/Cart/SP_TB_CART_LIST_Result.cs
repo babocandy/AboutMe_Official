@@ -17,7 +17,6 @@ namespace AboutMe.Domain.Entity.Cart
         {
             this.M_GBN = "A";
             this.P_COUNT = 1;
-            this.PROMOTION_TYPE = 99;
             this.EMP_DISCOUNT = 1;
             this.EMP_DISCOUNT_PRICE = 1;
         }
@@ -39,7 +38,7 @@ namespace AboutMe.Domain.Entity.Cart
         public int DISCOUNT_RATE { get; set; }
         public int DISCOUNT_PRICE { get; set; }
         public int P_POINT { get; set; }
-        public int PROMOTION_TYPE { get; set; }
+        public string PROMOTION_TYPE { get; set; }
         public int EMP_DISCOUNT { get; set; }
         public int EMP_DISCOUNT_PRICE { get; set; }
         public int ORDER_PRICE { get; set; }

@@ -419,12 +419,18 @@
                                             </dl>
                                         </td>
                                         <td class="proprice">
-                                            @if (@item.SELLING_PRICE > 0)
+                                        @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
                                             {
                                                 <del>@item.SELLING_PRICE.ToString("#,#0.") 원</del>
                                             }
                                             <strong>@String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)</strong>원
                                         </td>
+                                        @if (Model.UserProfile.M_GBN == "S") //임직원
+                                        {
+                                        <td class="vipprice">
+                                            <strong>@item.EMP_DISCOUNT_PRICE.ToString("#,#0.")</strong>원
+                                        </td>
+                                        }
                                         <td class="count">
                                             <div class="counttypea">
                                                 <input type='text' name="count" id='count_txt_@item.CART_IDX' value='@item.P_COUNT' size='3' />
