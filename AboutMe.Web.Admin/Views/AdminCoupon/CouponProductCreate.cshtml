@@ -223,7 +223,7 @@
                         str_check_ins_cd_coupon = item.CD_COUPON + "$" + item.P_CODE;
                          
                         <tr>
-                            <td class="brnone"><input type="checkbox" id="Check_ins_cd_coupon" name="Check_ins_cd_coupon" value="@str_check_ins_cd_coupon" @PrintCheckboxDisable(item.CD_COUPON.ToString()) /></td>
+                            <td class="brnone"><input type="checkbox" id="Check_ins_cd_coupon" name="Check_ins_cd_coupon" value="@str_check_ins_cd_coupon" @PrintCheckboxDisable(@str_check_ins_cd_coupon) /></td>
                             <td>@Html.DisplayFor(modelItem => item.P_CODE)</td>
                             <td>@Html.DisplayFor(modelItem => item.P_NAME)</td>
                             <td>@Html.DisplayFor(modelItem => item.DEPTH1_NAME)</td>
