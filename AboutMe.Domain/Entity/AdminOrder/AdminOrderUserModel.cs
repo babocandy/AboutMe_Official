@@ -115,8 +115,18 @@ namespace AboutMe.Domain.Entity.AdminOrder
     public class ORDER_INDEX_MODEL
     {
         public SP_TB_ADMIN_ORDER_Param SearchOption { set; get; }
+        public SP_ADMIN_ORDER_STATUS_Result OrderStatusCnt { set; get; }
         public List<SP_ADMIN_ORDER_LIST_Result> OrderList { get; set; }
-        public Int32 TotalCount {get; set;}
+        public Int32 TotalCount { get; set; }
+    }
+
+    public class ORDER_DETAIL_MODEL
+    {
+        public Int32 ORDER_IDX { get; set; }
+        public SP_TB_ADMIN_ORDER_Param SearchOption { set; get; }
+        public SP_ADMIN_ORDERLIST_DETAIL_BODY_Result BodyInfo { set; get; }
+        public List<SP_ADMIN_ORDERLIST_DETAIL_LIST_Result> OrderDetailList { get; set; }
+        public List<string> LogList { get; set; }
     }
 
     /*

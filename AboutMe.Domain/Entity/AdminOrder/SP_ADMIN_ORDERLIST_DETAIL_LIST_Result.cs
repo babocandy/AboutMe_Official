@@ -30,5 +30,7 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string ORDER_DETAIL_STATUS { get; set; }
         public string ORDER_DETAIL_STATUS_NM { get; set; }
         public System.DateTime ORDER_DETAIL_STATUS_DATE { get; set; }
+        public string P_CODE { get; set; }
+        public Nullable<int> DISCOUNT_PRICE { get; set; }
     }
 }

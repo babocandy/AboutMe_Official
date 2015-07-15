@@ -1,9 +1,113 @@
-﻿@{
+﻿@model AboutMe.Domain.Entity.AdminOrder.ORDER_DETAIL_MODEL
+@using System.Reflection;
+@{
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 
 }
 @section Scripts{
+    <script language="javascript">
+        function PopupMember(member_id)
+        {
+            alert(member_id);
+        }
+
+        function deliveryformCheck()
+        {
+
+            if ($("#RECEIVER_NAME_TXT").val().trim() == '') {
+                alert('받는이 이름을 입력하세요.');
+                $("#RECEIVER_NAME_TXT").focus();
+                return false;
+            }
+
+            if ($("#RECEIVER_POST_TXT").val().trim() == '') {
+                alert('우편번호를 입력하세요.');
+                $("#RECEIVER_POST_TXT").focus();
+                return false;
+            }
+
+            if ($("#RECEIVER_ADDR1_TXT").val().trim() == '') {
+                alert('배송지 주소를 입력하세요.');
+                $("#RECEIVER_ADDR1_TXT").focus();
+                return false;
+            }
+
+            if ($("#RECEIVER_ADDR2_TXT").val().trim() == '') {
+                alert('배송지 상세주소를 입력하세요.');
+                $("#RECEIVER_ADDR2_TXT").focus();
+                return false;
+            }
+            if ($("#RECEIVER_HP_TXT").val().trim() == '') {
+                alert('받는이 핸드폰번호 입력하세요.');
+                $("#RECEIVER_HP_TXT").focus();
+                return false;
+            }
+
+            if (confirm('배송지정보를 변경하시겠습니까?'))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        function memoformCheck() {
+
+            if (confirm('메모를 저장 하시겠습니까?')) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+
+        function changeDelivery(detail_idx) {
+            var f = document.dumyForm;
+            var delivery_num = $("#edit_delivery_" + detail_idx).val().trim();
+            if (delivery_num == "") {
+                alert("송장번호를 입력해 주세요.");
+                return false;
+            }
+
+            if (confirm('송장번호를 변경 하시겠습니까?')) {
+                f.ORDER_DETAIL_IDX.value = detail_idx;
+                f.DELIVERY_NUM.value = delivery_num;
+                f.TOBE_STATUS.value = "";
+                f.action = "/Order/OrderDetailDeliveryUpdate";
+                f.submit();
+            }
+        }
+
+        function changeStaus(detail_idx, asis_status, asis_status_name) {
+            var f = document.dumyForm;
+            var tobe_status = $("#ORDER_STATUS_" + detail_idx).val().trim();
+            alert(tobe_status);
+            if (asis_status == tobe_status)
+            {
+                alert("현재 주문상태가 ["+asis_status_name+"]상태입니다.다른 상태를 선택해주세요.");
+                return false;
+            }
+
+            if (tobe_status == "") {
+                alert("변경할 상태를 선택해 주세요.");
+                return false;
+            }
+
+
+            if (confirm('주문상태를 변경 하시겠습니까?')) {
+                f.ORDER_DETAIL_IDX.value = detail_idx;
+                f.DELIVERY_NUM.value = "";
+                f.TOBE_STATUS.value = tobe_status;
+                f.action = "/Order/OrderDetailStatusUpdate";
+                f.submit();
+            }
+        }
+    </script>
 }
 @section Left {
     @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
@@ -12,6 +116,98 @@
     @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
 }
 @section Body{
+<!-- 다음 우편번호 검색-->
+<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script language="javascript">
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layerPOST');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if (data.addressType === 'R') {
+                    //법정동명이 있을 경우 추가한다.
+                    if (data.bname !== '') {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if (data.buildingName !== '') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("RECEIVER_POST_TXT").value = data.postcode; //6자리 우편번호 사용
+
+                document.getElementById('RECEIVER_ADDR1_TXT').value = fullAddr;
+
+                // iframe을 넣은 element를 안보이게 한다.
+                element_layer.style.display = 'none';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition() {
+        var width = 300; //우편번호서비스가 들어갈 element의 width
+        var height = 460; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+    }
+</script>
+<!-- 다음 우편번호 검색-->
+    <form name="dumyForm" method="POST">
+        @Html.Hidden("ORDER_IDX", @Model.ORDER_IDX)
+        @Html.Hidden("ORDER_DETAIL_IDX", "")
+        @Html.Hidden("TOBE_STATUS","")
+        @Html.Hidden("DELIVERY_NUM", "")
+        @{
+            //Model.SearchOption을 Hidden box로 생성
+            Type type = Model.SearchOption.GetType();
+            PropertyInfo[] properties = type.GetProperties();
+
+            foreach (PropertyInfo property in properties)
+            {
+                @Html.Hidden(property.Name, property.GetValue(Model.SearchOption))
+            }
+        }
+    </form>
 
 <!--content-->
 <div class="content">
@@ -41,11 +237,10 @@
 		<thead>
 			<tr>
 				<th>상품명</th>
-				<th>주문<br />구분</th>
 				<th>수량</th>
 				<th>적용<br />프로모션</th>
 				<th>상품금액</th>
-				<th>임직원<br />할인액</th>
+				<th>임직원<br />판매액</th>
 				<th>쿠폰<br />할인액</th>
 				<th>사용쿠폰</th>
 				<th>포인트<br />사용액</th>
@@ -57,106 +252,194 @@
 			</tr>
 		</thead>
 		<tbody>
+            @foreach (var item in Model.OrderDetailList)
+            {
+                string img_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 			<tr>
 				<td>
-					<img src="/cmsManager/aboutCom/images/thumb.gif" alt="" /><br/>
-					상품명
+					<img src="@img_path@item.P_IMG1_S" alt="" /><br/>
+					@item.P_NAME <br />
+                    (@item.P_CODE)
 				</td>
-				<td>WEB</td>
-				<td>1</td>
-				<td>Time Sale</td>
-				<td>248,000원</td>
-				<td>6,000</td>
-				<td>69,900</td>
-				<td>생일쿠폰</td>
-				<td>2,700</td>
-				<td>169,400 원</td>
-				<td>4,700(적립)</td>
+				<td>@item.P_COUNT</td>
+				<td>@item.PROMOTION</td>
 				<td>
-					<input type="text" class="input-sm"  value="12454475" /><br />
-					<a class="btn btn-info small mt5" href="#">변경</a><br />
-					<a class="btn btn-info small mt5" href="#">배송추적</a>
+                    @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
+                    {
+                        <del>@item.SELLING_PRICE.ToString("#,#0.")원</del><br />
+                    }
+                    @String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)원
+                </td>
+				<td>@String.Format("{0:#,#0.}", @item.EMP_DISCOUNT_PRICE)원</td>
+				<td>@String.Format("{0:#,#0.}", @item.COUPON_DISCOUNT)원</td>
+				<td>@item.COUPON</td>
+				<td>@String.Format("{0:#,#0.}", @item.USE_POINT)원</td>
+				<td>@String.Format("{0:#,#0.}", @item.REAL_PAY_PRICE)원</td>
+				<td>@String.Format("{0:#,#0.}", @item.POINT_ACCML)P <br />@item.POINT_ACCML_DATE </td>
+				<td>
+                    <input type="text" class="input-sm" id="edit_delivery_@item.ORDER_DETAIL_IDX" value="@item.DELIVERY_NUM" /><br />
+                    <a href="#none" class="btn btn-info small mt5" id="edit_delivery_btn_@item.ORDER_DETAIL_IDX" onclick="changeDelivery('@item.ORDER_DETAIL_IDX')">변경</a><br />
+                    @(Html.Kendo().Tooltip()
+                        .For("#edit_delivery_btn_" + @item.ORDER_DETAIL_IDX.ToString())
+                        .Content("송장번호 입력/변경시 '상품준비중'인 상품은 '배송중'으로 자동 변경됩니다.")
+                        .Position(TooltipPosition.Bottom)
+                        .Width(300).Height(40)
+                    )
+
+
+                    @if (!string.IsNullOrEmpty(item.DELIVERY_NUM))
+                    { 
+					    <a class="btn btn-info small mt5" href="#none">배송추적</a>
+                    }
 				</td>
 				<td>
-					<select style="width:120px;">
-						<option selected="selected">반품</option>
-						<option>반품</option>
-						<option>반품</option>
-					</select><br />
-					<a class="btn btn-info small mt5" href="#">변경</a>
+                    @(Html.Kendo().DropDownList()
+                        .Name("ORDER_STATUS_" + @item.ORDER_DETAIL_IDX)
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .HtmlAttributes(new { style = "width:120px" })
+                        .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                                Text = "결제대기",
+                                Value = "10"
+                            },
+                            new SelectListItem() {
+                                Text = "결제완료",
+                                Value = "20"
+                            },
+                            new SelectListItem() {
+                                Text = "상품준비중",
+                                Value = "30"
+                            },
+                            new SelectListItem() {
+                                Text = "배송중",
+                                Value = "40"
+                            },
+                            new SelectListItem() {
+                                Text = "배송완료",
+                                Value = "50"
+                            },
+                            new SelectListItem() {
+                                Text = "구매확정",
+                                Value = "60"
+                            },
+                            new SelectListItem() {
+                                Text = "교환",
+                                Value = "70"
+                            },
+                            new SelectListItem() {
+                                Text = "반품",
+                                Value = "80"
+                            },
+                            new SelectListItem() {
+                                Text = "취소",
+                                Value = "90"
+                            }
+                        })
+                        .Value(@item.ORDER_DETAIL_STATUS)
+                    )
+                    <br />
+                    <a class="btn btn-info small mt5" href="#none" onclick="changeStaus('@item.ORDER_DETAIL_IDX','@item.ORDER_DETAIL_STATUS','@item.ORDER_DETAIL_STATUS_NM')">변경</a>
 				</td>
-				<td>20130404</td>
+				<td>@item.ORDER_DETAIL_STATUS_DATE</td>
 			</tr>
-			<tr>
-				<td>
-					<img src="/cmsManager/aboutCom/images/thumb.gif" alt="" /><br/>
-					상품명
-				</td>
-				<td>WEB</td>
-				<td>1</td>
-				<td>Time Sale</td>
-				<td>248,000원</td>
-				<td>6,000</td>
-				<td>69,900</td>
-				<td>생일쿠폰</td>
-				<td>2,700</td>
-				<td>169,400 원</td>
-				<td>4,700(적립)</td>
-				<td>
-					<input type="text" class="input-sm"  /><br />
-					<a class="btn btn-info small mt5" href="#">입력</a>
-				</td>
-				<td>
-					<select style="width:120px;">
-						<option selected="selected">배송중</option>
-						<option>반품</option>
-						<option>반품</option>
-					</select><br />
-					<a class="btn btn-info small mt5" href="#">변경</a>
-				</td>
-				<td>20130404</td>
-			</tr>
+            }
 		</tbody>
 	</table>
-							
-	<div class="tar mt10">
-		<a class="btn btn-default middium" href="#">포인트 수동 관리</a>
-		<a class="btn btn-default middium" href="#">PG사 부분 취소</a>
-		<a class="btn btn-default middium" href="#">주문전체취소</a>
-		<a class="btn btn-default middium" href="#">주문전체반품</a>
-	</div>
+    <div class="mt10" style="position: absolute;">
+        @Html.ActionLink("주문목록", "Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
+    </div>	
+    <div class="mt10 tar">
+        <a class="btn btn-default middium" href="#">포인트 수동 관리</a>
+        <a class="btn btn-default middium" href="#">PG사 부분 취소</a>
+        <a class="btn btn-default middium" href="#">주문전체취소</a>
+        <a class="btn btn-default middium" href="#">주문전체반품</a>
+    </div>
 </div>
 
 <div class="panel">
 	<div class="saleapply boxtyped mt20">
 		<ul>
 			<li class="product">
-				<p class="tot"><span class="tit">상품 금액</span><span class="price"><strong>82,000</strong>원</span></p>
-				<p><span class="tit">취소/반품</span><span class="price"><strong>82,000</strong> 원</span></p>
-				<p><span class="tit">상품금액</span><span class="price"><strong>0</strong> 원</span></p>
+				<p class="tot"><span class="tit">상품금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TOTAL_PRICE)</strong>원</span></p>
+				<p><span class="tit">취소/반품</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.CANCEL_PRICE)</strong>원</span></p>
+				<p><span class="tit">상품금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.ING_PRICE)</strong>원</span></p>
+                <p><span class="tit">배송비</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TRANS_PRICE)</strong>원</span></p>
 			</li>
 			<li class="sale">
-				<p class="tot"><span class="tit">할인 금액</span><span class="price"><strong>10,190</strong>원</span></p>
-				<p><span class="tit">임직원 할인</span><span class="price"><strong>190</strong> 원</span></p>
-				<p><span class="tit">쿠폰 할인</span><span class="price point"><i></i><strong>0</strong></span></p>
-				<p><span class="tit">보유포인트사용</span><span class="price"><strong>190</strong> 원</span></p>
-				<p><span class="tit">회원등급(VIP)확인</span><span class="price"><strong>190</strong> 원</span></p>
+				<p class="tot"><span class="tit">할인금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TOTAL_DISCOUNT)</strong>원</span></p>
+				<p><span class="tit">임직원 할인</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.EMP_DISCOUNT_PRICE)</strong>원</span></p>
+				<p><span class="tit">쿠폰 할인</span><span class="price point"><i></i><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.COUPON_DISCOUNT)</strong>원</span></p>
+				<p><span class="tit">보유포인트사용</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.USE_POINT)</strong>원</span></p>
+				<p><span class="tit">회원등급(VIP)할인</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.GRADE_DISCOUNT_PRICE)</strong>원</span></p>
 			</li>
 			<li class="total">
-				<p class="tot"><span class="tit">포인트</span><span class="price"><strong>ⓟ71,810</strong></span></p>
+                <p class="tot"><span class="tit">결제금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.REAL_PAY_PRICE)</strong>원</span></p>
+                <p><span class="tit">적립(될)포인트</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.POINT_ACCML)</strong>원</span></p>
+
 			</li>
 		</ul>
 	</div>
 	<div class="tal mt10">
 		<span class="fs11">
-			현 주문 상태 일괄 변경 : 
-			<select style="width:120px;">
-				<option selected="selected">선택완료</option>
-				<option>선택완료</option>
-				<option>선택완료</option>
-			</select>
-		</span>
-		<a href="#" class="btn btn-default small">변경</a>
+			상태 일괄 변경 : 
+                    @(Html.Kendo().DropDownList()
+                        .Name("MULTI_CHANGE_STATUS")
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .HtmlAttributes(new { style = "width:120px" })
+                        .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                                Text = "선택해주세요",
+                                Value = ""
+                            },new SelectListItem() {
+                                Text = "결제대기",
+                                Value = "10"
+                            },
+                            new SelectListItem() {
+                                Text = "결제완료",
+                                Value = "20"
+                            },
+                            new SelectListItem() {
+                                Text = "상품준비중",
+                                Value = "30"
+                            },
+                            new SelectListItem() {
+                                Text = "배송중",
+                                Value = "40"
+                            },
+                            new SelectListItem() {
+                                Text = "배송완료",
+                                Value = "50"
+                            },
+                            new SelectListItem() {
+                                Text = "구매확정",
+                                Value = "60"
+                            },
+                            new SelectListItem() {
+                                Text = "교환",
+                                Value = "70"
+                            },
+                            new SelectListItem() {
+                                Text = "반품",
+                                Value = "80"
+                            },
+                            new SelectListItem() {
+                                Text = "취소",
+                                Value = "90"
+                            }
+                        })
+                        .Value("")
+                    )
+		</span> 
+		<a href="#none" id="allStatusChangBtn" class="btn btn-default small">변경</a>
+        @(Html.Kendo().Tooltip()
+        .For("#allStatusChangBtn")
+        .Content("상태코드만 변경됩니다.")
+        .Position(TooltipPosition.Top)
+                //.Width(120)
+        )
+        <span class="small fcred">(상태코드만 변경됩니다.)</span>
 	</div>
 </div>
 
@@ -165,108 +448,155 @@
 	<table class="table table_row v2">
 		<tr>
 			<th>주문번호</th>
-			<td class="fcred">20121218110751</td>
+			<td class="fcred">@Model.BodyInfo.ORDER_CODE</td>
 			<th>주문일시</th>
-			<td>2013-01-01 오후 5:07:00</td>
+			<td>@Model.BodyInfo.ORDER_DATE</td>
 		</tr>
 		<tr>
 			<th>결제 수단</th>
-			<td>신용카드(3개월 할부)</td>
+			<td>@Model.BodyInfo.PAY_GBN_NM</td>
 			<th>승인 번호</th>
-			<td class="fcred">20121218110751</td>
+			<td class="fcred">@Model.BodyInfo.PAT_TID</td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td colspan="3">bckang@nate.com</td>
+			<td colspan="3">@Model.BodyInfo.SENDER_EMAIL</td>
 		</tr>
 	</table>
 
 	<h3 class="sub-header mt20">주문자 정보</h3>
 	<table class="table table_row v2">
 		<tr>
-			<th>받으시는 분</th>
-			<td  colspan="3">홍길동 (hong123) <a href="#" class="btn btn-success small">회원정보보기</a></td>
+			<th>보내시는 분</th>
+            <td colspan="3">
+                @Model.BodyInfo.ORDER_NAME
+                @if (@Model.BodyInfo.ORDER_ID != "(비회원)")
+                {
+                    @Html.Raw("(" + @Model.BodyInfo.ORDER_ID + ")  ");
+                    @Html.Raw(new HtmlString("<a href='#none' onclick=\"PopupMember('" + @Model.BodyInfo.ORDER_ID.ToString() + "')\" class='btn btn-success small'>회원정보보기</a>"));
+                }
+                else
+                {
+                    @Model.BodyInfo.ORDER_ID
+                }
+            </td>
 		</tr>
 		<tr>
 			<th>주소</th>
 			<td colspan="3">
-				123-456<br />
-				서울시 마포구 신공덕동 146-59 신보빌딩 4F
+				@Model.BodyInfo.SENDER_POST<br />
+				@Model.BodyInfo.SENDER_ADDR1<br />
+                @Model.BodyInfo.SENDER_ADDR2
 			</td>
 		</tr>
 		<tr>
 			<th>휴대전화</th>
-			<td>010-1234-5678</td>
+			<td>@Model.BodyInfo.SENDER_HP</td>
 			<th>기타 연락처</th>
-			<td>010-1234-5678</td>
+			<td>@Model.BodyInfo.SENDER_TEL</td>
 		</tr>
 	</table>
 
-	<h3 class="sub-header mt20">주문자 정보</h3>
-	<table class="table table_row v2">
-		<tr>
-			<th>받으시는 분</th>
-			<td  colspan="3"><input type="text" value="홍길동" class="input-sm" style="120px" /></td>
-		</tr>
-		<tr>
-			<th>주소</th>
-			<td  colspan="3">
-				<input type="text" class="input-sm" value="123-456" style="width:120px;"/> <a href="#" onclick="PopupCenter('/popoldlogin.html', '', '476', '380'); return false;" class="btn btn-success small">우편번호</a> <br />
-				<input type="text" class="input-sm mt5" value="서울시 마포구 신공덕동 146-59 신보빌딩 4F" style="width:390px;"/>
-			</td>
-		</tr>
-		<tr>
-			<th>휴대전화</th>
-			<td><input type="text" class="input-sm" value="010-1234-5678" style="width:120px;"/></td>
-			<th>기타 연락처</th>
-			<td><input type="text" class="input-sm" value="010-1234-5678" style="width:120px;"/></td>
-		</tr>
-		<tr>
-			<th>배송시 요청사항</th>
-			<td  colspan="3">
-				<input type="text" class="input-sm" value="부재시 핸드폰 연락주세요" style="width:390px;"/>
-			</td>
-		</tr>
-	</table>
-	<div class="tar mt10">
-		<a href="#" class="btn btn-default middium">변경</a>
-	</div>
-	<div class="mt10">
-		<h4>관리자메모</h4>
-		<textarea class="textarea" style="width:100%; height:150px;"></textarea>
-		<div class="tar mt10">
-			<a href="#" class="btn btn-default middium">저장</a>
-		</div>
-	</div>
-								
-	<h4 class="mt20">주문관련로그</h4>
-	<div class="alert alert-info">
-		<ul>
-			<li>· 주문서생성 (2013.01.23 12:55)</li>
-			<li>· 상품준비중으로 일괄변경 (관리자 cstone) (2013.01.24 13:55)</li>
-			<li>· 배송지 정보변경 “서울시 마포구 신공덕동 1234 번지“ 에서 “서울시 마포구 서교동 123”으로 변경(관리자 cstone) (2013.01.24 15:42)</li>
-			<li>· 제품명 AM0340BM 발송완료 (관리자 cstone) (송장번호 12355) (2013.01.24 05:45)</li>
-		</ul>	
-	</div>
-	<div class="tar mt10">
-		<a href="#" class="btn btn-default middium">해당 주문 건 취소/교환/반품 신청 내역 보기</a>
-		<a href="#" class="btn btn-default middium">출력</a>
-		<a href="#" class="btn btn-default middium">닫기</a>
-	</div>
-</div>
-<script type="text/javascript">
-	function PopupCenter(popNM, parms, width, height){
-		var sw  = screen.availWidth ;
-		var sh  = screen.availHeight ;
-		px=(sw - width)/2 ;
-		py=(sh - height)/2 ;
-		var set  = 'top=' + py + ',left=' + px ;
-		set += ',width=' + width + ',height=' + height + ',menubar = no, toolbar = no, location = no, status = no, scrollbars = yes, resizable = yes' ;
-		window.name="pop";
-		window.open (popNM + parms , '' , set) ;
-	}
-</script>
+	<h3 class="sub-header mt20">배송지 정보</h3>
+    @using (Html.BeginForm("DeliveryUpdate", "Order", FormMethod.Post, new { id = "deliveryform", name = "deliveryform", onsubmit = "return deliveryformCheck();" }))
+    {
+        @Html.Hidden("ORDER_IDX", @Model.ORDER_IDX)
 
-</div>
-<!--//content-->
+        foreach (PropertyInfo property in properties)
+        {
+            @Html.Hidden(property.Name, property.GetValue(Model.SearchOption))
+        }
+
+	    <table class="table table_row v2">
+		    <tr>
+			    <th>받으시는 분</th>
+			    <td  colspan="3"><input type="text" value="@Model.BodyInfo.RECEIVER_NAME" name="RECEIVER_NAME" id="RECEIVER_NAME_TXT" class="input-sm" style="120px" /></td>
+		    </tr>
+		    <tr>
+			    <th>주소</th>
+			    <td  colspan="3">
+                    <input type="text" class="input-sm" value="@Model.BodyInfo.RECEIVER_POST" name="RECEIVER_POST" id="RECEIVER_POST_TXT" style="width:120px;" />
+                     <input type="button" value="우편번호찾기" onclick="javascript:execDaumPostcode();" /><br />
+                     
+                    <input type="text" class="input-sm mt5" value="@Model.BodyInfo.RECEIVER_ADDR1" name="RECEIVER_ADDR1" id="RECEIVER_ADDR1_TXT" style="width:390px;" /> <br />
+                    <input type="text" class="input-sm mt5" value="@Model.BodyInfo.RECEIVER_ADDR2" name="RECEIVER_ADDR2" id="RECEIVER_ADDR2_TXT" style="width:390px;" />
+			    </td>
+		    </tr>
+		    <tr>
+			    <th>휴대전화</th>
+			    <td><input type="text" class="input-sm" value="@Model.BodyInfo.RECEIVER_HP" name="RECEIVER_HP" id="RECEIVER_HP_TXT" style="width:120px;" /></td>
+			    <th>기타 연락처</th>
+			    <td><input type="text" class="input-sm" value="@Model.BodyInfo.RECEIVER_TEL" name="RECEIVER_TEL" id="RECEIVER_TEL_TXT" style="width:120px;" /></td>
+		    </tr>
+		    <tr>
+			    <th>배송시 요청사항</th>
+			    <td  colspan="3">
+                    <input type="text" class="input-sm" value="@Model.BodyInfo.ORDER_MEMO" name="ORDER_MEMO" style="width:390px;" />
+			    </td>
+		    </tr>
+	    </table>
+	    <div class="tar mt10">
+                    @(Html.Kendo().Button()
+                        .Name("deliverysubmitbtn")
+                        .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                        .Content("배송지변경")
+                    )
+
+            </div>
+
+    }
+
+@using (Html.BeginForm("AdminMemoUpdate", "Order", FormMethod.Post, new { id = "memoform", name = "memoform", onsubmit = "return memoformCheck();" }))
+{
+    @Html.Hidden("ORDER_IDX", @Model.ORDER_IDX)
+
+    //Model.SearchOption을 Hidden box로 생성
+    foreach (PropertyInfo property in properties)
+    {
+        @Html.Hidden(property.Name, property.GetValue(Model.SearchOption))
+    }
+        <div class="mt10">
+            <h4>관리자메모</h4>
+            <textarea class="textarea" name="MANAGER_MEMO" style="width:100%; height:150px;">@Model.BodyInfo.MANAGER_MEMO</textarea>
+            <div class="tar mt10">
+                @(Html.Kendo().Button()
+                        .Name("memosubmitbtn")
+                        .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                        .Content("메모 저장")
+                )
+            </div>
+        </div>
 }
+        <h4 class="mt20">주문관련로그</h4>
+        <div class="alert alert-info">
+            <ul>
+                @foreach (string log in @Model.LogList)
+                {
+                    <li>· @log </li>
+                }
+            </ul>
+        </div>
+        <div class="mt10" style="position: absolute;">
+            @Html.ActionLink("주문목록", "Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
+        </div>
+        <div class="tar mt10">
+            <a href="#" class="btn btn-default middium">해당 주문 건 취소/교환/반품 신청 내역 보기</a>
+            <a href="#" class="btn btn-default middium">출력</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function PopupCenter(popNM, parms, width, height){
+            var sw  = screen.availWidth ;
+            var sh  = screen.availHeight ;
+            px=(sw - width)/2 ;
+            py=(sh - height)/2 ;
+            var set  = 'top=' + py + ',left=' + px ;
+            set += ',width=' + width + ',height=' + height + ',menubar = no, toolbar = no, location = no, status = no, scrollbars = yes, resizable = yes' ;
+            window.name="pop";
+            window.open (popNM + parms , '' , set) ;
+        }
+    </script>
+
+    </div>
+    <!--//content-->
+    }

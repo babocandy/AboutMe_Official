@@ -425,7 +425,7 @@
             <Parameter Name="RECEIVER_HP" Mode="In" Type="String" />
             <Parameter Name="REG_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_ORDER_STATUS">
+          <FunctionImport Name="SP_ADMIN_ORDER_STATUS" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_STATUS_Result)">
             <Parameter Name="FROM_DATE" Mode="In" Type="String" />
             <Parameter Name="TO_DATE" Mode="In" Type="String" />
             <Parameter Name="MEMBER_GBN" Mode="In" Type="String" />
@@ -519,6 +519,8 @@
           <Property Type="Int32" Name="USE_POINT" Nullable="true" />
           <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
           <Property Type="Int32" Name="POINT_ACCML" Nullable="true" />
+          <Property Type="Int32" Name="TRANS_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="TRANS_COUPON" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -538,6 +540,8 @@
           <Property Type="String" Name="ORDER_DETAIL_STATUS" Nullable="false" MaxLength="2" />
           <Property Type="String" Name="ORDER_DETAIL_STATUS_NM" Nullable="false" MaxLength="10" />
           <Property Type="DateTime" Name="ORDER_DETAIL_STATUS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDER_LIST_Result" >
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -557,6 +561,19 @@
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDER_LIST_Cnt" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_STATUS_Result" >
+          <Property Type="Int32" Name="ORDER_STATUS_ALL" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_10" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_20" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_30" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_40" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_50" ConcurrencyMode="None" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_60" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_70" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_80" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_90" ConcurrencyMode="None" DefaultValue="0" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_STATUS_99" DefaultValue="0" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -710,7 +727,23 @@
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MANAGER_MEMO_EDIT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MANAGER_MEMO_EDIT" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_RECEIVER_EDIT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_RECEIVER_EDIT" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_STATUS" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_STATUS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_STATUS" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_STATUS" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_STATUS_Result">
+                <ScalarProperty Name="ORDER_STATUS_ALL" ColumnName="ORDER_STATUS_ALL" />
+                <ScalarProperty Name="ORDER_STATUS_10" ColumnName="ORDER_STATUS_10" />
+                <ScalarProperty Name="ORDER_STATUS_20" ColumnName="ORDER_STATUS_20" />
+                <ScalarProperty Name="ORDER_STATUS_30" ColumnName="ORDER_STATUS_30" />
+                <ScalarProperty Name="ORDER_STATUS_40" ColumnName="ORDER_STATUS_40" />
+                <ScalarProperty Name="ORDER_STATUS_50" ColumnName="ORDER_STATUS_50" />
+                <ScalarProperty Name="ORDER_STATUS_60" ColumnName="ORDER_STATUS_60" />
+                <ScalarProperty Name="ORDER_STATUS_70" ColumnName="ORDER_STATUS_70" />
+                <ScalarProperty Name="ORDER_STATUS_80" ColumnName="ORDER_STATUS_80" />
+                <ScalarProperty Name="ORDER_STATUS_90" ColumnName="ORDER_STATUS_90" />
+                <ScalarProperty Name="ORDER_STATUS_99" ColumnName="ORDER_STATUS_99" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDERLIST_DETAIL_BODY" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDERLIST_DETAIL_BODY">
             <ResultMapping>
               <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDERLIST_DETAIL_BODY_Result">
@@ -747,6 +780,8 @@
                 <ScalarProperty Name="USE_POINT" ColumnName="USE_POINT" />
                 <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
                 <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
+                <ScalarProperty Name="TRANS_PRICE" ColumnName="TRANS_PRICE" />
+                <ScalarProperty Name="TRANS_COUPON" ColumnName="TRANS_COUPON" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -770,6 +805,8 @@
                 <ScalarProperty Name="ORDER_DETAIL_STATUS" ColumnName="ORDER_DETAIL_STATUS" />
                 <ScalarProperty Name="ORDER_DETAIL_STATUS_NM" ColumnName="ORDER_DETAIL_STATUS_NM" />
                 <ScalarProperty Name="ORDER_DETAIL_STATUS_DATE" ColumnName="ORDER_DETAIL_STATUS_DATE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

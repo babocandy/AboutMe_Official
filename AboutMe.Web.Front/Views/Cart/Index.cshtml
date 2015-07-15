@@ -101,7 +101,8 @@
             f.submit();
         }
 
-    }
+    }
+
     //cart 삭제
     function cart_delete(idx) {
 
@@ -483,7 +484,7 @@
                                             </dl>
                                         </td>
                                         <td class="proprice">
-                                        @if (@item.SELLING_PRICE > 0)
+                                        @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
                                         {
                                             <del>@item.SELLING_PRICE.ToString("#,#0.") 원</del>
                                         }

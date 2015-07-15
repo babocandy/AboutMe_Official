@@ -46,5 +46,7 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public Nullable<int> USE_POINT { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
         public Nullable<int> POINT_ACCML { get; set; }
+        public int TRANS_PRICE { get; set; }
+        public Nullable<int> TRANS_COUPON { get; set; }
     }
 }
