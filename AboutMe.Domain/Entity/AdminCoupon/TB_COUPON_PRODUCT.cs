@@ -7,14 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AboutMe.Domain.Entity.AdminOrder
+namespace AboutMe.Domain.Entity.AdminCoupon
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_ORDER_CODE
+    public partial class TB_COUPON_PRODUCT
     {
         public int IDX { get; set; }
-        public System.DateTime REG_DATE { get; set; }
+        public string CD_COUPON { get; set; }
+        public string P_CODE { get; set; }
+        public string USABLE_YN { get; set; }
+        public Nullable<System.DateTime> INS_DATE { get; set; }
     }
 }

@@ -40,13 +40,17 @@
         function frmCheck() {
             //alert("여기입니다");
 
+
+            /**
             var f = document.frm01;
+
 
             if (f.SEL_PMO_PRODUCT_CATEGORY.value == '') {
                 alert("프로모션 종류를 선택하세요.");
                 f.SEL_PMO_PRODUCT_CATEGORY.focus();
                 return false;
             }
+            **/
 
         }
 
@@ -141,7 +145,7 @@
 
                                                 <tr>
                                                     <th>최종할인가(수기입력)</th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_PRICE, new { cssClass = "input-sm text-left" }) @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_PRICE)</td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_PRICE, new { cssClass = "input-sm text-left" }) <FONT color="RED">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.PMO_PRICE)</FONT></td>
 
                                                 </tr>
 
@@ -161,8 +165,16 @@
                                                 <tr>
                                                     <th>활성화/비활성화 </th>
                                                     <td>
-                                                        @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "N") 비활성화
-                                                    </td>
+                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N") { 
+                                                            @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "Y") <text> 활성화</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "Y",new {disabled = "true"}) <text>활성화 <font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
+                                                        }
+                                                        @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "N", new { Checked = "true" }) 비활성화
+                                                        <font color="RED">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN)</font>
+</td>
 
                                                 </tr>
 

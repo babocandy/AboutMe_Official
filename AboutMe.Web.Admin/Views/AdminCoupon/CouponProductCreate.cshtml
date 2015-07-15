@@ -1,0 +1,252 @@
+﻿@model AboutMe.Web.Admin.Controllers.AdminCouponController.MyMultiModelForProductForCreate
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@functions{
+    protected string DisplayPromotionByTotalCheck(string CdPromotionTotal, int PRODUCT_PRICE_IDX)
+    {
+
+        string rtn = "";
+
+        //string[] Gv = GradeVal.Split('$');
+
+        List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result> PRD_VS_TOTAL =
+       ViewData["SP_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result>;
+
+
+        var qry = from PT in PRD_VS_TOTAL
+                  where PT.CD_PROMOTION_TOTAL == CdPromotionTotal && PT.PRODUCT_PRICE_IDX == PRODUCT_PRICE_IDX
+                  select PT;
+
+        if (qry.Count() > 0)
+        {
+            rtn = "checked";
+        }
+
+
+        return rtn;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    protected bool IsOverStartTime(DateTime StartDate)
+    {
+
+        bool rtn = false;
+
+        if (DateTime.Now > StartDate)
+        {
+            rtn = true;
+        }
+
+
+        return rtn;
+    }
+
+
+    protected bool IsOverEndingTime(DateTime EndDate)
+    {
+
+        bool rtn = false;
+
+        if (DateTime.Now > EndDate)
+        {
+            rtn = true;
+        }
+
+
+        return rtn;
+    }
+
+
+
+    protected string PrintCheckboxDisable(string CdCouponVsPCode)
+    {
+
+        string[] arr = CdCouponVsPCode.Split('$');
+        string rtn = "";
+
+        if(arr.Length == 2)
+        {
+            if (arr[0] != "" && arr[0].Length == 6)
+            {
+                rtn = "disabled=true";
+            }
+        }
+
+        return rtn;
+    }
+}
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            var bSuccess = '@TempData["bSuccess"]';
+            if(bSuccess){
+                alert("프로모션정보가 등록되었습니다!");
+            }
+        });
+
+
+        function allChk(obj) {
+            var f = document.frm02;
+      
+            for(var i =0 ; f.Check_ins_cd_coupon.length > i ; i++ )
+            {
+                if(obj.checked == false)
+                {
+                    f.Check_ins_cd_coupon[i].checked = false;
+                }
+                else
+                {
+                    f.Check_ins_cd_coupon[i].checked = true;
+                }
+            }
+        }
+    </script>
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="tar mb10">
+            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductCreate?CdCoupon=@Request["CdCoupon"]">상품 등록</a>
+            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+        </div>
+
+        <div class="panel">
+            <h3 class="sub-header">기본설정</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
+                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>쿠폰적용 상품 리스트</h4>
+            <form name="frm01" id="frm01" aciton="/AdminCoupon/CouponProductCreate" method="post">
+                <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"]" /> 
+
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="vam">검색</th>
+                                                    <td class="condition_seacth">
+                                                        <select name="SearchCol" style="width:170px;">
+                                                            <option>-선택하세요-</option>
+                                                            <option value="P_NAME" @if (ViewBag.SearchCol == "P_NAME") {  <text> selected</text> }>상품명</option>
+                                                            <option value="P_CODE" @if (ViewBag.SearchCol == "P_CODE") {  <text> selected</text> }>상품코드</option>
+
+                                                        </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
+                                                        <!--<a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>-->
+                                                        <input type="submit" value=" Search >> ">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+            </form>
+
+        </div>
+
+
+@using (Html.BeginForm("CouponProductCreateProc", "AdminCoupon", FormMethod.Post, new { id = "frm02", name = "frm02", onsubmit = "return frmCheck();" }))
+{ 
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+    <input type="hidden" name="CdCoupon" id="CdCoupon" value="@Request["CdCoupon"]" />
+        <div class="panel">
+            <h4>쿠폰적용 상품 리스트</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup>
+                    <col width="5%" />
+                    <col width="12%" />
+                    <col width="9%" />
+                    <col width="9%" />
+                    <col width="*" />
+                    <col width="7%" />
+                    <col width="9%" />
+                    <col width="9%" />
+                    <col width="7%" />
+                    <col width="7%" />
+                    <col width="7%" />
+                    <col width="7%" />
+
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone"><input type="checkbox" id="dummy" onclick="allChk(this);" /></th>
+                        <th scope="col">상품코드</th>
+                        <th scope="col">상품명</th>
+
+                        <th scope="col">DEPTH1_NAME</th>
+                        <th scope="col">DEPTH2_NAME</th>
+                        <th scope="col">DEPTH3_NAME</th>
+
+                        <th scope="col">생성일자</th>
+                        <th scope="col">활성화/비활성화</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        string str_check_ins_cd_coupon = "";
+                     }
+                    @foreach (var item in Model.inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result)
+                    {
+                         
+                        str_check_ins_cd_coupon = item.CD_COUPON + "$" + item.P_CODE;
+                         
+                        <tr>
+                            <td class="brnone"><input type="checkbox" id="Check_ins_cd_coupon" name="Check_ins_cd_coupon" value="@str_check_ins_cd_coupon" @PrintCheckboxDisable(@str_check_ins_cd_coupon) /></td>
+                            <td>@Html.DisplayFor(modelItem => item.P_CODE)</td>
+                            <td>@Html.DisplayFor(modelItem => item.P_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH1_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH2_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH3_NAME)</td>
+                            <td>@item.INS_DATE</td>
+                            <td>@item.USABLE_YN</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="btn_area">
+            <a class="btn btn-default middium" href="javascript:document.frm02.submit();"> 선택한 상품을 적용 >> </a>
+            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductList"> 상위(쿠폰 적용상품)리스트 </a>
+        </div>
+
+     }
+
+
+    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+
+
+
+  }

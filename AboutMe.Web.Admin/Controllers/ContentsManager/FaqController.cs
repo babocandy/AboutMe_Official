@@ -89,7 +89,7 @@ namespace AboutMe.Web.Admin.Controllers.ContentsManager
     #endregion
 
     [CustomAuthorize]
-    public class FaqController : BaseAdminController
+    public class FaqController : Controller
     {
         private IFaqService _faqservice;
         public FaqController(IFaqService _faqservice)

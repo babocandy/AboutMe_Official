@@ -8,19 +8,19 @@
 
 @section Scripts{
 
-   @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
-   {
-         if(TempData["jsMessage"] == "-1")
-         {  
-             <text>
+    @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+    {
+        if (TempData["jsMessage"] == "-1")
+        {
+            <text>
                 <script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>
-             </text>
-         }
+            </text>
+        }
 
         if (TempData["jsMessage"] == "-2")
         {
             <text>
-               <script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
+                <script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
             </text>
         }
 
@@ -30,7 +30,7 @@
                 <script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
             </text>
         }
-   }
+    }
 
 
     <script language="javascript">
@@ -52,7 +52,7 @@
 
         function setProductCategory(obj_selectbox, sel_index) {
 
-           // alert(obj_selectbox[sel_index].value);
+            // alert(obj_selectbox[sel_index].value);
             var f = document.frm01;
             f.inst_TB_PROMOTION_BY_PRODUCT_PMO_PRODUCT_CATEGORY.value = obj_selectbox.options[sel_index].value;
 
@@ -66,7 +66,7 @@
 
             }
 
-            if (obj_selectbox[sel_index].value == "02") //1+1 
+            if (obj_selectbox[sel_index].value == "02") //1+1
             {
                 f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = true;
                 f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = false;
@@ -81,7 +81,7 @@
 
         }
 
-  
+
     </script>
 
 }
@@ -136,7 +136,7 @@
                                                     </td>
 
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <th>프로모션 Main Title </th>
                                                     <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" }) </td>
@@ -177,7 +177,7 @@
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_ONEONE_MULTIPLE_CNT, new { cssClass = "input-sm text-left" }) ( <font color="red">ex:</font> ) (*)1+1의 경우 기본적으로 '2' 를 입력합니다  </td>
 
                                                 </tr>
-                    
+
                                                 <tr>
                                                     <th>프로모션시작일시 (YYYY-MM-DD) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DATE_FROM)</td>

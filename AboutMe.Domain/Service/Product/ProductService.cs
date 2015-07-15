@@ -15,14 +15,14 @@ namespace AboutMe.Domain.Service.Product
         #region 상품
 
         #region 상품 리스트
-        public List<SP_PRODUCT_SEL_Result> GetProductList()
+        public List<SP_PRODUCT_SEL_Result> GetProductList(Product_front_search_entity product_front_search_entity)
         {
 
             List<SP_PRODUCT_SEL_Result> lst = new List<SP_PRODUCT_SEL_Result>();
             using (ProductEntities ProductContext = new ProductEntities())
             {
                 //try {
-                    lst = ProductContext.SP_PRODUCT_SEL().ToList();
+                lst = ProductContext.SP_PRODUCT_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN).ToList();
                  //}catch
                  //{
                  //      ProductContext.Dispose();
@@ -35,7 +35,7 @@ namespace AboutMe.Domain.Service.Product
         #endregion
 
         #region 상품 카운트
-        public int GetProductCnt()
+        public int GetProductCnt(Product_front_search_entity product_front_search_entity)
         {
             List<SP_PRODUCT_CNT_Result> lst = new List<SP_PRODUCT_CNT_Result>();
             int productCount = -1;
@@ -43,7 +43,7 @@ namespace AboutMe.Domain.Service.Product
             using (ProductEntities ProductContext = new ProductEntities())
             {
 
-                lst = ProductContext.SP_PRODUCT_CNT().ToList();
+                lst = ProductContext.SP_PRODUCT_CNT(product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN).ToList();
                 if (lst != null && lst.Count > 0)
                     productCount = lst[0].COUNT;
                 /** }catch()

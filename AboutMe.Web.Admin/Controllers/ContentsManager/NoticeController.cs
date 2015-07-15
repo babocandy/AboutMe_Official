@@ -90,7 +90,7 @@ namespace AboutMe.Web.Admin.Controllers.ContentsManager
     #endregion
 
     [CustomAuthorize]
-    public class NoticeController : BaseAdminController
+    public class NoticeController : Controller
     {
         private INoticeService _noticeservice;
         public NoticeController(INoticeService _noticeservice)

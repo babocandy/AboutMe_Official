@@ -7,12 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AboutMe.Domain.Entity.AdminOrder
+namespace AboutMe.Domain.Entity.AdminCoupon
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_ADMIN_ORDER_LIST_Cnt
+    public partial class TB_COUPON_MEMBER_GRADE
     {
-        public int COUNT { get; set; }
+        public int IDX { get; set; }
+        public string CD_COUPON { get; set; }
+        public string M_GBN { get; set; }
+        public string M_GRADE { get; set; }
     }
 }

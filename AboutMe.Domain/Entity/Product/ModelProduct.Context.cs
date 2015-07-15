@@ -29,16 +29,6 @@ namespace AboutMe.Domain.Entity.Product
     
         public virtual DbSet<TB_LOG_USER> TB_LOG_USER { get; set; }
     
-        public virtual ObjectResult<SP_PRODUCT_CNT_Result> SP_PRODUCT_CNT()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_CNT_Result>("SP_PRODUCT_CNT");
-        }
-    
-        public virtual ObjectResult<SP_PRODUCT_SEL_Result> SP_PRODUCT_SEL()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEL_Result>("SP_PRODUCT_SEL");
-        }
-    
         public virtual ObjectResult<SP_PRODUCT_DETAIL_VIEW_Result> SP_PRODUCT_DETAIL_VIEW(string p_CODE)
         {
             var p_CODEParameter = p_CODE != null ?
@@ -88,6 +78,64 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("DEPTH2_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORY_DEPTH_SEL_Result>("SP_CATEGORY_DEPTH_SEL", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_CNT_Result> SP_PRODUCT_CNT(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN)
+        {
+            var p_CATE_CODEParameter = p_CATE_CODE != null ?
+                new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
+                new ObjectParameter("P_CATE_CODE", typeof(string));
+    
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            var l_CATE_CODEParameter = l_CATE_CODE != null ?
+                new ObjectParameter("L_CATE_CODE", l_CATE_CODE) :
+                new ObjectParameter("L_CATE_CODE", typeof(string));
+    
+            var sORT_GBNParameter = sORT_GBN != null ?
+                new ObjectParameter("SORT_GBN", sORT_GBN) :
+                new ObjectParameter("SORT_GBN", typeof(string));
+    
+            var p_OUTLET_YNParameter = p_OUTLET_YN != null ?
+                new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
+                new ObjectParameter("P_OUTLET_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_CNT_Result>("SP_PRODUCT_CNT", p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_SEL_Result> SP_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var p_CATE_CODEParameter = p_CATE_CODE != null ?
+                new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
+                new ObjectParameter("P_CATE_CODE", typeof(string));
+    
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            var l_CATE_CODEParameter = l_CATE_CODE != null ?
+                new ObjectParameter("L_CATE_CODE", l_CATE_CODE) :
+                new ObjectParameter("L_CATE_CODE", typeof(string));
+    
+            var sORT_GBNParameter = sORT_GBN != null ?
+                new ObjectParameter("SORT_GBN", sORT_GBN) :
+                new ObjectParameter("SORT_GBN", typeof(string));
+    
+            var p_OUTLET_YNParameter = p_OUTLET_YN != null ?
+                new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
+                new ObjectParameter("P_OUTLET_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEL_Result>("SP_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter);
         }
     }
 }

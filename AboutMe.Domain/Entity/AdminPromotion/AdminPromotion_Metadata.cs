@@ -98,6 +98,8 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public string PMO_ONE_ONE_P_CODE { get; set; }
         [Range(0, 1000000, ErrorMessage = "0~1000000 사이의 숫자형식으로 입력하세요.")]
         public Nullable<int> PMO_ONE_ONE_PRICE { get; set; }
+
+        [Required(ErrorMessage = "활성화여부를 선택하세요.")]
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
     }

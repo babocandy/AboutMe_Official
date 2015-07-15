@@ -41,5 +41,10 @@ namespace AboutMe.Web.Front.Controllers
 
             return View();
         }
+
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model  IEnumerable<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>
+﻿@model AboutMe.Web.Admin.Controllers.AdminCouponController.MyMultiModelForProduct
 
 @{
     ViewBag.Title = "Index";
@@ -38,7 +38,7 @@
         <!--//path-->
 
         <div class="tar mb10">
-            <a class="btn btn-default middium" href="/AdminPromotion/PrdCreate">신규 프로모션 등록 </a>
+            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductCreate?CdCoupon=@Request["CdCoupon"]">상품 등록</a>
             <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
         </div>
 
@@ -53,10 +53,8 @@
         </div>
 
         <div class="panel">
-            <h4>배송정책</h4>
-
-            @{ var selected_str = "selected";}
-            @using (Html.BeginForm("PrdIndex", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            <h4>쿠폰적용 상품 리스트</h4>
+            @using (Html.BeginForm("CouponProductList", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -69,60 +67,65 @@
                                                     <td class="condition_seacth">
                                                         <select name="SearchCol" style="width:170px;">
                                                             <option>-선택하세요-</option>
-                                                            <option value="PMO_TOTAL_NAME" @if (ViewBag.SearchCol == "PMO_TOTAL_NAME") { @selected_str     ; }>프로모션명</option>
+                                                            <option value="P_NAME" @if (ViewBag.SearchCol == "P_NAME")
+                                                                                   {  <text> selected</text> }>상품명</option>
+                                                            <option value="P_CODE" @if (ViewBag.SearchCol == "P_CODE") {  <text> selected</text> }>상품코드</option>
+
                                                         </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
-                                                        <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                        <!--<a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>-->
                                                         <input type="submit" value=" Search >> ">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
             }
-
         </div>
 
         <div class="panel">
-            <h4>상품별 프로모션 리스트</h4>
+            <h4>쿠폰적용 상품 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
-                <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="20%" /><col width="*" /><col width="8%" /></colgroup>
+                <colgroup>
+                    <col width="5%" />
+                    <col width="12%" />
+                    <col width="9%" />
+                    <col width="9%" />
+                    <col width="*" />
+                    <col width="7%" />
+                    <col width="9%" />
+                    <col width="9%" />
+                    <col width="7%" />
+                    <col width="7%" />
+                    <col width="7%" />
+                    <col width="7%" />
+
+                </colgroup>
                 <thead>
                     <tr>
                         <th scope="col" class="brnone">No</th>
-                        <th scope="col">프로모션명</th>
-                        <th scope="col">카테고리</th>
-                        <th scope="col">정률/정액</th>
-                        <!--
-                        <th scope="col">할인적용율</th>
-                        <th scope="col">할인액</th>
-                        -->
-                        <th scope="col">시작일자</th>
-                        <th scope="col">종료일자</th>
-                        <th scope="col">작성일자</th>
-                        <th scope="col">활성화</th>
-                        <th scope="col">관련상품edit</th>
+                        <th scope="col">상품코드</th>
+                        <th scope="col">상품명</th>
+
+                        <th scope="col">DEPTH1_NAME</th>
+                        <th scope="col">DEPTH2_NAME</th>
+                        <th scope="col">DEPTH3_NAME</th>
+
+                        <th scope="col">생성일자</th>
+                        <th scope="col">활성화/비활성화</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.inst_SP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result)
                     {
                         <tr>
                             <td class="brnone">@item.IDX</td>
-
-                            <td class="brnone"><b>@Html.ActionLink(item.PMO_PRODUCT_NAME, "PrdUpdate", new { CdPromotionPRODUCT = item.CD_PROMOTION_PRODUCT })</b></td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_CATEGORY_NAME)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
-                            
-                            <!--
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DISCOUNT_RATE)%</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DISCOUNT_MONEY)</td>
-                            -->
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DATE_FROM)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DATE_TO)</td>
+                            <td>@Html.DisplayFor(modelItem => item.P_CODE)</td>
+                            <td>@Html.DisplayFor(modelItem => item.P_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH1_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH2_NAME)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DEPTH3_NAME)</td>
                             <td>@item.INS_DATE</td>
                             <td>@item.USABLE_YN</td>
-                            <td > <b>@Html.ActionLink("[상품가격정책추가/편집]", "PrdPricingIndex", new { CdPromotionProduct = item.CD_PROMOTION_PRODUCT })</b></td>
                         </tr>
                     }
                 </tbody>
