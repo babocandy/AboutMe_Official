@@ -60,6 +60,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ChildStaffRequest_REF_BASEDB(string STAFF_ID = "")
         {
+            this.ViewBag.STAFF_ID = STAFF_ID;
             return View(_AdminFrontMemberService.GetAdminMemberStaffRequest_REF_BASEDB(STAFF_ID));
         }
 
@@ -67,6 +68,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ChildStaffRequest_REF_MEMBER(string STAFF_ID = "")
         {
+            this.ViewBag.STAFF_ID = STAFF_ID;
             return View(_AdminFrontMemberService.GetAdminMemberStaffRequest_REF_MEMBER(STAFF_ID));
         }
 
@@ -74,6 +76,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ChildStaffRequest_REF_REQUEST(string STAFF_ID = "")
         {
+            this.ViewBag.STAFF_ID = STAFF_ID;
             return View(_AdminFrontMemberService.GetAdminMemberStaffRequest_REF_REQUEST(STAFF_ID));
         }
 

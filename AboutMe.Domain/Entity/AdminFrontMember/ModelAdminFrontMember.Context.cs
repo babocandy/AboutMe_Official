@@ -410,15 +410,6 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB", sTAFF_IDParameter);
         }
     
-        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER(string sTAFF_ID)
-        {
-            var sTAFF_IDParameter = sTAFF_ID != null ?
-                new ObjectParameter("STAFF_ID", sTAFF_ID) :
-                new ObjectParameter("STAFF_ID", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER", sTAFF_IDParameter);
-        }
-    
         public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result> SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST(string sTAFF_ID)
         {
             var sTAFF_IDParameter = sTAFF_ID != null ?
@@ -426,6 +417,15 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
                 new ObjectParameter("STAFF_ID", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST", sTAFF_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER(string sTAFF_ID)
+        {
+            var sTAFF_IDParameter = sTAFF_ID != null ?
+                new ObjectParameter("STAFF_ID", sTAFF_ID) :
+                new ObjectParameter("STAFF_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER", sTAFF_IDParameter);
         }
     }
 }

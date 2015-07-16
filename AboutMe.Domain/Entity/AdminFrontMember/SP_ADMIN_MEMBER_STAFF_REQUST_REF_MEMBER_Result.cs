@@ -22,5 +22,6 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
         public Nullable<System.DateTime> M_STAFF_APPROV_DATE { get; set; }
         public string M_IS_RETIRE { get; set; }
         public Nullable<System.DateTime> M_DEL_DATE { get; set; }
+        public System.DateTime M_CREDATE { get; set; }
     }
 }
