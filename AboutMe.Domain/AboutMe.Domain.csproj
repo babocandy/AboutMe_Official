@@ -230,10 +230,10 @@
     <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result.cs">
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result.cs">
+    <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result.cs">
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result.cs">
+    <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result.cs">
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminOrder\AdminOrderUserModel.cs" />
@@ -565,6 +565,21 @@
     <Compile Include="Entity\Product\TB_LOG_USER.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Review\ModelReview.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelReview.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\ModelReview.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\ModelReview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelReview.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
@@ -595,7 +610,6 @@
     <Compile Include="Service\Product\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entity\AdminOrder\" />
     <Folder Include="Entity\Etc\" />
     <Folder Include="Entity\Order\" />
     <Folder Include="Service\Etc\" />
@@ -806,6 +820,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelProduct.edmx</DependentUpon>
       <LastGenOutput>ModelProduct.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Review\ModelReview.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelReview.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Review\ModelReview.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelReview.edmx</DependentUpon>
+      <LastGenOutput>ModelReview.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Review\ModelReview.edmx.diagram">
+      <DependentUpon>ModelReview.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Review\ModelReview.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelReview.edmx</DependentUpon>
+      <LastGenOutput>ModelReview.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

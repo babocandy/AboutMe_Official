@@ -341,8 +341,13 @@
     </div>
             
   <!-- 사번기준 기타정보1:임직원DB -->
+            { Html.RenderAction("ChildStaffRequest_REF_BASEDB", "CommonChildAction", new { STAFF_ID = @Model.STAFF_ID }); }
 
+ <!-- 사번기준 기타정보2:회원 -->
+            { Html.RenderAction("ChildStaffRequest_REF_MEMBER", "CommonChildAction", new { STAFF_ID = @Model.STAFF_ID }); }
 
+ <!-- 사번기준 기타정보3:임직원신청이력 -->
+            { Html.RenderAction("ChildStaffRequest_REF_REQUEST", "CommonChildAction", new { STAFF_ID = @Model.STAFF_ID }); }
 
 
 
