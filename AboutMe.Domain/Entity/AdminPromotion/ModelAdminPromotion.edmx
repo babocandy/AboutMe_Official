@@ -270,6 +270,12 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Parameter Name="TARGET_PMO_PRODUCT_DATE_FROM" Type="datetime" Mode="In" />
           <Parameter Name="TARGET_PMO_PRODUCT_DATE_TO" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PMO_PRODUCT_CATEGORY" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelAdminPromotionStoreContainer">
           <EntitySet Name="TB_PROMOTION_BY_TOTAL" EntityType="Self.TB_PROMOTION_BY_TOTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_PROMOTION_BY_PRODUCT" EntityType="Self.TB_PROMOTION_BY_PRODUCT" store:Type="Tables" store:Schema="dbo">
@@ -523,6 +529,12 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
             <Parameter Name="USABLE_YN" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL" ReturnType="Collection(ModelAdminPromotion.SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result)">
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL" ReturnType="Collection(ModelAdminPromotion.SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result)">
+            <Parameter Name="PMO_PRODUCT_CATEGORY" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_PROMOTION_BY_TOTAL_CATEGORY">
           <Key>
@@ -694,6 +706,25 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Property Type="DateTime" Name="PMO_TOTAL_DATE_TO" Nullable="true" Precision="23" />
           <Property Type="String" Name="USABLE_YN" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result">
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result">
+          <Property Type="String" Name="CD_PROMOTION_PRODUCT" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="PMO_PRODUCT_MAIN_TITLE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PMO_PRODUCT_SUB_TITLE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PMO_PRODUCT_SHOPPING_TIP" Nullable="true" MaxLength="50" />
+          <Property Type="Byte" Name="PMO_ONEONE_MULTIPLE_CNT" Nullable="true" />
+          <Property Type="Byte" Name="PMO_SET_DISCOUNT_CNT" Nullable="true" />
+          <Property Type="DateTime" Name="PMO_PRODUCT_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="PMO_PRODUCT_DATE_TO" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1028,6 +1059,33 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL" FunctionName="ModelAdminPromotion.Store.SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result">
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL" FunctionName="ModelAdminPromotion.Store.SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result">
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
+                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
+                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

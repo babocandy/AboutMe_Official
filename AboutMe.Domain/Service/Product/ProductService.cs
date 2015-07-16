@@ -22,7 +22,7 @@ namespace AboutMe.Domain.Service.Product
             using (ProductEntities ProductContext = new ProductEntities())
             {
                 //try {
-                lst = ProductContext.SP_PRODUCT_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN).ToList();
+                lst = ProductContext.SP_PRODUCT_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN, product_front_search_entity.P_CATE_CODE_3DEPTH).ToList();
                  //}catch
                  //{
                  //      ProductContext.Dispose();
@@ -43,7 +43,7 @@ namespace AboutMe.Domain.Service.Product
             using (ProductEntities ProductContext = new ProductEntities())
             {
 
-                lst = ProductContext.SP_PRODUCT_CNT(product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN).ToList();
+                lst = ProductContext.SP_PRODUCT_CNT(product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN, product_front_search_entity.P_CATE_CODE_3DEPTH).ToList();
                 if (lst != null && lst.Count > 0)
                     productCount = lst[0].COUNT;
                 /** }catch()

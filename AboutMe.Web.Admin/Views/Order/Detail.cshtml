@@ -6,6 +6,8 @@
 
 }
 @section Scripts{
+    <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
     <script language="javascript">
         function PopupMember(member_id)
         {
@@ -107,6 +109,34 @@
                 f.submit();
             }
         }
+
+
+        //기능별 상세팝업 :
+        function fPopPersonalDetail(argKIND, strM_ID) {
+            var xurl = "";
+            var wid = "1000";
+            var hei = "600";
+            var tar = "PERSONAL_POP";
+
+            xurl = "/AdminOrder/Index?M_ID=" + strM_ID;  //default
+            if (argKIND == "ORDER") {
+                xurl = "/AdminOrder/Index?M_ID=" + strM_ID;
+            }
+            else if (argKIND == "POINT") {
+                xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
+            }
+            else if (argKIND == "COUPON") {
+                xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
+            }
+            else if (argKIND == "QNA") {
+                xurl = "/AdminQna/Index?M_ID=" + strM_ID;
+            }
+            else if (argKIND == "MEMBER_INFO") {
+                xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
+            }
+            ow_yes(xurl, tar, wid, hei); //팝업
+        }
+
     </script>
 }
 @section Left {
@@ -237,10 +267,10 @@
 		<thead>
 			<tr>
 				<th>상품명</th>
-				<th>수량</th>
 				<th>적용<br />프로모션</th>
 				<th>상품금액</th>
 				<th>임직원<br />판매액</th>
+                <th>수량</th>
 				<th>쿠폰<br />할인액</th>
 				<th>사용쿠폰</th>
 				<th>포인트<br />사용액</th>
@@ -261,7 +291,6 @@
 					@item.P_NAME <br />
                     (@item.P_CODE)
 				</td>
-				<td>@item.P_COUNT</td>
 				<td>@item.PROMOTION</td>
 				<td>
                     @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
@@ -271,6 +300,7 @@
                     @String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)원
                 </td>
 				<td>@String.Format("{0:#,#0.}", @item.EMP_DISCOUNT_PRICE)원</td>
+                <td>@item.P_COUNT</td>
 				<td>@String.Format("{0:#,#0.}", @item.COUPON_DISCOUNT)원</td>
 				<td>@item.COUPON</td>
 				<td>@String.Format("{0:#,#0.}", @item.USE_POINT)원</td>
@@ -473,7 +503,7 @@
                 @if (@Model.BodyInfo.ORDER_ID != "(비회원)")
                 {
                     @Html.Raw("(" + @Model.BodyInfo.ORDER_ID + ")  ");
-                    @Html.Raw(new HtmlString("<a href='#none' onclick=\"PopupMember('" + @Model.BodyInfo.ORDER_ID.ToString() + "')\" class='btn btn-success small'>회원정보보기</a>"));
+                    @Html.Raw(new HtmlString("<a href='#none' onclick=\"fPopPersonalDetail('MEMBER_INFO','" + @Model.BodyInfo.ORDER_ID.ToString() + "')\" class='btn btn-success small'>회원정보보기</a>"));
                 }
                 else
                 {

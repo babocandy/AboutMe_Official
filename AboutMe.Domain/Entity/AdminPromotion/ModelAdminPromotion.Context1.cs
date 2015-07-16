@@ -561,5 +561,23 @@ namespace AboutMe.Domain.Entity.AdminPromotion
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE", cD_PROMOTION_PRODUCTParameter, uSABLE_YNParameter);
         }
+    
+        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL(string cD_PROMOTION_PRODUCT)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result>("SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL", cD_PROMOTION_PRODUCTParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL(string pMO_PRODUCT_CATEGORY)
+        {
+            var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
+                new ObjectParameter("PMO_PRODUCT_CATEGORY", pMO_PRODUCT_CATEGORY) :
+                new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>("SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL", pMO_PRODUCT_CATEGORYParameter);
+        }
     }
 }

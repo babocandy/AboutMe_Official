@@ -34,6 +34,8 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Notice.INoticeService, AboutMe.Domain.Service.Notice.NoticeService>(); //Notice
             container.RegisterType<AboutMe.Domain.Service.Cart.ICartService, AboutMe.Domain.Service.Cart.CartService>(); //Cart
 
+            container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //Cart
+
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
             container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());
