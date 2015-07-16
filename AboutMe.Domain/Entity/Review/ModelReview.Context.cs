@@ -12,6 +12,8 @@ namespace AboutMe.Domain.Entity.Review
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ReviewEntities : DbContext
     {
@@ -25,5 +27,14 @@ namespace AboutMe.Domain.Entity.Review
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual ObjectResult<SP_REVIEW_READY_SEL_Result> SP_REVIEW_READY_SEL(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_READY_SEL_Result>("SP_REVIEW_READY_SEL", m_IDParameter);
+        }
     }
 }

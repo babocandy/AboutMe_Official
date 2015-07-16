@@ -580,6 +580,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelReview.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_READY_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
@@ -608,6 +611,8 @@
     <Compile Include="Entity\Common\USER_PROFILE.cs" />
     <Compile Include="Service\Product\IProductService.cs" />
     <Compile Include="Service\Product\ProductService.cs" />
+    <Compile Include="Service\Review\IReviewService.cs" />
+    <Compile Include="Service\Review\ReviewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\Etc\" />
