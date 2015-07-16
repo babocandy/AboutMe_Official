@@ -1,0 +1,361 @@
+﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_TOTAL*@
+
+@model AboutMe.Web.Front.Controllers.EventController.MyMultiModelForPromotionProduct
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+   <link href="/aboutCom/css/event.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+    <script language="javascript">
+
+        $(function () {
+            //ajaxSelectCateCodeJavascriptInit();
+        });
+
+        function bsearch() {
+            var f = document.bform;
+            //alert('ok');
+            f.target = "";
+            f.PAGE.value = 1;
+            f.submit();
+        }
+
+        function pCateCode(code) {
+            //alert(code);
+            var f = document.bform;
+            f.P_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function cCateCode(code) {
+            var f = document.bform;
+            f.C_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function lCateCode(code) {
+            var f = document.bform;
+            f.L_CATE_CODE.value = code;
+            bsearch();
+        }
+
+        function sortGbn(code) {
+            var f = document.bform;
+            f.SORT_GBN.value = code;
+            bsearch();
+        }
+
+        function rePageSize() {
+            var f = document.aform;
+
+            f.target = "";
+            f.page.value = 1;
+            f.submit();
+        }
+
+    </script>
+
+
+    <script language="javascript">
+
+        //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+       /**
+        function AddCartClick(b) {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+            obj.p_count = $(b).attr('data-pcount');
+            arrP.push(obj);
+            Cart_Input(arrP);
+        }
+        **/
+    </script>
+
+
+<script language="javascript">
+
+    var pmo_set_discount_cnt = @Model.inst_PROMOTION_TOP_1_Result[0].PMO_SET_DISCOUNT_CNT;
+
+
+    function Calprice(sel_chkobj)
+    {
+        /**
+        document.getElementById("div_total_price").innerHTML = "";
+        document.getElementById("div_dc_price").innerHTML = "";
+        document.getElementById("div_result_price").innerHTML = "";
+        **/
+
+        var frmobj = document.frm001;
+        var sel_price = 0;
+        var sel_pmo_price = 0;
+
+        var total_price = 0 ;
+        var total_discount_price = 0 ;
+        var minus_price = 0 ;
+        var total_result_price = 0
+
+        var sel_arr , cur_arr ;
+        var pmo_set_selected_cnt = 0 ;
+
+        //alert(frmobj.ChkCalPrice.length);
+
+        for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+        {
+            if(frmobj.ChkCalPrice[i].checked == true)
+            {
+               //alert(frmobj.ChkCalPrice[i].value)
+                cur_arr= frmobj.ChkCalPrice[i].value.split('$');
+                //alert(cur_arr[1]);
+                total_price = parseInt(total_price) + parseInt(cur_arr[1]) ;
+                //alert(total_price);
+                total_discount_price =  parseInt(total_discount_price) +  parseInt(cur_arr[2]);
+                
+                
+                minus_price = minus_price - ( parseInt(cur_arr[1]) - parseInt(cur_arr[2]));
+                pmo_set_selected_cnt++;
+
+
+            }
+
+            //alert(total_discount_price);
+        }
+
+        if(pmo_set_selected_cnt >= pmo_set_discount_cnt )
+        {
+            total_result_price = total_discount_price  ;
+        }
+        else
+        {
+            minus_price = 0;
+            total_result_price = total_price;
+        }
+
+
+        document.getElementById("div_total_price").innerHTML = total_price;
+        document.getElementById("div_dc_price").innerHTML = minus_price;
+        document.getElementById("div_result_price").innerHTML = total_result_price;
+
+    }
+
+
+    //div_total , discount , result
+
+    //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+    function AddCartClick() {
+        
+                
+        var arrP = new Array;
+        var obj = new Object();
+
+        var frmobj = document.frm001 ;
+        var pcode = "" ; 
+
+        //alert(frmobj.ChkCalPrice.length);
+
+        for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+        {
+            if(frmobj.ChkCalPrice[i].checked == true)
+            {
+                cur_arr= frmobj.ChkCalPrice[i].value.split('$');
+                pcode = cur_arr[0] ;
+
+                /**
+                obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+                obj.p_count = $(b).attr('data-pcount');
+                **/
+
+                obj.p_code = pcode;//f.opt_p_code.value//P_CODE
+                obj.p_count = 1;
+                arrP.push(obj);
+            }
+
+            //alert(total_discount_price);
+        }
+
+        
+        Cart_Input(arrP);
+    }
+
+
+    //장바구니----아래 펑션을 변형해서 한번에 여러개를 넣으면 된다 
+    /**
+    function AddCartClick(b) {
+        var arrP = new Array;
+        var obj = new Object();
+        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+        obj.p_count = $(b).attr('data-pcount');
+        arrP.push(obj);
+        Cart_Input(arrP);
+    }
+
+    **/
+
+
+
+</script>
+
+
+
+
+
+
+
+    }
+
+
+<!--container-->
+@section Body{
+
+    <div class="wrap setgoods">
+        <!--header-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <!--//header-->
+        <!--container-->
+        <div id="container">
+            <div class="container100per">
+                <div class="inner">
+                    @{
+                        string FromYYYY = "", FromMM = "", FromDD = "";
+                        string ToYYYY = "", ToMM = "", ToDD = "";
+
+                        FromYYYY = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Year.ToString();
+                        FromMM = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Month.ToString().PadLeft(2,'0');
+                        FromDD = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Day.ToString().PadLeft(2,'0');
+
+                        ToYYYY = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Year.ToString();
+                        ToMM = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Month.ToString().PadLeft(2, '0');
+                        ToDD = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
+                    }
+                    <div class="txtbox">
+                        <span class="txt1"># <!--밤 9시 예뻐지는 시각-->@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE</span>
+                        <span class="txt2">
+                           <!-- <img src="/aboutCom/images/sample/txt_setgoods.png" alt="3개 이상 같이 구매해서 30% 할인 받자!" /></p> -->
+                            <img src="/aboutCom/images/sample/txt_setgoods.png" alt=">@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE" /></p>
+                           <!--<span class="date"><em>2015. 09. 01</em> ~ <em>2015. 09. 02</em></span> -->
+                            <span class="date"><em>@FromYYYY. @FromMM.  @FromDD</em> ~ <em>@ToYYYY. @ToMM.  @ToDD</em></span>
+                    </div>
+                    <!--상품리스트-->
+                    <div class="product_area">
+                        @using (Html.BeginForm("i", "test", FormMethod.Post, new { id = "frm001" , name = "frm001"  }))
+                        {
+                            <input type="hidden" id="testh" name="testh" value="000000000" /> 
+                            <fieldset>
+                                <legend>세트 상품 선택 폼</legend>
+                                <!--상품리스트-->
+                                <ul class="product_list">
+                                    @foreach (var item in Model.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)
+                                    {
+                                        <li>
+                                            <a href="/Shopping/Detail?pcode=@item.P_CODE" class="list">
+                                                <span class="photo">
+                                                    <!--
+                                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="">
+                                                     -->
+                                                    <img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" data-pic="@ViewBag.PRODUCT_PATH@item.OTHER_IMG1" class="item" alt="" />
+                                                </span>
+                                                <span class="info">
+                                                    <span class="tag"><span class="ico_new">NEW</span></span>
+                                                    <span class="title">
+                                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
+                                                        <em class="product_name">@item.P_NAME</em>
+                                                    </span>
+                                                    <em class="price">
+                                                        <del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                                                        <strong>@String.Format("{0:#,##0}", item.DISCOUNT_PRICE)원</strong>
+                                                    </em>
+                                                </span>
+                                            </a>
+
+                                            <a href="javascript:Cart_Product_Input('@item.P_CODE', 1);" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                            <label class="chkcon t2"><input type="checkbox" name="ChkCalPrice" id="ChkCalPrice" value="@item.P_CODE$@item.DISCOUNT_PRICE$@item.RESULT_PRICE" title="" onclick="Calprice(this);" /></label>
+                                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                                        </li>
+                                    }
+   
+                                 </ul>
+
+                                <div class="boxtyped mt20">
+                                    <ul class="priceview">
+                                        <li>
+                                            <span class="tit">총 구매 금액</span>
+                                            <div id="div_total_price">0</div>원
+                                        </li>
+                                        <li>
+
+                                            <span class="tit">할인 금액</span>
+                                            <div id="div_dc_price">0</div>원
+                                        </li>
+                                        <li class="total">
+                                            <span class="tit">총 결제 금액</span>
+                                            <div id="div_result_price">0</div>원
+                                        </li>
+                                    </ul>
+                                </div>
+ 
+                      <!--
+                    <div class="boxtyped mt20">
+                        <ul class="priceview">
+                            <li>
+                                <span class="tit">총 구매 금액</span>
+                                <span class="price"><strong>67,000</strong>원</span>
+                            </li>
+                            <li>
+
+                                <span class="tit">할인 금액</span>
+                                <span class="price"><strong>7,000</strong>원</span>
+                            </li>
+                            <li class="total">
+                                <span class="tit">총 결제 금액</span>
+                                <span class="price"><strong>6,000</strong>원</span>
+                            </li>
+                        </ul>
+                    </div>
+                          -->
+                            <div class="btn_link mt40">
+                                <a href="#" class="btn_brown_w185h60">
+                        바로 구매
+                                    </a><a href="javascript:AddCartClick();" class="btn_brown_w185h60 ml10"><img src="/aboutCom/images/event/ico_cart.png" class="cartimg" alt="" />쇼핑백</a>
+                                </div>
+                                <!--//상품리스트-->
+                            </fieldset>
+                 }
+             </div>
+
+
+
+
+
+
+
+                    <!--//상품리스트-->
+                    <a href="javscript:void(0)" class="tip_detail">
+                        <img src="/aboutCom/images/event/bg_tipdetail.png" width="100%" height="100%" alt="" />
+                        <span>낱개 구매는<br />할인 혜택이 없어요.</span>
+                    </a>
+                    <a href="javscript:void(0)" class="tip"><img src="/aboutCom/images/event/ico_tip.png" alt="TIP" /></a>
+                </div>
+            </div>
+        </div>
+
+
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+}
+<!--//footer-->
