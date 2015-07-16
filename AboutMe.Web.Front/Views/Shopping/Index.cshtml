@@ -33,15 +33,24 @@
             f.submit();
         }
 
-        function pCateCode(code) {
+        function pCateCode(code,depthName3) {
             //alert(code);
             var f = document.bform;
             f.P_CATE_CODE.value = code;
+            f.DEPTH_NAME3.value = depthName3;
+
+
+            //if (depthName3 == "전체") //유형별 선택시 3depth의 checked 값을 모두 false 처리한다.
+            //{
+            //유형별 선택시 3depth의 checked 값을 모두 false 처리한다.
+            NotAllchecked();
+            //}
+            //$('#span3depthname').html(depthName3); //3depth이름 넣어준다.
             bsearch();
         }
 
         function cCateCode(code) {
-            alert(code);
+            //alert(code);
             var f = document.bform;
             f.C_CATE_CODE.value = code;
             bsearch();
@@ -60,11 +69,35 @@
         }
 
         function rePageSize() {
-            var f = document.aform;
+            var f = document.bform;
 
             f.target = "";
             f.page.value = 1;
             f.submit();
+        }
+
+        //체크 박스 모두 체크
+        function NotAllchecked() {
+            var f = document.bform
+            f.DEPTH_NAME3.value = "";
+            var cbox;
+            cbox = document.bform.P_CATE_CODE_3DEPTH;
+            
+
+            if (cbox != undefined) {
+
+                if (cbox.length) {  // 여러 개일 경우
+                    for (var i = 0; i < cbox.length; i++) {
+
+                        cbox[i].checked = false;
+
+                    }
+
+                } else { // 한 개일 경우
+                    cbox.checked = false;
+
+                }
+            }
         }
 
     </script>
@@ -83,29 +116,74 @@
                             <input type="hidden" name="L_CATE_CODE" value="@ViewBag.L_CATE_CODE">
                             <input type="hidden" name="C_CATE_CODE" value="@ViewBag.C_CATE_CODE">
                             <input type="hidden" name="SORT_GBN" value="@ViewBag.SORT_GBN">
+                            <input type="hidden" name="P_CATE_CODE_3DEPTH_OLD" value="@ViewBag.P_CATE_CODE_3DEPTH">
+                            <input type="hidden" name="DEPTH_NAME3" value="@ViewBag.DEPTH_NAME3">
         <div id="container" class="display">
-            <div class="container100per beauty">
+            @{
+    //뷰티,헬스,셀렉샵 분기시 초기화 작업
+                var divClassGbn = "beauty";
+                var divClassImg = "/aboutCom/images/shopping/h2_beauty.png";
+                var divClassAlt = "BEAUTY 뷰티라인";
+
+                var subtitle1 = "유형별";
+                var subtitle2 = "피부고민별";
+                var subtitle3 = "라인별"; 
+                }
+@if (ViewBag.P_CATE_CODE.Substring(0, 3) == "101") //뷰티
+{
+    divClassGbn = "beauty";
+    divClassImg = "/aboutCom/images/shopping/h2_beauty.png";
+    divClassAlt = "BEAUTY 뷰티라인";
+    subtitle1 = "유형별";
+    subtitle2 = "피부고민별";
+    subtitle3 = "라인별";     
+}
+else if (ViewBag.P_CATE_CODE.Substring(0, 3) == "102") // 헬스
+{
+    divClassGbn = "health";
+    divClassImg = "/aboutCom/images/shopping/h2_health.png";
+    divClassAlt = "HEALTH 헬스라인";
+    subtitle1 = "유형별";
+    subtitle2 = "건강고민별";
+    subtitle3 = "라인별";
+    
+}
+else if (ViewBag.P_CATE_CODE.Substring(0, 3) == "103") //셀렉샵
+{
+    divClassGbn = "beauty";
+    divClassImg = "/aboutCom/images/shopping/h2_selectshop.png";
+    divClassAlt = "SELECT SHOP 셀렉샵";
+    subtitle1 = "브랜드별";
+    subtitle2 = "피부고민별";
+    subtitle3 = "라인별";
+}
+
+    
+
+            <div class="container100per @divClassGbn">
                 <div class="inner">
 
                     <!--display_top-->
                     <div class="display_top">
-                        <h2><img src="/aboutCom/images/shopping/h2_selectshop.png" alt="SELECT SHOP 셀렉샵" /></h2>
+                        <h2><img src="@divClassImg" alt="@divClassAlt" /></h2>
+
+
                         <div class="selecttypeC">
                             <!--현재 소팅 대분류 class "on" 사용-->
                             <div class="sort">
-                                <p class="tit">브랜드별
-                                    
-                                </p>
+                                <p class="tit">@subtitle1</p>
                                 <!--현재 소팅된 소분류 class "cnt" 사용합니다.-->
-                                <ul><li class="cnt"><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)100100">전체</a></li>
+                                <ul><li @if (ViewBag.P_CATE_CODE.ToString() == ViewBag.P_CATE_CODE.Substring(0, 3) + 100100)
+                                        { <text> class="cnt" </text>      } ><a href="#none" onclick="javascript:pCateCode('@ViewBag.P_CATE_CODE.Substring(0, 3)100100','전체');">전체</a></li>
+
                                     @{ var i = 0; }
                                     @foreach (var item in ViewData["CateCodeP"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
                                         <li @if (ViewBag.P_CATE_CODE.ToString() == @item.CATE_CODE.ToString())
-                                            { <text> class="cnt" </text>     }><a href="javascript:pCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
+                                            { <text> class="cnt" </text>     }><a href="javascript:pCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');">@item.DEPTH2_NAME</a></li>
 
-i++;
+                                    i++;
                                     }
                                     @*<li class="cnt"><a href="#">전체</a></li>
                                     <li><a href="#">엘라바쉐</a></li>
@@ -119,9 +197,10 @@ i++;
                                 </ul>
                             </div>
                             <div class="sort">
-                                <p class="tit">피부고민별</p>
+                                <p class="tit">@subtitle2</p>
                                 <ul>
-                                    <li><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)200100">전체</a></li>
+                                    <li @if (ViewBag.C_CATE_CODE.ToString() == "") { <text> class="cnt" </text> }><a href="" onclick="javascript:cCateCode('');">전체</a></li>
+
                                     @{ i = 0; }
                                     @foreach (var item in ViewData["CateCodeC"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
@@ -129,7 +208,7 @@ i++;
                                         <li @if (ViewBag.C_CATE_CODE.ToString() == @item.CATE_CODE.ToString())
                                             { <text> class="cnt" </text>    }><a href="javascript:cCateCode('@item.CATE_CODE');" onclick="javascript:cCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
 
-i++;
+                                    i++;
                                     }
                                     @*<li><a href="#">전체</a></li>
                                     <li><a href="#">수분/보습</a></li>
@@ -141,10 +220,12 @@ i++;
                                     <li><a href="#">생기/활력</a></li>*@
                                 </ul>
                             </div>
+@if (ViewBag.P_CATE_CODE.Substring(0, 3) != "102") //헬스에서는 제외
+{
                             <div class="sort">
-                                <p class="tit">라인별</p>
+                                <p class="tit">@subtitle3</p>
                                 <ul>
-                                    <li><a href="/shopping/Index?P_CATE_CODE=@ViewBag.CATE_CODE.Substring(0, 3)300100">전체</a></li>
+                                    <li @if (ViewBag.L_CATE_CODE.ToString() == "") { <text> class="cnt" </text>  }><a href="#none" onclick="javascript:lCateCode('');">전체</a></li>
                                     @{ i = 0; }
                                     @foreach (var item in ViewData["CateCodeL"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
@@ -152,7 +233,7 @@ i++;
                                         <li @if (ViewBag.L_CATE_CODE.ToString() == @item.CATE_CODE.ToString())
                                             { <text> class="cnt" </text>   } ><a href="javascript:lCateCode('@item.CATE_CODE');" onclick="javascript:lCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
 
-i++;
+                                        i++;
                                     }
                                     @*<li><a href="#">전체</a></li>
                                     <li><a href="#">수퍼아쿠아</a></li>
@@ -167,6 +248,7 @@ i++;
                                     <li><a href="#">더블리페어클래식</a></li>*@
                                 </ul>
                             </div>
+}    
                         </div>
                     </div>
                     <!--//display_top-->
@@ -176,20 +258,20 @@ i++;
                 <div class="display_bottom">
                     <!--상품리스트-->
                     <div class="product_area">
-                        @if (ViewBag.CATE_CODE.Substring(0, 3) == "101")
+                        @if ( (ViewBag.P_CATE_CODE.Substring(0, 3) == "101") && (ViewBag.P_CATE_CODE.Substring(3, 3) != "100") )
                         {
                          <!-- filter -->
                         <div class="filter">
-                            <span class="fti">스킨케어</span>
+                            <span class="fti" id="span3depthname">@ViewBag.DEPTH_NAME3</span>
                             <ul>
                                 
                                 @{ i = 0; }
                                 @foreach (var item in ViewData["3DEPTH"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                 {
-
-                                    <li @if (ViewBag.P_CATE_CODE_3DEPTH == "NEW") { <text> class="cnt" </text>   } ><label class="chkcon"><input type="checkbox" id="P_CATE_CODE_3DEPTH" name="P_CATE_CODE_3DEPTH" title="" value="@item.CATE_CODE"> <span class="txt">@item.DEPTH3_NAME</span></label></li>
-                                    i++;
-                                }
+                                    <li 
+                                @if ( (!String.IsNullOrEmpty(ViewBag.P_CATE_CODE_3DEPTH)) && (ViewBag.P_CATE_CODE_3DEPTH.ToString().IndexOf(item.CATE_CODE) != -1) ) { <text> class="cnt" </text>    }><label class="chkcon"><input type="checkbox" id="P_CATE_CODE_3DEPTH" name="P_CATE_CODE_3DEPTH" title="" value="@item.CATE_CODE" @if ((!String.IsNullOrEmpty(ViewBag.P_CATE_CODE_3DEPTH)) && (ViewBag.P_CATE_CODE_3DEPTH.ToString().IndexOf(item.CATE_CODE) != -1)) { <text> checked </text>     }> <span class="txt">@item.DEPTH3_NAME</span></label></li>
+                                i++;
+                        }
                                 @*<li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">스킨</span></label></li>
                                 <li><label class="chkcon"><input type="checkbox" name="" title=""> <span class="txt">로션</span></label></li>
@@ -203,8 +285,7 @@ i++;
                         <!-- filter -->
                         }
                         <div class="product_top">
-                            <span class="totaltxt">총 @ViewBag.TotalRecord 개의 상품이 있습니다.
-                                <a href="javascript:document.bform.submit();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a></span>
+                            <span class="totaltxt">총 @ViewBag.TotalRecord 개의 상품이 있습니다. <a href="javascript:document.bform.submit();">검색</a></span>
                             <!--분류-->
                             <ul class="sort">
                                 <li @if (ViewBag.SORT_GBN == "NEW"){ <text> class="cnt" </text>  } ><a href="javascript:sortGbn('NEW');" onclick="javascript:sortGbn('NEW');">신상품순</a></li>
@@ -228,16 +309,16 @@ i++;
                                         <span class="info">
                                             <span class="ico ico_new">NEW</span>
                                             <span class="title">
-                                                <em class="product_tit">@item.P_NAME<br />피부탱탱&amp;탄력 마스크</em>
-                                                <em class="product_name">에센셜 석류 마스크 시트</em>
+                                                <em class="product_tit">에센셜 석류<br />피부탱탱&amp;탄력 마스크</em>
+                                                <em class="product_name">@item.P_NAME</em>
                                             </span>
                                             <em class="price">
                                                 <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
-                                                @string.Format("{0:#,##0}", item.DISCOUNT_PRICE)원
+                                                @string.Format("{0:#,##0}", item.RESULT_PRICE)원
                                             </em>
                                         </span>
                                     </a>
-                                    <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                                    <a href="#" class="cart" onclick="javascript:Cart_Product_Input('@item.P_CODE','1');"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
                                     <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
                                 </li>
                             }

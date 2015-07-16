@@ -21,6 +21,7 @@ namespace AboutMe.Domain.Entity.Product
         public string P_NAME { get; set; }
         public Nullable<int> P_COUNT { get; set; }
         public Nullable<int> SELLING_PRICE { get; set; }
+        public Nullable<int> RESULT_PRICE { get; set; }
         public Nullable<int> DISCOUNT_RATE { get; set; }
         public Nullable<int> DISCOUNT_PRICE { get; set; }
         public string SOLDOUT_YN { get; set; }

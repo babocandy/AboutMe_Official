@@ -35,22 +35,12 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult Index(IEnumerable<string> P_CATE_CODE_3DEPTH, Product_front_search_entity product_front_search_entity)
         {
 
+            #region 초기화작업
             product_front_search_entity.P_CATE_CODE_3DEPTH = Request.Form["P_CATE_CODE_3DEPTH"];
             if (!string.IsNullOrEmpty(product_front_search_entity.P_CATE_CODE_3DEPTH))  //다중검색 3depth 할경우 넣어준다
             {
-                product_front_search_entity.P_CATE_CODE = product_front_search_entity.P_CATE_CODE_3DEPTH;
+                product_front_search_entity.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;
             }
-
-            int TotalRecord = 0;
-            product_front_search_entity.P_OUTLET_YN = "N"; //아울렛 상품 제외
-            TotalRecord = _ProductService.GetProductCnt(product_front_search_entity);
-
-            this.ViewBag.TotalRecord = TotalRecord;                                             //총카운트
-            this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
-            if (string.IsNullOrEmpty(product_front_search_entity.SORT_GBN)){
-                product_front_search_entity.SORT_GBN = "NEW";
-            }
-            this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
             if (string.IsNullOrEmpty(product_front_search_entity.P_CATE_CODE))
             {
                 product_front_search_entity.P_CATE_CODE = "101100100"; //뷰티 default
@@ -63,16 +53,27 @@ namespace AboutMe.Web.Front.Controllers
             {
                 product_front_search_entity.L_CATE_CODE = ""; //라인 default
             }
+            if (string.IsNullOrEmpty(product_front_search_entity.SORT_GBN))
+            {
+                product_front_search_entity.SORT_GBN = "NEW";
+            }
+            product_front_search_entity.P_OUTLET_YN = "N"; //아울렛 상품 제외
+            int TotalRecord = 0;
+            #endregion
+            
+            TotalRecord = _ProductService.GetProductCnt(product_front_search_entity);
+            this.ViewBag.TotalRecord = TotalRecord;                                             //총카운트
+            this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
             this.ViewBag.P_CATE_CODE = product_front_search_entity.P_CATE_CODE;                 //P_CATE_CODE
             this.ViewBag.C_CATE_CODE = product_front_search_entity.C_CATE_CODE;                 //C_CATE_CODE
             this.ViewBag.L_CATE_CODE = product_front_search_entity.L_CATE_CODE;                 //L_CATE_CODE
             this.ViewBag.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;   //P_CATE_CODE_3DEPTH
+            this.ViewBag.DEPTH_NAME3 = Request["DEPTH_NAME3"];                                  //뷰티3DEPTH NAME
 
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
-           
-
-            this.ViewBag.CATE_CODE = product_front_search_entity.P_CATE_CODE;//선택한 카테고리 코드값
+            //this.ViewBag.CATE_CODE = product_front_search_entity.P_CATE_CODE;//선택한 카테고리 코드값
 
             ViewData["CateCodeP"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), "").ToList(); //유형별
             ViewData["CateCodeC"] = _ProductService.GetCategoryDeptList("SKIN_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), "").ToList(); //피부타입별
@@ -98,11 +99,14 @@ namespace AboutMe.Web.Front.Controllers
             SP_PRODUCT_DETAIL_VIEW_Result productView = _ProductService.ViewProduct(pcode);
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
+            this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
+            this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
 
-            #region 로그 
-            UserLog userlog = new UserLog();
-            userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
-            #endregion
+
+            //#region 로그 
+            //UserLog userlog = new UserLog();
+            //userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
+            //#endregion
 
 
             return View(productView);
