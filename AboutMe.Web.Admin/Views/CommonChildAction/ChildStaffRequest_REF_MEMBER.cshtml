@@ -1,0 +1,124 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result>
+
+@{
+    ViewBag.Title = "ChildStaffRequest_REF_MEMBER";
+    Layout = null;
+}
+
+@{
+    @helper fGradeName(string gradeCode)
+{
+    var grade_name = gradeCode;
+    switch (gradeCode)
+    {
+        case "B": grade_name = "브론즈";
+            break;
+        case "S": grade_name = "실버";
+            break;
+        case "G": grade_name = "골드";
+            break;
+        case "V": grade_name = "VIP";
+            break;
+
+    }
+    <div>@grade_name</div>
+}
+
+    @helper fIsRerireNAME(string is_retire)
+{
+    var isretire_name = is_retire;
+    switch (is_retire)
+    {
+        case "Y": isretire_name = "탈퇴";
+            break;
+        case "N": isretire_name = "활동";
+            break;
+
+    }
+    <div>@isretire_name</div>
+}
+
+    @helper fM_GBN_NAME(string m_gbn)
+{
+    var m_gbn_name = m_gbn;
+    switch (m_gbn)
+    {
+        case "A": m_gbn_name = "일반회원";
+            break;
+        case "S": m_gbn_name = "임직원";
+            break;
+
+    }
+    <div>@m_gbn_name</div>
+}
+
+    @helper fCheckBoxChecked(string strList, string strChked)
+{
+    if (strList != null && strChked != null)
+    {
+        if (strList.Contains(strChked))
+        {
+            @(" checked")
+        }
+    }
+
+}
+}
+
+
+
+<div class="panel">
+    <h4>참조2.회원 테이블 : [<font color="ff0000">@ViewBag.STAFF_ID</font>]</h4>
+    <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+    <table class="table table_col">
+        <colgroup><col /><col /><col /><col /><col /><col /><col /><col /><col /><col /></colgroup>
+        <thead>
+            <tr>
+                <th scope="col" class="brnone">No</th>
+                <th scope="col">사번</th>
+                <th scope="col">아이디</th>
+                <th scope="col">이름</th>
+                <th scope="col">등급</th>
+                <th scope="col">임직원구분</th>
+                <th scope="col">임직원승인일</th>
+                <th scope="col">탈퇴여부</th>
+                <th scope="col">탈퇴일</th>
+                <th scope="col" class="brnone">회원가입일</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (@Model != null)
+                {
+                    if (@Model.Count() < 1)
+                    {
+                        <tr>
+                            <td colspan="10" class="brnone">No data...</td>
+                        </tr>
+                    }
+                }
+
+
+                var count = 1;
+                foreach (var item in @Model)
+                {
+                    <tr>
+                        <td class="brnone">@count.ToString("#,##0")</td>
+                        <td>@item.M_STAFF_ID</td>
+                        <td>@item.M_ID</td>
+                        <td>@item.M_NAME</td>
+                        <td>@fGradeName(@item.M_GRADE)</td>
+                        <td>@fM_GBN_NAME(@item.M_GBN)</td>
+                        <td>@item.M_STAFF_APPROV_DATE</td>
+                        <td>@fIsRerireNAME(@item.M_IS_RETIRE)</td>
+                        <td>@item.M_DEL_DATE</td>
+                        <td class="brnone">@item.M_CREDATE</td>
+                    </tr>
+                    count = count + 1;
+                }
+
+
+            }
+        </tbody>
+    </table>
+</div>
