@@ -58,6 +58,7 @@ namespace AboutMe.Web.Admin.Controllers
         #region 전체할인 ==================================================================================================
 
         // GET: AdminPromotion
+      
         public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
 
