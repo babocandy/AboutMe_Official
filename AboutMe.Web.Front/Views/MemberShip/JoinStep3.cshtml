@@ -3,6 +3,26 @@
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
 
+@{
+    @helper fM_SEX_NAME(string m_sex)
+    {
+        var m_sex_name = m_sex;
+        switch (m_sex)
+        {
+            case "1": m_sex_name = "남자";
+                break;
+            case "3": m_sex_name = "남자";
+                break;
+            case "2": m_sex_name = "여자";
+                break;
+            case "4": m_sex_name = "여자";
+                break;
+        }
+        @(m_sex_name)
+    
+    } //func
+    
+}
 
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
@@ -85,12 +105,19 @@ function fGoSave(){
     var strM_MOBILE = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "_" + f.M_MOBILE_3.value;
     var strM_PHONE = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "_" + f.M_PHONE_3.value;
     var strM_EMAIL = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value ;
-    var strM_ZIPCODE = f.M_ZIPCODE_1.value + "-" + f.M_ZIPCODE_2.value;
+    var strM_ZIPCODE = f.M_ZIPCODE.value ;
     var strM_ADDR1 = f.M_ADDR_1.value;
     var strM_ADDR2 = f.M_ADDR_2.value;
     var strM_ISSMS = f.M_ISSMS.value;
     var strM_ISEMAIL = f.M_ISEMAIL.value;
     var strM_ISDM = f.M_ISDM.value;
+
+    var strM_AGREE = f.M_AGREE.value;
+    var strM_AGREE2 = f.M_AGREE2.value;
+
+    var strM_JOIN_MODE = f.rM_JOIN_MODE.value;
+    var strM_DI = f.M_DI.value;
+    var strWORK_TMP_ID = f.WORK_TMP_ID.value;
 
     var strURL = "/MemberShip/AjaxJOIN_NEW_PROC";
 
@@ -101,10 +128,12 @@ function fGoSave(){
         dataType: 'json',
         data: {
             M_ID: strM_ID
-            , M_PWD: strM_PWD
             , M_NAME: strM_NAME
-            , M_BIRTHDAY: strM_BIRTHDAY
+            , M_PWD: strM_PWD
+
             , M_SEX: strM_SEX
+            , M_BIRTHDAY: strM_BIRTHDAY
+
             , M_MOBILE: strM_MOBILE
             , M_PHONE: strM_PHONE
             , M_EMAIL: strM_EMAIL
@@ -114,6 +143,14 @@ function fGoSave(){
             , M_ISSMS: strM_ISSMS
             , M_ISEMAIL: strM_ISEMAIL
             , M_ISDM: strM_ISDM
+
+            , M_AGREE: strM_AGREE
+            , M_AGREE2: strM_AGREE2
+            
+            , M_JOIN_MODE: strM_JOIN_MODE
+            , M_DI: strM_DI
+            , WORK_TMP_ID: strWORK_TMP_ID
+
         },
         success: function (retDATA) {
             if (retDATA.ERR_CODE == "0") {
@@ -181,6 +218,14 @@ function fID_DupCheck()
             <div class="joinstep"><img src="/aboutCom/images/membership/joinstep3.gif" alt="회원정보 입력" /></div>
             <div class="contypea step3">
                 <form name="frmJOIN" method="post" action="">
+                    <input type="hidden" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
+                    <input type="hidden" name="M_DI" value="@ViewBag.M_DI" />
+                    <input type="hidden" name="M_JOIN_MODE" value="@ViewBag.M_JOIN_MODE" />
+
+                    <input type="hidden" name="M_AGREE" value="@ViewBag.M_AGREE" />
+                    <input type="hidden" name="M_AGREE2" value="@ViewBag.M_AGREE2" />
+                                        
+
                     <fieldset>
                         <legend>회원가입 정보 입력 폼</legend>
                         <h3><img src="/aboutCom/images/membership/h3_userinfo.gif" alt="기본정보" /><span>표시는 필수 입력 항목입니다.</span></h3>
@@ -237,9 +282,10 @@ function fID_DupCheck()
                                         </td>
                                         <th><span class="essential">성별</span></th>
                                         <td>
-                                            <label class="racon"><input type="radio" name="gender" title="남" value="1" readonly/> <span class="txt">남</span></label>
-                                            <label class="racon ml80"><input type="radio" name="gender" title="여" value="2" readonly/> <span class="txt">여</span></label>
-                                        </td>
+                                            <input type="hidden" name="M_SEX" value="@ViewBag.M_SEX" />
+                                           
+                                            <span class="txt">@fM_SEX_NAME(@ViewBag.M_SEX)</span>
+                                            >
                                     </tr>
                                     <tr>
                                         <th><span class="essential">휴대폰 번호</span></th>
@@ -266,7 +312,7 @@ function fID_DupCheck()
                                         <th><span class="essential">이메일</span></th>
                                         <td colspan="3" class="email">
                                             <input type="text" class="ipttypea" style="width:130px" title="이메일주소입력" name="M_EMAIL_1" maxlength="30" />
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;@@&nbsp;&nbsp;
                                             <input type="text" class="ipttypea mr10" style="width:130px" title="이메일 도메인 입력" name="M_EMAIL_2" maxlength="50" />
                                             <select class="selectstyleb" title="" name="M_EMAIL_SEL">
                                                 <option selected="selected">선택하세요</option>
@@ -278,12 +324,12 @@ function fID_DupCheck()
                                     <tr>
                                         <th><span>주소</span></th>
                                         <td colspan="3" class="addr">
-                                            <input type="text" class="ipttypea" style="width:90px" title="우편번호 앞자리" name="M_ZIPCODE_1" maxlength="3"  readonly />
-                                            &nbsp;&nbsp;-&nbsp;&nbsp;
-                                            <input type="text" class="ipttypea mr10" style="width:90px" title="우편번호 마지막자리" name="M_ZIPCODE_2" maxlength="3" readonly /><a href="#" class="btn_white_w96h38 typeb" onclick="PopupCenter('/popoldlogin.html', '', '476', '380'); return false;">우편번호 찾기</a><br />
-                                            <input type="text" class="ipttypea mt8 mr10" style="width:350px" title="주소입력" name="M_ADDR1" maxlength="50"  readonly />
-                                            <input type="text" class="ipttypea mt8" style="width:350px" title="상세주소입력" name="M_ADDR1" maxlength="50"  />
-                                        </td>
+                                            <input type="text" class="ipttypea" style="width:200px" title="우편번호" id="M_ZIPCODE" name="M_ZIPCODE" maxlength="7" readonly />
+                                            <a href="javascript:sample2_execDaumPostcode();" class="btn_white_w96h38 typeb" >우편번호 찾기</a>
+                                            <br />
+                                            <input type="text" class="ipttypea mt8 mr10" style="width:350px" title="주소입력" id="M_ADDR1" name="M_ADDR1" maxlength="50" readonly />
+                                            <input type="text" class="ipttypea mt8" style="width:350px" title="상세주소입력" id="M_ADDR2" name="M_ADDR2" maxlength="50" />
+                                         </td>
                                     </tr>
                                     <tr>
                                         <th><span class="essential">SMS 수신</span></th>
@@ -322,10 +368,90 @@ function fID_DupCheck()
                 </div>
             </div>
         </div>
-        <!--//container-->
+    <!--//container-->
+    
+    </div>
 
 
-                        }
+<!-- 다음 우편번호 검색-->
+<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script language="javascript">
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layerPOST');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if (data.addressType === 'R') {
+                    //법정동명이 있을 경우 추가한다.
+                    if (data.bname !== '') {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if (data.buildingName !== '') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("M_ZIPCODE").value = data.postcode; //6자리 우편번호 사용
+                //document.getElementById("sample2_postcode").value = data.zonecode; //5자리 기초구역번호 사용
+                document.getElementById('M_ADDR1').value = fullAddr;
+                // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
+
+                // iframe을 넣은 element를 안보이게 한다.
+                element_layer.style.display = 'none';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition() {
+        var width = 300; //우편번호서비스가 들어갈 element의 width
+        var height = 460; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+    }
+</script>
+<!-- 다음 우편번호 검색-->
+
+ }
 <!--//container-->
 <!--footer-->
 @section Footer{

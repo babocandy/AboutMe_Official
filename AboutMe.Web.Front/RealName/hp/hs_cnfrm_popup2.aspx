@@ -46,9 +46,9 @@
 	//########################################################################
 	//# 회원사 모듈설치서버 IP 및 회원사 도메인 설정
 	//########################################################################
-    String serverIp =  "172.31.13.229";  	 									// 회원사 IP, InetAddress.getLocalHost().getHostAddress() 로 얻어올 수 있음. 52.68.130.158  , 172.31.13.229
+    String serverIp = "10.129.39.11";  	 									// 회원사 IP, InetAddress.getLocalHost().getHostAddress() 로 얻어올 수 있음. dev: 210.122.34.192 , 10.129.39.11
     //String siteDomain = "ec2-52-68-130-158.ap-northeast-1.compute.amazonaws.com";						// *** 회원사 도메인. (휴대폰인증번호 송신시 제휴사명에 노출) <<<<<<<<<<<<<<<<<<<<
-    String siteDomain = "52.68.130.158";						// *** 회원사 도메인. (휴대폰인증번호 송신시 제휴사명에 노출) <<<<<<<<<<<<<<<<<<<<
+    String siteDomain = "aboutme-dev.cstone.co.kr";						// *** 회원사 도메인. (휴대폰인증번호 송신시 제휴사명에 노출) <<<<<<<<<<<<<<<<<<<<
 
 
     //'okname을 호출할 파라미터 정보(내부에서 암호화하여 리턴함. 팝업창에 미리 세팅하는 경우 암호화된 값을 팝업으로 전달할 수 있다.)
@@ -59,7 +59,7 @@
 	//########################################################################
 	//opener(hs_cnfrm_popup1.aspx)의 도메일과 일치하도록 설정해야 함. (http://www.test.co.kr과 http://test.co.kr는 다른 도메인으로 인식하며, http 및 https도 일치해야 함)
     //String returnUrl = "http://"+Request.Url.Host+"/realname/hp/hs_cnfrm_popup3.aspx"; // 본인인증 완료후 리턴될 URL (도메인 포함 full path) <<<<<<<<<<<<<<<<<<<<
-    String returnUrl = "http://52.68.130.158/realname/hp/hs_cnfrm_popup3.aspx"; // 본인인증 완료후 리턴될 URL (도메인 포함 full path) <<<<<<<<<<<<<<<<<<<<
+    String returnUrl = "http://aboutme-dev.cstone.co.kr/realname/hp/hs_cnfrm_popup3.aspx"; // 본인인증 완료후 리턴될 URL (도메인 포함 full path) <<<<<<<<<<<<<<<<<<<<
 
 	//########################################################################
 	//# 운영전환시 변경 필요
@@ -72,7 +72,7 @@
 	//# 로그 경로 지정 및 권한 부여 (절대경로)
 	// # 로그파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
 	//########################################################################
-    String logPath = "c:\\WWWs\\okname380_aspx_com_win64\\module\\log";							//	' 로그파일 생성 경로
+    String logPath = "c:\\WWW\\REALNAME\\module\\log";							//	' 로그파일 생성 경로
 
 	//########################################################################
 	// # 옵션값에 'L'을 추가하는 경우에만 로그가 생성됨. 예) options="QL"
@@ -119,8 +119,8 @@
 		//**************************************************************************
 		//okname 응답 정보
 		//**************************************************************************
-		Response.Write ("ret="+ret+"<br>");
-		Response.Write ("output="+output+"<br>");
+		//Response.Write ("ret="+ret+"<br>");
+		//Response.Write ("output="+output+"<br>");
 		if (ret == 0) {
 			string[] result = ((String)output).Split(new string[] {"\n"}, StringSplitOptions.None);
 		    retcode =  result[0];
@@ -155,7 +155,7 @@
 
 <html>
 	<head>
-	<title>KCB 본인인증 샘플</title>
+	<title>KCB 본인인증</title>
 	<script>
 		function openPop(){
 

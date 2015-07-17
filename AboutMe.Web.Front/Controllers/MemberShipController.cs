@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 using AboutMe.Common.Helper;
 
@@ -208,9 +209,162 @@ namespace AboutMe.Web.Front.Controllers
 
             //실명인증 정상여부 판단.<<<<<<<<<<<<<<<<<<<<<<
 
-            //DB임시 저장 필요<<<<<<<<<<<<<<<<<<<<<<
+            //핸드폰 인증 :M_JOIN_MODE == hp
+            string mem_id = HttpContext.Request.Form["mem_id"]; //회원사ID
+            string tx_seqno = HttpContext.Request.Form["tx_seqno"];  //서비스거래번호
+            string result_cd = HttpContext.Request.Form["result_cd"];  //결과코드 "000"정상
+            string result_msg = HttpContext.Request.Form["result_msg"]; 
+            string cert_dt_tm = HttpContext.Request.Form["cert_dt_tm"]; 
+            string di = HttpContext.Request.Form["di"];   //DI
+            string ci = HttpContext.Request.Form["ci"];   //CI
+            string name = HttpContext.Request.Form["name"]; //실명
+            string birthday = HttpContext.Request.Form["birthday"]; //생일 (YYYYMMDD)
+            string gender = HttpContext.Request.Form["gender"]; //성별 0:여자, 1:남자
+            string nation = HttpContext.Request.Form["nation"]; //내외국인 1:내국인 ,2 외국인   <<<<<<<<< HP vs  ipin과 차이 주의
+            string tel_com_cd = HttpContext.Request.Form["tel_com_cd"]; //통신사 코드 : 01:SKT,02:KTF, 03:LGU+ , 04:알뜰폰SKT ,x
+            string tel_no = HttpContext.Request.Form["tel_no"]; //햔드폰번호 "-"없이
 
-            //다음 스텝 이동<<<<<<<<<<<<<<<<<<<<<<
+
+
+            //핸드폰 인증 :M_JOIN_MODE == ipin
+            string encPsnlInfo = HttpContext.Request.Form["encPsnlInfo"]; 
+            string virtualno = HttpContext.Request.Form["virtualno"];  //가상주민번호 (13)
+            string dupinfo = HttpContext.Request.Form["dupinfo"];   //DI  (64) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            string realname = HttpContext.Request.Form["realname"];  //실명 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            string cprequestnumber = HttpContext.Request.Form["cprequestnumber"];  //사이트 세션정보 (17)
+            string age = HttpContext.Request.Form["age"]; //연령대 (1)  0:~9세, 1:~12세 ,2:~14세, 3:~15세, 4: ~18세, 5: ~19세, 6:~20세, 7:20세~
+            string sex = HttpContext.Request.Form["sex"]; //0 :여자, 1:남자 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            string nationalinfo = HttpContext.Request.Form["nationalinfo"];  //0:내국인, 1:외국인  <<<<<<<<< HP vs  ipin과 차이 주의
+            string birthdate = HttpContext.Request.Form["birthdate"];  //생일(8) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            string coinfo1 = HttpContext.Request.Form["coinfo1"];  //CI (88) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            string coinfo2 = HttpContext.Request.Form["coinfo2"];  //연계정보 -ciupdate 가 짝수일때 넘어옴?? (88)
+            string ciupdate = HttpContext.Request.Form["ciupdate"];  //CI 갱신횟수 (1) -고정값"1"
+            string cpcode = HttpContext.Request.Form["cpcode"]; 
+            string authinfo = HttpContext.Request.Form["authinfo"]; //PIN발급수단 (0:공인인증서,1:카드,2:휴대폰,3:대면,5:..7)
+
+            //DB임시 저장 필요<<<<<<<<<<<<<<<<<<<<<<
+            //임시DB저장
+
+
+            //로그 기록
+            string memo = "실명인증";
+            string comment = "실명인증";
+            memo = memo + "|WORK_TMP_ID:" + WORK_TMP_ID;
+            memo = memo + "|M_JOIN_MODE:" + M_JOIN_MODE;
+            
+            memo = memo + "||휴대폰인증리턴===========:" ;
+            memo = memo + "|mem_id:" + mem_id;
+            memo = memo + "|tx_seqno:" + tx_seqno;
+            memo = memo + "|result_cd:" + result_cd;
+            memo = memo + "|result_msg:" + result_msg;
+            memo = memo + "|cert_dt_tm:" + cert_dt_tm;
+            memo = memo + "|di:" + di;
+            memo = memo + "|ci:" + ci;
+            memo = memo + "|name:" + name;
+            memo = memo + "|birthday:" + birthday;
+            memo = memo + "|gender:" + gender;
+            memo = memo + "|nation:" + nation;
+            memo = memo + "|tel_com_cd:" + tel_com_cd;
+            memo = memo + "|tel_no:" + tel_no;
+
+            memo = memo + "||IPIN인증리턴=============:";
+            memo = memo + "|encPsnlInfo:" + encPsnlInfo;
+            memo = memo + "|virtualno:" + virtualno;
+            memo = memo + "|dupinfo:" + dupinfo;
+            memo = memo + "|realname:" + realname;
+            memo = memo + "|cprequestnumber:" + cprequestnumber;
+            memo = memo + "|age:" + age;
+            memo = memo + "|sex:" + sex;
+            memo = memo + "|nationalinfo:" + nationalinfo;
+            memo = memo + "|birthdate:" + birthdate;
+            memo = memo + "|coinfo1:" + coinfo1;
+            memo = memo + "|coinfo2:" + coinfo2;
+            memo = memo + "|ciupdate:" + ciupdate;
+            memo = memo + "|cpcode:" + cpcode;
+            memo = memo + "|authinfo:" + authinfo;
+
+            UserLog userlog = new UserLog();
+            userlog.UserLogSave(memo, comment);
+
+            //실명인증 로그등록
+            string argM_JOIN_TYPE = "";
+            string argRESULT_CODE = "";
+            string argTRAN_NO = "";
+            string argM_NAME = "";
+            string argdi = "";
+            string argci = "";
+            string argM_BIRTHDAY = "";
+            string argM_SEX = "";
+            string argnation = "";
+            string argRETURN_MSG_ALL = "";
+            string argIP = HttpContext.Request.ServerVariables["REMOTE_ADDR"];
+
+            argM_JOIN_TYPE = M_JOIN_MODE;
+            argRETURN_MSG_ALL = memo;
+            if (M_JOIN_MODE == "hp" || M_JOIN_MODE == "HP")
+            {
+                argRESULT_CODE = result_cd;
+                argTRAN_NO = tx_seqno;
+                argM_NAME = name;
+                argdi = di;
+                argci = ci;
+                if (birthday.Length==8)
+                    argM_BIRTHDAY = birthday.Substring(0, 4) + "-" + birthday.Substring(4, 2) + "-" + birthday.Substring(6, 2);
+                else
+                    argM_BIRTHDAY = birthday;
+
+                argM_SEX = gender;
+                if (gender == "1") //0:여자 ,1:남자
+                    argM_SEX = "1"; //남자
+                else
+                    argM_SEX = "2"; //여자 =>2
+                argnation = nation;
+            }
+            if (M_JOIN_MODE == "ipin" || M_JOIN_MODE == "IPIN")
+            {
+                argRESULT_CODE = "";
+                argTRAN_NO = cprequestnumber;
+                argM_NAME = realname;
+                argdi = dupinfo;
+                argci = coinfo1;
+                if (birthday.Length == 8)
+                    argM_BIRTHDAY = birthday.Substring(0, 4) + "-" + birthday.Substring(4, 2) + "-" + birthday.Substring(6, 2);
+                else
+                    argM_BIRTHDAY = birthday;
+                argM_SEX = sex;
+                if (sex == "1") //0:여자 ,1:남자
+                    argM_SEX = "1"; //남자
+                else
+                    argM_SEX = "2"; //여자 =>2
+                argnation = nationalinfo;
+            }
+
+
+
+            //실명인증 로그 DB저장 -> Step3에서  WORK_TMP_ID로 1시간내 사용
+            _MemberService.SetRealNameLogInsert(WORK_TMP_ID, argM_JOIN_TYPE, argRESULT_CODE, argTRAN_NO, argM_NAME, argdi, argci, argM_BIRTHDAY, argM_SEX, argnation, argRETURN_MSG_ALL, argIP);
+
+
+            //DI기준으로 이미 가입한 적이 있는지?
+            ReturnDic retDic =  _MemberService.GetMemberDindDI(argdi);
+            if (retDic.ERR_CODE =="10") //이미 가입한 실명인증회원임            
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('"+ retDic.ERR_MSG +"'); location.href='/MemberShip/Login';</script>");
+            }
+
+            if (retDic.ERR_CODE =="20") //DI 파라메타 전달오류        
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('"+ retDic.ERR_MSG +"'); location.href='/MemberShip/JoinStep1';</script>");
+            }
+
+            if (retDic.ERR_CODE != "0") //DI 기타오류        
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.Go(-1);</script>");
+            }
+
+
+
+            //성공: 다음 스텝 이동<<<<<<<<<<<<<<<<<<<<<<
             return RedirectToAction("JoinStep2", "MemberShip", new { WORK_TMP_ID = WORK_TMP_ID }); // 실명인증 성공 -> Go Step2
         }
         
@@ -218,20 +372,34 @@ namespace AboutMe.Web.Front.Controllers
         //사용자 회원가입- Step2 -약관동의
         public ActionResult JoinStep2(string WORK_TMP_ID="")
         {
-            if (WORK_TMP_ID == null || WORK_TMP_ID == "")
-                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+            //if (WORK_TMP_ID == null || WORK_TMP_ID == "")
+            //    return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
 
             this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
             return View();
         }
 
         //사용자 회원가입- Step3 -회원정보 입력
-        public ActionResult JoinStep3(string WORK_TMP_ID = "")
+        public ActionResult JoinStep3(string WORK_TMP_ID = "", string M_AGREE = "N", string M_AGREE2 = "Y")
         {
             if (WORK_TMP_ID == null || WORK_TMP_ID == "")
                 return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
 
+            SP_MEMBER_REALNAME_LOG_VIEW_Result row =  _MemberService.GetRealNameLogWorkTmp(WORK_TMP_ID);
+            if(row ==null)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다2.'); location.href='/MemberShip/JoinStep1';</script>");
+            }
             this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
+            this.ViewBag.M_AGREE = M_AGREE;
+            this.ViewBag.M_AGREE2 = M_AGREE2;
+
+            this.ViewBag.M_JOIN_MODE = row.M_JOIN_TYPE;
+            this.ViewBag.M_DI = row.di;
+            this.ViewBag.M_NAME = row.M_NAME;
+            this.ViewBag.M_SEX = row.M_SEX;
+            this.ViewBag.M_BIRTHDAY = row.M_BIRTHDAY;
+
             return View();
         }
 

@@ -15,7 +15,7 @@
 
     // 암호화키 파일 설정 (ipin2.aspx에서 설정된 값과 동일)
 	// 키파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
-	String keyPath = "c:\\WWWs\\okname380_aspx_com_win64\\module\\key\\okname.key";
+    String keyPath = "c:\\WWW\\REALNAME\\module\\key\\okname.key";
 
 	// 회원사코드 (테스트인 경우 'P00000000000'를 사용하며 운영시 발급받은 회원사코드를 설정)
 	String memId    = "P19960000000";
@@ -77,30 +77,30 @@
 <head>
 <script language="JavaScript">
 function fncOpenerSubmit() {
-	opener.document.kcbOutForm.encPsnlInfo.value = "<%=encPsnlInfo %>";
+    opener.document.kcbOutForm_IPIN.encPsnlInfo.value = "<%=encPsnlInfo %>";
 <%
 	if (ret == 0) {
 %>
-	opener.document.kcbOutForm.dupinfo.value = "<%=result[0] %>";	// dupInfo
-	opener.document.kcbOutForm.coinfo1.value = "<%=result[1] %>";	// coinfo1
-	opener.document.kcbOutForm.coinfo2.value = "<%=result[2] %>";	// coinfo2
-	opener.document.kcbOutForm.ciupdate.value = "<%=result[3] %>";	// ciupdate
-	opener.document.kcbOutForm.virtualno.value = "<%=result[4] %>";	// virtualNo
-	opener.document.kcbOutForm.cpcode.value = "<%=result[5] %>";	// memId
-	opener.document.kcbOutForm.realname.value = "<%=result[6] %>";	// realName
-	opener.document.kcbOutForm.cprequestnumber.value = "<%=result[7] %>";	// cpRequestNumber
-	opener.document.kcbOutForm.age.value = "<%=result[8] %>";	// age
-	opener.document.kcbOutForm.sex.value = "<%=result[9] %>";	// sex
-	opener.document.kcbOutForm.nationalinfo.value = "<%=result[10]%>";	// nationalInfo
-	opener.document.kcbOutForm.birthdate.value = "<%=result[11]%>";	// birthDate
-	opener.document.kcbOutForm.authinfo.value = "<%=result[12]%>";	// authInfo
+    opener.document.kcbOutForm_IPIN.dupinfo.value = "<%=result[0] %>";	// dupInfo
+    opener.document.kcbOutForm_IPIN.coinfo1.value = "<%=result[1] %>";	// coinfo1
+    opener.document.kcbOutForm_IPIN.coinfo2.value = "<%=result[2] %>";	// coinfo2
+    opener.document.kcbOutForm_IPIN.ciupdate.value = "<%=result[3] %>";	// ciupdate
+    opener.document.kcbOutForm_IPIN.virtualno.value = "<%=result[4] %>";	// virtualNo
+    opener.document.kcbOutForm_IPIN.cpcode.value = "<%=result[5] %>";	// memId
+    opener.document.kcbOutForm_IPIN.realname.value = "<%=result[6] %>";	// realName
+    opener.document.kcbOutForm_IPIN.cprequestnumber.value = "<%=result[7] %>";	// cpRequestNumber
+    opener.document.kcbOutForm_IPIN.age.value = "<%=result[8] %>";	// age
+    opener.document.kcbOutForm_IPIN.sex.value = "<%=result[9] %>";	// sex
+    opener.document.kcbOutForm_IPIN.nationalinfo.value = "<%=result[10]%>";	// nationalInfo
+    opener.document.kcbOutForm_IPIN.birthdate.value = "<%=result[11]%>";	// birthDate
+    opener.document.kcbOutForm_IPIN.authinfo.value = "<%=result[12]%>";	// authInfo
 <%
 	}
 %>
 
-    //opener.document.kcbOutForm.action = "ipin4.aspx";
-    opener.document.kcbOutForm.action = "/MemberShip/RealNameResult";
-	opener.document.kcbOutForm.submit();
+    //opener.document.kcbOutForm_IPIN.action = "ipin4.aspx";
+    opener.document.kcbOutForm_IPIN.action = "/MemberShip/RealNameResult";
+    opener.document.kcbOutForm_IPIN.submit();
 	self.close();
 }
 </script>
@@ -110,11 +110,11 @@ function fncOpenerSubmit() {
 <%
  	if (ret == 0) {
 		// 인증결과 복호화 성공
-		Response.Write ("<script>alert('본인인증성공'); fncOpenerSubmit();</script>");
+		Response.Write ("<script>alert('Success! 본인인증성공'); fncOpenerSubmit();</script>");
 	}
 	else {
 		// 인증결과 복호화 실패
-		Response.Write ("<script>alert('인증결과복호화 실패 : "+ret+"'); self.close();</script>");
+		Response.Write ("<script>alert('Eror! 인증결과복호화 실패 : "+ret+"'); self.close();</script>");
 	}  
 %>
 </html>
