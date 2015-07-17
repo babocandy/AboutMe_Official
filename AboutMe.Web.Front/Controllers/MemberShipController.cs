@@ -39,11 +39,22 @@ namespace AboutMe.Web.Front.Controllers
             this._Cartservice = _cartservice;
         }
 
-        //사용자 로그인 폼
-        public ActionResult Login(string RedirectUrl = "")
-        {
-            this.ViewBag.RedirectUrl = RedirectUrl;
 
+        //사용자 로그인 폼
+        public ActionResult Login(string RedirectUrl = "", string PCODE_ARRAY = "")
+        {
+
+            if (!string.IsNullOrEmpty(PCODE_ARRAY))
+            {
+                ViewBag.isOrderLogin = "true";
+                ViewBag.OrderList = PCODE_ARRAY; //주문쪽상품데이터
+            }
+            else
+            {
+                ViewBag.isOrderLogin = "false";
+                ViewBag.OrderList = "";            
+            }
+            this.ViewBag.RedirectUrl = RedirectUrl;
 
             this.ViewBag.M_ID = MemberInfo.GetMemberId();
             this.ViewBag.M_NAME = MemberInfo.GetMemberName();
@@ -55,7 +66,7 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //사용자 로그인
-        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "")
+        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "")
         {
             //로그 기록
             string memo = "사용자-로그인";
@@ -135,7 +146,7 @@ namespace AboutMe.Web.Front.Controllers
                 cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅 -평문
 
 
-                _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "Y");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청 :  HttpContext.Session.SessionID???
+                _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "N");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청 :  HttpContext.Session.SessionID???
                 
 
                 memo = "사용자-로그인성공";
@@ -146,10 +157,15 @@ namespace AboutMe.Web.Front.Controllers
                 UserLog userlog = new UserLog();
                 userlog.UserLogSave(memo, comment);
 
-
-                if (RedirectUrl != "")
-                    return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
-
+                if (!string.IsNullOrEmpty(OrderList))
+                {
+                    return RedirectToAction("InsertOrderStep1", "Order", new { OrderList = OrderList }); // 주문페이지로이동
+                }
+                else
+                {
+                    if (RedirectUrl != "")
+                        return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
+                }
 
             }
 
@@ -158,6 +174,12 @@ namespace AboutMe.Web.Front.Controllers
             //return View();        }
         }
 
+        //비회원 주문
+        [HttpPost]
+        public ActionResult GoOrder(string OrderList)
+        {
+            return RedirectToAction("InsertOrderStep1", "Order", new { OrderList = OrderList }); // 주문페이지로이동
+        }
 
         //사용자 로그아웃 처리
         public ActionResult Logout()

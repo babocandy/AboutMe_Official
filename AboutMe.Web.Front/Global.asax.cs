@@ -20,7 +20,6 @@ namespace AboutMe.Web.Front
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
             Bootstrapper.Initialise(); //Depency injection ... 
         }
 

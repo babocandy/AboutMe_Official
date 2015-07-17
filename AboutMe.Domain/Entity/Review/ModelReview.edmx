@@ -4,20 +4,53 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ReviewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ReviewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_REVIEW_READY_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ReviewModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ReviewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="ReviewEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="ReviewEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_REVIEW_READY_SEL" ReturnType="Collection(ReviewModel.SP_REVIEW_READY_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_REVIEW_READY_SEL_Result">
+          <Property Type="String" Name="ORDER_CODE" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ReviewModelStoreContainer" CdmEntityContainer="ReviewEntities" />
+        <EntityContainerMapping StorageEntityContainer="ReviewModelStoreContainer" CdmEntityContainer="ReviewEntities" >
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_READY_SEL" FunctionName="ReviewModel.Store.SP_REVIEW_READY_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_READY_SEL_Result">
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

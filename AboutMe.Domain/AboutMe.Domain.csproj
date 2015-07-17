@@ -132,6 +132,9 @@
     <Compile Include="Entity\AdminCoupon\SP_ADMIN_COUPON_COMMON_CNT_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminCoupon\SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
@@ -151,9 +154,6 @@
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\TB_COUPON_MEMBER_GRADE.cs">
-      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminCoupon\TB_COUPON_PRICE_DETAIL.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\TB_COUPON_PRODUCT.cs">
@@ -586,6 +586,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelReview.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_READY_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
@@ -616,6 +619,8 @@
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\Promotion\PromotionService.cs" />
     <Compile Include="Service\Promotion\IPromotionService.cs" />
+    <Compile Include="Service\Review\IReviewService.cs" />
+    <Compile Include="Service\Review\ReviewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\Etc\" />

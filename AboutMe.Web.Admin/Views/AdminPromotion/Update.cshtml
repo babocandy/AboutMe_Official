@@ -70,6 +70,7 @@
 
         //alert(obj_selectbox[sel_index].value);
 
+        /**
         if (obj_selectbox[sel_index].value == "01") //일반회원 전용할인
         {
 
@@ -84,6 +85,7 @@
             f.CheckMemGrade[7].disabled = true;
 
         }
+        **/
 
         if (obj_selectbox[sel_index].value == "00") //임직원 전용할인
         {
@@ -168,10 +170,12 @@
                                                         { 
                                                             @:임직원전용할인
                                                         }
-                                                        @if (Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_CATEGORY == "01")
+                                                        
+                                                        @*@if (Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_CATEGORY == "01")
                                                         {
                                                             @:일반회원전용할인
-                                                        }
+                                                        }*@
+                                                        
                                                         @if (Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_CATEGORY == "03")
                                                         {
                                                             <text>
