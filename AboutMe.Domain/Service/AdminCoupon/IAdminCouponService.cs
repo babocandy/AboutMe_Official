@@ -31,6 +31,11 @@ namespace AboutMe.Domain.Service.AdminCoupon
         List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> GetAdminCouponIssuedList(string SearchCol, string SearchKeyword, int Page, int PageSize, string CdCoupon);
         int GetAdminCouponIssuedListCnt(string SearchCol, string SearchKeyword, string CdCoupon);
 
+        //발행가능 등급정보
+        List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> GetAdminCouponMemberGradeList(string CdCoupon);
+        //쿠폰발행가능 상품카운트
+        int GetAdminCouponProductUsableCnt(string CdCoupon);
+
 
     }
 }

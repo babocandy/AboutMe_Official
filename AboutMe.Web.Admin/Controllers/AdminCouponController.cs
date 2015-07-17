@@ -273,7 +273,7 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.Page = Page;
 
 
-
+            //쿠폰마스터 정보를 ViewData에 저장 
             List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
             ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
 
@@ -295,6 +295,53 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
 
+
+        //IssueExcute
+
+        public ActionResult IssueExcute( string CdCoupon)
+        {
+
+            //쿠폰마스터 정보를 ViewData에 저장 
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
+
+
+            //쿠폰발행가능 회원등급 리스트를 ViewData에 저장 
+            List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> grade_lst = _AdminCouponService.GetAdminCouponMemberGradeList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result"] = grade_lst;
+
+            //쿠폰발행가능 상품카운트를  ViewBag에 저장
+            int cnt  = _AdminCouponService.GetAdminCouponProductUsableCnt(CdCoupon);
+            ViewBag.ProductCnt = cnt.ToString();
+
+
+            return View();
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
+
+        public ActionResult IssueExcute([Bind( Exclude = "")]  TB_COUPON_MEMBER_GRADE tb_coupon_member_grade, string CdCoupon)
+        {    
+            
+            
+            /**
+            //쿠폰마스터 정보를 ViewData에 저장 
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
+
+
+            //쿠폰발행가능 회원등급 리스트를 ViewData에 저장 
+            List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> grade_lst = _AdminCouponService.GetAdminCouponMemberGradeList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result"] = master_lst;
+            **/
+
+            return View();
+
+        }
         
 
     }

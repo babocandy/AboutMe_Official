@@ -1,0 +1,495 @@
+﻿@model AboutMe.Domain.Entity.AdminCoupon.TB_COUPON_ISSUED_DETAIL
+
+
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+
+    <script language="javascript">
+
+        function frmCheck() {
+            //alert("여기입니다");
+
+            var f = document.frm01;
+
+
+            //용도구분값이 지불쿠폰 일때
+            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN'));
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
+            {
+                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN') == '') {
+                    alert("[용도구분]이 -지불-일때는 [상품적용범위]를 선택해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN[0].focus();
+                    return false;
+                }
+
+                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == '')
+                {
+                    alert("[용도구분]이 -지불-일때는 [정률/정액 구분]을 선택해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_RATE_OR_MONEY[0].focus();
+                    return false;
+                }
+            }
+
+
+           //발행방법이 자동발행일때
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_GBN') == 'A') {
+                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO') == '')
+                {
+                    alert("[발행방법]이 -자동발행-일때는 [자동발행TYPE]을 선택해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO[0].focus();
+                    return false;
+                }
+            }
+
+
+
+
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
+
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value == '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value == '') {
+                    alert("[사용기간 기준구분이]이 -고정기간 기준-일때는 [고정기간 일자]를 선택해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
+                    return false;
+                }
+            }
+
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
+
+
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.value == '' ) {
+                    alert("[사용기간 기준구분이]이 -발행일 기준-일때는 [발행일 기준 유효기간]을 선택해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.focus();
+                    return false;
+                }
+            }
+
+
+
+
+            //alert("여기 " + getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+            //사용기간 기준구분 - 정상
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'R') {
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.value == '' )
+                {
+                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 할인율]를 입력해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.focus();
+                    return false;
+                }
+            }
+
+
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'M') {
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.value == '') {
+                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 금액]을 입력해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.focus();
+                    return false;
+                }
+            }
+
+
+
+            if (f.CheckMemGrade.checked == false) {
+
+                 alert("적용회원등급을 선택하세요");
+                 f.CheckMemGrade.focus();
+                 return false;
+
+            }
+
+
+
+
+            /**
+            if (f.SEL_PMO_TOTAL_CATEGORY.value == '') {
+                alert("프로모션 종류를 선택하세요.");
+                f.SEL_PMO_TOTAL_CATEGORY.focus();
+                return false;
+            }
+            **/
+
+            return true;
+
+        }
+
+        function getRadioVal(form, name) {
+            var val = "";
+            // get list of radio buttons with specified name
+            var radios = form.elements[name];
+
+
+            // loop through list of radio buttons
+            // for (var i = 0; radios.length < i; i++)
+            for (var i = 0, len = radios.length; i < len; i++) {
+                //alert('in:   ' +name + ':' + radios[i].value);
+                if (radios[i].checked) { // radio checked?
+                    val = radios[i].value; // if so, hold its value in val
+                    break; // and break out of for loop
+                }
+            }
+            return val; // return value of checked radio or undefined if none checked
+        }
+
+        function setTotalCategory(obj_selectbox, sel_index) {
+            //alert(obj_selectbox[sel_index].value);
+            var f = document.frm01;
+            f.inst_TB_COUPON_MASTER_PMO_TOTAL_CATEGORY.value = obj_selectbox.options[sel_index].value;
+
+            //alert(obj_selectbox[sel_index].value);
+
+            if (obj_selectbox[sel_index].value == "01") //일반회원 전용할인
+            {
+
+                f.CheckMemGrade[0].disabled = false;
+                f.CheckMemGrade[1].disabled = false;
+                f.CheckMemGrade[2].disabled = false;
+                f.CheckMemGrade[3].disabled = false;
+
+                f.CheckMemGrade[4].disabled = true;
+                f.CheckMemGrade[5].disabled = true;
+                f.CheckMemGrade[6].disabled = true;
+                f.CheckMemGrade[7].disabled = true;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "00") //임직원 전용할인
+            {
+                f.CheckMemGrade[0].disabled = true;
+                f.CheckMemGrade[1].disabled = true;
+                f.CheckMemGrade[2].disabled = true;
+                f.CheckMemGrade[3].disabled = true;
+
+                f.CheckMemGrade[4].disabled = false;
+                f.CheckMemGrade[5].disabled = false;
+                f.CheckMemGrade[6].disabled = false;
+                f.CheckMemGrade[7].disabled = false;
+
+            }
+
+            if (obj_selectbox[sel_index].value == "03") //등급할인
+            {
+                f.CheckMemGrade[0].disabled = false;
+                f.CheckMemGrade[1].disabled = false;
+                f.CheckMemGrade[2].disabled = false;
+                f.CheckMemGrade[3].disabled = false;
+
+                f.CheckMemGrade[4].disabled = false;
+                f.CheckMemGrade[5].disabled = false;
+                f.CheckMemGrade[6].disabled = false;
+                f.CheckMemGrade[7].disabled = false;
+
+            }
+
+        }
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+        <!--//path-->
+    @{
+
+        //[1] 마스터 정보
+        
+        string CouponName = "", CouponGbn = "", CouponGbnM = "";
+        DateTime MasterFromDate, MasterToDate;
+        string UsableDeviceGbn = "", UsableYN = "", CouponDiscountMoney = "", CouponDiscountRate = "";
+        string IssueMethodGbn = "", IssueMethodWithAuto = "";
+        string RateOrMoney = "";
+
+        List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result
+            = ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>;
+
+        CouponName = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME;
+        CouponGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN;
+        CouponGbnM = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M;
+        MasterFromDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value;
+        MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
+        UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
+        UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
+        CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
+        CouponDiscountRate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE.ToString();
+        IssueMethodGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN;
+        IssueMethodWithAuto = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO;
+        
+        RateOrMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY ;
+
+        //[2] 상품정보
+        int ProductCount = 0;
+        ProductCount = int.Parse(@ViewBag.ProductCnt);
+        
+        //[3]적용가능 회원등급
+        int GradeCount = 0;
+        List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> grade_lst =
+             ViewData["SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>;
+
+        GradeCount = grade_lst.Count;
+
+         
+
+    }
+
+    <div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+    </div>
+    <!--//path-->
+
+    <div class="tar mb10">
+        <a class="btn btn-default middium" href="/AdminCoupon/IssueExcute?CdCoupon=@Request["CdCoupon"]">====== 쿠폰 발행 =======</a>
+        <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+    </div>
+
+    <div class="panel">
+        <h3 class="sub-header">쿠폰정보</h3>
+        <div class="alert alert-info">
+            <ul>
+                <li>. 쿠폰명  :  @CouponName  / 사용가능여부  :  @UsableYN</li>
+                <li>
+                    · 쿠폰용도구분 : @{ if (CouponGbn == "M")
+                     {<text>지불쿠폰</text>}
+                     else
+                     {<text>배송쿠폰</text>}}
+                </li>
+                <li>
+                    · 쿠폰용도상세구분 : @{ if (CouponGbnM == "R")
+                     {<text>회원가입</text>}
+                     else if (CouponGbnM == "B")
+                     {<text>생일</text>}
+                     else if (CouponGbnM == "B")
+                     {<text>일반이벤트쿠폰</text>}
+                    }
+                </li>
+                <li>. 발행가능기간 : @MasterFromDate.ToString() ~ @MasterToDate.ToString() </li>
+                <li>
+                    . 사용가능매체 : @{ if (CouponGbn == "P")
+                     {<text>PC,모바일</text>}
+                     else
+                     {<text>모바일전용</text>}}
+                </li>
+                <li>. 금액   :  @CouponDiscountMoney   . 할인율 : @CouponDiscountRate</li>
+                <li>
+                    . 발행방법 : @{ if (IssueMethodGbn == "A")
+                     {<text>자동발행 </text>}
+                     else if (IssueMethodGbn == "B")
+                     {<text>수동발행</text>}}
+                </li>
+                <li>
+                    . 자동발행 Type : @{ if (IssueMethodWithAuto == "A")
+                     {<text>Action 발행(회원가입등..) </text>}
+                     else if (IssueMethodWithAuto == "B")
+                     {<text>Batch 발행(생일등...)</text>}}
+                </li>
+
+                <li>
+                    . 쿠폰 적용대상 상품 수  : @ViewBag.ProductCnt
+
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+    @{
+        string Message = "";
+        bool CanExecute = true;
+
+
+        if (UsableYN != "Y")
+        {
+            CanExecute = false;
+            Message = "쿠폰정책이 비활성화 되어있습니다. 먼저 활성화 해 주세요.";
+        }
+        else if (MasterFromDate > DateTime.Now || MasterToDate < DateTime.Now)
+        {
+            CanExecute = false;
+            Message = "쿠폰의 발행가능기간이 시작되지 않거나 종료되어서 쿠폰발행을 할 수 없습니다 ";
+        }
+        else if (IssueMethodGbn == "A")
+        {
+            CanExecute = false;
+            Message = "자동발행 Type의 쿠폰이라 수동발행을 할 수 없습니다. ";
+        }
+        /**
+        else if (IssueMethodGbn == "B")
+        {
+            CanExecute = false;
+            Message = "자동발행 Type의 쿠폰이라 수동발행을 할 수 없습니다. ";
+        }**/
+        else if (CouponGbn == "M" && ProductCount <= 0)
+        {
+            CanExecute = false;
+            Message = "쿠폰 사용가능 상품을 먼저 설정해 주세요. 설정된 상품이 없습니다.";
+
+        }
+        else if (GradeCount == 0)
+        {
+            CanExecute = false;
+            Message = "발행대상 회원등급을 먼저 설정해 주세요";
+        }
+
+        //-------------------------------------------------------------------
+
+        bool MoneyDisabled = false, RateDisabled = false ;
+        if (RateOrMoney == "M")
+        {
+            MoneyDisabled = true;
+        }
+
+        if (RateOrMoney == "R")
+        {
+            RateDisabled = true;
+        }
+
+
+    }
+
+
+    <div>
+
+        <font color="red">@Message</font>
+
+    </div>
+
+    @if (CanExecute == true)
+    {
+
+        <div class="panel">
+            <h3 class="sub-header">회원별 개별 발행</h3>
+
+            @using (Html.BeginForm("IssuExcuteSingle", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck01();" }))
+            {
+
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                                        <input type="hidden" id="CdCoupon" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
+                                        <input type="hidden" id="CouponGbn" name="CouponGbn" value="@CouponGbn" />
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                            <tbody>
+
+
+                                                @if (CouponGbn == "M")
+                                                {
+
+                                                    if (RateOrMoney == "R")
+                                                    {
+                                                    <tr>
+                                                        <th>쿠폰 할인율(%) </th>
+                                                        <td>
+                                                            @Html.TextBoxFor(model => model.COUPON_MONEY, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.COUPON_MONEY)</font>
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                    if (RateOrMoney == "M")
+                                                    {
+                                                    <tr>
+                                                        <th>쿠폰 할인금액 </th>
+                                                        <td>
+                                                            @Html.TextBoxFor(model => model.COUPON_DISCOUNT_RATE, new { cssClass = "input-sm text-left", disabled = MoneyDisabled })  <font color="red">@Html.ValidationMessageFor(model => model.COUPON_DISCOUNT_RATE)</font>
+                                                        </td>
+                                                    </tr>
+                                                     }
+                                                }
+                                                <tr>
+                                                    <th>대상회원 </th>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.M_ID, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.M_ID)</font>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>관리자메모 </th>
+                                                    <td>
+                                                        @Html.TextAreaFor(model => model.ISSUED_MEMO, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.ISSUED_MEMO)</font>
+                                                    </td>
+                                                </tr>
+
+                                               
+                                                <tr>
+                                                    <th>발행</th>
+                                                    <td>
+                                                        <input type="submit" value="발 행" class="btn btn-default middium" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+            }
+        </div>
+
+    }
+
+    @if (CanExecute == true)
+    {
+        <div class="panel">
+            <h3 class="sub-header">일괄 발행 (최초 발행 이후에는 새로 추가된 상품에 대해서만 발행됩니다) </h3>
+
+            @using (Html.BeginForm("IssueExcuteEntire", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck02();" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                                        <input type="hidden" id="CdCoupon" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
+                                        <input type="hidden" id="CouponGbn" name="CouponGbn" value="@CouponGbn" />
+
+                                        <table class="table table_row">
+                                            <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                            <tbody>
+
+
+
+                                                @if (CouponGbn == "M")
+                                                {
+
+                                                    <tr>
+                                                        <th>쿠폰 할인율(%) </th>
+                                                        <td>
+                                                           @CouponDiscountRate %
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>쿠폰 할인금액 </th>
+                                                        <td>
+                                                           @CouponDiscountMoney 
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                                <tr>
+                                                    <th>일괄 발행</th>
+                                                    <td>
+                                                        <input type="submit" value=" 일괄 발행" class="btn btn-default middium" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+            }
+
+        </div>
+
+    }
+    <class ="btn_area"><a class="btn btn-primary small" href="/AdminCoupon/Index">목록</a>
+</div>
+   
+ }
+
