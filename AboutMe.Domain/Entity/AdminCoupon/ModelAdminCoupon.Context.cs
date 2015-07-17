@@ -29,10 +29,9 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
         public virtual DbSet<TB_COUPON_KIND_CATEGORY> TB_COUPON_KIND_CATEGORY { get; set; }
         public virtual DbSet<TB_COUPON_MEMBER_GRADE> TB_COUPON_MEMBER_GRADE { get; set; }
-        public virtual DbSet<TB_COUPON_PRICE_DETAIL> TB_COUPON_PRICE_DETAIL { get; set; }
         public virtual DbSet<TB_COUPON_MASTER> TB_COUPON_MASTER { get; set; }
-        public virtual DbSet<TB_COUPON_ISSUED_DETAIL> TB_COUPON_ISSUED_DETAIL { get; set; }
         public virtual DbSet<TB_COUPON_PRODUCT> TB_COUPON_PRODUCT { get; set; }
+        public virtual DbSet<TB_COUPON_ISSUED_DETAIL> TB_COUPON_ISSUED_DETAIL { get; set; }
     
         public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_COMMON_CNT()
         {
@@ -300,6 +299,57 @@ namespace AboutMe.Domain.Entity.AdminCoupon
                 new ObjectParameter("P_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_PRODUCT_CREATE_INS", cD_COUPONParameter, p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_ISSUED_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_ISSUED_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> SP_ADMIN_COUPON_ISSUED_LIST_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_LIST_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> SP_ADMIN_COUPON_ISSUED_DETAIL_SEL(Nullable<int> iDX_COUPON_NUMBER)
+        {
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_DETAIL_SEL", iDX_COUPON_NUMBERParameter);
         }
     }
 }
