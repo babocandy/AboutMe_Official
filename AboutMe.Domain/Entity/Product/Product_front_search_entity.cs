@@ -12,7 +12,7 @@ namespace AboutMe.Domain.Entity.Product
         public Product_front_search_entity()
         {
             PAGE = 1;
-            PAGESIZE = 4;
+            PAGESIZE = 6;
         }
         public int IDX { get; set; }
         public string P_CATE_CODE { get; set; }

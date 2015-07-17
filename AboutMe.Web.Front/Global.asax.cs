@@ -23,5 +23,20 @@ namespace AboutMe.Web.Front
 
             Bootstrapper.Initialise(); //Depency injection ... 
         }
-    }
-}
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            // event is raised each time a new session is created   
+            //더미세션 세팅:
+            HttpContext.Current.Session["dummy_session"] = HttpContext.Current.Session.SessionID;
+ 
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+            // event is raised when a session is abandoned or expires
+        }
+    } //class
+
+
+}//namespace

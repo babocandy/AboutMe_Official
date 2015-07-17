@@ -11,7 +11,7 @@
             @foreach (var item in ViewData["category1"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
             {
 
-                <li><a href="/shopping/Index?p_cate_code=@item.CATE_CODE">@item.DEPTH2_NAME</a></li>
+                <li><a href="/shopping/Index?p_cate_code=@item.CATE_CODE&DEPTH_NAME3=@item.DEPTH2_NAME">@item.DEPTH2_NAME</a></li>
                 if (i == 4)
                 {
                     @Html.Raw("</ul><ul>"); }
@@ -32,7 +32,7 @@
 <!--//list1-->
 <!--list2-->
 <div class="list list2">
-    <p class="tit"><a href="/shopping/Index?p_cate_code=101200100">헬스</a></p>
+    <p class="tit"><a href="/shopping/Index?p_cate_code=102100100">헬스</a></p>
     <div class="sublist">
         <ul>
             @{ i = 0; }
@@ -55,7 +55,7 @@
 <!--//list2-->
 <!--list3-->
 <div class="list list3">
-    <p class="tit"><a href="/shopping/Index?p_cate_code=101300100">수입브랜드</a></p>
+    <p class="tit"><a href="/shopping/Index?p_cate_code=103100100">수입브랜드</a></p>
     <div class="sublist">
         <ul>
             @{ i = 0; }

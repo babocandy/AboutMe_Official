@@ -29,15 +29,6 @@ namespace AboutMe.Domain.Entity.Product
     
         public virtual DbSet<TB_LOG_USER> TB_LOG_USER { get; set; }
     
-        public virtual ObjectResult<SP_PRODUCT_DETAIL_VIEW_Result> SP_PRODUCT_DETAIL_VIEW(string p_CODE)
-        {
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
-        }
-    
         public virtual int SP_USER_LOG_INS(string uid, string memo, string comment, string url, string userip)
         {
             var uidParameter = uid != null ?
@@ -80,7 +71,7 @@ namespace AboutMe.Domain.Entity.Product
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORY_DEPTH_SEL_Result>("SP_CATEGORY_DEPTH_SEL", cATE_GBNParameter, dEPTH1_CODEParameter, dEPTH2_CODEParameter);
         }
     
-        public virtual ObjectResult<SP_PRODUCT_CNT_Result> SP_PRODUCT_CNT(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN)
+        public virtual ObjectResult<SP_PRODUCT_CNT_Result> SP_PRODUCT_CNT(string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN, string p_CATE_CODE_3DEPTH)
         {
             var p_CATE_CODEParameter = p_CATE_CODE != null ?
                 new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
@@ -102,10 +93,14 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
                 new ObjectParameter("P_OUTLET_YN", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_CNT_Result>("SP_PRODUCT_CNT", p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter);
+            var p_CATE_CODE_3DEPTHParameter = p_CATE_CODE_3DEPTH != null ?
+                new ObjectParameter("P_CATE_CODE_3DEPTH", p_CATE_CODE_3DEPTH) :
+                new ObjectParameter("P_CATE_CODE_3DEPTH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_CNT_Result>("SP_PRODUCT_CNT", p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter, p_CATE_CODE_3DEPTHParameter);
         }
     
-        public virtual ObjectResult<SP_PRODUCT_SEL_Result> SP_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN)
+        public virtual ObjectResult<SP_PRODUCT_SEL_Result> SP_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN, string p_CATE_CODE_3DEPTH)
         {
             var pAGEParameter = pAGE.HasValue ?
                 new ObjectParameter("PAGE", pAGE) :
@@ -135,7 +130,20 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
                 new ObjectParameter("P_OUTLET_YN", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEL_Result>("SP_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter);
+            var p_CATE_CODE_3DEPTHParameter = p_CATE_CODE_3DEPTH != null ?
+                new ObjectParameter("P_CATE_CODE_3DEPTH", p_CATE_CODE_3DEPTH) :
+                new ObjectParameter("P_CATE_CODE_3DEPTH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEL_Result>("SP_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter, p_CATE_CODE_3DEPTHParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_DETAIL_VIEW_Result> SP_PRODUCT_DETAIL_VIEW(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
         }
     }
 }
