@@ -16,7 +16,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -199,6 +200,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberShipController.cs" />
+    <Compile Include="Controllers\Mypage\MyOrderController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\Mypage\MypageController.cs" />
     <Compile Include="DI_Core\Bootstraper.cs" />
@@ -720,6 +722,7 @@
     <Content Include="Views\CommonChildAction\ShoppingDetailRightPromotion.cshtml" />
     <Content Include="Views\Cart\FlyingCart.cshtml" />
     <Content Include="Views\ChildActionProduct\HeaderCategoryMenu.cshtml" />
+    <Content Include="Views\MyOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
