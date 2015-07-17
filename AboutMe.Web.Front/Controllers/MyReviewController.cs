@@ -6,13 +6,28 @@ using System.Web.Mvc;
 
 namespace AboutMe.Web.Front.Controllers
 {
-    [RouteArea("MyPage")]
-    [RoutePrefix("MyReview")]
-    [Route("{action=Index}")]
+    [RoutePrefix("MyPage/MyReview")]
+    [Route("{action=Ready}")]
     public class MyReviewController : Controller
     {
         // GET: MyReview
+        /*
         public ActionResult Index()
+        {
+            return View();
+        }*/
+
+        public ActionResult Ready()
+        {
+            return View();
+        }
+
+        public ActionResult Complete()
+        {
+            return View();
+        }
+
+        public ActionResult Write()
         {
             return View();
         }

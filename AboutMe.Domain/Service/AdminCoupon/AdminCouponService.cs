@@ -13,7 +13,7 @@ namespace AboutMe.Domain.Service.AdminCoupon
 {
     public class AdminCouponService : IAdminCouponService
     {
-        //전체할인 프로모션 리스트 가져오기
+        //쿠폰마스터 리스트 가져오기
         public List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponList(string SearchCol, string SearchKeyword, int Page, int PageSize)
         {
 
@@ -32,7 +32,7 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
         }
 
-        //전체할인 프로모션 row수 가져오기 
+        //쿠폰마스터  row수 가져오기 
         public int GetAdminCouponListCnt(string SearchCol, string SearchKeyword)
         {
 
@@ -98,6 +98,29 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
 
             return IsSuccess;
+        }
+
+
+
+
+       
+        //쿠폰마스터 상세정보 가져오기
+        public List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponList(string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> lst = new List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_MASTER_DETAIL_SEL(CdCoupon).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
         }
 
 
@@ -246,6 +269,55 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
 
         #endregion
+
+
+        #region 발행된 쿠폰 ==========================================================================
+
+
+
+        //발행된 쿠폰 리스트 가져오기
+        public List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> GetAdminCouponIssuedList(string SearchCol, string SearchKeyword, int Page, int PageSize, string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> lst = new List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_ISSUED_LIST_SEL(Page, PageSize, SearchCol, SearchKeyword,CdCoupon).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //쿠폰적용 대상상품 row수 가져오기 
+        public int GetAdminCouponIssuedListCnt(string SearchCol, string SearchKeyword, string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst = new List<SP_ADMIN_COUPON_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_ISSUED_CNT(SearchCol, SearchKeyword, CdCoupon).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
+        }
+
+        #endregion 
 
     }
 }

@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Ready";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet">
+}
+
+@section Body{
+    <div class="wrap mypage">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div id="container" class="review">
+            <div class="container1080">
+                @{ Html.RenderPartial("~/Views/MyReview/_Top.cshtml");}
+
+                <!--리뷰영역-->
+                <div class="contypeb">
+                    <div class="reviewwrap">
+                        <!--리뷰 탭-->
+                        <div class="reviewtab">
+                            <ul class="">
+                                <li class="cnt" ><a href="#" onclick="return false;">작성 가능한 리뷰</a></li>
+                                <li ><a href="/MyPage/MyReview/Complete">작성한 리뷰</a></li>
+                            </ul>
+                        </div>
+                        <!--//리뷰 탭-->
+                        <!--리뷰 컨텐츠-->
+                        <div id="tabCon1" class="writable tab_content tabletypeb" style="display:block">
+                            <!--작성 가능한 리뷰 목록-->
+                            <table summary="주문 상품 정보, 수량, 결제금액, 비고">
+                                <caption>작성 가능한 리뷰 목록</caption>
+                                <colgroup>
+                                    <col width="170" />
+                                    <col width="*" />
+                                    <col width="105" />
+                                    <col width="148" />
+                                    <col width="231" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">주문 상품 정보</th>
+                                        <th>수량</th>
+                                        <th>결제금액</th>
+                                        <th>비고</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="proimg">
+                                            <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        <span class="tag"><span class="ico_1_1">1+1</span></span>
+                                                        퓨어 화이트 토너
+                                                    </a>
+                                                </dt>
+                                                <dd>제주 참마 유래성분으로 미백기능성</dd>
+                                            </dl>
+                                        </td>
+                                        <td class="count">
+                                            <div class="relbox">1</div>
+                                        </td>
+                                        <td class="proprice"><strong>25,000</strong>원</td>
+                                        <td><a href="#" class="btn_goreview" onclick="PopupCenter('Write', '', 800, 824);">리뷰쓰기</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="proimg">
+                                            <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        퓨어 화이트 로션
+                                                    </a>
+                                                </dt>
+                                                <dd>강력한 보습 성분으로 윤기 넘치는<br />오아시스 피부 </dd>
+                                            </dl>
+                                        </td>
+                                        <td class="count">
+                                            <div class="relbox">1</div>
+                                        </td>
+                                        <td class="proprice"><strong>25,000</strong>원</td>
+                                        <td><a href="#" class="btn_goreview">리뷰쓰기</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="proimg">
+                                            <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        <span class="tag"><span class="ico_set">SET</span></span>
+                                                        이뮤젠 에너자이징 아이 크림
+                                                    </a>
+                                                </dt>
+                                                <dd>복합발효를 통해 성분의 효과를<br />높인 눈가 전용 아이 크림</dd>
+                                            </dl>
+                                        </td>
+                                        <td class="count">
+                                            <div class="relbox">1</div>
+                                        </td>
+                                        <td class="proprice"><strong>55,000</strong>원</td>
+                                        <td><a href="#" class="btn_goreview">리뷰쓰기</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="proimg">
+                                            <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        <span class="tag"><span class="ico_set">SET</span></span>
+                                                        리얼 프레쉬 팩 [로즈]
+                                                    </a>
+                                                </dt>
+                                                <dd>맑고 촉촉한 피부를 위한 100%천연유래<br />Real fresh pack</dd>
+                                            </dl>
+                                        </td>
+                                        <td class="count">
+                                            <div class="relbox">1</div>
+                                        </td>
+                                        <td class="proprice"><strong>4,000</strong>원</td>
+                                        <td><a href="#" class="btn_goreview">리뷰쓰기</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="proimg">
+                                            <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        <span class="tag"><span class="ico_coupon">COUPON</span></span>
+                                                        리얼 프레쉬 팩 [호박]
+                                                    </a>
+                                                </dt>
+                                                <dd>맑고 촉촉한 피부를 위한 100%천연유래<br />Real fresh pack</dd>
+                                            </dl>
+                                        </td>
+                                        <td class="count">
+                                            <div class="relbox">3</div>
+                                        </td>
+                                        <td class="proprice"><strong>4,000</strong>원</td>
+                                        <td><a href="#" class="btn_goreview">리뷰쓰기</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--//작성 가능한 리뷰 목록-->                       
+                        </div>
+                        <!--//리뷰 컨텐츠-->
+                    </div>
+                    <!--//wrap review-->
+                </div>
+                <!--//리뷰영역-->
+
+            </div>
+            <!--//container1080-->
+        </div>
+        <!--//container-->       
+    
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+
+    </div>
+    <!--//wrap-->
+}
+

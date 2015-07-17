@@ -65,10 +65,6 @@ namespace AboutMe.Web.Admin.Controllers
 
 
 
-
-
-
-
         // GET: AdminCoupon
         public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
@@ -256,6 +252,48 @@ namespace AboutMe.Web.Admin.Controllers
             return RedirectToAction("CouponProductListCreate", new { CdCoupon = CdCoupon });
         }
 
+
+        //발행된 쿠폰리스트 
+        public ActionResult IssuedCouponList(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX"
+            , string SortDir = "DESC", int Page = 1, int PageSize = 10 , string CdCoupon = "0")
+        {
+
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.SortCol = SortCol;
+            this.ViewBag.SortDir = SortDir;
+
+            //AdminMemberService srv =  new AdminMemberService();
+            int TotalRecord = 0;
+            TotalRecord = _AdminCouponService.GetAdminCouponProductListCnt(SearchCol, SearchKeyword,CdCoupon);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+
+
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
+
+            /**
+            if(master_lst.Count > 0)
+            {
+                ViewBag["CD_COUPON"] = master_lst[0].CD_COUPON;
+                ViewBag["COUPON_NAME"] = master_lst[0].COUPON_NAME;
+                ViewBag[""]
+            }
+             * **/
+            //테스트
+
+            List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> sP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result = new List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>();
+            
+            sP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result = _AdminCouponService.GetAdminCouponIssuedList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+
+            return View(sP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result);
+
+        }
 
         
 
