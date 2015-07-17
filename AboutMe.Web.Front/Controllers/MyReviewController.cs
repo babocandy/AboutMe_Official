@@ -26,5 +26,10 @@ namespace AboutMe.Web.Front.Controllers
         {
             return View();
         }
+
+        public ActionResult Write()
+        {
+            return View();
+        }
     }
 }

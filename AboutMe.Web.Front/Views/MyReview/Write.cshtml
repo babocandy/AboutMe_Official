@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Write";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet">
+}
+
+@section Body{
+<div class="wrap mypage">
+    <!--상품리뷰등록_뷰티-->
+    <div class="reviewpop_wrap review_write" style="display:block;">
+        <div class="dim"></div>
+        <div class="reviewpop">
+            <a href="#none" class="reviewpop_close" onclick="reviewpop_close()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt=""></a>
+            <!--reviewpop_top-->
+            <div class="reviewpop_top">
+                <div class="title_area">
+                    <p class="title">상품 리뷰 등록</p>
+                </div>
+            </div>
+            <!--//reviewpop_top-->
+            <!--reviewpop_bottom-->
+            <div class="reviewpop_bottom writeform pro">
+                <form name="frm" action="">
+                    <fieldset>
+                        <legend>상품 리뷰 등록 폼</legend>
+                        <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
+                        <table summary="상품찾기, 피부타입, 제목">
+                            <caption>상품 리뷰 등록 입력 표</caption>
+                            <colgroup>
+                                <col width="147">
+                                <col width="*">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">상품찾기</th>
+                                    <td class="prosearch">굿나잇 모이스쳐 앰플</td>
+                                </tr>
+                                <tr>
+                                    <td class="product">
+                                        <div class="pro_info">
+                                            <!--이미지사이즈 96x96-->
+                                            <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt4.jpg" alt=""></div>
+                                            <div class="detail">
+                                                <p class="tit">리얼 프레쉬팩 [로즈]</p>
+                                                <p class="stit">맑고 촉촉한 피부를 위한 100%천연유래 <br>Real fresh pack</p>
+                                                <p class="price">4,000원</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>피부타입</th>
+                                    <td class="skintype">
+                                        <select class="selectstyleb" title="" style="display: none;">
+                                            <option selected="selected">선택하세요</option>
+                                            <option>건성</option>
+                                            <option>지성</option>
+                                        </select><div class="outSelB"><a href="javascript:" title="" class="tag_select">선택하세요</a><ul class="tag_options" style="display: none;"><li class="open_selected"><a href="javascript:">선택하세요</a></li><li><a href="javascript:">건성</a></li><li><a href="javascript:">지성</a></li></ul></div>
+                                    </td>
+                                </tr>
+                                <tr class="last edit">
+                                    <th>내용<br><span>0 / 000 byte</span></th>
+                                    <td><textarea class="txtareatypea" style="width:100%"></textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="attach mt20">
+                            <h3>사진첨부</h3>
+                            <span class="locbox">
+                                <input type="text" class="ipttypea" style="width:400px" title="파일 경로입력"><a href="#" class="btn_white_w96h38">찾아보기</a>
+                            </span>
+                            <span class="imgbox">
+                                <img src="" alt="">
+                            </span>
+                        </div>
+                        <div class="agreebox mt40">
+                            <h3>타이틀 영역 타이틀 영역</h3><label class="chkcon"><input type="checkbox" name="" title=""><span class="txt">동의합니다.</span><span class="bl"></span></label>
+                            <div class="agreetxt">
+                                주문할 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?
+                                <span class="law">(전자상거래법 제 8조 제2항)</span>
+                            </div>
+                        </div>
+                        <div class="btngroup mt40">
+                            <a href="#" class="btn_brown_w96h38">등록</a><a href="#" class="btn_white_w96h38 typeb">취소</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!--//reviewpop_bottom-->
+        </div>
+    </div>
+    <!--//상품리뷰등록_뷰티-->
+    <script type="text/javascript">
+        //리뷰팝업
+        function reviewpop_view() {
+            $("html").css({ "overflow-y": "hidden" });
+            $(".reviewpop_wrap").show();
+            $(".reviewpop_wrap").css({ "overflow-y": "auto" });
+        }
+        function reviewpop_close() {
+            $(".reviewpop_wrap").hide();
+            $(".reviewpop_wrap").css({ "overflow-y": "hidden" });
+            $("html").css({ "overflow-y": "auto" });
+        }
+    </script>
+</div>
+}
+
