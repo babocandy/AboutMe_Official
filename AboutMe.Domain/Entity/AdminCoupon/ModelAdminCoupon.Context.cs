@@ -351,5 +351,23 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_DETAIL_SEL", iDX_COUPON_NUMBERParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> SP_ADMIN_COUPON_MEMBER_GRADE_SEL(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>("SP_ADMIN_COUPON_MEMBER_GRADE_SEL", cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL", cD_COUPONParameter);
+        }
     }
 }

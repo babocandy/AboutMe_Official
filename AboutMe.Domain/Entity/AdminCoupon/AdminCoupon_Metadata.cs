@@ -41,7 +41,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public string USABLE_DEVICE_GBN { get; set; }
    
         public string PRODUCT_APP_SCOPE_GBN { get; set; }
-        [Required(ErrorMessage = "회원적용범위 구분을 선택하세요.")]
+        //[Required(ErrorMessage = "회원적용범위 구분을 선택하세요.")]
         public string MEMBER_APP_SCOPE_GBN { get; set; }
 
         [Required(ErrorMessage = "발행방법 구분을 선택하세요.")]

@@ -319,5 +319,55 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
         #endregion 
 
+
+        #region 쿠폰 발행 =============================================================================================
+
+
+        //쿠폰발행대상 회원등급 리스트 가져오기
+        public List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> GetAdminCouponMemberGradeList(string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> lst = new List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_MEMBER_GRADE_SEL(CdCoupon).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+
+        //쿠폰발행대상 상품 Count 가져오기
+        public int GetAdminCouponProductUsableCnt(string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst = new List<SP_ADMIN_COUPON_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL(CdCoupon).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
+        }
+
+
+        #endregion
+
     }
 }
