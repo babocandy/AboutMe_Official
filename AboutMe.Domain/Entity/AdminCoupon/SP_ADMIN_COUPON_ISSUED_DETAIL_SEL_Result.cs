@@ -10,9 +10,8 @@
 namespace AboutMe.Domain.Entity.AdminCoupon
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_COUPON_ISSUED_DETAIL
+    public partial class SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result
     {
         public int IDX { get; set; }
         public int IDX_COUPON_NUMBER { get; set; }
