@@ -97,6 +97,7 @@
             if (confirm("수량을 변경하시겠습니까?")) {
                 f.IDX.value = idx;
                 f.CNT.value = cnt;
+                f.PCODE_ARRAY = '';
                 f.action = "/Cart/CartUpdateCnt";
                 f.submit();
             }
@@ -109,6 +110,7 @@
             if (confirm("삭제하시겠습니까?")) {
                 f.IDX.value = idx;
                 f.CNT.value = '';
+                f.PCODE_ARRAY = '';
                 f.action = "/Cart/CartDelete";
                 f.submit();
             }
@@ -142,6 +144,7 @@
                 if (confirm(cnt + "개의 상품을 장바구니에서 삭제하시겠습니까?")) {
                     f.IDX.value = idxstr;
                     f.CNT.value = '';
+                    f.PCODE_ARRAY = '';
                     f.action = "/Cart/CartDelete";
                     f.submit();
                 }
@@ -166,13 +169,13 @@
         function jjim_chkinsert(b) {
 
             @if (Model.UserProfile.IS_LOGIN)
-        {
-                @Html.Raw(new HtmlString("CheckAllWishInsert(b); "));
-        }
-        else
-        {
-                @Html.Raw(new HtmlString("isJJimLogin();"));
-        }
+            {
+                    @Html.Raw(new HtmlString("CheckAllWishInsert(b); "));
+            }
+            else
+            {
+                    @Html.Raw(new HtmlString("isJJimLogin();"));
+            }
 
         }
 
@@ -208,14 +211,22 @@
 
         function SelectNextStep() {
             var cnt = 0;
-            var idxstr = "";
+            var pcodelist = "";
+            var arrP = new Array;
 
             $("input:checkbox[name='gridchk']").each(function (idx) {
                 if (this.checked) {
-                    if (idxstr != "") {
-                        idxstr += ",";
+                    var obj = new Object();
+                    var oidx = $(this).val();
+                    var txtname = 'count_txt_' + oidx
+                    var txtbox = $("#" + txtname);
+                    var pcnt = txtbox.val();
+                    if (pcnt == 0) {
+                        pcnt = 1;
                     }
-                    idxstr += $(this).val();
+                    obj.p_code = $(this).attr('data-pcode');
+                    obj.p_count = pcnt;
+                    arrP.push(obj);
                     cnt++;
                 }
             });
@@ -223,6 +234,17 @@
             if (cnt == 0) {
                 alert("상품을 선택해 주세요.");
                 return;
+            }
+            else
+            {
+                var jobj = jQuery.stringify(arrP);
+                var f = document.cartform;
+                    f.IDX.value = '';
+                    f.CNT.value = '';
+                    f.PCODE_ARRAY.value = jobj;
+                //f.action = "/Cart/GoNextStep";
+                    f.action = "/MemberShip/Login";
+                    f.submit();
             }
         }
 
@@ -390,7 +412,8 @@
         <form action="" method="post" name="cartform">
             <input type="hidden" name="IDX" />
             <input type="hidden" name="CNT" />
-            <input type="hidden" name="GUBUN" />
+            <input type="hidden" name="PCODE_ARRAY" />    
+            <input type="hidden" name="RedirectUrl"  value="/Order/Step1"/>           
         </form>
 
         <!--//cart_top-->
@@ -631,9 +654,8 @@
         @BuyAsGoods()
 
         @Model.UserProfile.SESSION_ID
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니담기</a>
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니담기</a>
-        <a href="#none" class="btn_gray_w185h60" onclick="CartMerge(this)" data-pcode="1111112" data-pcount="1">로그인Merge</a>
+        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니</a>
+        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니</a>
     </div>
     <div class="container100per notify">
         <div class="inner">

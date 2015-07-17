@@ -11,16 +11,39 @@ using AboutMe.Web.Front.Common.Filters;
 
 namespace AboutMe.Web.Front.Controllers
 {
-    public class CartController : BaseFrontController
+    public class OrderController : BaseFrontController
     {
         private ICartService _cartservice;
- 
-        public CartController(ICartService _cartservice)
+
+        public OrderController(ICartService _cartservice)
         {
             this._cartservice = _cartservice;
         }
 
-        // GET: Cart
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult InsertOrderStep1(string OrderList)
+        {
+            List<CART_INSERT> DataList = JsonConvert.DeserializeObject<List<CART_INSERT>>(OrderList);
+            string P_CODE_LIST = "";
+            string P_COUNT_LIST = "";
+
+            string M_ID = _user_profile.M_ID;
+            string SESSION_ID = _user_profile.SESSION_ID;
+
+            foreach (CART_INSERT pData in DataList)
+            {
+                if (!string.IsNullOrEmpty(P_CODE_LIST))
+                {
+                    P_CODE_LIST += ",";
+                    P_COUNT_LIST += ",";
+                }
+                P_CODE_LIST += pData.p_code;
+                P_COUNT_LIST += pData.p_count;
+            }
+
+            return RedirectToAction(""); //Index로 이동
+        }
+        // GET: Order
         public ActionResult Index()
         {
             List<SP_TB_CART_LIST_Result> lst = new List<SP_TB_CART_LIST_Result>();
