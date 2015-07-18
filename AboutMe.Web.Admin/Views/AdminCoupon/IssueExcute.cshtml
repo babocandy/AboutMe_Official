@@ -442,7 +442,7 @@
     @if (CanExecute == true)
     {
         <div class="panel">
-            <h3 class="sub-header">일괄 발행 (최초 발행 이후에는 새로 추가된 상품에 대해서만 발행됩니다) </h3>
+            <h3 class="sub-header">일괄 발행 (최초 발행 이후에는 기 발행된 회원을 제외하고 발행됩니다) </h3>
 
             @using (Html.BeginForm("IssueExcuteEntire", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck02();" }))
             {
@@ -450,7 +450,6 @@
 
                                         <input type="hidden" id="CdCoupon" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
                                         <input type="hidden" id="CouponGbn" name="CouponGbn" value="@CouponGbn" />
-
                                         <table class="table table_row">
                                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
                                             <tbody>

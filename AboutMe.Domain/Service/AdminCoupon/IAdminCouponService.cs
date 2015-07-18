@@ -35,7 +35,11 @@ namespace AboutMe.Domain.Service.AdminCoupon
         List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> GetAdminCouponMemberGradeList(string CdCoupon);
         //쿠폰발행가능 상품카운트
         int GetAdminCouponProductUsableCnt(string CdCoupon);
-
+        
+        #region 쿠폰발행
+        //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/일괄발행 INSERT(admin)
+        int InsAdminCouponIssue_WithNoNumcheck_ManualEntire(string CdCoupon, string AdminId);
+        #endregion
 
     }
 }

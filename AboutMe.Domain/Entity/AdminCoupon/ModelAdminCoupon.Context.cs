@@ -318,6 +318,46 @@ namespace AboutMe.Domain.Entity.AdminCoupon
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_ISSUED_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
         }
     
+        public virtual ObjectResult<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> SP_ADMIN_COUPON_MEMBER_GRADE_SEL(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>("SP_ADMIN_COUPON_MEMBER_GRADE_SEL", cD_COUPONParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL", cD_COUPONParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_ENTIRE_INS(string cD_COUPON, string aDMIN_ID, ObjectParameter eXCUTE_RESULT)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            var aDMIN_IDParameter = aDMIN_ID != null ?
+                new ObjectParameter("ADMIN_ID", aDMIN_ID) :
+                new ObjectParameter("ADMIN_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_ENTIRE_INS", cD_COUPONParameter, aDMIN_IDParameter, eXCUTE_RESULT);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> SP_ADMIN_COUPON_ISSUED_DETAIL_SEL(Nullable<int> iDX_COUPON_NUMBER)
+        {
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_DETAIL_SEL", iDX_COUPON_NUMBERParameter);
+        }
+    
         public virtual ObjectResult<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> SP_ADMIN_COUPON_ISSUED_LIST_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string cD_COUPON)
         {
             var pAGEParameter = pAGE.HasValue ?
@@ -341,33 +381,6 @@ namespace AboutMe.Domain.Entity.AdminCoupon
                 new ObjectParameter("CD_COUPON", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_LIST_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
-        }
-    
-        public virtual ObjectResult<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> SP_ADMIN_COUPON_ISSUED_DETAIL_SEL(Nullable<int> iDX_COUPON_NUMBER)
-        {
-            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
-                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
-                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_DETAIL_SEL", iDX_COUPON_NUMBERParameter);
-        }
-    
-        public virtual ObjectResult<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> SP_ADMIN_COUPON_MEMBER_GRADE_SEL(string cD_COUPON)
-        {
-            var cD_COUPONParameter = cD_COUPON != null ?
-                new ObjectParameter("CD_COUPON", cD_COUPON) :
-                new ObjectParameter("CD_COUPON", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>("SP_ADMIN_COUPON_MEMBER_GRADE_SEL", cD_COUPONParameter);
-        }
-    
-        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL(string cD_COUPON)
-        {
-            var cD_COUPONParameter = cD_COUPON != null ?
-                new ObjectParameter("CD_COUPON", cD_COUPON) :
-                new ObjectParameter("CD_COUPON", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL", cD_COUPONParameter);
         }
     }
 }

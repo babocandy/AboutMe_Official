@@ -86,4 +86,35 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> INS_DATE { get; set; }
          * **/
     }
+
+    public class TB_COUPON_ISSUED_DETAIL_Meatadata
+    {
+       [Required(ErrorMessage = "쿠폰코드를 입력하세요.")]
+        public string CD_COUPON { get; set; }
+        public string COUPON_VERIFI_NUMBER { get; set; }
+        //public Nullable<int> COUPON_MONEY_DETAIL_NO { get; set; }
+        [Range(0, 100000, ErrorMessage = "0~100000사이의 값을 입력하세요")]
+        public Nullable<int> COUPON_MONEY { get; set; }
+        [Range(0, 100000, ErrorMessage = "0~100사이의 값을 입력하세요")]
+        public Nullable<int> COUPON_DISCOUNT_RATE { get; set; }
+        public string CD_COUPON_KIND { get; set; }
+        public string USE_STATUS { get; set; }
+        public string USABLE_TF { get; set; }
+        [Required(ErrorMessage = "발급대상 회원아이디를 입력하세요.")]
+        public string M_ID { get; set; }
+        public Nullable<System.DateTime> ISSUE_DATE { get; set; }
+        public Nullable<System.DateTime> USABLE_DATE_FROM { get; set; }
+        public Nullable<System.DateTime> USABLE_DATE_TO { get; set; }
+        public Nullable<int> ORDER_NO { get; set; }
+        public Nullable<int> ORDER_DETAIL_NO { get; set; }
+        public string ORDER_CANCEL_FL { get; set; }
+        public string RE_ISSUE_FL { get; set; }
+        public Nullable<System.DateTime> RE_ISSUE_DATE { get; set; }
+        public Nullable<System.DateTime> DOWNLOAD_DATE_FROM { get; set; }
+        public Nullable<System.DateTime> DOWNLOAD_DATE_TO { get; set; }
+        public string ISSUED_GBN { get; set; }
+        public string ISSUED_MEMO { get; set; }
+        [Required(ErrorMessage = "관리자 아이디를 입력하세요.")]
+        public string ADMIN_ID { get; set; }
+      }
 }

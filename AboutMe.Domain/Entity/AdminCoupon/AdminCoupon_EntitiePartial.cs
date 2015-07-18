@@ -12,4 +12,9 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     public partial class TB_COUPON_MASTER
     {
     }
+
+    [MetadataType(typeof(TB_COUPON_ISSUED_DETAIL_Meatadata))]
+    public partial class TB_COUPON_ISSUED_DETAIL
+    {
+    }
 }

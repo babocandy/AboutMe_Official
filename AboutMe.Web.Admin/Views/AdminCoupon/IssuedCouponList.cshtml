@@ -214,6 +214,7 @@
                                 else if (item.USE_STATUS == "10")
                                     {<text>사용완료</text>}
                             </td>
+                            <td>@item.M_ID</td>
                             <td>@item.ISSUE_DATE</td>
 
 
@@ -223,7 +224,10 @@
                         
                             <td>@item.ORDER_CANCEL_FL</td>
                             <td>@item.RE_ISSUE_FL / @item.RE_ISSUE_DATE</td>
-                            <td>@item.ISSUED_GBN</td>
+                            <td>@if (item.ISSUED_GBN == "A")
+                            {<text>일괄발행</text> }
+                            else if (item.ISSUED_GBN == "B")
+                            {<text>개별발행</text>}</td>
                             <td>@item.ISSUED_MEMO</td>
                             <td>@Html.ActionLink("변경", "ChangeCouponUsable", new { IdxCouponNumber = item.IDX_COUPON_NUMBER }); </td>
                        </tr>

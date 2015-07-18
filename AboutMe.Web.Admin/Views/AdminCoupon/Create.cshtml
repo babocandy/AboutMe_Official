@@ -285,12 +285,13 @@
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN, "P") PC  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN, "M") 모바일 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN)</font></td>
 
                                                 </tr>
+                                                <!---
                                                 <tr>
                                                     <th>상품적용범위 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN, "A") 특정상품  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN, "B") 전체상품 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN)</font></td>
 
                                                 </tr>
-                                                <!--
+                                             
                                                 <tr>
                                                     <th>회원적용범위 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "A") 전체회원  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "B") 등급회원전체 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "C") 특정회원 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN)</font></td>
@@ -327,7 +328,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                    <th>다운로드가능기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>발행가능기간(정책유효기간) 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.MASTER_TO_DATE, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
 
                                                 </tr>

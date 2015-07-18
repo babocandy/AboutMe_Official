@@ -265,33 +265,25 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.SortCol = SortCol;
             this.ViewBag.SortDir = SortDir;
 
-            //AdminMemberService srv =  new AdminMemberService();
-            int TotalRecord = 0;
-            TotalRecord = _AdminCouponService.GetAdminCouponProductListCnt(SearchCol, SearchKeyword,CdCoupon);
-            this.ViewBag.TotalRecord = TotalRecord;
-            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
-            this.ViewBag.Page = Page;
-
 
             //쿠폰마스터 정보를 ViewData에 저장 
             List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
             ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
 
-            /**
-            if(master_lst.Count > 0)
-            {
-                ViewBag["CD_COUPON"] = master_lst[0].CD_COUPON;
-                ViewBag["COUPON_NAME"] = master_lst[0].COUPON_NAME;
-                ViewBag[""]
-            }
-             * **/
-            //테스트
 
-            List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> sP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result = new List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>();
-            
-            sP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result = _AdminCouponService.GetAdminCouponIssuedList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+            //발행된 쿠폰의 COUNT 
+            int TotalRecord = 0;
+            TotalRecord = _AdminCouponService.GetAdminCouponIssuedListCnt(SearchCol, SearchKeyword,CdCoupon);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
 
-            return View(sP_ADMIN_COUPON_PRODUCT_DETAIL_SEL_Result);
+
+            //발행된 쿠폰리스트
+            List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result> sP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result = new List<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>();
+            sP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result = _AdminCouponService.GetAdminCouponIssuedList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+
+            return View(sP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result);
 
         }
 
@@ -324,22 +316,20 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
 
-        public ActionResult IssueExcute([Bind( Exclude = "")]  TB_COUPON_MEMBER_GRADE tb_coupon_member_grade, string CdCoupon)
-        {    
-            
-            
-            /**
-            //쿠폰마스터 정보를 ViewData에 저장 
-            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
-            ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
+        public ActionResult IssueExcuteEntire( string CdCoupon)
+        {
 
+            int ResultCode;
+            string AdminId = "TestAdminID000";
 
-            //쿠폰발행가능 회원등급 리스트를 ViewData에 저장 
-            List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> grade_lst = _AdminCouponService.GetAdminCouponMemberGradeList(CdCoupon).ToList();
-            ViewData["SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result"] = master_lst;
-            **/
+            ResultCode = _AdminCouponService.InsAdminCouponIssue_WithNoNumcheck_ManualEntire(CdCoupon, AdminId);
 
-            return View();
+            ViewBag.ResultCode = ResultCode.ToString();
+
+            if (ResultCode == 0) // 정상수행
+                return RedirectToAction("IssuedCouponList", new { CdCoupon = CdCoupon });
+            else
+                return RedirectToAction("IssueExcute", new { CdCoupon = CdCoupon });
 
         }
         
