@@ -73,8 +73,8 @@
 		//**************************************************************************
 		//okname 응답 정보
 		//**************************************************************************
-		Response.Write ("ret="+ret+"<br>");
-		Response.Write ("output="+output+"<br>");
+		//Response.Write ("ret="+ret+"<br>");
+		//Response.Write ("output="+output+"<br>");
 		if (ret == 0) {
 			result = ((String)output).Split(new string[] {"\n"}, StringSplitOptions.None);
 			retcode = result[0];

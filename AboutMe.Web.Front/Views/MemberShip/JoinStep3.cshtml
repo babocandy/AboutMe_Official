@@ -40,8 +40,12 @@
 
 
     <div class="wrap join">
+
+<script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
+
 <script>
     var glID_DUP_CHECKED = false;  //아이디 중복확인 여부
+    var glREGISTER_ING = false;  //저장처리중
     function fSetNewID()
     {
         glID_DUP_CHECKED = false;  //아이디 중복확인 여부
@@ -52,161 +56,220 @@
             window.location.href = "/";
     }
 
-function fGoSave(){
-    var f = document.frmJOIN;
-    if (f.M_ID.value.length < 4) {
-        alert("아이디를 4자이상 입력하세요");
-        return;
+    function fSetEmailDomain()
+        {
+            var f = document.frmJOIN;
+            if(f.M_EMAIL_SEL.selectedIndex>0)
+            {
+                f.M_EMAIL_2.value=f.M_EMAIL_SEL[f.M_EMAIL_SEL.selectedIndex].value;
+            }
     }
-    if (!glID_DUP_CHECKED)
+
+    //신규가입 저장 성공후 -> 다음 스텝으로 이동
+    function fGoRegisterComplete()
     {
-        alert("아이디 중복 체크를 먼저 하십시오");
-        return;
-    }
-    if (f.M_PWD.value.length < 5) {
-        alert("암호를 5자이상 입력하세요");
-        return;
-    }
-    if (f.M_NAME.value.length < 1) {
-        alert("이름이 없습니다. 실명인증부터 다시 받으셔야 합니다.");
-        return;
-    }
-    if (f.M_BIRTHDAY.value.length < 1) {
-        alert("생일이 없습니다. 실명인증부터 다시 받으셔야 합니다.");
-        return;
-    }
-    if (f.M_MOBILE_1.value.length < 3 || f.M_MOBILE_2.value.length < 3 || f.M_MOBILE_3.value.length < 3) {
-        alert("휴대폰 번호를 입력하세요.");
-        return;
-    }
-    if (f.M_EMAIL_1.value.length < 2 || f.M_EMAIL_2.value.length < 3 ) {
-        alert("EMAIL을 입력하세요.");
-        return;
+        var f = document.frmJOIN;
+        f.action = "/MemberShip/JoinStep4";
+        f.targte = "";
+        f.submit();
     }
 
-    if (f.M_ISSMS[0].checked == false && f.M_ISSMS[1].checked == false) {
-        alert("SMS수신여부를 선택하세요.");
-        return;
-    }
-    if (f.M_ISEMAIL[0].checked == false && f.M_ISEMAIL[1].checked == false) {
-        alert("이메일수신여부를 선택하세요.");
-        return;
-    }
-    if (f.M_ISDM[0].checked == false && f.M_ISDM[1].checked == false) {
-        alert("DM수신여부를 선택하세요.");
-        return;
-    }
+    function fGoSave(){
+        var f = document.frmJOIN;
 
-    var strM_ID = f.M_ID.value;
-    var strM_PWD = f.M_PWD.value;
-    var strM_NAME = f.M_NAME.value;
-    var strM_BIRTHDAY = f.M_BIRTHDAY.value;
-    var strM_SEX = f.M_SEX.value;
-    var strM_MOBILE = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "_" + f.M_MOBILE_3.value;
-    var strM_PHONE = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "_" + f.M_PHONE_3.value;
-    var strM_EMAIL = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value ;
-    var strM_ZIPCODE = f.M_ZIPCODE.value ;
-    var strM_ADDR1 = f.M_ADDR_1.value;
-    var strM_ADDR2 = f.M_ADDR_2.value;
-    var strM_ISSMS = f.M_ISSMS.value;
-    var strM_ISEMAIL = f.M_ISEMAIL.value;
-    var strM_ISDM = f.M_ISDM.value;
+        if (glREGISTER_ING) {
+            alert("회원가입 처리중입니다. 잠시만 기다려 주십시오.");
+            return;
+        }
 
-    var strM_AGREE = f.M_AGREE.value;
-    var strM_AGREE2 = f.M_AGREE2.value;
+        //ID 유효성 검증
+        if(fIsValidMemberID(f.M_ID.value) ==false)
+        {
+            glID_DUP_CHECKED = false;
+            return;
+        }
+        //if (f.M_ID.value.length < 4) {
+        //    alert("아이디를 4자이상 입력하세요");
+        //    return;
+        //}
 
-    var strM_JOIN_MODE = f.rM_JOIN_MODE.value;
-    var strM_DI = f.M_DI.value;
-    var strWORK_TMP_ID = f.WORK_TMP_ID.value;
+        //ID 중혹확인여부
+        if (!glID_DUP_CHECKED)
+        {
+            alert("아이디 중복 체크를 먼저 하십시오");
+            return;
+        }
 
-    var strURL = "/MemberShip/AjaxJOIN_NEW_PROC";
+        if (f.M_PWD.value != f.M_PWD2.value) {
+            alert("암호와 암호 확인이 일치하지 않습니다.");
+            return;
+        }
 
-    $.ajax({
-        url: strURL,
-        async: false,  //동기 통신
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            M_ID: strM_ID
-            , M_NAME: strM_NAME
-            , M_PWD: strM_PWD
+        //암호 유효성 검증
+        if(fIsValidMemberPWD(f.M_PWD.value) ==false)
+        {
+            return;
+        }
+        
 
-            , M_SEX: strM_SEX
-            , M_BIRTHDAY: strM_BIRTHDAY
+        if (f.M_NAME.value.length < 1) {
+            alert("이름이 없습니다. 실명인증부터 다시 받으셔야 합니다.");
+            return;
+        }
+        if (f.M_BIRTHDAY.value.length < 1) {
+            alert("생일이 없습니다. 실명인증부터 다시 받으셔야 합니다.");
+            return;
+        }
+        if (f.M_MOBILE_1.value.length < 3 || f.M_MOBILE_2.value.length < 3 || f.M_MOBILE_3.value.length < 3) {
+            alert("휴대폰 번호를 입력하세요.");
+            return;
+        }
+        if (f.M_EMAIL_1.value.length < 2 || f.M_EMAIL_2.value.length < 3 ) {
+            alert("EMAIL을 입력하세요.");
+            return;
+        }
 
-            , M_MOBILE: strM_MOBILE
-            , M_PHONE: strM_PHONE
-            , M_EMAIL: strM_EMAIL
-            , M_ZIPCODE: strM_ZIPCODE
-            , M_ADDR1: strM_ADDR1
-            , M_ADDR2: strM_ADDR2
-            , M_ISSMS: strM_ISSMS
-            , M_ISEMAIL: strM_ISEMAIL
-            , M_ISDM: strM_ISDM
+        if (f.M_ISSMS[0].checked == false && f.M_ISSMS[1].checked == false) {
+            alert("SMS수신여부를 선택하세요.");
+            return;
+        }
+        if (f.M_ISEMAIL[0].checked == false && f.M_ISEMAIL[1].checked == false) {
+            alert("이메일수신여부를 선택하세요.");
+            return;
+        }
+        if (f.M_ISDM[0].checked == false && f.M_ISDM[1].checked == false) {
+            alert("DM수신여부를 선택하세요.");
+            return;
+        }
 
-            , M_AGREE: strM_AGREE
-            , M_AGREE2: strM_AGREE2
+        var strM_ID = f.M_ID.value;
+        var strM_PWD = f.M_PWD.value;
+        var strM_NAME = f.M_NAME.value;
+        var strM_BIRTHDAY = f.M_BIRTHDAY.value;
+        var strM_SEX = f.M_SEX.value;
+        var strM_MOBILE = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
+        var strM_PHONE = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "-" + f.M_PHONE_3.value;
+        var strM_EMAIL = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value ;
+        var strM_ZIPCODE = f.M_ZIPCODE.value ;
+        var strM_ADDR1 = f.M_ADDR1.value;
+        var strM_ADDR2 = f.M_ADDR2.value;
+        var strM_ISSMS = "N";
+        if (f.M_ISSMS[0].checked) strM_ISSMS = "Y";
+        
+        var strM_ISEMAIL = "N";
+        if (f.M_ISEMAIL[0].checked) strM_ISEMAIL = "Y";
+
+        var strM_ISDM = "N";
+        if (f.M_ISDM[0].checked) strM_ISDM = "Y";
+
+        var strM_AGREE = f.M_AGREE.value;
+        var strM_AGREE2 = f.M_AGREE2.value;
+
+        var strM_JOIN_MODE = f.M_JOIN_MODE.value;
+        var strM_DI = f.M_DI.value;
+        var strWORK_TMP_ID = f.WORK_TMP_ID.value;
+
+        var strURL = "/MemberShip/AjaxJOIN_Register";
+
+        glREGISTER_ING = true;  //저장 진행중 --------------------
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                M_ID: strM_ID
+                , M_NAME: strM_NAME
+                , M_PWD: strM_PWD
+
+                , M_SEX: strM_SEX
+                , M_BIRTHDAY: strM_BIRTHDAY
+
+                , M_MOBILE: strM_MOBILE
+                , M_PHONE: strM_PHONE
+                , M_EMAIL: strM_EMAIL
+                , M_ZIPCODE: strM_ZIPCODE
+                , M_ADDR1: strM_ADDR1
+                , M_ADDR2: strM_ADDR2
+                , M_ISSMS: strM_ISSMS
+                , M_ISEMAIL: strM_ISEMAIL
+                , M_ISDM: strM_ISDM
+
+                , M_AGREE: strM_AGREE
+                , M_AGREE2: strM_AGREE2
             
-            , M_JOIN_MODE: strM_JOIN_MODE
-            , M_DI: strM_DI
-            , WORK_TMP_ID: strWORK_TMP_ID
+                , M_JOIN_MODE: strM_JOIN_MODE
+                , M_DI: strM_DI
+                , WORK_TMP_ID: strWORK_TMP_ID
 
-        },
-        success: function (retDATA) {
-            if (retDATA.ERR_CODE == "0") {
-                glID_DUP_CHECKED = true;
-                alert("등록되었습니다.");
-
-            }
-            else {
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    glID_DUP_CHECKED = true;
+                    alert("회원가입을 축하합니다. 로그인후 사용하십시오.");
+                    fGoRegisterComplete(); //다음 스텝으로 이동
+                }
+                else {
+                    glID_DUP_CHECKED = false;
+                    glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                    alert("회원가입중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
                 glID_DUP_CHECKED = false;
-                alert("회원가입중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
+                glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                alert("ajax 오류발생2");
             }
-        },
-        error: function (e) {
-            alert("ajax 오류발생2");
+        }); //ajax    
+    } //func
+
+
+    //ID중복 확인
+    function fID_DupCheck()
+    {
+        var f = document.frmJOIN;
+        //ID 유효성 검증
+        if(fIsValidMemberID(f.M_ID.value) ==false)
+        {
+            glID_DUP_CHECKED = false;
+            return;
         }
-    }); //ajax    
-} //func
+        //if (f.M_ID.value.length < 4) {
+        //    alert("아이디를 영문 숫자 조합하여 4~12자리로 만들어 주세요");
+        //    return;
+        //}
 
-function fID_DupCheck()
-{
-    var f = document.frmJOIN;
-    if (f.M_ID.value.length < 4) {
-        alert("아이디를 영문 숫자 조합하여 4~12자리로 만들어 주세요");
-        return;
-    }
+        var strM_ID = f.M_ID.value;
 
-    var strM_ID = f.M_ID.value;
+        var strURL = "/MemberShip/AjaxID_DUPCheck"; 
 
-    var strURL = "/MemberShip/AjaxID_DUPCheck"; 
-
-    $.ajax({
-        url: strURL,
-        async: false,  //동기 통신
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            M_ID: strM_ID
-        },
-        success: function (retDATA) {
-            if (retDATA.ERR_CODE == "0") {
-                glID_DUP_CHECKED = true;
-                alert("사용가능한 ID입니다.");
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                M_ID: strM_ID
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    glID_DUP_CHECKED = true;
+                    alert("사용가능한 ID입니다.");
                 
+                }
+                else {
+                    glID_DUP_CHECKED = false;
+                    alert("이미 사용중이거나 사용할수 없는 아이디 입니다.다른 아이디를 입력하세요." );
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생1");
             }
-            else {
-                glID_DUP_CHECKED = false;
-                alert("이미 사용중이거나 사용할수 없는 아이디 입니다.다른 아이디를 입력하세요.\n" + retDATA);
-            }
-        },
-        error: function (e) {
-            alert("ajax 오류발생1");
-        }
-    }); //ajax
+        }); //ajax
 
 
-} //function fID_DupCheck()
+    } //function fID_DupCheck()
 </script>
 
 
@@ -241,9 +304,9 @@ function fID_DupCheck()
                                 </tr>
                                 <tr>
                                     <th class="password"><span class="essential">비밀번호</span></th>
-                                    <td class="password"><input type="password" class="ipttypea" style="width:390px" title="비밀번호" /><br /><span class="ps_txt txt2"><em>※</em> 영문과 숫자를 조합하여 5~12자리로 만들어 주세요. 첫글자는 영문으로 입력해주세요 </span></td>
+                                    <td class="password"><input type="password" class="ipttypea" style="width:390px" title="비밀번호" name="M_PWD" value="" maxlength="12" /><br /><span class="ps_txt txt2"><em>※</em> 영문과 숫자를 조합하여 5~12자리로 만들어 주세요. 첫글자는 영문으로 입력해주세요 </span></td>
                                     <th class="password"><span class="essential">비밀번호 확인</span></th>
-                                        <td class="password"><input type="password" class="ipttypea" style="width:100%" title="비밀번호확인" /></td>
+                                        <td class="password"><input type="password" class="ipttypea" style="width:100%" title="비밀번호확인" name="M_PWD2" value="" maxlength="12"  /></td>
                                     </tr>
                                     <tr>
                                         <th><span class="essential">이름</span></th>
@@ -285,7 +348,7 @@ function fID_DupCheck()
                                             <input type="hidden" name="M_SEX" value="@ViewBag.M_SEX" />
                                            
                                             <span class="txt">@fM_SEX_NAME(@ViewBag.M_SEX)</span>
-                                            >
+                                            
                                     </tr>
                                     <tr>
                                         <th><span class="essential">휴대폰 번호</span></th>
@@ -302,8 +365,23 @@ function fID_DupCheck()
                                         <td class="home_num">
                                             <select class="selectstyleb" title="" name="M_PHONE_1">
                                                 <option selected="selected">02</option>
-                                                <option>032</option>
-                                                <option>031</option>
+                                                <option value='031'>031</option>
+                                                <option value='032'>032</option>
+                                                <option value='033'>033</option>
+                                                <option value='041'>041</option>
+                                                <option value='042'>042</option>
+                                                <option value='043'>043</option>
+                                                <option value='044'>044</option>
+                                                <option value='051'>051</option>
+                                                <option value='052'>052</option>
+                                                <option value='053'>053</option>
+                                                <option value='054'>054</option>
+                                                <option value='055'>055</option>
+                                                <option value='061'>061</option>
+                                                <option value='062'>062</option>
+                                                <option value='063'>063</option>
+                                                <option value='064'>064</option>
+                                                <option value='070'>070</option>
                                             </select>
                                             <input type="text" class="ipttypea mr10" style="width:80px" title="집전화번호 가운데 자리 입력" name="M_PHONE_2" maxlength="4" /><input type="text" class="ipttypea" style="width:80px" title="집전화번호 마지막 자리 입력" name="M_PHONE_3" maxlength="4" />
                                         </td>
@@ -314,10 +392,24 @@ function fID_DupCheck()
                                             <input type="text" class="ipttypea" style="width:130px" title="이메일주소입력" name="M_EMAIL_1" maxlength="30" />
                                             &nbsp;&nbsp;@@&nbsp;&nbsp;
                                             <input type="text" class="ipttypea mr10" style="width:130px" title="이메일 도메인 입력" name="M_EMAIL_2" maxlength="50" />
-                                            <select class="selectstyleb" title="" name="M_EMAIL_SEL">
-                                                <option selected="selected">선택하세요</option>
-                                                <option>hanmail.net</option>
-                                                <option>naver.com</option>
+                                            <select class="selectstyleb" title="" name="M_EMAIL_SEL" onchange="javascript:fSetEmailDomain()">
+                                                <option value="">직접입력</option>
+                                                <option value="daum.net">daum.net</option>
+                                                <option value="hanmail.net">hanmail.net</option>
+                                                <option value="hotmail.com">hotmail.com</option>
+                                                <option value="gmail.com">gmail.com</option>
+                                                <option value="yahoo.co.kr">yahoo.co.kr</option>
+                                                <option value="lycos.co.kr">lycos.co.kr</option>
+                                                <option value="nate.com">nate.com</option>
+                                                <option value="naver.com">naver.com</option>
+                                                <option value="hanafos.com">hanafos.com</option>
+                                                <option value="empal.com">empal.com</option>
+                                                <option value="hanmir.com">hanmir.com</option>
+                                                <option value="netian.com">netian.com</option>
+                                                <option value="freechal.com">freechal.com</option>
+                                                <option value="chol.com">chol.com</option>
+                                                <option value="hitel.net">hitel.net</option>
+                                                <option value="paran.com">paran.com</option>
                                             </select>
                                         </td>
                                     </tr>
