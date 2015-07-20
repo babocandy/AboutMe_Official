@@ -22,11 +22,26 @@
             <div class="container1080">
                 <h2><img src="/aboutCom/images/membership/h2_login.png" alt="LOGIN 로그인" /></h2>
                 <!--contypea-->
+
+                SessionID:@Session.SessionID  ,M_ID:@ViewBag.M_ID
+                Request_Url_Host = @ViewBag.Request_Url_Host
+                <br />
+                Request_Url_Authority = @ViewBag.Request_Url_Authority
+                <br />
+                Request_Url_Port = @ViewBag.Request_Url_Port
+                <br />
+                DomainName = @ViewBag.DomainName
+
+                <br />
+                HTTPS_DOMAIN = @ViewBag.HTTPS_DOMAIN
+
+
                 <div class="loginipt_area">
                     <!--회원로그인-->
                     <div class="member_login contypea">
 
                         <script>
+                        var glHTTPS_DOMAIN= "@ViewBag.HTTPS_DOMAIN";
                         function fGoLogin() {
                             var f = document.frmLOGIN;
                             if (f.ID.value.length < 2) {
@@ -37,7 +52,8 @@
                                 alert("패스워드를 입력하세요");
                                 return;
                             }
-                            f.action = "/MemberShip/LoginProc/";
+                            //f.action = "/MemberShip/LoginProc/";
+                            f.action = glHTTPS_DOMAIN + "/MemberShip/LoginProc/";
                             f.submit();
 
                         }
@@ -53,12 +69,14 @@
                                 <a href="javascript:fGoLogin();" class="btn_login btn_brown_w175h80"><img src="/aboutCom/images/common/ico_lock.png" class="lockimg" alt="">로그인</a>
                                 <label for="idsave" class="chkcon idsave"><input type="checkbox" id="idsave" /><span class="txt">아이디 저장</span></label>
                             </div>
-                            SessionID:@Session.SessionID  ,M_ID:@ViewBag.M_ID
+
                             <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
                             <input type="hidden" name="OrderList" value="@ViewBag.OrderList">
                         </form>
                         <p class="idpw_search"><span class="txt">· 회원 아이디, 비밀번호를 잊으셨나요?</span><a href="#" class="btn_white_w118h38">아이디 찾기</a><a href="#" class="btn_white_w118h38 ml5">비밀번호 찾기</a></p>
+
                     </div>
+
                     <!--//회원로그인-->
                     <!--비회원로그인-->
                     <div class="nomember_check contypea">
