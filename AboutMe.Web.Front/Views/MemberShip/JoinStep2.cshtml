@@ -37,7 +37,10 @@
             <div class="joinstep"><img src="/aboutCom/images/membership/joinstep2.gif" alt="약관동의" /></div>
 
             <form name="frmJOIN_AGREE" method="post" action="">
-                <input type="hidden" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
+                <input type="text" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
+                <input type="hidden" name="M_AGREE" value="" />
+                <input type="hidden" name="M_AGREE2" value="" />
+
                 <!--웹사이트/모바일 이용약관-->
                 <div class="agreecon first">
                     <h3><img src="/aboutCom/images/membership/h3_agree1.gif" alt="웹사이트/모바일 이용약관" /></h3>
@@ -618,7 +621,7 @@
                         </table><br><br><br>
                     </div>
                     <p class="txt_agree">
-                        <label class="chkcon" for="agree5"><input type="checkbox" id="agree5" name="M_AGREE" title="" class="agree_check" /> <span class="txt">동의합니다.(동의하지 않아도 회원가입 가능합니다.)</span></label>
+                        <label class="chkcon" for="agree5"><input type="checkbox" id="agree5" name="agree5" value="Y" title="" class="agree_check" /> <span class="txt">동의합니다.(동의하지 않아도 회원가입 가능합니다.)</span></label>
                     </p>
                 </div>
                 <!--//개인정보 제3자 제공-->
@@ -631,7 +634,7 @@
                         <span style="white-space:pre">    1)수집 항목 : 주민등록번호, 이름, 이메일, 주소, 휴대폰번호, 전화번호, 주소</span><br><br>
                     </div>
                     <p class="txt_agree">
-                        <label class="chkcon" for="agree6"><input type="checkbox" id="agree6" name="M_AGREE2" title="" class="agree_check" /> <span class="txt">동의합니다.</span></label>
+                        <label class="chkcon" for="agree6"><input type="checkbox" id="agree6" name="agree6" value="Y" title="" class="agree_check" /> <span class="txt">동의합니다.</span></label>
                     </p>
                 </div>
                 <!--//고유식별정보 수집 및 이용-->
@@ -682,16 +685,26 @@
                         return;
                     }
 
-                    //if (!f.M_AGREE.checked) {
+                    //if (!f.agree5.checked) {
                     //    alert("개인정보 제3자 제공에 동의하셔야 합니다.");
-                    //    f.M_AGREE.focus();
+                    //    f.agree5.focus();
                     //    return;
                     //}
-                    if (!f.M_AGREE2.checked) {
+                    if (!f.agree6.checked) {
                         alert("고유식별정보 수집 및 이용에 동의하셔야 합니다.");
-                        f.M_AGREE2.focus();
+                        f.agree6.focus();
                         return;
                     }
+
+                    if (f.agree5.checked)
+                        f.M_AGREE.value = "Y";
+                    else
+                        f.M_AGREE.value = "N";
+
+                    if (f.agree6.checked)
+                        f.M_AGREE2.value = "Y";
+                    else
+                        f.M_AGREE2.value = "N";
 
                     f.targte = "";
                     f.action = "/MemberShip/JoinStep3";
@@ -707,6 +720,8 @@
         </div>
     </div>
     <!--//container-->
+
+    </div>
 
 
 

@@ -13,7 +13,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
     public partial class SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result
     {
-        public int IDX { get; set; }
+        public Nullable<int> IDX { get; set; }
         public int IDX_COUPON_NUMBER { get; set; }
         public string CD_COUPON { get; set; }
         public string COUPON_VERIFI_NUMBER { get; set; }

@@ -194,68 +194,6 @@ namespace AboutMe.Domain.Entity.Member
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_INS", m_IDParameter, m_NAMEParameter, m_PWDParameter, m_GRADEParameter, m_SEXParameter, m_BIRTHDAYParameter, m_MOBILEParameter, m_PHONEParameter, m_EMAILParameter, m_ZIPCODEParameter, m_ADDR1Parameter, m_ADDR2Parameter, m_ISSMSParameter, m_ISEMAILParameter, m_ISDMParameter, m_JOIN_MODEParameter, m_DIParameter, m_AGREEParameter, m_AGREE2Parameter, m_SKIN_TROUBLE_CDParameter, m_GBNParameter, m_STAFF_COMPANYParameter, m_STAFF_IDParameter, eRR_CODE);
         }
     
-        public virtual int SP_MEMBER_REALNAME_LOG_INS(string wORK_TMP_ID, string cERT_GB, string rESULT_CODE, string tRAN_NO, string name, string di, string ci, string birthday, string gender, string nation, string rETURN_MSG_ALL, string iP)
-        {
-            var wORK_TMP_IDParameter = wORK_TMP_ID != null ?
-                new ObjectParameter("WORK_TMP_ID", wORK_TMP_ID) :
-                new ObjectParameter("WORK_TMP_ID", typeof(string));
-    
-            var cERT_GBParameter = cERT_GB != null ?
-                new ObjectParameter("CERT_GB", cERT_GB) :
-                new ObjectParameter("CERT_GB", typeof(string));
-    
-            var rESULT_CODEParameter = rESULT_CODE != null ?
-                new ObjectParameter("RESULT_CODE", rESULT_CODE) :
-                new ObjectParameter("RESULT_CODE", typeof(string));
-    
-            var tRAN_NOParameter = tRAN_NO != null ?
-                new ObjectParameter("TRAN_NO", tRAN_NO) :
-                new ObjectParameter("TRAN_NO", typeof(string));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var diParameter = di != null ?
-                new ObjectParameter("di", di) :
-                new ObjectParameter("di", typeof(string));
-    
-            var ciParameter = ci != null ?
-                new ObjectParameter("ci", ci) :
-                new ObjectParameter("ci", typeof(string));
-    
-            var birthdayParameter = birthday != null ?
-                new ObjectParameter("birthday", birthday) :
-                new ObjectParameter("birthday", typeof(string));
-    
-            var genderParameter = gender != null ?
-                new ObjectParameter("gender", gender) :
-                new ObjectParameter("gender", typeof(string));
-    
-            var nationParameter = nation != null ?
-                new ObjectParameter("nation", nation) :
-                new ObjectParameter("nation", typeof(string));
-    
-            var rETURN_MSG_ALLParameter = rETURN_MSG_ALL != null ?
-                new ObjectParameter("RETURN_MSG_ALL", rETURN_MSG_ALL) :
-                new ObjectParameter("RETURN_MSG_ALL", typeof(string));
-    
-            var iPParameter = iP != null ?
-                new ObjectParameter("IP", iP) :
-                new ObjectParameter("IP", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_REALNAME_LOG_INS", wORK_TMP_IDParameter, cERT_GBParameter, rESULT_CODEParameter, tRAN_NOParameter, nameParameter, diParameter, ciParameter, birthdayParameter, genderParameter, nationParameter, rETURN_MSG_ALLParameter, iPParameter);
-        }
-    
-        public virtual ObjectResult<SP_MEMBER_REALNAME_LOG_VIEW_Result> SP_MEMBER_REALNAME_LOG_VIEW(string wORK_TMP_ID)
-        {
-            var wORK_TMP_IDParameter = wORK_TMP_ID != null ?
-                new ObjectParameter("WORK_TMP_ID", wORK_TMP_ID) :
-                new ObjectParameter("WORK_TMP_ID", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MEMBER_REALNAME_LOG_VIEW_Result>("SP_MEMBER_REALNAME_LOG_VIEW", wORK_TMP_IDParameter);
-        }
-    
         public virtual int SP_MEMBER_UPD(string m_ID, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, ObjectParameter eRR_CODE)
         {
             var m_IDParameter = m_ID != null ?
@@ -346,6 +284,77 @@ namespace AboutMe.Domain.Entity.Member
                 new ObjectParameter("M_SKIN_TROUBLE_CD", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_UPD_SKIN_TROUBLE", m_IDParameter, m_SKIN_TROUBLE_CDParameter, eRR_CODE);
+        }
+    
+        public virtual int SP_MEMBER_REALNAME_LOG_INS(string wORK_TMP_ID, string m_JOIN_TYPE, string rESULT_CODE, string tRAN_NO, string m_NAME, string di, string ci, string m_BIRTHDAY, string m_SEX, string nation, string rETURN_MSG_ALL, string iP)
+        {
+            var wORK_TMP_IDParameter = wORK_TMP_ID != null ?
+                new ObjectParameter("WORK_TMP_ID", wORK_TMP_ID) :
+                new ObjectParameter("WORK_TMP_ID", typeof(string));
+    
+            var m_JOIN_TYPEParameter = m_JOIN_TYPE != null ?
+                new ObjectParameter("M_JOIN_TYPE", m_JOIN_TYPE) :
+                new ObjectParameter("M_JOIN_TYPE", typeof(string));
+    
+            var rESULT_CODEParameter = rESULT_CODE != null ?
+                new ObjectParameter("RESULT_CODE", rESULT_CODE) :
+                new ObjectParameter("RESULT_CODE", typeof(string));
+    
+            var tRAN_NOParameter = tRAN_NO != null ?
+                new ObjectParameter("TRAN_NO", tRAN_NO) :
+                new ObjectParameter("TRAN_NO", typeof(string));
+    
+            var m_NAMEParameter = m_NAME != null ?
+                new ObjectParameter("M_NAME", m_NAME) :
+                new ObjectParameter("M_NAME", typeof(string));
+    
+            var diParameter = di != null ?
+                new ObjectParameter("di", di) :
+                new ObjectParameter("di", typeof(string));
+    
+            var ciParameter = ci != null ?
+                new ObjectParameter("ci", ci) :
+                new ObjectParameter("ci", typeof(string));
+    
+            var m_BIRTHDAYParameter = m_BIRTHDAY != null ?
+                new ObjectParameter("M_BIRTHDAY", m_BIRTHDAY) :
+                new ObjectParameter("M_BIRTHDAY", typeof(string));
+    
+            var m_SEXParameter = m_SEX != null ?
+                new ObjectParameter("M_SEX", m_SEX) :
+                new ObjectParameter("M_SEX", typeof(string));
+    
+            var nationParameter = nation != null ?
+                new ObjectParameter("nation", nation) :
+                new ObjectParameter("nation", typeof(string));
+    
+            var rETURN_MSG_ALLParameter = rETURN_MSG_ALL != null ?
+                new ObjectParameter("RETURN_MSG_ALL", rETURN_MSG_ALL) :
+                new ObjectParameter("RETURN_MSG_ALL", typeof(string));
+    
+            var iPParameter = iP != null ?
+                new ObjectParameter("IP", iP) :
+                new ObjectParameter("IP", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_REALNAME_LOG_INS", wORK_TMP_IDParameter, m_JOIN_TYPEParameter, rESULT_CODEParameter, tRAN_NOParameter, m_NAMEParameter, diParameter, ciParameter, m_BIRTHDAYParameter, m_SEXParameter, nationParameter, rETURN_MSG_ALLParameter, iPParameter);
+        }
+    
+        public virtual ObjectResult<SP_MEMBER_REALNAME_LOG_VIEW_Result> SP_MEMBER_REALNAME_LOG_VIEW(string wORK_TMP_ID)
+        {
+            var wORK_TMP_IDParameter = wORK_TMP_ID != null ?
+                new ObjectParameter("WORK_TMP_ID", wORK_TMP_ID) :
+                new ObjectParameter("WORK_TMP_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MEMBER_REALNAME_LOG_VIEW_Result>("SP_MEMBER_REALNAME_LOG_VIEW", wORK_TMP_IDParameter);
+        }
+    
+        public virtual int SP_MEMBER_FIND_DI(string m_DI, ObjectParameter eRR_CODE, ObjectParameter rET_M_ID)
+        {
+            var m_DIParameter = m_DI != null ?
+                new ObjectParameter("M_DI", m_DI) :
+                new ObjectParameter("M_DI", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_DI", m_DIParameter, eRR_CODE, rET_M_ID);
         }
     }
 }

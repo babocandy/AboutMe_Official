@@ -9,6 +9,11 @@
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="SP_MEMBER_FIND_DI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_DI" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+          <Parameter Name="RET_M_ID" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="SP_MEMBER_FIND_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_NAME" Type="varchar" Mode="In" />
           <Parameter Name="M_EMAIL" Type="varchar" Mode="In" />
@@ -55,14 +60,14 @@
         </Function>
         <Function Name="SP_MEMBER_REALNAME_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WORK_TMP_ID" Type="varchar" Mode="In" />
-          <Parameter Name="CERT_GB" Type="varchar" Mode="In" />
+          <Parameter Name="M_JOIN_TYPE" Type="varchar" Mode="In" />
           <Parameter Name="RESULT_CODE" Type="varchar" Mode="In" />
           <Parameter Name="TRAN_NO" Type="varchar" Mode="In" />
-          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="M_NAME" Type="varchar" Mode="In" />
           <Parameter Name="di" Type="varchar" Mode="In" />
           <Parameter Name="ci" Type="varchar" Mode="In" />
-          <Parameter Name="birthday" Type="varchar" Mode="In" />
-          <Parameter Name="gender" Type="varchar" Mode="In" />
+          <Parameter Name="M_BIRTHDAY" Type="varchar" Mode="In" />
+          <Parameter Name="M_SEX" Type="varchar" Mode="In" />
           <Parameter Name="nation" Type="varchar" Mode="In" />
           <Parameter Name="RETURN_MSG_ALL" Type="varchar" Mode="In" />
           <Parameter Name="IP" Type="varchar" Mode="In" />
@@ -160,23 +165,6 @@
             <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_MEMBER_REALNAME_LOG_INS">
-            <Parameter Name="WORK_TMP_ID" Mode="In" Type="String" />
-            <Parameter Name="CERT_GB" Mode="In" Type="String" />
-            <Parameter Name="RESULT_CODE" Mode="In" Type="String" />
-            <Parameter Name="TRAN_NO" Mode="In" Type="String" />
-            <Parameter Name="name" Mode="In" Type="String" />
-            <Parameter Name="di" Mode="In" Type="String" />
-            <Parameter Name="ci" Mode="In" Type="String" />
-            <Parameter Name="birthday" Mode="In" Type="String" />
-            <Parameter Name="gender" Mode="In" Type="String" />
-            <Parameter Name="nation" Mode="In" Type="String" />
-            <Parameter Name="RETURN_MSG_ALL" Mode="In" Type="String" />
-            <Parameter Name="IP" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_MEMBER_REALNAME_LOG_VIEW" ReturnType="Collection(AboutMeModel2.SP_MEMBER_REALNAME_LOG_VIEW_Result)">
-            <Parameter Name="WORK_TMP_ID" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_MEMBER_UPD">
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="M_MOBILE" Mode="In" Type="String" />
@@ -206,6 +194,28 @@
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="M_SKIN_TROUBLE_CD" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MEMBER_REALNAME_LOG_INS">
+            <Parameter Name="WORK_TMP_ID" Mode="In" Type="String" />
+            <Parameter Name="M_JOIN_TYPE" Mode="In" Type="String" />
+            <Parameter Name="RESULT_CODE" Mode="In" Type="String" />
+            <Parameter Name="TRAN_NO" Mode="In" Type="String" />
+            <Parameter Name="M_NAME" Mode="In" Type="String" />
+            <Parameter Name="di" Mode="In" Type="String" />
+            <Parameter Name="ci" Mode="In" Type="String" />
+            <Parameter Name="M_BIRTHDAY" Mode="In" Type="String" />
+            <Parameter Name="M_SEX" Mode="In" Type="String" />
+            <Parameter Name="nation" Mode="In" Type="String" />
+            <Parameter Name="RETURN_MSG_ALL" Mode="In" Type="String" />
+            <Parameter Name="IP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MEMBER_REALNAME_LOG_VIEW" ReturnType="Collection(AboutMeModel2.SP_MEMBER_REALNAME_LOG_VIEW_Result)">
+          <Parameter Name="WORK_TMP_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MEMBER_FIND_DI">
+            <Parameter Name="M_DI" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+            <Parameter Name="RET_M_ID" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_MEMBER_VIEW_Result">
@@ -246,14 +256,14 @@
         </ComplexType>
         <ComplexType Name="SP_MEMBER_REALNAME_LOG_VIEW_Result">
           <Property Type="String" Name="WORK_TMP_ID" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CERT_GB" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_JOIN_TYPE" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="RESULT_CODE" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="TRAN_NO" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="name" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="di" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="ci" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="birthday" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="gender" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_BIRTHDAY" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_SEX" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="nation" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="RETURN_MSG_ALL" Nullable="true" MaxLength="5000" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
@@ -310,19 +320,23 @@
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_ID" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_ID" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_PW" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_PW" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_INS" FunctionName="AboutMeModel2.Store.SP_MEMBER_INS" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_PWD" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_PWD" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_RETIRE" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_RETIRE" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_SKIN_TROUBLE" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_SKIN_TROUBLE" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_REALNAME_LOG_INS" FunctionName="AboutMeModel2.Store.SP_MEMBER_REALNAME_LOG_INS" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_REALNAME_LOG_VIEW" FunctionName="AboutMeModel2.Store.SP_MEMBER_REALNAME_LOG_VIEW">
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel2.SP_MEMBER_REALNAME_LOG_VIEW_Result">
                 <ScalarProperty Name="WORK_TMP_ID" ColumnName="WORK_TMP_ID" />
-                <ScalarProperty Name="CERT_GB" ColumnName="CERT_GB" />
+                <ScalarProperty Name="M_JOIN_TYPE" ColumnName="M_JOIN_TYPE" />
                 <ScalarProperty Name="RESULT_CODE" ColumnName="RESULT_CODE" />
                 <ScalarProperty Name="TRAN_NO" ColumnName="TRAN_NO" />
-                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
                 <ScalarProperty Name="di" ColumnName="di" />
                 <ScalarProperty Name="ci" ColumnName="ci" />
-                <ScalarProperty Name="birthday" ColumnName="birthday" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
                 <ScalarProperty Name="nation" ColumnName="nation" />
                 <ScalarProperty Name="RETURN_MSG_ALL" ColumnName="RETURN_MSG_ALL" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
@@ -330,10 +344,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD" />
-          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_PWD" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_PWD" />
-          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_RETIRE" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_RETIRE" />
-          <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_SKIN_TROUBLE" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_SKIN_TROUBLE" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_DI" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_DI" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -104,8 +104,80 @@ namespace AboutMe.Domain.Service.Member
             rObj.ERR_MSG = strERR_MSG;
 
             return rObj; 
-            
+        }
 
+        //회원 가입:실명인증 로그등록
+        public void SetRealNameLogInsert(string wORK_TMP_ID = "", string m_JOIN_TYPE = "", string rESULT_CODE = "", string tRAN_NO = "", string m_NAME = "", string di = "", string ci = "", string m_BIRTHDAY = "", string m_SEX = "", string nation = "", string rETURN_MSG_ALL = "", string iP = "")
+        {
+
+            using (MemberEntities MemberContext = new MemberEntities())
+            {
+                /**try {**/
+                int sp_ret = MemberContext.SP_MEMBER_REALNAME_LOG_INS(wORK_TMP_ID, m_JOIN_TYPE, rESULT_CODE, tRAN_NO, m_NAME, di, ci, m_BIRTHDAY, m_SEX, nation, rETURN_MSG_ALL,iP);
+
+                /** }catch()
+                 {
+                       MemberContext.Dispose();
+                 }**/
+            }
+        }
+
+        //회원 가입:실명인증 로그조회 1건(1시간내)
+        public SP_MEMBER_REALNAME_LOG_VIEW_Result GetRealNameLogWorkTmp(string wORK_TMP_ID = "")
+        {
+
+            SP_MEMBER_REALNAME_LOG_VIEW_Result row1 = new SP_MEMBER_REALNAME_LOG_VIEW_Result();
+            using (MemberEntities MemberContext = new MemberEntities())
+            {
+                /**try {**/
+                row1 = MemberContext.SP_MEMBER_REALNAME_LOG_VIEW(wORK_TMP_ID).FirstOrDefault();
+
+                /** }catch()
+                 {
+                       MemberContext.Dispose();
+                 }**/
+            }
+            return row1;
+        }
+
+        //회원 가입:실명인증 DI  사용여부확인 <<-- 동일인 중복가입방지
+        //리턴:ReturnDic
+        public ReturnDic  GetMemberDindDI(string m_DI="")
+        {
+            int nERR_CODE = 0; //에러 없음
+            string strERR_MSG = ""; //에러 없음
+            string strRET_M_ID = ""; //DI로 중복되는 계정
+            using (MemberEntities MemberContext = new MemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam1 = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                ObjectParameter objOutParam2 = new ObjectParameter("RET_M_ID", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = MemberContext.SP_MEMBER_FIND_DI(m_DI, objOutParam1, objOutParam2);
+                nERR_CODE = (int)objOutParam1.Value;
+                strRET_M_ID = (string)objOutParam2.Value;
+
+                if (nERR_CODE != 0)
+                    strERR_MSG = "DB 처리 오류.ERR_CODE:" + nERR_CODE.ToString();
+
+                if (nERR_CODE == 10)
+                    strERR_MSG = "실영인증 중복. 이미 가입하신 회원 입니다. 아이디/암호찾기를 하십시오.";
+                if (nERR_CODE == 20)
+                    strERR_MSG = "실영인증 중복체크. 파라메타 DI값 전달오류.";
+
+
+                /** }catch()
+                 {
+                       MemberContext.Dispose();
+                 }**/
+            }
+
+            //결과 리턴
+            ReturnDic rObj = new ReturnDic();
+            rObj.ERR_CODE = nERR_CODE.ToString();
+            rObj.ERR_MSG = strERR_MSG;
+            rObj.ETC1 = strRET_M_ID; //DI로 중복되는 계정
+
+            return rObj; 
         }
 
         //회원 가입:등록

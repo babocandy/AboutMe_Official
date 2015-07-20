@@ -8,7 +8,7 @@ namespace AboutMe.Web.Front.Controllers
 {
     [RoutePrefix("MyPage/MyReview")]
     [Route("{action=Ready}")]
-    public class MyReviewController : Controller
+    public class MyReviewController : BaseFrontController
     {
         // GET: MyReview
         /*
@@ -28,6 +28,11 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         public ActionResult Write()
+        {
+            return View();
+        }
+
+        public ActionResult Update()
         {
             return View();
         }

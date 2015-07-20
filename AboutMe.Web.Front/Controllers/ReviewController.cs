@@ -8,7 +8,7 @@ namespace AboutMe.Web.Front.Controllers
 {
     [RoutePrefix("Review")]
     [Route("{action=Product}")]
-    public class ReviewController : Controller
+    public class ReviewController : BaseFrontController
     {
         /*// GET: Review
         public ActionResult Index()

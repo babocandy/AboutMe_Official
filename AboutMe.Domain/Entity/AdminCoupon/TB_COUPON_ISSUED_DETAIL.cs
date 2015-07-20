@@ -14,7 +14,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
     public partial class TB_COUPON_ISSUED_DETAIL
     {
-        public int IDX { get; set; }
+        public Nullable<int> IDX { get; set; }
         public int IDX_COUPON_NUMBER { get; set; }
         public string CD_COUPON { get; set; }
         public string COUPON_VERIFI_NUMBER { get; set; }
@@ -37,5 +37,6 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public Nullable<System.DateTime> DOWNLOAD_DATE_TO { get; set; }
         public string ISSUED_GBN { get; set; }
         public string ISSUED_MEMO { get; set; }
+        public string ADMIN_ID { get; set; }
     }
 }

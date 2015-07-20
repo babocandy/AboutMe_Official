@@ -319,5 +319,92 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
         #endregion 
 
+
+        #region 쿠폰 발행 =============================================================================================
+
+
+        //쿠폰발행대상 회원등급 리스트 가져오기
+        public List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> GetAdminCouponMemberGradeList(string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> lst = new List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_MEMBER_GRADE_SEL(CdCoupon).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+
+        //쿠폰발행대상 상품 Count 가져오기
+        public int GetAdminCouponProductUsableCnt(string CdCoupon)
+        {
+
+            List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst = new List<SP_ADMIN_COUPON_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL(CdCoupon).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
+        }
+
+
+
+        //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/일괄발행 INSERT(admin)
+        public int InsAdminCouponIssue_WithNoNumcheck_ManualEntire(string CdCoupon, string AdminId)
+        {
+
+            int ResultCode = -999; //실행결과코드
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+
+                    using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                    {
+                        ObjectParameter objOutParam01 = new ObjectParameter("EXCUTE_RESULT", typeof(int));//sp의 output parameter변수명을 동일하게 사용한다.
+
+                        AdmCouponContext.SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_ENTIRE_INS(CdCoupon, AdminId, objOutParam01);
+
+                        ResultCode = Convert.ToInt32(objOutParam01.Value.ToString());
+                    }
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                }
+
+            }
+
+
+            return ResultCode;
+        }
+
+
+
+        #endregion
+
     }
 }

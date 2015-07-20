@@ -35,13 +35,13 @@
 	//# 파일은 매월초에 갱신되며 만일 파일이 갱신되지 않으면 복화화데이터가 깨지는 현상이 발생됨.
 	// # 키파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
 	//########################################################################
-	String keyPath = "c:\\WWWs\\okname380_aspx_com_win64\\module\\key\\okname.key";
+	String keyPath = "c:\\WWW\\REALNAME\\module\\key\\okname.key";
 
 	//########################################################################
 	//# 로그 경로 지정 및 권한 부여 (hs_cnfrm_popup2.aspx에서 설정된 값과 동일하게 설정)
 	// # 로그파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
 	//########################################################################
-	String logPath = "c:\\WWWs\\okname380_aspx_com_win64\\module\\log";
+    String logPath = "c:\\WWW\\REALNAME\\module\\log";
 
 	//########################################################################
 	// # 옵션값에 'L'을 추가하는 경우에만 로그가 생성됨. 예) options="SL"
@@ -82,6 +82,7 @@
 			// 복호화된 본인확인 결과 데이터
 			// 개발시 확인 용도로 사용하며 운영시 주석 또는 삭제 처리 필요
 			//**************************************************************************
+            /*
 			Response.Write("복호화 요청 호출 성공.<br/>");		 
 			Response.Write("처리결과코드:"+result[0]+"<br/>");		 
 			Response.Write("처리결과메시지:"+result[1]+"<br/>");		 
@@ -96,6 +97,7 @@
 			Response.Write("내외국인구분:"+result[10]+"<br/>");	 
 			Response.Write("통신사코드:"+result[11]+"<br/>");	 
 			Response.Write("휴대폰번호:"+result[12]+"<br/>");	 
+            */
 		}
 		else {
 			if (ret <=200 ) 
@@ -111,25 +113,25 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-	<title>KCB 본인확인 샘플</title>
+	<title>KCB 본인확인</title>
     <script type="text/javascript" >
 	function fncOpenerSubmit() {
-		opener.document.kcbResultForm.mem_id.value = "<%=memId%>";
+	    opener.document.kcbResultForm_HP.mem_id.value = "<%=memId%>";
 <%
 	if (ret == 0) {
 %>
-	    opener.document.kcbResultForm.result_cd.value = "<%=result[0]%>";
-	    opener.document.kcbResultForm.result_msg.value = "<%=result[1]%>";
-	    opener.document.kcbResultForm.tx_seqno.value = "<%=result[2]%>";
-	    opener.document.kcbResultForm.cert_dt_tm.value = "<%=result[3]%>";
-	    opener.document.kcbResultForm.di.value = "<%=result[4]%>";
-	    opener.document.kcbResultForm.ci.value = "<%=result[5]%>";
-	    opener.document.kcbResultForm.name.value = "<%=result[7]%>";
-	    opener.document.kcbResultForm.birthday.value = "<%=result[8]%>";
-	    opener.document.kcbResultForm.gender.value = "<%=result[9]%>";
-	    opener.document.kcbResultForm.nation.value = "<%=result[10]%>";
-	    opener.document.kcbResultForm.tel_com_cd.value = "<%=result[11]%>";
-	    opener.document.kcbResultForm.tel_no.value = "<%=result[12]%>";
+	    opener.document.kcbResultForm_HP.result_cd.value = "<%=result[0]%>";
+	    opener.document.kcbResultForm_HP.result_msg.value = "<%=result[1]%>";
+	    opener.document.kcbResultForm_HP.tx_seqno.value = "<%=result[2]%>";
+	    opener.document.kcbResultForm_HP.cert_dt_tm.value = "<%=result[3]%>";
+	    opener.document.kcbResultForm_HP.di.value = "<%=result[4]%>";
+	    opener.document.kcbResultForm_HP.ci.value = "<%=result[5]%>";
+	    opener.document.kcbResultForm_HP.name.value = "<%=result[7]%>";
+	    opener.document.kcbResultForm_HP.birthday.value = "<%=result[8]%>";
+	    opener.document.kcbResultForm_HP.gender.value = "<%=result[9]%>";
+	    opener.document.kcbResultForm_HP.nation.value = "<%=result[10]%>";
+	    opener.document.kcbResultForm_HP.tel_com_cd.value = "<%=result[11]%>";
+	    opener.document.kcbResultForm_HP.tel_no.value = "<%=result[12]%>";
 <%
 	}
 %>
@@ -149,15 +151,15 @@
 		// 인증결과 복호화 성공
 		// 인증결과를 확인하여 페이지분기등의 처리를 수행해야한다.
 		if (retcode == "B000") {
-			Response.Write ("<script>alert('본인인증성공'); fncOpenerSubmit();</script>");
+			Response.Write ("<script>alert('Success! 본인인증성공'); fncOpenerSubmit();</script>");
 		}
 		else {
-			Response.Write ("<script>alert('본인인증실패 : "+retcode+"'); fncOpenerSubmit();</script>");
+			Response.Write ("<script>alert('Error1! 본인인증실패 : "+retcode+"'); fncOpenerSubmit();</script>");
 		}
 	}
 	else {
 		// 인증결과 복호화 실패
-		Response.Write ("<script>alert('인증결과복호화 실패 : "+ret+"'); self.close();</script>");
+		Response.Write ("<script>alert('Error2! 인증결과복호화 실패 : "+ret+"'); self.close();</script>");
 	}  
 %>
 </html>
