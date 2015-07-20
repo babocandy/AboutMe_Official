@@ -439,8 +439,8 @@ namespace AboutMe.Web.Front.Controllers
         //사용자 회원가입- Step2 -약관동의
         public ActionResult JoinStep2(string WORK_TMP_ID="")
         {
-            if (WORK_TMP_ID == null || WORK_TMP_ID == "")
-                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+            //if (WORK_TMP_ID == null || WORK_TMP_ID == "")
+            //    return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
 
             this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
             return View();
@@ -610,10 +610,19 @@ namespace AboutMe.Web.Front.Controllers
             MAIL_BODY =MAIL_BODY +"<br>이름:"+M_NAME;
             MAIL_BODY =MAIL_BODY +"</body></html>";
 
+            //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+            string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+            string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+            string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+            string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+            string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
+
+            //메일 발송
             MailSender mObj = new MailSender();
-            mObj.MailSendAction(M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+            mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
 
-
+            //ViewBag.mail_err_no = mObj.err_no;
+            //ViewBag.mail_err_msg = mObj.err_msg;
 
             return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
 

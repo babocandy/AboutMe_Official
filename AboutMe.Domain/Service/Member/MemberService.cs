@@ -86,10 +86,10 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "DB 처리 오류.\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "계정 중복 확인.\n 이미 존재하는 ID입니다.\n 다른 계정을 사용 하십시오.";
+                    strERR_MSG = "계정 중복 확인.\\n 이미 존재하는 ID입니다.\\n 다른 계정을 사용 하십시오.";
 
 
                 /** }catch()
@@ -160,9 +160,9 @@ namespace AboutMe.Domain.Service.Member
                     strERR_MSG = "DB 처리 오류.ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "실명인증 중복 오류.\n 이미 가입하신 회원 입니다.\n 아이디/암호찾기를 활용 하십시오.";
+                    strERR_MSG = "실명인증 중복 오류.\\n 이미 가입하신 회원 입니다.\\n 아이디/암호찾기를 활용 하십시오.";
                 if (nERR_CODE == 20)
-                    strERR_MSG = "실명인증 중복체크. 파라메타 DI값 전달오류.";
+                    strERR_MSG = "실명인증 중복체크.\\n 파라메타 DI값 전달오류.";
 
 
                 /** }catch()
@@ -200,10 +200,10 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE !=0)
-                    strERR_MSG = "DB 처리 오류.ERR_CODE:" + nERR_CODE.ToString() ;
+                    strERR_MSG = "DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "회원가입 오류.\n 이미 존재하는 ID입니다.";
+                    strERR_MSG = "회원가입 오류.\\n 이미 존재하는 ID입니다.";
 
 
                 /** }catch()

@@ -329,3 +329,20 @@ function fOnlyNumber(obj)
 	    }
 	    return true;
     }
+
+	//전화번호 중간 및 나머지 부분 체크 3~4자리숫자
+	function fIsValidMemberTEL_PART(argTEL_PART,argNULL_PERMIT) {
+	    var reg_exp = new RegExp("^[0-9]{3,4}$", "g");
+	    var match = reg_exp.exec(argTEL_PART);
+	    if (argNULL_PERMIT == "Y") // 옵션 
+	    {
+	        if (argTEL_PART == "")
+	            return true;
+	    }
+        //필수 or 값이 있음
+	    if (match == null || argTEL_PART.length < 3 || argTEL_PART.length > 4) {
+	        alert("휴대폰/전화번호 형식이 잘못되었습니다. 3~4자의 숫자로 구성되어야 합니다");
+	        return false;
+	    }
+	    return true;
+	}

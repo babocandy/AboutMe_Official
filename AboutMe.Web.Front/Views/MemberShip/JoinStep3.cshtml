@@ -124,6 +124,22 @@
             alert("휴대폰 번호를 입력하세요.");
             return;
         }
+
+        if (fIsValidMemberTEL_PART(f.M_MOBILE_2.value, "N") == false)
+        {
+            return;
+        }
+        if (fIsValidMemberTEL_PART(f.M_MOBILE_3.value, "N") == false) {
+            return;
+        }
+
+        if (fIsValidMemberTEL_PART(f.M_PHONE_2.value, "Y") == false) {
+            return;
+        }
+        if (fIsValidMemberTEL_PART(f.M_PHONE_3.value, "Y") == false) {
+            return;
+        }
+
         if (f.M_EMAIL_1.value.length < 2 || f.M_EMAIL_2.value.length < 3 ) {
             alert("EMAIL을 입력하세요.");
             return;
@@ -310,13 +326,17 @@
                                     </tr>
                                     <tr>
                                         <th><span class="essential">이름</span></th>
-                                        <td colspan="3" class="membername"><input type="text" class="ipttypea" style="width:390px" title="이름" name="M_NAME" value="@ViewBag.M_NAME" maxlength="15" readonly /></td>
+                                        <td colspan="3" class="membername">
+                                            <input type="hidden" class="ipttypea" style="width:390px" title="이름" name="M_NAME" value="@ViewBag.M_NAME" maxlength="15" readonly />
+                                            @ViewBag.M_NAME
+                                        </td>
 
                                     </tr>
                                     <tr>
                                         <th><span class="essential">생년월일</span></th>
                                         <td class="birth">
-                                            <input type="text" class="ipttypea" style="width:390px" title="생년월일" name="M_BIRTHDAY" value="@ViewBag.M_BIRTHDAY" maxlength="10" readonly />
+                                            <input type="hidden" class="ipttypea" style="width:390px" title="생년월일" name="M_BIRTHDAY" value="@ViewBag.M_BIRTHDAY" maxlength="10" readonly />
+                                            @ViewBag.M_BIRTHDAY
 
                                             <!--
                                             <span class="select_w95">
@@ -466,7 +486,7 @@
 
 
 <!-- 다음 우편번호 검색-->
-<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
     <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
 
