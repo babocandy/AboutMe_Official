@@ -58,7 +58,7 @@ namespace AboutMe.Web.Admin.Controllers
          *  팝업-회원 포인트 적립/차감 수정  
          */
         [CustomAuthorize]
-        public ActionResult PopupMemberPointUpdate(string M_ID)
+        public ActionResult MemberPointUpdate(string M_ID)
         {
             AdminPointInsertViewModel model = new AdminPointInsertViewModel();
             model.Mid = M_ID;
@@ -72,7 +72,7 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult PopupMemberPointUpdate(AdminPointInsertViewModel model)
+        public ActionResult MemberPointUpdate(AdminPointInsertViewModel model)
         {
             Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
             Debug.WriteLine("Type - " + model.Mid);
@@ -170,7 +170,7 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult CancelPartOfOrder()
         {
             /**/
-            Tuple<string, string> result = _AdminPointService.CancelPartOfOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"]);
+            Tuple<string, string> result = _AdminPointService.CancelPartOfOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"], Convert.ToInt32(Request.Form["ORDER_DETAIL_IDX"]), Request.Form["P_NAME"]);
 
             Debug.WriteLine("에러번호 : " + result.Item1);
             Debug.WriteLine("에러메세지 : " + result.Item2);
@@ -182,15 +182,50 @@ namespace AboutMe.Web.Admin.Controllers
          * 샘플 - 구매 확정후 포인트 적립
          */
         [CustomAuthorize]
-        public ActionResult SavePointOnOrder()
+        public ActionResult SavePointAfterFirmOrder()
         {
 
-            Tuple<string, string> result = _AdminPointService.SavePointOnOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"]);
+            Tuple<string, string> result = _AdminPointService.SavePointAfterFirmOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"], Convert.ToInt32(Request.Form["ORDER_DETAIL_IDX"]), Request.Form["P_NAME"] );
 
             Debug.WriteLine("에러번호 : " + result.Item1);
             Debug.WriteLine("에러메세지 : " + result.Item2);
 
             return RedirectToAction("TestPoint");
         }
+
+        
+
+
+        /**
+         * 샘플 - 구매 확정후 취소시 사용했던 포인트 재적립
+         */
+        [CustomAuthorize]
+        public ActionResult ResaveUsedPointOnCancelAfterFirmOrder()
+        {
+
+            Tuple<string, string> result = _AdminPointService.ResaveUsedPointOnCancelAfterFirmOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"], Convert.ToInt32(Request.Form["ORDER_DETAIL_IDX"]), Request.Form["P_NAME"]);
+
+            Debug.WriteLine("에러번호 : " + result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+
+            return RedirectToAction("TestPoint");
+        }
+
+        /**
+         * 샘플 - 구매 확정후 취소시 적립했던 포인트 회수
+         */
+        [CustomAuthorize]
+        public ActionResult GetBackSavedPointOnCancelAfterFirmOrder()
+        {
+
+            Tuple<string, string> result = _AdminPointService.GetBackSavedPointOnCancelAfterFirmOrder(Request.Form["M_ID"], Convert.ToInt32(Request.Form["POINT"]), Request.Form["ORDER_CODE"], Convert.ToInt32(Request.Form["ORDER_DETAIL_IDX"]), Request.Form["P_NAME"]);
+
+            Debug.WriteLine("에러번호 : " + result.Item1);
+            Debug.WriteLine("에러메세지 : " + result.Item2);
+
+            return RedirectToAction("TestPoint");
+        }
+
+        
     }
 }

@@ -26,8 +26,7 @@
         <h3 class="sub-header">포인트관리</h3>
         <h4>회원 검색</h4>
         <div class="alert alert-info">
-            <form class="form-inline">
-                @using (Html.BeginForm("Index", "AdminPoint/Index", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();", @clas = "form-inline" }))
+                @using (Html.BeginForm("Index", "AdminPoint/PointIndex", FormMethod.Post, new { id = "frm", name = "frm", onsubmit = "return frmCheck();", @class = "form-inline" }))
                 {
                     <div class="row">
                         <div class="col-md-8">
@@ -37,7 +36,7 @@
                                     List<SelectListItem> items = new List<SelectListItem>();
                                     items.Add(new SelectListItem { Text = "아이디", Value = "M_ID" });
                                     items.Add(new SelectListItem { Text = "이름", Value = "M_NAME" });
-                                    items.Add(new SelectListItem { Text = "등급", Value = "M_GRADE" });
+
 
 
                                     foreach (var xx in items)
@@ -55,7 +54,7 @@
                             <div class="form-group">
                                 <input type="text" id="txt1" class="input-sm" title="검색어 입력" style="width:400px;" name="searchValue" value="@Model.SearchValue" />
                             </div>
-                            <button class="btn btn-default btn-xs" onclick="document.frm01.submit(); return false;">검색하기</button>
+                            <button class="btn btn-default btn-xs" onclick="document.frm.submit(); return false;">검색하기</button>
                             <a href="@(Request.Url.PathAndQuery)" class=" btn btn-primary btn-xs">취소</a>
                         </div>
                         <div class="col-md-4  text-right">
@@ -75,7 +74,7 @@
                                     }
 
                                 }
-                                @Html.DropDownList("pageSize", pageSizeItems, new { style = "width:150px;" })
+                                @Html.DropDownList("pageSize", pageSizeItems, new { style = "width:150px;",  @onchange ="document.frm.submit();"})
                             </div>
                         </div>
                     </div>
@@ -91,8 +90,8 @@
                 <tr>
                     <th scope="col" class="brnone">No.</th>
                     <th scope="col">이름(아이디)</th>
-                    <th scope="col">포인트</th>
                     <th scope="col">가입일</th>
+                    <th scope="col">포인트</th>
                     <th scope="col" class="brnone">등급</th>
                 </tr>
             </thead>
@@ -103,7 +102,7 @@
                     <tr>
                         <!--<td class="brnone"><input type="checkbox" value="50,000" title="선택" /></td>-->
                         <td class="brnone">@item.M_NO</td>
-                        <td>@Html.ActionLink(string.Format("{0}({1})", item.M_NAME, item.M_ID), null, null, new { onclick = string.Format("openScrollYes('/AdminPoint/PopupMemberPointUpdate?M_ID={0}','_blank', '1000', '600'); return false;", @item.M_ID), @class = "btn" })</td>                        
+                        <td>@Html.ActionLink(string.Format("{0}({1})", item.M_NAME, item.M_ID), null, null, new { onclick = string.Format("openScrollYes('/AdminPoint/MemberPointUpdate?M_ID={0}','_blank', '1000', '600'); return false;", @item.M_ID), @class = "btn" })</td>                        
                         <td>@item.M_CREDATE.ToShortDateString()</td>
                         <td>@item.M_POINT</td>
                         <td>@MemberCode2Label.Grade2Label(item.M_GRADE)</td>
@@ -130,13 +129,14 @@
     }
 
     <script>
+        /*
         function popupPointUpdate(mid) {
-            var myWindow = window.open("/AdminPoint/PopupMemberPointUpdate?M_ID=" + mid, "popupPointUpdate", "width=400, height=400,scrollbars=0");
+            var myWindow = window.open("/AdminPoint/MemberPointUpdate?M_ID=" + mid, "popupPointUpdate", "width=400, height=400,scrollbars=0");
         }
 
         function popupPointHistory(mid) {
             var myWindow = window.open("/AdminPoint/MyPointHistory?M_ID=" + mid, "popupPointHistory", "width=800, height=500,scrollbars=0");
-        }
+        }*/
     </script>
 
 }
