@@ -7,18 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AboutMe.Domain.Entity.AdminOrder
+namespace AboutMe.Domain.Entity.Order
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_ORDER_LOG
+    public partial class SP_ORDER_STEP2_BASEADDR_INFO_Result
     {
-        public int IDX { get; set; }
-        public int ORDER_IDX { get; set; }
-        public string ORDER_CODE { get; set; }
-        public string PROCESS_MEMO { get; set; }
-        public string REG_ID { get; set; }
-        public System.DateTime REG_DATE { get; set; }
+        public string M_ID { get; set; }
+        public string M_NAME { get; set; }
+        public string M_ZIPCODE { get; set; }
+        public string M_ADDR1 { get; set; }
+        public string M_ADDR2 { get; set; }
+        public string M_PHONE { get; set; }
+        public string M_MOBILE { get; set; }
+        public string M_EMAIL { get; set; }
     }
 }
