@@ -11,7 +11,7 @@ namespace AboutMe.Domain.Entity.Review
 {
     using System;
     
-    public partial class SP_REVIEW_READY_SEL_Result
+    public partial class SP_REVIEW_PRODUCT_READY_SEL_Result
     {
         public string ORDER_CODE { get; set; }
         public int ORDER_DETAIL_IDX { get; set; }
@@ -20,7 +20,10 @@ namespace AboutMe.Domain.Entity.Review
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public string P_CATE_CODE { get; set; }
-        public string P_IMG1_S { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
+        public string P_IMG1_S { get; set; }
+        public int P_COUNT { get; set; }
+        public string P_INFO_DETAIL_WEB { get; set; }
+        public string P_INFO_DETAIL_MOBILE { get; set; }
     }
 }
