@@ -36,7 +36,7 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Order.IOrderService, AboutMe.Domain.Service.Order.OrderService>(); //Order
 
             container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //Cart
-
+            container.RegisterType<AboutMe.Domain.Service.Review.IReviewService, AboutMe.Domain.Service.Review.IReviewService>(); //Review
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
             container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());
