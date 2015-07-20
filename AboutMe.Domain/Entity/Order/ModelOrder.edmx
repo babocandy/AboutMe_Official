@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel4.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ORDER_PAY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="PAY_GBN" Type="char" Mode="In" />
+          <Parameter Name="CARD_GBN" Type="char" Mode="In" />
+          <Parameter Name="INSTLMT_AT" Type="char" Mode="In" />
+          <Parameter Name="BANK_CODE" Type="char" Mode="In" />
+          <Parameter Name="PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="REAL_ACCOUNT_AT" Type="char" Mode="In" />
+          <Parameter Name="CASHRECEIPT_SE_CODE" Type="char" Mode="In" />
+          <Parameter Name="CASHRECEIPT_RESULT_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="HTTP_USER_AGENT" Type="varchar" Mode="In" />
+          <Parameter Name="PAT_GUBUN" Type="varchar" Mode="In" />
+          <Parameter Name="SVR_DOMAIN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="SESSION_ID" Type="varchar" Mode="In" />
+          <Parameter Name="P_CODE_LIST" Type="varchar" Mode="In" />
+          <Parameter Name="P_COUNT_LIST" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP2_BASEADDR_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP2_DISCOUNT_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP2_PRICE_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP2_PRODUCT_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP2_RECENTADDR_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AboutMeModel4StoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AboutMeModel4" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OrderEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ORDER_PAY">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="PAY_GBN" Mode="In" Type="String" />
+            <Parameter Name="CARD_GBN" Mode="In" Type="String" />
+            <Parameter Name="INSTLMT_AT" Mode="In" Type="String" />
+            <Parameter Name="BANK_CODE" Mode="In" Type="String" />
+            <Parameter Name="PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="REAL_ACCOUNT_AT" Mode="In" Type="String" />
+            <Parameter Name="CASHRECEIPT_SE_CODE" Mode="In" Type="String" />
+            <Parameter Name="CASHRECEIPT_RESULT_CODE" Mode="In" Type="String" />
+            <Parameter Name="HTTP_USER_AGENT" Mode="In" Type="String" />
+            <Parameter Name="PAT_GUBUN" Mode="In" Type="String" />
+            <Parameter Name="SVR_DOMAIN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP1" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="SESSION_ID" Mode="In" Type="String" />
+            <Parameter Name="P_CODE_LIST" Mode="In" Type="String" />
+            <Parameter Name="P_COUNT_LIST" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_BASEADDR_INFO" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_BASEADDR_INFO_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_DISCOUNT_INFO" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_DISCOUNT_INFO_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_PRICE_INFO" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_PRICE_INFO_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_PRODUCT_LIST" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_PRODUCT_LIST_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_RECENTADDR_INFO" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_RECENTADDR_INFO_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="M_ZIPCODE" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="M_ADDR1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_ADDR2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_PHONE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="M_MOBILE" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="M_EMAIL" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_STEP2_DISCOUNT_INFO_Result">
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="POINT_USE_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="TRANS_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="TRANS_COUPON" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_STEP2_PRICE_INFO_Result">
+          <Property Type="Int32" Name="TOTAL_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="TOTAL_ORDER_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="TRANS_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="POINT_USE_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_STEP2_PRODUCT_LIST_Result">
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="false" />
+          <Property Type="String" Name="PROMOTION_TYPE" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="PROMOTION" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="PROMOTION_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="false" />
+          <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="USE_POINT" Nullable="false" />
+          <Property Type="Int32" Name="USE_POINT_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="Int32" Name="GRADE_DISCOUNT_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="POINT_ACCML" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_STEP2_RECENTADDR_INFO_Result">
+          <Property Type="String" Name="RECEIVER_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="RECEIVER_POST" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="RECEIVER_ADDR1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RECEIVER_ADDR2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RECEIVER_TEL" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RECEIVER_HP" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ORDER_MEMO" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_STEP2_Result" >
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel4StoreContainer" CdmEntityContainer="OrderEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ORDER_PAY" FunctionName="AboutMeModel4.Store.SP_ORDER_PAY" />
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP1" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP1" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_Result">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_BASEADDR_INFO" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_BASEADDR_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_BASEADDR_INFO_Result">
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_ZIPCODE" ColumnName="M_ZIPCODE" />
+                <ScalarProperty Name="M_ADDR1" ColumnName="M_ADDR1" />
+                <ScalarProperty Name="M_ADDR2" ColumnName="M_ADDR2" />
+                <ScalarProperty Name="M_PHONE" ColumnName="M_PHONE" />
+                <ScalarProperty Name="M_MOBILE" ColumnName="M_MOBILE" />
+                <ScalarProperty Name="M_EMAIL" ColumnName="M_EMAIL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_DISCOUNT_INFO" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_DISCOUNT_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_DISCOUNT_INFO_Result">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
+                <ScalarProperty Name="POINT_USE_PRICE" ColumnName="POINT_USE_PRICE" />
+                <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
+                <ScalarProperty Name="TRANS_PRICE" ColumnName="TRANS_PRICE" />
+                <ScalarProperty Name="TRANS_COUPON" ColumnName="TRANS_COUPON" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_PRICE_INFO" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_PRICE_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_PRICE_INFO_Result">
+                <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
+                <ScalarProperty Name="TOTAL_ORDER_PRICE" ColumnName="TOTAL_ORDER_PRICE" />
+                <ScalarProperty Name="TRANS_PRICE" ColumnName="TRANS_PRICE" />
+                <ScalarProperty Name="DISCOUNT_AMT" ColumnName="DISCOUNT_AMT" />
+                <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
+                <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
+                <ScalarProperty Name="POINT_USE_PRICE" ColumnName="POINT_USE_PRICE" />
+                <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
+                <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
+                <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_PRODUCT_LIST" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_PRODUCT_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_PRODUCT_LIST_Result">
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="PROMOTION_TYPE" ColumnName="PROMOTION_TYPE" />
+                <ScalarProperty Name="PROMOTION" ColumnName="PROMOTION" />
+                <ScalarProperty Name="PROMOTION_NAME" ColumnName="PROMOTION_NAME" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
+                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
+                <ScalarProperty Name="COUPON_DISCOUNT_PRICE" ColumnName="COUPON_DISCOUNT_PRICE" />
+                <ScalarProperty Name="USE_POINT" ColumnName="USE_POINT" />
+                <ScalarProperty Name="USE_POINT_PRICE" ColumnName="USE_POINT_PRICE" />
+                <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
+                <ScalarProperty Name="GRADE_DISCOUNT_PRICE" ColumnName="GRADE_DISCOUNT_PRICE" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+                <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_RECENTADDR_INFO" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_RECENTADDR_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_RECENTADDR_INFO_Result">
+                <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+                <ScalarProperty Name="RECEIVER_POST" ColumnName="RECEIVER_POST" />
+                <ScalarProperty Name="RECEIVER_ADDR1" ColumnName="RECEIVER_ADDR1" />
+                <ScalarProperty Name="RECEIVER_ADDR2" ColumnName="RECEIVER_ADDR2" />
+                <ScalarProperty Name="RECEIVER_TEL" ColumnName="RECEIVER_TEL" />
+                <ScalarProperty Name="RECEIVER_HP" ColumnName="RECEIVER_HP" />
+                <ScalarProperty Name="ORDER_MEMO" ColumnName="ORDER_MEMO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

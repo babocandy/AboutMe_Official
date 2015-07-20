@@ -124,7 +124,7 @@ namespace AboutMe.Domain.Entity.AdminPoint
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POINT_MEMBER_SEL_Result>("SP_POINT_MEMBER_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter);
         }
     
-        public virtual ObjectResult<SP_ADMIN_POINT_HISTORY_SEL_Result> SP_ADMIN_POINT_HISTORY_SEL(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        public virtual ObjectResult<SP_ADMIN_POINT_HISTORY_SEL_Result> SP_ADMIN_POINT_HISTORY_SEL(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -138,33 +138,16 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("PAGESIZE", pAGESIZE) :
                 new ObjectParameter("PAGESIZE", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_POINT_HISTORY_SEL_Result>("SP_ADMIN_POINT_HISTORY_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_POINT_HISTORY_SEL_Result>("SP_ADMIN_POINT_HISTORY_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual ObjectResult<Nullable<int>> SP_ADMIN_POINT_HISTORY_CNT(string m_ID)
+        public virtual ObjectResult<Nullable<int>> SP_ADMIN_POINT_HISTORY_CNT(string m_ID, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
                 new ObjectParameter("M_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_POINT_HISTORY_CNT", m_IDParameter);
-        }
-    
-        public virtual int SP_POINT_SAVE_ON_ORDER(string m_ID, Nullable<int> sAVE_POINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
-        {
-            var m_IDParameter = m_ID != null ?
-                new ObjectParameter("M_ID", m_ID) :
-                new ObjectParameter("M_ID", typeof(string));
-    
-            var sAVE_POINTParameter = sAVE_POINT.HasValue ?
-                new ObjectParameter("SAVE_POINT", sAVE_POINT) :
-                new ObjectParameter("SAVE_POINT", typeof(int));
-    
-            var oRDER_CODEParameter = oRDER_CODE != null ?
-                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
-                new ObjectParameter("ORDER_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_SAVE_ON_ORDER", m_IDParameter, sAVE_POINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_POINT_HISTORY_CNT", m_IDParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual int SP_POINT_USE_ON_ORDER(string m_ID, Nullable<int> uSE_POINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
@@ -184,7 +167,7 @@ namespace AboutMe.Domain.Entity.AdminPoint
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_USE_ON_ORDER", m_IDParameter, uSE_POINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_POINT_CANCEL_PART_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_POINT_CANCEL_PART_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, Nullable<int> oRDER_DETAIL_IDX, string p_NAME, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -198,7 +181,15 @@ namespace AboutMe.Domain.Entity.AdminPoint
                 new ObjectParameter("ORDER_CODE", oRDER_CODE) :
                 new ObjectParameter("ORDER_CODE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_PART_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_PART_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, oRDER_DETAIL_IDXParameter, p_NAMEParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual int SP_POINT_CANCEL_ALL_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
@@ -218,13 +209,88 @@ namespace AboutMe.Domain.Entity.AdminPoint
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_CANCEL_ALL_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual ObjectResult<SP_POINT_MEMBER_PROFILE_Result> SP_POINT_MEMBER_PROFILE(string m_ID)
+        public virtual ObjectResult<SP_POINT_MEMBER_PROFILE_Result> SP_POINT_MEMBER_PROFILE(string m_ID, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
                 new ObjectParameter("M_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POINT_MEMBER_PROFILE_Result>("SP_POINT_MEMBER_PROFILE", m_IDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POINT_MEMBER_PROFILE_Result>("SP_POINT_MEMBER_PROFILE", m_IDParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_GET_BACK_SAVED_POINT_ON_CANCEL_AFTER_FIRM_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, Nullable<int> oRDER_DETAIL_IDX, string p_NAME, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pOINTParameter = pOINT.HasValue ?
+                new ObjectParameter("POINT", pOINT) :
+                new ObjectParameter("POINT", typeof(int));
+    
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_GET_BACK_SAVED_POINT_ON_CANCEL_AFTER_FIRM_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, oRDER_DETAIL_IDXParameter, p_NAMEParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_RESAVE_USED_POINT_ON_CANCEL_AFTER_FIRM_ORDER(string m_ID, Nullable<int> pOINT, string oRDER_CODE, Nullable<int> oRDER_DETAIL_IDX, string p_NAME, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pOINTParameter = pOINT.HasValue ?
+                new ObjectParameter("POINT", pOINT) :
+                new ObjectParameter("POINT", typeof(int));
+    
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_RESAVE_USED_POINT_ON_CANCEL_AFTER_FIRM_ORDER", m_IDParameter, pOINTParameter, oRDER_CODEParameter, oRDER_DETAIL_IDXParameter, p_NAMEParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_SAVE_AFTER_FIRM_ORDER(string m_ID, Nullable<int> sAVE_POINT, string oRDER_CODE, Nullable<int> oRDER_DETAIL_IDX, string p_NAME, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var sAVE_POINTParameter = sAVE_POINT.HasValue ?
+                new ObjectParameter("SAVE_POINT", sAVE_POINT) :
+                new ObjectParameter("SAVE_POINT", typeof(int));
+    
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var p_NAMEParameter = p_NAME != null ?
+                new ObjectParameter("P_NAME", p_NAME) :
+                new ObjectParameter("P_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_SAVE_AFTER_FIRM_ORDER", m_IDParameter, sAVE_POINTParameter, oRDER_CODEParameter, oRDER_DETAIL_IDXParameter, p_NAMEParameter, rET_NUM, rET_MESSAGE);
         }
     }
 }

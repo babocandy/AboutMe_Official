@@ -27,10 +27,6 @@ namespace AboutMe.Domain.Entity.AdminOrder
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TB_ORDER_CODE> TB_ORDER_CODE { get; set; }
-        public virtual DbSet<TB_ORDER_DETAIL> TB_ORDER_DETAIL { get; set; }
-        public virtual DbSet<TB_ORDER_LOG> TB_ORDER_LOG { get; set; }
-        public virtual DbSet<TB_ORDER_MASTER> TB_ORDER_MASTER { get; set; }
     
         public virtual int SP_ADMIN_ORDER_DETAIL_DELIVERY_NUM_INPUT(Nullable<int> oRDER_DETAIL_IDX, string dELIVERY_NUM, string rEG_ID)
         {

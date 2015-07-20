@@ -42,10 +42,13 @@ namespace AboutMe.Domain.Service.AdminPoint
          */
         public SP_POINT_MEMBER_PROFILE_Result GetMemberProfile(string mid)
         {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
             SP_POINT_MEMBER_PROFILE_Result result = new SP_POINT_MEMBER_PROFILE_Result();
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                result = context.SP_POINT_MEMBER_PROFILE(mid).FirstOrDefault();
+                result = context.SP_POINT_MEMBER_PROFILE(mid, retNum, retMsg).FirstOrDefault();
             }
 
             return result;
@@ -141,11 +144,14 @@ namespace AboutMe.Domain.Service.AdminPoint
          */
         public List<SP_ADMIN_POINT_HISTORY_SEL_Result> GetMyPointHistoryList(string mid, int pageNo = 1, int pageSize = 10)
         {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
             List<SP_ADMIN_POINT_HISTORY_SEL_Result> lst = new List<SP_ADMIN_POINT_HISTORY_SEL_Result>();
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                lst = context.SP_ADMIN_POINT_HISTORY_SEL(mid,pageNo,pageSize).ToList();
+                lst = context.SP_ADMIN_POINT_HISTORY_SEL(mid,pageNo,pageSize,retNum,retMsg).ToList();
             }
 
             return lst;
@@ -158,10 +164,13 @@ namespace AboutMe.Domain.Service.AdminPoint
          */
         public int GetMyPointHistoryListCnt(string mid)
         {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
             int ret = 0;
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                int? cnt = context.SP_ADMIN_POINT_HISTORY_CNT(mid).SingleOrDefault();
+                int? cnt = context.SP_ADMIN_POINT_HISTORY_CNT(mid, retNum, retMsg).SingleOrDefault();
                 ret = cnt ?? 0;
             }
 
@@ -227,17 +236,18 @@ namespace AboutMe.Domain.Service.AdminPoint
          * @mid=회원아이디
          * @point=반환(=적립) 포인트
          * @orderCode = 주문코드
+         * @orderDetailIndx = 주문상세일련번호
+         * @productName = 상품명
          * 
          */
-        public Tuple<string, string> CancelPartOfOrder(string mid, int point, string orderCode)
+        public Tuple<string, string> CancelPartOfOrder(string mid, int point, string orderCode, int? orderDetailIndx, string productName)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_POINT_CANCEL_PART_ORDER(mid, point, orderCode, retNum, retMsg);
-
+                context.SP_POINT_CANCEL_PART_ORDER(mid, point, orderCode, orderDetailIndx, productName, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
@@ -254,21 +264,80 @@ namespace AboutMe.Domain.Service.AdminPoint
          * @ mid = 회원아이디
          * @ point = 적립포인트
          * @ orderCode = 주문코드
+         * @orderDetailIndx = 주문상세일련번호
+         * @productName = 상품명
          * 
          */
-        public Tuple<string, string> SavePointOnOrder(string mid, int point, string orderCode)
+        public Tuple<string, string> SavePointAfterFirmOrder(string mid, int? point, string orderCode, int? orderDetailIndx, string productName)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminPointEntities context = new AdminPointEntities())
             {
-                context.SP_POINT_SAVE_ON_ORDER(mid, point, orderCode, retNum, retMsg);
+                context.SP_POINT_SAVE_AFTER_FIRM_ORDER(mid, point, orderCode, orderDetailIndx,productName, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
             Debug.WriteLine("SavePointOnOrder retNum:  " + retNum.Value);
             Debug.WriteLine("SavePointOnOrder retMsg:  " + retMsg.Value);
+
+            return tp;
+        }
+
+
+
+        /**
+         * 구매확정후 취소시 사용했던 포인트 재적립
+         * 
+         * @ mid = 회원아이디
+         * @ point = 적립포인트
+         * @ orderCode = 주문코드
+         * @orderDetailIndx = 주문상세일련번호
+         * @productName = 상품명
+         * 
+         */
+        public Tuple<string, string> ResaveUsedPointOnCancelAfterFirmOrder(string mid, int? point, string orderCode, int? orderDetailIndx, string productName)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (AdminPointEntities context = new AdminPointEntities())
+            {
+                context.SP_POINT_RESAVE_USED_POINT_ON_CANCEL_AFTER_FIRM_ORDER(mid, point, orderCode, orderDetailIndx, productName, retNum, retMsg);
+            }
+
+            Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+            Debug.WriteLine("SavePointOnOrder retNum:  " + retNum.Value);
+            Debug.WriteLine("SavePointOnOrder retMsg:  " + retMsg.Value);
+
+            return tp;
+        }
+
+
+        /**
+         * 구매확정후 취소시 적립했던 포인트 회수
+         * 
+         * @ mid = 회원아이디
+         * @ point = 적립포인트
+         * @ orderCode = 주문코드
+         * @orderDetailIndx = 주문상세일련번호
+         * @productName = 상품명
+         * 
+         */
+        public Tuple<string, string> GetBackSavedPointOnCancelAfterFirmOrder(string mid, int? point, string orderCode, int? orderDetailIndx, string productName)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (AdminPointEntities context = new AdminPointEntities())
+            {
+                context.SP_POINT_GET_BACK_SAVED_POINT_ON_CANCEL_AFTER_FIRM_ORDER(mid, point, orderCode, orderDetailIndx, productName, retNum, retMsg);
+            }
+
+            Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+            Debug.WriteLine("GetBackSavedPointOnCancelAfterFirmOrder retNum:  " + retNum.Value);
+            Debug.WriteLine("GetBackSavedPointOnCancelAfterFirmOrder retMsg:  " + retMsg.Value);
 
             return tp;
         }

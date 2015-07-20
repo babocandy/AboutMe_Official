@@ -31,34 +31,42 @@
 
 @section Body{
 
+            <!--//path-->
+        @{
+
+            string CouponName = "", CouponGbn = "", CouponGbnM = "";
+            DateTime MasterFromDate, MasterToDate;
+            string UsableDeviceGbn = "", UsableYN = "", CouponDiscountMoney = "", CouponDiscountRate = "";
+            string IssueMethodGbn = "", IssueMethodWithAuto = "";
+
+            List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result
+                = ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>;
+
+            CouponName = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME;
+            CouponGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN;
+            CouponGbnM = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M;
+            MasterFromDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value;
+            MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
+            UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
+            UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
+            CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
+            CouponDiscountRate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE.ToString();
+            IssueMethodGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN;
+            IssueMethodWithAuto = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO;
+            
+            
+        }
+
+
     <div class="content">
-        <!--path-->
+      
+          <!--path-->
         <div class="path">
             <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
         </div>
-        <!--//path-->
-@{
-    
-    string CouponName = "", CouponGbn = "", CouponGbnM = "";
-    DateTime MasterFromDate, MasterToDate;
-    string UsableDeviceGbn = "",UsableYN ="" , CouponDiscountMoney = "" , CouponDiscountRate = ""  ;
-    
-    List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>  SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result  
-        = ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>;
-
-    CouponName = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME;
-    CouponGbn  = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN;
-    CouponGbnM = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M;
-    MasterFromDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value;
-    MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
-    UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
-    UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
-    CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
-    CouponDiscountRate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE.ToString();    
-}
 
         <div class="tar mb10">
-            <a class="btn btn-default middium" href="/AdminCoupon/Create">신규 쿠폰정책 등록</a>
+            <a class="btn btn-default middium" href="/AdminCoupon/IssueExcute?CdCoupon=@Request["CdCoupon"]">====== 쿠폰 발행 =======</a>
             <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
         </div>
 
@@ -82,7 +90,21 @@
                      else
                      {<text>모바일전용</text>}}
                      </li>
-                    <li>. 금액   :  @CouponDiscountMoney   . 할인율 : @CouponDiscountRate</li>
+                     <li>. 금액   :  @CouponDiscountMoney   . 할인율 : @CouponDiscountRate</li>
+                    <li>
+                        . 발행방법 : @{ if (IssueMethodGbn == "A")
+                         {<text>자동발행 </text>}
+                                    else if (IssueMethodGbn == "B")
+                         {<text>수동발행</text>}}
+                    </li>
+                    <li>
+                        . 자동발행 Type : @{ if (IssueMethodWithAuto == "A")
+                         {<text>Action 발행(회원가입등..) </text>}
+                                    else if (IssueMethodWithAuto == "B")
+                         {<text>Batch 발행(생일등...)</text>}}
+                    </li>
+
+
 
                 </ul>
             </div>
@@ -192,6 +214,7 @@
                                 else if (item.USE_STATUS == "10")
                                     {<text>사용완료</text>}
                             </td>
+                            <td>@item.M_ID</td>
                             <td>@item.ISSUE_DATE</td>
 
 
@@ -201,7 +224,10 @@
                         
                             <td>@item.ORDER_CANCEL_FL</td>
                             <td>@item.RE_ISSUE_FL / @item.RE_ISSUE_DATE</td>
-                            <td>@item.ISSUED_GBN</td>
+                            <td>@if (item.ISSUED_GBN == "A")
+                            {<text>일괄발행</text> }
+                            else if (item.ISSUED_GBN == "B")
+                            {<text>개별발행</text>}</td>
                             <td>@item.ISSUED_MEMO</td>
                             <td>@Html.ActionLink("변경", "ChangeCouponUsable", new { IdxCouponNumber = item.IDX_COUPON_NUMBER }); </td>
                        </tr>
