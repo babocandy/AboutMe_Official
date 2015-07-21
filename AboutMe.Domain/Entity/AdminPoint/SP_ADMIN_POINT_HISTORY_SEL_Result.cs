@@ -21,5 +21,8 @@ namespace AboutMe.Domain.Entity.AdminPoint
         public Nullable<int> POINT { get; set; }
         public string KIND { get; set; }
         public string ADM_NAME { get; set; }
+        public string ORDER_CODE { get; set; }
+        public Nullable<int> ORDER_DETAIL_IDX { get; set; }
+        public string P_NAME { get; set; }
     }
 }

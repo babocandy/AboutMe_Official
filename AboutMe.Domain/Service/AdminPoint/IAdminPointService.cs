@@ -21,9 +21,13 @@ namespace AboutMe.Domain.Service.AdminPoint
         Tuple<string, string> UpdateMemberPointSave(string mid, int point, string addition = null, string adminId = null, string adminName = null, string orderCode = null, int? revieweIdx = null);
         Tuple<string, string> UpdateMemberPointUse(string mid, int point, string addition = null, string adminId = null, string adminName = null, string orderCode = null);
 
-        Tuple<string, string> SavePointOnOrder(string mid, int amount, string orderCode);
+        
         Tuple<string, string> UsePointOnOrder(string mid, int point, string orderCode);
         Tuple<string, string> CancelAllOfOrder(string mid, int point, string orderCode);
-        Tuple<string, string> CancelPartOfOrder(string mid, int point, string orderCode);
+        Tuple<string, string> CancelPartOfOrder(string mid, int point, string orderCode, int? orderDetailIndx, string productName);
+
+        Tuple<string, string> SavePointAfterFirmOrder(string mid, int? point, string orderCode, int? orderDetailIndx, string productName);
+        Tuple<string, string> ResaveUsedPointOnCancelAfterFirmOrder(string mid, int? point, string orderCode, int? orderDetailIndx, string productName);
+        Tuple<string, string> GetBackSavedPointOnCancelAfterFirmOrder(string mid, int? point, string orderCode, int? orderDetailIndx, string productName);
     }
 }

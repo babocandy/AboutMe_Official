@@ -40,7 +40,9 @@
                 <th scope="col">구분</th>
                 <th scope="col">일자</th>
                 <th scope="col">포인트</th>
-                <th scope="col">주문번호</th>
+                <th scope="col">누적포인트</th>
+                <th scope="col">주문코드</th>
+                <th scope="col">주문상세</th>
                 <th scope="col">설명</th>
                 <th scope="col">메모</th>
                 <th scope="col" class="brnone">등록자</th>
@@ -58,6 +60,8 @@
                     <td class="">@item.INS_DATE.Value.ToShortDateString()</td>
                     <td>@item.POINT</td>
                     <td>@item.SUM_POINT</td>
+                    <td>@item.ORDER_CODE</td>
+                    <td>@string.Format(("{0}({1})"),  @item.P_NAME, @item.ORDER_DETAIL_IDX)</td>
                     <td>@item.DETAIL</td>
                     <td>@item.ADDITION_REASON</td>
                     <td class="brnone">@item.ADM_NAME</td>

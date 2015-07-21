@@ -25,10 +25,17 @@ namespace AboutMe.Web.Test.Controllers
         public ActionResult SendMailGo(string receiver = "", string subject = "[AboutMe]No Subject", string body = "")
         {
 
+            //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+            string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+            string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+            string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+            string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+            string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
 
+            //메일 발송
             MailSender mObj = new MailSender();
+            mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, receiver, subject, body);
 
-            mObj.MailSendAction(receiver, subject, body);
 
             ViewBag.mail_err_no = mObj.err_no;
             ViewBag.mail_err_msg = mObj.err_msg;
