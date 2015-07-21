@@ -542,7 +542,7 @@ $(function(){
 		});
 	}
 
-    /*리뷰*/
+	/*리뷰*/
 	$(".reviewConts_area .sort li").click(function(e){
 		e.preventDefault();
 		$(".reviewConts_area .sort li").removeClass("cnt")	;

@@ -146,5 +146,79 @@ namespace AboutMe.Domain.Entity.Order
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_STEP2_RECENTADDR_INFO_Result>("SP_ORDER_STEP2_RECENTADDR_INFO", m_IDParameter);
         }
+    
+        public virtual int SP_ORDER_STEP2_ADDR_SAVE(string m_ID, string sENDER_POST1, string sENDER_POST2, string sENDER_ADDR1, string sENDER_ADDR2, string sENDER_TEL1, string sENDER_TEL2, string sENDER_TEL3, string sENDER_HP1, string sENDER_HP2, string sENDER_HP3, string sENDER_EMAIL1, string sENDER_EMAIL2)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var sENDER_POST1Parameter = sENDER_POST1 != null ?
+                new ObjectParameter("SENDER_POST1", sENDER_POST1) :
+                new ObjectParameter("SENDER_POST1", typeof(string));
+    
+            var sENDER_POST2Parameter = sENDER_POST2 != null ?
+                new ObjectParameter("SENDER_POST2", sENDER_POST2) :
+                new ObjectParameter("SENDER_POST2", typeof(string));
+    
+            var sENDER_ADDR1Parameter = sENDER_ADDR1 != null ?
+                new ObjectParameter("SENDER_ADDR1", sENDER_ADDR1) :
+                new ObjectParameter("SENDER_ADDR1", typeof(string));
+    
+            var sENDER_ADDR2Parameter = sENDER_ADDR2 != null ?
+                new ObjectParameter("SENDER_ADDR2", sENDER_ADDR2) :
+                new ObjectParameter("SENDER_ADDR2", typeof(string));
+    
+            var sENDER_TEL1Parameter = sENDER_TEL1 != null ?
+                new ObjectParameter("SENDER_TEL1", sENDER_TEL1) :
+                new ObjectParameter("SENDER_TEL1", typeof(string));
+    
+            var sENDER_TEL2Parameter = sENDER_TEL2 != null ?
+                new ObjectParameter("SENDER_TEL2", sENDER_TEL2) :
+                new ObjectParameter("SENDER_TEL2", typeof(string));
+    
+            var sENDER_TEL3Parameter = sENDER_TEL3 != null ?
+                new ObjectParameter("SENDER_TEL3", sENDER_TEL3) :
+                new ObjectParameter("SENDER_TEL3", typeof(string));
+    
+            var sENDER_HP1Parameter = sENDER_HP1 != null ?
+                new ObjectParameter("SENDER_HP1", sENDER_HP1) :
+                new ObjectParameter("SENDER_HP1", typeof(string));
+    
+            var sENDER_HP2Parameter = sENDER_HP2 != null ?
+                new ObjectParameter("SENDER_HP2", sENDER_HP2) :
+                new ObjectParameter("SENDER_HP2", typeof(string));
+    
+            var sENDER_HP3Parameter = sENDER_HP3 != null ?
+                new ObjectParameter("SENDER_HP3", sENDER_HP3) :
+                new ObjectParameter("SENDER_HP3", typeof(string));
+    
+            var sENDER_EMAIL1Parameter = sENDER_EMAIL1 != null ?
+                new ObjectParameter("SENDER_EMAIL1", sENDER_EMAIL1) :
+                new ObjectParameter("SENDER_EMAIL1", typeof(string));
+    
+            var sENDER_EMAIL2Parameter = sENDER_EMAIL2 != null ?
+                new ObjectParameter("SENDER_EMAIL2", sENDER_EMAIL2) :
+                new ObjectParameter("SENDER_EMAIL2", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_ADDR_SAVE", m_IDParameter, sENDER_POST1Parameter, sENDER_POST2Parameter, sENDER_ADDR1Parameter, sENDER_ADDR2Parameter, sENDER_TEL1Parameter, sENDER_TEL2Parameter, sENDER_TEL3Parameter, sENDER_HP1Parameter, sENDER_HP2Parameter, sENDER_HP3Parameter, sENDER_EMAIL1Parameter, sENDER_EMAIL2Parameter);
+        }
+    
+        public virtual ObjectResult<SP_ORDER_STEP2_COUPON_SEARCH_Result> SP_ORDER_STEP2_COUPON_SEARCH(string m_ID, string p_CODE, string dEVICE_GBN)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var dEVICE_GBNParameter = dEVICE_GBN != null ?
+                new ObjectParameter("DEVICE_GBN", dEVICE_GBN) :
+                new ObjectParameter("DEVICE_GBN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_STEP2_COUPON_SEARCH_Result>("SP_ORDER_STEP2_COUPON_SEARCH", m_IDParameter, p_CODEParameter, dEVICE_GBNParameter);
+        }
     }
 }

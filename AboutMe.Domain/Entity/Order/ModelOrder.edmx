@@ -25,8 +25,28 @@
           <Parameter Name="P_CODE_LIST" Type="varchar" Mode="In" />
           <Parameter Name="P_COUNT_LIST" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ORDER_STEP2_ADDR_SAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_POST1" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_POST2" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_ADDR1" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_ADDR2" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_TEL1" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_TEL2" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_TEL3" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_HP1" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_HP2" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_HP3" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_EMAIL1" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_EMAIL2" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ORDER_STEP2_BASEADDR_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_STEP2_COUPON_SEARCH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="DEVICE_GBN" Type="char" Mode="In" />
         </Function>
         <Function Name="SP_ORDER_STEP2_DISCOUNT_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
@@ -81,17 +101,43 @@
           <FunctionImport Name="SP_ORDER_STEP2_RECENTADDR_INFO" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_RECENTADDR_INFO_Result)">
           <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_ADDR_SAVE">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="SENDER_POST1" Mode="In" Type="String" />
+            <Parameter Name="SENDER_POST2" Mode="In" Type="String" />
+            <Parameter Name="SENDER_ADDR1" Mode="In" Type="String" />
+            <Parameter Name="SENDER_ADDR2" Mode="In" Type="String" />
+            <Parameter Name="SENDER_TEL1" Mode="In" Type="String" />
+            <Parameter Name="SENDER_TEL2" Mode="In" Type="String" />
+            <Parameter Name="SENDER_TEL3" Mode="In" Type="String" />
+            <Parameter Name="SENDER_HP1" Mode="In" Type="String" />
+            <Parameter Name="SENDER_HP2" Mode="In" Type="String" />
+            <Parameter Name="SENDER_HP3" Mode="In" Type="String" />
+            <Parameter Name="SENDER_EMAIL1" Mode="In" Type="String" />
+            <Parameter Name="SENDER_EMAIL2" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_STEP2_COUPON_SEARCH" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_COUPON_SEARCH_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="DEVICE_GBN" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
           <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="M_ZIPCODE" Nullable="true" MaxLength="7" />
           <Property Type="String" Name="M_ADDR1" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="M_ADDR2" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="M_PHONE" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="M_MOBILE" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="M_EMAIL" Nullable="true" MaxLength="100" />
-        </ComplexType>
+          <Property Type="String" Name="M_ZIPCODE1" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_ZIPCODE2" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_PHONE1" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_PHONE2" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_PHONE3" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_MOBILE1" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_MOBILE2" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_MOBILE3" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="M_EMAIL1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_EMAIL2" Nullable="true" MaxLength="100" />
+          </ComplexType>
         <ComplexType Name="SP_ORDER_STEP2_DISCOUNT_INFO_Result">
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
           <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="false" />
@@ -124,30 +170,42 @@
           <Property Type="Int32" Name="SELLING_PRICE" Nullable="false" />
           <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="false" />
           <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="false" />
-          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="false" />
           <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
           <Property Type="String" Name="COUPON_NAME" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="false" />
           <Property Type="Int32" Name="COUPON_DISCOUNT_PRICE" Nullable="false" />
           <Property Type="Int32" Name="USE_POINT" Nullable="false" />
-          <Property Type="Int32" Name="USE_POINT_PRICE" Nullable="false" />
           <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="false" />
-          <Property Type="Int32" Name="GRADE_DISCOUNT_PRICE" Nullable="false" />
           <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
           <Property Type="Int32" Name="POINT_ACCML" Nullable="false" />
+          <Property Type="Int32" Name="ORDER_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_ORDER_STEP2_RECENTADDR_INFO_Result">
           <Property Type="String" Name="RECEIVER_NAME" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="RECEIVER_POST" Nullable="true" MaxLength="7" />
           <Property Type="String" Name="RECEIVER_ADDR1" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="RECEIVER_ADDR2" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="RECEIVER_TEL" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="RECEIVER_HP" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="ORDER_MEMO" Nullable="false" MaxLength="500" />
-        </ComplexType>
+          <Property Type="String" Name="RECEIVER_POST1" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_POST2" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_TEL1" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_TEL2" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_TEL3" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_HP1" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_HP2" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_HP3" Nullable="false" MaxLength="128" />
+          </ComplexType>
         <ComplexType Name="SP_ORDER_STEP2_Result" >
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="SP_ORDER_STEP2_COUPON_SEARCH_Result">
+          <Property Type="String" Name="RATE_OR_MONEY" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="IDX_COUPON_NUMBER" Nullable="false" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="COUPON_MONEY" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_RATE" Nullable="true" />
+          <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="BENEFIT" Nullable="false" MaxLength="12" />
+          </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -167,13 +225,19 @@
               <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_BASEADDR_INFO_Result">
                 <ScalarProperty Name="M_ID" ColumnName="M_ID" />
                 <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
-                <ScalarProperty Name="M_ZIPCODE" ColumnName="M_ZIPCODE" />
                 <ScalarProperty Name="M_ADDR1" ColumnName="M_ADDR1" />
                 <ScalarProperty Name="M_ADDR2" ColumnName="M_ADDR2" />
-                <ScalarProperty Name="M_PHONE" ColumnName="M_PHONE" />
-                <ScalarProperty Name="M_MOBILE" ColumnName="M_MOBILE" />
-                <ScalarProperty Name="M_EMAIL" ColumnName="M_EMAIL" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="M_ZIPCODE1" ColumnName="M_ZIPCODE1" />
+                <ScalarProperty Name="M_ZIPCODE2" ColumnName="M_ZIPCODE2" />
+                <ScalarProperty Name="M_PHONE1" ColumnName="M_PHONE1" />
+                <ScalarProperty Name="M_PHONE2" ColumnName="M_PHONE2" />
+                <ScalarProperty Name="M_PHONE3" ColumnName="M_PHONE3" />
+                <ScalarProperty Name="M_MOBILE1" ColumnName="M_MOBILE1" />
+                <ScalarProperty Name="M_MOBILE2" ColumnName="M_MOBILE2" />
+                <ScalarProperty Name="M_MOBILE3" ColumnName="M_MOBILE3" />
+                <ScalarProperty Name="M_EMAIL1" ColumnName="M_EMAIL1" />
+                <ScalarProperty Name="M_EMAIL2" ColumnName="M_EMAIL2" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_DISCOUNT_INFO" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_DISCOUNT_INFO">
@@ -218,17 +282,16 @@
                 <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
                 <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
                 <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
-                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
                 <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
                 <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
                 <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
                 <ScalarProperty Name="COUPON_DISCOUNT_PRICE" ColumnName="COUPON_DISCOUNT_PRICE" />
                 <ScalarProperty Name="USE_POINT" ColumnName="USE_POINT" />
-                <ScalarProperty Name="USE_POINT_PRICE" ColumnName="USE_POINT_PRICE" />
                 <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
-                <ScalarProperty Name="GRADE_DISCOUNT_PRICE" ColumnName="GRADE_DISCOUNT_PRICE" />
                 <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
                 <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
+                <ScalarProperty Name="ORDER_PRICE" ColumnName="ORDER_PRICE" />
+                <ScalarProperty Name="EMP_DISCOUNT_PRICE" ColumnName="EMP_DISCOUNT_PRICE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -236,13 +299,31 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_RECENTADDR_INFO_Result">
                 <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
-                <ScalarProperty Name="RECEIVER_POST" ColumnName="RECEIVER_POST" />
                 <ScalarProperty Name="RECEIVER_ADDR1" ColumnName="RECEIVER_ADDR1" />
                 <ScalarProperty Name="RECEIVER_ADDR2" ColumnName="RECEIVER_ADDR2" />
-                <ScalarProperty Name="RECEIVER_TEL" ColumnName="RECEIVER_TEL" />
-                <ScalarProperty Name="RECEIVER_HP" ColumnName="RECEIVER_HP" />
-                <ScalarProperty Name="ORDER_MEMO" ColumnName="ORDER_MEMO" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="RECEIVER_POST1" ColumnName="RECEIVER_POST1" />
+                <ScalarProperty Name="RECEIVER_POST2" ColumnName="RECEIVER_POST2" />
+                <ScalarProperty Name="RECEIVER_TEL1" ColumnName="RECEIVER_TEL1" />
+                <ScalarProperty Name="RECEIVER_TEL2" ColumnName="RECEIVER_TEL2" />
+                <ScalarProperty Name="RECEIVER_TEL3" ColumnName="RECEIVER_TEL3" />
+                <ScalarProperty Name="RECEIVER_HP1" ColumnName="RECEIVER_HP1" />
+                <ScalarProperty Name="RECEIVER_HP2" ColumnName="RECEIVER_HP2" />
+                <ScalarProperty Name="RECEIVER_HP3" ColumnName="RECEIVER_HP3" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_ADDR_SAVE" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_ADDR_SAVE" />
+          <FunctionImportMapping FunctionImportName="SP_ORDER_STEP2_COUPON_SEARCH" FunctionName="AboutMeModel4.Store.SP_ORDER_STEP2_COUPON_SEARCH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_STEP2_COUPON_SEARCH_Result">
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>
@@ -259,7 +340,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

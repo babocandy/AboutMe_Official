@@ -1,0 +1,420 @@
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_ADDRESSINFO
+<script language="javascript">
+    function setSenderAddr(gbn) {
+        if (gbn == 1) //기본배송지
+        {
+            $("#SENDER_NAME").val('@Model.BaseAddrInfo.M_NAME');
+            $("#SENDER_POST1").val('@Model.BaseAddrInfo.M_ZIPCODE1');
+            $("#SENDER_POST2").val('@Model.BaseAddrInfo.M_ZIPCODE2');
+            $("#SENDER_ADDR1").val('@Model.BaseAddrInfo.M_ADDR1');
+            $("#SENDER_ADDR2").val('@Model.BaseAddrInfo.M_ADDR2');
+            $("#SENDER_TEL1").val('@Model.BaseAddrInfo.M_PHONE1');
+            $("#SENDER_TEL2").val('@Model.BaseAddrInfo.M_PHONE2');
+            $("#SENDER_TEL3").val('@Model.BaseAddrInfo.M_PHONE3');
+            $("#SENDER_HP1").val('@Model.BaseAddrInfo.M_MOBILE1');
+            $("#SENDER_HP2").val('@Model.BaseAddrInfo.M_MOBILE2');
+            $("#SENDER_HP3").val('@Model.BaseAddrInfo.M_MOBILE3');
+            $("#SENDER_EMAIL1").val('@Model.BaseAddrInfo.M_EMAIL1');
+            $("#SENDER_EMAIL2").val('@Model.BaseAddrInfo.M_EMAIL2');
+            $("#SENDER_EMAIL3").val('직접입력');
+
+        }
+        else if (gbn == 2) //신규
+        {
+            $("#SENDER_NAME").val('');
+            $("#SENDER_POST1").val('');
+            $("#SENDER_POST2").val('');
+            $("#SENDER_ADDR1").val('');
+            $("#SENDER_ADDR2").val('');
+            $("#SENDER_TEL1").val('');
+            $("#SENDER_TEL2").val('');
+            $("#SENDER_TEL3").val('');
+            $("#SENDER_HP1").val('');
+            $("#SENDER_HP2").val('');
+            $("#SENDER_HP3").val('');
+            $("#SENDER_EMAIL1").val('');
+            $("#SENDER_EMAIL2").val('');
+            $("#SENDER_EMAIL3").val('직접입력');
+
+        }
+    }
+
+    function setReceiverAddr(gbn) {
+        if (gbn == 1) //기본배송지
+        {
+            $("#RECEIVER_NAME").val('@Model.BaseAddrInfo.M_NAME');
+            $("#RECEIVER_POST1").val('@Model.BaseAddrInfo.M_ZIPCODE1');
+            $("#RECEIVER_POST2").val('@Model.BaseAddrInfo.M_ZIPCODE2');
+            $("#RECEIVER_ADDR1").val('@Model.BaseAddrInfo.M_ADDR1');
+            $("#RECEIVER_ADDR2").val('@Model.BaseAddrInfo.M_ADDR2');
+            $("#RECEIVER_TEL1").val('@Model.BaseAddrInfo.M_PHONE1');
+            $("#RECEIVER_TEL2").val('@Model.BaseAddrInfo.M_PHONE2');
+            $("#RECEIVER_TEL3").val('@Model.BaseAddrInfo.M_PHONE3');
+            $("#RECEIVER_HP1").val('@Model.BaseAddrInfo.M_MOBILE1');
+            $("#RECEIVER_HP2").val('@Model.BaseAddrInfo.M_MOBILE2');
+            $("#RECEIVER_HP3").val('@Model.BaseAddrInfo.M_MOBILE3');
+
+        }
+        else if (gbn == 2) //최근배송지
+        {
+            $("#RECEIVER_NAME").val('@Model.RecentAddrInfo.RECEIVER_NAME');
+            $("#RECEIVER_POST1").val('@Model.RecentAddrInfo.RECEIVER_POST1');
+            $("#RECEIVER_POST2").val('@Model.RecentAddrInfo.RECEIVER_POST2');
+            $("#RECEIVER_ADDR1").val('@Model.RecentAddrInfo.RECEIVER_ADDR1');
+            $("#RECEIVER_ADDR2").val('@Model.RecentAddrInfo.RECEIVER_ADDR2');
+            $("#RECEIVER_TEL1").val('@Model.RecentAddrInfo.RECEIVER_TEL1');
+            $("#RECEIVER_TEL2").val('@Model.RecentAddrInfo.RECEIVER_TEL2');
+            $("#RECEIVER_TEL3").val('@Model.RecentAddrInfo.RECEIVER_TEL3');
+            $("#RECEIVER_HP1").val('@Model.RecentAddrInfo.RECEIVER_HP1');
+            $("#RECEIVER_HP2").val('@Model.RecentAddrInfo.RECEIVER_HP2');
+            $("#RECEIVER_HP3").val('@Model.RecentAddrInfo.RECEIVER_HP3');
+        }
+        else if (gbn == 3) //신규
+        {
+            $("#RECEIVER_NAME").val('');
+            $("#RECEIVER_POST1").val('');
+            $("#RECEIVER_POST2").val('');
+            $("#RECEIVER_ADDR1").val('');
+            $("#RECEIVER_ADDR2").val('');
+            $("#RECEIVER_TEL1").val('');
+            $("#RECEIVER_TEL2").val('');
+            $("#RECEIVER_TEL3").val('');
+            $("#RECEIVER_HP1").val('');
+            $("#RECEIVER_HP2").val('');
+            $("#RECEIVER_HP3").val('');
+        }
+    }
+
+    function setSameSenderAddr() {
+        $("#RECEIVER_NAME").val($("#SENDER_NAME").val());
+        $("#RECEIVER_POST1").val($("#SENDER_POST1").val());
+        $("#RECEIVER_POST2").val($("#SENDER_POST2").val());
+        $("#RECEIVER_ADDR1").val($("#SENDER_ADDR1").val());
+        $("#RECEIVER_ADDR2").val($("#SENDER_ADDR2").val());
+        $("#RECEIVER_TEL1").val($("#SENDER_TEL1").val());
+        $("#RECEIVER_TEL2").val($("#SENDER_TEL2").val());
+        $("#RECEIVER_TEL3").val($("#SENDER_TEL3").val());
+        $("#RECEIVER_HP1").val($("#SENDER_HP1").val());
+        $("#RECEIVER_HP2").val($("#SENDER_HP2").val());
+        $("#RECEIVER_HP3").val($("#SENDER_HP3").val());
+    }
+
+    function saveAddress() {
+        if ($("#SENDER_POST1").val().trim() == "" || $("#SENDER_POST2").val().trim() == "") {
+            alert('우편번호를 입력해주세요.');
+            $("#SENDER_POST1").setfocus();
+            return;
+        }
+        if ($("#SENDER_ADDR1").val().trim() == "") {
+            alert('주소를 입력해주세요.');
+            $("#SENDER_ADDR1").setfocus();
+            return;
+        }
+        if ($("#SENDER_ADDR2").val().trim() == "") {
+            alert('상세주소를 입력해주세요.');
+            $("#SENDER_ADDR2").setfocus();
+            return;
+        }
+        if ($("#SENDER_TEL1").val().trim() == "" || $("#SENDER_TEL2").val().trim() == "" || $("#SENDER_TEL3").val().trim() == "") {
+            alert('전화번호를 입력해주세요.');
+            $("#SENDER_TEL1").setfocus();
+            return;
+        }
+        if ($("#SENDER_HP1").val().trim() == "" || $("#SENDER_HP3").val().trim() == "" || $("#SENDER_HP3").val().trim() == "") {
+            alert('휴대폰번호를 입력해주세요.');
+            $("#SENDER_HP1").setfocus();
+            return;
+        }
+        if ($("#SENDER_EMAIL1").val().trim() == "" || $("#SENDER_EMAIL2").val().trim() == "") {
+            alert('이메일주소를 입력해주세요.');
+            $("#SENDER_EMAIL1").setfocus();
+            return;
+        }
+
+        if (confirm('회원 주소정보를 변경하시겠습니까?')) {
+            var src_url = "/Order/SaveMemberAddress";
+            var param = "SENDER_POST1=" + $("#SENDER_POST1").val().trim();
+            param += "&SENDER_POST2=" + $("#SENDER_POST1").val().trim();
+            param += "&SENDER_ADDR1=" + $("#SENDER_ADDR1").val().trim();
+            param += "&SENDER_ADDR2=" + $("#SENDER_ADDR2").val().trim();
+            param += "&SENDER_TEL1=" + $("#SENDER_TEL1").val().trim();
+            param += "&SENDER_TEL2=" + $("#SENDER_TEL2").val().trim();
+            param += "&SENDER_TEL3=" + $("#SENDER_TEL3").val().trim();
+            param += "&SENDER_HP1=" + $("#SENDER_HP1").val().trim();
+            param += "&SENDER_HP2=" + $("#SENDER_HP2").val().trim();
+            param += "&SENDER_HP3=" + $("#SENDER_HP3").val().trim();
+            param += "&SENDER_EMAIL1=" + $("#SENDER_EMAIL1").val().trim();
+            param += "&SENDER_EMAIL2=" + $("#SENDER_EMAIL2").val().trim();
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data : param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        alert("저장 하였습니다.");
+                        reloadAddress();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
+    }
+    function reloadAddress()
+    {
+        var src_url = "/Order/Step1AddressInfo";
+        var param = "OrderIdx=@Model.OrderIdx";
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                $(".addrinfo").empty().html(data);
+                if ($("*").is(".selectstylea")) {
+                    $("select.selectstylea").selectCssA();
+                }
+                if ($("*").is(".selectstyleb")) {
+                    $("select.selectstyleb").selectCssB();
+                }
+                $(".chkcon").each(function () {
+                    $(this).append("<span class='bl'></span>");
+                    if ($(this).children(":checked").length != 0) {
+                        $(this).addClass("chkcon_on");
+                    }
+                });
+                $(".chkcon").click(function () {
+                    if ($(this).children(":checked").length == 0) {
+                        $(this).removeClass("chkcon_on");
+                    } else {
+                        $(this).addClass("chkcon_on");
+                    }
+                });
+                $(".racon").each(function () {
+                    $(this).append("<span class='bl'></span>");
+                    if ($(this).children(":checked").length != 0) {
+                        $(this).addClass("racon_on");
+                    }
+                });
+                $(".racon").click(function () {
+                    $(this).parent().find(".racon").each(function () {
+                        if ($(this).children(":checked").length == 0) {
+                            $(this).removeClass("racon_on");
+                        } else {
+                            $(this).addClass("racon_on");
+                        }
+                    });
+                });
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+</script>
+    <!-- 주소 정보(기본정보 / 배송지 정보) -->
+    <div class="buyerinfo divitem">
+        <div class="tit_h4">
+            <h4><img src="/aboutCom/images/cart/h4_buyerinfo.png" alt="주문자 정보" /></h4>
+            <span class="tip"><i class="essential"></i>표시는 필수 입력 항목입니다.</span>
+        </div>
+        <div class="tabletypea">
+            <table>
+                <caption>기본정보 입력 표</caption>
+                <colgroup>
+                    <col width="110" />
+                    <col width="*" />
+                </colgroup>
+                <tbody>
+                    @if (Model.UserProfile.IS_LOGIN == true)
+                    {
+                    <tr>
+                        <td class="opt" colspan="2">
+                            <label class="racon racon_on">
+                                <input type="radio" name="radio1" checked="checked" title="회원 정보와 동일" onclick="setSenderAddr(1);" /> <span class="txt">회원 정보와 동일</span>
+                            </label><label class="racon">
+                                <input type="radio" name="radio1" title="새로 입력" onclick="setSenderAddr(2);"/> <span class="txt">새로 입력</span>
+                            </label><a href="#none" class="btn_brown_w96h38" onclick="saveAddress();">지금 주소로 저장</a>
+                        </td>
+                    </tr>
+                    }
+                    <tr>
+                        <th><span class="essential">주문하시는 분</span></th>
+                        <td><input type="text" class="ipttypea" style="width:228px" name="SENDER_NAME" id="SENDER_NAME" value="@Model.BaseAddrInfo.M_NAME" title="주문하시는 분 입력" /></td>
+                    </tr>
+                    <tr>
+                        <th><span class="essential">주소</span></th>
+                        <td class="addr">
+                            <address>
+                                <input type="text" class="ipttypea mr10" style="width:90px" name="SENDER_POST1" id="SENDER_POST1" value="@Model.BaseAddrInfo.M_ZIPCODE1" title="우편번호 앞자리 입력" />-<input type="text" class="ipttypea ml10" style="width:90px" name="SENDER_POST2" id="SENDER_POST2" value="@Model.BaseAddrInfo.M_ZIPCODE2" title="우편번호 뒷자리 입력" /><a href="#none" class="btn_white_w96h38 typeb" onclick="sample2_execDaumPostcode('SENDER_POST1', 'SENDER_POST2', 'SENDER_ADDR1');">우편번호 찾기</a>
+                                <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="SENDER_ADDR1" id="SENDER_ADDR1" value="@Model.BaseAddrInfo.M_ADDR1" title="주소 입력" />
+                                <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="SENDER_ADDR2" id="SENDER_ADDR2" value="@Model.BaseAddrInfo.M_ADDR2" title="주소상세 입력" />
+                            </address>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span>전화번호</span></th>
+                        <td class="phone">
+                            
+                            <select class="selectstyleb" title="" name="SENDER_TEL1" id="SENDER_TEL1">
+                                <option value="02" @if (Model.BaseAddrInfo.M_PHONE1 == "02") { @Html.Raw("selected='selected'") ; }>02</option>
+                                <option value="031" @if (Model.BaseAddrInfo.M_PHONE1 == "031") { @Html.Raw("selected='selected'"); } >031</option>
+                                <option value="032" @if (Model.BaseAddrInfo.M_PHONE1 == "032") { @Html.Raw("selected='selected'") ; }>032</option>
+                                <option value="033" @if (Model.BaseAddrInfo.M_PHONE1 == "033") { @Html.Raw("selected='selected'") ; }>033</option>
+                                <option value="041" @if (Model.BaseAddrInfo.M_PHONE1 == "041") { @Html.Raw("selected='selected'") ; }>041</option>
+                                <option value="042" @if (Model.BaseAddrInfo.M_PHONE1 == "042") { @Html.Raw("selected='selected'") ; }>042</option>
+                                <option value="043" @if (Model.BaseAddrInfo.M_PHONE1 == "043") { @Html.Raw("selected='selected'") ; }>043</option>
+                                <option value="044" @if (Model.BaseAddrInfo.M_PHONE1 == "044") { @Html.Raw("selected='selected'") ; }>044</option>
+                                <option value="051" @if (Model.BaseAddrInfo.M_PHONE1 == "051") { @Html.Raw("selected='selected'") ; }>051</option>
+                                <option value="052" @if (Model.BaseAddrInfo.M_PHONE1 == "051") { @Html.Raw("selected='selected'") ; }>052</option>
+                                <option value="053" @if (Model.BaseAddrInfo.M_PHONE1 == "053") { @Html.Raw("selected='selected'") ; }>053</option>
+                                <option value="054" @if (Model.BaseAddrInfo.M_PHONE1 == "054") { @Html.Raw("selected='selected'") ; }>054</option>
+                                <option value="055" @if (Model.BaseAddrInfo.M_PHONE1 == "055") { @Html.Raw("selected='selected'") ; }>055</option>
+                                <option value="061" @if (Model.BaseAddrInfo.M_PHONE1 == "061") { @Html.Raw("selected='selected'") ; }>061</option>
+                                <option value="062" @if (Model.BaseAddrInfo.M_PHONE1 == "062") { @Html.Raw("selected='selected'") ; }>062</option>
+                                <option value="063" @if (Model.BaseAddrInfo.M_PHONE1 == "063") { @Html.Raw("selected='selected'") ; }>063</option>
+                                <option value="064" @if (Model.BaseAddrInfo.M_PHONE1 == "064") { @Html.Raw("selected='selected'") ; }>064</option>
+                                <option value="0502" @if (Model.BaseAddrInfo.M_PHONE1 == "0502") { @Html.Raw("selected='selected'") ; }>0502</option>
+                                <option value="0505" @if (Model.BaseAddrInfo.M_PHONE1 == "0505") { @Html.Raw("selected='selected'") ; }>0505</option>
+                                <option value="070" @if (Model.BaseAddrInfo.M_PHONE1 == "070") { @Html.Raw("selected='selected'") ; }>070</option>
+                                <option value="080" @if (Model.BaseAddrInfo.M_PHONE1 == "080") { @Html.Raw("selected='selected'") ; }>080</option>
+                            </select><input type="number" class="ipttypea ml10" style="width:80px" name="SENDER_TEL2" id="SENDER_TEL2" max="9999" value="@Model.BaseAddrInfo.M_PHONE2" title="전화번호 중간 번호 입력" /><input type="number" class="ipttypea ml10" style="width:80px" name="SENDER_TEL3" id="SENDER_TEL3" value="@Model.BaseAddrInfo.M_PHONE3" max="9999" title="전화번호 끝 번호 입력" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="essential">휴대폰</span></th>
+                        <td class="phone">
+                            <select class="selectstyleb" title="" name="SENDER_HP1" id="SENDER_HP1">
+                                <option value="010" @if (Model.BaseAddrInfo.M_MOBILE1 == "010") { @Html.Raw("selected='selected'") ; }>010</option>
+                                <option value="011" @if (Model.BaseAddrInfo.M_MOBILE1=="011") { @Html.Raw("selected='selected'"); }>011</option>
+                                <option value="016" @if (Model.BaseAddrInfo.M_MOBILE1 == "016") { @Html.Raw("selected='selected'") ; }>016</option>
+                                <option value="017" @if (Model.BaseAddrInfo.M_MOBILE1 == "017") { @Html.Raw("selected='selected'") ; }>017</option>
+                                <option value="018" @if (Model.BaseAddrInfo.M_MOBILE1 == "018") { @Html.Raw("selected='selected'") ; }>018</option>
+                                <option value="019" @if (Model.BaseAddrInfo.M_MOBILE1 == "019") { @Html.Raw("selected='selected'") ; }>019</option>
+                            </select><input type="number" class="ipttypea ml10" name="SENDER_HP2" id="SENDER_HP2" value="@Model.BaseAddrInfo.M_MOBILE2" max="9999" style="width:80px" title="휴대폰 중간 번호 입력" /><input type="number" class="ipttypea ml10" name="SENDER_HP3" id="SENDER_HP3" max="9999" style="width:80px" value="@Model.BaseAddrInfo.M_MOBILE3" title="휴대폰 끝 번호 입력" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="essential">이메일</span></th>
+                        <td class="email">
+                            <input type="text" class="ipttypea mr10" style="width:90px" name="SENDER_EMAIL1" id="SENDER_EMAIL1" value="@Model.BaseAddrInfo.M_EMAIL1" title="이메일 ID 입력" />@@<input type="text" class="ipttypea ml10" style="width:82px" name="SENDER_EMAIL2" id="SENDER_EMAIL2" value="@Model.BaseAddrInfo.M_EMAIL2" title="이메일 도메인 입력" /><select class="selectstyleb" title="" name="SENDER_EMAIL3" id="SENDER_EMAIL3" onchange="sender_mail3_change(this)">
+                                <option value="직접입력" selected="selected">직접입력</option>
+                                <option value="daum.net">daum.net</option>
+                                <option value="hanmail.net">hanmail.net</option>
+                                <option value="hotmail.com">hotmail.com</option>
+                                <option value="dreamwiz.com">dreamwiz.com</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="empal.com">empal.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="hanafos.com">hanafos.com</option>
+                                <option value="hanmir.com">hanmir.com</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="lycos.co.kr">lycos.co.kr</option>
+                                <option value="paran.com">paran.com</option>
+                                <option value="yahoo.com">yahoo.com</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="receiveinfo divitem">
+        <div class="tit_h4">
+            <h4><img src="/aboutCom/images/cart/h4_receiveinfo.png" alt="배송지 정보" /></h4>
+            <label class="chkcon" style="float: right; margin-top: 5px; font-size: 14px; color: #696361;"><input type="checkbox" name="" title="" onclick="setSameSenderAddr();" /><span class="txt">주문자 정보와 동일</span></label>
+        </div>
+        <div class="tabletypea">
+            <table>
+                <caption>배송지 정보 입력 표</caption>
+                <colgroup>
+                    <col width="110" />
+                    <col width="*" />
+                </colgroup>
+                <tbody>
+                    @if (Model.UserProfile.IS_LOGIN == true)
+                    { 
+                    <tr>
+                        <td class="opt" colspan="2">
+                            <label class="racon racon_on">
+                                <input type="radio" name="radio2" checked="checked" title="기본주소" onclick="setReceiverAddr(1);" /> <span class="txt">기본주소</span>
+                            </label><label class="racon">
+                                        <input type="radio" name="radio2" title="최근 배송지" onclick="setReceiverAddr(2);" /> <span class="txt">최근 배송지</span>
+                            </label><label class="racon">
+                                        <input type="radio" name="radio2" title="신규 배송지" onclick="setReceiverAddr(3);" /> <span class="txt">신규 배송지</span>
+                            </label>
+                        </td>
+                    </tr>
+                    }
+                    <tr>
+                        <th><span class="essential">받으시는 분</span></th>
+                        <td><input type="text" class="ipttypea" name="RECEIVER_NAME" id="RECEIVER_NAME" style="width:228px" title="받으시는 분 입력" /></td>
+                    </tr>
+                    <tr>
+                        <th><span class="essential">주소</span></th>
+                        <td class="addr">
+                            <address>
+                                <input type="text" class="ipttypea mr10" style="width:90px" name="RECEIVER_POST1" id="RECEIVER_POST1" title="우편번호 앞자리 입력" />-<input type="text" class="ipttypea ml10" style="width:90px" name="RECEIVER_POST2" id="RECEIVER_POST2" title="우편번호 뒷자리 입력" /><a href="#none" class="btn_white_w96h38 typeb" onclick="sample2_execDaumPostcode('RECEIVER_POST1', 'RECEIVER_POST2', 'RECEIVER_ADDR1');">우편번호 찾기</a>
+                                <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="RECEIVER_ADDR1" id="RECEIVER_ADDR1" title="주소 입력" />
+                                <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="RECEIVER_ADDR2" id="RECEIVER_ADDR2" title="주소상세 입력" />
+                            </address>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span>전화번호</span></th>
+                        <td class="phone">
+                            <select class="selectstyleb" title="" name="RECEIVER_TEL1" id="RECEIVER_TEL1">
+                                <option value="02" selected="selected">02</option>
+                                <option value="031">031</option>
+                                <option value="02">032</option>
+                                <option value="033">033</option>
+                                <option value="041">041</option>
+                                <option value="042">042</option>
+                                <option value="043">043</option>
+                                <option value="044">044</option>
+                                <option value="051">051</option>
+                                <option value="052">052</option>
+                                <option value="053">053</option>
+                                <option value="054">054</option>
+                                <option value="055">055</option>
+                                <option value="061">061</option>
+                                <option value="062">062</option>
+                                <option value="063">063</option>
+                                <option value="064">064</option>
+                                <option value="0502">0502</option>
+                                <option value="0505">0505</option>
+                                <option value="070">070</option>
+                                <option value="080">080</option>
+                            </select><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_TEL2" id="RECEIVER_TEL2" max="9999" title="전화번호 중간 번호 입력" /><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_TEL3" id="RECEIVER_TEL3" max="9999" title="전화번호 끝 번호 입력" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span class="essential">휴대폰</span></th>
+                        <td class="phone">
+                            <select class="selectstyleb" title="">
+                                <option value="010" selected="selected">010</option>
+                                <option value="011">011</option>
+                                <option value="016">016</option>
+                                <option value="017">017</option>
+                                <option value="018">018</option>
+                                <option value="019">019</option>
+                            </select><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_HP2" id="RECEIVER_HP2" max="9999" title="휴대폰 중간 번호 입력" /><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_HP3" id="RECEIVER_HP3" max="9999" title="휴대폰 끝 번호 입력" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span>배송시 요청사항<br /><span class="txtcnt">(<em>0</em>자 / 100자)</span></span></th>
+                        <td class="comment">
+                            <textarea class="txtareatypea" style="width:350px" name="ORDER_MEMO" id="ORDER_MEMO" maxlength="100" onkeyup="textCounter(this,100)"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- //주소 정보(기본정보 / 배송지 정보) -->
+

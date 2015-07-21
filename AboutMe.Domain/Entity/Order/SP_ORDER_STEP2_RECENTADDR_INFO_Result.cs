@@ -14,11 +14,15 @@ namespace AboutMe.Domain.Entity.Order
     public partial class SP_ORDER_STEP2_RECENTADDR_INFO_Result
     {
         public string RECEIVER_NAME { get; set; }
-        public string RECEIVER_POST { get; set; }
         public string RECEIVER_ADDR1 { get; set; }
         public string RECEIVER_ADDR2 { get; set; }
-        public string RECEIVER_TEL { get; set; }
-        public string RECEIVER_HP { get; set; }
-        public string ORDER_MEMO { get; set; }
+        public string RECEIVER_POST1 { get; set; }
+        public string RECEIVER_POST2 { get; set; }
+        public string RECEIVER_TEL1 { get; set; }
+        public string RECEIVER_TEL2 { get; set; }
+        public string RECEIVER_TEL3 { get; set; }
+        public string RECEIVER_HP1 { get; set; }
+        public string RECEIVER_HP2 { get; set; }
+        public string RECEIVER_HP3 { get; set; }
     }
 }

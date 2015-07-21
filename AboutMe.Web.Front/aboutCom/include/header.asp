@@ -10,13 +10,24 @@
 			<ul class="depth1">
 				<!--브랜드소개-->
 				<li>
-					<a href="/aboutme/brand.asp" class="menu"><img src="/aboutCom/images/common/m_brand.gif" class="imgInteractive" alt="브랜드 소개" /></a>
+					<a href="/aboutme/brand.asp" class="menu dropmenu1"><img src="/aboutCom/images/common/m_brand.gif" class="imgInteractive" alt="브랜드 소개" /></a>
+					<!--2015-07-13브랜드소개-->
+					<div class="depth1_2">
+						<img src="/aboutCom/images/common/bul_detph2.gif" class="bul_detph2" alt="" />
+						<p class="tit">브랜드소개</p>
+						<ul class="list">
+							<li><a href="/aboutme/brand.asp">브랜드 스토리</a></li>
+							<li><a href="/aboutme/magazin.asp">매거진</a></li>
+							<li><a href="/aboutme/store.asp">매장안내</a></li>
+						</ul>
+					</div>
+					<!--//2015-07-13브랜드소개-->
 				</li>
 				<!--//브랜드소개-->
 				
 				<!--쇼핑-->
 				<li>
-					<a href="/shopping/beauty_list.asp"  class="menu dropmenu"><img src="/aboutCom/images/common/m_shoping.gif" alt="쇼핑" /></a>
+					<a href="/shopping/beauty_list.asp"  class="menu dropmenu2"><img src="/aboutCom/images/common/m_shoping.gif"  class="imgInteractive" alt="쇼핑" /></a>
 					<!--depth2-->
 					<div class="depth2">
 						<img src="/aboutCom/images/common/bul_detph2.gif" class="bul_detph2" alt="" />

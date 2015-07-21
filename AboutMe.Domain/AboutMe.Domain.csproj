@@ -531,6 +531,7 @@
     <Compile Include="Entity\Notice\TB_NOTICE.cs">
       <DependentUpon>ModelNotice.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Order\OrderUserModel.cs" />
     <Compile Include="Entity\Order\ModelOrder.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -547,6 +548,9 @@
       <DependentUpon>ModelOrder.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Order\SP_ORDER_STEP2_BASEADDR_INFO_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_COUPON_SEARCH_Result.cs">
       <DependentUpon>ModelOrder.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Order\SP_ORDER_STEP2_DISCOUNT_INFO_Result.cs">
