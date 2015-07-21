@@ -29,5 +29,29 @@ namespace AboutMe.Domain.Service.Review
 
             return lst;
        }
+
+        public SP_REVIEW_GET_PRODUCT_INFO_Result GetProductInfo(string pcode)
+        {
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                return context.SP_REVIEW_GET_PRODUCT_INFO(pcode).SingleOrDefault();
+            }
+        }
+
+        public Tuple<string, string>  InsertMyReview(string mid, int? orderDetailIdx, string pCode, string skinType, string comment, string addImage  ){
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                context.SP_REVIEW_PRODUCT_INS(mid, orderDetailIdx, pCode, skinType, comment, addImage, retNum, retMsg);
+            }
+
+            Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+            Debug.WriteLine("UpdateMemberPointSave retNum:  " + retNum.Value);
+            Debug.WriteLine("UpdateMemberPointSave retMsg:  " + retMsg.Value);
+
+            return tp;
+        }
     }
 }

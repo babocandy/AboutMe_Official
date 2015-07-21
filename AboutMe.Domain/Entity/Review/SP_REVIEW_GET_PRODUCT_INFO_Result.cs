@@ -11,20 +11,14 @@ namespace AboutMe.Domain.Entity.Review
 {
     using System;
     
-    public partial class SP_REVIEW_PRODUCT_READY_SEL_Result
+    public partial class SP_REVIEW_GET_PRODUCT_INFO_Result
     {
-        public string ORDER_CODE { get; set; }
-        public int ORDER_DETAIL_IDX { get; set; }
-        public string M_ID { get; set; }
-        public string M_NAME { get; set; }
-        public string P_CODE { get; set; }
-        public string P_NAME { get; set; }
-        public string P_CATE_CODE { get; set; }
-        public Nullable<int> REAL_PAY_PRICE { get; set; }
-        public string P_IMG1_S { get; set; }
-        public int P_COUNT { get; set; }
-        public string P_INFO_DETAIL_WEB { get; set; }
-        public string P_INFO_DETAIL_MOBILE { get; set; }
         public string P_SUB_TITLE { get; set; }
+        public string P_CATE_CODE { get; set; }
+        public string P_TAG { get; set; }
+        public string P_INFO_DETAIL_MOBILE { get; set; }
+        public string P_INFO_DETAIL_WEB { get; set; }
+        public string MAIN_IMG { get; set; }
+        public string P_NAME { get; set; }
     }
 }

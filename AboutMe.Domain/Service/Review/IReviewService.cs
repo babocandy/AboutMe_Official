@@ -14,5 +14,8 @@ namespace AboutMe.Domain.Service.Review
     public interface IReviewService
     {
         List<SP_REVIEW_PRODUCT_READY_SEL_Result> GetReadyList(string mid);
+        SP_REVIEW_GET_PRODUCT_INFO_Result GetProductInfo(string pcode);
+
+        Tuple<string, string> InsertMyReview(string mid, int? orderDetailIdx, string pCode, string skinType, string comment, string addImage);
     }
 }

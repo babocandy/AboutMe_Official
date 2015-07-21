@@ -1,9 +1,34 @@
-﻿@{
+﻿@model AboutMe.Web.Front.Models.MyReviewInsertViewModel
+@{
     ViewBag.Title = "Write";
     Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
 }
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+
+    <style>
+        .field-validation-error, .validation-summary-errors {
+            color: red;
+            font-size: 13px;
+            line-height: 15px;
+            text-indent: -11px;
+        }
+    </style>
+
+    @if (!Model.ResultNum.IsEmpty() && Model.ResultNum != "0")
+    {
+        <script>
+            alert("@(Model.ResultMessage)");
+        </script>
+    }
+    else if (Model.ResultNum == "0")
+    {
+        <script>
+            window.opener.location.reload(true);
+            self.close();
+        </script>
+    }
+
 }
 
 @section Body{
@@ -20,7 +45,14 @@
         <!--//pop_top-->
         <!--pop_bottom-->
         <div class="write_review pro">
-            <form name="frm" action="">
+                @using (Html.BeginForm("Write", "MyReview", FormMethod.Post, new { id = "frm", name = "frm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+                 <input type="hidden" name="Mid" value="@(Model.Mid)" />
+                <input type="hidden" name="OrderDetailIdx" value="@(Model.OrderDetailIdx)" />
+                <input type="hidden" name="Pcode" value="@(Model.Pcode)" />
+
                 <fieldset>
                     <legend>상품 리뷰 등록 폼</legend>
                     <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
@@ -37,32 +69,41 @@
                                 <th>상품명</th>
                                 <td class="pro_info">
                                     <!--이미지사이즈 96x96-->
-                                    <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt4.jpg" alt="" /></div>
+                                    <div class="photo"><img src="@ViewBag.Pimg" alt="" /></div>
                                     <div class="detail">
-                                        <p class="tit">리얼 프레쉬팩 [로즈]</p>
-                                        <p class="stit">맑고 촉촉한 피부를 위한 100%천연유래 <br />Real fresh pack</p>
-                                        <p class="price"><strong>4,000</strong>원</p>
+                                        <p class="tit">@ViewBag.Pname</p>
+                                        <p class="stit">@ViewBag.PsubTitle</p>
+                                        <!--<p class="price"><strong>4,000</strong>원</p>-->
                                     </div>
                                 </td>
                                 <th class="skintype">피부타입</th>
                                 <td class="skintype">
-                                    <select class="selectstyleb" title="">
-                                        <option selected="selected">선택하세요</option>
-                                        <option>건성</option>
-                                        <option>지성</option>
+                                    <span>@Html.ValidationMessageFor(model => model.SkinType)</span> 
+                                    <select class="selectstyleb" title="" name="SkinType">
+                                        <option selected="selected" value="">선택하세요</option>
+                                        <option value="10">민감성</option>
+                                        <option value="20">건성</option>
+                                        <option value="30">중성</option>
+                                        <option value="40">지복합성</option>
                                     </select>
+                                    
                                 </td>
                             </tr>
                             <tr class="edit">
                                 <th>내용<br /><span>0 / 000 자</span></th>
-                                <td colspan="3"><textarea class="txtareatypea" style="width:100%"></textarea></td>
+                                <td colspan="3">
+                                    <span>@Html.ValidationMessageFor(model => model.Comment)</span>
+                                    <textarea name="Comment" class="txtareatypea" style="width:100%"></textarea>
+                                    
+                                </td>
+                                
                             </tr>
                             <tr class="attach">
                                 <th>사진첨부</th>
                                 <td colspan="3">
                                     <span class="imgbox">
                                         <img src="/aboutCom/images/review/write_imgnone.jpg" alt="" />
-                                    </span><input type="text" class="ipttypea ml10" style="width:360px" title="파일 경로입력" /><a href="#" class="btn_white_w96h38 ml5">찾아보기</a>
+                                    </span><input type="text" name="AddImage" class="ipttypea ml10" style="width:360px" title="파일 경로입력" /><a href="#" class="btn_white_w96h38 ml5">찾아보기</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -76,10 +117,10 @@
                         </ul>
                     </div>
                     <div class="btngroup mt30">
-                        <a href="#" class="btn_brown_w96h38">등록</a><a href="#" onclick="PopupClose()" class="btn_white_w96h38 typeb">취소</a>
+                        <a href="#" class="btn_brown_w96h38" onclick="document.frm.submit(); return false;" >등록</a><a href="#" onclick="PopupClose()" class="btn_white_w96h38 typeb">취소</a>
                     </div>
                 </fieldset>
-            </form>
+              }
         </div>
         <!--//pop_bottom-->
     </div>
