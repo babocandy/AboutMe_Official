@@ -1,0 +1,89 @@
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_PAYINFO
+<!-- 결제 정보 -->
+<div class="tit_h4">
+    <h4><img src="/aboutCom/images/cart/h4_payinfo.png" alt="결제 정보" /></h4>
+</div>
+<div class="paycon divitem">
+    <p class="opt">
+        <label id="rdoCredit" class="racon racon_on">
+            <input type="radio" name="PAY_GBN" value="1" title="신용카드" /> <span class="txt">신용카드</span>
+        </label><label id="rdoRealtime" class="racon">
+            <input type="radio" name="PAY_GBN" value="2" title="실시간 계좌이체" /> <span class="txt">실시간 계좌이체</span>
+        </label><label id="rdoVirtual" class="racon">
+            <input type="radio" name="PAY_GBN" value="3" title="가상계좌" /> <span class="txt">가상계좌</span>
+        </label>
+        @if (Model.UserProfile.IS_LOGIN == true)
+        { 
+        <label id="rdoVirtual" class="racon">
+            <input type="radio" name="PAY_GBN" value="4" title="포인트결제" /> <span class="txt">포인트결제</span>
+        </label>
+        }
+    </p>
+    <div id="credit" class="credit paytip boxtypea" style="display:block;">
+        <p class="infobtn"><a href="#" class="btn_blue_w96h38">무이자 할부 혜택 안내</a></p>
+        <div class="paymentstep">
+            <em>결제 방법</em>
+            <p class="txt">
+                카드결제를 이용하기 위해서는 본인 여부 확인을 위해 인증절차를 거쳐야 합니다.<br />
+                각 카드사에서는 ISP 또는 안심클릭 인증을 통해 안전 결제 서비스를 제공하며, 공인인증서의
+                인증방식이 필요합니다.
+            </p>
+            <img src="/aboutCom/images/cart/paymentstep_credit.gif" alt="STEP 01 주문/결제 STEP 02 카드 선택 STEP 03 카드정보입력 STEP 04 인증/결제완료" />
+        </div>
+    </div>
+    <div id="realtime" class="realtime paytip boxtypea">
+        <p class="infobtn"><a href="#" class="btn_blue_w96h38">은행별 이용 가능 시간</a></p>
+        <div class="paymentstep">
+            <em>결제 방법</em>
+            <img src="/aboutCom/images/cart/paymentstep_realtime.gif" alt="STEP 01 결제할 은행 선택 STEP 02 예금주, 주민번호, 계좌번호, 계좌비밀번호 입력 STEP 03 공인인증서를 통한 본인 인증 STEP 04 결제완료" />
+        </div>
+    </div>
+    <div id="virtual" class="virtual paytip boxtypea">
+        <div class="paymentstep">
+            <em>결제 방법</em>
+            <img src="/aboutCom/images/cart/paymentstep_virtual.gif" alt="STEP 01 가상계좌를 발급받을 은행 선택 STEP 02 가상계좌 발급 STEP 03 가상계좌 번호로 입금 (인터넷뱅킹,폰뱅킹,은행 창구 입금 등) STEP 04 결제완료" />
+        </div>
+    </div>
+    @if (Model.UserProfile.IS_LOGIN == false)
+    { 
+    <p class="agreetit mt20">[비회원 필수입력정보 수집 동의서]<label class="chkcon"><input type="checkbox" name="nomem_agree_chk" id="nomem_agree_chk" title="" value="1"/><span class="txt">동의합니다.</span></label></p>
+    <div class="agreebox">
+        <span class="litit">개인정보의 수집 및 이용 목적</span>
+        <ol>
+            <li>1)  주문자 정보 확보</li>
+            <li>2)  물품에 관한 배송지 정보 확보</li>
+            <li>3)  불만처리 의사소통 경로 확보</li>
+        </ol>
+    </div>
+    }
+</div>
+<div class="confirmcon divitem">
+    <div class="total">
+        <p class="totprice"><span class="tit">총 결제 금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", Model.PriceInfo.TOTAL_PAY_PRICE)</strong>원</span></p>
+    @if (Model.UserProfile.IS_LOGIN == false)
+    {
+        <div class="nmpwd">
+            <label>비회원 비밀번호<input type="password" class="ipttypea h28 ml10" style="width:162px" name="NOMEMBER_PASS" id="NOMEMBER_PASS" title="비회원 비밀번호" /></label>
+            <span class="info mt10"><i></i>비회원 주문 조회 시 사용  4자에서 12자 영문 또는 숫자 조합)</span>
+        </div>
+    }
+    else
+    {
+        <p class="totpoint">예상 적립 포인트<i></i><strong>@String.Format("{0:#,#0.}", Model.PriceInfo.ACCML_POINT)</strong></p>
+    }
+    </div>
+    <p class="agreetit">주문자 동의<label class="chkcon"><input type="checkbox" title="" name="mem_agree1_chk" id="mem_agree1_chk" value="1" /><span class="txt">동의합니다.</span></label></p>
+    <div class="agreebox">
+        주문할 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?
+        <span class="law">(전자상거래법 제 8조 제2항)</span>
+    </div>
+    <div class="personaldata mt20">
+        <div class="lft">
+            <p class="pti">개인정보 제3자 제공/위탁동의</p>
+            <label class="chkcon"><input type="checkbox" name="mem_agree2_chk" id="mem_agree2_chk" value="1" title="" /><span class="txt">동의합니다.</span></label>
+        </div>
+        <a href="#none" class="btn_white_w120h38">약관전체보기</a>
+    </div>
+    <p class="btn_payment mt30"><a href="#none" class="btn_brown_w229h60" onclick="return payConfirm();">주문결제</a><a href="#none" class="btn_white_w229h60" onclick="cancelOrder();">주문취소</a></p>
+</div>
+<!-- //결제 정보 -->

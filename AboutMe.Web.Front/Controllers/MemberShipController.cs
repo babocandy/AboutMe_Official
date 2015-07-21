@@ -41,13 +41,13 @@ namespace AboutMe.Web.Front.Controllers
 
 
         //사용자 로그인 폼
-        public ActionResult Login(string RedirectUrl = "", string PCODE_ARRAY = "")
+        public ActionResult Login(string RedirectUrl = "", string OrderList = "")
         {
 
-            if (!string.IsNullOrEmpty(PCODE_ARRAY))
+            if (!string.IsNullOrEmpty(OrderList))
             {
                 ViewBag.isOrderLogin = "true";
-                ViewBag.OrderList = PCODE_ARRAY; //주문쪽상품데이터
+                ViewBag.OrderList = OrderList; //주문쪽상품데이터
             }
             else
             {

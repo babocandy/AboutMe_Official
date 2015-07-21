@@ -1,4 +1,4 @@
-﻿@model AboutMe.Domain.Entity.Cart.CART_INDEX_MODEL
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_MODEL
 @{
     ViewBag.Title = "주문/결제 - ABOUT ME";
     ViewBag.TopClass = "order";
@@ -12,10 +12,89 @@
 }
 @section Scripts {
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
+    <script language="javascript">
+        function textCounter(field, maxlimit) {
+	        var applycontents;
+    
+            var str_cnt = 0;
+            var tempStr, tempStr2;	
+	
+            for(var i=0; i<field.value.length; i++)
+            {
+	            tempStr = field.value.charAt(i);
+	            if(escape(tempStr).length > 4 || escape(tempStr)=="%0A") str_cnt += 2;
+  	            else str_cnt += 1 ;
+            }
+    
+             if (str_cnt > maxlimit){
+	            alert("최대 " + maxlimit + "bytes까지만 입력 가능합니다.");		
+	            str_cnt = 0;		
+	            tempStr2 = "";
+	            for(i = 0; i < field.value.length; i++) 
+	            {
+		            tempStr = field.value.charAt(i);	
+		            if(escape(tempStr).length > 4 || escape(tempStr)=="%0A") str_cnt += 2;
+      	            else str_cnt += 1 ;
+      	            if (str_cnt > maxlimit)
+      	            {
+      		            if(escape(tempStr).length > 4 || escape(tempStr)=="%0A") str_cnt -= 2;
+      		            else str_cnt -= 1 ;	
+      		            break;	      		
+      	            }
+      	            else tempStr2 += tempStr;
+                }	    
+	            field.value = tempStr2;
+            }
+    
+             $(".txtcnt").html("(<em>" + str_cnt + "자</em>/" + maxlimit + "자)");
+
+        }
+
+        function cancelOrder()
+        {
+            if (confirm("장바구니로 이동하시겠습니까?")) {
+                location.href = "/Cart";
+            }
+        }
+
+        //주문결제
+        function payConfirm()
+        {
+
+        }
+        //쿠폰팝업
+        function CouponPopup(linkname) {
+            var sw = screen.availWidth;
+            var sh = screen.availHeight;
+            var popNM = '/Order/CouponPop?OrderIdx=@Model.OrderIdx'+linkname;
+            var width = 740;
+            var height = 600;
+            px = (sw - width) / 2;
+            py = (sh - height) / 2;
+            var set = 'top=' + py + ',left=' + px;
+            set += ',width=' + width + ',height=' + height + ',menubar = no, toolbar = no, location = no, status = no, scrollbars = yes, resizable = yes';
+            window.name = "CouponPopup";
+            window.open(popNM, '', set);
+        }
+
+    </script>
 }
+
+@helper NoMemberBanner()
+{
+    <div class="banner boxtypef mt40">
+        <h3>배너 이미지</h3>
+        <a href="#" class="jointxt"><img src="/aboutCom/images/cart/nonmb_jointxt.png" alt="지금 어바웃미 멤버십에 가입 하세요" /></a>
+        <span class="benefittxt"><img src="/aboutCom/images/cart/nonmb_bannertxt.png" alt="특별한 회원 혜택 - 구매 금액의 최대 5%  적립 - 회원가입 시 10,000원 할인쿠폰 - 구매금액별 사은품 지급 - 생일쿠폰 지급 VIP 추가 혜택 - 추가 5% 할인 - 무료배송 쿠폰(월 기준)" /></span>
+        <div class="btn_nonmb">
+            <a href="/MemberShip/JoinStep1" class="btn_white_w155h48">회원가입</a>
+            <a href="/MemberShip/Login" class="btn_white_w155h48 mt5">로그인</a>
+        </div>
+    </div>
+}
+
 <!--container-->
-order idx : @ViewBag.Order_Idx
-TempData : @TempData["Order_Idx"]
+order idx : @Model.OrderIdx
 <div id="container">
     <div class="container1080">
         <h2><img src="/aboutCom/images/cart/h2_order.png" alt="주문/결제" /></h2>
@@ -24,382 +103,38 @@ TempData : @TempData["Order_Idx"]
             <li class="step2"><span>주문 완료</span></li>
         </ol>
         <div class="clear"></div>
+
         <div class="orderform">
             <form name="frm" action="">
                 <fieldset>
                     <legend>주문 상품 결제옵션 폼</legend>
                     <div class="row1 tabletypeb">
-                        <table summary="상품명, 상품금액, 수량, 쿠폰적용, 예상적립 포인트, 주문금액">
-                            <caption>주문상품 확인</caption>
-                            <colgroup>
-                                <col width="163" />
-                                <col width="*" />
-                                <col width="222" />
-                                <col width="117" />
-                                <col width="241" />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="2">상품명</th>
-                                    <th>상품금액</th>
-                                    <th>수량</th>
-                                    <th>주문금액</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="proimg">
-                                        <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
-                                    </td>
-                                    <td class="product">
-                                        <dl>
-                                            <dt>
-                                                <a href="#">
-                                                    <span class="tag"><span class="ico_new">NEW</span></span>
-                                                    퓨어 화이트 토너
-                                                </a>
-                                            </dt>
-                                            <dd>제주 참마 유래성분으로 미백기능성</dd>
-                                        </dl>
-                                    </td>
-                                    <td class="proprice">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </td>
-                                    <td class="count">
-                                        <div class="relbox">
-                                            1
-                                            <span class="onenone">
-                                                <i>+1</i>
-                                                <span class="tooltip">동일한 상품이 하나 더 배송되는<br />1+1 상품입니다.</span>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="ordprice"><strong>25,000</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td class="proimg">
-                                        <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt2.jpg" alt="상품 이미지" /></a>
-                                    </td>
-                                    <td class="product">
-                                        <dl>
-                                            <dt>
-                                                <a href="#">
-                                                    <span class="tag"><span class="ico_best">BEST</span></span>
-                                                    뉴트리 워터 스킨
-                                                </a>
-                                            </dt>
-                                            <dd>강력한 보습 성분으로 윤기 넘치는 오아시스 피부</dd>
-                                        </dl>
-                                    </td>
-                                    <td class="proprice">
-                                        <del>32,000원</del>
-                                        <strong>27,000</strong>원
-                                    </td>
-                                    <td class="count">
-                                        <div class="relbox">
-                                            1
-                                        </div>
-                                    </td>
-                                    <td class="ordprice"><strong>27,000</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td class="proimg">
-                                        <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt3.jpg" alt="상품 이미지" /></a>
-                                    </td>
-                                    <td class="product">
-                                        <dl>
-                                            <dt>
-                                                <a href="#">
-                                                    <span class="tag"><span class="ico_coupon">COUPON</span></span>
-                                                    이뮤젠 에너자이징 아이 크림
-                                                </a>
-                                            </dt>
-                                            <dd>복합발효를 통해 성분의 효과를 높인 눈가 전용 아이 크림</dd>
-                                        </dl>
-                                    </td>
-                                    <td class="proprice">
-                                        <del>60,000원</del>
-                                        <strong>55,000</strong>원
-                                    </td>
-                                    <td class="count">
-                                        <div class="relbox">
-                                            1
-                                            <span class="onenone">
-                                                <i>+1</i>
-                                                <span class="tooltip">동일한 상품이 하나 더 배송되는<br />1+1 상품입니다.</span>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="ordprice"><strong>55,000</strong>원</td>
-                                </tr>
-                                <tr>
-                                    <td class="proimg">
-                                        <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt4.jpg" alt="상품 이미지" /></a>
-                                    </td>
-                                    <td class="product">
-                                        <dl>
-                                            <dt>
-                                                <a href="#">
-                                                    <span class="tag"><span class="ico_coupon">COUPON</span></span>
-                                                    리얼 프레쉬 팩 [로즈]
-                                                </a>
-                                            </dt>
-                                            <dd>맑고 촉촉한 피부를 위한 100%천연유래 Real fresh pack</dd>
-                                        </dl>
-                                    </td>
-                                    <td class="proprice">
-                                        <strong>4,000</strong>원
-                                    </td>
-                                    <td class="count">
-                                        <div class="relbox">
-                                            2
-                                        </div>
-                                    </td>
-                                    <td class="ordprice"><strong>4,000</strong>원</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @{Html.RenderAction("Step1ProductList", "Order", new { OrderIdx = @Model.OrderIdx});}
                     </div>
                     <div class="orderwrap">
                         <h3>주문 입력정보</h3>
-                        <div class="banner boxtypef">
-                            <h4>배너 이미지</h4>
-                            <a href="#" class="jointxt"><img src="/aboutCom/images/cart/nonmb_jointxt.png" alt="지금 어바웃미 멤버십에 가입 하세요" /></a>
-                            <span class="benefittxt"><img src="/aboutCom/images/cart/nonmb_bannertxt.png" alt="특별한 회원 혜택 - 구매 금액의 최대 5%  적립 - 회원가입 시 10,000원 할인쿠폰 - 구매금액별 사은품 지급 - 생일쿠폰 지급 VIP 추가 혜택 - 추가 5% 할인 - 무료배송 쿠폰(월 기준)" /></span>
-                            <div class="btn_nonmb">
-                                <a href="#" class="btn_white_w155h48">회원가입</a>
-                                <a href="#" class="btn_white_w155h48 mt5">로그인</a>
-                            </div>
-                        </div>
-                        <div class="saleapply boxtyped mt20">
-                            <ul>
-                                <li class="product">
-                                    <p class="tot"><span class="tit">상품 금액</span><span class="price"><strong>82,000</strong>원</span></p>
-                                    <p><span class="tit">상품 금액</span><span class="price"><strong>82,000</strong> 원</span></p>
-                                    <p><span class="tit">배송비</span><span class="price"><strong>0</strong> 원</span></p>
-                                </li>
-                                <li class="sale">
-                                    <p class="tot"><span class="tit">할인 금액</span><span class="price"><strong>10,190</strong>원</span></p>
-                                    <p><span class="tit">쿠폰 할인</span><span class="price"><strong>190</strong> 원</span></p>
-                                    <p><span class="tit">보유 포인트 사용</span><span class="price point"><i></i><strong>10,000</strong></span></p>
-                                    <p><span class="tit">회원할인</span><span class="price"><strong>0</strong> 원</span></p>
-                                </li>
-                                <li class="total">
-                                    <p class="tot"><span class="tit">총 결제 금액</span><span class="price"><strong>71,810</strong>원</span></p>
-                                    <p><span class="tit">예상 적립포인트</span><span class="price point"><i></i><strong>21,780</strong></span></p>
-                                    <p><span class="info"><i></i>최종 결제금액 기준으로 포인트 적립됩니다.</span></p>
-                                </li>
-                            </ul>
-                        </div>
+                        @if (Model.UserProfile.IS_LOGIN == false)
+                        { 
+                            @NoMemberBanner()
+                        }
+                        else
+                        {
+                            Html.RenderAction("Step1DiscountInfo", "Order", new { OrderIdx = @Model.OrderIdx });
+                        }
+                        @{Html.RenderAction("Step1PriceInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
+                        
                         <div class="addrinfo contypea divstylea mt20">
-                            <!-- 주소 정보(기본정보 / 배송지 정보) -->
-                            <div class="buyerinfo divitem">
-                                <div class="tit_h4">
-                                    <h4><img src="/aboutCom/images/cart/h4_buyerinfo.png" alt="주문자 정보" /></h4>
-                                    <span class="tip"><i class="essential"></i>표시는 필수 입력 항목입니다.</span>
-                                </div>
-                                <div class="tabletypea">
-                                    <table>
-                                        <caption>기본정보 입력 표</caption>
-                                        <colgroup>
-                                            <col width="110" />
-                                            <col width="*" />
-                                        </colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <th><span class="essential">주문하시는 분</span></th>
-                                                <td><input type="text" class="ipttypea" style="width:228px" title="주문하시는 분 입력" /></td>
-                                            </tr>
-                                            <tr>
-                                                <th><span class="essential">주소</span></th>
-                                                <td class="addr">
-                                                    <address>
-                                                        <input type="text" class="ipttypea mr10" style="width:90px" title="우편번호 앞자리 입력" />-<input type="text" class="ipttypea ml10" style="width:90px" title="우편번호 뒷자리 입력" /><a href="#" class="btn_white_w96h38 typeb">우편번호 찾기</a>
-                                                        <input type="text" class="ipttypea" style="margin-top:8px;width:350px" title="주소 입력" />
-                                                        <input type="text" class="ipttypea" style="margin-top:8px;width:350px" title="주소상세 입력" />
-                                                    </address>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span>전화번호</span></th>
-                                                <td class="phone">
-                                                    <select class="selectstyleb" title="">
-                                                        <option selected="selected">02</option>
-                                                        <option>031</option>
-                                                        <option>032</option>
-                                                        <option>041</option>
-                                                        <option>070</option>
-                                                    </select><input type="text" class="ipttypea ml10" style="width:80px" title="전화번호 중간 번호 입력" /><input type="text" class="ipttypea ml10" style="width:80px" title="전화번호 끝 번호 입력" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span class="essential">휴대폰</span></th>
-                                                <td class="phone">
-                                                    <select class="selectstyleb" title="">
-                                                        <option selected="selected">010</option>
-                                                        <option>011</option>
-                                                        <option>016</option>
-                                                        <option>019</option>
-                                                    </select><input type="text" class="ipttypea ml10" style="width:80px" title="휴대폰 중간 번호 입력" /><input type="text" class="ipttypea ml10" style="width:80px" title="휴대폰 끝 번호 입력" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span class="essential">이메일</span></th>
-                                                <td class="email">
-                                                    <input type="text" class="ipttypea mr10" style="width:90px" title="이메일 ID 입력" />@@<input type="text" class="ipttypea ml10" style="width:82px" title="이메일 도메인 입력" /><select class="selectstyleb" title="">
-                                                        <option selected="selected">선택하세요</option>
-                                                        <option>naver.com</option>
-                                                        <option>gmail.com</option>
-                                                        <option>nate.com</option>
-                                                        <option>hanmail.net</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="receiveinfo divitem">
-                                <div class="tit_h4">
-                                    <h4><img src="/aboutCom/images/cart/h4_receiveinfo.png" alt="배송지 정보" /></h4>
-                                    <label class="chkcon tip"><input type="checkbox" name="" title="" /><span class="txt">주문자 정보와 동일</span></label>
-                                </div>
-                                <div class="tabletypea">
-                                    <table>
-                                        <caption>배송지 정보 입력 표</caption>
-                                        <colgroup>
-                                            <col width="110" />
-                                            <col width="*" />
-                                        </colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <th><span class="essential">받으시는 분</span></th>
-                                                <td><input type="text" class="ipttypea" style="width:228px" title="받으시는 분 입력" /></td>
-                                            </tr>
-                                            <tr>
-                                                <th><span class="essential">주소</span></th>
-                                                <td class="addr">
-                                                    <address>
-                                                        <input type="text" class="ipttypea mr10" style="width:90px" title="우편번호 앞자리 입력" />-<input type="text" class="ipttypea ml10" style="width:90px" title="우편번호 뒷자리 입력" /><a href="#" class="btn_white_w96h38 typeb">우편번호 찾기</a>
-                                                        <input type="text" class="ipttypea" style="margin-top:8px;width:350px" title="주소 입력" />
-                                                        <input type="text" class="ipttypea" style="margin-top:8px;width:350px" title="주소상세 입력" />
-                                                    </address>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span>전화번호</span></th>
-                                                <td class="phone">
-                                                    <select class="selectstyleb" title="">
-                                                        <option selected="selected">02</option>
-                                                        <option>031</option>
-                                                        <option>032</option>
-                                                        <option>041</option>
-                                                        <option>070</option>
-                                                    </select><input type="text" class="ipttypea ml10" style="width:80px" title="전화번호 중간 번호 입력" /><input type="text" class="ipttypea ml10" style="width:80px" title="전화번호 끝 번호 입력" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span class="essential">휴대폰</span></th>
-                                                <td class="phone">
-                                                    <select class="selectstyleb" title="">
-                                                        <option selected="selected">010</option>
-                                                        <option>011</option>
-                                                        <option>016</option>
-                                                        <option>019</option>
-                                                    </select><input type="text" class="ipttypea ml10" style="width:80px" title="휴대폰 중간 번호 입력" /><input type="text" class="ipttypea ml10" style="width:80px" title="휴대폰 끝 번호 입력" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th><span>배송시 요청사항<br /><span class="txtcnt">(<em>0</em>자 / 100자)</span></span></th>
-                                                <td class="comment">
-                                                    <textarea class="txtareatypea" style="width:350px"></textarea>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- //주소 정보(기본정보 / 배송지 정보) -->
+                        @{Html.RenderAction("Step1AddressInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
                         </div>
                         <div class="payinfo contypea divstylea mt20">
-                            <!-- 결제 정보 -->
-                            <div class="tit_h4">
-                                <h4><img src="/aboutCom/images/cart/h4_payinfo.png" alt="결제 정보" /></h4>
-                            </div>
-                            <div class="paycon divitem">
-                                <p class="opt">
-                                    <label id="rdoCredit" class="racon racon_on">
-                                        <input type="radio" name="radio3" checked="checked" title="신용카드" /> <span class="txt">신용카드</span>
-                                    </label><label id="rdoRealtime" class="racon">
-                                        <input type="radio" name="radio3" title="실시간 계좌이체" /> <span class="txt">실시간 계좌이체</span>
-                                    </label><label id="rdoVirtual" class="racon">
-                                        <input type="radio" name="radio3" title="가상계좌" /> <span class="txt">가상계좌</span>
-                                    </label>
-                                </p>
-                                <div id="credit" class="credit paytip boxtypea" style="display:block;">
-                                    <p class="infobtn"><a href="#" class="btn_blue_w96h38">무이자 할부 혜택 안내</a></p>
-                                    <div class="paymentstep">
-                                        <em>결제 방법</em>
-                                        <p class="txt">
-                                            카드결제를 이용하기 위해서는 본인 여부 확인을 위해 인증절차를 거쳐야 합니다.<br />
-                                            각 카드사에서는 ISP 또는 안심클릭 인증을 통해 안전 결제 서비스를 제공하며, 공인인증서의
-                                            인증방식이 필요합니다.
-                                        </p>
-                                        <img src="/aboutCom/images/cart/paymentstep_credit.gif" alt="STEP 01 주문/결제 STEP 02 카드 선택 STEP 03 카드정보입력 STEP 04 인증/결제완료" />
-                                    </div>
-                                </div>
-                                <div id="realtime" class="realtime paytip boxtypea">
-                                    <p class="infobtn"><a href="#" class="btn_blue_w96h38">은행별 이용 가능 시간</a></p>
-                                    <div class="paymentstep">
-                                        <em>결제 방법</em>
-                                        <img src="/aboutCom/images/cart/paymentstep_realtime.gif" alt="STEP 01 결제할 은행 선택 STEP 02 예금주, 주민번호, 계좌번호, 계좌비밀번호 입력 STEP 03 공인인증서를 통한 본인 인증 STEP 04 결제완료" />
-                                    </div>
-                                </div>
-                                <div id="virtual" class="virtual paytip boxtypea">
-                                    <div class="paymentstep">
-                                        <em>결제 방법</em>
-                                        <img src="/aboutCom/images/cart/paymentstep_virtual.gif" alt="STEP 01 가상계좌를 발급받을 은행 선택 STEP 02 가상계좌 발급 STEP 03 가상계좌 번호로 입금 (인터넷뱅킹,폰뱅킹,은행 창구 입금 등) STEP 04 결제완료" />
-                                    </div>
-                                </div>
-                                <p class="agreetit mt20">[비회원 필수입력정보 수집 동의서]<label class="chkcon"><input type="checkbox" name="" title="" /><span class="txt">동의합니다.</span></label></p>
-                                <div class="agreebox">
-                                    <span class="litit">개인정보의 수집 및 이용 목적</span>
-                                    <ol>
-                                        <li>1)  주문자 정보 확보</li>
-                                        <li>2)  물품에 관한 배송지 정보 확보</li>
-                                        <li>3)  불만처리 의사소통 경로 확보</li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <div class="confirmcon divitem">
-                                <div class="total">
-                                    <p class="totprice"><span class="tit">총 결제 금액</span><span class="price"><strong>71,810</strong>원</span></p>
-                                    <div class="nmpwd">
-                                        <label>비회원 비밀번호<input type="password" class="ipttypea h28 ml10" style="width:162px" title="받으시는 분 입력" /></label>
-                                        <span class="info mt10"><i></i>비회원 주문 조회 시 사용  4자에서 12자 영문 또는 숫자 조합)</span>
-                                    </div>
-                                </div>
-                                <p class="agreetit">주문자 동의<label class="chkcon"><input type="checkbox" name="" title="" /><span class="txt">동의합니다.</span></label></p>
-                                <div class="agreebox">
-                                    주문할 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?
-                                    <span class="law">(전자상거래법 제 8조 제2항)</span>
-                                </div>
-                                <div class="personaldata mt20">
-                                    <div class="lft">
-                                        <p class="pti">개인정보 제3자 제공/위탁동의</p>
-                                        <label class="chkcon"><input type="checkbox" name="" title="" /><span class="txt">동의합니다.</span></label>
-                                    </div>
-                                    <a href="#" class="btn_white_w120h38">약관전체보기</a>
-                                </div>
-                                <p class="btn_payment mt30"><a href="/cart/orderend_nonmb.asp" class="btn_brown_w229h60">주문결제</a><a href="/cart/orderend_nonmb.asp" class="btn_white_w229h60">주문취소</a></p>
-                            </div>
-                            <!-- //결제 정보 -->
+                        @{Html.RenderAction("Step1PayInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
+
+
     </div>
     <div class="container100per notify">
         <div class="inner">
@@ -417,3 +152,82 @@ TempData : @TempData["Order_Idx"]
     </div>
 </div>
 <!--//container-->
+
+<!-- 다음 우편번호 검색-->
+<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script language="javascript">
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layerPOST');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode(zip1, zip2, addr1) {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if (data.addressType === 'R') {
+                    //법정동명이 있을 경우 추가한다.
+                    if (data.bname !== '') {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if (data.buildingName !== '') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                }
+                var postsplit = data.postcode.split('-');
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById(zip1).value = postsplit[0]; //6자리 우편번호 사용
+                document.getElementById(zip2).value = postsplit[1]; //6자리 우편번호 사용
+                //document.getElementById("sample2_postcode").value = data.zonecode; //5자리 기초구역번호 사용
+                document.getElementById(addr1).value = fullAddr;
+                // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
+
+                // iframe을 넣은 element를 안보이게 한다.
+                element_layer.style.display = 'none';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition() {
+        var width = 300; //우편번호서비스가 들어갈 element의 width
+        var height = 460; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+    }
+</script>
+<!-- 다음 우편번호 검색-->

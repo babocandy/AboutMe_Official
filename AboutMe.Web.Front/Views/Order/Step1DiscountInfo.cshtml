@@ -1,0 +1,67 @@
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_DISCOUNTINFO
+
+<div class="saleinfo contypea">
+    <!-- 할인 관련 정보 -->
+    <div class="tit_h4">
+        <h4><img src="/aboutCom/images/cart/h4_saleinfo.png" alt="할인 혜택" /></h4>
+    </div>
+    <div class="tabletypea">
+        <table>
+            <caption>상품 할인정보 테이블</caption>
+            <colgroup>
+                <col width="126" />
+                <col width="430" />
+                <col width="*" />
+            </colgroup>
+            <tbody>
+                <tr class="si_coupon">
+                    <th>할인 쿠폰 사용</th>
+                    <td>
+                        <label>
+                            <input type="text" class="ipttypea h30 mr5" style="width:122px" value="@String.Format("{0:#,#0.}", Model.DiscountInfo.COUPON_DISCOUNT_AMT)" title="쿠폰 할인금액" disabled />원
+                        </label><a href="#none" class="btn_brown_w96h38 ml20" onclick="CouponPopup(''); return false;">쿠폰 사용</a>
+                        <a href="#none" class="btn_white_w96h38 typeb" target="_blank" >내 쿠폰 확인</a>
+                    </td>
+                    <td><span class="info"><i></i>쿠폰은 상품별로 사용가능 합니다.</span></td>
+                </tr>
+                <tr class="si_point">
+                    <th>보유 포인트 사용</th>
+                    <td>
+                        <span class="insert">
+                            <label><input type="text" class="ipttypea h30 mr5" style="width:122px" value="@String.Format("{0:#,#0.}", Model.DiscountInfo.POINT_USE_PRICE)" title="사용할 포인트 입력" />원</label><br />
+                            <span class="mypoint"><i></i>나의 포인트 <span>@String.Format("{0:#,#0.}", "1000")</span></span>
+                        </span>
+                        <label class="chkcon ml20"><input type="checkbox" name="" title="" /><span class="txt">모두 사용하기</span></label>
+                    </td>
+                    <td><span class="info"><i></i>포인트 5,000 이상 보유 시 1,000 단위로 사용 가능합니다.<br />할인 혜택에서 배송비는 제외됩니다.</span></td>
+                </tr>
+                <tr class="si_vip">
+                    <th>VIP 회원 할인 금액</th>
+                    <td><span class="price"><strong>@String.Format("{0:#,#0.}", Model.DiscountInfo.GRADE_DISCOUNT_AMT)</strong>원</span></td>
+                    <td><span class="info"><i></i>VIP 클래스은 결제금액의 5% 추가 할인이 됩니다.</span></td>
+                </tr>
+                <tr class="si_delivery">
+                    <th>무료배송 쿠폰</th>
+                    @Model.DiscountInfo.TRANS_COUPON
+                    <td>
+                        <select class="selectstyleb" title="" name="TRANS_COUPON" disabled="@Model.TransCouponDisabled.ToString()">
+                            <option selected="selected" value="">쿠폰을 선택하세요</option>
+                            @foreach (var items in Model.TransCouponList)
+                            {
+                                string seltxt = "";
+                                if (Model.DiscountInfo.TRANS_COUPON == items.IDX_COUPON_NUMBER)
+                                {
+                                    seltxt = "selected='selected'";
+                                }
+                                @Html.Raw(new HtmlString("<option " + seltxt + " value='" + items.IDX_COUPON_NUMBER.ToString() + "'>" + items.COUPON_NAME + "</option>"));
+                                   
+                            }
+                        </select>
+                    </td>
+                    <td><span class="info"><i></i>총 결제금액이 30,000원 이상인 경우 배송비 무료입니다.</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- //할인 관련 정보 -->
+</div>
