@@ -446,7 +446,7 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.SORT_DIR = SORT_DIR;
             this.ViewBag.PAGE = PAGE;
             this.ViewBag.PAGESIZE = PAGESIZE;
-            if (SEL_IDX == null || SEL_IDX<1)
+            if (SEL_IDX<1)
                 return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
 
 
@@ -464,7 +464,7 @@ namespace AboutMe.Web.Admin.Controllers
             string PROC_ADM_ID = AdminUserInfo.GetAdmId();  //처리자 계정 (관리자 로그인계정)
 
             //return View();
-            if (IDX == null || IDX<1)
+            if (IDX<1)
             {
                 //return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
                 nERR_CODE = 1;
