@@ -24,6 +24,7 @@
                 <!--contypea-->
 
                 SessionID:@Session.SessionID  ,M_ID:@ViewBag.M_ID
+                <br />
                 Request_Url_Host = @ViewBag.Request_Url_Host
                 <br />
                 Request_Url_Authority = @ViewBag.Request_Url_Authority
@@ -49,7 +50,7 @@
                                 return;
                             }
                             if (f.PW.value.length < 4) {
-                                alert("패스워드를 입력하세요");
+                                alert("비밀번호를 입력하세요");
                                 return;
                             }
                             //f.action = "/MemberShip/LoginProc/";
@@ -57,6 +58,7 @@
                             f.submit();
 
                         }
+
 
                         </script>
 
@@ -73,7 +75,10 @@
                             <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
                             <input type="hidden" name="OrderList" value="@ViewBag.OrderList">
                         </form>
-                        <p class="idpw_search"><span class="txt">· 회원 아이디, 비밀번호를 잊으셨나요?</span><a href="#" class="btn_white_w118h38">아이디 찾기</a><a href="#" class="btn_white_w118h38 ml5">비밀번호 찾기</a></p>
+                        <p class="idpw_search"><span class="txt">· 회원 아이디, 비밀번호를 잊으셨나요?</span>
+                            <a href="javascript:PopupCenter('/MemberShip/IdSearch', '', '600', '500');" class="btn_white_w118h38">아이디 찾기</a>
+                            <a href="javascript:PopupCenter('/MemberShip/PwSearch', '', '600', '500');" class="btn_white_w118h38 ml5">비밀번호 찾기</a>
+                        </p>
 
                     </div>
 
@@ -115,7 +120,7 @@
                 <div class="contypeb mt40">
                     <h3><img src="/aboutCom/images/membership/h3_membership.gif" alt="Membership 회원가입하고  회원 클래스별 많은 혜택을 누리세요. " /></h3>
                     <div class="benefitbox">
-                        <a href="#" class="btn_join btn_brown_w185h48">회원가입</a>
+                        <a href="/MemberShip/JoinStep1" class="btn_join btn_brown_w185h48">회원가입</a>
                     </div>
                 </div>
                 <!--//contypeb-->

@@ -29,5 +29,7 @@ namespace AboutMe.Domain.Service.Member
             , string m_JOIN_MODE, string m_DI, string m_AGREE, string m_AGREE2, string m_SKIN_TROUBLE_CD
             , string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID); //회원 신규가입
 
+        ReturnDic GetMemberFindID(string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "");//회원 ID찾기 ->리턴:ReturnDic
+        ReturnDic GetMemberFindPWD(string m_ID = "", string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "", string m_PWD_NEW = "");//PW 찾기 ->리턴:ReturnDic
     }
 }

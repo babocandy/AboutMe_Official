@@ -219,9 +219,104 @@ namespace AboutMe.Domain.Service.Member
             rObj.ERR_MSG = strERR_MSG;
 
             return rObj; 
-            
-            
         }
+
+        //회원 ID찾기
+        //리턴:ReturnDic
+        public ReturnDic GetMemberFindID(string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "")
+        {
+
+            int nERR_CODE = 0; //에러 없음
+            string strERR_MSG = ""; //에러 없음
+            string strRET_M_ID = ""; //찾아진 계정
+            string strRET_M_NAME = ""; //찾아진 이름
+            string strRET_M_CREDATE; //찾아진 가입일
+            using (MemberEntities MemberContext = new MemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                ObjectParameter objOutParam2 = new ObjectParameter("RET_M_ID", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                ObjectParameter objOutParam3 = new ObjectParameter("RET_M_NAME", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                ObjectParameter objOutParam4 = new ObjectParameter("RET_M_CREDATE", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+
+                int sp_ret = MemberContext.SP_MEMBER_FIND_ID(m_NAME, m_EMAIL, m_MOBILE, objOutParam, objOutParam2, objOutParam3, objOutParam4);
+                nERR_CODE = (int)objOutParam.Value;
+                strRET_M_ID = (string)objOutParam2.Value;
+                strRET_M_NAME = (string)objOutParam3.Value;
+                strRET_M_CREDATE = (string)objOutParam4.Value;
+
+                if (nERR_CODE != 0)
+                    strERR_MSG = "아이디찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+
+                if (nERR_CODE == 10)
+                    strERR_MSG = "아이디찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                if (nERR_CODE == 20)
+                    strERR_MSG = "아이디찾기 오류.\\n 파라메타 전달 오류.";
+
+
+                /** }catch()
+                 {
+                       MemberContext.Dispose();
+                 }**/
+            }
+
+            //결과 리턴
+            ReturnDic rObj = new ReturnDic();
+            rObj.ERR_CODE = nERR_CODE.ToString();
+            rObj.ERR_MSG = strERR_MSG;
+            rObj.ETC1 = strRET_M_ID; //찾은 계정 : ERR_CODE=="0"일때만 유효
+            rObj.ETC2 = strRET_M_NAME; //찾은 이름 : ERR_CODE=="0"일때만 유효
+            rObj.ETC3 = strRET_M_CREDATE; //찾은 가입일 : ERR_CODE=="0"일때만 유효
+            
+
+            return rObj;
+        }
+
+        //회원 비밀번호찾기
+        //리턴:ReturnDic
+        public ReturnDic GetMemberFindPWD(string m_ID = "", string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "", string m_PWD_NEW = "")
+        {
+
+            int nERR_CODE = 0; //에러 없음
+            string strERR_MSG = ""; //에러 없음
+            string strRET_M_NAME = ""; //에러 없음
+            string strRET_M_EMAIL = ""; //에러 없음
+            using (MemberEntities MemberContext = new MemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                ObjectParameter objOutParam2 = new ObjectParameter("RET_M_NAME", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                ObjectParameter objOutParam3 = new ObjectParameter("RET_M_EMAIL", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = MemberContext.SP_MEMBER_FIND_PWD(m_ID, m_NAME, m_EMAIL, m_MOBILE, m_PWD_NEW, objOutParam, objOutParam2, objOutParam3);
+                nERR_CODE = (int)objOutParam.Value;
+                strRET_M_NAME = (string)objOutParam2.Value;
+                strRET_M_EMAIL = (string)objOutParam3.Value;
+
+                if (nERR_CODE != 0)
+                    strERR_MSG = "비밀번호찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+
+                if (nERR_CODE == 10)
+                    strERR_MSG = "비밀번호찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                if (nERR_CODE == 20)
+                    strERR_MSG = "비밀번호찾기 오류.\\n 파라메타 전달 오류.";
+
+                /** }catch()
+                 {
+                       MemberContext.Dispose();
+                 }**/
+            }
+
+            //결과 리턴
+            ReturnDic rObj = new ReturnDic();
+            rObj.ERR_CODE = nERR_CODE.ToString();
+            rObj.ERR_MSG = strERR_MSG;
+            rObj.ETC1 = strRET_M_NAME; //찾은 이름 : ERR_CODE=="0"일때만 유효
+            rObj.ETC2 = strRET_M_EMAIL; //찾은 EMAIL : ERR_CODE=="0"일때만 유효
+
+
+            return rObj;
+        }
+
 
     } //class
 } //namespace
