@@ -374,17 +374,17 @@
                                         <th><span class="essential">휴대폰 번호</span></th>
                                         <td class="phone_num">
                                             <select class="selectstyleb" title="" name="M_MOBILE_1">
-                                                <option selected="selected">010</option>
-                                                <option>011</option>
-                                                <option>016</option>
-                                                <option>019</option>
+                                                <option value="010" selected="selected" >010</option>
+                                                <option value="011">011</option>
+                                                <option value="016">016</option>
+                                                <option value="019">019</option>
                                             </select>
                                             <input type="text" class="ipttypea mr10" style="width:90px" title="휴대폰번호 가운데 자리 입력" name="M_MOBILE_2" maxlength="4" /><input type="text" class="ipttypea" style="width:90px" title="휴대폰번호 마지막 자리 입력" name="M_MOBILE_3" maxlength="4" />
                                         </td>
                                         <th><span>집 전화번호</span></th>
                                         <td class="home_num">
                                             <select class="selectstyleb" title="" name="M_PHONE_1">
-                                                <option selected="selected">02</option>
+                                                <option value="02" selected="selected" >02</option>
                                                 <option value='031'>031</option>
                                                 <option value='032'>032</option>
                                                 <option value='033'>033</option>
@@ -409,9 +409,9 @@
                                     <tr>
                                         <th><span class="essential">이메일</span></th>
                                         <td colspan="3" class="email">
-                                            <input type="text" class="ipttypea" style="width:130px" title="이메일주소입력" name="M_EMAIL_1" maxlength="30" />
+                                            <input type="text" class="ipttypea" style="width:130px" title="이메일주소입력" name="M_EMAIL_1" maxlength="30" value="" />
                                             &nbsp;&nbsp;@@&nbsp;&nbsp;
-                                            <input type="text" class="ipttypea mr10" style="width:130px" title="이메일 도메인 입력" name="M_EMAIL_2" maxlength="50" />
+                                            <input type="text" class="ipttypea mr10" style="width:130px" title="이메일 도메인 입력" name="M_EMAIL_2" maxlength="50" value="" />
                                             <select class="selectstyleb" title="" name="M_EMAIL_SEL" onchange="javascript:fSetEmailDomain()">
                                                 <option value="">직접입력</option>
                                                 <option value="daum.net">daum.net</option>

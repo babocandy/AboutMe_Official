@@ -426,7 +426,7 @@ namespace AboutMe.Web.Front.Controllers
 
             if (retDic.ERR_CODE != "0") //DI 기타오류        
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.Go(-1);</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
             }
 
 
@@ -494,12 +494,23 @@ namespace AboutMe.Web.Front.Controllers
         //사용자 회원 신규가입 -저장: ajax > JSON리턴
         public ActionResult AjaxJOIN_Register(string M_ID = "")
         {
+            //로그 기록 준비
+            string log_memo = "회원 신규가입";
+            string log_comment = "회원 신규가입";
+            UserLog userlog = new UserLog();
+
+
             string strERR_CODE = "0";
             string strERR_MSG = "";
             ReturnDic ObjretDIC = new ReturnDic();
             //return View();
             if (M_ID == "")
             {
+                log_comment = log_comment + "실패 : param오류";
+                log_memo = log_memo + "실패 : param오류";
+                log_memo = log_memo + "|M_ID:" + M_ID;
+                userlog.UserLogSave(log_memo, log_comment);
+
                 //return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
                 strERR_CODE = "1";
                 strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
@@ -543,7 +554,40 @@ namespace AboutMe.Web.Front.Controllers
             ReturnDic retDic = _MemberService.GetMemberFindDI(M_DI);
             if (retDic.ERR_CODE != "0") //DI 기타오류      10:이미 가입한 DI , 20 :Param Err  
             {
-                //return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.Go(-1);</script>");
+                //로그 기록
+                log_comment = log_comment + "실패:DI중복오류";
+                log_memo = log_memo + "실패:DI중복오류";
+                log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+                log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+                log_memo = log_memo + "|M_ID:" + M_ID;
+                log_memo = log_memo + "|M_NAME:" + M_NAME;
+                log_memo = log_memo + "|M_PWD:" + M_PWD;
+                log_memo = log_memo + "|M_PWD_MD5_HASH:" + M_PWD_MD5_HASH;
+                log_memo = log_memo + "|M_PWD_SHA256_HASH:" + M_PWD_SHA256_HASH;
+                log_memo = log_memo + "|M_GRADE:" + M_GRADE;
+                log_memo = log_memo + "|M_SEX:" + M_SEX;
+                log_memo = log_memo + "|M_BIRTHDAY:" + M_BIRTHDAY;
+                log_memo = log_memo + "|M_PHONE:" + M_PHONE;
+                log_memo = log_memo + "|M_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|M_ZIPCODE:" + M_ZIPCODE;
+                log_memo = log_memo + "|M_ADDR1:" + M_ADDR1;
+                log_memo = log_memo + "|M_ADDR2:" + M_ADDR2;
+                log_memo = log_memo + "|M_ISSMS:" + M_ISSMS;
+                log_memo = log_memo + "|M_ISEMAIL:" + M_ISEMAIL;
+                log_memo = log_memo + "|M_ISDM:" + M_ISDM;
+
+                log_memo = log_memo + "|M_JOIN_MODE:" + M_JOIN_MODE;
+                log_memo = log_memo + "|M_DI:" + M_DI;
+                log_memo = log_memo + "|M_AGREE:" + M_AGREE;
+                log_memo = log_memo + "|M_AGREE2:" + M_AGREE2;
+                log_memo = log_memo + "|M_SKIN_TROUBLE_CD:" + M_SKIN_TROUBLE_CD;
+
+                log_memo = log_memo + "|M_GBN:" + M_GBN;
+                log_memo = log_memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
+                log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                //return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
                 return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
             }
 
@@ -563,43 +607,46 @@ namespace AboutMe.Web.Front.Controllers
             }
 
             //로그 기록
-            string memo = "회원신규가입-저장";
-            string comment = "회원신규가입-저장";
-            if(strERR_CODE!="0")
+            if (strERR_CODE == "0")
             {
-                comment = comment + "오류";
-                memo = memo + "오류";
+                log_comment = log_comment + "성공";
+                log_memo = log_memo + "성공";
             }
-            memo = memo + "|strERR_CODE:" + strERR_CODE;
-            memo = memo + "|strERR_MSG:" + strERR_MSG;
-            memo = memo + "|M_ID:" + M_ID;
-            memo = memo + "|M_NAME:" + M_NAME;
-            memo = memo + "|M_PWD:" + M_PWD;
-            memo = memo + "|M_PWD_MD5_HASH:" + M_PWD_MD5_HASH;
-            memo = memo + "|M_PWD_SHA256_HASH:" + M_PWD_SHA256_HASH;
-            memo = memo + "|M_GRADE:" + M_GRADE;
-            memo = memo + "|M_SEX:" + M_SEX;
-            memo = memo + "|M_BIRTHDAY:" + M_BIRTHDAY;
-            memo = memo + "|M_PHONE:" + M_PHONE;
-            memo = memo + "|M_EMAIL:" + M_EMAIL;
-            memo = memo + "|M_ZIPCODE:" + M_ZIPCODE;
-            memo = memo + "|M_ADDR1:" + M_ADDR1;
-            memo = memo + "|M_ADDR2:" + M_ADDR2;
-            memo = memo + "|M_ISSMS:" + M_ISSMS;
-            memo = memo + "|M_ISEMAIL:" + M_ISEMAIL;
-            memo = memo + "|M_ISDM:" + M_ISDM;
+            else
+            {
+                log_comment = log_comment + "실패";
+                log_memo = log_memo + "실패";
 
-            memo = memo + "|M_JOIN_MODE:" + M_JOIN_MODE;
-            memo = memo + "|M_DI:" + M_DI;
-            memo = memo + "|M_AGREE:" + M_AGREE;
-            memo = memo + "|M_AGREE2:" + M_AGREE2;
-            memo = memo + "|M_SKIN_TROUBLE_CD:" + M_SKIN_TROUBLE_CD;
+            }
+            log_memo = log_memo + "|strERR_CODE:" + strERR_CODE;
+            log_memo = log_memo + "|strERR_MSG:" + strERR_MSG;
+            log_memo = log_memo + "|M_ID:" + M_ID;
+            log_memo = log_memo + "|M_NAME:" + M_NAME;
+            log_memo = log_memo + "|M_PWD:" + M_PWD;
+            log_memo = log_memo + "|M_PWD_MD5_HASH:" + M_PWD_MD5_HASH;
+            log_memo = log_memo + "|M_PWD_SHA256_HASH:" + M_PWD_SHA256_HASH;
+            log_memo = log_memo + "|M_GRADE:" + M_GRADE;
+            log_memo = log_memo + "|M_SEX:" + M_SEX;
+            log_memo = log_memo + "|M_BIRTHDAY:" + M_BIRTHDAY;
+            log_memo = log_memo + "|M_PHONE:" + M_PHONE;
+            log_memo = log_memo + "|M_EMAIL:" + M_EMAIL;
+            log_memo = log_memo + "|M_ZIPCODE:" + M_ZIPCODE;
+            log_memo = log_memo + "|M_ADDR1:" + M_ADDR1;
+            log_memo = log_memo + "|M_ADDR2:" + M_ADDR2;
+            log_memo = log_memo + "|M_ISSMS:" + M_ISSMS;
+            log_memo = log_memo + "|M_ISEMAIL:" + M_ISEMAIL;
+            log_memo = log_memo + "|M_ISDM:" + M_ISDM;
 
-            memo = memo + "|M_GBN:" + M_GBN;
-            memo = memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
-            memo = memo + "|M_STAFF_ID:" + M_STAFF_ID;
-            UserLog userlog = new UserLog();
-            userlog.UserLogSave(memo, comment);
+            log_memo = log_memo + "|M_JOIN_MODE:" + M_JOIN_MODE;
+            log_memo = log_memo + "|M_DI:" + M_DI;
+            log_memo = log_memo + "|M_AGREE:" + M_AGREE;
+            log_memo = log_memo + "|M_AGREE2:" + M_AGREE2;
+            log_memo = log_memo + "|M_SKIN_TROUBLE_CD:" + M_SKIN_TROUBLE_CD;
+
+            log_memo = log_memo + "|M_GBN:" + M_GBN;
+            log_memo = log_memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
+            log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
+            userlog.UserLogSave(log_memo, log_comment);
 
             //신규회원가입 축하메일 발송 --------------------------
             string MAIL_SUBJECT="[AboutMe]회원가입 축하메일";
@@ -652,6 +699,189 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
- 
+
+        //아이디 찾기 팝업 폼
+        public ActionResult IdSearch()
+        {
+            return View();
+        }
+
+        //아이디찾기 팝업:결과
+        public ActionResult IdSearch_End(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        {
+            //로그 기록 준비
+            string log_memo = "아이디찾기";
+            string log_comment = "아이디찾기";
+            UserLog userlog = new UserLog();
+
+
+            if (M_NAME == "" || M_EMAIL == "" || M_MOBILE=="")
+            {
+                log_comment = log_comment + "실패 : param오류";
+                log_memo = log_memo + "실패 : param오류";
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/IdSearch';</script>");
+            }
+
+            //아이디 찾기 - DB처리
+            ReturnDic retDic = _MemberService.GetMemberFindID(M_NAME, M_EMAIL, M_MOBILE);
+            if (retDic.ERR_CODE != "0") //아이디찾기 오류        
+            {
+                log_comment = log_comment + "실패 : DB찾기 오류";
+                log_memo = log_memo + "실패: DB찾기 오류";
+                log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+                log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+                log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+                log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+                log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/IdSearch';</script>");
+            }
+
+            this.ViewBag.M_ID = retDic.ETC1; //찾아진 ID
+            this.ViewBag.M_NAME = retDic.ETC2; //찾아진 이름
+            this.ViewBag.M_CREDATE = retDic.ETC3; //찾아진 가입일
+
+            //로그 기록
+            log_comment = log_comment + "성공";
+            log_memo = log_memo + "성공";
+            log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+            log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+            log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+            log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+            log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+            log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+            log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+            log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+            userlog.UserLogSave(log_memo, log_comment);
+
+
+
+            return View();
+        }
+
+        //비밀번호 찾기 팝업 폼
+        public ActionResult PwSearch()
+        {
+            return View();
+        }
+
+        //비밀번호 팝업:결과
+        public ActionResult PwSearch_End(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        {
+            //로그 기록 준비
+            string log_memo = "비밀번호 찾기";
+            string log_comment = "비밀번호 찾기";
+            UserLog userlog = new UserLog();
+
+            if (M_ID == "" || M_NAME == "" || M_EMAIL == "" || M_MOBILE == "")
+            {
+                log_comment = log_comment + "실패 : param오류";
+                log_memo = log_memo + "실패 : param오류";
+                log_memo = log_memo + "|inputM_ID:" + M_ID;
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/PwSearch';</script>");
+            }
+
+            //신규비밀번호 랜덤생성
+            string strNEW_PWD ="";
+            string strNEW_PWD_MD5 ="";
+            string strNEW_PWD_SHA256_HASH = "";
+
+            Random r = new Random();
+            int randomNumber = r.Next(100000, 90000000); //alph(1)+ 6~8 자리
+            //string strNOW_TIME = @DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            //string strWORK_TMP_ID = @strNOW_TIME +  @randomNumber.ToString();
+
+            strNEW_PWD = Utility01.GetRandomAlpha(1) + Utility01.GetRandomAlphanumeric(7);  //랜덤암호 신규생성 :문자로 시작
+            AES256Cipher objEnc = new AES256Cipher();
+            strNEW_PWD_MD5 = objEnc.MD5Hash(strNEW_PWD);   //MD5 
+            strNEW_PWD_SHA256_HASH = objEnc.SHA256Hash(strNEW_PWD_MD5);   //MD5->HA256_HASH
+
+           
+
+            //비밀번호 찾기 - DB처리
+            ReturnDic retDic = _MemberService.GetMemberFindPWD(M_ID, M_NAME, M_EMAIL, M_MOBILE, strNEW_PWD_SHA256_HASH);
+            if (retDic.ERR_CODE != "0") //비밀번호디찾기 오류        
+            {
+                log_comment = log_comment + "실패 : DB찾기 오류";
+                log_memo = log_memo + "실패: DB찾기 오류";
+                log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+                log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+                log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+                log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+                log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+                log_memo = log_memo + "|inputM_ID:" + M_ID;
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                log_memo = log_memo + "|strNEW_PWD:" + strNEW_PWD;
+                userlog.UserLogSave(log_memo, log_comment); 
+                
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/PwSearch';</script>");
+            }
+
+            this.ViewBag.M_NAME = retDic.ETC1; //찾아진 이름
+            this.ViewBag.M_EMAIL = retDic.ETC2; //찾아진 EMAIL
+            this.ViewBag.M_PWD_NEW = strNEW_PWD; //새로 세팅된 비밀번호
+
+
+            //로그 기록
+            log_comment = log_comment + "성공";
+            log_memo = log_memo + "성공";
+            log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+            log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+            log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+            log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+            log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+            log_memo = log_memo + "|inputM_ID:" + M_ID;
+            log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+            log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+            log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+            log_memo = log_memo + "|strNEW_PWD:" + strNEW_PWD;
+            userlog.UserLogSave(log_memo, log_comment);
+
+
+            //새로 세팅된 비밀번호 메일로 전송 ----------------------
+            string MAIL_SUBJECT = "[AboutMe]비밀번호 신규 세팅";
+            string MAIL_BODY = "";
+            MAIL_BODY = MAIL_BODY + "<html><body>";
+            MAIL_BODY = MAIL_BODY + "<br>====AboutMe 비밀번호가 새롭게 변경되었습니다.=========<br>";
+            //MAIL_BODY = MAIL_BODY + "<br>아이디:" + M_ID;
+            MAIL_BODY = MAIL_BODY + "<br>신규비밀번호:" + strNEW_PWD;
+            MAIL_BODY = MAIL_BODY + "</body></html>";
+
+            //비밀번호 찾기: 메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+            string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+            string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+            string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+            string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+            string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
+
+            //비밀번호 찾기: 메일 발송
+            MailSender mObj = new MailSender();
+            mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+
+            //ViewBag.mail_err_no = mObj.err_no;
+            //ViewBag.mail_err_msg = mObj.err_msg;
+
+
+
+
+            return View();
+        }
+
     } //class
 }//namespace
