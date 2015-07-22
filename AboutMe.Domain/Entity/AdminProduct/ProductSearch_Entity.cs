@@ -12,8 +12,17 @@ namespace AboutMe.Domain.Entity.AdminProduct
     {
         public ProductSearch_Entity()
         {
-            Page = 1;
-            PageSize = 10;
+            this.Page = 1;
+            this.PageSize = 10;
+            this.TO_DATE = "";
+            this.FROM_DATE = "";
+            //this.TO_DATE = DateTime.Today.ToString().Substring(0, 10);
+            //this.FROM_DATE = DateTime.Today.AddDays(-7).ToString().Substring(0, 10);
+            this.iconYn = "";
+            this.searchStatus = "N"; //검색상태 초기화는 N
+            this.searchDisplayY = "Y"; //초기값은 전시상품만
+            this.cateCode = "";
+            
         }
         public int IDX { get; set; }
         public string SearchKey { get; set; }
@@ -24,6 +33,10 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string searchDisplayN { get; set; }
         public string soldoutYn { get; set; }
         public string POutletYn { get; set; }
+        public string FROM_DATE { get; set; }
+        public string TO_DATE { get; set; }
+        public string searchStatus { get; set; }
+        
         [DefaultValue(1)]
         public int Page { get; set; }
         [DefaultValue(10)]

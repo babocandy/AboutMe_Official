@@ -23,5 +23,12 @@ namespace AboutMe.Web.Front
 
             Bootstrapper.Initialise(); //Depency injection ... 
         }
+
+        protected void Session_Start(Object sender, EventArgs e)
+        {
+            //Session["init"] = 0;
+            //HttpContext.Current.Session.Add("__MyAppSession", string.Empty);
+            Session.Add("MyVariable", true);
+        }
     }
 }

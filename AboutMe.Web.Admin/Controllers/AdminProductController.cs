@@ -356,28 +356,64 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품
         
         #region 상품 리스트
-        public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
+        public ActionResult ProductIndex(IEnumerable<string> iconYn, IEnumerable<string> BatchIconYn, ProductSearch_Entity productSearch_Entity)
         {
+ 
+            this.ViewBag.BatchIconYn = Request.Form["BatchIconYn"];
+            this.ViewBag.iconYn = Request.Form["iconYn"];
 
             this.ViewBag.PageSize = productSearch_Entity.PageSize;
             this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            if (!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword))
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            if (!string.IsNullOrEmpty(this.ViewBag.SearchKeyword))
             {
                 this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
                 productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
             }
-            else
-            {
-                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            }
+            this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
 
+            productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
             this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
+            this.ViewBag.cateCode1 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(0,3);
+            this.ViewBag.cateCode2 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(3,3);
+            this.ViewBag.cateCode3 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(6,3);
+            if (string.IsNullOrEmpty(this.ViewBag.iconYn))
+            {
+                this.ViewBag.iconYn = "";
+            }
+            if (string.IsNullOrEmpty(this.ViewBag.BatchIconYn))
+            {
+                this.ViewBag.BatchIconYn = "";
+            }
+            
             this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
             this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
+            {
+                this.ViewBag.searchDisplayY = "";
+                productSearch_Entity.searchDisplayY = "";
+            }
+            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
+            {
+                this.ViewBag.searchDisplayN = "";
+                productSearch_Entity.searchDisplayN = "";
+            }
             this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
             this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-
+            this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
+            if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
+            {
+                this.ViewBag.FROM_DATE = "";
+                productSearch_Entity.FROM_DATE = "";
+            }
+            this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
+            if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
+            {
+                this.ViewBag.TO_DATE = "";
+                productSearch_Entity.TO_DATE = "";
+            }
+            
             int TotalRecord = 0;
             TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
 
