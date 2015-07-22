@@ -1,0 +1,37 @@
+﻿@if (IsSectionDefined("Head"))
+{
+    @RenderSection("Head")
+}
+@if (IsSectionDefined("Scripts"))
+{
+    @RenderSection("Scripts")
+}
+<title>ABOUT ME</title>
+</head>
+<body>
+
+    <!--header-->
+    @if (IsSectionDefined("Header"))
+    {
+        @RenderSection("Header")
+    }
+    <!--//header-->
+    <!--container-->
+    @if (IsSectionDefined("Body"))
+    {
+        @RenderSection("Body")
+    }
+    else
+    {
+        @RenderBody()
+    }
+    <!--//container-->
+    <!--footer-->
+    @if (IsSectionDefined("footer"))
+    {
+        @RenderSection("footer")
+    }
+    <!--//footer-->
+
+</body>
+</html>

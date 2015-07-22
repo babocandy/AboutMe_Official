@@ -71,6 +71,12 @@
             return false;
         }
 
+        if (f.P_SUB_TITLE.value == '') {
+            alert("상품 설명을 입력하세요.");
+            f.P_SUB_TITLE.focus();
+            return false;
+        }
+
         if (f.SELLING_PRICE.value == "") {
             alert("판매가를 입력해 주세요!");
             f.SELLING_PRICE.focus();
@@ -521,8 +527,7 @@
     <input type="hidden" name="OLD_OTHER_IMG1" value="@Html.DisplayFor(model => model.OTHER_IMG1)">
     <input type="hidden" name="OLD_OTHER_IMG2" value="@Html.DisplayFor(model => model.OTHER_IMG2)">
     <input type="hidden" name="OLD_OTHER_IMG3" value="@Html.DisplayFor(model => model.OTHER_IMG3)">
-    <input type="hidden" name="OLD_OTHER_IMG4" value="@Html.DisplayFor(model => model.OTHER_IMG4)">
-    <input type="hidden" name="OLD_OTHER_IMG5" value="@Html.DisplayFor(model => model.OTHER_IMG5)">
+    
 
                                <div class="panel">
                                 <h3 class="sub-header">상품관리</h3>
@@ -563,7 +568,26 @@
                                         <tr>
                                             <th>상품명</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:150px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="100" value="@Html.DisplayFor(model => model.P_NAME)" />
+                                                <input type="text" style="width:150px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="50" value="@Html.DisplayFor(model => model.P_NAME)" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품설명</th>
+                                            <td colspan="3">
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="P_SUB_TITLE" name="P_SUB_TITLE" maxlength="100" value="@Html.DisplayFor(model => model.P_SUB_TITLE)" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>아이콘</th>
+                                            <td colspan="3">
+                                                <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (Model.ICON_YN.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
+                                                <label for="icon2"><input type="checkbox" id="iconYn" name="iconYn" value="T" @if (Model.ICON_YN.ToString().IndexOf('T') != -1) { <text> checked</text> } /><span class="txt mr5">TIME</span></label>
+                                                <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (Model.ICON_YN.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">COUPON</span></label>
+                                                <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="D" @if (Model.ICON_YN.ToString().IndexOf('D') != -1) { <text> checked</text> } /><span class="txt mr5">1+1</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (Model.ICON_YN.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="O" @if (Model.ICON_YN.ToString().IndexOf('O') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (Model.ICON_YN.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SET</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="U" @if (Model.ICON_YN.ToString().IndexOf('U') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -637,26 +661,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>상품추가이미지4</th>
-                                            <td colspan="3">
-                                                <input type="file" id="OTHER_IMG4" name="OTHER_IMG4" maxlength="100" value="" />
-                                                @if (@Html.DisplayFor(model => model.OTHER_IMG4).ToString() != "")
-                                                {
-                                                    <span id="SPAN_OTHER_IMG4"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG4)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG4');">[삭제]</a></span>
-                                                }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>상품추가이미지5</th>
-                                            <td colspan="3">
-                                                <input type="file" id="OTHER_IMG5" name="OTHER_IMG5" maxlength="100" value="" />
-                                                @if (@Html.DisplayFor(model => model.OTHER_IMG5).ToString() != "")
-                                                {
-                                                    <span id="SPAN_OTHER_IMG5"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG5)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG5');">[삭제]</a></span>
-                                                }
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <th>상품정보(web)</th>
                                             <td colspan="3">
                                                 <textarea name="P_INFO_DETAIL_WEB" id="P_INFO_DETAIL_WEB" class="form-control" rows="10" title="내용">@Html.DisplayFor(model => model.P_INFO_DETAIL_WEB)</textarea>
@@ -666,6 +670,12 @@
                                             <th>상품정보(mobile)</th>
                                             <td colspan="3">
                                                 <textarea name="P_INFO_DETAIL_MOBILE" id="P_INFO_DETAIL_MOBILE" class="form-control" rows="10" title="내용">@Html.DisplayFor(model => model.P_INFO_DETAIL_MOBILE)</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>함께하면 좋은상품<br />(","로 구분)</th>
+                                            <td colspan="3">
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="WITH_PRODUCT_LIST" name="WITH_PRODUCT_LIST" maxlength="300" value="@Html.DisplayFor(model => model.WITH_PRODUCT_LIST)" />
                                             </td>
                                         </tr>
                                     </tbody>
