@@ -55,14 +55,6 @@ namespace AboutMe.Web.Front.Controllers
                 ViewBag.OrderList = "";            
             }
 
-            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
-            if ( HttpContext.Request.Url.Port !=80)
-                strHTTPS_DOMAIN =strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
-
-
-            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
-
-
             this.ViewBag.RedirectUrl = RedirectUrl;
 
             this.ViewBag.M_ID = MemberInfo.GetMemberId();
@@ -70,16 +62,28 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();
             this.ViewBag.M_EMAIL = MemberInfo.GetMemberEmail();
 
+
+
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            if ( HttpContext.Request.Url.Port !=80)
+                strHTTPS_DOMAIN =strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+
+
             //test ---------
             this.ViewBag.Request_Url_Host = Request.Url.Host;
             this.ViewBag.Request_Url_Authority = Request.Url.Authority;
             this.ViewBag.Request_Url_Port = Request.Url.Port;
             this.ViewBag.DomainName = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);
 
+
             return View();
         }
 
         //사용자 로그인
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "")
         {
             //string HTTP_DOMAIN = Config.GetConfigValue("HTTP_DOMAIN");
@@ -270,6 +274,8 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
         //사용자 회원가입- Step1 -실명인증 결과 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RealNameResult(string WORK_TMP_ID = "", string M_JOIN_MODE="")
         {
             if (WORK_TMP_ID == null || WORK_TMP_ID == "" || M_JOIN_MODE == "" || M_JOIN_MODE == null)
@@ -471,6 +477,8 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //사용자 회원가입- Step3-1 --ID중복체크
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AjaxID_DUPCheck(string M_ID = "")
         {
             string strERR_CODE = "0";
@@ -492,6 +500,8 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //사용자 회원 신규가입 -저장: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]        
         public ActionResult AjaxJOIN_Register(string M_ID = "")
         {
             //로그 기록 준비
@@ -649,13 +659,16 @@ namespace AboutMe.Web.Front.Controllers
             userlog.UserLogSave(log_memo, log_comment);
 
             //신규회원가입 축하메일 발송 --------------------------
-            string MAIL_SUBJECT="[AboutMe]회원가입 축하메일";
-            string MAIL_BODY="";
-            MAIL_BODY = MAIL_BODY + "<html><body>";
-            MAIL_BODY =MAIL_BODY +"<br>====AboutMe 회원가입을 축하합니다=========<br>";
-            MAIL_BODY =MAIL_BODY +"<br>아이디:"+M_ID;
-            MAIL_BODY =MAIL_BODY +"<br>이름:"+M_NAME;
-            MAIL_BODY =MAIL_BODY +"</body></html>";
+            string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
+            string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
+            skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
+            skin_body = skin_body.Replace("$$M_NAME$$", M_NAME);  //이름
+            skin_body = skin_body.Replace("$$M_ID$$", M_ID);  //아이디
+
+            string MAIL_SUBJECT = "[AboutMe]어바웃미 회원가입을 축하합니다.";
+            string MAIL_BODY = skin_body;
+
 
             //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
             string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
@@ -707,6 +720,8 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //아이디찾기 팝업:결과
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult IdSearch_End(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
         {
             //로그 기록 준비
@@ -775,6 +790,8 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //비밀번호 팝업:결과
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult PwSearch_End(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
         {
             //로그 기록 준비
@@ -855,13 +872,15 @@ namespace AboutMe.Web.Front.Controllers
 
 
             //새로 세팅된 비밀번호 메일로 전송 ----------------------
-            string MAIL_SUBJECT = "[AboutMe]비밀번호 신규 세팅";
-            string MAIL_BODY = "";
-            MAIL_BODY = MAIL_BODY + "<html><body>";
-            MAIL_BODY = MAIL_BODY + "<br>====AboutMe 비밀번호가 새롭게 변경되었습니다.=========<br>";
-            //MAIL_BODY = MAIL_BODY + "<br>아이디:" + M_ID;
-            MAIL_BODY = MAIL_BODY + "<br>신규비밀번호:" + strNEW_PWD;
-            MAIL_BODY = MAIL_BODY + "</body></html>";
+            string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
+            string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
+            skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
+            skin_body = skin_body.Replace("$$M_NAME$$", strNEW_PWD);  //신규암호
+
+            string MAIL_SUBJECT = "[AboutMe]어바웃미 비밀번호가 변경되었습니다.";
+            string MAIL_BODY = skin_body;
+
 
             //비밀번호 찾기: 메일 발송을 위한 발송정보 준비 ----------------------------------------------------
             string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr

@@ -33,5 +33,11 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_BASEDB_Result> GetAdminMemberStaffRequest_REF_BASEDB(string sTAFF_ID ); //임직원 신청 연관정보 : 임직원DB
         List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> GetAdminMemberStaffRequest_REF_MEMBER(string sTAFF_ID); //임직원 신청 연관정보 : 회원TBL
         List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result> GetAdminMemberStaffRequest_REF_REQUEST(string sTAFF_ID); //임직원 신청 연관정보 : 임직원신청이력
+
+        //데이타 이행 :회원암호--오픈전 마이그레이션시 1회 필요 -----------------------------------------
+        List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL(); //데이타 이행 :회원암호 -list 
+        void SetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(string m_ID = "", string m_PWD_SHA256 = ""); //데이타 이행 :회원암호 -수정저장
+
+
     }
 }

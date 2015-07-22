@@ -31,5 +31,7 @@ namespace AboutMe.Domain.Service.Member
 
         ReturnDic GetMemberFindID(string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "");//회원 ID찾기 ->리턴:ReturnDic
         ReturnDic GetMemberFindPWD(string m_ID = "", string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "", string m_PWD_NEW = "");//PW 찾기 ->리턴:ReturnDic
+
+        ReturnDic SetMemberRetire(string m_ID = "", string m_IS_RETIRE = "", string m_DEL_REASON = ""); //회원 탈퇴처리
     }
 }

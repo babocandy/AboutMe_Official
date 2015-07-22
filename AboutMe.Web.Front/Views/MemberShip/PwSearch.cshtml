@@ -91,7 +91,10 @@
             <!--//pop_top-->
             <!--pop_bottom-->
             <div class="pop_bottom">
-                <form name="frmPopSearch" action="" method="post">
+                @using (Html.BeginForm("PwSearch_End", "MemberShip", FormMethod.Post, new { id = "frmPopSearch", name = "frmPopSearch" }))
+                {
+                    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                              
                     <input type="hidden" name="M_EMAIL" value="" />
                     <input type="hidden" name="M_MOBILE" value="" />
 
@@ -160,7 +163,7 @@
                             <a href="javascript:fGoFind();" class="btn_brown_w96h38">비밀번호 찾기</a>
                         </div>
                     </fieldset>
-                </form>
+                }
             </div>
             <!--//pop_bottom-->
         </div>

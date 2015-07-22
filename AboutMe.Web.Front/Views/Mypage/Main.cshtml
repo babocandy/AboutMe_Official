@@ -9,15 +9,23 @@
 
 }
 
-
-<!--header-->
-@section Header{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+@section Scripts{
 }
-<!--//header-->
-<!--container-->
+
+
+
+@section Header{
+}
+
+
 @section Body{
+
 <div class="wrap mypage">
+
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
+
     <!--container-->
     <div id="container" class="mymain">
         <div class="container1080">
@@ -27,19 +35,7 @@
                 <div class="h2_area">
                     <h2>마이<br />페이지<i></i></h2>
                     <!--mypage_menu-->
-                    <div class="mypage_menu">
-                        <ul>
-                            <li><a href="#">배송/주문조회</a></li>
-                            <li><a href="#">교환/반품 신청</a></li>
-                            <li><a href="#">내 포인트</a></li>
-                            <li><a href="#">내 쿠폰북</a></li>
-                            <li><a href="#">1:1문의</a></li>
-                            <li><a href="#">찜목록</a></li>
-                            <li><a href="#">임직원인증->미정</a></li>
-                            <li><a href="#">개인정보관리</a></li>
-                            <li><a href="#">회원탈퇴</a></li>
-                        </ul>
-                    </div>
+                    @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
                     <!--//mypage_menu-->
                 </div>
                 <!--//h2_area-->
@@ -294,12 +290,14 @@
         </div>
     </div>
     <!--//container-->
-    </dev>
+
+    <!--footer-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+
+</div>
 
 }
-<!--//container-->
-<!--footer-->
+
 @section Footer{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
 }
-<!--//footer-->

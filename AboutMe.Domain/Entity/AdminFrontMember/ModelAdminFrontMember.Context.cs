@@ -427,5 +427,23 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result>("SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER", sTAFF_IDParameter);
         }
+    
+        public virtual ObjectResult<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result>("SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL");
+        }
+    
+        public virtual int SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(string m_ID, string m_PWD_SHA256)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var m_PWD_SHA256Parameter = m_PWD_SHA256 != null ?
+                new ObjectParameter("M_PWD_SHA256", m_PWD_SHA256) :
+                new ObjectParameter("M_PWD_SHA256", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD", m_IDParameter, m_PWD_SHA256Parameter);
+        }
     }
 }

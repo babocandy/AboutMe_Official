@@ -407,7 +407,7 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 .reviewpop .reviewpop_bottom .reviewproduct .plbanr {position:absolute; right:18px; top:18px;width:310px; height:140px; background:#ccc; }
 
 /* popup : 새창 */
-body.popup {min-width:0;overflow-x:hidden;}
+body.popup {min-width:0;overflow:hidden;}
 .popupwrap .pop {padding:20px 20px 30px;}
 .popupwrap .pop .pop_top{position:relative;}
 .popupwrap .pop .pop_top .title_area {padding-bottom:21px;text-align:center;border-top:2px solid #696361;border-bottom:1px solid #bbb5b4;}
@@ -448,9 +448,21 @@ body.popup {min-width:0;overflow-x:hidden;}
 .popupwrap .pop .pro_info .detail .stit{margin-top:6px;font-family:"Dotum";font-size:11px;line-height:14px;color:#bbb5b4;letter-spacing:-1px;}
 
 /*할인 쿠폰 사용 팝업*/
-.coupon_used{}
+.coupon_used{height:453px;}
 .coupon_used .product_coupon{margin-top:20px;}
-.coupon_used .product_coupon .prolist{margin-top:11px;padding:0 30px;height:354px;border:1px solid #efe8e6;overflow-y:auto;}
+.coupon_used .product_coupon .saleapply{margin-top:20px;padding:30px 0 27px;border:1px solid #efe8e6;text-align:center;}
+.coupon_used .product_coupon .saleapply ul{display:inline-block;}
+.coupon_used .product_coupon .saleapply ul:after{content:"";display:block;clear:both;}
+.coupon_used .product_coupon .saleapply ul li{float:left;position:relative;margin-left:48px;text-align:center;}
+.coupon_used .product_coupon .saleapply ul li:first-child{margin-left:0;}
+.coupon_used .product_coupon .saleapply ul li:after{content:"";display:inline-block;position:absolute;top:-6px;left:-37px;width:30px;height:30px;background:url("/aboutCom/images/common/bul30.png") 0 -120px no-repeat;}
+.coupon_used .product_coupon .saleapply ul li:first-child:after{display:none;background:none;}
+.coupon_used .product_coupon .saleapply ul li.tprice:after{background-position:0 -150px;}
+.coupon_used .product_coupon .saleapply ul li dl{overflow:hidden;}
+.coupon_used .product_coupon .saleapply ul li dl dt{float:left;display:inline-block;font-size:16px;line-height:18px;color:#1b1818;letter-spacing:-0.5px;}
+.coupon_used .product_coupon .saleapply ul li dl dd{float:left;display:inline-block;margin-left:5px;font-size:16px;line-height:18px;color:#1b1818;}
+.coupon_used .product_coupon .saleapply ul li dl dd strong{font-size:18px;}
+.coupon_used .product_coupon .prolist{margin-top:20px;padding:0 30px;height:256px;border:1px solid #efe8e6;overflow-y:auto;}
 .coupon_used .product_coupon .prolist ul li.pro_info .detail{float:left;width:245px;}
 .coupon_used .product_coupon .prolist ul li.pro_info .couponsel{float:left;margin-left:20px;padding-top:14px;width:227px;}
 .coupon_used .product_coupon .prolist ul li.pro_info .couponsel .outSelB{width:100%;}
@@ -480,7 +492,7 @@ body.popup {min-width:0;overflow-x:hidden;}
 .coupon_info .applies_goods .prolist ul li.pro_info .detail .price del{margin-right:10px;font-size:13px;color:#696361;}
 
 /*상품리뷰 등록 팝업*/
-.write_review.pro{padding-top:17px;}
+.write_review.pro{margin-top:17px;height:456px;}
 .write_review.pro table{width:100%;border:1px solid #bbb5b4;table-layout:fixed;}
 .write_review.pro table tbody th,
 .write_review.pro table tbody td{border-top:1px solid #efe8e6;}

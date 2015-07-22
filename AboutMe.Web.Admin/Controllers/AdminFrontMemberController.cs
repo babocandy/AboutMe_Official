@@ -500,7 +500,48 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
 
-      
+
+        //#####################################################################################################################################
+        //-//데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요 =============================================================================================================================
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL()
+        {
+            //return View();
+
+            AES256Cipher objEnc = new AES256Cipher();
+
+            List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> result = _AdminFrontMemberService.GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL();
+
+            int TotalRecord = result.Count;
+
+            int ACTION_CNT = 0;
+
+            this.ViewBag.START = DateTime.Now;
+
+            for (int i = 0; i < result.Count;i++ )
+            {
+                string M_ID = result[i].M_ID;
+                string M_PWD = result[i].M_PWD;
+                string ZZ_OLD_PWD_MD5 = result[i].ZZ_OLD_PWD_MD5;
+
+                //string M_PWD_MD5_HASH = objEnc.MD5Hash(M_PWD);  
+                string M_PWD_SHA256_HASH = objEnc.SHA256Hash(ZZ_OLD_PWD_MD5);   //MD5-> SHA256_HASH
+
+                if(M_PWD.Length<1 && ZZ_OLD_PWD_MD5.Length>20)
+                {
+                    _AdminFrontMemberService.SetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(M_ID, M_PWD_SHA256_HASH);
+                    ACTION_CNT++;
+
+                }
+
+            } //for
+
+            this.ViewBag.TotalRecord = TotalRecord; //대상건수
+            this.ViewBag.ACTION_CNT = ACTION_CNT;  //처리건수
+            this.ViewBag.END = DateTime.Now;
+
+            return View();
+        }      
     
-    }
-}
+    } //clsss
+}// namespace

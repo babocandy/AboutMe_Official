@@ -29,25 +29,13 @@
     <link href="/aboutCom/css/membership.css" rel="stylesheet" />
 }
 
-
-<!--header-->
-@section Header{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
-}
-<!--//header-->
-<!--container-->
-@section Body{
-
-
-    <div class="wrap join">
-
+@section Scripts{
 <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
 <script>
     var glID_DUP_CHECKED = false;  //아이디 중복확인 여부
     var glREGISTER_ING = false;  //저장처리중
-    function fSetNewID()
-    {
+    function fSetNewID() {
         glID_DUP_CHECKED = false;  //아이디 중복확인 여부
     }
 
@@ -56,25 +44,22 @@
             window.location.href = "/";
     }
 
-    function fSetEmailDomain()
-        {
-            var f = document.frmJOIN;
-            if(f.M_EMAIL_SEL.selectedIndex>0)
-            {
-                f.M_EMAIL_2.value=f.M_EMAIL_SEL[f.M_EMAIL_SEL.selectedIndex].value;
-            }
+    function fSetEmailDomain() {
+        var f = document.frmJOIN;
+        if (f.M_EMAIL_SEL.selectedIndex > 0) {
+            f.M_EMAIL_2.value = f.M_EMAIL_SEL[f.M_EMAIL_SEL.selectedIndex].value;
+        }
     }
 
     //신규가입 저장 성공후 -> 다음 스텝으로 이동
-    function fGoRegisterComplete()
-    {
+    function fGoRegisterComplete() {
         var f = document.frmJOIN;
         f.action = "/MemberShip/JoinStep4";
         f.targte = "";
         f.submit();
     }
 
-    function fGoSave(){
+    function fGoSave() {
         var f = document.frmJOIN;
 
         if (glREGISTER_ING) {
@@ -83,8 +68,7 @@
         }
 
         //ID 유효성 검증
-        if(fIsValidMemberID(f.M_ID.value) ==false)
-        {
+        if (fIsValidMemberID(f.M_ID.value) == false) {
             glID_DUP_CHECKED = false;
             return;
         }
@@ -94,8 +78,7 @@
         //}
 
         //ID 중혹확인여부
-        if (!glID_DUP_CHECKED)
-        {
+        if (!glID_DUP_CHECKED) {
             alert("아이디 중복 체크를 먼저 하십시오");
             return;
         }
@@ -106,11 +89,10 @@
         }
 
         //암호 유효성 검증
-        if(fIsValidMemberPWD(f.M_PWD.value) ==false)
-        {
+        if (fIsValidMemberPWD(f.M_PWD.value) == false) {
             return;
         }
-        
+
 
         if (f.M_NAME.value.length < 1) {
             alert("이름이 없습니다. 실명인증부터 다시 받으셔야 합니다.");
@@ -125,8 +107,7 @@
             return;
         }
 
-        if (fIsValidMemberTEL_PART(f.M_MOBILE_2.value, "N") == false)
-        {
+        if (fIsValidMemberTEL_PART(f.M_MOBILE_2.value, "N") == false) {
             return;
         }
         if (fIsValidMemberTEL_PART(f.M_MOBILE_3.value, "N") == false) {
@@ -140,7 +121,7 @@
             return;
         }
 
-        if (f.M_EMAIL_1.value.length < 2 || f.M_EMAIL_2.value.length < 3 ) {
+        if (f.M_EMAIL_1.value.length < 2 || f.M_EMAIL_2.value.length < 3) {
             alert("EMAIL을 입력하세요.");
             return;
         }
@@ -158,6 +139,7 @@
             return;
         }
 
+        var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
         var strM_PWD = f.M_PWD.value;
         var strM_NAME = f.M_NAME.value;
@@ -165,13 +147,13 @@
         var strM_SEX = f.M_SEX.value;
         var strM_MOBILE = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
         var strM_PHONE = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "-" + f.M_PHONE_3.value;
-        var strM_EMAIL = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value ;
-        var strM_ZIPCODE = f.M_ZIPCODE.value ;
+        var strM_EMAIL = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value;
+        var strM_ZIPCODE = f.M_ZIPCODE.value;
         var strM_ADDR1 = f.M_ADDR1.value;
         var strM_ADDR2 = f.M_ADDR2.value;
         var strM_ISSMS = "N";
         if (f.M_ISSMS[0].checked) strM_ISSMS = "Y";
-        
+
         var strM_ISEMAIL = "N";
         if (f.M_ISEMAIL[0].checked) strM_ISEMAIL = "Y";
 
@@ -195,7 +177,8 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                M_ID: strM_ID
+                __RequestVerificationToken: strTOKEN
+                , M_ID: strM_ID
                 , M_NAME: strM_NAME
                 , M_PWD: strM_PWD
 
@@ -214,7 +197,7 @@
 
                 , M_AGREE: strM_AGREE
                 , M_AGREE2: strM_AGREE2
-            
+
                 , M_JOIN_MODE: strM_JOIN_MODE
                 , M_DI: strM_DI
                 , WORK_TMP_ID: strWORK_TMP_ID
@@ -237,17 +220,15 @@
                 glREGISTER_ING = false; //저장 진행중 종료 --------------------
                 alert("ajax 오류발생2");
             }
-        }); //ajax    
+        }); //ajax
     } //func
 
 
     //ID중복 확인
-    function fID_DupCheck()
-    {
+    function fID_DupCheck() {
         var f = document.frmJOIN;
         //ID 유효성 검증
-        if(fIsValidMemberID(f.M_ID.value) ==false)
-        {
+        if (fIsValidMemberID(f.M_ID.value) == false) {
             glID_DUP_CHECKED = false;
             return;
         }
@@ -256,9 +237,10 @@
         //    return;
         //}
 
+        var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
 
-        var strURL = "/MemberShip/AjaxID_DUPCheck"; 
+        var strURL = "/MemberShip/AjaxID_DUPCheck";
 
         $.ajax({
             url: strURL,
@@ -266,17 +248,19 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                M_ID: strM_ID
+                __RequestVerificationToken: strTOKEN
+                ,M_ID: strM_ID
+
             },
             success: function (retDATA) {
                 if (retDATA.ERR_CODE == "0") {
                     glID_DUP_CHECKED = true;
                     alert("사용가능한 ID입니다.");
-                
+
                 }
                 else {
                     glID_DUP_CHECKED = false;
-                    alert("이미 사용중이거나 사용할수 없는 아이디 입니다.다른 아이디를 입력하세요." );
+                    alert("이미 사용중이거나 사용할수 없는 아이디 입니다.다른 아이디를 입력하세요.");
                 }
             },
             error: function (e) {
@@ -288,6 +272,19 @@
     } //function fID_DupCheck()
 </script>
 
+}
+
+@section Header{
+
+}
+
+@section Body{
+<div class="wrap join">
+
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
+
 
     <!--container-->
     <div id="container">
@@ -296,7 +293,11 @@
             <!--step-->
             <div class="joinstep"><img src="/aboutCom/images/membership/joinstep3.gif" alt="회원정보 입력" /></div>
             <div class="contypea step3">
-                <form name="frmJOIN" method="post" action="">
+
+            @using (Html.BeginForm("AjaxJOIN_Register", "MemberShip", FormMethod.Post, new { id = "frmJOIN", name = "frmJOIN" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                              
                     <input type="hidden" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
                     <input type="hidden" name="M_DI" value="@ViewBag.M_DI" />
                     <input type="hidden" name="M_JOIN_MODE" value="@ViewBag.M_JOIN_MODE" />
@@ -448,21 +449,21 @@
                                         <td colspan="3" class="selectradio">
                                             <label class="racon"><input type="radio"  title="수신" name="M_ISSMS" value="Y" /> <span class="txt">수신</span></label>
                                             <label class="racon"><input type="radio"  title="미수신" name="M_ISSMS" value="N" /> <span class="txt">미수신</span></label>
-    </td>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th><span class="essential">이메일 수신</span></th>
                                         <td colspan="3" class="selectradio">
                                             <label class="racon"><input type="radio"  title="수신" name="M_ISEMAIL" value="Y" /> <span class="txt">수신</span></label>
                                             <label class="racon"><input type="radio" title="미수신" name="M_ISEMAIL" value="N" /> <span class="txt">미수신</span></label>
-    </td>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th><span class="essential">DM 수신</span></th>
                                         <td colspan="3" class="selectradio">
                                             <label class="racon"><input type="radio"  title="수신" name="M_ISDM" value="Y" /> <span class="txt">수신</span></label>
                                             <label class="racon"><input type="radio"  title="미수신" name="M_ISDM" value="N" /> <span class="txt">미수신</span></label>
-    </td>
+                                       </td>
                                     </tr>
                                 </table>
                                 <div class="ps_list">
@@ -476,13 +477,18 @@
                                 <a href="javascript:fGoSave();" class="btn_brown_w185h60 mr10">가입완료</a><a href="javascript:fGoCancel();" class="btn_white_w185h60">취소</a>
                             </div>
                         </fieldset>
-                    </form>
-                </div>
+              } 
+                    <!--</form>-->
             </div>
         </div>
+    </div>
     <!--//container-->
     
-    </div>
+    <!--footer-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+
+</div>
 
 
 <!-- 다음 우편번호 검색-->
@@ -563,10 +569,8 @@
 </script>
 <!-- 다음 우편번호 검색-->
 
- }
-<!--//container-->
-<!--footer-->
+ } 
+
+
 @section Footer{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
 }
-<!--//footer-->

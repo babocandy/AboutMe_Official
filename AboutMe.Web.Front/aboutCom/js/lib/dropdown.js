@@ -17,7 +17,7 @@
 		if (keyCode == 27) hideOptions(e.data);
 	}
 	function showOptions(speed) {
-	    $(document).bind("click", speed, hideOptions);
+		$(document).bind("click", speed, hideOptions);
 		$(document).bind("keyup", speed, hideOptionsOnEscKey);
 		$($(document).data("nowselectoptions")).slideDown(speed);
 		$($(document).data("nowselectoptions")).prev("a").addClass("tag_select_open");
@@ -43,7 +43,7 @@
 			$(this).data("cssobj", divselect);
 			var divoptions = $("<ul></ul>").insertAfter(divselect).addClass("tag_options").hide();
 
-			divselect.click(function (e) {
+			divselect.click(function(e) {
 				if ( !$(this).parent().hasClass("dised") ){
 					if ($($(document).data("nowselectoptions")).get(0) != $(this).next("ul").get(0)) {
 						hideOptions(speed);
@@ -92,8 +92,7 @@
 
 	}
 	$.fn.selectCssB = function(_speed) {
-	    $(this).each(function () {
-	        var me = this;
+		$(this).each(function() {
 			var speed = _speed || "fast";
 			if ($(this).data("cssobj")) {
 				$($(this).data("cssobj")).remove();
@@ -112,7 +111,7 @@
 			$(this).data("cssobj", divselect);
 			var divoptions = $("<ul></ul>").insertAfter(divselect).addClass("tag_options").hide();
 
-			divselect.click(function (e) {
+			divselect.click(function(e) {
 				if ( !$(this).parent().hasClass("dised") ){
 					if ($($(document).data("nowselectoptions")).get(0) != $(this).next("ul").get(0)) {
 						hideOptions(speed);
@@ -120,7 +119,6 @@
 					if (!$(this).next("ul").is(":visible")) {
 						e.stopPropagation();
 						$(document).data("nowselectoptions", $(this).next("ul"));
-                       
 						showOptions(speed);
 					}
 				}
