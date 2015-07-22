@@ -30,13 +30,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
        
-        public ActionResult Test01()
-        {
-            return View();
-        }
-        
         //관리자 로그인 폼
-        public ActionResult Login(string ERR_CODE = "", string ERR_MSG = "", string RedirectUrl="")
+        public ActionResult Login( string RedirectUrl = "")
         {
             //세션 확인용
             /*
@@ -51,8 +46,6 @@ namespace AboutMe.Web.Admin.Controllers
 
             this.ViewBag.RedirectUrl = RedirectUrl;
 
-            this.ViewBag.ERR_CODE = ERR_CODE;
-            this.ViewBag.ERR_MSG = ERR_MSG;
 
             this.ViewBag.ADM_ID = AdminUserInfo.GetAdmId();
             this.ViewBag.ADM_NAME = AdminUserInfo.GetAdmName();
@@ -67,6 +60,8 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         //관리자 로그인 처리
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "")
         {
             //로그 기록

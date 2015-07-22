@@ -1,0 +1,77 @@
+@charset "utf-8";
+body {min-width:320px; font-family: 'NanumBarunGothicLight'; font-size:12px;}
+
+/* header */
+.header {position:relative; width:100%; z-index:30;}
+.header .h_top {position:relative; height:44px; background:#403836;}
+.header .h_top h1 {text-align:center;}
+.header .h_top h1 img {margin-top:15px; width:121px;}
+.header .h_top .openlnb {position:absolute; left:15px; top:16px;}
+.header .h_top .openlnb img {width:15px;}
+.header .h_top .btn_cart {position:absolute; right:12px; top:13px;}
+.header .h_top .btn_cart img {width:19px;}
+.header .lnb_area {display:none; position:relative; width:100%; height:100%;}
+.header .lnb_area .dim {position:fixed; left:0; top:0; width:100%; height:100%; background:#000; opacity:0.7;  filter: alpha(opacity=70);z-index:1}
+.header .lnb_area .lnb {position:fixed; left:-280px; top:0; width:280px; height:100%; z-index:5; overflow-y:auto; }
+.header .lnb_area .lnbclose {display:block;  position:absolute; left:293px; top:-24px; width:15px; height:12px; background:url("/aboutCom/images/common/bul30.png") 0 -408px no-repeat; background-size:cover; z-index:5; font-size:0; }
+.lnb .userclass_info {padding:18px 15px; font-size:13px; color:#1c1c1c;background:#fff;}
+.lnb .userclass_info.vip span {color:#403836; border-bottom:1px solid #403836;}
+.lnb .userclass_info.gold span {color:#bfa32c; border-bottom:1px solid #bfa32c;}
+.lnb .userclass_info.siver span {color:#aaaaaa; border-bottom:1px solid #aaaaaa;}
+.lnb .userclass_info.bronze span {color:#947158; border-bottom:1px solid #947158;}
+.lnb .btn_cart {position:absolute; right:24px; top:17px;}
+.lnb .btn_cart img {width:19px;}
+.lnb .nav {border-top:1px solid #dddad9; border-bottom:1px solid #dddad9; background:#f7f3f2;}
+.lnb .nav .depth1 {background:#fff;}
+.lnb .nav .depth1:after {display:block; clear:both; content:'';}
+.lnb .nav .depth1 li {width:50%; float:left; }
+.lnb .nav .depth1 li a {display:block; padding:15px; font-size:13px; border-bottom:1px solid #f7f3f2; border-left:1px solid #f7f3f2;  margin-left:-1px;font-weight:normal;-webkit-text-stroke-width:0.5px;}
+.lnb .nav .depth1 li.slidetype {position:relative; width:100%; clear:both; float:none;}
+.lnb .nav .depth1 li.slidetype:after{display:block; content:''; position:absolute; right:15px; top:18px; width:16px; height:8px; background:url("/aboutCom/images/common/bg_lnbslide.gif") 0 -22px no-repeat; background-size:cover;}
+.lnb .nav .depth1 li.slidetype.on:after{background-position:0 0;}
+.lnb .nav .depth1 li.slidetype a {border-bottom:1px solid #dddad9;}
+.lnb .nav .depth1 li.slidetype .depth2 {display:none; background:#f7f3f2; padding:8px 0;}
+.lnb .nav .depth1 li.slidetype .depth2:after {display:block; clear:both; content:'';}
+.lnb .nav .depth1 li.slidetype.on .depth2 {display:block;}
+.lnb .nav .depth1 li.slidetype .depth2 li {float:none; width:100%;}
+.lnb .nav .depth1 li.slidetype .depth2 li a {border:none; padding:10px 15px; margin-left:-1px;font-weight:normal;-webkit-text-stroke-width:0px;}
+.lnb .nav .depth1 li.slidetype .fl {float:left; width:50%;}
+.lnb .nav .depth1 li.slidetype .depth2 .tit {padding-top:13px;padding-left:15px; padding-bottom:9px; font-size:13px;font-weight:normal;-webkit-text-stroke-width:0.5px; }
+.lnb .nav .cscenter {background:#fff; margin-top:10px; padding:15px;}
+.lnb .nav .cscenter .tit {font-size:11px; color:#1c1c1c;}
+.lnb .nav .cscenter .tel a {display:block; font-size:18px; margin:5px 0; font-weight:normal;-webkit-text-stroke-width:0px;}
+.lnb .nav .cscenter .txt {font-size:11px; color:#696361;letter-spacing:-1px;}
+
+
+
+/* footer */
+.footer {position:relative; padding-bottom:24px; width:100%; background:#696361; z-index:20;}
+.footer .tel_area {height:56px; padding-top:18px;  text-align:center; box-sizing:border-box;}
+.footer .tel_area .tel {}
+.footer .tel_area .tel img {width:111px; margin-top:2px;}
+.footer .tel_area .txt {display:inline-block; text-align:left; color:#fff; font-size:9px; margin-left:10px;}
+.footer .address {border-top:1px solid #827c7a; padding:19px 15px; font-size:10px; color:#fff;}
+.footer .address dl {width:286px; margin:0 auto;overflow:hidden;}
+.footer .address dt {float:left; width:64px; letter-spacing:-1px}
+.footer .address dd {float:left; margin-left:11px;  width:208px; letter-spacing:-1px}
+.footer .f_link {overflow:hidden;}
+.footer .f_link ul {width:252px; margin:0 auto;}
+.footer .f_link  li {float:left; background:url(/aboutCom/images/common/bg_bar.gif) 0 4px no-repeat; background-size:1px 8px; margin-left:12px; padding-left:12px;}
+.footer .f_link  li:first-child {background:none; margin-left:0; padding-left:0;}
+.footer .f_link  li a {font-size:10px; color:#fff;}
+.footer .copy {margin-top:20px; text-align:center; font-family:"Verdana"; font-size:9px; color:#a7a7a7}
+.footer .copy img {width:245px;}
+.f_bottom {position:absolute; left:0; top:0; width:100%;}
+.f_bottom .historyback {position:absolute; left:6px; bottom:6px;}
+.f_bottom img {width:40px;}
+.f_bottom .documtop {position:absolute; right:6px; bottom:6px;}
+
+/* container */
+.container {position:relative;  z-index:10;}
+
+/*뒤로가기*/
+.container .h2_area {position:relative; text-align:center;  border-bottom:1px solid #d9d4d3; background:#fff;}
+.container .h2_area h2 {padding:12px 0 10px 0; font-size:14px; color:#333; text-align:center;}
+.container .historyback {position:absolute; left:15px; top:14px;}
+.container .historyback img {width:13px;}
+

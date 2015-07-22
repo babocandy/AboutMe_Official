@@ -94,5 +94,24 @@ namespace AboutMe.Common.Helper
             return new string(result);
         }
 
-    }
-}
+
+        //서버의 로컬파일 text파일 가져오기 ex)text,html,메일스킨,... 읽기
+        //사용예
+        //    string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //현재 도메인 구하기. ex http://www.aaa.co.kr:1234  
+        //    string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\" ;  //메일스킨이 존재하는 폴더(웹루트이하로 가정)
+        //    string skin_body =Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일스킨 파일명
+        //    skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인 변경
+        public static string GetTextResourceFile(string resourceName)
+        {
+            return System.IO.File.ReadAllText(resourceName);
+            /*
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+            using (var sr = new StreamReader(stream))
+            {
+                return sr.ReadToEnd();
+            }
+             */
+        }
+
+    } //class
+}//namespace

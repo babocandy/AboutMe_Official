@@ -171,7 +171,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
                 /**try {**/
-                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL(productSearch_Entity.Page, productSearch_Entity.PageSize, productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayY, productSearch_Entity.searchDisplayN, productSearch_Entity.soldoutYn, productSearch_Entity.POutletYn).ToList();
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_SEL(productSearch_Entity.Page, productSearch_Entity.PageSize, productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayY, productSearch_Entity.searchDisplayN, productSearch_Entity.soldoutYn, productSearch_Entity.POutletYn, productSearch_Entity.FROM_DATE, productSearch_Entity.TO_DATE).ToList();
                 /** }catch()
                  {
                        AdmEtcContext.Dispose();
@@ -192,7 +192,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                lst = AdminProductContext.SP_ADMIN_PRODUCT_CNT(productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayY, productSearch_Entity.searchDisplayN, productSearch_Entity.soldoutYn, productSearch_Entity.POutletYn).ToList();
+                lst = AdminProductContext.SP_ADMIN_PRODUCT_CNT(productSearch_Entity.SearchKey, productSearch_Entity.SearchKeyword, productSearch_Entity.cateCode, productSearch_Entity.iconYn, productSearch_Entity.searchDisplayY, productSearch_Entity.searchDisplayN, productSearch_Entity.soldoutYn, productSearch_Entity.POutletYn, productSearch_Entity.FROM_DATE, productSearch_Entity.TO_DATE).ToList();
                 if (lst != null && lst.Count > 0)
                     productCount = lst[0].COUNT;
                 /** }catch()
@@ -214,7 +214,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.OTHER_IMG4, tb_product_info.OTHER_IMG5, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
+                AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_SUB_TITLE, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
 
             }
         }
@@ -270,7 +270,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                AdminProductContext.SP_ADMIN_PRODUCT_UPD(tb_product_info.IDX, tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_NAME, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.SOLDOUT_YN, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.OTHER_IMG4, tb_product_info.OTHER_IMG5, tb_product_info.DISPLAY_YN, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
+                AdminProductContext.SP_ADMIN_PRODUCT_UPD(tb_product_info.IDX, tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_NAME, tb_product_info.P_SUB_TITLE, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.SOLDOUT_YN, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
             }
         }
         #endregion
@@ -292,7 +292,7 @@ namespace AboutMe.Domain.Service.AdminProduct
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
 
-                AdminProductContext.SP_ADMIN_PRODUCT_BATCH_UPD(tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.DISPLAY_YN, tb_product_info.SOLDOUT_YN, tb_product_info.P_OUTLET_YN);
+                AdminProductContext.SP_ADMIN_PRODUCT_BATCH_UPD(tb_product_info.P_CODE, tb_product_info.ICON_BATCH_CHK, tb_product_info.ICON_YN, tb_product_info.DISPLAY_YN, tb_product_info.SOLDOUT_YN, tb_product_info.P_OUTLET_YN);
             }
         }
         #endregion

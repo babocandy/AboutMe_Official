@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=301880
+  -->
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  <connectionStrings>
+    <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-AboutMe.Web.Front-20150526075123.mdf;Initial Catalog=aspnet-AboutMe.Web.Front-20150526075123;Integrated Security=True" providerName="System.Data.SqlClient" />
+    <add name="FaqEntities" connectionString="metadata=res://*/Entity.Faq.ModelFaq.csdl|res://*/Entity.Faq.ModelFaq.ssdl|res://*/Entity.Faq.ModelFaq.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;user id=about;password=sostlfod;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="ProductEntities" connectionString="metadata=res://*/Entity.Product.ModelProduct.csdl|res://*/Entity.Product.ModelProduct.ssdl|res://*/Entity.Product.ModelProduct.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;persist security info=True;user id=about;password=sostlfod;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="NoticeEntities" connectionString="metadata=res://*/Entity.Notice.ModelNotice.csdl|res://*/Entity.Notice.ModelNotice.ssdl|res://*/Entity.Notice.ModelNotice.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;persist security info=True;user id=about;password=sostlfod;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="CartEntities" connectionString="metadata=res://*/Entity.Cart.ModelCart.csdl|res://*/Entity.Cart.ModelCart.ssdl|res://*/Entity.Cart.ModelCart.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;persist security info=True;user id=about;password=sostlfod;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="MemberEntities" connectionString="metadata=res://*/Entity.Member.ModelMember.csdl|res://*/Entity.Member.ModelMember.ssdl|res://*/Entity.Member.ModelMember.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;user id=about;password=sostlfod;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="ReviewEntities" connectionString="metadata=res://*/Entity.Review.ModelReview.csdl|res://*/Entity.Review.ModelReview.ssdl|res://*/Entity.Review.ModelReview.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;persist security info=True;user id=about;password=sostlfod;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="AdminPromotion3Entities" connectionString="metadata=res://*/Entity.AdminPromotion.ModelAdminPromotion.csdl|res://*/Entity.AdminPromotion.ModelAdminPromotion.ssdl|res://*/Entity.AdminPromotion.ModelAdminPromotion.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;user id=about;password=sostlfod;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="AdminCouponEntities" connectionString="metadata=res://*/Entity.AdminCoupon.ModelAdminCoupon.csdl|res://*/Entity.AdminCoupon.ModelAdminCoupon.ssdl|res://*/Entity.AdminCoupon.ModelAdminCoupon.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;user id=about;password=sostlfod;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="OrderEntities" connectionString="metadata=res://*/Entity.Order.ModelOrder.csdl|res://*/Entity.Order.ModelOrder.ssdl|res://*/Entity.Order.ModelOrder.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=114.52.63.60;initial catalog=AboutMe;user id=about;password=sostlfod;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+  <appSettings>
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+
+    <add key="ProductPhotoPath" value="/Upload/Product/" />
+    <add key="AES256_KEY" value="abcdefghijklmnopqrstuvwxyz123456" />
+
+    <add key="HTTP_PROTOCOL" value="http://" />
+    <add key="HTTPS_PROTOCOL" value="http://" />  <!-- ssl적용시 :  https://-->
+
+
+    <add key="MAIL_SENDER_EMAIL" value="noreply@cstone.co.kr" /> <!--EMAIL발송자 계정:회원가입축하메일,주문완료메일 등..-->
+    <add key="MAIL_SENDER_PW" value="cstonedev12" />  <!--EMAIL발송자 암호-->
+    <add key="MAIL_SENDER_SMTP_SERVER" value="smtp.gmail.com" />    <!--smtp서버-->
+    <add key="MAIL_SENDER_SMTP_PORT" value="587" />    <!--smtp서버 port-->
+    <add key="MAIL_SENDER_SMTP_TIMEOUT" value="20000" />    <!--smtp서버 timeout-->
+
+
+
+  </appSettings>
+  <system.web>
+    <authentication mode="Forms">
+      <forms loginUrl="~/YourLoginUrl" timeout="2880" cookieless="UseCookies" />
+    </authentication>
+    <compilation debug="true" targetFramework="4.5" />
+    <httpRuntime targetFramework="4.5" />
+<<<<<<< HEAD
+    <!--<sessionState mode="InProc" timeout="30" cookieless="false" />-->
+    <sessionState mode="InProc" 
+                stateConnectionString="tcpip=127.0.0.1:42424" 
+                sqlConnectionString="Data Source=.\SQLEXPRESS;Trusted_Connection=Yes;" 
+                cookieless="false" 
+                timeout="100"/>
+    
+
+
+
+=======
+    <globalization fileEncoding="utf-8" requestEncoding="utf-8" responseEncoding="utf-8" culture="ko-KR" uiCulture="ko-KR"/>   
+>>>>>>> e0df3cef3fa6553572dfc46cb40cc4a3650caa4b
+  </system.web>
+  <system.webServer>
+    <modules>
+      <remove name="FormsAuthentication" />
+    </modules>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
+        <bindingRedirect oldVersion="0.0.0.0-7.0.0.0" newVersion="7.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-1.1.0.0" newVersion="1.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+</configuration>
