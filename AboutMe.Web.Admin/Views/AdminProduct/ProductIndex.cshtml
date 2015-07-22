@@ -308,6 +308,17 @@
 
     }
 
+    //키이벤트 발생시 아이콘 check박스 체크
+    function selectedIconChk() {
+        var f = document.bform
+        var cbox = document.bform.IconBatchChk;
+            if (cbox.checked == false) {
+                cbox.checked = true;
+            }
+    }
+
+    
+
 
     //상품 일괄 수정
     function allProductChk() {
@@ -337,11 +348,11 @@
                     }
 
 
-                    if (f.P_NAME[i].value == "") {
-                        alert("상품명을 입력해 주세요!");
-                        f.P_NAME[i].focus();
-                        return;
-                    }
+                    //if (f.P_NAME[i].value == "") {
+                    //    alert("상품명을 입력해 주세요!");
+                    //    f.P_NAME[i].focus();
+                    //    return;
+                    //}
 
 
                 }
@@ -349,11 +360,11 @@
 
             else {
 
-                if (f.P_NAME.value == "") {
-                    alert("상품명을 입력해 주세요!");
-                    f.P_NAME.focus();
-                    return;
-                }
+                //if (f.P_NAME.value == "") {
+                //    alert("상품명을 입력해 주세요!");
+                //    f.P_NAME.focus();
+                //    return;
+                //}
 
             }
         }
@@ -430,7 +441,7 @@
     <div class="panel">
         <h3 class="sub-header">상품관리</h3>
         <form action="" id="bform" method="post" name="bform">
-            <input type="hidden" name="searchStatus" id="searchStatus" value="N" />
+            <input type="hidden" name="searchStatus" id="searchStatus" value="@this.ViewBag.searchStatus" />
             <input type="hidden" name="Page" id="Page" value="@this.ViewBag.Page" />
             <input type="hidden" name="cateCode" id="cateCode" value="@this.ViewBag.cateCode" />
             
@@ -524,24 +535,16 @@
                     <td>현재 선택한 <input type="text" name="number_ch" id="number_ch" style="padding-right:5px;width:40px;height:15px;text-align:right;" class="intext" readonly /> 건</td>
                     <th>총검색</th>
                     <td>@ViewBag.TotalRecord 건</td>
-                    <th>■ 아이콘 일괄변경</th>
+                    <th><input type="checkbox" id="IconBatchChk" name="IconBatchChk" value="Y" /> 아이콘 일괄변경</th>
                     <td>
-                        <label for="icon1"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="N" @if (ViewBag.BatchIconYn.ToString().IndexOf('N') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
-                        <label for="icon2"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="T" @if (ViewBag.BatchIconYn.ToString().IndexOf('T') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">TIME</span></label>
-                        <label for="icon3"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (ViewBag.BatchIconYn.ToString().IndexOf('C') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">COUPON</span></label>
-                        <label for="icon3"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="D" @if (ViewBag.BatchIconYn.ToString().IndexOf('D') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">1+1</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="B" @if (ViewBag.BatchIconYn.ToString().IndexOf('B') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="O" @if (ViewBag.BatchIconYn.ToString().IndexOf('O') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (ViewBag.BatchIconYn.ToString().IndexOf('S') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">SET</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="U" @if (ViewBag.BatchIconYn.ToString().IndexOf('U') != -1)
-                                                                                                                { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
+                        <label for="icon1"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="N" @if (ViewBag.BatchIconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">NEW</span></label>
+                        <label for="icon2"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="T" @if (ViewBag.BatchIconYn.ToString().IndexOf('T') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">TIME</span></label>
+                        <label for="icon3"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (ViewBag.BatchIconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">COUPON</span></label>
+                        <label for="icon3"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="D" @if (ViewBag.BatchIconYn.ToString().IndexOf('D') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">1+1</span></label>
+                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="B" @if (ViewBag.BatchIconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">BEST</span></label>
+                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="O" @if (ViewBag.BatchIconYn.ToString().IndexOf('O') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SOLD OUT</span></label>
+                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (ViewBag.BatchIconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SET</span></label>
+                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="U" @if (ViewBag.BatchIconYn.ToString().IndexOf('U') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">커스텀</span></label>
                     </td>
                     <th>출력수</th>
                     <td>
@@ -581,7 +584,7 @@
                     if (Model.Count() < 1)
                     {
                         <tr>
-                            <td colspan="7" class="brnone">No data...</td>
+                            <td colspan="13" class="brnone">No data...</td>
                         </tr>
                     }
                 }
@@ -627,18 +630,19 @@
                      }
                         @ICON_NAME
                     </td>
-                    <td class="tal">@item.P_NAME</td>
+                    <td class="tal"><a href="/AdminProduct/ProductUpdate?pcode=@item.P_CODE">@item.P_NAME</a></td>
                     <td>@string.Format("{0:#,##0}", item.SELLING_PRICE) </td>
                     <td>@string.Format("{0:#,##0}", item.DISCOUNT_PRICE) </td>
                     <td>@item.DISCOUNT_RATE%</td>
                     <td><input type="checkbox" name="tb_product_info[@i].DISPLAY_YN" @if (item.DISPLAY_YN == "Y") { <text> checked </text> } value="Y" id="DISPLAY_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
                     <td><input type="checkbox" name="tb_product_info[@i].SOLDOUT_YN" @if (item.SOLDOUT_YN == "Y") { <text> checked </text>  } value="Y" id="SOLDOUT_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
                     <td><input type="checkbox" name="tb_product_info[@i].P_OUTLET_YN" @if (item.P_OUTLET_YN == "Y") { <text> checked </text>  } value="Y" id="P_OUTLET_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
-                    <td>@if (string.IsNullOrEmpty(ViewBag.SearchKeyword)) { 
+                    <td>@if (ViewBag.searchStatus != "Y")
+                    {
                         <a href="/AdminProduct/display_re_sort?clickChk=UP&re_sort=@item.RE_SORT&idx=@item.IDX">▲</a>
                         <br /><a href="/AdminProduct/display_re_sort?clickChk=DOWN&re_sort=@item.RE_SORT&idx=@item.IDX">▼</a>
-                        }
-</td>
+                    }
+                    </td>
                     <td>@item.REGDATE</td>
                 </tr>
                     i++;

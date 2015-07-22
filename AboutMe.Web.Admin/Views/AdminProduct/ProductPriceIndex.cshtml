@@ -16,22 +16,48 @@
 
     <script language="javascript">
 
+
+        function ChangeDate(d) {
+            var from_date, to_date;
+
+            if (d == "1") //오늘
+            {
+                from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "7") {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "15") {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "31") {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $("#FROM_DATE").val(from_date);
+            $("#TO_DATE").val(to_date);
+
+        }
+
         $(function () {
             ajaxSelectCateCodeJavascriptInit();
         });
 
 
-        //문자열 안의 공백 지우기
-        function deleteSpace(str) {
-            var out = "";
-
-            for (common_i = 0; common_i < str.length; common_i++) {
-                if (str.charAt(common_i) == " ") {
-                    continue;
-                }
-                out += str.charAt(common_i);
-            }
-            return out.length;
+        //카테고리 3depth seleted value값
+        function selectCateValue(d) {
+            //alert(d.value);
+            var f = document.bform;
+            f.cateCode.value = d.value;
         }
 
 
@@ -54,11 +80,23 @@
                     result += "<option value=''>=선택=</option>";
                     $('#ajaxPCateCode1').html('');
                     $.each(data.msg, function (id, category) {
-                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH1_NAME + '</option>';
+                        if ((category.CATE_CODE).substring(0, 3) == "@this.ViewBag.cateCode1") {
+                            result += '<option value=' + category.CATE_CODE + ' selected >' + category.DEPTH1_NAME + '</option>';
+                        } else {
+                            result += '<option value=' + category.CATE_CODE + ' >' + category.DEPTH1_NAME + '</option>';
+                        }
+
+                        //result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH1_NAME + '</option>';
                     });
                     result += "</select>";
 
                     $('#ajaxPCateCode1').html(result);
+
+                    @if (!string.IsNullOrEmpty(this.ViewBag.cateCode1))
+                    {
+                        <text>ajaxSelectCateCodeJavascriptProductType1();</text>
+                    }
+
 
                 },
                 error: function (errorData) {
@@ -72,9 +110,14 @@
 
             var f = document.bform;
             var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
-
+            f.cateCode.value = $("#P_CATE_CODE1 option:selected").val();
             $('#ajaxPCateCode2').html('');
             $('#ajaxPCateCode3').html('');
+
+            if (DEPTH1_CODE =='')
+            {
+                return;
+            }
 
             $.ajax({
                 url: '/AdminProduct/CategoryListJavascript',
@@ -89,11 +132,19 @@
                     result += "<option value=''>=선택=</option>";
                     $('#ajaxPCateCode2').html('');
                     $.each(data.msg, function (id, category) {
-                        result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
+                        if ((category.CATE_CODE).substring(3, 6) == "@this.ViewBag.cateCode2") {
+                            result += '<option value=' + category.CATE_CODE + ' selected >' + category.DEPTH2_NAME + '</option>';
+                        } else {
+                            result += '<option value=' + category.CATE_CODE + ' >' + category.DEPTH2_NAME + '</option>';
+                        }
                     });
                     result += "</select>";
 
                     $('#ajaxPCateCode2').html(result);
+                     @if ((!string.IsNullOrEmpty(this.ViewBag.cateCode2)) && (this.ViewBag.cateCode2 != "100") && (this.ViewBag.cateCode1 == "101"))
+                     {
+                         <text>ajaxSelectCateCodeJavascriptProductType2();</text>
+                     }
 
                 },
                 error: function (errorData) {
@@ -106,8 +157,15 @@
         function ajaxSelectCateCodeJavascriptProductType2() {
 
             var f = document.bform;
+            f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
             var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
             var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
+
+            if ((DEPTH1_CODE == '') || (DEPTH2_CODE == '') ) {
+                return;
+            }
+
+
             //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
             //var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val();
             $.ajax({
@@ -120,11 +178,15 @@
                 },
                 success: function (data) {
                     if ((data.msg).length > 0) { //데이타가 있을때만 생성한다.
-                        var result = "<select style='width:120px;' id='P_CATE_CODE3' name='P_CATE_CODE3'>";
+                        var result = "<select style='width:120px;' id='P_CATE_CODE3' name='P_CATE_CODE3' onchange='selectCateValue(this);'>";
                         result += "<option value=''>=선택=</option>";
                         $('#ajaxPCateCode3').html('');
                         $.each(data.msg, function (id, category) {
-                            result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH3_NAME + '</option>';
+                            if ((category.CATE_CODE).substring(6, 9) == "@this.ViewBag.cateCode3") {
+                                result += '<option value=' + category.CATE_CODE + ' selected >' + category.DEPTH3_NAME + '</option>';
+                            } else {
+                                result += '<option value=' + category.CATE_CODE + ' >' + category.DEPTH3_NAME + '</option>';
+                            }
                         });
                         result += "</select>";
 
@@ -140,42 +202,34 @@
 
 
 
+        function bsearch() {
+            var f = document.bform;
 
-
-
-
-
-
-	
-        function bsearch()
-        {
-            var f=document.aform;
-		
-            f.target="";
+            f.target = "";
             f.page.value = "";
             f.submit();
 
         }
 
-        function rePageSize()
-        {
-            var f=document.aform;
+        function rePageSize() {
+            var f = document.bform;
 
-            f.target="";
-            f.page.value = "";
+            f.Page.value = "";
+            //f.searchStatus.value = "N"; //검색상태:Y
+            f.action = "/AdminProduct/ProductPriceIndex";
+            f.target = "";
+            f.method = "post"
             f.submit();
-
         }
-	
-        
+
 
 	
         //체크 박스 모두 체크
         function allchecked_result() {
             //alert('test');
             var cbox ;
-            cbox = document.aform.P_CODE;
-            var f = document.aform
+            cbox = document.bform.P_CODE;
+            var f = document.bform
 			
             if(cbox != undefined)
             {
@@ -213,7 +267,7 @@
         //체크박스 건별 체크
         function sel_ck(num)
         {
-            var f = document.aform
+            var f = document.bform
             var cbox = f.P_CODE;	
             var number_ch = f.number_ch.value;
             if (cbox.length)
@@ -246,8 +300,8 @@
         function selectedChk(num)
         {
             //alert(num);
-            var f = document.aform
-            var cbox = document.aform.P_CODE;	
+            var f = document.bform
+            var cbox = document.bform.P_CODE;
             if (cbox.length)
             {
                 if (cbox[num].checked == false)
@@ -279,7 +333,7 @@
         function getBindSalePrice(num) 
         {
 
-            var f = document.aform;
+            var f = document.bform;
 
             if (num == -1) //배열 없이 한 레코드일때
             {
@@ -422,13 +476,13 @@
         {
 
 
-            var f=document.aform;
+            var f = document.bform;
             var deny_pattern = /[^(a-zA-Z0-9)]/;
             var deny_pattern_id = /[^(a-z0-9)]/;
             var deny_pattern_hp = /[^(0-9)]/;
             var deny_patternOnlyEng = /[^(sa-zA-Z)]/;
 
-            var cbox = document.aform.P_CODE;
+            var cbox = document.bform.P_CODE;
 
 
             if((f.number_ch.value == '') || (f.number_ch.value == 0))
@@ -546,8 +600,8 @@
             cmt ="선택하신 상품정보를 수정 하시겠습니까?"
             if(confirm(cmt))
             {	 
-                //f.action="sale_product_index_ok.asp"
-                f.target="";
+                f.target = "";
+                f.action = "/AdminProduct/ProductPriceUpdate";
                 f.method="post"
                 f.submit();
             }
@@ -602,6 +656,17 @@
         }
 
 
+        //검색
+        function frmCheck() {
+            var f = document.bform;
+            f.searchStatus.value = "Y"; //검색상태:Y
+            //alert(f.searchStatus.value);
+            f.action = "/AdminProduct/ProductPriceIndex";
+            f.target = "";
+            f.method = "post"
+            f.submit();
+        }
+
 
 
     </script>
@@ -620,83 +685,91 @@
 
         <div class="panel">
             <h3 class="sub-header">상품가격관리</h3>
-            <div class="tar mb10">
-                <a class="btn btn-default middium" href="/AdminProduct/ProductInsert">상품등록</a>
-                @if (!string.IsNullOrEmpty(ViewBag.SearchKeyword))
-                {
-                    <a class="btn btn-default middium" href="/AdminProduct/ProductPriceIndex">검색초기화</a>
-                }
-            </div>
-            @using (Html.BeginForm("ProductPriceIndex", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", onsubmit = "return frmCheck();" }))
-            {
-                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
-                           
-                            <div class="">
-                                <table class="table table_row">
-                                    <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="20%" /></colgroup>
-                                    <tfoot>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <th>일자</th>
-                                            <td>
-                                                <input type="text" id="datepicker" name="from" class="input-sm" style="width:120px">
-                                                <a href="#" class="btn btn-primary small">7일</a>
-                                                <a href="#" class="btn btn-primary small">15일</a>
-                                                <a href="#" class="btn btn-primary small">31일</a>
-                                            </td>
-                                            <th rowspan="5">검색조건</th>
-                                            <td rowspan="5" class="condition_seacth">
-                                                <select name="SearchKey" style="width:170px;">
-                                                    <option value="P_CODE" @if (ViewBag.SearchKey == "P_CODE") { <text> selected</text> }>상품품번</option>
-                                                    <option value="P_NAME" @if (ViewBag.SearchKey == "P_NAME") { <text> selected</text> }>상품명</option>
-                                                </select><br />
-                                                <input type="text" value="@ViewBag.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
-                                                <a href="javascript:document.bform.submit();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
-                                            </td>
-                                        </tr>
+            <form action="" id="bform" method="post" name="bform">
+                <input type="hidden" name="searchStatus" id="searchStatus" value="@this.ViewBag.searchStatus" />
+                <input type="hidden" name="Page" id="Page" value="@this.ViewBag.Page" />
+                <input type="hidden" name="cateCode" id="cateCode" value="@this.ViewBag.cateCode" />
+                <div class="tar mb10">
+                    <a class="btn btn-default middium" href="/AdminProduct/ProductInsert">상품등록</a>
+                   @if (ViewBag.searchStatus == "Y")
+                   {
+                        <a class="btn btn-default middium" href="/AdminProduct/ProductPriceIndex">검색초기화</a>
+                   }
+                </div>
+                    @Html.AntiForgeryToken() 
 
-                                        <tr>
-                                            <th>판매상태</th>
-                                            <td>
-                                                <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (ViewBag.searchDisplayY == "Y") { <text> checked</text> } /><span class="txt mr5">전시</span></label>
-                                                <label for="sale2"><input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (ViewBag.searchDisplayN == "Y") { <text> checked</text> } /><span class="txt mr5">비전시</span></label>
-                                                <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (ViewBag.soldoutYn == "Y") { <text> checked</text> } /><span class="txt mr5">품절</span></label>
-                                                <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (ViewBag.POutletYn == "Y") { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>카테고리</th>
-                                            <td>
-                                                <span id="ajaxPCateCode1"></span>
-                                                <span id="ajaxPCateCode2"></span>
-                                                <span id="ajaxPCateCode3"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>아이콘</th>
-                                            <td>
-                                                <label for="icon1"><input type="checkbox" id="icon1" /><span class="txt mr5">아이콘1</span></label>
-                                                <label for="icon2"><input type="checkbox" id="icon2" /><span class="txt mr5">아이콘2</span></label>
-                                                <label for="icon3"><input type="checkbox" id="icon3" /><span class="txt mr5">아이콘3</span></label>
-                                                <label for="icon4"><input type="checkbox" id="icon4" /><span class="txt mr5">아이콘4</span></label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>판매가</th>
-                                            <td>
-                                                <input type="text" class="input-sm" style="width:120px">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-            }
-        </div>
+                                        <div class="">
+                                            <table class="table table_row">
+                                                <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="20%" /></colgroup>
+                                                <tfoot>
+                                                </tfoot>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>일자</th>
+                                                        <td>
+                                                            @(Html.Kendo().DatePicker()
+                          .Name("FROM_DATE")
+                          .Value(ViewBag.FROM_DATE)
+                          .HtmlAttributes(new { style = "width:120px" })
+                                                            )
+                                                            ~
+                                                            @(Html.Kendo().DatePicker()
+                          .Name("TO_DATE")
+                          .Value(ViewBag.TO_DATE)
+                          .HtmlAttributes(new { style = "width:120px" })
+                                                            )
+                                                            <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
+                                                            <a href="#" class="btn btn-primary small" onclick="ChangeDate('1')">오늘</a>
+                                                            <a href="#" class="btn btn-primary small" onclick="ChangeDate('7')">7일</a>
+                                                            <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
+                                                            <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
+                                                        </td>
+                                                        <th rowspan="5">검색조건</th>
+                                                        <td rowspan="5" class="condition_seacth">
+                                                            <select name="SearchKey" style="width:170px;">
+                                                                <option value="P_CODE" @if (ViewBag.SearchKey == "P_CODE") { <text> selected</text> }>상품품번</option>
+                                                                <option value="P_NAME" @if (ViewBag.SearchKey == "P_NAME") { <text> selected</text> }>상품명</option>
+                                                            </select><br />
+                                                            <input type="text" value="@ViewBag.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
+                                                            <a href="javascript:frmCheck();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
+                                                        </td>
+                                                    </tr>
 
-@using (Html.BeginForm("ProductPriceUpdate", "AdminProduct", FormMethod.Post, new { id = "aform", name = "aform"}))
-{
-    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                                                    <tr>
+                                                        <th>판매상태</th>
+                                                        <td>
+                                                            <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (ViewBag.searchDisplayY == "Y") { <text> checked</text> } /><span class="txt mr5">전시</span></label>
+                                                            <label for="sale2"><input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (ViewBag.searchDisplayN == "Y") { <text> checked</text> } /><span class="txt mr5">비전시</span></label>
+                                                            <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (ViewBag.soldoutYn == "Y") { <text> checked</text> } /><span class="txt mr5">품절</span></label>
+                                                            <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (ViewBag.POutletYn == "Y") { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>카테고리</th>
+                                                        <td>
+                                                            <span id="ajaxPCateCode1"></span>
+                                                            <span id="ajaxPCateCode2"></span>
+                                                            <span id="ajaxPCateCode3"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>아이콘</th>
+                                                        <td>
+                                                            <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (ViewBag.iconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
+                                                            <label for="icon2"><input type="checkbox" id="iconYn" name="iconYn" value="T" @if (ViewBag.iconYn.ToString().IndexOf('T') != -1) { <text> checked</text> } /><span class="txt mr5">TIME</span></label>
+                                                            <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (ViewBag.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">COUPON</span></label>
+                                                            <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="D" @if (ViewBag.iconYn.ToString().IndexOf('D') != -1) { <text> checked</text> } /><span class="txt mr5">1+1</span></label>
+                                                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (ViewBag.iconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
+                                                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="O" @if (ViewBag.iconYn.ToString().IndexOf('O') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
+                                                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (ViewBag.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SET</span></label>
+                                                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="U" @if (ViewBag.iconYn.ToString().IndexOf('U') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+</div>
+
         <div class="panel">
             <div class="">
                 <table class="table table_row">
@@ -708,8 +781,12 @@
                         <td>@ViewBag.TotalRecord 건</td>
                         <th>출력수</th>
                         <td>
-                            <select>
-                                <option>50개</option>
+                            <select name="PageSize" onchange="javascript:rePageSize();">
+                                <option value="10" @if (ViewBag.PageSize == 10) { <text> selected</text> }>10개</option>
+                                <option value="20" @if (ViewBag.PageSize == 20) { <text> selected</text> }>20개</option>
+                                <option value="50" @if (ViewBag.PageSize == 50) { <text> selected</text> }>50개</option>
+                                <option value="100" @if (ViewBag.PageSize == 100) { <text> selected</text> }>100개</option>
+                                <option value="200" @if (ViewBag.PageSize == 200) { <text> selected</text> }>200개</option>
                             </select>
                         </td>
                     </tr>
@@ -771,7 +848,6 @@
             </table>
         </div>
 
-}
         @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
 
     </div>

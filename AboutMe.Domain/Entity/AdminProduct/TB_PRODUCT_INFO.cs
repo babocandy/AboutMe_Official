@@ -20,6 +20,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string L_CATE_CODE { get; set; }
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
+        public string P_SUB_TITLE { get; set; }
         public Nullable<int> P_COUNT { get; set; }
         public Nullable<int> SELLING_PRICE { get; set; }
         public Nullable<int> DISCOUNT_RATE { get; set; }
