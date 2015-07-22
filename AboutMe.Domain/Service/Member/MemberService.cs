@@ -319,7 +319,7 @@ namespace AboutMe.Domain.Service.Member
 
         //회원 탈퇴처리
         //리턴:ReturnDic
-        public ReturnDic SetMemberRetire(string m_ID="", string m_IS_RETIRE="", string m_DEL_REASON="")
+        public ReturnDic SetMemberRetire(string m_ID="", string m_IS_RETIRE="Y", string m_DEL_REASON="")
         {
 
             int nERR_CODE = 0; //에러 없음
@@ -328,7 +328,7 @@ namespace AboutMe.Domain.Service.Member
             {
                 /**try {**/
                 ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
-                int sp_ret = MemberContext.SP_MEMBER_UPD_RETIRE(m_ID, m_IS_RETIRE, m_DEL_REASON, objOutParam);
+                int sp_ret = MemberContext.SP_MEMBER_UPD_RETIRE(m_ID, "Y", m_DEL_REASON, objOutParam);
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
