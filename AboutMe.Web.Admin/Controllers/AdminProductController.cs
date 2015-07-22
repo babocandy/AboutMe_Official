@@ -356,7 +356,7 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품
         
         #region 상품 리스트
-        public ActionResult ProductIndex(IEnumerable<string> iconYn, IEnumerable<string> BatchIconYn, ProductSearch_Entity productSearch_Entity)
+        public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
  
             this.ViewBag.BatchIconYn = Request.Form["BatchIconYn"];
@@ -430,23 +430,60 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 할인정책 리스트
         public ActionResult ProductPriceIndex(ProductSearch_Entity productSearch_Entity)
         {
+
+            this.ViewBag.iconYn = Request.Form["iconYn"];
+
             this.ViewBag.PageSize = productSearch_Entity.PageSize;
             this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            if (!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword))
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            if (!string.IsNullOrEmpty(this.ViewBag.SearchKeyword))
             {
                 this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
                 productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
             }
-            else
-            {
-                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            }
+            this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
+
+            productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
             this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.iconYn = productSearch_Entity.iconYn;
+            this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
+            this.ViewBag.cateCode1 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(0, 3);
+            this.ViewBag.cateCode2 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(3, 3);
+            this.ViewBag.cateCode3 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(6, 3);
+            if (string.IsNullOrEmpty(this.ViewBag.iconYn))
+            {
+                this.ViewBag.iconYn = "";
+            }
+            if (string.IsNullOrEmpty(this.ViewBag.BatchIconYn))
+            {
+                this.ViewBag.BatchIconYn = "";
+            }
+
             this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
             this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
+            {
+                this.ViewBag.searchDisplayY = "";
+                productSearch_Entity.searchDisplayY = "";
+            }
+            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
+            {
+                this.ViewBag.searchDisplayN = "";
+                productSearch_Entity.searchDisplayN = "";
+            }
             this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
             this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+            this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
+            if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
+            {
+                this.ViewBag.FROM_DATE = "";
+                productSearch_Entity.FROM_DATE = "";
+            }
+            this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
+            if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
+            {
+                this.ViewBag.TO_DATE = "";
+                productSearch_Entity.TO_DATE = "";
+            }
 
             int TotalRecord = 0;
             TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
@@ -455,7 +492,6 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.Page = productSearch_Entity.Page;
 
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
-
             return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
         }
         #endregion
@@ -471,10 +507,13 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
        
         //public ActionResult ProductInsert(string P_CATE_CODE, string C_CATE_CODE, string L_CATE_CODE, string P_CODE, string P_NAME, Nullable<int> P_COUNT, Nullable<int> P_POINT, Nullable<int> P_PRICE, Nullable<int> SELLING_PRICE, Nullable<int> DISCOUNT_RATE, Nullable<int> DISCOUNT_P_POINT, Nullable<int> DISCOUNT_PRICE, string SOLDOUT_YN, string P_INFO_DETAIL_WEB, string P_INFO_DETAIL_MOBILE, string MV_URL, string P_COMPONENT_INFO, string P_TAG, string MAIN_IMG, string OTHER_IMG1, string OTHER_IMG2, string OTHER_IMG3, string OTHER_IMG4, string OTHER_IMG5, string DISPLAY_YN, string ICON_YN, string WITH_PRODUCT_LIST)
-        public ActionResult ProductInsert(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3, HttpPostedFileBase OTHER_IMG4, HttpPostedFileBase OTHER_IMG5)
+        public ActionResult ProductInsert(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
         {
             if (ModelState.IsValid)
             {
+
+                this.ViewBag.iconYn = Request.Form["iconYn"];
+                tb_product_info.ICON_YN = string.IsNullOrEmpty(this.ViewBag.iconYn) ? "" : this.ViewBag.iconYn.Replace(",", "");
                 string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 
                 #region 파일 업로드
@@ -544,32 +583,8 @@ namespace AboutMe.Web.Admin.Controllers
                         tb_product_info.OTHER_IMG3 = "";
                     }
                 }
-                if (OTHER_IMG4 != null)
-                {
-                    ImageUpload imageUpload4 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
-                    ImageResult imageResult4 = imageUpload4.RenameUploadFile(OTHER_IMG4);
-                    if (imageResult4.Success)
-                    {
-                        tb_product_info.OTHER_IMG4 = imageResult4.ImageName;
-                    }
-                    else
-                    {
-                        tb_product_info.OTHER_IMG4 = "";
-                    }
-                }
-                if (OTHER_IMG5 != null)
-                {
-                    ImageUpload imageUpload5 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
-                    ImageResult imageResult5 = imageUpload5.RenameUploadFile(OTHER_IMG5);
-                    if (imageResult5.Success)
-                    {
-                        tb_product_info.OTHER_IMG5 = imageResult5.ImageName;
-                    }
-                    else
-                    {
-                        tb_product_info.OTHER_IMG5 = "";
-                    }
-                }
+
+               
                 #endregion
 
                 //_AdminProductService.InsertAdminProduct(P_CATE_CODE, C_CATE_CODE, L_CATE_CODE, P_CODE, P_NAME, P_COUNT, P_POINT, P_PRICE, SELLING_PRICE, DISCOUNT_RATE, DISCOUNT_P_POINT, DISCOUNT_PRICE, SOLDOUT_YN, P_INFO_DETAIL_WEB, P_INFO_DETAIL_MOBILE, MV_URL, P_COMPONENT_INFO, P_TAG, MAIN_IMG, OTHER_IMG1, OTHER_IMG2, OTHER_IMG3, OTHER_IMG4, OTHER_IMG5, DISPLAY_YN, ICON_YN, WITH_PRODUCT_LIST);
@@ -627,11 +642,15 @@ namespace AboutMe.Web.Admin.Controllers
         // POST
         [HttpPost, ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         [ValidateAntiForgeryToken]
-        public ActionResult ProductUpdate(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3, HttpPostedFileBase OTHER_IMG4, HttpPostedFileBase OTHER_IMG5)
+        public ActionResult ProductUpdate(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
         {
             
             if (ModelState.IsValid)
             {
+
+                this.ViewBag.iconYn = Request.Form["iconYn"];
+                tb_product_info.ICON_YN = string.IsNullOrEmpty(this.ViewBag.iconYn) ? "" : this.ViewBag.iconYn.Replace(",", "");
+                
                 string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 
                 #region 파일 업로드
@@ -705,40 +724,7 @@ namespace AboutMe.Web.Admin.Controllers
                 {
                     tb_product_info.OTHER_IMG3 = tb_product_info.OLD_OTHER_IMG3;
                 }
-                if (OTHER_IMG4 != null)
-                {
-                    ImageUpload imageUpload4 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
-                    ImageResult imageResult4 = imageUpload4.RenameUploadFile(OTHER_IMG4);
-                    if (imageResult4.Success)
-                    {
-                        tb_product_info.OTHER_IMG4 = imageResult4.ImageName;
-                    }
-                    else
-                    {
-                        tb_product_info.OTHER_IMG4 = tb_product_info.OLD_OTHER_IMG4;
-                    }
-                }
-                else
-                {
-                    tb_product_info.OTHER_IMG4 = tb_product_info.OLD_OTHER_IMG4;
-                }
-                if (OTHER_IMG5 != null)
-                {
-                    ImageUpload imageUpload5 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
-                    ImageResult imageResult5 = imageUpload5.RenameUploadFile(OTHER_IMG5);
-                    if (imageResult5.Success)
-                    {
-                        tb_product_info.OTHER_IMG5 = imageResult5.ImageName;
-                    }
-                    else
-                    {
-                        tb_product_info.OTHER_IMG5 = tb_product_info.OLD_OTHER_IMG5;
-                    }
-                }
-                else
-                {
-                    tb_product_info.OTHER_IMG5 = tb_product_info.OLD_OTHER_IMG5;
-                }
+               
                 #endregion
 
                 _AdminProductService.UpdateAdminProduct(tb_product_info);
@@ -813,6 +799,11 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
             this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
 
+            
+            this.ViewBag.BatchIconYn    = Request.Form["BatchIconYn"];
+            this.ViewBag.IconBatchChk   = Request.Form["IconBatchChk"];
+            this.ViewBag.BatchIconYn    = string.IsNullOrEmpty(this.ViewBag.BatchIconYn) ? "" : this.ViewBag.BatchIconYn.Replace(",", "");
+            this.ViewBag.IconBatchChk = string.IsNullOrEmpty(this.ViewBag.IconBatchChk) ? "" : this.ViewBag.IconBatchChk;
 
             try
             {
@@ -820,6 +811,9 @@ namespace AboutMe.Web.Admin.Controllers
                 {
                     if (!string.IsNullOrEmpty(tb_product.P_CODE))
                     {
+                        tb_product.ICON_YN          = this.ViewBag.BatchIconYn;
+                        tb_product.ICON_BATCH_CHK   = this.ViewBag.IconBatchChk; 
+
                         _AdminProductService.UpdateAdminProductBatch(tb_product);
 
                         #region 상품가격 일괄 수정 로그 생성
