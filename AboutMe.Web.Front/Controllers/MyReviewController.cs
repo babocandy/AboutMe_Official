@@ -42,14 +42,22 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult Ready()
         {
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
-            return View(_ReviewService.GetReadyList(_user_profile.M_ID));
+            return View(_ReviewService.GetMyReviewReadyList(_user_profile.M_ID));
         }
 
-        public ActionResult Complete()
+        [HttpGet]
+        [CustomAuthorize]
+        public ActionResult Complete(int page = 1)
         {
-            return View();
+            MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
+            model.PageNo = page;
+            model.CompleteList = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);           
+            model.TotalItem = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
+
+            return View(model);
         }
 
+        [HttpGet]
         [CustomAuthorize]
         public ActionResult Write(int? OrderDetailIdx, string Pcode = null)
         {
@@ -103,17 +111,17 @@ namespace AboutMe.Web.Front.Controllers
 
             if (model.OrderDetailIdx == null )
             {
-                 ModelState.AddModelError("", "-주문상세일련번호가 필요합니다.");
+                 ModelState.AddModelError("", "*주문상세일련번호가 필요합니다.");
             }
 
             if (model.Pcode == null && model.Pcode == "")
             {
-                ModelState.AddModelError("", "-상품코드가 필요합니다.");
+                ModelState.AddModelError("", "*상품코드가 필요합니다.");
             }
 
             if (model.Mid == null && model.Mid == "")
             {
-                ModelState.AddModelError("", "-회원아이디가 필요합니다.");
+                ModelState.AddModelError("", "*회원아이디가 필요합니다.");
             }
 
             return View(model);

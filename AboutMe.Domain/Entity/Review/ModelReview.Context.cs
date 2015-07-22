@@ -87,5 +87,31 @@ namespace AboutMe.Domain.Entity.Review
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_GET_PRODUCT_INFO_Result>("SP_REVIEW_GET_PRODUCT_INFO", p_CODEParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> SP_REVIEW_PRODUCT_COMPLETE_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_REVIEW_PRODUCT_COMPLETE_CNT", m_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> SP_REVIEW_PRODUCT_COMPLETE_SEL(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_COMPLETE_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter, rET_NUM, rET_MESSAGE);
+        }
     }
 }

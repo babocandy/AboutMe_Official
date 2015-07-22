@@ -15,7 +15,7 @@ namespace AboutMe.Domain.Service.Review
 {
     public class ReviewService : IReviewService
     {
-        public List<SP_REVIEW_PRODUCT_READY_SEL_Result> GetReadyList(string mid)
+        public List<SP_REVIEW_PRODUCT_READY_SEL_Result> GetMyReviewReadyList(string mid)
         {
             List<SP_REVIEW_PRODUCT_READY_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_READY_SEL_Result>();
 
@@ -52,6 +52,39 @@ namespace AboutMe.Domain.Service.Review
             Debug.WriteLine("UpdateMemberPointSave retMsg:  " + retMsg.Value);
 
             return tp;
+        }
+
+        /**
+         * 마이리뷰, 작성완료 목록 조회
+         */
+        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetMyReviewCompleteList(string mid, int? pageNo=1, int? pageSize=10)
+        {
+            List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
+
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_PRODUCT_COMPLETE_SEL(mid, pageNo, pageSize, retNum, retMsg).ToList();
+            }
+
+            return lst;
+        }
+
+        /**
+         * 마이리뷰, 작성완료 목록 총수
+         */
+        public int GetMyReviewCompleteCnt(string mid)
+        {
+            int ret = 0;
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                int? cnt = context.SP_REVIEW_PRODUCT_COMPLETE_CNT(mid).SingleOrDefault() ;
+                ret = cnt ?? 0;
+            }
+
+            return ret;
         }
     }
 }

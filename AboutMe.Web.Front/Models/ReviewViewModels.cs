@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using AboutMe.Domain.Entity.Review;
+
 namespace AboutMe.Web.Front.Models
 {
     public class MyReviewInsertViewModel
@@ -24,5 +26,14 @@ namespace AboutMe.Web.Front.Models
 
         public string ResultNum { get; set; }
         public string ResultMessage { get; set; }
+    }
+
+    public class MyReviewCompleteViewModel
+    {
+        public IList<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> CompleteList { get; set; }
+        public int PageNo { get; set; }
+        public int PageSize { get { return 10; } }
+        public int TotalItem { get; set; }
+        
     }
 }
