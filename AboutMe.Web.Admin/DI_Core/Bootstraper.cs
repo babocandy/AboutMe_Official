@@ -38,6 +38,7 @@ namespace AboutMe.Web.Admin.DI_Core
 
             container.RegisterType<AboutMe.Domain.Service.AdminCoupon.IAdminCouponService, AboutMe.Domain.Service.AdminCoupon.AdminCouponService>(); //쿠폰관리
             container.RegisterType<AboutMe.Domain.Service.AdminOrder.IAdminOrderService, AboutMe.Domain.Service.AdminOrder.AdminOrderService>(); //주문관리
+            container.RegisterType<AboutMe.Domain.Service.Order.IOrderService, AboutMe.Domain.Service.Order.OrderService>(); //Order
 
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));

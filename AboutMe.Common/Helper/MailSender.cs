@@ -25,16 +25,17 @@ namespace AboutMe.Common.Helper
         private int timeout;
 
         //public async Task MailSendAction(string _receiver = "", string _subject = "[AboutMe]No Subject", string _body = "")
-        public void MailSendAction(string _receiver = "", string _subject = "[AboutMe]No Subject", string _body = "")
+        public void MailSendAction(string _sender = "", string _sender_pw = "", string _sender_smtp_server = "", string _sender_smtp_port = "587", string _timeout="20000"
+            ,string _receiver = "", string _subject = "[AboutMe]No Subject", string _body = "")
         {
             this.err_no = 0; //일단 에러없음
             this.err_msg = ""; //일단 에러없음
 
-            this.sender = "noreply@cstone.co.kr"; //발송자 계정 -상수로 변경 필요
-            this.sender_pw = "cstonedev12"; //발송자 암호
-            this.sender_smtp_server = "smtp.gmail.com";  //발송 SMTP서버
-            this.sender_smtp_port = 587;  //465 or 587   //발송 SMTP서버 포트
-            this.timeout = 20000;  //타임아웃 20초
+            this.sender = _sender; // "noreply@cstone.co.kr"; //발송자 계정 -상수로 변경 필요
+            this.sender_pw = _sender_pw; //"cstonedev12"; //발송자 암호
+            this.sender_smtp_server = _sender_smtp_server; // "smtp.gmail.com";  //발송 SMTP서버
+            this.sender_smtp_port =int.Parse(_sender_smtp_port); //587;  //465 or 587   //발송 SMTP서버 포트
+            this.timeout = int.Parse(_timeout);  // 20000;  //타임아웃 20초
 
             this.receiver = _receiver;
             this.subject = _subject;

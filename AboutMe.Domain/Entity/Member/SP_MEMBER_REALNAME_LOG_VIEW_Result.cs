@@ -14,14 +14,14 @@ namespace AboutMe.Domain.Entity.Member
     public partial class SP_MEMBER_REALNAME_LOG_VIEW_Result
     {
         public string WORK_TMP_ID { get; set; }
-        public string CERT_GB { get; set; }
+        public string M_JOIN_TYPE { get; set; }
         public string RESULT_CODE { get; set; }
         public string TRAN_NO { get; set; }
-        public string name { get; set; }
+        public string M_NAME { get; set; }
         public string di { get; set; }
         public string ci { get; set; }
-        public string birthday { get; set; }
-        public string gender { get; set; }
+        public string M_BIRTHDAY { get; set; }
+        public string M_SEX { get; set; }
         public string nation { get; set; }
         public string RETURN_MSG_ALL { get; set; }
         public System.DateTime INS_DATE { get; set; }

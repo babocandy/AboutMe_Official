@@ -136,7 +136,8 @@
             }
             ow_yes(xurl, tar, wid, hei); //팝업
         }
-
+
+
     </script>
 }
 @section Left {
@@ -291,7 +292,7 @@
 					@item.P_NAME <br />
                     (@item.P_CODE)
 				</td>
-				<td>@item.PROMOTION</td>
+				<td>@item.PROMOTION </td>
 				<td>
                     @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
                     {
@@ -301,8 +302,8 @@
                 </td>
 				<td>@String.Format("{0:#,#0.}", @item.EMP_DISCOUNT_PRICE)원</td>
                 <td>@item.P_COUNT</td>
-				<td>@String.Format("{0:#,#0.}", @item.COUPON_DISCOUNT)원</td>
-				<td>@item.COUPON</td>
+				<td>@String.Format("{0:#,#0.}", @item.COUPON_DISCOUNT_AMT)원</td>
+				<td>@item.COUPON_NAME</td>
 				<td>@String.Format("{0:#,#0.}", @item.USE_POINT)원</td>
 				<td>@String.Format("{0:#,#0.}", @item.REAL_PAY_PRICE)원</td>
 				<td>@String.Format("{0:#,#0.}", @item.POINT_ACCML)P <br />@item.POINT_ACCML_DATE </td>
@@ -391,21 +392,21 @@
 	<div class="saleapply boxtyped mt20">
 		<ul>
 			<li class="product">
-				<p class="tot"><span class="tit">상품금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TOTAL_PRICE)</strong>원</span></p>
-				<p><span class="tit">취소/반품</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.CANCEL_PRICE)</strong>원</span></p>
-				<p><span class="tit">상품금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.ING_PRICE)</strong>원</span></p>
+				<p class="tot"><span class="tit">총상품금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TOTAL_PRICE)</strong>원</span></p>
+				<p><span class="tit">취소/반품 금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.CANCEL_PRICE)</strong>원</span></p>
+				<p><span class="tit">구매상품 금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.ING_PRICE)</strong>원</span></p>
                 <p><span class="tit">배송비</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TRANS_PRICE)</strong>원</span></p>
 			</li>
 			<li class="sale">
-				<p class="tot"><span class="tit">할인금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TOTAL_DISCOUNT)</strong>원</span></p>
-				<p><span class="tit">임직원 할인</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.EMP_DISCOUNT_PRICE)</strong>원</span></p>
-				<p><span class="tit">쿠폰 할인</span><span class="price point"><i></i><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.COUPON_DISCOUNT)</strong>원</span></p>
+				<p class="tot"><span class="tit">할인금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.TOTAL_DISCOUNT_AMT)</strong>원</span></p>
+				<p><span class="tit">임직원 할인</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.EMP_DISCOUNT_AMT)</strong>원</span></p>
+				<p><span class="tit">쿠폰 할인</span><span class="price point"><i></i><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.COUPON_DISCOUNT_AMT)</strong>원</span></p>
 				<p><span class="tit">보유포인트사용</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.USE_POINT)</strong>원</span></p>
-				<p><span class="tit">회원등급(VIP)할인</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.GRADE_DISCOUNT_PRICE)</strong>원</span></p>
+				<p><span class="tit">회원등급(VIP)할인</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.GRADE_DISCOUNT_AMT)</strong>원</span></p>
 			</li>
 			<li class="total">
                 <p class="tot"><span class="tit">결제금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.REAL_PAY_PRICE)</strong>원</span></p>
-                <p><span class="tit">적립(될)포인트</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.POINT_ACCML)</strong>원</span></p>
+                <p><span class="tit">적립(예정)포인트</span><span class="price"><strong>@String.Format("{0:#,#0.}", @Model.BodyInfo.POINT_ACCML)</strong>원</span></p>
 
 			</li>
 		</ul>

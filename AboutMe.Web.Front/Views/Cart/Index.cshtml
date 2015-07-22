@@ -14,199 +14,113 @@
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
     <!--script src="/Scripts/cart_script.js"></script-->
     <script language="javascript">
-        function GridCheckAll(c) {
+    function GridCheckAll(c) {
 
-            $("input:checkbox[name='gridchk']").each(function (idx) {
-                var chk = $(this);
-                if (c.checked) {
-                    chk.prop('checked', true);
-                    chk.parent().parent().find(".chkcon").addClass("chkcon_on");
-                }
-                else {
-                    chk.prop('checked', false);
-                    chk.parent().parent().find(".chkcon").removeClass("chkcon_on");
-                }
-            });
-            chkPriceCalculate();
-        }
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            var chk = $(this);
+            if (c.checked) {
+                chk.prop('checked', true);
+                chk.parent().parent().find(".chkcon").addClass("chkcon_on");
+            }
+            else {
+                chk.prop('checked', false);
+                chk.parent().parent().find(".chkcon").removeClass("chkcon_on");
+            }
+        });
+        chkPriceCalculate();
+    }
 
-        function GridCheck(c) {
-            chkPriceCalculate();
-        }
+    function GridCheck(c) {
+        chkPriceCalculate();
+    }
 
-        function chkPriceCalculate() {
+    function chkPriceCalculate() {
 
-            var arrP = new Array;
-            var obj = new Object();
-            $("input:checkbox[name='gridchk']").each(function (idx) {
-                if (this.checked) {
-                    arrP.push(parseInt($(this).val()));
-                }
-            });
+        var arrP = new Array;
+        var obj = new Object();
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            if (this.checked) {
+                arrP.push(parseInt($(this).val()));
+            }
+        });
 
-            var jobj = encodeURIComponent(jQuery.stringify(arrP));
+        var jobj = encodeURIComponent(jQuery.stringify(arrP));
 
-            var src_url = "/Cart/CartCalculatePrice";
-            var param = "data=" + jobj;
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: src_url,
-                data: param,
-                success: function (data) {
-                    if (data.result == "true") {
-                        $("#SumPointTxt").text(data.sum_point);
-                        $("#SumPriceTxt").text(data.sum_price);
-                        if (data.chk_count > 0) {
-                            $("#WishCntTxt").text("(" + data.chk_count + ")");
-                            $("#DelCntTxt").text("(" + data.chk_count + ")");
-                            $("#WishCntTxt").parent().parent().parent().find(".wish").addClass("on");
-                            $("#DelCntTxt").parent().parent().parent().find(".del").addClass("on");
-                        }
-                        else {
-                            $("#WishCntTxt").text("");
-                            $("#DelCntTxt").text("");
-                            $("#WishCntTxt").parent().parent().parent().find(".wish").removeClass("on");
-                            $("#DelCntTxt").parent().parent().parent().find(".del").removeClass("on");
-                        }
+        var src_url = "/Cart/CartCalculatePrice";
+        var param = "data=" + jobj;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.result == "true") {
+                    $("#SumPointTxt").text(data.sum_point);
+                    $("#SumPriceTxt").text(data.sum_price);
+                    if (data.chk_count > 0) {
+                        $("#WishCntTxt").text("(" + data.chk_count + ")");
+                        $("#DelCntTxt").text("(" + data.chk_count + ")");
+                        $("#WishCntTxt").parent().parent().parent().find(".wish").addClass("on");
+                        $("#DelCntTxt").parent().parent().parent().find(".del").addClass("on");
                     }
                     else {
-                        if (data.msg != "") {
-                            alert(data.msg);
-                        }
+                        $("#WishCntTxt").text("");
+                        $("#DelCntTxt").text("");
+                        $("#WishCntTxt").parent().parent().parent().find(".wish").removeClass("on");
+                        $("#DelCntTxt").parent().parent().parent().find(".del").removeClass("on");
                     }
-                },
-                complete: function (jqXHR, textStatus) {
                 }
-            });
-        }
-
-
-        //cart 수량변경
-        function count_change(idx) {
-            var f = document.cartform;
-            var txtname = 'count_txt_' + idx
-            var txtbox = $("#" + txtname);
-            var cnt = txtbox.val();
-            if (cnt == "" || cnt == "0" || cnt < 1) {
-                alert('수량을 입력해주세요.');
-                txtbox.focus();
-                return;
-            }
-
-            if (confirm("수량을 변경하시겠습니까?")) {
-                f.IDX.value = idx;
-                f.CNT.value = cnt;
-                f.action = "/Cart/CartUpdateCnt";
-                f.submit();
-            }
-
-        }
-        //cart 삭제
-        function cart_delete(idx) {
-
-            var f = document.cartform;
-            if (confirm("삭제하시겠습니까?")) {
-                f.IDX.value = idx;
-                f.CNT.value = '';
-                f.action = "/Cart/CartDelete";
-                f.submit();
-            }
-
-        }
-
-        //선택 모두 삭제
-        function CheckAllDelete(b) {
-            if ($(b).hasClass("on")) {
-
-                var cnt = 0;
-                var idxstr = "";
-
-                $("input:checkbox[name='gridchk']").each(function (idx) {
-                    if (this.checked) {
-                        if (idxstr != "") {
-                            idxstr += ",";
-                        }
-                        idxstr += $(this).val();
-                        cnt++;
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
                     }
-                });
-
-                if (cnt == 0) {
-                    alert("삭제할 상품을 선택해주세요.");
-                    return false;
                 }
-
-                var f = document.cartform;
-
-                if (confirm(cnt + "개의 상품을 장바구니에서 삭제하시겠습니까?")) {
-                    f.IDX.value = idxstr;
-                    f.CNT.value = '';
-                    f.action = "/Cart/CartDelete";
-                    f.submit();
-                }
+            },
+            complete: function (jqXHR, textStatus) {
             }
+        });
+    }
+
+
+    //cart 수량변경
+    function count_change(idx) {
+        var f = document.cartform;
+        var txtname = 'count_txt_' + idx
+        var txtbox = $("#" + txtname);
+        var cnt = txtbox.val();
+        if (cnt == "" || cnt == "0" || cnt < 1) {
+            alert('수량을 입력해주세요.');
+            txtbox.focus();
+            return;
         }
 
-        function jjim_insert(pcode) {
-
-            @if (Model.UserProfile.IS_LOGIN)
-            {
-                @Html.Raw(new HtmlString("var arrP = new Array; "));
-                @Html.Raw(new HtmlString("arrP.push(pcode); "));
-                @Html.Raw(new HtmlString("Wish_Input(arrP); "));
-            }
-            else
-            {
-                @Html.Raw(new HtmlString("isJJimLogin();"));
-            }
-
+        if (confirm("수량을 변경하시겠습니까?")) {
+            f.IDX.value = idx;
+            f.CNT.value = cnt;
+            f.OrderList = '';
+            f.action = "/Cart/CartUpdateCnt";
+            f.submit();
         }
 
-        function jjim_chkinsert(b) {
+    }
+    //cart 삭제
+    function cart_delete(idx) {
 
-            @if (Model.UserProfile.IS_LOGIN)
-        {
-                @Html.Raw(new HtmlString("CheckAllWishInsert(b); "));
-        }
-        else
-        {
-                @Html.Raw(new HtmlString("isJJimLogin();"));
-        }
-
-        }
-
-        //선택전체 찜
-        function CheckAllWishInsert(b) {
-            if ($(b).hasClass("on")) {
-
-                var cnt = 0;
-                var arrP = new Array;
-
-                $("input:checkbox[name='gridchk']").each(function (idx) {
-                    if (this.checked) {
-                        arrP.push($(this).attr('data-pcode'));
-                    }
-                });
-
-                if (arrP.length == 0) {
-                    alert("찜할 상품을 선택해주세요.");
-                    return false;
-                }
-
-                Wish_Input(arrP);
-
-            }
+        var f = document.cartform;
+        if (confirm("삭제하시겠습니까?")) {
+            f.IDX.value = idx;
+            f.CNT.value = '';
+            f.OrderList = '';
+            f.action = "/Cart/CartDelete";
+            f.submit();
         }
 
-        function isJJimLogin() {
-            if (confirm('로그인 후 찜을 저장할 수 있습니다.\n로그인페이지로 이동하시겠습니까?')) {
-                location.href = '/MemberShip/Login';
-                return;
-            }
-        }
+    }
 
-        function SelectNextStep() {
+    //선택 모두 삭제
+    function CheckAllDelete(b) {
+        if ($(b).hasClass("on")) {
+
             var cnt = 0;
             var idxstr = "";
 
@@ -221,14 +135,128 @@
             });
 
             if (cnt == 0) {
-                alert("상품을 선택해 주세요.");
-                return;
+                alert("삭제할 상품을 선택해주세요.");
+                return false;
+            }
+
+            var f = document.cartform;
+
+            if (confirm(cnt + "개의 상품을 장바구니에서 삭제하시겠습니까?")) {
+                f.IDX.value = idxstr;
+                f.CNT.value = '';
+                f.OrderList = '';
+                f.action = "/Cart/CartDelete";
+                f.submit();
             }
         }
+    }
 
-        function AllNextStep() {
+    function jjim_insert(pcode) {
+
+        @if (Model.UserProfile.IS_LOGIN)
+            {
+                @Html.Raw(new HtmlString("var arrP = new Array; "));
+                @Html.Raw(new HtmlString("arrP.push(pcode); "));
+                @Html.Raw(new HtmlString("Wish_Input(arrP); "));
+            }
+            else
+            {
+                @Html.Raw(new HtmlString("isJJimLogin();"));
+            }
+
+    }
+
+    function jjim_chkinsert(b) {
+
+        @if (Model.UserProfile.IS_LOGIN)
+            {
+                    @Html.Raw(new HtmlString("CheckAllWishInsert(b); "));
+            }
+            else
+            {
+                    @Html.Raw(new HtmlString("isJJimLogin();"));
+            }
+
+    }
+
+    //선택전체 찜
+    function CheckAllWishInsert(b) {
+        if ($(b).hasClass("on")) {
+
+            var cnt = 0;
+            var arrP = new Array;
+
+            $("input:checkbox[name='gridchk']").each(function (idx) {
+                if (this.checked) {
+                    arrP.push($(this).attr('data-pcode'));
+                }
+            });
+
+            if (arrP.length == 0) {
+                alert("찜할 상품을 선택해주세요.");
+                return false;
+            }
+
+            Wish_Input(arrP);
 
         }
+    }
+
+    function isJJimLogin() {
+        if (confirm('로그인 후 찜을 저장할 수 있습니다.\n로그인페이지로 이동하시겠습니까?')) {
+            location.href = '/MemberShip/Login';
+            return;
+        }
+    }
+
+    function SelectNextStep(isall) {
+        var cnt = 0;
+        var pcodelist = "";
+        var arrP = new Array;
+
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            if (this.checked || isall) {
+                var obj = new Object();
+                var oidx = $(this).val();
+                var txtname = 'count_txt_' + oidx
+                var txtbox = $("#" + txtname);
+                var pcnt = txtbox.val();
+                if (pcnt == 0) {
+                    pcnt = 1;
+                }
+                obj.p_code = $(this).attr('data-pcode');
+                obj.p_count = pcnt;
+                arrP.push(obj);
+                cnt++;
+            }
+        });
+
+        if (cnt == 0) {
+            alert("상품을 선택해 주세요.");
+            return;
+        }
+        else {
+            var jobj = jQuery.stringify(arrP);
+            var f = document.cartform;
+            f.IDX.value = '';
+            f.CNT.value = '';
+            f.OrderList.value = jobj;
+
+            @if (Model.UserProfile.IS_LOGIN)
+            {
+                @Html.Raw(" f.action = '/Order/InsertOrderStep1' ;")
+            }
+            else
+            {
+                @Html.Raw(" f.action = '/MemberShip/Login' ;")
+            }
+            f.submit();
+        }
+    }
+
+    function AllNextStep() {
+
+    }
 
     </script>
 }
@@ -390,7 +418,8 @@
         <form action="" method="post" name="cartform">
             <input type="hidden" name="IDX" />
             <input type="hidden" name="CNT" />
-            <input type="hidden" name="GUBUN" />
+            <input type="hidden" name="OrderList" />    
+            <input type="hidden" name="RedirectUrl"  value="/Order/Step1"/>           
         </form>
 
         <!--//cart_top-->
@@ -607,8 +636,8 @@
                     {
                     <div class="row3 mt40">
                         <div class="btn_group">
-                            <a href="#none" class="btn_gray_w185h60" onclick="SelectNextStep();">선택 상품 주문</a>
-                            <a href="#none" class="btn_brown_w185h60" onclick="AllNextStep();">전체 상품 주문</a>
+                            <a href="#none" class="btn_gray_w185h60" onclick="SelectNextStep(false);">선택 상품 주문</a>
+                            <a href="#none" class="btn_brown_w185h60" onclick="SelectNextStep(true);">전체 상품 주문</a>
                         </div>
                     </div>
                     }
@@ -631,9 +660,8 @@
         @BuyAsGoods()
 
         @Model.UserProfile.SESSION_ID
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니담기</a>
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니담기</a>
-        <a href="#none" class="btn_gray_w185h60" onclick="CartMerge(this)" data-pcode="1111112" data-pcount="1">로그인Merge</a>
+        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니</a>
+        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니</a>
     </div>
     <div class="container100per notify">
         <div class="inner">

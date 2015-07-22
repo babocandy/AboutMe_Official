@@ -39,14 +39,14 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public Nullable<int> TOTAL_PRICE { get; set; }
         public Nullable<int> ING_PRICE { get; set; }
         public Nullable<int> CANCEL_PRICE { get; set; }
-        public Nullable<int> TOTAL_DISCOUNT { get; set; }
-        public Nullable<int> COUPON_DISCOUNT { get; set; }
-        public Nullable<int> GRADE_DISCOUNT_PRICE { get; set; }
-        public Nullable<int> EMP_DISCOUNT_PRICE { get; set; }
         public Nullable<int> USE_POINT { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
         public Nullable<int> POINT_ACCML { get; set; }
         public int TRANS_PRICE { get; set; }
         public Nullable<int> TRANS_COUPON { get; set; }
+        public Nullable<int> TOTAL_DISCOUNT_AMT { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_AMT { get; set; }
+        public Nullable<int> GRADE_DISCOUNT_AMT { get; set; }
+        public Nullable<int> EMP_DISCOUNT_AMT { get; set; }
     }
 }

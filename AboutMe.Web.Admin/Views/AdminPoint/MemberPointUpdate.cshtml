@@ -77,7 +77,7 @@
 <br />
 <h2>포인트 적립/차감</h2>
 
-@using (Html.BeginForm("PopupMemberPointUpdate", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
+@using (Html.BeginForm("MemberPointUpdate", "AdminPoint", FormMethod.Post, new { id = "frm", name = "frm" }))
 {
     @Html.AntiForgeryToken()
     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>

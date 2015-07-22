@@ -73,12 +73,20 @@
             <td> 주문코드</td>
             <td> <input type="text" name="ORDER_CODE" /></td>
         </tr>
+        <tr>
+            <td> 주문 상세 상품 일련번호</td>
+            <td> <input type="text" name="ORDER_DETAIL_IDX" /></td>
+        </tr>
+        <tr>
+            <td> 주문 상세 상품명</td>
+            <td> <input type="text" name="P_NAME" /></td>
+        </tr>
     </table>
     <input type="submit" name="" value="제출" />
 </form>
 
 <br /><br />
-<form name="frm1" method="post" action="SavePointOnOrder">
+<form name="frm1" method="post" action="SavePointAfterFirmOrder">
     <h4>4.구매 확정후 포인트 적립</h4>
     <table>
 
@@ -94,7 +102,74 @@
             <td> 주문코드</td>
             <td> <input type="text" name="ORDER_CODE" /></td>
         </tr>
+        <tr>
+            <td> 주문 상세 상품 일련번호</td>
+            <td> <input type="text" name="ORDER_DETAIL_IDX" /></td>
+        </tr>
+        <tr>
+            <td> 주문 상세 상품명</td>
+            <td> <input type="text" name="P_NAME" /></td>
+        </tr>
     </table>
 
     <input type="submit" name="" value="제출" />
 </form>
+<br />
+<form name="frm1" method="post" action="ResaveUsedPointOnCancelAfterFirmOrder">
+    <h4>4-1.구매 확정후 취소시 사용했던 포인트 재적립</h4>
+    <table>
+
+        <tr>
+            <td> 회원아이디</td>
+            <td> <input type="text" name="M_ID" /></td>
+        </tr>
+        <tr>
+            <td> 적립포인트</td>
+            <td> <input type="text" name="POINT" /></td>
+        </tr>
+        <tr>
+            <td> 주문코드</td>
+            <td> <input type="text" name="ORDER_CODE" /></td>
+        </tr>
+        <tr>
+            <td> 주문 상세 상품 일련번호</td>
+            <td> <input type="text" name="ORDER_DETAIL_IDX" /></td>
+        </tr>
+        <tr>
+            <td> 주문 상세 상품명</td>
+            <td> <input type="text" name="P_NAME" /></td>
+        </tr>
+    </table>
+
+    <input type="submit" name="" value="제출" />
+</form>
+<br />
+<form name="frm1" method="post" action="GetBackSavedPointOnCancelAfterFirmOrder">
+    <h4>4-2.구매 확정후 취소시 적립했던 포인트 회수</h4>
+    <table>
+
+        <tr>
+            <td> 회원아이디</td>
+            <td> <input type="text" name="M_ID" /></td>
+        </tr>
+        <tr>
+            <td> 적립포인트</td>
+            <td> <input type="text" name="POINT" /></td>
+        </tr>
+        <tr>
+            <td> 주문코드</td>
+            <td> <input type="text" name="ORDER_CODE" /></td>
+        </tr>
+        <tr>
+            <td> 주문 상세 상품 일련번호</td>
+            <td> <input type="text" name="ORDER_DETAIL_IDX" /></td>
+        </tr>
+        <tr>
+            <td> 주문 상세 상품명</td>
+            <td> <input type="text" name="P_NAME" /></td>
+        </tr>
+    </table>
+
+    <input type="submit" name="" value="제출" />
+</form>
+

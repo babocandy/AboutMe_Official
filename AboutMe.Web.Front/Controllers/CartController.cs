@@ -9,14 +9,12 @@ using AboutMe.Domain.Service.Cart;
 using AboutMe.Domain.Entity.Cart;
 using AboutMe.Web.Front.Common.Filters;
 
-
 namespace AboutMe.Web.Front.Controllers
 {
     public class CartController : BaseFrontController
     {
         private ICartService _cartservice;
-        
-      
+ 
         public CartController(ICartService _cartservice)
         {
             this._cartservice = _cartservice;
@@ -45,7 +43,7 @@ namespace AboutMe.Web.Front.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         public ActionResult CartInput(string data)
         {
@@ -69,7 +67,7 @@ namespace AboutMe.Web.Front.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         public ActionResult CartUpdateCnt(Int32 IDX, Int32 CNT)
         {
@@ -110,7 +108,7 @@ namespace AboutMe.Web.Front.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-        
+
         #region 로그인시 장바구니 합치기 test용
         public void CartMerge()
         {
@@ -209,5 +207,7 @@ namespace AboutMe.Web.Front.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
+
+
     }
 }

@@ -7,14 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AboutMe.Domain.Entity.AdminOrder
+namespace AboutMe.Domain.Entity.Order
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_ORDER_CODE
+    public partial class SP_ORDER_STEP2_COUPON_SEARCH_Result
     {
-        public int IDX { get; set; }
-        public System.DateTime REG_DATE { get; set; }
+        public string RATE_OR_MONEY { get; set; }
+        public int IDX_COUPON_NUMBER { get; set; }
+        public string COUPON_NAME { get; set; }
+        public Nullable<int> COUPON_MONEY { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_RATE { get; set; }
+        public string CD_COUPON { get; set; }
+        public string BENEFIT { get; set; }
     }
 }

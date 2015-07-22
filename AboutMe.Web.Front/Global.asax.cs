@@ -20,15 +20,23 @@ namespace AboutMe.Web.Front
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
             Bootstrapper.Initialise(); //Depency injection ... 
         }
 
-        protected void Session_Start(Object sender, EventArgs e)
+        protected void Session_Start(object sender, EventArgs e)
         {
-            //Session["init"] = 0;
-            //HttpContext.Current.Session.Add("__MyAppSession", string.Empty);
-            Session.Add("MyVariable", true);
+            // event is raised each time a new session is created   
+            //더미세션 세팅:
+            HttpContext.Current.Session["dummy_session"] = HttpContext.Current.Session.SessionID;
+
+ 
         }
-    }
-}
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+            // event is raised when a session is abandoned or expires
+        }
+    } //class
+
+
+}//namespace

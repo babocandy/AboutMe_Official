@@ -54,7 +54,7 @@
                 </li>
                 <!--//쇼핑-->
                 <!--리뷰-->
-                <li><a href="/review/pro_review.asp" class="menu"><img src="/aboutCom/images/common/m_review.gif" class="imgInteractive" alt="리뷰" /></a></li>
+                <li><a href="/Review" class="menu"><img src="/aboutCom/images/common/m_review.gif" class="imgInteractive" alt="리뷰" /></a></li>
                 <!--//리뷰-->
                 <!--이벤트-->
                 <li><a href="/event//main.asp" class="menu"><img src="/aboutCom/images/common/m_event.gif" class="imgInteractive" alt="이벤트" /></a></li>
@@ -96,6 +96,7 @@
         <!--//쇼핑백-->
     </div>
 </div>
+
 <script language="javascript">
 
     function FlyCartLoad(page) {
@@ -106,7 +107,7 @@
             cache: false,
             type: "POST",
             url: "/Cart/FlyingCart",
-            data:"page="+page,
+            data: "page=" + page,
             success: function (data) {
                 $("#flycart_list").empty().html(data);
             },
@@ -115,10 +116,8 @@
         });
     }
 
-    function FlyCartDelete(idx)
-    {
-        if (confirm("삭제하시겠습니까?"))
-        {
+    function FlyCartDelete(idx) {
+        if (confirm("삭제하시겠습니까?")) {
             var src_url = "/Cart/FlyCartDelete";
             var param = "IDX=" + idx;
             $.ajax({
@@ -136,8 +135,7 @@
         }
     }
 
-    function FlycartClose()
-    {
+    function FlycartClose() {
         $("#header .lycart").hide();
     }
 
@@ -213,14 +211,13 @@
 
     //바로구매 하기 (ToDo)
     function NowOrderInput(p_code, p_count) {
-        if (confirm('바로구매하시겠습니까?'))
-        {
+        if (confirm('바로구매하시겠습니까?')) {
             alert('구매페이지 이동!!');
         }
     }
 
 
-    //찜하기 
+    //찜하기
     function Wish_Product_Input(p_code) {
         var arrP = new Array;
         arrP.push(p_code);

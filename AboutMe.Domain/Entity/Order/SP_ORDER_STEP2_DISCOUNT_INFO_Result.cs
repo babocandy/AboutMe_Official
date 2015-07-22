@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AboutMe.Domain.Entity.AdminOrder
+namespace AboutMe.Domain.Entity.Order
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TB_ORDER_LOG
+    public partial class SP_ORDER_STEP2_DISCOUNT_INFO_Result
     {
-        public int IDX { get; set; }
         public int ORDER_IDX { get; set; }
-        public string ORDER_CODE { get; set; }
-        public string PROCESS_MEMO { get; set; }
-        public string REG_ID { get; set; }
-        public System.DateTime REG_DATE { get; set; }
+        public int COUPON_DISCOUNT_AMT { get; set; }
+        public int POINT_USE_PRICE { get; set; }
+        public int GRADE_DISCOUNT_AMT { get; set; }
+        public int TRANS_PRICE { get; set; }
+        public Nullable<int> TRANS_COUPON { get; set; }
     }
 }

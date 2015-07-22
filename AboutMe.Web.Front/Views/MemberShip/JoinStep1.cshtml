@@ -32,12 +32,12 @@
         <script>
         //HP
         function jsSubmitHP(){
-            var popupWindowHP = window.open("", "auth_popup", "width=430,height=590,scrollbar=yes");
+            window.open("", "auth_popup", "width=430,height=590,scrollbar=yes");
             var form1 = document.formREAL_NAME;
             form1.target = "auth_popup";
             form1.action = "/RealName/hp/hs_cnfrm_popup2.aspx";
             form1.submit();
-            popupWindowHP.focus();
+            //popupWindowHP.focus();
         }
 
         //ipin
@@ -91,42 +91,17 @@
         </div>
         <!--//container-->
 
-        <br>
-        <a href="javascript:fSkipHP();">[SkipHP]</a> &nbsp; &nbsp;
-        <a href="javascript:fSkipIPIN();">[SkipIPIN]</a>
-        <script>
-        //HP -test 임시
-        function fSkipHP() {
-        var form1 = document.kcbResultForm;
-        form1.target = "";
-        form1.action = "/MemberShip/RealNameResult";
-        form1.submit();
-        }
-
-        //ipin -test 임시
-        function fSkipIPIN() {
-        var form1 = document.kcbOutForm;
-        form1.target = "";
-        form1.action = "/MemberShip/RealNameResult";
-        form1.submit();
-        }
-
-        </script>
 
 
 
+        <form name="formREAL_NAME" method="post" target="" action="">
+            <input type="hidden" name="test" value="test"/>
 
-
-
-
-
-
-        <form name="form_REAL_NAME" action="" method="post">
         </form>
 
 
         <!-- 본인확인 처리결과 정보_HP -->
-        <form name="kcbResultForm" method="post">
+        <form name="kcbResultForm_HP" method="post">
             <input type="hidden" name="mem_id" value="" />
             <input type="hidden" name="tx_seqno" value="" />
             <input type="hidden" name="result_cd" value="" />
@@ -146,7 +121,7 @@
         </form>  
 
         <!-- 본인확인 처리결과 정보_ipin -->
-        <form name="kcbOutForm" method="post">
+        <form name="kcbOutForm_IPIN" method="post">
             <input type="hidden" name="encPsnlInfo" />
             <input type="hidden" name="virtualno" />
             <input type="hidden" name="dupinfo" />

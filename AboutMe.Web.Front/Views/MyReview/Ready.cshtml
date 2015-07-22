@@ -1,0 +1,105 @@
+﻿@model IEnumerable<SP_REVIEW_PRODUCT_READY_SEL_Result>
+@using AboutMe.Domain.Entity.Review
+@{
+    ViewBag.Title = "Ready";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet">
+}
+
+@section Body{
+    <div class="wrap mypage">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div id="container" class="review">
+            <div class="container1080">
+                @{ Html.RenderPartial("~/Views/MyReview/_Top.cshtml");}
+
+                <!--리뷰영역-->
+                <div class="contypeb">
+                    <div class="reviewwrap">
+                        <!--리뷰 탭-->
+                        <div class="reviewtab">
+                            <ul class="">
+                                <li class="cnt" ><a href="#" onclick="return false;">작성 가능한 리뷰</a></li>
+                                <li ><a href="/MyPage/MyReview/Complete">작성한 리뷰</a></li>
+                            </ul>
+                        </div>
+                        <!--//리뷰 탭-->
+                        <!--리뷰 컨텐츠-->
+                        <div id="tabCon1" class="writable tab_content tabletypeb" style="display:block">
+                            <!--작성 가능한 리뷰 목록-->
+                            <table summary="주문 상품 정보, 수량, 결제금액, 비고">
+                                <caption>작성 가능한 리뷰 목록</caption>
+                                <colgroup>
+                                    <col width="170" />
+                                    <col width="*" />
+                                    <col width="105" />
+                                    <col width="148" />
+                                    <col width="231" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">주문 상품 정보</th>
+                                        <th>수량</th>
+                                        <th>결제금액</th>
+                                        <th>비고</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="proimg">
+                                                <a href="#"><img src="@(ViewBag.PRODUCT_PATH)@(item.P_IMG1_S)" alt="상품 이미지" /></a>
+                                            </td>
+                                            <td class="product">
+                                                <dl>
+                                                    <dt>
+                                                        <a href="#">
+                                                            <!--<span class="tag"><span class="ico_1_1">1+1</span></span>-->
+                                                            @item.P_NAME
+                                                        </a>
+                                                    </dt>
+                                                    <dd>@Html.Raw(item.P_SUB_TITLE)</dd>
+                                                </dl>
+                                            </td>
+                                            <td class="count">
+                                                <div class="relbox">@item.P_COUNT</div>
+                                            </td>
+                                            <td class="proprice"><strong>@string.Format("{0:#,##0}", @item.REAL_PAY_PRICE)</strong>원</td>
+
+                                            @{
+                                                
+                                                var str = "OrderDetailIdx=" + item.ORDER_DETAIL_IDX;
+                                                str = str + "&Pcode=" + item.P_CODE;                       
+                                            }
+                                           <td><a href="#" class="btn_goreview" onclick="PopupCenter('/MyPage/MyReview/Write?@(str)', '', 780, 600); return false;">리뷰쓰기</a></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                            <!--//작성 가능한 리뷰 목록-->                       
+                        </div>
+                        <!--//리뷰 컨텐츠-->
+                    </div>
+                    <!--//wrap review-->
+                </div>
+                <!--//리뷰영역-->
+
+            </div>
+            <!--//container1080-->
+        </div>
+        <!--//container-->       
+    
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+
+    </div>
+    <!--//wrap-->
+}
+

@@ -1,5 +1,5 @@
-<%'@ CodePage = "65001" %>
-<%'Response.CharSet = "UTF-8" %>
+<%@ CodePage = "65001" %>
+<%Response.Charset = "UTF-8"%>
 <%
 '**************************************************************************
 ' 파일명 : hs_cnfrm_popup1.aspx
