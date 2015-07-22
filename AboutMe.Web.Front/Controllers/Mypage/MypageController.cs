@@ -71,7 +71,7 @@ namespace AboutMe.Web.Front.Controllers
             string M_ID = MemberInfo.GetMemberId();
             string M_EMAIL = MemberInfo.GetMemberEmail();
 
-            ReturnDic retDic = _MemberService.SetMemberRetire(M_ID, M_DEL_REASON);   //탈퇴처리
+            ReturnDic retDic = _MemberService.SetMemberRetire(M_ID,"Y", M_DEL_REASON);   //탈퇴처리
             if (retDic.ERR_CODE != "0") //오류
             {
                 //로그 기록
@@ -97,7 +97,7 @@ namespace AboutMe.Web.Front.Controllers
             userlog.UserLogSave(log_memo, log_comment);
 
             //탈퇴메일 발송 --------------------------
-            if (M_EMAIL == "")
+            if (M_EMAIL != "")
             {
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
                 string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
