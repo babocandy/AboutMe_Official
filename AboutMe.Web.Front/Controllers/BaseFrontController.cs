@@ -34,6 +34,27 @@ namespace AboutMe.Web.Front.Controllers
             M_M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD()  //회원 피부트러블 코드  char(9)
         };
 
+        /**
+         * 상품 이미지 폴더
+         */
+        protected string _img_path_product{
+            get
+            {
+                return AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+            }
+        }
+
+        /**
+         * 리뷰 이미지 폴더
+         */
+        protected string _img_path_review
+        {
+            get
+            {
+                return AboutMe.Common.Helper.Config.GetConfigValue("ReviewPhotoPath");
+            }
+        }
+
        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
        {
           

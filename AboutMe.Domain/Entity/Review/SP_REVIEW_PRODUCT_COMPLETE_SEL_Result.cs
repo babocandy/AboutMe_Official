@@ -32,5 +32,6 @@ namespace AboutMe.Domain.Entity.Review
         public string COMMENT { get; set; }
         public string ADD_IMAGE { get; set; }
         public string IS_PHOTO { get; set; }
+        public Nullable<System.DateTime> INS_DATE { get; set; }
     }
 }
