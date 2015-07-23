@@ -1,0 +1,44 @@
+﻿@*@model IEnumerable<MvcCsBoard.Controllers.PagingValue>*@
+@model AboutMe.Common.Data.PagingProps
+
+@Request.Url.LocalPath
+<br />
+
+<div class="paging">
+
+    @if (Model.HasPreviousBlock)
+    {
+        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.GoPageOfPrevBlock + "&" + Model.QStr))" class="prev">이전</a>
+    }
+    else
+    {
+        <a href="#" class="prev">이전</a>
+    }
+
+
+
+    @for (var i = Model.StartPage; i <= Model.EndPage; i++)
+    {
+        if (i == Model.CurrentPage)
+        {
+            <strong>[@i]</strong>
+        }
+        else
+        {
+            @*<a href="@Url.Action(Request.Url.LocalPath, new { page = i, page_size = Model.page_size })" class="btn btn-default">*@
+            <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + i + "&" + Model.QStr))">@i</a>
+        }
+    }
+
+
+    @if (Model.HasNextBlock)
+    {
+        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.GoPageOfNextBlock + "&" + Model.QStr))" class="next">다음</a>
+    }
+    else
+    {
+        <a href="#" class="next">다음</a>
+    }
+</div>
+
+

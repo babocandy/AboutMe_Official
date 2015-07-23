@@ -17,17 +17,95 @@
     <link href="/aboutCom/css/membership.css" rel="stylesheet" />
 }
 
+@section Scripts{
 
-<!--header-->
-@section Header{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+<script type="text/javascript">
+
+    $(function () {
+        $(".allagree_check").change(function () {
+            var agreechkbox = $(".agree_check");
+            var is_check = $(this).is(":checked");
+            if (is_check) {
+                $(".agree_check").prop("checked", is_check);
+                agreechkbox.parent().addClass("chkcon_on")
+            } else {
+                $(".agree_check").prop("checked", is_check);
+                agreechkbox.parent().removeClass("chkcon_on")
+            }
+        });
+    });
+
+
+
+    function fGoNextStep() {
+        var f = document.frmJOIN_AGREE;
+        if (!f.AGREE_BASIC1.checked) {
+            alert("웹사이트 /모바일 이용약관에 동의하셔야 합니다.");
+            f.AGREE_BASIC1.focus();
+            return;
+        }
+        if (!f.AGREE_BASIC2.checked) {
+            alert("쇼핑몰 이용약관에 동의하셔야 합니다.");
+            f.AGREE_BASIC2.focus();
+            return;
+        }
+        if (!f.AGREE_BASIC3.checked) {
+            alert("개인정보 수집 및 이용에 동의하셔야 합니다.");
+            f.AGREE_BASIC3.focus();
+            return;
+        }
+        if (!f.AGREE_BASIC4.checked) {
+            alert("개인정보 위탁에 동의하셔야 합니다.");
+            f.AGREE_BASIC4.focus();
+            return;
+        }
+
+        //if (!f.agree5.checked) {
+        //    alert("개인정보 제3자 제공에 동의하셔야 합니다.");
+        //    f.agree5.focus();
+        //    return;
+        //}
+        if (!f.agree6.checked) {
+            alert("고유식별정보 수집 및 이용에 동의하셔야 합니다.");
+            f.agree6.focus();
+            return;
+        }
+
+        if (f.agree5.checked)
+            f.M_AGREE.value = "Y";
+        else
+            f.M_AGREE.value = "N";
+
+        if (f.agree6.checked)
+            f.M_AGREE2.value = "Y";
+        else
+            f.M_AGREE2.value = "N";
+
+        f.targte = "";
+        f.action = "/MemberShip/JoinStep3";
+        f.submit();
+    }
+
+    function fGoCancel() {
+        if (confirm("회원가입을 중단하시겠습니까?"))
+            window.location.href = "/";
+    }
+</script>
+
 }
-<!--//header-->
-<!--container-->
+
+
+
+@section Header{
+}
+
 @section Body{
 
+<div class="wrap join">
 
-    <div class="wrap join">
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
 
     <!--container-->
     <div id="container">
@@ -36,7 +114,10 @@
             <!--step-->
             <div class="joinstep"><img src="/aboutCom/images/membership/joinstep2.gif" alt="약관동의" /></div>
 
-            <form name="frmJOIN_AGREE" method="post" action="">
+            @using (Html.BeginForm("JoinStep3", "MemberShip", FormMethod.Post, new { id = "frmJOIN_AGREE", name = "frmJOIN_AGREE" }))
+            {
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                              
                 <input type="text" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
                 <input type="hidden" name="M_AGREE" value="" />
                 <input type="hidden" name="M_AGREE2" value="" />
@@ -641,94 +722,20 @@
                 <div class="btngroup">
                     <a href="javascript:fGoNextStep();" class="btn_brown_w185h60 mr10">확인</a><a href="javascript:fGoCancel();" class="btn_white_w185h60">취소</a>
                 </div>
-            </form>
+               }
 
-            <script type="text/javascript">
-                
-                $(function () {
-                    $(".allagree_check").change(function () {
-                        var agreechkbox = $(".agree_check");
-                        var is_check = $(this).is(":checked");
-                        if (is_check) {
-                            $(".agree_check").prop("checked", is_check);
-                            agreechkbox.parent().addClass("chkcon_on")
-                        } else {
-                            $(".agree_check").prop("checked", is_check);
-                            agreechkbox.parent().removeClass("chkcon_on")
-                        }
-                    });
-                });
-                
-
-
-                function fGoNextStep() {
-                    var f = document.frmJOIN_AGREE;
-                    if(!f.AGREE_BASIC1.checked)
-                    {
-                        alert("웹사이트 /모바일 이용약관에 동의하셔야 합니다.");
-                        f.AGREE_BASIC1.focus();
-                        return;
-                    }
-                    if (!f.AGREE_BASIC2.checked) {
-                        alert("쇼핑몰 이용약관에 동의하셔야 합니다.");
-                        f.AGREE_BASIC2.focus();
-                        return;
-                    }
-                    if (!f.AGREE_BASIC3.checked) {
-                        alert("개인정보 수집 및 이용에 동의하셔야 합니다.");
-                        f.AGREE_BASIC3.focus();
-                        return;
-                    }
-                    if (!f.AGREE_BASIC4.checked) {
-                        alert("개인정보 위탁에 동의하셔야 합니다.");
-                        f.AGREE_BASIC4.focus();
-                        return;
-                    }
-
-                    //if (!f.agree5.checked) {
-                    //    alert("개인정보 제3자 제공에 동의하셔야 합니다.");
-                    //    f.agree5.focus();
-                    //    return;
-                    //}
-                    if (!f.agree6.checked) {
-                        alert("고유식별정보 수집 및 이용에 동의하셔야 합니다.");
-                        f.agree6.focus();
-                        return;
-                    }
-
-                    if (f.agree5.checked)
-                        f.M_AGREE.value = "Y";
-                    else
-                        f.M_AGREE.value = "N";
-
-                    if (f.agree6.checked)
-                        f.M_AGREE2.value = "Y";
-                    else
-                        f.M_AGREE2.value = "N";
-
-                    f.targte = "";
-                    f.action = "/MemberShip/JoinStep3";
-                    f.submit();
-                }
-
-                function fGoCancel()
-                {
-                    if (confirm("회원가입을 중단하시겠습니까?"))
-                        window.location.href = "/";
-                }
-            </script>
+ 
         </div>
     </div>
     <!--//container-->
 
-    </div>
-
-
-
-}
-<!--//container-->
-<!--footer-->
-@section Footer{
+    <!--footer-->
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+
+</div>
+
 }
-<!--//footer-->
+
+@section Footer{
+}

@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 
-using AboutMe.Domain.Service.Cart;
+using AboutMe.Domain.Service.Order;
+using AboutMe.Domain.Entity.Order;
 using AboutMe.Domain.Entity.Cart;
 using AboutMe.Web.Front.Common.Filters;
 
@@ -13,11 +14,11 @@ namespace AboutMe.Web.Front.Controllers
 {
     public class OrderController : BaseFrontController
     {
-        private ICartService _cartservice;
+        private IOrderService _orderservice;
 
-        public OrderController(ICartService _cartservice)
+        public OrderController(IOrderService _orderservice)
         {
-            this._cartservice = _cartservice;
+            this._orderservice = _orderservice;
         }
 
         [OutputCache(NoStore = true, Duration = 0)]
@@ -40,213 +41,156 @@ namespace AboutMe.Web.Front.Controllers
                 P_CODE_LIST += pData.p_code;
                 P_COUNT_LIST += pData.p_count;
             }
+            Int32 Order_Idx = _orderservice.InsertOrderStep1(_user_profile.M_ID, _user_profile.SESSION_ID, P_CODE_LIST, P_COUNT_LIST);
+            this.TempData["Order_Idx"] = Order_Idx;
+            return Content("<form name='mysubmitform' action='/Order/Step1' method='POST'><input type='hidden' name='ORDER_IDX' value='" + Order_Idx.ToString() + "'></form> <script language='javascript'>document.mysubmitform.submit();</script>");
 
-            return RedirectToAction(""); //Index로 이동
-        }
-        // GET: Order
-        public ActionResult Index()
-        {
-            List<SP_TB_CART_LIST_Result> lst = new List<SP_TB_CART_LIST_Result>();
-            lst = _cartservice.CartList(_user_profile.M_ID, _user_profile.SESSION_ID);
-
-            CART_INDEX_MODEL viewModel = new CART_INDEX_MODEL();
-            viewModel.UserProfile = _user_profile;
-            viewModel.BannerUrl = "/aboutCom/images/sample/thum_banner.jpg";
-            viewModel.CartCnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
-            viewModel.CartList = lst;
-            viewModel.SumPoint = (lst.Count() < 1) ? 0 : lst.Sum(x => x.P_POINT);
-            viewModel.SumPrice = (lst.Count() < 1) ? 0 : lst.Sum(x => x.ORDER_PRICE);
-            return View(viewModel);
-        }
-
-        public ActionResult CartCount()
-        {
-            int cnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
-            var jsonData = new { cart_count = cnt };
-
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult CartInput(string data)
+        public ActionResult Step1(Int32 ORDER_IDX)
         {
-
-            List<CART_INSERT> cartDataList = JsonConvert.DeserializeObject<List<CART_INSERT>>(data);
-
-            foreach  (CART_INSERT cartData in cartDataList)
+            //ViewBag.Order_Idx = ORDER_IDX;
+            ORDER_STEP1_MODEL M = new ORDER_STEP1_MODEL
             {
-                SP_TB_CART_PRODUCT_ADD_Param newItem = new SP_TB_CART_PRODUCT_ADD_Param {
-                    M_ID = _user_profile.M_ID,
-                    SESSION_ID = _user_profile.SESSION_ID,
-                    P_CODE_LIST = cartData.p_code,
-                    P_COUNT_LIST = cartData.p_count,
-                    MERGY_OPT = "Y"
-                };
+                OrderIdx = ORDER_IDX,
+                UserProfile = _user_profile
+            };
+            return View(M);
+        }
 
-                _cartservice.CartInsert(newItem);
+        public ActionResult Step1ProductList(Int32 OrderIdx)
+        {
+            ORDER_STEP1_ORDERLIST M = new ORDER_STEP1_ORDERLIST
+            {
+                OrderIdx = OrderIdx,
+                UserProfile = _user_profile,
+                OrderList = _orderservice.OrderStep1List(OrderIdx)
+
+            };
+            return PartialView(M);
+        }
+        
+        public ActionResult Step1PriceInfo(Int32 OrderIdx)
+        {
+            ORDER_STEP1_PRICEINFO M = new ORDER_STEP1_PRICEINFO
+            {
+                OrderIdx = OrderIdx,
+                UserProfile = _user_profile,
+                PriceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx)
+
+            };
+            return PartialView(M);
+        }
+
+        public ActionResult Step1DiscountInfo(Int32 OrderIdx)
+        {
+            SP_ORDER_STEP2_PRICE_INFO_Result priceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx);
+            bool coupon_disable = true;
+
+            if (priceInfo.TOTAL_PAY_PRICE >= 30000)
+            {
+                coupon_disable = true;
             }
-            int cnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
-            var jsonData = new { result="true",cart_count = cnt };
+            else
+            {
+                coupon_disable = false;
+            }
 
+            ORDER_STEP1_DISCOUNTINFO M = new ORDER_STEP1_DISCOUNTINFO
+            {
+                OrderIdx = OrderIdx,
+                UserProfile = _user_profile,
+                TransCouponDisabled = coupon_disable,
+                DiscountInfo = _orderservice.OrderStep1DiscountInfo(OrderIdx),
+                TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID,"TRANS","P")
+            };
+            return PartialView(M);
+        }
+
+        public ActionResult Step1AddressInfo(Int32 OrderIdx)
+        {
+            string M_ID = _user_profile.M_ID;
+            SP_ORDER_STEP2_RECENTADDR_INFO_Result info = new SP_ORDER_STEP2_RECENTADDR_INFO_Result();
+            SP_ORDER_STEP2_BASEADDR_INFO_Result baseinfo = new SP_ORDER_STEP2_BASEADDR_INFO_Result();
+
+            if (_user_profile.IS_LOGIN == true)
+            {
+                info = _orderservice.OrderStep1RecentAddrInfo(M_ID);
+                baseinfo = _orderservice.OrderStep1BaseAddrInfo(M_ID);
+            }
+            else
+            {
+            }
+
+            ORDER_STEP1_ADDRESSINFO M = new ORDER_STEP1_ADDRESSINFO
+            {
+                OrderIdx = OrderIdx,
+                UserProfile = _user_profile,
+                RecentAddrInfo = info,
+                BaseAddrInfo= baseinfo
+            };
+            return PartialView(M);
+        }
+
+        public ActionResult SaveMemberAddress(string SENDER_POST1, string SENDER_POST2, string SENDER_ADDR1, string SENDER_ADDR2, 
+            string SENDER_TEL1, string SENDER_TEL2, string SENDER_TEL3, string SENDER_HP1, string SENDER_HP2, string SENDER_HP3,
+            string SENDER_EMAIL1, string SENDER_EMAIL2)
+        {
+            _orderservice.OrderStep1SaveMemberInfo(_user_profile.M_ID, SENDER_POST1, SENDER_POST2, SENDER_ADDR1, SENDER_ADDR2, SENDER_TEL1, SENDER_TEL2, SENDER_TEL3, SENDER_HP1, SENDER_HP2, SENDER_HP3, SENDER_EMAIL1, SENDER_EMAIL2);
+            var jsonData = new { result = "true" };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult CartUpdateCnt(Int32 IDX, Int32 CNT)
+        public ActionResult Step1PayInfo(Int32 OrderIdx)
         {
-            _cartservice.CartUpdateCnt(_user_profile.M_ID, _user_profile.SESSION_ID,IDX, CNT);
-            return RedirectToAction("Index");
-
-        }
-        [HttpPost]
-        public ActionResult CartDelete(string IDX)
-        {
-            _cartservice.CartDelete(_user_profile.M_ID, _user_profile.SESSION_ID, IDX);
-            return RedirectToAction("Index");
-
-        }
-
-        [HttpPost]
-        public ActionResult CartCalculatePrice(string data)
-        {
-            Int32 sum_point = 0;
-            Int32 sum_price = 0;
-
-            string sum_point_txt = "";
-            string sum_price_txt = "";
-
-            List<SP_TB_CART_LIST_Result> lst = new List<SP_TB_CART_LIST_Result>();
-            lst = _cartservice.CartList(_user_profile.M_ID, _user_profile.SESSION_ID);
-
-            List<Int32> cartDataList = JsonConvert.DeserializeObject<List<Int32>>(data);
+            string M_ID = _user_profile.M_ID;
             
-            var q = lst.Where(x=> cartDataList.Contains(x.CART_IDX)).ToList();
+            ORDER_STEP1_PAYINFO M = new ORDER_STEP1_PAYINFO
+            {
+                OrderIdx = OrderIdx,
+                UserProfile = _user_profile,
+                PriceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx)
+            };
+            return PartialView(M);
+        }
 
-            sum_point = q.Sum(x => x.P_POINT);
-            sum_price = q.Sum(x => x.ORDER_PRICE);
+        public ActionResult CouponPop(Int32 OrderIdx)
+        {
+            string M_ID = _user_profile.M_ID;
+            //ViewBag.Order_Idx = ORDER_IDX;
+            ORDER_STEP1_ORDERLIST M = new ORDER_STEP1_ORDERLIST
+            {
+                OrderIdx = OrderIdx,
+                UserProfile = _user_profile,
+                OrderList = _orderservice.OrderStep1List(OrderIdx)
+            };
+            return View(M);
+        }
 
-            sum_point_txt = sum_point.ToString("#,#0.");
-            sum_price_txt = sum_price.ToString("#,#0.");
-            var jsonData = new { result = "true", sum_point = sum_point_txt, sum_price = sum_price_txt, chk_count  = q.Count()};
-
+        public ActionResult ProductCouponList(string P_CODE)
+        {
+            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "P");
+            var jsonData = new { result = "true", list= TransCouponList};
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-
-        #region 로그인시 장바구니 합치기 test용
-        public void CartMerge()
+        public ActionResult SelectCouponOption(string P_CODE, string COUPON_CD)
         {
-            _cartservice.CartMerge(_user_profile.M_ID, _user_profile.SESSION_ID, "Y");
-            //var jsonData = new { result = "true" };
-            //return Json(jsonData, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
-        [HttpPost]
-        [CustomAuthorize]
-        public ActionResult WishInput(string data)
-        {
-
-            List<String> PCodeList = JsonConvert.DeserializeObject<List<String>>(data);
-            int cnt = 0;
-            object jsonData = null;
-            foreach (String Item in PCodeList)
+            string str = "<option RATE_OR_MONEY='' COUPON_MONEY='' COUPON_DISCOUNT_RATE=''>쿠폰을 선택하세요</option>\n";
+            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "P");
+            //var jsonData = new { result = "true", list= TransCouponList};
+            foreach (SP_ORDER_STEP2_COUPON_SEARCH_Result item in TransCouponList)
             {
-                cnt = _cartservice.WishInsert(_user_profile.M_ID, Item);
-            }
-
-            if (PCodeList.Count() == 1)
-            {
-                if (cnt == -99) //이미추가되어있는경우    
+                string seltxt = "";
+                if (item.IDX_COUPON_NUMBER.ToString() == COUPON_CD)
                 {
-                    cnt = _cartservice.WishListCount(_user_profile.M_ID);
-                    jsonData = new { result = "false", wish_count = cnt, msg = "이미 찜하였습니다." };
+                    seltxt = "selected='selected'";
                 }
-                else
-                {
-                    jsonData = new { result = "true", wish_count = cnt };
-                }
+                str += "<option value='" + item.IDX_COUPON_NUMBER + "' "+seltxt+" RATE_OR_MONEY='" + item.RATE_OR_MONEY + "' COUPON_MONEY='" + item.COUPON_MONEY + "'" + " COUPON_DISCOUNT_RATE='" + item.COUPON_DISCOUNT_RATE + "'>" + item.COUPON_NAME + "</option>\n";
             }
-            else
-            {
-                jsonData = new { result = "true", wish_count = cnt };
-            }
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
+            return Content(str);
         }
 
-        [HttpPost]
-        [CustomAuthorize]
-        public ActionResult WishDelete(string data)
-        {
-            List<int> idxList = JsonConvert.DeserializeObject<List<int>>(data);
-            int cnt = 0;
-            foreach (int Item in idxList)
-            {
-                cnt = _cartservice.WishDelete(_user_profile.M_ID, Item);
-            }
-            var jsonData = new { result = "true", wish_count = cnt };
-
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
-
-        }
-
-        [HttpPost]
-        public ActionResult WishCount()
-        {
-            int cnt = _cartservice.WishListCount(_user_profile.M_ID);
-            var jsonData = new { wish_count = cnt };
-
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult FlyingCart(int page=1)
-        {
-            int PageSize = 1;
-            List<SP_TB_CART_LIST_Result> lst = new List<SP_TB_CART_LIST_Result>();
-            lst = _cartservice.CartList(_user_profile.M_ID, _user_profile.SESSION_ID);
-
-            var cart_list = lst.Skip((page - 1) * PageSize).Take(PageSize);
-            int cartCnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
-            int totalPage = cartCnt / PageSize;
-
-            CART_FLYING_MODEL viewModel = new CART_FLYING_MODEL();
-            viewModel.CurrentPage = page;
-            viewModel.TotalPage = totalPage;
-            viewModel.PrevPage = (page > 1) ? page - 1 : 1;
-            viewModel.NextPage = (page < totalPage) ? page + 1 : totalPage;
-            viewModel.CartCnt = cartCnt;
-            viewModel.CartList = cart_list;
-
-            return PartialView(viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult FlyCartDelete(string IDX)
-        {
-            _cartservice.CartDelete(_user_profile.M_ID, _user_profile.SESSION_ID, IDX);
-
-            int cnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
-            var jsonData = new { result = "true", cart_count = cnt };
-
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
-
-        }
-
-        #region 주문페이지로 이동
-        public ActionResult GoNextStep(string PCODE_ARRAY)
-        {
-            this.ViewBag.PCODE_ARRAY = PCODE_ARRAY;
-
-            if (_user_profile.IS_LOGIN)
-            {
-                return RedirectToAction("InsertStep1", "Order", new { order_list = PCODE_ARRAY});
-            }
-            else
-            {
-                return RedirectToAction("CartLogin", "MemberShip", new { order_list = PCODE_ARRAY});
-            }
-        }
-        #endregion
-
-
+        
     }
 }

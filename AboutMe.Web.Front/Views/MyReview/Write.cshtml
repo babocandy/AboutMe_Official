@@ -1,111 +1,139 @@
-﻿@{
+﻿@model AboutMe.Web.Front.Models.MyReviewInsertViewModel
+@using AboutMe.Common.Helper
+@{
     ViewBag.Title = "Write";
-    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+    Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
 }
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
-    <link href="/aboutCom/css/mypage.css" rel="stylesheet">
+
+    <style>
+        .field-validation-error, .validation-summary-errors {
+            color: red;
+            font-size: 13px;
+            line-height: 15px;
+            text-indent: -11px;
+        }
+    </style>
+
+    @if (!Model.ResultNum.IsEmpty() && Model.ResultNum != "0")
+    {
+        <script>
+            alert("@(Model.ResultMessage)");
+        </script>
+    }
+    else if (Model.ResultNum == "0")
+    {
+        <script>
+            window.opener.location.reload(true);
+            self.close();
+        </script>
+    }
+
 }
 
 @section Body{
-<div class="wrap mypage">
-    <!--상품리뷰등록_뷰티-->
-    <div class="reviewpop_wrap review_write" style="display:block;">
-        <div class="dim"></div>
-        <div class="reviewpop">
-            <a href="#none" class="reviewpop_close" onclick="reviewpop_close()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt=""></a>
-            <!--reviewpop_top-->
-            <div class="reviewpop_top">
-                <div class="title_area">
-                    <p class="title">상품 리뷰 등록</p>
-                </div>
+	<!-- 상품리뷰등록_뷰티 팝업 -->
+<div class="popupwrap">
+    <div class="pop">
+        <!--pop_top-->
+        <div class="pop_top">
+            <div class="title_area">
+                <p class="title">상품 리뷰 등록</p>
             </div>
-            <!--//reviewpop_top-->
-            <!--reviewpop_bottom-->
-            <div class="reviewpop_bottom writeform pro">
-                <form name="frm" action="">
-                    <fieldset>
-                        <legend>상품 리뷰 등록 폼</legend>
-                        <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
-                        <table summary="상품찾기, 피부타입, 제목">
-                            <caption>상품 리뷰 등록 입력 표</caption>
-                            <colgroup>
-                                <col width="147">
-                                <col width="*">
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th rowspan="2">상품찾기</th>
-                                    <td class="prosearch">굿나잇 모이스쳐 앰플</td>
-                                </tr>
-                                <tr>
-                                    <td class="product">
-                                        <div class="pro_info">
-                                            <!--이미지사이즈 96x96-->
-                                            <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt4.jpg" alt=""></div>
-                                            <div class="detail">
-                                                <p class="tit">리얼 프레쉬팩 [로즈]</p>
-                                                <p class="stit">맑고 촉촉한 피부를 위한 100%천연유래 <br>Real fresh pack</p>
-                                                <p class="price">4,000원</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>피부타입</th>
-                                    <td class="skintype">
-                                        <select class="selectstyleb" title="" style="display: none;">
-                                            <option selected="selected">선택하세요</option>
-                                            <option>건성</option>
-                                            <option>지성</option>
-                                        </select><div class="outSelB"><a href="javascript:" title="" class="tag_select">선택하세요</a><ul class="tag_options" style="display: none;"><li class="open_selected"><a href="javascript:">선택하세요</a></li><li><a href="javascript:">건성</a></li><li><a href="javascript:">지성</a></li></ul></div>
-                                    </td>
-                                </tr>
-                                <tr class="last edit">
-                                    <th>내용<br><span>0 / 000 byte</span></th>
-                                    <td><textarea class="txtareatypea" style="width:100%"></textarea></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="attach mt20">
-                            <h3>사진첨부</h3>
-                            <span class="locbox">
-                                <input type="text" class="ipttypea" style="width:400px" title="파일 경로입력"><a href="#" class="btn_white_w96h38">찾아보기</a>
-                            </span>
-                            <span class="imgbox">
-                                <img src="" alt="">
-                            </span>
-                        </div>
-                        <div class="agreebox mt40">
-                            <h3>타이틀 영역 타이틀 영역</h3><label class="chkcon"><input type="checkbox" name="" title=""><span class="txt">동의합니다.</span><span class="bl"></span></label>
-                            <div class="agreetxt">
-                                주문할 상품의 상품명, 상품가격, 배송정보를 확인하였으며, 구매에 동의하시겠습니까?
-                                <span class="law">(전자상거래법 제 8조 제2항)</span>
-                            </div>
-                        </div>
-                        <div class="btngroup mt40">
-                            <a href="#" class="btn_brown_w96h38">등록</a><a href="#" class="btn_white_w96h38 typeb">취소</a>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <!--//reviewpop_bottom-->
+            <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
         </div>
+        <!--//pop_top-->
+        <!--pop_bottom-->
+        <div class="write_review pro">
+                @using (Html.BeginForm("Write", "MyReview", FormMethod.Post, new { id = "frm", name = "frm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+                 <input type="hidden" name="Mid" value="@(Model.Mid)" />
+                <input type="hidden" name="OrderDetailIdx" value="@(Model.OrderDetailIdx)" />
+                <input type="hidden" name="Pcode" value="@(Model.Pcode)" />
+
+                <fieldset>
+                    <legend>상품 리뷰 등록 폼</legend>
+                    <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
+                    <table summary="상품찾기, 피부타입, 제목">
+                        <caption>상품 리뷰 등록 입력 표</caption>
+                        <colgroup>
+@if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+{
+                            <col width="147" />
+                            <col width="*" />
+                            <col width="88" />
+                            <col width="142" />
+}
+else
+{
+    <col width="147" />
+    <col width="*" />
+}
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>상품명</th>
+                                <td class="pro_info">
+                                    <!--이미지사이즈 96x96-->
+                                    <div class="photo"><img src="@ViewBag.Pimg" alt="" /></div>
+                                    <div class="detail">
+                                        <p class="tit">@ViewBag.Pname</p>
+                                        <p class="stit">@ViewBag.PsubTitle</p>
+                                        <!--<p class="price"><strong>4,000</strong>원</p>-->
+                                    </div>
+                                </td>
+
+                                @if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+                                {
+                                    <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SkinType)</span>피부타입</th>
+                                    <td class="skintype">
+                                        <select class="selectstyleb" title="" name="SkinType">
+                                            <option selected="selected" value="">선택하세요</option>
+                                            <option value="10">건성</option>
+                                            <option value="20">중성</option>
+                                            <option value="30">지복합성</option>
+                                        </select>
+
+                                    </td>
+                                }
+  
+                            </tr>
+                            <tr class="edit">
+                                <th><span>@Html.ValidationMessageFor(model => model.Comment)</span>내용<br /><span>0 / 000 자</span></th>
+                                <td colspan="3">                                   
+                                    <textarea name="Comment" class="txtareatypea" style="width:100%"></textarea>                                    
+                                </td>                                
+                            </tr>
+                            <tr class="attach">
+                                <th>사진첨부</th>
+                                <td colspan="3">
+                                    <span class="imgbox">
+                                        <img src="/aboutCom/images/review/write_imgnone.jpg" alt="" />
+                                    </span><input type="text" name="AddImage" class="ipttypea ml10" style="width:360px" title="파일 경로입력" /><a href="#" class="btn_white_w96h38 ml5">찾아보기</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="note">
+                        <h3>유의사항</h3>
+                        <ul>
+                            <li>- 리뷰 작성 시 일반리뷰는 500포인트, 포토리뷰는 1,000포인트를 적립해 드립니다.</li>
+                            <li>- 텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
+                            <li>- 근거 없는 악성 비방글,게시판의 성격과 맞지 않는 글은 삭제 돌 수 있으니 양해 부탁 드립니다.</li>
+                        </ul>
+                    </div>
+                    <div class="btngroup mt30">
+                        <a href="#" class="btn_brown_w96h38" onclick="document.frm.submit(); return false;" >등록</a><a href="#" onclick="PopupClose()" class="btn_white_w96h38 typeb">취소</a>
+                    </div>
+                </fieldset>
+              }
+        </div>
+        <!--//pop_bottom-->
     </div>
-    <!--//상품리뷰등록_뷰티-->
-    <script type="text/javascript">
-        //리뷰팝업
-        function reviewpop_view() {
-            $("html").css({ "overflow-y": "hidden" });
-            $(".reviewpop_wrap").show();
-            $(".reviewpop_wrap").css({ "overflow-y": "auto" });
-        }
-        function reviewpop_close() {
-            $(".reviewpop_wrap").hide();
-            $(".reviewpop_wrap").css({ "overflow-y": "hidden" });
-            $("html").css({ "overflow-y": "auto" });
-        }
-    </script>
 </div>
+<!-- //상품리뷰등록_뷰티 팝업 -->
 }
 

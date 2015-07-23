@@ -1,0 +1,241 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/shopping.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+<script>
+    // 카테고리
+    var cateIdx, oldcateIdx = -1;
+    function cateOpen(idx) {
+        if (!$(".categoryls>ul>li:eq(" + idx + ")>a").hasClass("disable")) {
+            cateIdx = idx;
+            if (cateIdx == oldcateIdx) {
+                cateClose();
+                oldcateIdx = -1;
+            } else {
+                if (oldcateIdx > -1) {
+                    $(".categoryls>ul>li:eq(" + oldcateIdx + ")>.subcatels").slideUp(0);
+                    $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").removeClass("cnt");
+                }
+                $("html, body").css({ "overflow-y": "hidden" });
+                $("body").bind('touchmove', function (e) { e.preventDefault() });
+                $(".categoryls .dimed").fadeIn();
+                $(".categoryls>ul>li:eq(" + cateIdx + ") .subcatels").slideDown();
+                $(".categoryls>ul>li:eq(" + cateIdx + ")>a").addClass("cnt");
+                oldcateIdx = cateIdx;
+            }
+        }
+    }
+    // 카테고리 1depth click
+    function cateOpen1(obj) {
+        var _this = obj;
+        $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").text($(_this).text());
+        $(".categoryls>ul>li:eq(1)>a").removeClass("disable");
+        $(".categoryls>ul>li:eq(2)>a").addClass("disable");
+        cateOpen(1);
+    }
+    // 카테고리 2depth click
+    function cateOpen2(obj) {
+        var _this = obj;
+        $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").text($(_this).text());
+        $(".categoryls>ul>li:eq(2)>a").removeClass("disable");
+        cateOpen(2);
+    }
+    // 카테고리 3depth click
+    function cateOpen3(obj) {
+        var _this = obj;
+        $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").text($(_this).text());
+        cateClose();
+    }
+    // 카테고리 3depth 있을때
+    function cate3Block() {
+        $(".categoryls>ul>li:eq(2)>a").show(0);
+    }
+    // 카테고리 3depth 없을때
+    function cate3None() {
+        $(".categoryls>ul>li:eq(2)>a").hide(0);
+    }
+    // 카테고리 close
+    function cateClose() {
+        oldcateIdx = -1;
+        $("html, body").css({ "overflow-y": "auto" });
+        $("body").unbind('touchmove');
+        $(".categoryls .dimed").fadeOut();
+        $(".categoryls>ul>li>a").removeClass("cnt");
+        $(".categoryls>ul>li>.subcatels").slideUp().removeClass("cnt");
+    }
+    $(function () {
+        // 카테고리 dimmed click
+        $(".categoryls .dimed").click(function () {
+            cateClose();
+        });
+    });
+</script>
+
+    <script language="javascript">
+
+        $(function () {
+            //ajaxSelectCateCodeJavascriptInit();
+        });
+
+    </script>
+}
+
+<!--container-->
+@section Body{
+
+    <div class="wrap display">
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>쇼핑</h2>
+            </div>
+
+            <!-- category -->
+            <div class="categoryls">
+                <div class="dimed"></div>
+                <ul>
+                    <li>
+                        <a href="javascript:" onclick="cateOpen(0);">ALL</a>
+                        <div class="subcatels">
+                            <ul>
+                                <li><a href="javascript:" onclick="cateOpen1(this);cate3Block();" class="cnt">전체dpe1</a></li>
+                                <li><a href="javascript:" onclick="cateOpen1(this);cate3Block();">뷰티</a></li>
+                                <li><a href="javascript:" onclick="cateOpen1(this);cate3None();">헬스</a></li>
+                                <li><a href="javascript:" onclick="cateOpen1(this);cate3None();">셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵</a></li>
+                            </ul>
+                            <a href="javascript:" onclick="cateClose();" class="btn_close">닫기</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:" onclick="cateOpen(1);" class="disable">ALL</a>
+                        <div class="subcatels">
+                            <ul>
+                                <li><a href="javascript:" onclick="cateOpen2(this);">전체dpe2</a></li>
+                                <li><a href="javascript:" onclick="cateOpen2(this);">뷰티</a></li>
+                                <li><a href="javascript:" onclick="cateOpen2(this);">헬스</a></li>
+                                <li><a href="javascript:" onclick="cateOpen2(this);">셀렉트샵</a></li>
+                            </ul>
+                            <a href="javascript:" onclick="cateClose();" class="btn_close">닫기</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:" onclick="cateOpen(2);" class="disable">ALL</a>
+                        <div class="subcatels">
+                            <ul>
+                                <li><a href="#link" onclick="cateOpen3(this);">전체dpe3</a></li>
+                                <li><a href="#link" onclick="cateOpen3(this);">뷰티</a></li>
+                                <li><a href="#link" onclick="cateOpen3(this);">헬스</a></li>
+                                <li><a href="#link" onclick="cateOpen3(this);">셀렉트샵</a></li>
+                            </ul>
+                            <a href="javascript:" onclick="cateClose();" class="btn_close">닫기</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //category -->
+            <!--상품정렬-->
+            <div class="product_sort">
+                <p class="total_txt">총 <strong>54</strong>개 상품이 있습니다.</p>
+                <span class="sort">
+                    <span class="selbox select_a">
+                        <select name="" title="상품정렬 선택">
+                            <option>신상품순</option>
+                            <option>인기순</option>
+                            <option>최저가순</option>
+                            <option>최고가순</option>
+                        </select>
+                    </span>
+                </span>
+            </div>
+            <!--상품정렬-->
+            <!--상품리스트-->
+            <div class="product_list">
+                <ul>
+                    <li>
+                        <a href="#none">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
+                            <span class="ico ico_best">BEST</span>
+                            <span class="p_tit">스킨 톤업 버블 워시</span>
+                            <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                25,000원
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#none">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
+                            <span class="ico ico_time">TIME</span>
+                            <span class="p_tit">스킨 톤업 버블 워시</span>
+                            <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                25,000원
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#none">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
+                            <span class="ico ico_best">BEST</span>
+                            <span class="p_tit">스킨 톤업 버블 워시</span>
+                            <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                25,000원
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#none">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
+                            <span class="ico ico_time">TIME</span>
+                            <span class="p_tit">스킨 톤업 버블 워시</span>
+                            <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                25,000원
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--상품리스트-->
+            <!--페이징-->
+            <div class="paging">
+                <a href="#" class="prev"></a>
+                <strong>1</strong> / 50
+                <a href="#" class="next"></a>
+            </div>
+            <!--//페이징-->
+
+
+
+        </div>
+        <!--//container-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    </div>
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+    
+}
+<!--//footer-->

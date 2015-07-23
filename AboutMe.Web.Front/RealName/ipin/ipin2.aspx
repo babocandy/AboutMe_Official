@@ -62,8 +62,8 @@
 		//**************************************************************************
 		//okname 응답 정보
 		//**************************************************************************
-		Response.Write ("ret="+ret+"<br>");
-		Response.Write ("output="+output+"<br>");
+		//Response.Write ("ret="+ret+"<br>");
+		//Response.Write ("output="+output+"<br>");
 		if (ret == 0) {
 			string[] result = ((String)output).Split(new string[] {"\n"}, StringSplitOptions.None);
 		    pubkey =  result[0];

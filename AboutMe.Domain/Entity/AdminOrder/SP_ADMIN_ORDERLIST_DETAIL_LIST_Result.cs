@@ -17,11 +17,9 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string P_IMG1_S { get; set; }
         public string P_NAME { get; set; }
         public int P_COUNT { get; set; }
-        public Nullable<int> PROMOTION { get; set; }
+        public string PROMOTION { get; set; }
         public int SELLING_PRICE { get; set; }
         public Nullable<int> EMP_DISCOUNT_PRICE { get; set; }
-        public Nullable<int> COUPON_DISCOUNT { get; set; }
-        public Nullable<int> COUPON { get; set; }
         public int USE_POINT { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
         public int POINT_ACCML { get; set; }
@@ -32,5 +30,14 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public System.DateTime ORDER_DETAIL_STATUS_DATE { get; set; }
         public string P_CODE { get; set; }
         public Nullable<int> DISCOUNT_PRICE { get; set; }
+        public string PROMOTION_TYPE { get; set; }
+        public Nullable<int> EMP_DISCOUNT_AMT { get; set; }
+        public string COUPON_NAME { get; set; }
+        public int COUPON_DISCOUNT_AMT { get; set; }
+        public int COUPON_DISCOUNT_PRICE { get; set; }
+        public int USE_POINT_PRICE { get; set; }
+        public int GRADE_DISCOUNT_AMT { get; set; }
+        public int GRADE_DISCOUNT_PRICE { get; set; }
+        public string CD_COUPON { get; set; }
     }
 }

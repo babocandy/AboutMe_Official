@@ -41,19 +41,20 @@ namespace AboutMe.Web.Front.Controllers
 
 
         //사용자 로그인 폼
-        public ActionResult Login(string RedirectUrl = "", string PCODE_ARRAY = "")
+        public ActionResult Login(string RedirectUrl = "", string OrderList = "")
         {
 
-            if (!string.IsNullOrEmpty(PCODE_ARRAY))
+            if (!string.IsNullOrEmpty(OrderList))
             {
                 ViewBag.isOrderLogin = "true";
-                ViewBag.OrderList = PCODE_ARRAY; //주문쪽상품데이터
+                ViewBag.OrderList = OrderList; //주문쪽상품데이터
             }
             else
             {
                 ViewBag.isOrderLogin = "false";
                 ViewBag.OrderList = "";            
             }
+
             this.ViewBag.RedirectUrl = RedirectUrl;
 
             this.ViewBag.M_ID = MemberInfo.GetMemberId();
@@ -62,12 +63,34 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.M_EMAIL = MemberInfo.GetMemberEmail();
 
 
+
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            if ( HttpContext.Request.Url.Port !=80)
+                strHTTPS_DOMAIN =strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+
+
+            //test ---------
+            this.ViewBag.Request_Url_Host = Request.Url.Host;
+            this.ViewBag.Request_Url_Authority = Request.Url.Authority;
+            this.ViewBag.Request_Url_Port = Request.Url.Port;
+            this.ViewBag.DomainName = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);
+
+
             return View();
         }
 
         //사용자 로그인
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "")
         {
+            //string HTTP_DOMAIN = Config.GetConfigValue("HTTP_DOMAIN");
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority;  // ==> http://현재doamin[:port]
+
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
+
             //로그 기록
             string memo = "사용자-로그인";
             string comment = "사용자-로그인";
@@ -157,21 +180,48 @@ namespace AboutMe.Web.Front.Controllers
                 UserLog userlog = new UserLog();
                 userlog.UserLogSave(memo, comment);
 
+                //https 제거 처리 start------------- SSL적용후 테스트 필요--------------------------
+                
+                if (RedirectUrl != "")
+                {
+                    if (RedirectUrl.Substring(0, 8) == "https://")
+                    {
+                        RedirectUrl = "http://" + RedirectUrl.Substring(8);
+                    }
+                    if (RedirectUrl.Substring(0, 1) == "/")
+                    {
+                        RedirectUrl = strHTTP_DOMAIN + RedirectUrl;
+                    }
+                }
+                 
+                //https 제거 처리 end-------------
+
+
                 if (!string.IsNullOrEmpty(OrderList))
                 {
-                    return RedirectToAction("InsertOrderStep1", "Order", new { OrderList = OrderList }); // 주문페이지로이동
+                    //개발시
+                    //return RedirectToAction("InsertOrderStep1", "Order", new { OrderList = OrderList }); // 주문페이지로이동
+
+                    //https ->  http 로 변경 적용시
+                    //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
+                    return Redirect(uh.Action("InsertOrderStep1", "Order", null, "http")); // 주문페이지로이동
                 }
                 else
                 {
                     if (RedirectUrl != "")
-                        return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
+                        return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");  //이미 https -> http로 변경괸 상태
                 }
 
             }
 
 
-            return RedirectToAction("Main", "Mypage"); // 로그인 성공
-            //return View();        }
+            //개발시
+            //return RedirectToAction("Main", "Mypage"); // 로그인 성공
+            
+            //https ->  http 로 변경 적용시
+            //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
+            return Redirect(uh.Action("Main", "Mypage", null, "http"));
+            
         }
 
         //비회원 주문
@@ -224,6 +274,8 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
         //사용자 회원가입- Step1 -실명인증 결과 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RealNameResult(string WORK_TMP_ID = "", string M_JOIN_MODE="")
         {
             if (WORK_TMP_ID == null || WORK_TMP_ID == "" || M_JOIN_MODE == "" || M_JOIN_MODE == null)
@@ -323,7 +375,7 @@ namespace AboutMe.Web.Front.Controllers
 
             argM_JOIN_TYPE = M_JOIN_MODE;
             argRETURN_MSG_ALL = memo;
-            if (M_JOIN_MODE == "hp" || M_JOIN_MODE == "HP")
+            if (argM_JOIN_TYPE == "hp" || argM_JOIN_TYPE == "HP")
             {
                 argRESULT_CODE = result_cd;
                 argTRAN_NO = tx_seqno;
@@ -342,17 +394,17 @@ namespace AboutMe.Web.Front.Controllers
                     argM_SEX = "2"; //여자 =>2
                 argnation = nation;
             }
-            if (M_JOIN_MODE == "ipin" || M_JOIN_MODE == "IPIN")
+            if (argM_JOIN_TYPE == "ipin" || argM_JOIN_TYPE == "IPIN")
             {
                 argRESULT_CODE = "";
                 argTRAN_NO = cprequestnumber;
                 argM_NAME = realname;
                 argdi = dupinfo;
                 argci = coinfo1;
-                if (birthday.Length == 8)
-                    argM_BIRTHDAY = birthday.Substring(0, 4) + "-" + birthday.Substring(4, 2) + "-" + birthday.Substring(6, 2);
+                if (birthdate.Length == 8)
+                    argM_BIRTHDAY = birthdate.Substring(0, 4) + "-" + birthdate.Substring(4, 2) + "-" + birthdate.Substring(6, 2);
                 else
-                    argM_BIRTHDAY = birthday;
+                    argM_BIRTHDAY = birthdate;
                 argM_SEX = sex;
                 if (sex == "1") //0:여자 ,1:남자
                     argM_SEX = "1"; //남자
@@ -362,13 +414,12 @@ namespace AboutMe.Web.Front.Controllers
             }
 
 
-
             //실명인증 로그 DB저장 -> Step3에서  WORK_TMP_ID로 1시간내 사용
             _MemberService.SetRealNameLogInsert(WORK_TMP_ID, argM_JOIN_TYPE, argRESULT_CODE, argTRAN_NO, argM_NAME, argdi, argci, argM_BIRTHDAY, argM_SEX, argnation, argRETURN_MSG_ALL, argIP);
 
 
             //DI기준으로 이미 가입한 적이 있는지?
-            ReturnDic retDic =  _MemberService.GetMemberDindDI(argdi);
+            ReturnDic retDic = _MemberService.GetMemberFindDI(argdi);
             if (retDic.ERR_CODE =="10") //이미 가입한 실명인증회원임            
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('"+ retDic.ERR_MSG +"'); location.href='/MemberShip/Login';</script>");
@@ -381,7 +432,7 @@ namespace AboutMe.Web.Front.Controllers
 
             if (retDic.ERR_CODE != "0") //DI 기타오류        
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.Go(-1);</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
             }
 
 
@@ -426,6 +477,8 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //사용자 회원가입- Step3-1 --ID중복체크
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AjaxID_DUPCheck(string M_ID = "")
         {
             string strERR_CODE = "0";
@@ -446,7 +499,408 @@ namespace AboutMe.Web.Front.Controllers
 
         }
 
-        
+        //사용자 회원 신규가입 -저장: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]        
+        public ActionResult AjaxJOIN_Register(string M_ID = "")
+        {
+            //로그 기록 준비
+            string log_memo = "회원 신규가입";
+            string log_comment = "회원 신규가입";
+            UserLog userlog = new UserLog();
+
+
+            string strERR_CODE = "0";
+            string strERR_MSG = "";
+            ReturnDic ObjretDIC = new ReturnDic();
+            //return View();
+            if (M_ID == "")
+            {
+                log_comment = log_comment + "실패 : param오류";
+                log_memo = log_memo + "실패 : param오류";
+                log_memo = log_memo + "|M_ID:" + M_ID;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                //return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+                strERR_CODE = "1";
+                strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+            }
+
+            //회원가입 : 입력항목 post
+            string M_NAME = HttpContext.Request.Form["M_NAME"]; //
+            string M_PWD = HttpContext.Request.Form["M_PWD"]; //
+            string M_GRADE = "B"; // 기본등급:브론즈
+            string M_SEX = HttpContext.Request.Form["M_SEX"]; //
+            string M_BIRTHDAY = HttpContext.Request.Form["M_BIRTHDAY"]; //
+            string M_MOBILE = HttpContext.Request.Form["M_MOBILE"]; //
+            string M_PHONE = HttpContext.Request.Form["M_PHONE"]; //
+            string M_EMAIL = HttpContext.Request.Form["M_EMAIL"]; //
+            string M_ZIPCODE = HttpContext.Request.Form["M_ZIPCODE"]; //
+            string M_ADDR1 = HttpContext.Request.Form["M_ADDR1"]; //
+            string M_ADDR2 = HttpContext.Request.Form["M_ADDR2"]; //
+            string M_ISSMS = HttpContext.Request.Form["M_ISSMS"]; //
+            string M_ISEMAIL = HttpContext.Request.Form["M_ISEMAIL"]; //
+            string M_ISDM = HttpContext.Request.Form["M_ISDM"]; //
+
+            string M_JOIN_MODE = HttpContext.Request.Form["M_JOIN_MODE"]; //
+            string M_DI = HttpContext.Request.Form["M_DI"]; //
+            string M_AGREE = HttpContext.Request.Form["M_AGREE"]; //
+            string M_AGREE2 = HttpContext.Request.Form["M_AGREE2"]; //
+            string M_SKIN_TROUBLE_CD =""; //  HttpContext.Request.Form["M_SKIN_TROUBLE_CD"]; // 가입시- 피부트러블 항목 없음
+
+            //임직원 정보 -- 가입시 기본:일반회원
+            string M_GBN = "A"; //가입시 기본:일반회원  HttpContext.Request.Form["M_GBN"]; //
+            string M_STAFF_COMPANY = ""; //가입시 기본:일반회원
+            string M_STAFF_ID = ""; //가입시 기본:일반회원
+
+            AES256Cipher objEnc = new AES256Cipher();
+            string M_PWD_MD5_HASH = objEnc.MD5Hash(M_PWD);   //MD5: ADM_PWD -> ADM_PWD_MD5_HASH
+            string M_PWD_SHA256_HASH = objEnc.SHA256Hash(M_PWD_MD5_HASH);   //MD5: ADM_PWD_MD5_HASH -> ADM_PWD_SHA256_HASH
+
+
+            //이미 사용된 DI인지 최종 체크
+            //DI기준으로 이미 가입한 적이 있는지?
+            ReturnDic retDic = _MemberService.GetMemberFindDI(M_DI);
+            if (retDic.ERR_CODE != "0") //DI 기타오류      10:이미 가입한 DI , 20 :Param Err  
+            {
+                //로그 기록
+                log_comment = log_comment + "실패:DI중복오류";
+                log_memo = log_memo + "실패:DI중복오류";
+                log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+                log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+                log_memo = log_memo + "|M_ID:" + M_ID;
+                log_memo = log_memo + "|M_NAME:" + M_NAME;
+                log_memo = log_memo + "|M_PWD:" + M_PWD;
+                log_memo = log_memo + "|M_PWD_MD5_HASH:" + M_PWD_MD5_HASH;
+                log_memo = log_memo + "|M_PWD_SHA256_HASH:" + M_PWD_SHA256_HASH;
+                log_memo = log_memo + "|M_GRADE:" + M_GRADE;
+                log_memo = log_memo + "|M_SEX:" + M_SEX;
+                log_memo = log_memo + "|M_BIRTHDAY:" + M_BIRTHDAY;
+                log_memo = log_memo + "|M_PHONE:" + M_PHONE;
+                log_memo = log_memo + "|M_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|M_ZIPCODE:" + M_ZIPCODE;
+                log_memo = log_memo + "|M_ADDR1:" + M_ADDR1;
+                log_memo = log_memo + "|M_ADDR2:" + M_ADDR2;
+                log_memo = log_memo + "|M_ISSMS:" + M_ISSMS;
+                log_memo = log_memo + "|M_ISEMAIL:" + M_ISEMAIL;
+                log_memo = log_memo + "|M_ISDM:" + M_ISDM;
+
+                log_memo = log_memo + "|M_JOIN_MODE:" + M_JOIN_MODE;
+                log_memo = log_memo + "|M_DI:" + M_DI;
+                log_memo = log_memo + "|M_AGREE:" + M_AGREE;
+                log_memo = log_memo + "|M_AGREE2:" + M_AGREE2;
+                log_memo = log_memo + "|M_SKIN_TROUBLE_CD:" + M_SKIN_TROUBLE_CD;
+
+                log_memo = log_memo + "|M_GBN:" + M_GBN;
+                log_memo = log_memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
+                log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                //return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
+                return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
+            }
+
+
+
+            //DB저장: 회원 신규가입 -----------------------
+            ObjretDIC = _MemberService.SetMemberRegister(M_ID, M_NAME, M_PWD_SHA256_HASH, M_GRADE, M_SEX, M_BIRTHDAY, M_MOBILE, M_PHONE, M_EMAIL, M_ZIPCODE, M_ADDR1, M_ADDR2, M_ISSMS, M_ISEMAIL, M_ISDM
+            , M_JOIN_MODE, M_DI, M_AGREE, M_AGREE2, M_SKIN_TROUBLE_CD
+            , M_GBN, M_STAFF_COMPANY, M_STAFF_ID);
+            if (ObjretDIC.ERR_CODE != "0")
+            {
+                strERR_CODE = ObjretDIC.ERR_CODE;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + strERR_CODE;
+                if (strERR_CODE == "10")
+                    strERR_MSG = strERR_MSG + "\\n 이미 존재하는 계정입니다.";
+            }
+
+            //로그 기록
+            if (strERR_CODE == "0")
+            {
+                log_comment = log_comment + "성공";
+                log_memo = log_memo + "성공";
+            }
+            else
+            {
+                log_comment = log_comment + "실패";
+                log_memo = log_memo + "실패";
+
+            }
+            log_memo = log_memo + "|strERR_CODE:" + strERR_CODE;
+            log_memo = log_memo + "|strERR_MSG:" + strERR_MSG;
+            log_memo = log_memo + "|M_ID:" + M_ID;
+            log_memo = log_memo + "|M_NAME:" + M_NAME;
+            log_memo = log_memo + "|M_PWD:" + M_PWD;
+            log_memo = log_memo + "|M_PWD_MD5_HASH:" + M_PWD_MD5_HASH;
+            log_memo = log_memo + "|M_PWD_SHA256_HASH:" + M_PWD_SHA256_HASH;
+            log_memo = log_memo + "|M_GRADE:" + M_GRADE;
+            log_memo = log_memo + "|M_SEX:" + M_SEX;
+            log_memo = log_memo + "|M_BIRTHDAY:" + M_BIRTHDAY;
+            log_memo = log_memo + "|M_PHONE:" + M_PHONE;
+            log_memo = log_memo + "|M_EMAIL:" + M_EMAIL;
+            log_memo = log_memo + "|M_ZIPCODE:" + M_ZIPCODE;
+            log_memo = log_memo + "|M_ADDR1:" + M_ADDR1;
+            log_memo = log_memo + "|M_ADDR2:" + M_ADDR2;
+            log_memo = log_memo + "|M_ISSMS:" + M_ISSMS;
+            log_memo = log_memo + "|M_ISEMAIL:" + M_ISEMAIL;
+            log_memo = log_memo + "|M_ISDM:" + M_ISDM;
+
+            log_memo = log_memo + "|M_JOIN_MODE:" + M_JOIN_MODE;
+            log_memo = log_memo + "|M_DI:" + M_DI;
+            log_memo = log_memo + "|M_AGREE:" + M_AGREE;
+            log_memo = log_memo + "|M_AGREE2:" + M_AGREE2;
+            log_memo = log_memo + "|M_SKIN_TROUBLE_CD:" + M_SKIN_TROUBLE_CD;
+
+            log_memo = log_memo + "|M_GBN:" + M_GBN;
+            log_memo = log_memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
+            log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
+            userlog.UserLogSave(log_memo, log_comment);
+
+            //신규회원가입 축하메일 발송 --------------------------
+            string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
+            string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
+            skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
+            skin_body = skin_body.Replace("$$M_NAME$$", M_NAME);  //이름
+            skin_body = skin_body.Replace("$$M_ID$$", M_ID);  //아이디
+
+            string MAIL_SUBJECT = "[AboutMe]어바웃미 회원가입을 축하합니다.";
+            string MAIL_BODY = skin_body;
+
+
+            //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+            string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+            string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+            string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+            string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+            string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
+
+            //메일 발송
+            MailSender mObj = new MailSender();
+            mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+
+            //ViewBag.mail_err_no = mObj.err_no;
+            //ViewBag.mail_err_msg = mObj.err_msg;
+
+            return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+
+        }
+
+        //사용자 회원가입- Step4 -가입완료 : DB에서 확인 필요
+        public ActionResult JoinStep4(string M_ID = "")
+        {
+            if (M_ID == null || M_ID == "")
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('회원계정이 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+
+            }
+
+            //DB에서 확인
+            SP_MEMBER_VIEW_Result result = _MemberService.GetMemberView(M_ID);
+            if (result == null)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('회원가입후 DB조회에 실패하였습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+            }
+
+            this.ViewBag.M_ID = result.M_ID;
+            this.ViewBag.M_NAME = result.M_NAME;
+            this.ViewBag.M_EMAIL = result.M_EMAIL;
+            this.ViewBag.M_CREDATE = result.M_CREDATE.ToString("yyyy.MM.dd");
+
+            return View();
+        }
+
+
+        //아이디 찾기 팝업 폼
+        public ActionResult IdSearch()
+        {
+            return View();
+        }
+
+        //아이디찾기 팝업:결과
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IdSearch_End(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        {
+            //로그 기록 준비
+            string log_memo = "아이디찾기";
+            string log_comment = "아이디찾기";
+            UserLog userlog = new UserLog();
+
+
+            if (M_NAME == "" || M_EMAIL == "" || M_MOBILE=="")
+            {
+                log_comment = log_comment + "실패 : param오류";
+                log_memo = log_memo + "실패 : param오류";
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/IdSearch';</script>");
+            }
+
+            //아이디 찾기 - DB처리
+            ReturnDic retDic = _MemberService.GetMemberFindID(M_NAME, M_EMAIL, M_MOBILE);
+            if (retDic.ERR_CODE != "0") //아이디찾기 오류        
+            {
+                log_comment = log_comment + "실패 : DB찾기 오류";
+                log_memo = log_memo + "실패: DB찾기 오류";
+                log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+                log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+                log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+                log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+                log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/IdSearch';</script>");
+            }
+
+            this.ViewBag.M_ID = retDic.ETC1; //찾아진 ID
+            this.ViewBag.M_NAME = retDic.ETC2; //찾아진 이름
+            this.ViewBag.M_CREDATE = retDic.ETC3; //찾아진 가입일
+
+            //로그 기록
+            log_comment = log_comment + "성공";
+            log_memo = log_memo + "성공";
+            log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+            log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+            log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+            log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+            log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+            log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+            log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+            log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+            userlog.UserLogSave(log_memo, log_comment);
+
+
+
+            return View();
+        }
+
+        //비밀번호 찾기 팝업 폼
+        public ActionResult PwSearch()
+        {
+            return View();
+        }
+
+        //비밀번호 팝업:결과
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PwSearch_End(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        {
+            //로그 기록 준비
+            string log_memo = "비밀번호 찾기";
+            string log_comment = "비밀번호 찾기";
+            UserLog userlog = new UserLog();
+
+            if (M_ID == "" || M_NAME == "" || M_EMAIL == "" || M_MOBILE == "")
+            {
+                log_comment = log_comment + "실패 : param오류";
+                log_memo = log_memo + "실패 : param오류";
+                log_memo = log_memo + "|inputM_ID:" + M_ID;
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/PwSearch';</script>");
+            }
+
+            //신규비밀번호 랜덤생성
+            string strNEW_PWD ="";
+            string strNEW_PWD_MD5 ="";
+            string strNEW_PWD_SHA256_HASH = "";
+
+            Random r = new Random();
+            int randomNumber = r.Next(100000, 90000000); //alph(1)+ 6~8 자리
+            //string strNOW_TIME = @DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            //string strWORK_TMP_ID = @strNOW_TIME +  @randomNumber.ToString();
+
+            strNEW_PWD = Utility01.GetRandomAlpha(1) + Utility01.GetRandomAlphanumeric(7);  //랜덤암호 신규생성 :문자로 시작
+            AES256Cipher objEnc = new AES256Cipher();
+            strNEW_PWD_MD5 = objEnc.MD5Hash(strNEW_PWD);   //MD5 
+            strNEW_PWD_SHA256_HASH = objEnc.SHA256Hash(strNEW_PWD_MD5);   //MD5->HA256_HASH
+
+           
+
+            //비밀번호 찾기 - DB처리
+            ReturnDic retDic = _MemberService.GetMemberFindPWD(M_ID, M_NAME, M_EMAIL, M_MOBILE, strNEW_PWD_SHA256_HASH);
+            if (retDic.ERR_CODE != "0") //비밀번호디찾기 오류        
+            {
+                log_comment = log_comment + "실패 : DB찾기 오류";
+                log_memo = log_memo + "실패: DB찾기 오류";
+                log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+                log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+                log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+                log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+                log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+                log_memo = log_memo + "|inputM_ID:" + M_ID;
+                log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+                log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+                log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+                log_memo = log_memo + "|strNEW_PWD:" + strNEW_PWD;
+                userlog.UserLogSave(log_memo, log_comment); 
+                
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/PwSearch';</script>");
+            }
+
+            this.ViewBag.M_NAME = retDic.ETC1; //찾아진 이름
+            this.ViewBag.M_EMAIL = retDic.ETC2; //찾아진 EMAIL
+            this.ViewBag.M_PWD_NEW = strNEW_PWD; //새로 세팅된 비밀번호
+
+
+            //로그 기록
+            log_comment = log_comment + "성공";
+            log_memo = log_memo + "성공";
+            log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+            log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+            log_memo = log_memo + "|retDic.ETC1:" + retDic.ETC1;
+            log_memo = log_memo + "|retDic.ETC2:" + retDic.ETC2;
+            log_memo = log_memo + "|retDic.ETC3:" + retDic.ETC3;
+            log_memo = log_memo + "|inputM_ID:" + M_ID;
+            log_memo = log_memo + "|inputM_NAME:" + M_NAME;
+            log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
+            log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
+            log_memo = log_memo + "|strNEW_PWD:" + strNEW_PWD;
+            userlog.UserLogSave(log_memo, log_comment);
+
+
+            //새로 세팅된 비밀번호 메일로 전송 ----------------------
+            string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
+            string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
+            skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
+            skin_body = skin_body.Replace("$$M_NAME$$", strNEW_PWD);  //신규암호
+
+            string MAIL_SUBJECT = "[AboutMe]어바웃미 비밀번호가 변경되었습니다.";
+            string MAIL_BODY = skin_body;
+
+
+            //비밀번호 찾기: 메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+            string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+            string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+            string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+            string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+            string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
+
+            //비밀번호 찾기: 메일 발송
+            MailSender mObj = new MailSender();
+            mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+
+            //ViewBag.mail_err_no = mObj.err_no;
+            //ViewBag.mail_err_msg = mObj.err_msg;
+
+
+
+
+            return View();
+        }
 
     } //class
 }//namespace

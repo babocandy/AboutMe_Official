@@ -24,8 +24,9 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string OLD_OTHER_IMG1 { get; set; }
         public string OLD_OTHER_IMG2 { get; set; }
         public string OLD_OTHER_IMG3 { get; set; }
-        public string OLD_OTHER_IMG4 { get; set; }
-        public string OLD_OTHER_IMG5 { get; set; }
+        //public string OLD_OTHER_IMG4 { get; set; }
+        //public string OLD_OTHER_IMG5 { get; set; }
 
+        public string ICON_BATCH_CHK { get; set; }
     }
 }

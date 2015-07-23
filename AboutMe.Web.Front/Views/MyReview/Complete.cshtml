@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Ready";
+﻿@model AboutMe.Web.Front.Models.MyReviewCompleteViewModel
+@using AboutMe.Common.Helper
+@{
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
 @section Head{
@@ -32,144 +33,77 @@
                         <div id="tabCon2" class="wrote tab_content" style="display:block">
                             <!--리뷰 슬라이드-->
                             <div class="pur_review accordion">
-                                <!---
-                처음과 마지막  .pur_review .cont에 각각 "first", "last" class가 붙습니다.
-            -->
-                                <div class="cont first  accordcont cnt">
-                                    <div class="subj accordsubject">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <!--사진이 등록된 리뷰일 때 사용-->
-                                            <span class="ico_photo">포토리뷰</span>
-                                            <!--//사진이 등록된 리뷰일 때 사용-->
-                                            <span class="userage">30대, 여<em class="skin dry"></em></span>
-                                        </div>
-                                        <p class="txtdotdot">
-                                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                                        </p>
-                                    </div>
-                                    <div class="contxt accordtxt">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin dry"></em></span>
-                                        </div>
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! <br />
-                                        <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
-                                    </div>
-                                </div>
+    <!---
+        처음과 마지막  .pur_review .cont에 각각 "first", "last" class가 붙습니다.
+    -->
+    @{
+                                    var i = 0;
+                                    var count = Model.CompleteList.Count;
 
-                                <div class="cont accordcont">
-                                    <div class="subj accordsubject">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                                        </div>
-                                        <p class="txtdotdot">
-                                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                                        </p>
-                                    </div>
-                                    <div class="contxt accordtxt">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                                        </div>
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!
-                                    </div>
-                                </div>
+    }
+    @foreach (var item in Model.CompleteList) {
 
-                                <div class="cont accordcont">
-                                    <div class="subj accordsubject">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <!--사진이 등록된 리뷰일 때 사용-->
-                                            <span class="ico_photo">포토리뷰</span>
-                                            <!--//사진이 등록된 리뷰일 때 사용-->
-                                            <!--
-                            skin type class
-                            건성 : dry
-                            중성 : normal
-                            지성 : oliy
-                        -->
-                                            <span class="userage">30대, 여<em class="skin dry"></em></span>
-                                        </div>
-                                        <p class="txtdotdot">
-                                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                                        </p>
-                                    </div>
-                                    <div class="contxt accordtxt">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin dry"></em></span>
-                                        </div>
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! <br />
-                                        <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
-                                    </div>
-                                </div>
+        var cssClassName = "";
+        var selectContent = "";
+        
+        if (i == 0)
+        {
+            cssClassName = "first";
+            selectContent = "cnt";
+        }
+        else if (i >= count - 1)
+        {
+            cssClassName = "last";
+            
+        }
 
-                                <div class="cont accordcont">
-                                    <div class="subj accordsubject">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <!--사진이 등록된 리뷰일 때 사용-->
-                                            <span class="ico_photo">포토리뷰</span>
-                                            <!--//사진이 등록된 리뷰일 때 사용-->
-                                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                                        </div>
-                                        <p class="txtdotdot">
-                                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                                        </p>
-                                    </div>
-                                    <div class="contxt accordtxt">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                                        </div>
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!</br />
-                                        <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
-                                    </div>
-                                </div>
+         <div class="cont accordcont @cssClassName @selectContent">
 
-                                <div class="cont last accordcont">
-                                    <div class="subj accordsubject">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin olily"></em></span>
-                                        </div>
-                                        <p class="txtdotdot">
-                                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                                        </p>
-                                    </div>
-                                    <div class="contxt accordtxt">
-                                        <div class="writer">
-                                            <span class="id">Kkon***</span>
-                                            <span class="userage">30대, 여<em class="skin olily"></em></span>
-                                        </div>
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!
-                                    </div>
-                                </div>
-                            </div>
-                            <!--//리뷰 슬라이드-->
-                            <!--페이징-->
-                            <div class="paging mt30">
-                                <a class="prev" href="#">이전</a>
-                                <!--현재 페이지-->
-                                <strong>1</strong>
-                                <!--//현재 페이지-->
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <a href="#">5</a>
-                                <a href="#">6</a>
-                                <a href="#">7</a>
-                                <a href="#">8</a>
-                                <a href="#">9</a>
-                                <a href="#">10</a>
-                                <a class="next" href="#">다음</a>
-                            </div>
-                            <!--//페이징-->
-                        </div>
+             <div class="subj accordsubject">
+                 <div class="writer">
+                     <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
+                     @if (item.IS_PHOTO == "Y")
+                     {
+                         <!--사진이 등록된 리뷰일 때 사용-->
+                         <span class="ico_photo">포토리뷰</span>
+                         <!--//사진이 등록된 리뷰일 때 사용-->
+                     }
+                    
+
+                     <span class="userage">@ReviewHelper.ConvertAge(item.M_BIRTHDAY), @ReviewHelper.ConvertGenger(item.M_SEX)<em class="skin @(ReviewHelper.ConvertSkinType(item.SKIN_TYPE))"></em></span>
+                 </div>
+                 <p class="txtdotdot">
+                     @item.COMMENT
+                 </p>
+             </div>
+             <div class="contxt accordtxt">
+                 <div class="writer">
+                     <span class="userage">@ReviewHelper.ConvertAge(item.M_BIRTHDAY), @ReviewHelper.ConvertGenger(item.M_SEX)<em class="skin @(ReviewHelper.ConvertSkinType(item.SKIN_TYPE))"></em></span>
+                 </div>
+                 @item.COMMENT
+                 @if (item.IS_PHOTO=="Y")
+                 {
+                    <img src="@ViewBag.img_path_product@item.ADD_IMAGE" alt="" />
+                 }                
+             </div>
+
+        </div>
+
+        i++;
+                    }
+
+
+                </div>
+                <!--//리뷰 슬라이드-->
+                <!--페이징-->
+                @{
+
+                                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = 10, PagePerBlock = Model.PageSize, CurrentPage = Model.PageNo, QueryStr = "" });
+                }
+                <!--//페이징-->
+            </div>
                         <!--//리뷰 컨텐츠-->
-                    </div>
+                        </div>
                     <!--//wrap review-->
                 </div>
                 <!--//리뷰영역-->

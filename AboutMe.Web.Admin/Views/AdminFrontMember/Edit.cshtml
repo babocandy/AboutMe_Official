@@ -163,155 +163,51 @@
 
 @section Scripts{
 
-}
+<script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
 
-@section Left {
-
-    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
-}
-
-@section Header{
-    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
-}
-
-@section Body{
-
-<!-- 다음 우편번호 검색-->
-<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-</div>
-
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script language="javascript">
-    // 우편번호 찾기 화면을 넣을 element
-    var element_layer = document.getElementById('layerPOST');
-
-    function closeDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        element_layer.style.display = 'none';
+<script>
+    function fReload() {
+        window.location.reload();
     }
 
-    function sample2_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function (data) {
-                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var fullAddr = data.address; // 최종 주소 변수
-                var extraAddr = ''; // 조합형 주소 변수
-
-                // 기본 주소가 도로명 타입일때 조합한다.
-                if (data.addressType === 'R') {
-                    //법정동명이 있을 경우 추가한다.
-                    if (data.bname !== '') {
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있을 경우 추가한다.
-                    if (data.buildingName !== '') {
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("M_ZIPCODE").value = data.postcode; //6자리 우편번호 사용
-                //document.getElementById("sample2_postcode").value = data.zonecode; //5자리 기초구역번호 사용
-                document.getElementById('M_ADDR1').value = fullAddr;
-                // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
-
-                // iframe을 넣은 element를 안보이게 한다.
-                element_layer.style.display = 'none';
-            },
-            width: '100%',
-            height: '100%'
-        }).embed(element_layer);
-
-        // iframe을 넣은 element를 보이게 한다.
-        element_layer.style.display = 'block';
-
-        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-        initLayerPosition();
+    function fGoList() {
+        var f = document.frmFORM;
+        f.target = "";
+        f.action = "/AdminFrontMember/Index";
+        f.submit();
     }
 
-    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
-    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
-    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
-    function initLayerPosition() {
-        var width = 300; //우편번호서비스가 들어갈 element의 width
-        var height = 460; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+    //기능별 상세팝업 :
+    function fPopPersonalDetail(argKIND) {
+        var f = document.frmFORM;
+        var strM_ID = f.SEL_M_ID.value;
+        var xurl = "";
+        var wid = "1000";
+        var hei = "600";
+        var tar = "PERSONAL_POP";
 
-        // 위에서 선언한 값들을 실제 element에 넣는다.
-        element_layer.style.width = width + 'px';
-        element_layer.style.height = height + 'px';
-        element_layer.style.border = borderWidth + 'px solid';
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+        xurl = "/AdminOrder/Index?M_ID=" + strM_ID;  //default
+        if (argKIND == "ORDER") {
+            xurl = "/AdminOrder/Index?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "POINT") {
+            xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "COUPON") {
+            xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "QNA") {
+            xurl = "/AdminQna/Index?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "MEMBER_INFO") {
+            xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
+        }
+        ow_yes(xurl, tar, wid, hei); //팝업
     }
-</script>
-<!-- 다음 우편번호 검색-->
 
 
-
-
-
-<div class="content">
-    <!--path-->
-    <div class="path">
-        <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원수정</strong>
-    </div>
-    <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
-
-    <script>
-        function fReload() {
-            window.location.reload();
-        }
-
-        function fGoList() {
-            var f = document.frmFORM;
-            f.target = "";
-            f.action = "/AdminFrontMember/Index";
-            f.submit();
-        }
-
-        //기능별 상세팝업 :
-        function fPopPersonalDetail(argKIND){
-            var f = document.frmFORM;
-            var strM_ID = f.SEL_M_ID.value;
-            var xurl="";
-            var wid="1000";
-            var hei = "600";
-            var tar ="PERSONAL_POP";
-
-            xurl="/AdminOrder/Index?M_ID=" +strM_ID ;  //default
-            if(argKIND=="ORDER")
-            {
-                xurl="/AdminOrder/Index?M_ID=" +strM_ID ;
-            }
-            else if(argKIND=="POINT")
-            {
-                xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
-            }
-            else if (argKIND == "COUPON") {
-                xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
-            }
-            else if (argKIND == "QNA")
-            {
-                xurl="/AdminQna/Index?M_ID=" +strM_ID ;
-            }
-            else if (argKIND == "MEMBER_INFO") {
-                xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
-            }
-    ow_yes(xurl, tar, wid, hei); //팝업
-        }
-
-
-        //기본정보 수정-------------------------------------------------
-    function fGoSaveBasic()
-    {
+    //기본정보 수정-------------------------------------------------
+    function fGoSaveBasic() {
         var f = document.frmFORM;
         if (f.SEL_M_ID.value.length < 4) {
             alert("아이디가 없습니다..");
@@ -324,6 +220,7 @@
         //f.action = "/AdminFrontMember/EditOK_Basic";
         //f.submit();
 
+        var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.SEL_M_ID.value;
         var strM_GRADE = f.M_GRADE.value;
         var strM_MOBILE = f.M_MOBILE.value;
@@ -344,7 +241,8 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                M_ID: strM_ID
+                __RequestVerificationToken: strTOKEN
+                , M_ID: strM_ID
                 , M_GRADE: strM_GRADE
                 , M_MOBILE: strM_MOBILE
                 , M_PHONE: strM_PHONE
@@ -357,13 +255,11 @@
                 , M_ISDM: strM_ISDM
             },
             success: function (retDATA) {
-                if(retDATA.ERR_CODE=="0")
-                {
+                if (retDATA.ERR_CODE == "0") {
                     alert("수정되었습니다.\n 페이지를 새로고칩니다.");
                     fReload();
                 }
-                else
-                {
+                else {
                     alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
                 }
             },
@@ -374,7 +270,7 @@
 
     } //function
 
-     //비밀번호 변경--------------------------------------------------
+    //비밀번호 변경--------------------------------------------------
     function fGoSavePWD() {
         var f = document.frmFORM;
         if (f.SEL_M_ID.value.length < 4) {
@@ -387,6 +283,7 @@
         }
         //f.action = "/AdminFrontMember/EditOK_PWD";
         //f.submit();
+        var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.SEL_M_ID.value;
         var strM_PWD = f.M_PWD.value;
 
@@ -398,7 +295,8 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                M_ID: strM_ID
+                __RequestVerificationToken: strTOKEN
+                , M_ID: strM_ID
                 , M_PWD: strM_PWD
             },
             success: function (retDATA) {
@@ -417,7 +315,7 @@
 
     } //function
 
-        //임직원정보 수정-------------------------------------------------
+    //임직원정보 수정-------------------------------------------------
     function fGoSaveStaff() {
         var f = document.frmFORM;
         var strM_GBN = f.M_GBN[f.M_GBN.selectedIndex].value;
@@ -436,6 +334,7 @@
         }
         //f.action = "/AdminFrontMember/EditOK_Staff";
         //f.submit();
+        var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.SEL_M_ID.value;
         //var strM_GBN = f.M_GBN[f.M_GBN.selectedIndex].value;
         var strM_STAFF_COMPANY = f.M_STAFF_COMPANY.value;
@@ -449,7 +348,8 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                M_ID: strM_ID
+                __RequestVerificationToken: strTOKEN
+                , M_ID: strM_ID
                 , M_GBN: strM_GBN
                 , M_STAFF_COMPANY: strM_STAFF_COMPANY
                 , M_STAFF_ID: strM_STAFF_ID
@@ -481,11 +381,12 @@
         {; }
         else
         { return; }
-        
+
         //f.action = "/AdminFrontMember/EditOK_Retire";
         //f.submit();
+        var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.SEL_M_ID.value;
-        var strM_DEL_REASON = f.M_DEL_REASON .value;
+        var strM_DEL_REASON = f.M_DEL_REASON.value;
 
         var strURL = "/AdminFrontMember/EditOK_Retire"; //탈퇴 수정
 
@@ -495,7 +396,8 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                M_ID: strM_ID
+                __RequestVerificationToken: strTOKEN
+                , M_ID: strM_ID
                 , M_IS_RETIRE: 'Y'
                 , M_DEL_REASON: strM_DEL_REASON
             },
@@ -515,7 +417,30 @@
 
     } //function
 
-    </script>
+</script>
+
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+
+
+
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원수정</strong>
+    </div>
 
     <div class="panel">
         <h3 class="sub-header">회원정보 수정</h3>
@@ -821,6 +746,84 @@
 </div>
 
 
+
+<!-- 다음 우편번호 검색-->
+<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script language="javascript">
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layerPOST');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if (data.addressType === 'R') {
+                    //법정동명이 있을 경우 추가한다.
+                    if (data.bname !== '') {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if (data.buildingName !== '') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                //document.getElementById("M_ZIPCODE").value = data.postcode; //6자리 우편번호 사용
+                document.getElementById("M_ZIPCODE").value = data.zonecode; //5자리 기초구역번호 사용
+                document.getElementById('M_ADDR1').value = fullAddr;
+                // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
+
+                // iframe을 넣은 element를 안보이게 한다.
+                element_layer.style.display = 'none';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition() {
+        var width = 300; //우편번호서비스가 들어갈 element의 width
+        var height = 460; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+    }
+</script>
+<!-- 다음 우편번호 검색-->
 
 
 }

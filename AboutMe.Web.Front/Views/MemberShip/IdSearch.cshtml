@@ -1,0 +1,165 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1323, user-scalable = yes" />
+    <meta name="Keywords" content="ABOUT ME" />
+    <meta name="Description" content="ABOUT ME" />
+    <link href="/aboutCom/css/import.css" rel="stylesheet" />
+    <script src="/aboutCom/js/lib/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.easing-1.3.min.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/dropdown.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.countdown.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.dotdotdot.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/script.js" type="text/javascript"></script>
+    <title>ABOUT ME</title>
+
+
+    <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
+
+    <script>
+
+        function fSetEmailDomain() {
+            var f = document.frmPopSearch;
+            if (f.M_EMAIL_SEL.selectedIndex > 0) {
+                f.M_EMAIL_2.value = f.M_EMAIL_SEL[f.M_EMAIL_SEL.selectedIndex].value;
+            }
+        }
+
+          function fGoFind() {
+            var f = document.frmPopSearch;
+            if (f.M_NAME.value.length < 2) {
+                alert("이름을 입력하세요");
+                return;
+            }
+            if (f.M_EMAIL_1.value.length < 2 || f.M_EMAIL_2.value.length < 3) {
+                alert("EMAIL을 입력하세요.");
+                return;
+            }
+            f.M_EMAIL.value = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value;
+
+
+            if (f.M_MOBILE_1.value.length < 3 || f.M_MOBILE_2.value.length < 3 || f.M_MOBILE_3.value.length < 3) {
+                alert("휴대폰 번호를 입력하세요.");
+                return;
+            }
+
+            if (fIsValidMemberTEL_PART(f.M_MOBILE_2.value, "N") == false) {
+                return;
+            }
+            if (fIsValidMemberTEL_PART(f.M_MOBILE_3.value, "N") == false) {
+                return;
+            }
+            f.M_MOBILE.value = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
+
+            if (f.agree.checked != true) {
+                alert("아이디 찾기 위해 이름,이메일,핸드폰 번호 제공에 동의하여야 합니다.");
+                return;
+            }
+
+            f.action = "/MemberShip/IdSearch_End";
+            f.target = "";
+            f.submit();
+
+
+        } //func
+
+
+    </script>
+
+
+</head>
+<body class="popup">
+    <div class="popupwrap confirm">
+        <div class="pop">
+            <!--pop_top-->
+            <div class="pop_top">
+                <div class="title_area">
+                    <p class="title">아이디 찾기</p>
+                </div>
+                <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
+            </div>
+            <!--//pop_top-->
+            <!--pop_bottom-->
+            <div class="pop_bottom">
+                @using (Html.BeginForm("IdSearch_End", "MemberShip", FormMethod.Post, new { id = "frmPopSearch", name = "frmPopSearch" }))
+                {
+                    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                              
+                    <input type="hidden" name="M_EMAIL" value="" />
+                    <input type="hidden" name="M_MOBILE" value="" />
+
+                    <fieldset>
+                        <legend>아이디 찾기 폼</legend>
+                        <table summary="이름,이메일,핸드폰 번호">
+                            <caption>아이디 찾기 입력 표</caption>
+                            <colgroup>
+                                <col width="110">
+                                <col width="*">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th><span>이름</span></th>
+                                    <td><input type="text" class="ipttypea" style="width:233px" title="이름 입력" name="M_NAME" value="" maxlength="20"/></td>
+                                </tr>
+                                <tr>
+                                    <th><span>이메일</span></th>
+                                    <td class="frm_email">
+                                        <input type="text" class="ipttypea" style="width:100px" title="이메일주소 입력" name="M_EMAIL_1" maxlength="30" value="" />
+                                        &nbsp;&nbsp;@@&nbsp;&nbsp;
+                                        <input type="text" class="ipttypea mr10" style="width:100px" title="이메일 도메인 입력" name="M_EMAIL_2" maxlength="50" value="" />
+                                        <select class="selectstyleb" title="이메일 도메인 선택" name="M_EMAIL_SEL" onchange="javascript:fSetEmailDomain()">
+                                            <option value="">직접입력</option>
+                                            <option value="daum.net">daum.net</option>
+                                            <option value="hanmail.net">hanmail.net</option>
+                                            <option value="hotmail.com">hotmail.com</option>
+                                            <option value="gmail.com">gmail.com</option>
+                                            <option value="yahoo.co.kr">yahoo.co.kr</option>
+                                            <option value="lycos.co.kr">lycos.co.kr</option>
+                                            <option value="nate.com">nate.com</option>
+                                            <option value="naver.com">naver.com</option>
+                                            <option value="hanafos.com">hanafos.com</option>
+                                            <option value="empal.com">empal.com</option>
+                                            <option value="hanmir.com">hanmir.com</option>
+                                            <option value="netian.com">netian.com</option>
+                                            <option value="freechal.com">freechal.com</option>
+                                            <option value="chol.com">chol.com</option>
+                                            <option value="hitel.net">hitel.net</option>
+                                            <option value="paran.com">paran.com</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><span>핸드폰 번호</span></th>
+                                    <td class="frm_tel">
+                                        <select class="selectstyleb" title="핸드폰 번호 국번 선택" name="M_MOBILE_1">
+                                            <option value="010" selected="selected" >010</option>
+                                            <option value="011">011</option>
+                                            <option value="016" >016</option>
+                                            <option value="019">019</option>
+                                        </select>&nbsp;&nbsp;
+                                        <input type="text" class="ipttypea mr10" style="width:90px" title="휴대폰번호 가운데 자리 입력" name="M_MOBILE_2" value="" maxlength="4" /> <input type="text" class="ipttypea" style="width:90px" title="휴대폰번호 마지막 자리 입력" name="M_MOBILE_3" value="" maxlength="4" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="txt_agree">
+                            <label class="chkcon" for="agree"><input type="checkbox" id="agree" name="agree" title="" class="agree_check" /> <span class="txt">아이디 찾기 위해 이름,이메일,핸드폰 번호 제공에 동의합니다.</span></label>
+                        </p>
+                        <div class="btngroup mt20">
+                            <a href="javascript:fGoFind();" class="btn_brown_w96h38">아이디 찾기</a>
+                        </div>
+                    </fieldset>
+            }
+            </div>
+            <!--//pop_bottom-->
+        </div>
+    </div>
+</body>
+</html>

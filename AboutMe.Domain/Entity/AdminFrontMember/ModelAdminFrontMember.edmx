@@ -119,6 +119,11 @@
         <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_PWD_SHA256" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="AboutMeModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -242,7 +247,12 @@
           <Parameter Name="STAFF_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result)">
-            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+          <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL" ReturnType="Collection(AboutMeModel.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result)" />
+          <FunctionImport Name="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_PWD_SHA256" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
@@ -328,6 +338,11 @@
           <Property Type="String" Name="M_IS_RETIRE" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="M_DEL_DATE" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="M_CREDATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result">
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_PWD" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ZZ_OLD_PWD_MD5" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -515,6 +530,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL" FunctionName="AboutMeModel.Store.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result">
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_PWD" ColumnName="M_PWD" />
+                <ScalarProperty Name="ZZ_OLD_PWD_MD5" ColumnName="ZZ_OLD_PWD_MD5" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD" FunctionName="AboutMeModel.Store.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

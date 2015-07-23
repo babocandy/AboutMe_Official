@@ -254,6 +254,9 @@
     <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result.cs">
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminFrontMember\SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result.cs">
+      <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminOrder\AdminOrderUserModel.cs" />
     <Compile Include="Entity\AdminOrder\ModelAdminOrder.Context.cs">
       <AutoGen>True</AutoGen>
@@ -286,18 +289,6 @@
       <DependentUpon>ModelAdminOrder.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_STATUS_Result.cs">
-      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminOrder\TB_ORDER_CODE.cs">
-      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminOrder\TB_ORDER_DETAIL.cs">
-      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminOrder\TB_ORDER_LOG.cs">
-      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminOrder\TB_ORDER_MASTER.cs">
       <DependentUpon>ModelAdminOrder.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminPoint\ModelAdminPoint.Context.cs">
@@ -558,6 +549,43 @@
     <Compile Include="Entity\Notice\TB_NOTICE.cs">
       <DependentUpon>ModelNotice.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Order\OrderUserModel.cs" />
+    <Compile Include="Entity\Order\ModelOrder.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOrder.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\ModelOrder.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\ModelOrder.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOrder.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_BASEADDR_INFO_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_COUPON_SEARCH_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_DISCOUNT_INFO_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_PRICE_INFO_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_PRODUCT_LIST_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_RECENTADDR_INFO_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_ORDER_STEP2_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Product\ModelProduct.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -604,7 +632,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelReview.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Review\SP_REVIEW_READY_SEL_Result.cs">
+    <Compile Include="Entity\Review\SP_REVIEW_GET_PRODUCT_INFO_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_COMPLETE_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_READY_SEL_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -635,6 +669,8 @@
     <Compile Include="Service\Faq\FaqService.cs" />
     <Compile Include="Service\Faq\IFaqService.cs" />
     <Compile Include="Entity\Common\USER_PROFILE.cs" />
+    <Compile Include="Service\Order\OrderService.cs" />
+    <Compile Include="Service\Order\IOrderService.cs" />
     <Compile Include="Service\Product\IProductService.cs" />
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\Promotion\PromotionService.cs" />
@@ -644,9 +680,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\Etc\" />
-    <Folder Include="Entity\Order\" />
     <Folder Include="Service\Etc\" />
-    <Folder Include="Service\Order\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
@@ -841,6 +875,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelProduct.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Order\ModelOrder.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelOrder.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Order\ModelOrder.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelOrder.edmx</DependentUpon>
+      <LastGenOutput>ModelOrder.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Order\ModelOrder.edmx.diagram">
+      <DependentUpon>ModelOrder.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Order\ModelOrder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelOrder.edmx</DependentUpon>
+      <LastGenOutput>ModelOrder.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Product\ModelProduct.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelProduct.edmx</DependentUpon>

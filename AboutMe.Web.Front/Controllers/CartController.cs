@@ -208,22 +208,6 @@ namespace AboutMe.Web.Front.Controllers
 
         }
 
-        #region 주문페이지로 이동
-        public ActionResult GoNextStep(string PCODE_ARRAY)
-        {
-            this.ViewBag.PCODE_ARRAY = PCODE_ARRAY;
-
-            if (_user_profile.IS_LOGIN)
-            {
-                return RedirectToAction("InsertStep1", "Order", new { order_list = PCODE_ARRAY});
-            }
-            else
-            {
-                return RedirectToAction("CartLogin", "MemberShip", new { order_list = PCODE_ARRAY});
-            }
-        }
-        #endregion
-
 
     }
 }
