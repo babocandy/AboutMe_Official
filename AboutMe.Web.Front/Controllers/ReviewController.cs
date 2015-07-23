@@ -25,5 +25,12 @@ namespace AboutMe.Web.Front.Controllers
         {
             return View();
         }
+
+        [ChildActionOnly]
+        public ActionResult InShoppingDetail(string P_CODE)
+        {
+
+            return View();
+        }
     }
 }
