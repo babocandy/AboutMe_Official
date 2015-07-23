@@ -385,6 +385,43 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         }
  
 
+        //데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요
+        public List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL()
+        {
+
+            List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> lst = new List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL().ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+        }
+
+        //데이타 이행 :회원암호 -수정저장  --오픈전 마이그레이션시 1회 필요
+        public void SetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(string m_ID="", string m_PWD_SHA256="")
+        {
+
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                int ret = AdminFrontMemberContext.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(m_ID, m_PWD_SHA256);
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+        }
+
+
 
     } //class
 } //namespace

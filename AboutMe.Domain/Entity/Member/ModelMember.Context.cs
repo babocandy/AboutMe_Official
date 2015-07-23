@@ -55,48 +55,6 @@ namespace AboutMe.Domain.Entity.Member
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_DUP_CHK", m_IDParameter, eRR_CODE);
         }
     
-        public virtual int SP_MEMBER_FIND_ID(string m_NAME, string m_EMAIL, string m_MOBILE, ObjectParameter eRR_CODE, ObjectParameter rET_M_ID)
-        {
-            var m_NAMEParameter = m_NAME != null ?
-                new ObjectParameter("M_NAME", m_NAME) :
-                new ObjectParameter("M_NAME", typeof(string));
-    
-            var m_EMAILParameter = m_EMAIL != null ?
-                new ObjectParameter("M_EMAIL", m_EMAIL) :
-                new ObjectParameter("M_EMAIL", typeof(string));
-    
-            var m_MOBILEParameter = m_MOBILE != null ?
-                new ObjectParameter("M_MOBILE", m_MOBILE) :
-                new ObjectParameter("M_MOBILE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_ID", m_NAMEParameter, m_EMAILParameter, m_MOBILEParameter, eRR_CODE, rET_M_ID);
-        }
-    
-        public virtual int SP_MEMBER_FIND_PW(string m_ID, string m_NAME, string m_EMAIL, string m_MOBILE, string m_PWD_NEW, ObjectParameter eRR_CODE)
-        {
-            var m_IDParameter = m_ID != null ?
-                new ObjectParameter("M_ID", m_ID) :
-                new ObjectParameter("M_ID", typeof(string));
-    
-            var m_NAMEParameter = m_NAME != null ?
-                new ObjectParameter("M_NAME", m_NAME) :
-                new ObjectParameter("M_NAME", typeof(string));
-    
-            var m_EMAILParameter = m_EMAIL != null ?
-                new ObjectParameter("M_EMAIL", m_EMAIL) :
-                new ObjectParameter("M_EMAIL", typeof(string));
-    
-            var m_MOBILEParameter = m_MOBILE != null ?
-                new ObjectParameter("M_MOBILE", m_MOBILE) :
-                new ObjectParameter("M_MOBILE", typeof(string));
-    
-            var m_PWD_NEWParameter = m_PWD_NEW != null ?
-                new ObjectParameter("M_PWD_NEW", m_PWD_NEW) :
-                new ObjectParameter("M_PWD_NEW", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_PW", m_IDParameter, m_NAMEParameter, m_EMAILParameter, m_MOBILEParameter, m_PWD_NEWParameter, eRR_CODE);
-        }
-    
         public virtual int SP_MEMBER_INS(string m_ID, string m_NAME, string m_PWD, string m_GRADE, string m_SEX, string m_BIRTHDAY, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, string m_JOIN_MODE, string m_DI, string m_AGREE, string m_AGREE2, string m_SKIN_TROUBLE_CD, string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID, ObjectParameter eRR_CODE)
         {
             var m_IDParameter = m_ID != null ?
@@ -355,6 +313,48 @@ namespace AboutMe.Domain.Entity.Member
                 new ObjectParameter("M_DI", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_DI", m_DIParameter, eRR_CODE, rET_M_ID);
+        }
+    
+        public virtual int SP_MEMBER_FIND_PWD(string m_ID, string m_NAME, string m_EMAIL, string m_MOBILE, string m_PWD_NEW, ObjectParameter eRR_CODE, ObjectParameter rET_M_NAME, ObjectParameter rET_M_EMAIL)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var m_NAMEParameter = m_NAME != null ?
+                new ObjectParameter("M_NAME", m_NAME) :
+                new ObjectParameter("M_NAME", typeof(string));
+    
+            var m_EMAILParameter = m_EMAIL != null ?
+                new ObjectParameter("M_EMAIL", m_EMAIL) :
+                new ObjectParameter("M_EMAIL", typeof(string));
+    
+            var m_MOBILEParameter = m_MOBILE != null ?
+                new ObjectParameter("M_MOBILE", m_MOBILE) :
+                new ObjectParameter("M_MOBILE", typeof(string));
+    
+            var m_PWD_NEWParameter = m_PWD_NEW != null ?
+                new ObjectParameter("M_PWD_NEW", m_PWD_NEW) :
+                new ObjectParameter("M_PWD_NEW", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_PWD", m_IDParameter, m_NAMEParameter, m_EMAILParameter, m_MOBILEParameter, m_PWD_NEWParameter, eRR_CODE, rET_M_NAME, rET_M_EMAIL);
+        }
+    
+        public virtual int SP_MEMBER_FIND_ID(string m_NAME, string m_EMAIL, string m_MOBILE, ObjectParameter eRR_CODE, ObjectParameter rET_M_ID, ObjectParameter rET_M_NAME, ObjectParameter rET_M_CREDATE)
+        {
+            var m_NAMEParameter = m_NAME != null ?
+                new ObjectParameter("M_NAME", m_NAME) :
+                new ObjectParameter("M_NAME", typeof(string));
+    
+            var m_EMAILParameter = m_EMAIL != null ?
+                new ObjectParameter("M_EMAIL", m_EMAIL) :
+                new ObjectParameter("M_EMAIL", typeof(string));
+    
+            var m_MOBILEParameter = m_MOBILE != null ?
+                new ObjectParameter("M_MOBILE", m_MOBILE) :
+                new ObjectParameter("M_MOBILE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_ID", m_NAMEParameter, m_EMAILParameter, m_MOBILEParameter, eRR_CODE, rET_M_ID, rET_M_NAME, rET_M_CREDATE);
         }
     }
 }

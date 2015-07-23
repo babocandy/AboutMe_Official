@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Mypage Retire";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <!-- 각 페이지별 코딩에 따라 css or js 변경필요-->
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+}
+
+@section Scripts{
+<script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
+
+    <script>
+        var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+
+        function fGoRetire()
+        {
+            var f = document.frmRETIRE;
+            var strDEL_REASON = "";
+
+            if(f.M_DEL_REASON_CODE[0].checked ||
+               f.M_DEL_REASON_CODE[1].checked ||
+               f.M_DEL_REASON_CODE[2].checked ||
+               f.M_DEL_REASON_CODE[3].checked ||
+               f.M_DEL_REASON_CODE[4].checked 
+                )
+            {
+                ;
+            }
+            else {
+                alert("불편했던 사항을 1개 이상 선택/입력해 주세요");
+                return;
+            }
+            
+            if(f.agree.checked ==false)
+            {
+                alert("개인정보 삭제동의가 필요합니다.");
+                return;
+            }
+
+            strDEL_REASON = "";
+            if (f.M_DEL_REASON_CODE[0].checked)
+                strDEL_REASON = strDEL_REASON + "|1.제품에 대해 불만이 많아요.";
+            if (f.M_DEL_REASON_CODE[1].checked)
+                strDEL_REASON = strDEL_REASON + "|2.사이트를 방문하지 않아요.";
+            if (f.M_DEL_REASON_CODE[2].checked)
+                strDEL_REASON = strDEL_REASON + "|3.관심이 없어요.";
+            if (f.M_DEL_REASON_CODE[3].checked)
+                strDEL_REASON = strDEL_REASON + "|4.판매처가 없어요.";
+            if (f.M_DEL_REASON_CODE[4].checked) {
+                strDEL_REASON = strDEL_REASON + "|5.기타:";
+                strDEL_REASON = strDEL_REASON + f.M_DEL_REASON_DESC.value;
+            }
+            f.M_DEL_REASON.value = strDEL_REASON;
+
+            if(confirm("정말 회원탈퇴를 하시겠습니까?"))
+            {
+                f.target = "";
+                //f.action = "/Mypage/RetireProc";
+                f.action = glHTTPS_DOMAIN + "/Mypage/RetireProc";
+                f.submit();
+            }
+
+        }
+    </script>
+}
+
+
+<!--header-->
+@section Header{
+   
+}
+<!--//header-->
+<!--container-->
+@section Body{
+ <div class="wrap mypage">
+
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
+
+
+     <!--container-->
+     <div id="container" class="dropout">
+         <div class="container1080">
+             <!--mypage_top-->
+             <div class="mypage_top">
+                 <!--h2_area-->
+                 <div class="h2_area">
+                     <h2>회원 탈퇴<i></i></h2>
+                     <!--mypage_menu-->
+                     @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                     <!--//mypage_menu-->
+                 </div>
+                 <!--//h2_area-->
+                 <!--꼭 읽어주세요-->
+                 <div class="userread">
+                     <p class="tit">꼭 읽어주세요</p>
+                     <ul class="ps_list">
+                         <li>회원 탈퇴를 하시면, 보유하신 적립금, 할인쿠폰은 자동 소멸됩니다.</li>
+                         <li>회원 탈퇴 시 구매내역 자동소멸로 회원등급제는 재가입시 브론즈 회원으로 적용됩니다.</li>
+                         <li>이벤트 참여는 탈퇴 이후 자동타락을 기본으로 하며, 이전 당첨에 있어서는 경품발송이 예정대로 진행됩니다.</li>
+                         <li>탈퇴 후 재가입은 15일 이후부터 가능하며, 동일한 아이디로는 재가입 불가능합니다.</li>
+                     </ul>
+                 </div>
+                 <!--//꼭 읽어주세요-->
+             </div>
+             <!--//mypage_top-->
+             <!--회원 탈퇴-->
+             <div class="contypea step3">
+                 <h3><img src="/aboutCom/images/mypage/h3_dropout.gif" alt="불편했던 사항 입력해 주세요" /></h3>
+                 <div class="dropoutform">
+                     <!--<form name="frmRETIRE" action="" method="post">-->
+                    @using (Html.BeginForm("RetireProc", "MemberShip", FormMethod.Post, new { id = "frmRETIRE", name = "frmRETIRE" }))
+                    {
+                        @Html.AntiForgeryToken()                       //폼 데이터 위조 방지 토큰 생성
+
+                           <input type="hidden" name="M_DEL_REASON" value="">
+                            
+                           <fieldset>
+                             <legend>회원 탈퇴 폼</legend>
+                             <table summary="불편사항 체크 및 입력">
+                                 <caption>불편사항 체크 입력 표</caption>
+                                 <colgroup>
+                                     <col width="50%" />
+                                     <col width="50%" />
+                                 </colgroup>
+                                 <tbody>
+                                     <tr>
+                                         <td><label class="chkcon"><input type="checkbox" name="M_DEL_REASON_CODE" value="1" title=""> <span class="txt">제품에 대해 불만이 많아요.</span></label></td>
+                                         <td><label class="chkcon"><input type="checkbox" name="M_DEL_REASON_CODE" value="2" title=""> <span class="txt">사이트를 방문하지 않아요.</span></label></td>
+                                     </tr>
+                                     <tr>
+                                         <td><label class="chkcon"><input type="checkbox" name="M_DEL_REASON_CODE" value="3" title=""> <span class="txt">관심이 없어요.</span></label></td>
+                                         <td><label class="chkcon"><input type="checkbox" name="M_DEL_REASON_CODE" value="4" title=""> <span class="txt">판매처가 없어요.</span></label></td>
+                                     </tr>
+                                     <tr>
+                                         <td colspan="2" class="comment">
+                                             <label class="chkcon"><input type="checkbox" name="M_DEL_REASON_CODE" value="5" title=""> <span class="txt">기타</span></label>
+                                             <textarea class="txtareatypea" style="width:940px" name="M_DEL_REASON_DESC" onkeyup="javascript:return content_length_check(this,300);"></textarea>
+                                         </td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                             <div class="agreebox">
+                                 <span class="info"><i></i>위 사항을 확인하였으며, 탈퇴 후 개인정보의 삭제에 동의 합니다.</span>
+                                 <label class="chkcon"><input type="checkbox" name="agree" title=""> <span class="txt">개인정보 삭제 동의 합니다.</span></label>
+                             </div>
+                             <div class="btngroup mt20">
+                                 <a href="javascript:fGoRetire();" class="btn_brown_w96h38">탈퇴</a><a href="/MemberShip/Main" class="btn_white_w96h38 typeb">취소</a>
+                             </div>
+                         </fieldset>
+                    }
+                     <!--</form>-->
+                 </div>
+             </div>
+             <!--//회원 탈퇴-->
+         </div>
+     </div>
+     <!--//container-->
+
+    <!--footer-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+
+ </div>
+
+}
+
+
+
+@section Footer{
+}    
+

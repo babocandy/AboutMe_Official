@@ -137,14 +137,21 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.SortCol = SortCol;
             this.ViewBag.SortDir = SortDir;
 
+
+
+            //쿠폰마스터 정보를 ViewData에 저장 
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
+
+
+
+
             //AdminMemberService srv =  new AdminMemberService();
             int TotalRecord = 0;
             TotalRecord = _AdminCouponService.GetAdminCouponProductListCnt(SearchCol, SearchKeyword,CdCoupon);
             this.ViewBag.TotalRecord = TotalRecord;
             //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
             this.ViewBag.Page = Page;
-
-
 
 
 
@@ -175,14 +182,18 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.SortCol = SortCol;
             this.ViewBag.SortDir = SortDir;
 
+
+            //쿠폰마스터 정보를 ViewData에 저장 
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
+
+
             //AdminMemberService srv =  new AdminMemberService();
             int TotalRecord = 0;
             TotalRecord = _AdminCouponService.GetAdminCouponProductForCreateListCnt(SearchCol, SearchKeyword, CdCoupon);
             this.ViewBag.TotalRecord = TotalRecord;
             //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
             this.ViewBag.Page = Page;
-
-
 
 
 

@@ -9,66 +9,69 @@
     <link href="/aboutCom/css/membership.css" rel="stylesheet" />
 }
 
-
-<!--header-->
-@section Header{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+@section Scripts{
 }
-<!--//header-->
-<!--container-->
+
+
+@section Header{
+}
 @section Body{
+<div class="wrap join">
 
 
-    <div class="wrap join">
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
+
  
 
-        <!--container-->
-        <div id="container">
-            <div class="container1080">
-                <h2><img src="/aboutCom/images/membership/h2_join.gif" alt="회원가입" /><span>고객님의 가입여부 확인 및 개인 정보보호를 위해 실명확인 서비스를 실시하고 있습니다. </span></h2>
-                <!--step-->
-                <div class="joinstep"><img src="/aboutCom/images/membership/joinstep4.gif" alt="가입완료" /></div>
-                <div class="userinfo">
-                    <!--회원정보-->
-                    <div class="userdetail contypea">
-                        <p class="username"><em>@ViewBag.M_NAME</em> 고객님</p>
-                        <p class="fintxt">
-                            ABOUTME 회원가입을 진심으로 감사 드립니다.<br />
-                            아래의 정보로 회원 등록이 완료되었습니다.
-                        </p>
-                        <dl>
-                            <dt>아이디</dt>
-                            <dd>@ViewBag.M_ID</dd>
-                            <dt>이름</dt>
-                            <dd>@ViewBag.M_NAME</dd>
-                            <dt>이메일</dt>
-                            <dd>@ViewBag.M_EMAIL</dt>
-                            <dt>가입일</dt>
-                            <dd>@ViewBag.M_CREDATE</dd>
-                        </dl>
-                    </div>
-                    <!--회원정보-->
-                    <!--회원혜택-->
-                    <div class="userbenefit">
-                        <a href="#"><img src="/aboutCom/images/sample/joinend_banner.jpg" alt="" /></a>
-                    </div>
-                    <!--//회원혜택-->
+    <!--container-->
+    <div id="container">
+        <div class="container1080">
+            <h2><img src="/aboutCom/images/membership/h2_join.gif" alt="회원가입" /><span>고객님의 가입여부 확인 및 개인 정보보호를 위해 실명확인 서비스를 실시하고 있습니다. </span></h2>
+            <!--step-->
+            <div class="joinstep"><img src="/aboutCom/images/membership/joinstep4.gif" alt="가입완료" /></div>
+            <div class="userinfo">
+                <!--회원정보-->
+                <div class="userdetail contypea">
+                    <p class="username"><em>@ViewBag.M_NAME</em> 고객님</p>
+                    <p class="fintxt">
+                        ABOUTME 회원가입을 진심으로 감사 드립니다.<br />
+                        아래의 정보로 회원 등록이 완료되었습니다.
+                    </p>
+                    <dl>
+                        <dt>아이디</dt>
+                        <dd>@ViewBag.M_ID</dd>
+                        <dt>이름</dt>
+                        <dd>@ViewBag.M_NAME</dd>
+                        <dt>이메일</dt>
+                        <dd>@ViewBag.M_EMAIL</dt>
+                        <dt>가입일</dt>
+                        <dd>@ViewBag.M_CREDATE</dd>
+                    </dl>
                 </div>
-                <div class="btngroup mt40">
-                    <a href="/MemberShip/Login/" class="btn_brown_w185h60 mr10">로그인</a><a href="/" class="btn_white_w185h60"><img src="/aboutCom/images/common/ico_main.gif" class="gomainimg" alt="" />메인으로가기</a>
+                <!--회원정보-->
+                <!--회원혜택-->
+                <div class="userbenefit">
+                    <a href="#"><img src="/aboutCom/images/sample/joinend_banner.jpg" alt="" /></a>
                 </div>
+                <!--//회원혜택-->
+            </div>
+            <div class="btngroup mt40">
+                <a href="/MemberShip/Login/" class="btn_brown_w185h60 mr10">로그인</a><a href="/" class="btn_white_w185h60"><img src="/aboutCom/images/common/ico_main.gif" class="gomainimg" alt="" />메인으로가기</a>
             </div>
         </div>
-
-        <!--//container-->
-
     </div>
 
+    <!--//container-->
 
-}
-<!--//container-->
-<!--footer-->
-@section Footer{
+    <!--footer-->
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+
+</div>
 }
-<!--//footer-->
+
+
+@section Footer{
+}

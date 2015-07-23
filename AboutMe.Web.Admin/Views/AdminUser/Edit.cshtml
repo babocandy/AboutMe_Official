@@ -6,6 +6,27 @@
 }
 
 @section Scripts{
+<script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
+<script>
+    function fGoSave() {
+        var f = document.frmFORM;
+        //if (f.ADM_ID.value.length < 4) {
+        //    alert("아이디를 입력하세요.");
+        //    return;
+        //}
+        if (f.ADM_NAME.value.length < 1) {
+            alert("이름을 입력하세요.");
+            return;
+        }
+        if (f.ADM_PWD.value.length > 1 && f.ADM_PWD.value.length < 4) {
+            alert("암호를 수정하려면 4자이상 입력하세요.\n 수정하지않으려면 공란으로 두세요");
+            return;
+        }
+        f.action = "/AdminUser/EditOK";
+        f.submit();
+    }
+</script>
 
 }
 
@@ -42,26 +63,7 @@
                     </div>
                 </div>
         -->
-        <script>
-            function fGoSave()
-            {
-                var f = document.frmFORM;
-                //if (f.ADM_ID.value.length < 4) {
-                //    alert("아이디를 입력하세요.");
-                //    return;
-                //}
-                if (f.ADM_NAME.value.length < 1) {
-                    alert("이름을 입력하세요.");
-                    return;
-                }
-                if (f.ADM_PWD.value.length > 1 && f.ADM_PWD.value.length < 4) {
-                    alert("암호를 수정하려면 4자이상 입력하세요.\n 수정하지않으려면 공란으로 두세요");
-                    return;
-                }
-                f.action = "/AdminUser/EditOK";
-                f.submit();
-            }
-        </script>
+
 
         <div class="panel">
             <h3 class="sub-header">관리자수정</h3>

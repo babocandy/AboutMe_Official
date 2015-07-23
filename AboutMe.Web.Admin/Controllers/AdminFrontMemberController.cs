@@ -93,6 +93,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -기본정보: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_Basic(string M_ID = "", string M_GRADE = "", string M_MOBILE = "--", string M_PHONE = "--", string M_EMAIL = "@", string M_ZIPCODE = "", string M_ADDR1 = "", string M_ADDR2 = "", string M_ISSMS = "", string M_ISEMAIL = "", string M_ISDM = "")
         {
@@ -144,6 +146,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -암호변경: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_PWD(string M_ID = "", string M_PWD="")
         {
@@ -202,6 +206,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -임직원: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_Staff(string M_ID = "", string M_GBN = "", string M_STAFF_COMPANY = "", string M_STAFF_ID = "")
         {
@@ -246,6 +252,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -탈퇴: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_Retire(string M_ID = "", string M_DEL_REASON = "")
         {
@@ -446,7 +454,7 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.SORT_DIR = SORT_DIR;
             this.ViewBag.PAGE = PAGE;
             this.ViewBag.PAGESIZE = PAGESIZE;
-            if (SEL_IDX == null || SEL_IDX<1)
+            if (SEL_IDX<1)
                 return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
 
 
@@ -454,6 +462,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 임직원 신청- 수정 : ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult StaffRequestEditOK(int IDX = -1, string STATUS = "", string PROC_COMMENT = "")
         {
@@ -464,7 +474,7 @@ namespace AboutMe.Web.Admin.Controllers
             string PROC_ADM_ID = AdminUserInfo.GetAdmId();  //처리자 계정 (관리자 로그인계정)
 
             //return View();
-            if (IDX == null || IDX<1)
+            if (IDX<1)
             {
                 //return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
                 nERR_CODE = 1;
@@ -500,7 +510,48 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
 
-      
+
+        //#####################################################################################################################################
+        //-//데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요 =============================================================================================================================
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL()
+        {
+            //return View();
+
+            AES256Cipher objEnc = new AES256Cipher();
+
+            List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> result = _AdminFrontMemberService.GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL();
+
+            int TotalRecord = result.Count;
+
+            int ACTION_CNT = 0;
+
+            this.ViewBag.START = DateTime.Now;
+
+            for (int i = 0; i < result.Count;i++ )
+            {
+                string M_ID = result[i].M_ID;
+                string M_PWD = result[i].M_PWD;
+                string ZZ_OLD_PWD_MD5 = result[i].ZZ_OLD_PWD_MD5;
+
+                //string M_PWD_MD5_HASH = objEnc.MD5Hash(M_PWD);  
+                string M_PWD_SHA256_HASH = objEnc.SHA256Hash(ZZ_OLD_PWD_MD5);   //MD5-> SHA256_HASH
+
+                if(M_PWD.Length<1 && ZZ_OLD_PWD_MD5.Length>20)
+                {
+                    _AdminFrontMemberService.SetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(M_ID, M_PWD_SHA256_HASH);
+                    ACTION_CNT++;
+
+                }
+
+            } //for
+
+            this.ViewBag.TotalRecord = TotalRecord; //대상건수
+            this.ViewBag.ACTION_CNT = ACTION_CNT;  //처리건수
+            this.ViewBag.END = DateTime.Now;
+
+            return View();
+        }      
     
-    }
-}
+    } //clsss
+}// namespace

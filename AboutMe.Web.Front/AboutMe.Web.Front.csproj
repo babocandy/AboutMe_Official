@@ -198,6 +198,7 @@
     <Compile Include="Common\UserLog.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseFrontController.cs" />
+    <Compile Include="Controllers\MyCouponController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ChildActionProductController.cs" />
@@ -436,13 +437,28 @@
     <Content Include="aboutCom\images\event\h3_timesale.png" />
     <Content Include="aboutCom\images\event\ico_cart.png" />
     <Content Include="aboutCom\images\event\ico_tip.png" />
+    <Content Include="aboutCom\images\mail\img_benf.jpg" />
+    <Content Include="aboutCom\images\mail\img_box1.jpg" />
+    <Content Include="aboutCom\images\mail\img_box1_2.jpg" />
+    <Content Include="aboutCom\images\mail\img_box2.jpg" />
+    <Content Include="aboutCom\images\mail\img_delpoint.jpg" />
+    <Content Include="aboutCom\images\mail\img_delpointtxt.jpg" />
+    <Content Include="aboutCom\images\mail\img_delpointtxt2.jpg" />
+    <Content Include="aboutCom\images\mail\img_goaboutme.jpg" />
+    <Content Include="aboutCom\images\mail\img_jointxt.jpg" />
+    <Content Include="aboutCom\images\mail\img_jointxt2.jpg" />
+    <Content Include="aboutCom\images\mail\img_outinfo.jpg" />
+    <Content Include="aboutCom\images\mail\img_outtxt.jpg" />
+    <Content Include="aboutCom\images\mail\img_outtxt2.jpg" />
     <Content Include="aboutCom\images\mail\mail_bl_call.gif" />
     <Content Include="aboutCom\images\mail\mail_bl_point.gif" />
     <Content Include="aboutCom\images\mail\mail_btn_aboutmego.gif" />
     <Content Include="aboutCom\images\mail\mail_callnum_hanjin.gif" />
+    <Content Include="aboutCom\images\mail\mail_footer.jpg" />
     <Content Include="aboutCom\images\mail\mail_hlogo.jpg" />
     <Content Include="aboutCom\images\mail\mail_ico_equal.gif" />
     <Content Include="aboutCom\images\mail\mail_ico_min.gif" />
+    <Content Include="aboutCom\images\mail\mail_logo.jpg" />
     <Content Include="aboutCom\images\mail\mail_orderend_hanjin.jpg" />
     <Content Include="aboutCom\images\mail\mail_orderend_txt1.gif" />
     <Content Include="aboutCom\images\mail\mail_orderend_txt2.gif" />
@@ -455,6 +471,8 @@
     <Content Include="aboutCom\images\mail\mail_tag_coupon.gif" />
     <Content Include="aboutCom\images\mail\mail_tag_new.gif" />
     <Content Include="aboutCom\images\mail\product_im96x96.jpg" />
+    <Content Include="aboutCom\images\mail\txt_mailinfo.jpg" />
+    <Content Include="aboutCom\images\mail\txt_mailinfo2.jpg" />
     <Content Include="aboutCom\images\membership\bg_membership.gif" />
     <Content Include="aboutCom\images\membership\h2_join.gif" />
     <Content Include="aboutCom\images\membership\h2_login.png" />
@@ -526,6 +544,7 @@
     <Content Include="aboutCom\images\review\thumb308.jpg" />
     <Content Include="aboutCom\images\review\thumb640.jpg" />
     <Content Include="aboutCom\images\review\txt_review.gif" />
+    <Content Include="aboutCom\images\review\write_imgnone.jpg" />
     <Content Include="aboutCom\images\sample\bg_mbnr1.jpg" />
     <Content Include="aboutCom\images\sample\bg_mbnr2.jpg" />
     <Content Include="aboutCom\images\sample\bg_mbnr3.jpg" />
@@ -613,6 +632,7 @@
     <Content Include="aboutCom\images\shopping\thumb_detail4_big.jpg" />
     <Content Include="aboutCom\images\shopping\thumb_move.jpg" />
     <Content Include="aboutCom\images\shopping\tit_related_product.gif" />
+    <Content Include="aboutCom\images\shopping\tit_relgoods.gif" />
     <Content Include="aboutCom\images\shopping\tit_setgoods.gif" />
     <Content Include="aboutCom\images\shopping\txt_tab1.gif" />
     <Content Include="aboutCom\images\shopping\txt_tab2.gif" />
@@ -633,6 +653,13 @@
     <Content Include="aboutCom\js\lib\ui.datepicker-ko.js" />
     <Content Include="aboutCom\js\main.js" />
     <Content Include="aboutCom\js\script.js" />
+    <Content Include="aboutCom\js\lib\ui.datepicker-ko.js" />
+    <Content Include="aboutCom\MailSkin\mail_delpoint.html" />
+    <Content Include="aboutCom\MailSkin\mail_join.html" />
+    <Content Include="aboutCom\MailSkin\mail_memout.html" />
+    <Content Include="aboutCom\MailSkin\mail_orderend.html" />
+    <Content Include="aboutCom\MailSkin\mail_orderend_nonmb.html" />
+    <Content Include="aboutCom\MailSkin\mail_orderend_vip.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -659,6 +686,8 @@
     <Content Include="aboutCom\images\sample\Thumbs.db" />
     <Content Include="aboutCom\images\shopping\Thumbs.db" />
     <Content Include="Content\child.html" />
+    <Content Include="aboutCom\images\mypage\Thumbs.db" />
+    <Content Include="aboutCom\images\review\Thumbs.db" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -735,13 +764,24 @@
     <Content Include="Views\MyOrder\Index.cshtml" />
     <Content Include="Views\Event\SetPromotion.cshtml" />
     <Content Include="Views\MyReview\Ready.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\MyReview\Complete.cshtml" />
     <Content Include="Views\MyReview\_Top.cshtml" />
     <Content Include="Views\MyReview\Write.cshtml" />
     <Content Include="Views\Review\Product.cshtml" />
     <Content Include="Views\Review\Experience.cshtml" />
+    <Content Include="Views\Event\TimeSale.cshtml" />
+    <Content Include="Views\MyCoupon\Downloadable.cshtml" />
+    <Content Include="Views\MyCoupon\UpdateToUsable.cshtml" />
+    <Content Include="Views\MyCoupon\Available.cshtml" />
+    <Content Include="Views\MyCoupon\Availablelist.cshtml" />
+    <Content Include="Views\MyCoupon\CouponProductPop.cshtml" />
     <Content Include="Views\MemberShip\JoinStep4.cshtml" />
     <Content Include="Views\Order\Step1.cshtml" />
+    <Content Include="Views\MemberShip\IdSearch.cshtml" />
+    <Content Include="Views\MemberShip\IdSearch_End.cshtml" />
+    <Content Include="Views\MemberShip\PwSearch.cshtml" />
+    <Content Include="Views\MemberShip\PwSearch_End.cshtml" />
     <Content Include="Views\Order\Step1ProductList.cshtml" />
     <Content Include="Views\Order\Step1PriceInfo.cshtml" />
     <Content Include="Views\Order\Step1DiscountInfo.cshtml" />
@@ -751,9 +791,14 @@
     <Content Include="Views\Order\InipayTest.cshtml" />
     <Content Include="Views\Order\OrderProcess.cshtml" />
     <Content Include="Views\Order\OrderResult.cshtml" />
+    <Content Include="Views\AboutMePartial\_MyPageSubMenu.cshtml" />
+    <Content Include="Views\Mypage\MyModify.cshtml" />
+    <Content Include="Views\Mypage\Pop_PwChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\Product\" />
+    <Folder Include="Upload\Review\" />
     <Folder Include="Views\ReviewViewModels\" />
   </ItemGroup>
   <ItemGroup>

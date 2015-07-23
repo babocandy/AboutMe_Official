@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;  //for Random 
 
 using System.Configuration;
 using System.Collections;
@@ -45,8 +46,72 @@ namespace AboutMe.Common.Helper
                 return list;
           }
 
-     
+
+        //문자 숫자 랜덤  :혼동소지의 char는 제거 ,O,o,0 ,I,i,1,l,L
+        public static string GetRandomAlphanumeric(int length=4)
+        {
+            const string alphanumericCharacters =
+                "ABCDEFGHJKMNPQRSTUVWXYZ" +
+                "abcdefghjkmnpqrstuvwxyz" +
+                "23456789";
+            return GetRandomAny(length, alphanumericCharacters);
+        }
+        //문자 랜덤 :혼동소지의 char는 제거 ,O,o,0 ,I,i,1,l,L
+        public static string GetRandomAlpha(int length = 4)
+        {
+            const string alphanumericCharacters =
+                "ABCDEFGHJKMNPQRSTUVWXYZ" +
+                "abcdefghjkmnpqrstuvwxyz";
+            return GetRandomAny(length, alphanumericCharacters);
+        }
+        //숫자 랜덤 
+        public static string GetRandomNumberString(int length = 4)
+        {
+            const string alphanumericCharacters = "0123456789";
+            return GetRandomAny(length, alphanumericCharacters);
+        }
+        //랜덤 팩토리
+        public static string GetRandomAny(int length = 4, IEnumerable<char> characterSet=null )
+        {
+            if (length < 0)
+                throw new ArgumentException("length must not be negative", "length");
+            if (length > int.MaxValue / 8) // 250 million chars ought to be enough for anybody
+                throw new ArgumentException("length is too big", "length");
+            if (characterSet == null)
+                throw new ArgumentNullException("characterSet");
+            var characterArray = characterSet.Distinct().ToArray();
+            if (characterArray.Length == 0)
+                throw new ArgumentException("characterSet must not be empty", "characterSet");
+
+            var bytes = new byte[length * 8];
+            new RNGCryptoServiceProvider().GetBytes(bytes);
+            var result = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                ulong value = BitConverter.ToUInt64(bytes, i * 8);
+                result[i] = characterArray[value % (uint)characterArray.Length];
+            }
+            return new string(result);
+        }
 
 
-    }
-}
+        //서버의 로컬파일 text파일 가져오기 ex)text,html,메일스킨,... 읽기
+        //사용예
+        //    string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //현재 도메인 구하기. ex http://www.aaa.co.kr:1234  
+        //    string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\" ;  //메일스킨이 존재하는 폴더(웹루트이하로 가정)
+        //    string skin_body =Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일스킨 파일명
+        //    skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인 변경
+        public static string GetTextResourceFile(string resourceName)
+        {
+            return System.IO.File.ReadAllText(resourceName);
+            /*
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+            using (var sr = new StreamReader(stream))
+            {
+                return sr.ReadToEnd();
+            }
+             */
+        }
+
+    } //class
+}//namespace

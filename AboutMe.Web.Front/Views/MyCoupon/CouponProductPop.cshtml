@@ -1,0 +1,162 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminCoupon.SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result>
+
+
+@{
+  
+    Layout = null;
+}
+
+@{
+
+    //[1] 마스터 정보
+
+    string CouponName = "", CouponGbn = "", CouponGbnM = "" , CouponAdMsg = "";
+    DateTime MasterFromDate, MasterToDate;
+    string UsableDeviceGbn = "", UsableYN = "",RateOrMoney ="", CouponDiscountMoney = "", CouponDiscountRate = "";
+    string IssueMethodGbn = "", IssueMethodWithAuto = "";
+
+    DateTime UsableDateFrom, UsableDateTo;
+    
+    //string RateOrMoney = "";
+
+    List<AboutMe.Domain.Entity.AdminCoupon.SP_COUPON_MASTER_INFO_SEL_Result> SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result
+        = ViewData["SP_COUPON_MASTER_INFO_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_COUPON_MASTER_INFO_SEL_Result>;
+
+    CouponName = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME;
+
+    CouponAdMsg = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_AD_MSG;
+    CouponGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN;
+    CouponGbnM = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M;
+    MasterFromDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value;
+    MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
+    UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
+    UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
+    RateOrMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY; 
+    CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
+    CouponDiscountRate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE.ToString();
+    IssueMethodGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN;
+    IssueMethodWithAuto = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO;
+
+
+    UsableDateFrom = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DATE_FROM.Value;
+    UsableDateTo = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DATE_TO.Value;
+
+}
+
+@{
+    string FromYYYY = "", FromMM = "", FromDD = "";
+    string ToYYYY = "", ToMM = "", ToDD = "";
+
+    FromYYYY = UsableDateFrom.Year.ToString();
+    FromMM = UsableDateFrom.Month.ToString().PadLeft(2, '0');
+    FromDD = UsableDateFrom.Day.ToString().PadLeft(2, '0');
+
+
+    ToYYYY = UsableDateTo.Year.ToString();
+    ToMM   = UsableDateTo.Month.ToString().PadLeft(2, '0');
+    ToDD   = UsableDateTo.Day.ToString().PadLeft(2, '0');
+
+}
+
+
+@{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+
+<script src="/aboutCom/js/lib/jquery-ui.js"></script>
+<script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
+
+
+<title>ABOUT ME</title>
+</head>
+<body class="popup">
+    <!-- 쿠폰 적용대상 보기 팝업-->
+    <div class="popupwrap">
+        <div class="pop">
+            <!--pop_top-->
+            <div class="pop_top">
+                <div class="title_area">
+                    <p class="title">쿠폰 적용대상 보기</p>
+                </div>
+                <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
+            </div>
+            <!--//pop_top-->
+            <!-- coupon_info -->
+            <div class="coupon_info">
+                <div class="selected_coupon">
+                    <h3>선택한 쿠폰</h3>
+                    <table summary="할인율(액), 쿠폰명, 사용 가능기간">
+                        <caption>선택한 쿠폰 표</caption>
+                        <colgroup>
+                            <col width="139" />
+                            <col width="*" />
+                            <col width="242" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>할인율(액)</th>
+                                <th>쿠폰명</th>
+                                <th>사용 가능시간</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="dcrate">@if(RateOrMoney =="R")
+                                                   { 
+                                                      @CouponDiscountRate @:%
+                                                   }
+                                                   else if (RateOrMoney == "M")
+                                                   {
+                                                       @String.Format("{0:#,##0}", CouponDiscountMoney)  @:원
+                                                   }
+                                 </td>
+                                <td class="cpname">@CouponAdMsg</td>
+                                <td class="date"><span>@FromYYYY. @FromMM. @FromDD</span> ~ <span>@ToYYYY. @ToMM. @ToDD</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="applies_goods mt20">
+                    <h3>적용 대상 상품</h3>
+                    <div class="prolist">
+                        <ul>
+                        @foreach (var item in Model)
+                        {
+                            <li class="pro_info">
+                                <!-- 이미지사이즈 96x96 -->
+                                <div class="photo"><!--<img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" />-->
+                                @ViewBag.PRODUCT_PATH@item.OTHER_IMG1
+                                </div>
+                                <div class="detail">
+                                    <p class="tit">@item.P_NAME</p>
+                                    <p class="stit">@item.P_SUB_TITLE</p>
+                                    <p class="price"><del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del>@String.Format("{0:#,##0}", item.DISCOUNT_PRICE)원</p>
+                                </div>
+                            </li>
+                        }
+                        </ul>
+                    </div>
+                </div>
+                <!-- 페이징 -->
+                <div class="paging mt30">
+                    <a href="#" class="prev">이전</a>
+                    <!-- 현재 페이지 -->
+                    <strong>1</strong>
+                    <!-- //현재 페이지 -->
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">7</a>
+                    <a href="#">8</a>
+                    <a href="#">9</a>
+                    <a href="#">10</a>
+                    <a href="#" class="next">다음</a>
+                </div>
+                <!-- //페이징 -->
+            </div>
+            <!--//coupon_info-->
+        </div>
+    </div>
+    <!--//쿠폰 적용대상 보기 팝업-->
+</body>
+</html>

@@ -161,6 +161,70 @@
 
 @section Scripts{
 
+<script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
+<script>
+    function fReload() {
+        window.location.reload();
+    }
+
+    function fGoList() {
+        var f = document.frmFORM;
+        f.target = "";
+        f.action = "/AdminFrontMember/StaffRequestIndex";
+        f.submit();
+    }
+
+
+
+    //임직원 신청내역 수정-------------------------------------------------
+    function fGoSave() {
+        var f = document.frmFORM;
+        if (f.SEL_IDX.value.length < 1) {
+            alert("문서번호가 없습니다..");
+            return;
+        }
+        //f.action = "/AdminFrontMember/StaffRequestEditOK_Basic";
+        //f.submit();
+
+        var strTOKEN = f.__RequestVerificationToken.value;
+        var strIDX = f.SEL_IDX.value;
+        var strSTATUS = f.STATUS.value;
+        var strPROC_COMMENT = f.PROC_COMMENT.value;
+
+        var strURL = "/AdminFrontMember/StaffRequestEditOK"; //임직원 신청내역 수정
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                __RequestVerificationToken: strTOKEN
+                , IDX: strIDX
+                , STATUS: strSTATUS
+                , PROC_COMMENT: strPROC_COMMENT
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    alert("수정되었습니다.\n 페이지를 새로고칩니다.");
+                    fReload();
+                }
+                else {
+                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                alert("ajax 오류발생2-1");
+            }
+        }); //ajax
+
+    } //function
+
+
+</script>
+
+
 }
 
 @section Left {
@@ -180,69 +244,6 @@
         <div class="path">
             <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">임직원신청내역</a> &gt; <strong>임직원신청내역</strong>
         </div>
-        <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
-
-        <script>
-        function fReload() {
-            window.location.reload();
-        }
-
-        function fGoList() {
-            var f = document.frmFORM;
-            f.target = "";
-            f.action = "/AdminFrontMember/StaffRequestIndex";
-            f.submit();
-        }
-
-
-
-        //임직원 신청내역 수정-------------------------------------------------
-    function fGoSave()
-    {
-        var f = document.frmFORM;
-        if (f.SEL_IDX.value.length < 1) {
-            alert("문서번호가 없습니다..");
-            return;
-        }
-        //f.action = "/AdminFrontMember/StaffRequestEditOK_Basic";
-        //f.submit();
-
-        var strIDX = f.SEL_IDX.value;
-        var strSTATUS = f.STATUS.value;
-        var strPROC_COMMENT = f.PROC_COMMENT.value;
-
-        var strURL = "/AdminFrontMember/StaffRequestEditOK"; //임직원 신청내역 수정
-
-        $.ajax({
-            url: strURL,
-            async: false,  //동기 통신
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                IDX: strIDX
-                , STATUS: strSTATUS
-                , PROC_COMMENT: strPROC_COMMENT
-            },
-            success: function (retDATA) {
-                if(retDATA.ERR_CODE=="0")
-                {
-                    alert("수정되었습니다.\n 페이지를 새로고칩니다.");
-                    fReload();
-                }
-                else
-                {
-                    alert("ERR!!!! 저장중 오류발생.\n ERR_CODE:" + retDATA.ERR_CODE + "\n ERR_MSG:" + retDATA.ERR_MSG);
-                }
-            },
-            error: function (e) {
-                alert("ajax 오류발생2-1");
-            }
-        }); //ajax
-
-    } //function
-
-
-        </script>
 
         <div class="panel">
             <h3 class="sub-header">임직원 신청내역</h3>

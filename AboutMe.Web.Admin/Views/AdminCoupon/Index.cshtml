@@ -13,7 +13,7 @@
 
             var bSuccess = '@TempData["bSuccess"]';
             if(bSuccess){
-                alert("프로모션정보가 등록되었습니다!");
+                alert("쿠폰정보가 등록되었습니다!");
             }
         });
     </script>
@@ -39,15 +39,15 @@
 
         <div class="tar mb10">
             <a class="btn btn-default middium" href="/AdminCoupon/Create">신규 쿠폰정책 등록</a>
-            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+           <!-- <a class="btn btn-default middium" href="#">EXEL 다운로드</a>-->
         </div>
 
         <div class="panel">
             <h3 class="sub-header">기본설정</h3>
             <div class="alert alert-info">
                 <ul>
-                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
-                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                    <li>· 쿠폰 정책 리스트입니다.</li>
+                    <li>· 신규 쿠폰 정책을 등록하려면 우측 상단 [신규 쿠폰정책 등록]을 클릭하세요.</li>
                 </ul>
             </div>
         </div>
@@ -73,7 +73,7 @@
    
                                                                                         }>쿠폰정책명</option>
                                                         </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
-                                                        <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                        <!---<a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>-->
                                                         <input type="submit" value=" Search >> ">
                                                     </td>
                                                 </tr>

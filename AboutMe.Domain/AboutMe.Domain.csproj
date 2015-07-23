@@ -147,6 +147,21 @@
     <Compile Include="Entity\AdminCoupon\SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_COMMON_CNT_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_DOWNLOADABLE_LIST_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_ISSUED_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_MASTER_INFO_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminCoupon\TB_COUPON_ISSUED_DETAIL.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
@@ -237,6 +252,9 @@
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminFrontMember\SP_ADMIN_MEMBER_STAFF_REQUST_VIEW_Result.cs">
+      <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminFrontMember\SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result.cs">
       <DependentUpon>ModelAdminFrontMember.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminOrder\AdminOrderUserModel.cs" />
@@ -626,6 +644,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelReview.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_GET_PRODUCT_INFO_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_COMPLETE_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_READY_SEL_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
@@ -648,6 +672,8 @@
     <Compile Include="Service\AdminOrder\IAdminOrderService.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
+    <Compile Include="Service\Coupon\CouponService.cs" />
+    <Compile Include="Service\Coupon\ICouponService.cs" />
     <Compile Include="Service\Member\IMemberService.cs" />
     <Compile Include="Service\Member\MemberService.cs" />
     <Compile Include="Service\Notice\NoticeService.cs" />

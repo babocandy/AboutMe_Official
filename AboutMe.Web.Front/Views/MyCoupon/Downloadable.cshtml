@@ -1,0 +1,275 @@
+﻿
+@model IEnumerable<AboutMe.Domain.Entity.AdminCoupon.SP_COUPON_DOWNLOADABLE_LIST_Result>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script src="/aboutCom/js/lib/jquery-ui.js"></script>
+    <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
+}
+
+@section Scripts{
+
+   <script language="javascript">
+    $(function () {
+        //ajaxSelectCateCodeJavascriptInit();
+    });
+
+    function bsearch() {
+        var f = document.bform;
+        //alert('ok');
+        f.target = "";
+        f.PAGE.value = 1;
+        f.submit();
+    }
+
+    function pCateCode(code) {
+        //alert(code);
+        var f = document.bform;
+        f.P_CATE_CODE.value = code;
+        bsearch();
+    }
+
+    function cCateCode(code) {
+        var f = document.bform;
+        f.C_CATE_CODE.value = code;
+        bsearch();
+    }
+
+    function lCateCode(code) {
+        var f = document.bform;
+        f.L_CATE_CODE.value = code;
+        bsearch();
+    }
+
+    function sortGbn(code) {
+        var f = document.bform;
+        f.SORT_GBN.value = code;
+        bsearch();
+    }
+
+    function rePageSize() {
+        var f = document.aform;
+
+        f.target = "";
+        f.page.value = 1;
+        f.submit();
+    }
+    </script>
+ }
+
+
+@section Body{
+
+    <div class="wrap mypage">
+    <!--header-->
+    <!-- #include virtual="/aboutCom/include/header.asp" -->
+    <!--//header-->
+    <!--container-->
+    <div id="container" class="coupon">
+        <div class="container1080">
+            <!--mypage_top-->
+            <div class="mypage_top">
+                <!--h2_area-->
+                <div class="h2_area">
+                    <h2>나의 쿠폰<i></i></h2>
+                    <!--mypage_menu-->
+                    <div class="mypage_menu">
+                        <ul>
+                            <li><a href="#">배송/주문조회</a></li>
+                            <li><a href="#">취소/교환/반품</a></li>
+                            <li><a href="#">내 포인트</a></li>
+                            <li class="cnt"><a href="#">내 쿠폰북</a></li>
+                            <li><a href="#">1:1문의</a></li>
+                            <li><a href="#">찜목록</a></li>
+                            <li><a href="#">나의리뷰</a></li>
+                            <li><a href="#">개인정보관리</a></li>
+                            <li><a href="#">회원탈퇴</a></li>
+                        </ul>
+                    </div>
+                    <!--//mypage_menu-->
+                </div>
+                <!--//h2_area-->
+                <!--꼭 읽어주세요-->
+                <div class="userread">
+                    <p class="tit">꼭 읽어주세요</p>
+                    <ul class="ps_list">
+                        <li>쿠폰은 다운로드 후 사용가능 합니다.</li>
+                        <li>쿠폰은 1상품당 한번만 사용가능 합니다.</li>
+                        <li>무료배송 쿠폰은 최종 결제금액 기준으로 적용됩니다.</li>
+                    </ul>
+                </div>
+                <!--//꼭 읽어주세요-->
+            </div>
+            <!--//mypage_top-->
+            <!--쿠폰영역-->
+            <div class="contypeb">
+                <div class="couponwrap">
+                    <!--쿠폰소팅-->
+                    <div class="sort">
+                        <ul>
+                            <li class="cnt"><a href="/Mypage/MyCoupon/Downloadable">다운로드 가능 쿠폰</a></li>
+                            <li><a href="/Mypage/MyCoupon/Availablelist">사용 가능 쿠폰</a></li>
+                            <li><a href="/mypage/mycoupon_pass.asp">지난 쿠폰 내역</a></li>
+                        </ul>
+                    </div>
+                    <!--//쿠폰소팅-->
+                    <a href="/Mypage/MyCoupon/UpdateToUsable?UpdateMethod=A&IdxCouponNumber=0" class="btn_alldown"><img src="/aboutCom/images/common/ico_down2.gif" class="ico" alt="" />전체다운로드</a>
+
+                    <!--쿠폰리스트-->
+                    <div class="coupon_list">
+                        <ul>
+                            
+
+               @{
+                   string cssType = "";
+                   string couponTitle = "";
+                   string discount_str = "";
+
+                   string FromYYYY = "", FromMM = "", FromDD = "";
+                   string ToYYYY = "", ToMM = "", ToDD = "";
+
+                   string DwFromYYYY = "", DwFromMM = "", DwFromDD = "";
+                   string DwToYYYY = "", DwToMM = "", DwToDD = "";
+                }
+
+                @foreach (var item in Model)
+                {
+                    if (item.COUPON_GBN == "S") //배송쿠폰이면
+                    {
+                        cssType = "couponimg type3";
+                        couponTitle = "무료배송";
+                    }
+                    else if (item.COUPON_GBN == "M") //지불쿠폰이면
+                    {
+                        if (item.RATE_OR_MONEY == "R") //정률할인제 이면
+                        {
+                            cssType = "couponimg type1";
+                            couponTitle = "<strong>" + item.COUPON_DISCOUNT_RATE.ToString() + "</strong>%";
+                        }
+
+                        if (item.RATE_OR_MONEY == "M") //정액할인제 이면
+                        {
+                            cssType = "couponimg type2";
+                            couponTitle = "<strong>" + String.Format("{0:#,##0}", item.COUPON_MONEY) + "</strong>원";
+                        }
+                    }
+
+
+                    FromYYYY = item.USABLE_DATE_FROM.Value.Year.ToString();
+                    FromMM = item.USABLE_DATE_FROM.Value.Month.ToString().PadLeft(2, '0');
+                    FromDD = item.USABLE_DATE_FROM.Value.Day.ToString().PadLeft(2, '0');
+
+                    ToYYYY = item.USABLE_DATE_TO.Value.Year.ToString();
+                    ToMM = item.USABLE_DATE_TO.Value.Month.ToString().PadLeft(2, '0');
+                    ToDD = item.USABLE_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
+
+                    DwFromYYYY = item.DOWNLOAD_DATE_FROM.Value.Year.ToString();
+                    DwFromMM = item.DOWNLOAD_DATE_FROM.Value.Month.ToString().PadLeft(2, '0');
+                    DwFromDD = item.DOWNLOAD_DATE_FROM.Value.Day.ToString().PadLeft(2, '0');
+
+                    DwToYYYY = item.DOWNLOAD_DATE_TO.Value.Year.ToString();
+                    DwToMM = item.DOWNLOAD_DATE_TO.Value.Month.ToString().PadLeft(2, '0');
+                    DwToDD = item.DOWNLOAD_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
+
+                    <li>
+                        <!--
+                                coupontype1 , coupontype2, coupontype3
+                        세가지 타입이 있습니다.
+                        -->
+                        <div class="@cssType">@Html.Raw(couponTitle)</div>
+                        <div class="detail">
+                            <p class="tit">광고문구 <br />광고문구</p>
+                            <p class="peorid">
+                                <strong>사용가능기간-</strong> @FromYYYY. @FromMM. @FromDD~@ToMM. @ToDD<br />
+                                <strong>다운로드기간-</strong> @DwFromYYYY. @DwFromMM. @DwFromDD~@DwToMM. @DwToDD
+                            </p>
+                            <a href="/Mypage/MyCoupon/UpdateToUsable?UpdateMethod=S&IdxCouponNumber=@item.IDX_COUPON_NUMBER" class="btn_coupondown2"><img src="/aboutCom/images/common/ico_down.gif" class="ico" alt="" /> 쿠폰 다운로드</a>
+                        </div>
+                    </li>
+
+                }
+                            
+                        
+                           
+                            <!---
+                             <li>
+                                <div class="couponimg type2"><strong>10,000</strong>원</div>
+                                <div class="detail">
+                                    <p class="tit">브론즈 회원 대상<br />50% 할인쿠폰</p>
+                                    <p class="peorid">
+                                        <strong>사용가능기간-</strong> 2015. 09. 01~09. 15<br />
+                                        <strong>다운로드기간-</strong> 2015. 09. 01~09. 15
+                                    </p>
+                                    <a href="#" class="btn_coupondown2"><img src="/aboutCom/images/common/ico_down.gif" class="ico" alt="" /> 쿠폰 다운로드</a>
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <div class="couponimg type3">무료배송</div>
+                                <div class="detail">
+                                    <p class="tit">브론즈 회원 대상<br />50% 할인쿠폰</p>
+                                    <p class="peorid">
+                                        <strong>사용가능기간-</strong> 2015. 09. 01~09. 15<br />
+                                        <strong>다운로드기간-</strong> 2015. 09. 01~09. 15
+                                    </p>
+                                    <a href="#" class="btn_coupondown2"><img src="/aboutCom/images/common/ico_down.gif" class="ico" alt="" /> 쿠폰 다운로드</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="couponimg type3">무료배송</div>
+                                <div class="detail">
+                                    <p class="tit">브론즈 회원 대상<br />50% 할인쿠폰</p>
+                                    <p class="peorid">
+                                        <strong>사용가능기간-</strong> 2015. 09. 01~09. 15<br />
+                                        <strong>다운로드기간-</strong> 2015. 09. 01~09. 15
+                                    </p>
+                                    <a href="#" class="btn_coupondown2"><img src="/aboutCom/images/common/ico_down.gif" class="ico" alt="" /> 쿠폰 다운로드</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="couponimg type3">무료배송</div>
+                                <div class="detail">
+                                    <p class="tit">브론즈 회원 대상<br />50% 할인쿠폰</p>
+                                    <p class="peorid">
+                                        <strong>사용가능기간-</strong> 2015. 09. 01~09. 15<br />
+                                        <strong>다운로드기간-</strong> 2015. 09. 01~09. 15
+                                    </p>
+                                    <a href="#" class="btn_coupondown2"><img src="/aboutCom/images/common/ico_down.gif" class="ico" alt="" /> 쿠폰 다운로드</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="couponimg type2"><strong>10,000</strong>원</div>
+                                <div class="detail">
+                                    <p class="tit">브론즈 회원 대상<br />50% 할인쿠폰</p>
+                                    <p class="peorid">
+                                        <strong>사용가능기간-</strong> 2015. 09. 01~09. 15<br />
+                                        <strong>다운로드기간-</strong> 2015. 09. 01~09. 15
+                                    </p>
+                                    <a href="#" class="btn_coupondown2"><img src="/aboutCom/images/common/ico_down.gif" class="ico" alt="" /> 쿠폰 다운로드</a>
+                                </div>
+                            </li>
+                                -->
+                        </ul>
+                    </div>
+                    <!--쿠폰리스트-->
+                </div>
+            </div>
+            <!--//쿠폰영역-->
+
+
+        </div>
+    </div>
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+}
+<!--//footer-->
