@@ -29,6 +29,16 @@
             self.close();
         </script>
     }
+    
+    <script>
+        function findUploadFile() {
+            document.getElementById("UploadImage").click();
+        }
+
+        function changeUploadFile() {
+            document.frm.ImageFileName.value = document.frm.UploadImage.value;
+        }
+    </script>
 
 }
 
@@ -46,7 +56,7 @@
         <!--//pop_top-->
         <!--pop_bottom-->
         <div class="write_review pro">
-                @using (Html.BeginForm("Write", "MyReview", FormMethod.Post, new { id = "frm", name = "frm" }))
+                @using (Html.BeginForm("Write", "MyReview", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
@@ -60,7 +70,7 @@
                     <table summary="상품찾기, 피부타입, 제목">
                         <caption>상품 리뷰 등록 입력 표</caption>
                         <colgroup>
-@if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+@if (ReviewHelper.IsBeauty(Model.ProductInfo.P_CATE_CODE))
 {
                             <col width="147" />
                             <col width="*" />
@@ -78,15 +88,15 @@ else
                                 <th>상품명</th>
                                 <td class="pro_info">
                                     <!--이미지사이즈 96x96-->
-                                    <div class="photo"><img src="@ViewBag.Pimg" alt="" /></div>
+                                    <div class="photo"><img src="@Model.ProductInfo.MAIN_IMG" alt="" /></div>
                                     <div class="detail">
-                                        <p class="tit">@ViewBag.Pname</p>
-                                        <p class="stit">@ViewBag.PsubTitle</p>
+                                        <p class="tit">@Model.ProductInfo.P_NAME</p>
+                                        <p class="stit">@Model.ProductInfo.P_SUB_TITLE</p>
                                         <!--<p class="price"><strong>4,000</strong>원</p>-->
                                     </div>
                                 </td>
 
-                                @if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+                                @if (ReviewHelper.IsBeauty(Model.ProductInfo.P_CATE_CODE))
                                 {
                                     <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SkinType)</span>피부타입</th>
                                     <td class="skintype">
@@ -112,7 +122,10 @@ else
                                 <td colspan="3">
                                     <span class="imgbox">
                                         <img src="/aboutCom/images/review/write_imgnone.jpg" alt="" />
-                                    </span><input type="text" name="AddImage" class="ipttypea ml10" style="width:360px" title="파일 경로입력" /><a href="#" class="btn_white_w96h38 ml5">찾아보기</a>
+                                    </span>
+                                    <input type="text" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" />
+                                    <input type="file" id="UploadImage" name="UploadImage" style="visibility:hidden;width:0px;" onchange="changeUploadFile();" />
+                                    <a href="#" class="btn_white_w96h38 ml5" onclick="findUploadFile(); return false;">찾아보기</a>
                                 </td>
                             </tr>
                         </tbody>
