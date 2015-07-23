@@ -204,15 +204,17 @@
                      }
                     @foreach (var item in Model)
                     {
-                        using (Html.BeginForm("PrdPricingUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm" + xx.ToString(), name = "frm" + xx.ToString(), onsubmit = "return frmCheck();" }))
+                        using (Html.BeginForm("PrdPricingUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm" + xx.ToString(), name = "frm" + xx.ToString() }))
                         {
                             @Html.AntiForgeryToken()                      //폼 데이터 위조 방지 토큰 생성
 
-                                                    <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()">
+                            <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()">
+                            <input type="hidden" name="Pcode" value="@item.P_CODE">
+                            <input type="hidden" name="idx" value="@item.IDX">
                            <tr>
                             <td class="brnone">@item.IDX</td>
                           
-                               <input type="hidden" name="Pcode" value="@item.P_CODE">
+                              
                             <td class="brnone">@Html.DisplayFor(modelItem => item.P_CODE)</td>
                             <td>상품명</td>
                             <td>정상가</td>
@@ -261,20 +263,16 @@
                                </td>
 
                             <td>
-                            <!--
-                             @foreach (var item2 in ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result>)
-                              {
-                                   <text>
-                                      <input type="checkbox" id="CheckCdPromotionTotal" name="CheckCdPromotionTotal" value="@item2.CD_PROMOTION_TOTAL" @DisplayPromotionByTotalCheck(item2.CD_PROMOTION_TOTAL,item.IDX) /> @item2.PMO_TOTAL_NAME <br />
-                                   </text>
-                             }
-                            -->
+                    
 
-                                @foreach (var item2 in ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result>)
+                                @foreach (var item2 in ViewData["SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result>)
                                 {
-                                    <text>
-                                    @item2.PMO_TOTAL_NAME <br />
-                                    </text>
+                                    if (item2.PRODUCT_PRICE_IDX.ToString() == item.IDX.ToString())
+                                    { 
+                                        <text>
+                                        @item2.PMO_TOTAL_NAME <br />
+                                        </text>
+                                    }
                                 }
 
 
@@ -292,7 +290,13 @@
                             </td>
                         </tr>
                         }
-                    }
+
+
+                        
+                        xx =  xx + 1 ;  // 폼을 별개로 생성하기 위해 xx COUNT를 증가시켜줘야한다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        
+                        
+                   }
                     
 
                 </tbody>

@@ -52,7 +52,10 @@ namespace AboutMe.Domain.Service.AdminPromotion
         int GetAdminPromotionByProductForUpdateDupSel(string PmoProductCategory, DateTime TargetPmoProductDateFrom, DateTime TargetPmoProductDateTo, string CdPromotionProduct);
 
 
-        int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal);
+        //int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal);
+
+        int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal, string Pcode, int idx);
+        int GetAdminPromotionByProductPricing_IDX_AllDupSel(string CdPromotionProduct, string Pcode, int idx);
 
         #endregion --------------------------------------------------------------------------
     }
