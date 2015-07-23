@@ -44,7 +44,7 @@
                     <th colspan="2">상품명</th>
                     <th>상품금액</th>
                     <th>수량</th>
-                    <th>쿠폰적용</th>
+                    <th>쿠폰할인</th>
                     <th>예상적립 포인트</th>
                     <th>주문금액</th>
                 </tr>
@@ -121,13 +121,21 @@
             { 
             <td class="coupon">
                 <strong>@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_AMT)</strong>원<br />
-                <a href="#" class="btn_coupondown mt10">쿠폰 변경 <img src="/aboutCom/images/common/ico_change.gif" alt=""></a>
+                @if (string.IsNullOrEmpty(item.IDX_COUPON_NUMBER.ToString()) || item.IDX_COUPON_NUMBER == 0)
+                {
+                    <a href="#none" class="btn_coupondown mt10" onclick="CouponPopup('@item.P_CODE');">쿠폰 적용 <img src="/aboutCom/images/common/ico_change.gif" alt=""></a>
+                }
+                else
+                {
+                    <a href="#none" class="btn_coupondown mt10" onclick="CouponPopup('@item.P_CODE');">쿠폰 변경 <img src="/aboutCom/images/common/ico_change.gif" alt=""></a>
+                }
+                
             </td>
             <td class="point">
                 <span class="val">@String.Format("{0:#,#0.}", item.POINT_ACCML)</span>
             </td>
             }
-            <td class="ordprice"><strong>@String.Format("{0:#,#0.}", item.ORDER_PRICE)</strong>원</td>
+            <td class="ordprice"><strong>@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_PRICE)</strong>원</td>
         </tr>
     }
     </tbody>

@@ -99,6 +99,16 @@
         $("#RECEIVER_HP3").val($("#SENDER_HP3").val());
     }
 
+    function sender_mail3_change(v) {
+        if ($(v).val() == "") {
+            $("#SENDER_EMAIL2").removeAttr("readonly");
+        }
+        else {
+            $("#SENDER_EMAIL2").attr("readonly", "readonly");
+        }
+        $("#SENDER_EMAIL2").val($(v).val());
+    }
+
     function saveAddress() {
         if ($("#SENDER_POST1").val().trim() == "" || $("#SENDER_POST2").val().trim() == "") {
             alert('우편번호를 입력해주세요.');
@@ -134,7 +144,7 @@
         if (confirm('회원 주소정보를 변경하시겠습니까?')) {
             var src_url = "/Order/SaveMemberAddress";
             var param = "SENDER_POST1=" + $("#SENDER_POST1").val().trim();
-            param += "&SENDER_POST2=" + $("#SENDER_POST1").val().trim();
+            param += "&SENDER_POST2=" + $("#SENDER_POST2").val().trim();
             param += "&SENDER_ADDR1=" + $("#SENDER_ADDR1").val().trim();
             param += "&SENDER_ADDR2=" + $("#SENDER_ADDR2").val().trim();
             param += "&SENDER_TEL1=" + $("#SENDER_TEL1").val().trim();
@@ -251,7 +261,7 @@
                         <th><span class="essential">주소</span></th>
                         <td class="addr">
                             <address>
-                                <input type="text" class="ipttypea mr10" style="width:90px" name="SENDER_POST1" id="SENDER_POST1" value="@Model.BaseAddrInfo.M_ZIPCODE1" title="우편번호 앞자리 입력" />-<input type="text" class="ipttypea ml10" style="width:90px" name="SENDER_POST2" id="SENDER_POST2" value="@Model.BaseAddrInfo.M_ZIPCODE2" title="우편번호 뒷자리 입력" /><a href="#none" class="btn_white_w96h38 typeb" onclick="sample2_execDaumPostcode('SENDER_POST1', 'SENDER_POST2', 'SENDER_ADDR1');">우편번호 찾기</a>
+                                <input type="text" class="ipttypea mr10" style="width:90px" name="SENDER_POST1" id="SENDER_POST1" value="@Model.BaseAddrInfo.M_ZIPCODE1" title="우편번호 앞자리 입력" readonly />-<input type="text" class="ipttypea ml10" style="width:90px" name="SENDER_POST2" id="SENDER_POST2" value="@Model.BaseAddrInfo.M_ZIPCODE2" title="우편번호 뒷자리 입력" readonly /><a href="#none" class="btn_white_w96h38 typeb" onclick="sample2_execDaumPostcode('SENDER_POST1', 'SENDER_POST2', 'SENDER_ADDR1');">우편번호 찾기</a>
                                 <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="SENDER_ADDR1" id="SENDER_ADDR1" value="@Model.BaseAddrInfo.M_ADDR1" title="주소 입력" />
                                 <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="SENDER_ADDR2" id="SENDER_ADDR2" value="@Model.BaseAddrInfo.M_ADDR2" title="주소상세 입력" />
                             </address>
@@ -303,7 +313,7 @@
                         <th><span class="essential">이메일</span></th>
                         <td class="email">
                             <input type="text" class="ipttypea mr10" style="width:90px" name="SENDER_EMAIL1" id="SENDER_EMAIL1" value="@Model.BaseAddrInfo.M_EMAIL1" title="이메일 ID 입력" />@@<input type="text" class="ipttypea ml10" style="width:82px" name="SENDER_EMAIL2" id="SENDER_EMAIL2" value="@Model.BaseAddrInfo.M_EMAIL2" title="이메일 도메인 입력" /><select class="selectstyleb" title="" name="SENDER_EMAIL3" id="SENDER_EMAIL3" onchange="sender_mail3_change(this)">
-                                <option value="직접입력" selected="selected">직접입력</option>
+                                <option value="" selected="selected">직접입력</option>
                                 <option value="daum.net">daum.net</option>
                                 <option value="hanmail.net">hanmail.net</option>
                                 <option value="hotmail.com">hotmail.com</option>
@@ -359,7 +369,7 @@
                         <th><span class="essential">주소</span></th>
                         <td class="addr">
                             <address>
-                                <input type="text" class="ipttypea mr10" style="width:90px" name="RECEIVER_POST1" id="RECEIVER_POST1" title="우편번호 앞자리 입력" />-<input type="text" class="ipttypea ml10" style="width:90px" name="RECEIVER_POST2" id="RECEIVER_POST2" title="우편번호 뒷자리 입력" /><a href="#none" class="btn_white_w96h38 typeb" onclick="sample2_execDaumPostcode('RECEIVER_POST1', 'RECEIVER_POST2', 'RECEIVER_ADDR1');">우편번호 찾기</a>
+                                <input type="text" class="ipttypea mr10" style="width:90px" name="RECEIVER_POST1" id="RECEIVER_POST1" title="우편번호 앞자리 입력" readonly />-<input type="text" class="ipttypea ml10" style="width:90px" name="RECEIVER_POST2" id="RECEIVER_POST2" title="우편번호 뒷자리 입력" readonly /><a href="#none" class="btn_white_w96h38 typeb" onclick="sample2_execDaumPostcode('RECEIVER_POST1', 'RECEIVER_POST2', 'RECEIVER_ADDR1');">우편번호 찾기</a>
                                 <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="RECEIVER_ADDR1" id="RECEIVER_ADDR1" title="주소 입력" />
                                 <input type="text" class="ipttypea" style="margin-top:8px;width:350px" name="RECEIVER_ADDR2" id="RECEIVER_ADDR2" title="주소상세 입력" />
                             </address>
@@ -396,7 +406,7 @@
                     <tr>
                         <th><span class="essential">휴대폰</span></th>
                         <td class="phone">
-                            <select class="selectstyleb" title="">
+                            <select class="selectstyleb" title="" name="RECEIVER_HP1" id="RECEIVER_HP1">
                                 <option value="010" selected="selected">010</option>
                                 <option value="011">011</option>
                                 <option value="016">016</option>

@@ -7,11 +7,18 @@
     // {
     ViewBag.TopClass += " nonmb";
     // }
-
+    ViewBag.BodyScript = @"onload='javascript:enable_click()' onfocus='javascript:focus_control()' ";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 }
 @section Scripts {
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
+    <!-------------------------------------------------------------------------------
+    * 웹SITE 가 https를 이용하면 https://plugin.inicis.com/pay61_secunissl_cross.js 사용
+    * 웹SITE 가 Unicode(UTF-8)를 이용하면 http://plugin.inicis.com/pay61_secuni_cross.js 사용
+    * 웹SITE 가 https, unicode를 이용하면 https://plugin.inicis.com/pay61_secunissl_cross.js 사용
+    -------------------------------------------------------------------------------->
+    <script language="javascript" src="http://plugin.inicis.com/pay61_secuni_cross.js"></script>
+
     <script language="javascript">
         function textCounter(field, maxlimit) {
 	        var applycontents;
@@ -57,16 +64,11 @@
             }
         }
 
-        //주문결제
-        function payConfirm()
-        {
-
-        }
         //쿠폰팝업
         function CouponPopup(linkname) {
             var sw = screen.availWidth;
             var sh = screen.availHeight;
-            var popNM = '/Order/CouponPop?OrderIdx=@Model.OrderIdx'+linkname;
+            var popNM = '/Order/CouponPop?OrderIdx=@Model.OrderIdx#' + linkname;
             var width = 740;
             var height = 600;
             px = (sw - width) / 2;
@@ -76,7 +78,43 @@
             window.name = "CouponPopup";
             window.open(popNM, '', set);
         }
+        
+        //쿠폰적용
+        function setOrderCoupon(arrP) {
+            var jobj = encodeURIComponent(JSON.stringify(arrP));
+            var src_url = "/Order/ApplyCoupon";
+            var param = "data=" + jobj;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data: param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        document.dummyForm1.action = "/Order/Step1";
+                        document.dummyForm1.submit();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
 
+        function digit_check(evt) {
+
+            var code = evt.which ? evt.which : event.keyCode;
+            if (code > 31 && (code < 48 || code > 57) && (code < 96 || code > 105)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
     </script>
 }
 
@@ -95,6 +133,7 @@
 
 <!--container-->
 order idx : @Model.OrderIdx
+<form name="dummyForm1" action="" method="POST"><input type="hidden" name="ORDER_IDX" value="@Model.OrderIdx"></form>
 <div id="container">
     <div class="container1080">
         <h2><img src="/aboutCom/images/cart/h2_order.png" alt="주문/결제" /></h2>
@@ -105,7 +144,6 @@ order idx : @Model.OrderIdx
         <div class="clear"></div>
 
         <div class="orderform">
-            <form name="frm" action="">
                 <fieldset>
                     <legend>주문 상품 결제옵션 폼</legend>
                     <div class="row1 tabletypeb">
@@ -119,10 +157,13 @@ order idx : @Model.OrderIdx
                         }
                         else
                         {
-                            Html.RenderAction("Step1DiscountInfo", "Order", new { OrderIdx = @Model.OrderIdx });
+                            @Html.Raw("<div class=\"saleinfo contypea\">");
+                                Html.RenderAction("Step1DiscountInfo", "Order", new { OrderIdx = @Model.OrderIdx });
+                            @Html.Raw("</div>");
                         }
+                        <div class="saleapply boxtyped mt20">
                         @{Html.RenderAction("Step1PriceInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
-                        
+                        </div>
                         <div class="addrinfo contypea divstylea mt20">
                         @{Html.RenderAction("Step1AddressInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
                         </div>
@@ -131,7 +172,6 @@ order idx : @Model.OrderIdx
                         </div>
                     </div>
                 </fieldset>
-            </form>
         </div>
 
 
