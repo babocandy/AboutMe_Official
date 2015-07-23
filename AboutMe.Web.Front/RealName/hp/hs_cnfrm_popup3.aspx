@@ -136,8 +136,8 @@
 	}
 %>
 
-	    //opener.document.kcbResultForm_HP.action = "hs_cnfrm_popup4.aspx";
-	    opener.document.kcbResultForm_HP.action = "/MemberShip/RealNameResult";
+	    //opener.document.kcbResultForm_HP.action = "/MemberShip/RealNameResult";
+	    opener.document.kcbResultForm_HP.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
 	    opener.document.kcbResultForm_HP.submit();
 		
 		self.close();

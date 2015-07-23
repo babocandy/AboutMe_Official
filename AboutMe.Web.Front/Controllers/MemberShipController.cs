@@ -88,10 +88,9 @@ namespace AboutMe.Web.Front.Controllers
         {
             //string HTTP_DOMAIN = Config.GetConfigValue("HTTP_DOMAIN");
             string strHTTP_DOMAIN = "http://" + Request.Url.Authority;  // ==> http://현재doamin[:port]
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
 
-            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
-
-            //로그 기록
+            //로그 기록 준비
             string memo = "사용자-로그인";
             string comment = "사용자-로그인";
             //memo = memo + "|ID:" + ID;
@@ -271,6 +270,7 @@ namespace AboutMe.Web.Front.Controllers
         //사용자 회원가입- Step1 -실명인증
         public ActionResult JoinStep1()
         {
+
             return View();
         }
         //사용자 회원가입- Step1 -실명인증 결과 
@@ -463,6 +463,19 @@ namespace AboutMe.Web.Front.Controllers
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다2.'); location.href='/MemberShip/JoinStep1';</script>");
             }
+
+
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = Config.GetConfigValue("HTTP_PROTOCOL") + HttpContext.Request.Url.Host; //ex)http://www.aboutme.co.kr
+            if (HttpContext.Request.Url.Port != 80)
+            {
+                strHTTPS_DOMAIN = strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+                strHTTP_DOMAIN = strHTTP_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+            }
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //회원가입시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //회원가입시 사용됨.
+
+
             this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
             this.ViewBag.M_AGREE = M_AGREE;
             this.ViewBag.M_AGREE2 = M_AGREE2;
@@ -789,7 +802,7 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
-        //비밀번호 팝업:결과
+        //비밀번호 찾기  팝업:결과
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PwSearch_End(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
