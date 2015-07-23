@@ -120,6 +120,7 @@
           <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="ADD_IMAGE" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -184,6 +185,7 @@
                 <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
                 <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
                 <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -1,4 +1,5 @@
 ﻿@model AboutMe.Web.Front.Models.MyReviewInsertViewModel
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "Write";
     Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
@@ -59,10 +60,18 @@
                     <table summary="상품찾기, 피부타입, 제목">
                         <caption>상품 리뷰 등록 입력 표</caption>
                         <colgroup>
+@if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+{
                             <col width="147" />
                             <col width="*" />
                             <col width="88" />
                             <col width="142" />
+}
+else
+{
+    <col width="147" />
+    <col width="*" />
+}
                         </colgroup>
                         <tbody>
                             <tr>
@@ -76,27 +85,27 @@
                                         <!--<p class="price"><strong>4,000</strong>원</p>-->
                                     </div>
                                 </td>
-                                <th class="skintype">피부타입</th>
-                                <td class="skintype">
-                                    <span>@Html.ValidationMessageFor(model => model.SkinType)</span> 
-                                    <select class="selectstyleb" title="" name="SkinType">
-                                        <option selected="selected" value="">선택하세요</option>
-                                        <option value="10">민감성</option>
-                                        <option value="20">건성</option>
-                                        <option value="30">중성</option>
-                                        <option value="40">지복합성</option>
-                                    </select>
-                                    
-                                </td>
+
+                                @if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+                                {
+                                    <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SkinType)</span>피부타입</th>
+                                    <td class="skintype">
+                                        <select class="selectstyleb" title="" name="SkinType">
+                                            <option selected="selected" value="">선택하세요</option>
+                                            <option value="10">건성</option>
+                                            <option value="20">중성</option>
+                                            <option value="30">지복합성</option>
+                                        </select>
+
+                                    </td>
+                                }
+  
                             </tr>
                             <tr class="edit">
-                                <th>내용<br /><span>0 / 000 자</span></th>
-                                <td colspan="3">
-                                    <span>@Html.ValidationMessageFor(model => model.Comment)</span>
-                                    <textarea name="Comment" class="txtareatypea" style="width:100%"></textarea>
-                                    
-                                </td>
-                                
+                                <th><span>@Html.ValidationMessageFor(model => model.Comment)</span>내용<br /><span>0 / 000 자</span></th>
+                                <td colspan="3">                                   
+                                    <textarea name="Comment" class="txtareatypea" style="width:100%"></textarea>                                    
+                                </td>                                
                             </tr>
                             <tr class="attach">
                                 <th>사진첨부</th>

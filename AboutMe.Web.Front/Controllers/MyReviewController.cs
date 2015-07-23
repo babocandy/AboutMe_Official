@@ -13,6 +13,7 @@ using AboutMe.Web.Front.Common;
 using AboutMe.Web.Front.Models;
 using AboutMe.Domain.Entity.Review;
 
+using AboutMe.Common.Helper;
 
 namespace AboutMe.Web.Front.Controllers
 {
@@ -41,7 +42,7 @@ namespace AboutMe.Web.Front.Controllers
         [CustomAuthorize]
         public ActionResult Ready()
         {
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+            ViewBag.img_path_product = _img_path_product; //이미지디렉토리경로
             return View(_ReviewService.GetMyReviewReadyList(_user_profile.M_ID));
         }
 
@@ -49,7 +50,9 @@ namespace AboutMe.Web.Front.Controllers
         [CustomAuthorize]
         public ActionResult Complete(int page = 1)
         {
+            
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
+            ViewBag.img_path_product = _img_path_product; //이미지디렉토리경로
             model.PageNo = page;
             model.CompleteList = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);           
             model.TotalItem = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
@@ -71,8 +74,9 @@ namespace AboutMe.Web.Front.Controllers
             {
                 SP_REVIEW_GET_PRODUCT_INFO_Result productInfo = _ReviewService.GetProductInfo(Pcode);
                 ViewBag.Pname = productInfo.P_NAME;
-                ViewBag.Pimg = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath") + productInfo.MAIN_IMG;
+                ViewBag.Pimg = _img_path_product + productInfo.MAIN_IMG;
                 ViewBag.PsubTitle = productInfo.P_SUB_TITLE;
+                ViewBag.PcateCode = productInfo.P_CATE_CODE;
             }
 
             return View(model);
@@ -96,7 +100,15 @@ namespace AboutMe.Web.Front.Controllers
                 ViewBag.Pname = productInfo.P_NAME;
                 ViewBag.Pimg = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath") + productInfo.MAIN_IMG;
                 ViewBag.PsubTitle = productInfo.P_SUB_TITLE;
+                ViewBag.PcateCode = productInfo.P_CATE_CODE;
             }
+
+            if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+            {
+                var valueToClean = ModelState["SkinType"];
+                valueToClean.Errors.Clear(); 
+            }
+
 
            if (ModelState.IsValid){
 

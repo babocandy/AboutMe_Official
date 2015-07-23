@@ -1,4 +1,5 @@
 ﻿@model AboutMe.Web.Front.Models.MyReviewCompleteViewModel
+@using AboutMe.Common.Helper
 @{
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
@@ -56,32 +57,36 @@
             
         }
 
-            <div class="cont accordcont @cssClassName @selectContent">
-            <div class="subj accordsubject">
-                <div class="writer">
-                    <span class="id">@item.M_ID</span>
+         <div class="cont accordcont @cssClassName @selectContent">
 
-                    
-                    @if (item.IS_PHOTO == "Y")
-                    {
+             <div class="subj accordsubject">
+                 <div class="writer">
+                     <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
+                     @if (item.IS_PHOTO == "Y")
+                     {
                          <!--사진이 등록된 리뷰일 때 사용-->
-                        <span class="ico_photo">포토리뷰</span>
-                    }
+                         <span class="ico_photo">포토리뷰</span>
+                         <!--//사진이 등록된 리뷰일 때 사용-->
+                     }
+                    
 
-                    <span class="userage">30대, 여<em class="skin dry"></em></span>
-                </div>
-                <p class="txtdotdot">
-                   @item.COMMENT
-                </p>
-            </div>
-            <div class="contxt accordtxt">
-                <div class="writer">
-                    <span class="id">@item.M_ID</span>
-                    <span class="userage">30대, 여<em class="skin dry"></em></span>
-                </div>
-                    @item.COMMENT
-                <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
-            </div>
+                     <span class="userage">@ReviewHelper.ConvertAge(item.M_BIRTHDAY), @ReviewHelper.ConvertGenger(item.M_SEX)<em class="skin @(ReviewHelper.ConvertSkinType(item.SKIN_TYPE))"></em></span>
+                 </div>
+                 <p class="txtdotdot">
+                     @item.COMMENT
+                 </p>
+             </div>
+             <div class="contxt accordtxt">
+                 <div class="writer">
+                     <span class="userage">@ReviewHelper.ConvertAge(item.M_BIRTHDAY), @ReviewHelper.ConvertGenger(item.M_SEX)<em class="skin @(ReviewHelper.ConvertSkinType(item.SKIN_TYPE))"></em></span>
+                 </div>
+                 @item.COMMENT
+                 @if (item.IS_PHOTO=="Y")
+                 {
+                    <img src="@ViewBag.img_path_product@item.ADD_IMAGE" alt="" />
+                 }                
+             </div>
+
         </div>
 
         i++;
