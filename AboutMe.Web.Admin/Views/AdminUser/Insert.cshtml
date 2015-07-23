@@ -4,6 +4,28 @@
 }
 
 @section Scripts{
+<script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
+<script>
+    function fGoSave() {
+        var f = document.frmFORM;
+        if (f.ADM_ID.value.length < 4) {
+            alert("아이디를 입력하세요.");
+            return;
+        }
+        if (f.ADM_NAME.value.length < 1) {
+            alert("이름을 입력하세요.");
+            return;
+        }
+        if (f.ADM_PWD.value.length < 4) {
+            alert("암호를 입력하세요.");
+            return;
+        }
+        f.action = "/AdminUser/InsertOK";
+        f.submit();
+    }
+</script>
+
 
 }
 
@@ -40,30 +62,12 @@
                     </div>
                 </div>
         -->
-        <script>
-            function fGoSave()
-            {
-                var f = document.frmFORM;
-                if (f.ADM_ID.value.length < 4) {
-                    alert("아이디를 입력하세요.");
-                    return;
-                }
-                if (f.ADM_NAME.value.length < 1) {
-                    alert("이름을 입력하세요.");
-                    return;
-                }
-                if (f.ADM_PWD.value.length < 4) {
-                    alert("암호를 입력하세요.");
-                    return;
-                }
-                f.action = "/AdminUser/InsertOK";
-                f.submit();
-            }
-        </script>
 
         <div class="panel">
             <h3 class="sub-header">관리자등록</h3>
-            <form name="frmFORM" method="post" action="">
+@using (Html.BeginForm("InsertOK", "AdminUser", FormMethod.Post, new { id = "frmFORM", name = "frmFORM" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
                 <table class="table table_row">
                     <colgroup><col width="200px" /><col width="*" /></colgroup>
@@ -108,7 +112,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </form>
+}
 
         </div>
 

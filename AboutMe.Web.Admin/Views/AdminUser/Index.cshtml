@@ -48,6 +48,23 @@
 
 
 @section Scripts{
+<script>
+    function fGoSearch() {
+        var f = document.frmSearch;
+        f.PAGE.value = "1";
+        f.action = "/AdminUser/Index";
+        f.method = "post";
+        f.submit();
+    }
+
+    function fExcel() {
+        var f = document.frmSearch;
+        f.action = "/AdminUser/Excel";
+        f.method = "post";
+        f.submit();
+    }
+</script>
+
 
 }
 
@@ -87,22 +104,6 @@
 
         <div class="panel">
             <h4>관리자관리</h4>
-            <script>
-                function fGoSearch() {
-                    var f = document.frmSearch;
-                    f.PAGE.value = "1";
-                    f.action = "/AdminUser/Index";
-                    f.method = "post";
-                    f.submit();
-                }
-
-                function fExcel() {
-                    var f = document.frmSearch;
-                    f.action = "/AdminUser/Excel";
-                    f.method = "post";
-                    f.submit();
-                }
-            </script>
 
             <form name="frmSearch" method="post" action="">
                 <input type="hidden" name="PAGE" value="@ViewBag.PAGE">

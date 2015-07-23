@@ -239,6 +239,8 @@ namespace AboutMe.Web.Admin.Controllers
             return View();
          }
         // GET: AdminUser 관리자관리-등록저장 /AdminUser/InserOK/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult InsertOK(string ADM_ID = "", string ADM_NAME = "", string ADM_PWD = "", string ADM_GRADE = "A", string ADM_EMAIL = "", string ADM_PHONE = "", string ADM_USE_YN = "N")
         {
@@ -312,6 +314,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         // GET: AdminUser 관리자관리-수정저장 /AdminUser/EditOK/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK(string ADM_ID = "", string ADM_NAME = "", string ADM_PWD = "", string ADM_GRADE = "A", string ADM_EMAIL = "", string ADM_PHONE = "", string ADM_USE_YN = "N")
         {

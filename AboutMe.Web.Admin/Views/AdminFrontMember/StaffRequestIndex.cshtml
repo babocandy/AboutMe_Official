@@ -99,6 +99,120 @@
 
 @section Scripts{
 
+<script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
+<script>
+    function fGoSearch() {
+        var f = document.frmSearch;
+        if (f.SEL_DATE_FROM.value.length > 0) {
+            if (fISDate(f.SEL_DATE_FROM.value) == false) {
+                alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
+                return;
+            }
+        }
+        if (f.SEL_DATE_TO.value.length > 0) {
+            if (fISDate(f.SEL_DATE_TO.value) == false) {
+                alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
+                return;
+            }
+        }
+        if (f.SEL_DATE_FROM.value > f.SEL_DATE_TO.value) {
+            var tmp = f.SEL_DATE_FROM.value;
+            f.SEL_DATE_FROM.value = f.SEL_DATE_TO.value;
+            f.SEL_DATE_TO.value = tmp;
+        }
+
+
+
+        f.PAGE.value = "1";
+        f.action = "/AdminFrontMember/StaffRequestIndex";
+        f.method = "post";
+        f.submit();
+    }
+
+    function fExcel() {
+        var f = document.frmSearch;
+        fMakeGRADE_LIST();
+        f.action = "/AdminFrontMember/StaffRequestExcel";
+        f.method = "post";
+        f.submit();
+    }
+
+
+</script>
+
+<script>
+
+    function search_date_change(v) {
+        //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
+
+        var from_date, to_date;
+
+        if (v == "1") //오늘
+        {
+            from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "2") //-7 ~오늘
+        {
+            from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "3") //-30~오늘
+        {
+            from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "4") // --60일~오늘
+        {
+            from_date = '@DateTime.Now.AddMonths(-2).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "5") //  -90일~오늘
+        {
+            from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else//  전체기간
+        {
+            from_date = '';
+            to_date = '';
+        }
+
+        $('#SEL_DATE_FROM').val(from_date);
+        $('#SEL_DATE_TO').val(to_date);
+        /*
+        if (v) {
+            $('#SEL_DATE_FROM').removeAttr("disabled");
+            $('#SEL_DATE_TO').removeAttr("disabled");
+            $('#SEL_DATE_FROM').css("background-color", "#ffffff");
+            $('#SEL_DATE_TO').css("background-color", "#ffffff");
+        }
+        else {
+            $('#SEL_DATE_FROM').attr("disabled", "disabled");
+            $('#SEL_DATE_TO').attr("disabled", "disabled");
+            $('#SEL_DATE_FROM').css("background-color", "#c0c0c0");
+            $('#SEL_DATE_TO').css("background-color", "#c0c0c0");
+        }
+        */
+    }
+
+
+    //DatePicker
+    $(document).ready(function () {
+        // create DatePicker from input HTML element
+        $("#SEL_DATE_FROM").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+
+        $("#SEL_DATE_TO").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+    });
+
+</script>
+
+
 }
 
 @section Left {
@@ -133,182 +247,8 @@
         </div>
 
         <div class="panel">
-            <h4>회원관리</h4>
+            <h4>임직원신청내역관리</h4>
 
-            <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
-
-            <script>
-                function fGoSearch()
-                {
-                    var f = document.frmSearch;
-                    if (f.SEL_DATE_FROM.value.length > 0) {
-                        if (fISDate(f.SEL_DATE_FROM.value) == false) {
-                            alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
-                            return;
-                        }
-                    }
-                    if (f.SEL_DATE_TO.value.length > 0) {
-                        if (fISDate(f.SEL_DATE_TO.value) == false) {
-                            alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
-                            return;
-                        }
-                    }
-                    if (f.SEL_DATE_FROM.value > f.SEL_DATE_TO.value) {
-                        var tmp = f.SEL_DATE_FROM.value;
-                        f.SEL_DATE_FROM.value = f.SEL_DATE_TO.value;
-                        f.SEL_DATE_TO.value = tmp;
-                    }
-
-
-
-                    f.PAGE.value = "1";
-                    f.action = "/AdminFrontMember/StaffRequestIndex";
-                    f.method = "post";
-                    f.submit();
-                }
-
-                function fExcel()
-                {
-                    var f = document.frmSearch;
-                    fMakeGRADE_LIST();
-                    f.action = "/AdminFrontMember/StaffRequestExcel";
-                    f.method = "post";
-                    f.submit();
-                }
-
-
-            </script>
-
-            <script>
-                var glCALENDAR_MAPPING_Obj = $("#SEL_DATE_FROM"); //default DATE Text 칼럼
-                function fSetDateTextFromCal(glCALENDAR_MAPPING_ELEMEMT_ID, argDATE_STRING) {
-                    //var f = document.frmSearch;
-                    glCALENDAR_MAPPING_Obj.val(argDATE_STRING);
-                    //$("#SEL_DATE_FROM").val(argDATE_STRING);
-
-
-                }
-
-                function fCanendarShow(argTargetObj,e)
-                {
-                    glCALENDAR_MAPPING_Obj = argTargetObj;
-
-
-                    //달력 위치 잡기
-                    //alert("e.pageX:" + e.pageX + ",e.pageY:" + e.pageY)
-                    //$("#calendar").style.left = e.pageX + "px";
-                    //$("#calendar").style.top = (e.pageY + 20) + "px";
-                    $('#calendar').css('left', e.pageX + "px");
-                    $('#calendar').css('top', (e.pageY + 20) + "px");
-
-                    //달력 기존값 유지 처리 :없을시 오늘
-                    var strDATE_OLD = argTargetObj.val() + "--";
-                    var arrDATE_OLD = strDATE_OLD.split("-");
-                    var strYYYY = arrDATE_OLD[0];
-                    var strMM = arrDATE_OLD[1];
-                    var strDD = arrDATE_OLD[2];
-
-                    var defaultDate = new Date();  //일단 오늘
-                    if (strYYYY != "" && strMM != "" && strDD != "")
-                        defaultDate = new Date(strYYYY, strMM - 1, strDD);  //기존 값이 있으면 기존 값으로 변경
-                    //var defaultDate = kendo.toString(kendo.parseDate(new Date()), 'yyyy-MM-dd');
-                    $("#calendar").data("kendoCalendar").value(defaultDate); //달력의 기본값설정
-
-
-                    $("#calendar").show();
-                }
-
-                function fCanendarHide() {
-                    $("#calendar").hide();
-                }
-
-                function search_date_change(v) {
-                    //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
-
-                    var from_date, to_date;
-
-                    if (v == "1") //오늘
-                    {
-                        from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-                    }
-                    else if (v == "2") //-7 ~오늘
-                    {
-                        from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
-                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-                    }
-                    else if (v == "3") //-30~오늘
-                    {
-                        from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
-                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-                    }
-                    else if (v == "4") // --60일~오늘
-                    {
-                        from_date = '@DateTime.Now.AddMonths(-2).ToString("yyyy-MM-dd")';
-                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-                    }
-                    else if (v == "5") //  -90일~오늘
-                    {
-                        from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
-                        to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-                    }
-                    else//  전체기간
-                    {
-                        from_date = '';
-                        to_date = '';
-                    }
-
-                    $('#SEL_DATE_FROM').val(from_date);
-                    $('#SEL_DATE_TO').val(to_date);
-                    /*
-                    if (v) {
-                        $('#SEL_DATE_FROM').removeAttr("disabled");
-                        $('#SEL_DATE_TO').removeAttr("disabled");
-                        $('#SEL_DATE_FROM').css("background-color", "#ffffff");
-                        $('#SEL_DATE_TO').css("background-color", "#ffffff");
-                    }
-                    else {
-                        $('#SEL_DATE_FROM').attr("disabled", "disabled");
-                        $('#SEL_DATE_TO').attr("disabled", "disabled");
-                        $('#SEL_DATE_FROM').css("background-color", "#c0c0c0");
-                        $('#SEL_DATE_TO').css("background-color", "#c0c0c0");
-                    }
-                    */
-
-                    fCanendarHide();
-                }
-
-
-
-                $(document).ready(function () {
-                    // create Calendar from div HTML element
-                    $("#calendar").kendoCalendar({
-                        format: "yyyy-MM-dd"
-                        , parseFormats: ["yyyy-MM-dd"]
-                        //,value: moment(value).format('MM/DD/YYYY')
-                        ,change: function () {
-                            var selectedDate = new Date($("#calendar").data("kendoCalendar").value());
-                            var strYEAR = selectedDate.getFullYear();
-                            var strMONTH = selectedDate.getMonth() +1;
-                            var strDAY = selectedDate.getDate();
-                            strMONTH = "00" + strMONTH;
-                            strMONTH = strMONTH.substr(strMONTH.length -2);
-                            strDAY = "00" + strDAY;
-                            strDAY = strDAY.substr(strDAY.length - 2);
-
-
-
-                            var selectedDateString = strYEAR  + '-' + strMONTH + '-' + strDAY;
-                            //alert(selectedDateString);
-                            fSetDateTextFromCal(glCALENDAR_MAPPING_Obj, selectedDateString); //yyyy-mm-dd
-                            fCanendarHide();
-                        }
-                    });
-
-                    $("#calendar").hide();  // 최기화면 : 달력 숨김
-
-                });
-            </script>
 
 
             <div id="calendar" style="position:absolute;top:100px;left:100px; z-index:10000;"></div> <!--kendo달력-->
@@ -323,11 +263,9 @@
                         <tr>
                             <th scope="row" class="vam">가입기간</th>
                             <td class="condition_seacth">
-                                <input type="text" class="input-sm text-left" id="SEL_DATE_FROM" name="SEL_DATE_FROM" value="@ViewBag.SEL_DATE_FROM" maxlength="10" onclick="javascript: $('#calendar').hide();">
-                                <a href="#none" onclick="javascript: fCanendarShow($('#SEL_DATE_FROM'), event);" class="btn btn-default small">C</a>
+                                <input type="text" class="input-sm text-left" id="SEL_DATE_FROM" name="SEL_DATE_FROM" value="@ViewBag.SEL_DATE_FROM" maxlength="10" >
                                 ~
-                                <input type="text" class="input-sm text-left" id="SEL_DATE_TO" name="SEL_DATE_TO" value="@ViewBag.SEL_DATE_TO" maxlength="10" onclick="javascript: $('#calendar').hide();">
-                                <a href="#none" onclick="javascript: fCanendarShow($('#SEL_DATE_TO'), event);" class="btn btn-default small">C</a>  (YYYY-MM-DD)
+                                <input type="text" class="input-sm text-left" id="SEL_DATE_TO" name="SEL_DATE_TO" value="@ViewBag.SEL_DATE_TO" maxlength="10" >(YYYY-MM-DD)&nbsp;
 
                                 <a href="javascript:search_date_change('1');" class="btn btn-default small">오늘</a>
                                 <a href="javascript:search_date_change('2');" class="btn btn-default small">7일</a>

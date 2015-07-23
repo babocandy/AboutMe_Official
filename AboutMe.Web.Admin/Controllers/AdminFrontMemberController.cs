@@ -93,6 +93,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -기본정보: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_Basic(string M_ID = "", string M_GRADE = "", string M_MOBILE = "--", string M_PHONE = "--", string M_EMAIL = "@", string M_ZIPCODE = "", string M_ADDR1 = "", string M_ADDR2 = "", string M_ISSMS = "", string M_ISEMAIL = "", string M_ISDM = "")
         {
@@ -144,6 +146,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -암호변경: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_PWD(string M_ID = "", string M_PWD="")
         {
@@ -202,6 +206,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -임직원: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_Staff(string M_ID = "", string M_GBN = "", string M_STAFF_COMPANY = "", string M_STAFF_ID = "")
         {
@@ -246,6 +252,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 회원  수정 -탈퇴: ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult EditOK_Retire(string M_ID = "", string M_DEL_REASON = "")
         {
@@ -454,6 +462,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         //관리자 - 임직원 신청- 수정 : ajax > JSON리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult StaffRequestEditOK(int IDX = -1, string STATUS = "", string PROC_COMMENT = "")
         {
