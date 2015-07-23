@@ -174,6 +174,74 @@
                 </li>
             </ul>
             break;
+            
+       case "AdminPromotion":  //프로모션 관리
+
+        <h2>기본설정</h2>
+        <ul class="nav nav-sidebar depth1">
+            <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+            <li @fLeftMenuCSSOn("AdminPromotion")>
+                <a href="#" class="menu ">프로모션관리</a>
+                <ul class="depth2">
+                    <li @fLeftMenuCSSOn("AdminPromotion/Index")><a href="/AdminPromotion/Index">전체할인 프로모션 정책관리</a></li>
+                    <li @fLeftMenuCSSOn("AdminPromotion/PrdIndex")><a href="/AdminPromotion/PrdIndex">상품별할인 프로모션 정책관리</a></li>
+                    <!--<li><a href="#">적립/사용내역</a></li>-->
+                </ul>
+            </li>
+            <!--
+            <li>
+                <a href="#" class="menu">회원등급관리</a>
+            </li>
+             -->
+
+            <li @fLeftMenuCSSOn("AdminCoupon")>
+                <a href="#" class="menu">쿠폰관리</a>
+                <ul class="depth2">
+                    <li @fLeftMenuCSSOn("PointIndex")><a href="/AdminCoupon/Index">쿠폰정책관리</a></li>
+                    <!--
+                    <li><a href="#">적립/사용내역</a></li>
+                    <li><a href="#">쿠폰관리</a></li>
+                    <li><a href="#">사용내역</a></li>
+                        -->
+                </ul>
+            </li>
+          
+        </ul>
+            break;
+
+    
+      case "AdminCoupon":  //쿠폰 관리
+
+    <h2>기본설정</h2>
+    <ul class="nav nav-sidebar depth1">
+        <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+        <li @fLeftMenuCSSOn("AdminPromotion")>
+            <a href="#" class="menu ">프로모션관리</a>
+            <ul class="depth2">
+                <li @fLeftMenuCSSOn("AdminPromotion/Index")><a href="/AdminPromotion/Index">프로모션 정책관리</a></li>
+                <!--<li><a href="#">적립/사용내역</a></li>-->
+            </ul>
+        </li>
+        <!--
+        <li>
+            <a href="#" class="menu">회원등급관리</a>
+        </li>
+         -->
+
+        <li @fLeftMenuCSSOn("AdminCoupon")>
+            <a href="#" class="menu">쿠폰관리</a>
+            <ul class="depth2">
+                <li @fLeftMenuCSSOn("PointIndex")><a href="/AdminCoupon/Index">쿠폰정책관리</a></li>
+                <!--
+                <li><a href="#">적립/사용내역</a></li>
+                <li><a href="#">쿠폰관리</a></li>
+                <li><a href="#">사용내역</a></li>
+                    -->
+            </ul>
+        </li>
+
+    </ul>
+            break;
 
     } //switch
 

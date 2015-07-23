@@ -159,17 +159,19 @@
         
                 
         var arrP = new Array;
-        var obj = new Object();
+    
 
         var frmobj = document.frm001 ;
         var pcode = "" ; 
 
-        //alert(frmobj.ChkCalPrice.length);
-
+    
         for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
         {
             if(frmobj.ChkCalPrice[i].checked == true)
             {
+                alert(frmobj.ChkCalPrice[i].checked );
+
+                var obj = new Object();
                 cur_arr= frmobj.ChkCalPrice[i].value.split('$');
                 pcode = cur_arr[0] ;
 
@@ -185,9 +187,20 @@
 
             //alert(total_discount_price);
         }
+            
+            
+        
+        if(arrP.length > 0)
+        {
+            Cart_Input(arrP);
+        }
+        else
+        {
+            alert("쇼핑백에 담을 상품을 선택해주세요!");
+        }
 
         
-        Cart_Input(arrP);
+   
     }
 
 
@@ -207,10 +220,6 @@
 
 
 </script>
-
-
-
-
 
 
 

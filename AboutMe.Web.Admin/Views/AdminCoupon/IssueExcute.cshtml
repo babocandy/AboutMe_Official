@@ -210,7 +210,7 @@
         
         string CouponName = "", CouponGbn = "", CouponGbnM = "";
         DateTime MasterFromDate, MasterToDate;
-        string UsableDeviceGbn = "", UsableYN = "", CouponDiscountMoney = "", CouponDiscountRate = "";
+        string UsableDeviceGbn = "", UsableYN = "", RateOrMonty = "", CouponDiscountMoney = "", CouponDiscountRate = "";
         string IssueMethodGbn = "", IssueMethodWithAuto = "";
         string RateOrMoney = "";
 
@@ -224,6 +224,7 @@
         MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
         UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
         UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
+        RateOrMonty = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY; 
         CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
         CouponDiscountRate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE.ToString();
         IssueMethodGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN;

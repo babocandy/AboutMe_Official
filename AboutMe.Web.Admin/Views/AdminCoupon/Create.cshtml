@@ -48,7 +48,7 @@
          
        
 
-
+            /**
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
 
                 //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
@@ -58,6 +58,7 @@
                     return false;
                 }
             }
+            **/
 
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
 
@@ -265,7 +266,8 @@
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "A") 고정기간기준 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "B") 발행일기준 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN)</font></td>
 
                                                 </tr>
-                                                <tr>
+                                                <!--
+                                                 <tr>
                                                     <th>고정기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)</td>
 
@@ -274,6 +276,7 @@
                                                     <th>고정기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)</td>
                                                 </tr>
+                                                   -->
                                                 <tr>
                                                     <th>발행일 기준 유효기간(DAY) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT)</font></td

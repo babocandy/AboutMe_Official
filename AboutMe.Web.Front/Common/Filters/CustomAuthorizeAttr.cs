@@ -48,6 +48,9 @@ namespace AboutMe.Web.Front.Common.Filters
           public string user_ADM_Role2 { get; set; }
 
 
+          public string CustomRedirection { get; set; }
+
+
           public string Roles // new keyword will hide base class Roles Property ( 이 프로퍼티이름은 변경하면 안됨)
           {
                get { return _rolesDept1 ?? String.Empty; }
@@ -140,9 +143,23 @@ namespace AboutMe.Web.Front.Common.Filters
                 filterContext.Result = new RedirectToRouteResult(new
                 RouteValueDictionary(new { controller = "Error", action = "AccessDenied" }));
                  * **/
-             
+                Uri RedirTo = new Uri(HttpContext.Current.Request.Url.ToString());
+
+                //http://aboutme.cstone.co.kr:5555" 와 같은 string을 만든다 
+                string CurDomain = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
+                if (this.CustomRedirection != null && this.CustomRedirection != "")
+                {
+
+                    RedirTo = new Uri(CurDomain + this.CustomRedirection);
+                }
+                /**
+                {
+                    RedirTo = HttpContext.Current.Request.Url;
+                }
+                 ***/
+
                 filterContext.Result = new RedirectToRouteResult(new
-                    RouteValueDictionary(new { controller = "MemberShip", action = "Login", RedirectUrl = HttpContext.Current.Request.Url }));
+                    RouteValueDictionary(new { controller = "MemberShip", action = "Login", RedirectUrl = RedirTo }));
                 
             }
         }

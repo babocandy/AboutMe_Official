@@ -378,13 +378,10 @@ namespace AboutMe.Domain.Service.AdminCoupon
             {
                 try
                 {
-
                     using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
                     {
                         ObjectParameter objOutParam01 = new ObjectParameter("EXCUTE_RESULT", typeof(int));//sp의 output parameter변수명을 동일하게 사용한다.
-
                         AdmCouponContext.SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_ENTIRE_INS(CdCoupon, AdminId, objOutParam01);
-
                         ResultCode = Convert.ToInt32(objOutParam01.Value.ToString());
                     }
 
@@ -395,13 +392,10 @@ namespace AboutMe.Domain.Service.AdminCoupon
                     Transaction.Current.Rollback();
                     scope.Dispose();
                 }
-
             }
-
 
             return ResultCode;
         }
-
 
 
         #endregion

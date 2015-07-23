@@ -652,7 +652,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
 
         //상품별할인 상품별 정보 업데이트
         //public int UpdateAdminPromotionByProductPricing(TB_PROMOTION_BY_PRODUCT_PRICE Tb, string CdPromotionProduct, string[] CheckCdPromotiontTotal)
-        public int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal)
+        public int UpdateAdminPromotionByProductPricing(string UsableYN, string CdPromotionProduct, string[] CheckCdPromotiontTotal , string Pcode , int idx )
         {
 
             int IsSuccess = 1;
@@ -668,6 +668,9 @@ namespace AboutMe.Domain.Service.AdminPromotion
                         AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE(
                               CdPromotionProduct
                               , UsableYN
+                              , Pcode
+                          
+                              , idx
                             );
                       
                     }
@@ -700,6 +703,34 @@ namespace AboutMe.Domain.Service.AdminPromotion
 
 
             return IsSuccess;
+        }
+
+
+
+        //상품별 할인 상품정보 (수정시) 프로모션 중복여부 확인 - 타 프로모션에 활성화된 상품이 있는지 모두 SCAN
+        public int GetAdminPromotionByProductPricing_IDX_AllDupSel(string CdPromotionProduct, string Pcode, int idx)
+        {
+
+            //PmoProductDateFrom
+
+
+            List<SP_ADMIN_PROMOTION_COMMON_CNT_Result> lst = new List<SP_ADMIN_PROMOTION_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+            {
+                /**try {**/
+                lst = AdmPromotionContext.SP_ADMIN_PROMOTION_ALL_PRODUCT_PRICE_IDX_DUP_SEL(Pcode, CdPromotionProduct, idx).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
         }
 
 

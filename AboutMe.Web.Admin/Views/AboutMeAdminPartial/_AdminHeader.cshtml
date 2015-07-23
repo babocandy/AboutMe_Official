@@ -69,7 +69,7 @@
         @fAdminAdminMenuDisplay() <!--관리자관리:권한 체크 -->
         <li @fTopMenuCSSOn("AdminProduct")><a href="/AdminProduct/ProductIndex">상품관리</a></li>
         <li><a href="/display/index.html">전시관리</a></li>
-        <li><a href="/promotion/index.html">프로모션관리</a></li>
+        <li @fTopMenuCSSOn("AdminPromotion,AdminCoupon")><a href="/AdminPromotion/index">프로모션관리</a></li>
         <li @fTopMenuCSSOn("Order")><a href="/Order/">주문/매출</a></li>
         <li @fTopMenuCSSOn("Faq,Notice")><a href="/Faq/">컨텐츠관리</a></li>
         <li @fTopMenuCSSOn("AdminFrontMember") ><a href="/AdminFrontMember/Index">회원관리</a></li>

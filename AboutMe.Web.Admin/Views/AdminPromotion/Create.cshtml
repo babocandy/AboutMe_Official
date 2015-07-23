@@ -31,18 +31,18 @@
 
             //alert(obj_selectbox[sel_index].value);
 
-            if (obj_selectbox[sel_index].value == "01") //일반회원 전용할인
+            if (obj_selectbox[sel_index].value == "00") //일반회원 전용할인
             {
           
-                f.CheckMemGrade[0].disabled = false;
-                f.CheckMemGrade[1].disabled = false;
-                f.CheckMemGrade[2].disabled = false;
-                f.CheckMemGrade[3].disabled = false;
+                f.CheckMemGrade[0].disabled = true;
+                f.CheckMemGrade[1].disabled = true;
+                f.CheckMemGrade[2].disabled = true;
+                f.CheckMemGrade[3].disabled = true;
 
-                f.CheckMemGrade[4].disabled = true;
-                f.CheckMemGrade[5].disabled = true;
-                f.CheckMemGrade[6].disabled = true;
-                f.CheckMemGrade[7].disabled = true;
+                f.CheckMemGrade[4].disabled = false;
+                f.CheckMemGrade[5].disabled = false;
+                f.CheckMemGrade[6].disabled = false;
+                f.CheckMemGrade[7].disabled = false;
 
             }
              

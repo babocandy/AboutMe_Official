@@ -479,10 +479,10 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             //상품별로 적용된 전체할인 가능 정보 가져오기
-            ViewData["SP_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result"] = _AdminPromotionService.GetAdminPromotionByProductVsTotalList(CdPromotionProduct).ToList();
+            ViewData["SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result"] = _AdminPromotionService.GetAdminPromotionByProductVsTotalList(CdPromotionProduct).ToList();
 
             //전체 전체할인 프로모션중 usable = y인것만 가져오기
-            ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList();
+            //ViewData["SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result"] = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList();
 
             /**
             mMyMultiModelForProductPricing.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result= _AdminPromotionService.GetAdminPromotionByProductPricingList(CdPromotionProduct).ToList();
@@ -593,7 +593,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             //return View(mMyMultiModelForProductPricing);
-            return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
+            return RedirectToAction("PrdPricingIndex" ,new { CdPromotionProduct = CdPromotionProduct });
 
 
         }
@@ -617,7 +617,7 @@ namespace AboutMe.Web.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PrdPricingUpdate(string UsableYN, string PCode, string CdPromotionProduct, string[] CheckCdPromotionTotal)
+        public ActionResult PrdPricingUpdate(string UsableYN, string PCode, string CdPromotionProduct, string[] CheckCdPromotionTotal , string idx )
         {
 
             /**
@@ -639,12 +639,12 @@ namespace AboutMe.Web.Admin.Controllers
             {
 
                 //모든 활성화된 프로모션에 소속된 상품들을 뒤져서, 중복된 상품이 있는지 조회
-                PcodeDupCnt = _AdminPromotionService.GetAdminPromotionByProductPricingAllDupSel(CdPromotionProduct, PCode);
+                PcodeDupCnt = _AdminPromotionService.GetAdminPromotionByProductPricing_IDX_AllDupSel(CdPromotionProduct, PCode,int.Parse(idx));
 
                 // 동일시간대 활성화된 프로모션에 소속된 상품들중, 중복상품이 없음 OR  지금 입력한 가격정책의 UsableYN = 'N'이면 
                 if (PcodeDupCnt == 0 || UsableYN == "N")
                  {
-                     is_success = _AdminPromotionService.UpdateAdminPromotionByProductPricing(UsableYN, CdPromotionProduct, CheckCdPromotionTotal);
+                     is_success = _AdminPromotionService.UpdateAdminPromotionByProductPricing(UsableYN, CdPromotionProduct, CheckCdPromotionTotal,PCode,Int32.Parse(idx));
                         if (is_success == 1) // INSERT가 성공했으면 
                         {
                             return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = _CdPromotionProduct });
