@@ -13,6 +13,8 @@
 <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
     <script>
+        var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+
         function fGoRetire()
         {
             var f = document.frmRETIRE;
@@ -44,7 +46,7 @@
             if (f.M_DEL_REASON_CODE[1].checked)
                 strDEL_REASON = strDEL_REASON + "|2.사이트를 방문하지 않아요.";
             if (f.M_DEL_REASON_CODE[2].checked)
-                strDEL_REASON = strDEL_REASON + "|3. 관심이 없어요.";
+                strDEL_REASON = strDEL_REASON + "|3.관심이 없어요.";
             if (f.M_DEL_REASON_CODE[3].checked)
                 strDEL_REASON = strDEL_REASON + "|4.판매처가 없어요.";
             if (f.M_DEL_REASON_CODE[4].checked) {
@@ -56,7 +58,8 @@
             if(confirm("정말 회원탈퇴를 하시겠습니까?"))
             {
                 f.target = "";
-                f.action = "/Mypage/RetireProc";
+                //f.action = "/Mypage/RetireProc";
+                f.action = glHTTPS_DOMAIN + "/Mypage/RetireProc";
                 f.submit();
             }
 

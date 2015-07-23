@@ -202,6 +202,52 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
         <Function Name="SP_ADMIN_COUPON_PRODUCT_USABLE_CNT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_COUPON_AVAILABLE_LIST_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_AVAILABLE_LIST_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_COMMON_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX_COUPON_NUMBER" Type="int" Mode="In" />
+          <Parameter Name="METHOD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_DOWNLOADABLE_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_ISSUED_DETAIL_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX_COUPON_NUMBER" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_MASTER_INFO_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX_COUPON_SERIAL" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_PRODUCT_LIST_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX_COUPON_SERIAL" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_PRODUCT_LIST_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX_COUPON_SERIAL" Type="int" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_VIEW_PRODUCT_DETAIL_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX_COUPON_SERIAL" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="AboutMeModel3StoreContainer">
           <EntitySet Name="TB_COUPON_ISSUED_DETAIL" EntityType="Self.TB_COUPON_ISSUED_DETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_COUPON_MASTER" EntityType="Self.TB_COUPON_MASTER" Schema="dbo" store:Type="Tables" />
@@ -353,7 +399,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           </FunctionImport>
           <EntitySet Name="TB_COUPON_ISSUED_DETAIL" EntityType="AboutMeModel3.TB_COUPON_ISSUED_DETAIL" />
           <FunctionImport Name="SP_ADMIN_COUPON_ISSUED_DETAIL_SEL" ReturnType="Collection(AboutMeModel3.SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result)">
-            <Parameter Name="IDX_COUPON_NUMBER" Mode="In" Type="Int32" />
+          <Parameter Name="IDX_COUPON_NUMBER" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_COUPON_ISSUED_LIST_SEL" ReturnType="Collection(AboutMeModel3.SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result)">
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
@@ -361,6 +407,52 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
             <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
             <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
             <Parameter Name="CD_COUPON" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX_COUPON_NUMBER" Mode="In" Type="Int32" />
+            <Parameter Name="METHOD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_AVAILABLE_LIST_CNT" ReturnType="Collection(AboutMeModel3.SP_COUPON_COMMON_CNT_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_COMMON_CNT" ReturnType="Collection(AboutMeModel3.SP_COUPON_COMMON_CNT_Result)" />
+          <FunctionImport Name="SP_COUPON_ISSUED_DETAIL_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_ISSUED_DETAIL_SEL_Result)">
+          <Parameter Name="IDX_COUPON_NUMBER" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_DOWNLOADABLE_LIST" ReturnType="Collection(AboutMeModel3.SP_COUPON_DOWNLOADABLE_LIST_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_AVAILABLE_LIST_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_ISSUED_DETAIL_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_VIEW_PRODUCT_DETAIL_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX_COUPON_SERIAL" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_PRODUCT_LIST_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX_COUPON_SERIAL" Mode="In" Type="Int32" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_PRODUCT_LIST_CNT" ReturnType="Collection(AboutMeModel3.SP_COUPON_COMMON_CNT_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX_COUPON_SERIAL" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_MASTER_INFO_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_MASTER_INFO_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX_COUPON_SERIAL" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_COUPON_COMMON_CNT_Result">
@@ -499,6 +591,41 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Property Name="ISSUED_MEMO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="ADMIN_ID" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SP_COUPON_COMMON_CNT_Result">
+          <Property Type="Int32" Name="CNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_COUPON_ISSUED_DETAIL_SEL_Result">
+          <Property Type="Int32" Name="IDX_COUPON_NUMBER" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOWNLOAD_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DOWNLOAD_DATE_TO" Nullable="true" Precision="23" />
+          <Property Type="String" Name="COUPON_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="RATE_OR_MONEY" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="COUPON_MONEY" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_RATE" Nullable="true" />
+          <Property Type="DateTime" Name="USABLE_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="USABLE_DATE_TO" Nullable="true" Precision="23" />
+          <Property Type="String" Name="USE_STATUS" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="COUPON_AD_MSG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="COUPON_USE_DESCRIPTION" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_COUPON_DOWNLOADABLE_LIST_Result">
+          <Property Type="Int32" Name="IDX_COUPON_NUMBER" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOWNLOAD_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DOWNLOAD_DATE_TO" Nullable="true" Precision="23" />
+          <Property Type="String" Name="COUPON_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="RATE_OR_MONEY" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="COUPON_MONEY" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_RATE" Nullable="true" />
+          <Property Type="DateTime" Name="USABLE_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="USABLE_DATE_TO" Nullable="true" Precision="23" />
+          <Property Type="String" Name="USE_STATUS" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="COUPON_AD_MSG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="COUPON_USE_DESCRIPTION" Nullable="true" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="true" />
           <Property Type="Int32" Name="IDX_COUPON_NUMBER" Nullable="false" />
@@ -523,6 +650,46 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Property Type="DateTime" Name="DOWNLOAD_DATE_TO" Nullable="true" Precision="23" />
           <Property Type="String" Name="ISSUED_GBN" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="ISSUED_MEMO" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result">
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
+          <Property Type="Int32" Name="IDX_COUPON_NUMBER" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="SP_COUPON_MASTER_INFO_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="COUPON_AD_MSG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="COUPON_USE_DESCRIPTION" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="COUPON_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="COUPON_GBN_M" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="RATE_OR_MONEY" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="SERVICE_LIFE_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="EXRIRED_DAY_FROM_ISSUE_DT" Nullable="true" />
+          <Property Type="String" Name="USABLE_DEVICE_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="PRODUCT_APP_SCOPE_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="MEMBER_APP_SCOPE_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ISSUE_METHOD_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ISSUE_METHOD_WITH_AUTO" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="COUPON_NUM_CHECK_TF" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="ISSUE_MAX_LIMIT" Nullable="true" />
+          <Property Type="DateTime" Name="MASTER_FROM_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="MASTER_TO_DATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_MONEY" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_RATE" Nullable="true" />
+          <Property Type="String" Name="USABLE_YN" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="USABLE_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="USABLE_DATE_TO" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -871,6 +1038,153 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
                 <ScalarProperty Name="DOWNLOAD_DATE_TO" ColumnName="DOWNLOAD_DATE_TO" />
                 <ScalarProperty Name="ISSUED_GBN" ColumnName="ISSUED_GBN" />
                 <ScalarProperty Name="ISSUED_MEMO" ColumnName="ISSUED_MEMO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE" FunctionName="AboutMeModel3.Store.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_COUPON_AVAILABLE_LIST_CNT" FunctionName="AboutMeModel3.Store.SP_COUPON_AVAILABLE_LIST_CNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_COMMON_CNT" FunctionName="AboutMeModel3.Store.SP_COUPON_COMMON_CNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_ISSUED_DETAIL_SEL" FunctionName="AboutMeModel3.Store.SP_COUPON_ISSUED_DETAIL_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_ISSUED_DETAIL_SEL_Result">
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="DOWNLOAD_DATE_FROM" ColumnName="DOWNLOAD_DATE_FROM" />
+                <ScalarProperty Name="DOWNLOAD_DATE_TO" ColumnName="DOWNLOAD_DATE_TO" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="USABLE_DATE_FROM" ColumnName="USABLE_DATE_FROM" />
+                <ScalarProperty Name="USABLE_DATE_TO" ColumnName="USABLE_DATE_TO" />
+                <ScalarProperty Name="USE_STATUS" ColumnName="USE_STATUS" />
+                <ScalarProperty Name="COUPON_AD_MSG" ColumnName="COUPON_AD_MSG" />
+                <ScalarProperty Name="COUPON_USE_DESCRIPTION" ColumnName="COUPON_USE_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_DOWNLOADABLE_LIST" FunctionName="AboutMeModel3.Store.SP_COUPON_DOWNLOADABLE_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_DOWNLOADABLE_LIST_Result">
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="DOWNLOAD_DATE_FROM" ColumnName="DOWNLOAD_DATE_FROM" />
+                <ScalarProperty Name="DOWNLOAD_DATE_TO" ColumnName="DOWNLOAD_DATE_TO" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="USABLE_DATE_FROM" ColumnName="USABLE_DATE_FROM" />
+                <ScalarProperty Name="USABLE_DATE_TO" ColumnName="USABLE_DATE_TO" />
+                <ScalarProperty Name="USE_STATUS" ColumnName="USE_STATUS" />
+                <ScalarProperty Name="COUPON_AD_MSG" ColumnName="COUPON_AD_MSG" />
+                <ScalarProperty Name="COUPON_USE_DESCRIPTION" ColumnName="COUPON_USE_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_AVAILABLE_LIST_SEL" FunctionName="AboutMeModel3.Store.SP_COUPON_AVAILABLE_LIST_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_ISSUED_DETAIL_SEL_Result">
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="DOWNLOAD_DATE_FROM" ColumnName="DOWNLOAD_DATE_FROM" />
+                <ScalarProperty Name="DOWNLOAD_DATE_TO" ColumnName="DOWNLOAD_DATE_TO" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="USABLE_DATE_FROM" ColumnName="USABLE_DATE_FROM" />
+                <ScalarProperty Name="USABLE_DATE_TO" ColumnName="USABLE_DATE_TO" />
+                <ScalarProperty Name="USE_STATUS" ColumnName="USE_STATUS" />
+                <ScalarProperty Name="COUPON_AD_MSG" ColumnName="COUPON_AD_MSG" />
+                <ScalarProperty Name="COUPON_USE_DESCRIPTION" ColumnName="COUPON_USE_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_VIEW_PRODUCT_DETAIL_SEL" FunctionName="AboutMeModel3.Store.SP_COUPON_VIEW_PRODUCT_DETAIL_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result">
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_PRODUCT_LIST_SEL" FunctionName="AboutMeModel3.Store.SP_COUPON_PRODUCT_LIST_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result">
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_PRODUCT_LIST_CNT" FunctionName="AboutMeModel3.Store.SP_COUPON_PRODUCT_LIST_CNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_MASTER_INFO_SEL" FunctionName="AboutMeModel3.Store.SP_COUPON_MASTER_INFO_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_MASTER_INFO_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_AD_MSG" ColumnName="COUPON_AD_MSG" />
+                <ScalarProperty Name="COUPON_USE_DESCRIPTION" ColumnName="COUPON_USE_DESCRIPTION" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="COUPON_GBN_M" ColumnName="COUPON_GBN_M" />
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="SERVICE_LIFE_GBN" ColumnName="SERVICE_LIFE_GBN" />
+                <ScalarProperty Name="EXRIRED_DAY_FROM_ISSUE_DT" ColumnName="EXRIRED_DAY_FROM_ISSUE_DT" />
+                <ScalarProperty Name="USABLE_DEVICE_GBN" ColumnName="USABLE_DEVICE_GBN" />
+                <ScalarProperty Name="PRODUCT_APP_SCOPE_GBN" ColumnName="PRODUCT_APP_SCOPE_GBN" />
+                <ScalarProperty Name="MEMBER_APP_SCOPE_GBN" ColumnName="MEMBER_APP_SCOPE_GBN" />
+                <ScalarProperty Name="ISSUE_METHOD_GBN" ColumnName="ISSUE_METHOD_GBN" />
+                <ScalarProperty Name="ISSUE_METHOD_WITH_AUTO" ColumnName="ISSUE_METHOD_WITH_AUTO" />
+                <ScalarProperty Name="COUPON_NUM_CHECK_TF" ColumnName="COUPON_NUM_CHECK_TF" />
+                <ScalarProperty Name="ISSUE_MAX_LIMIT" ColumnName="ISSUE_MAX_LIMIT" />
+                <ScalarProperty Name="MASTER_FROM_DATE" ColumnName="MASTER_FROM_DATE" />
+                <ScalarProperty Name="MASTER_TO_DATE" ColumnName="MASTER_TO_DATE" />
+                <ScalarProperty Name="COUPON_DISCOUNT_MONEY" ColumnName="COUPON_DISCOUNT_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="USABLE_DATE_FROM" ColumnName="USABLE_DATE_FROM" />
+                <ScalarProperty Name="USABLE_DATE_TO" ColumnName="USABLE_DATE_TO" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

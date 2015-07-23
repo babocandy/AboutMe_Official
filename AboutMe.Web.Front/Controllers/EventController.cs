@@ -39,6 +39,10 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
+
+        #region 세트상품 / 타임세일등 ================================================================
+
+
         //세트상품 
         public ActionResult SetPromotion()
         {
@@ -68,12 +72,66 @@ namespace AboutMe.Web.Front.Controllers
                 CdPromotionProduct = mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result[0].CD_PROMOTION_PRODUCT;
                 mMyMultiModelForPromotionProduct.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result = _PromotionService.GetPromotionByProductList(CdPromotionProduct).ToList();
 
+
+                return View(mMyMultiModelForPromotionProduct);
+
+            }
+            else
+            {
+
+                return View("/");
+
             }
 
-            return View(mMyMultiModelForPromotionProduct);
 
             //return View();
         }
+
+        //타임세일
+        public ActionResult TimeSale()
+        {
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+
+            var mMyMultiModelForPromotionProduct = new MyMultiModelForPromotionProduct
+            {
+                inst_PROMOTION_TOP_1_Result = new List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>(),
+                inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result = new List<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result>()
+            };
+
+
+            string aas = "";
+            if (TempData["jsMessage"] != null)
+            {
+                aas = TempData["jsMessage"].ToString();
+            }
+
+            string CdPromotionProduct = ""; //상품별 프로모션 코드 
+
+            //타임세일 프로모션 정보중 유효한 TOP 1 가져오기 
+            mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result = _PromotionService.GetPromotionByProductTop1_Info("03").ToList();
+
+            if (mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result.Count != 0)
+            {
+                CdPromotionProduct = mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result[0].CD_PROMOTION_PRODUCT;
+                mMyMultiModelForPromotionProduct.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result = _PromotionService.GetPromotionByProductList(CdPromotionProduct).ToList();
+
+
+                return View(mMyMultiModelForPromotionProduct);
+
+            }
+            else
+            {
+
+                return View("/");
+
+            }
+
+        }
+
+
+
+
+        #endregion 
 
 
     }

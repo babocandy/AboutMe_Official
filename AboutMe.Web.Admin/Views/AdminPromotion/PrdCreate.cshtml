@@ -73,7 +73,7 @@
 
             }
 
-            if (obj_selectbox[sel_index].value == "03") //일반품별할인
+            if (obj_selectbox[sel_index].value == "03" && obj_selectbox[sel_index].value == "04" && obj_selectbox[sel_index].value == "05") //일반품별할인
             {
                 f.inst_TB_PROMOTION_BY_PRODUCT_PMO_SET_DISCOUNT_CNT.disabled = true;
                 f.inst_TB_PROMOTION_BY_PRODUCT_PMO_ONEONE_MULTIPLE_CNT.disabled = true;
@@ -130,7 +130,9 @@
                                                             <option value="">==선택==</option>
                                                             <option value="01">세트상품</option>
                                                             <option value="02">1+1 프로모션</option>
-                                                            <option value="03">일반 품별할인(타임세일포함)</option>
+                                                            <option value="03">타임세일</option>
+                                                            <option value="04">일반할인</option>
+                                                            <option value="05">아웃렛</option>
                                                         </select>
 
                                                     </td>

@@ -98,8 +98,8 @@ function fncOpenerSubmit() {
 	}
 %>
 
-    //opener.document.kcbOutForm_IPIN.action = "ipin4.aspx";
-    opener.document.kcbOutForm_IPIN.action = "/MemberShip/RealNameResult";
+    //opener.document.kcbOutForm_IPIN.action = "/MemberShip/RealNameResult";
+    opener.document.kcbOutForm_IPIN.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
     opener.document.kcbOutForm_IPIN.submit();
 	self.close();
 }

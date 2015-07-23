@@ -82,6 +82,35 @@
 }
 
 
+@{
+
+    //[1] 마스터 정보
+
+    string CouponName = "", CouponGbn = "", CouponGbnM = "";
+    DateTime MasterFromDate, MasterToDate;
+    string UsableDeviceGbn = "", UsableYN = "", CouponDiscountMoney = "", CouponDiscountRate = "";
+    string IssueMethodGbn = "", IssueMethodWithAuto = "";
+    string RateOrMoney = "";
+
+    List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result
+        = ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>;
+
+    CouponName = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME;
+    CouponGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN;
+    CouponGbnM = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M;
+    MasterFromDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value;
+    MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
+    UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
+    UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
+    CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
+    CouponDiscountRate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE.ToString();
+    IssueMethodGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN;
+    IssueMethodWithAuto = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO;
+
+    RateOrMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY;
+
+}
+
 
 @section Scripts{
 
@@ -134,21 +163,56 @@
 
         <div class="tar mb10">
             <a class="btn btn-default middium" href="/AdminCoupon/CouponProductCreate?CdCoupon=@Request["CdCoupon"]">상품 등록</a>
-            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+            <!--<a class="btn btn-default middium" href="#">EXEL 다운로드</a>-->
         </div>
 
         <div class="panel">
-            <h3 class="sub-header">기본설정</h3>
+            <h3 class="sub-header">[ @CouponName ]- 적용된 상품의 리스트 </h3>
             <div class="alert alert-info">
                 <ul>
-                    <li>· 배송료에 대한 금액 및 조건을 설정하고 배송회사, 송장번호를 조회할 주소 등을 설정합니다.</li>
-                    <li>· 입점업체에서 사용중인 배송사는 삭제할 수 없습니다.</li>
+                    <li>. 쿠폰명  :  @CouponName  / 사용가능여부  :  @UsableYN</li>
+                    <li>
+                        · 쿠폰용도구분 : @{ if (CouponGbn == "M")
+                         {<text>지불쿠폰</text>}
+                         else
+                         {<text>배송쿠폰</text>}}
+                    </li>
+                    <li>
+                        · 쿠폰용도상세구분 : @{ if (CouponGbnM == "R")
+                         {<text>회원가입</text>}
+                         else if (CouponGbnM == "B")
+                         {<text>생일</text>}
+                         else if (CouponGbnM == "B")
+                         {<text>일반이벤트쿠폰</text>}
+                        }
+                    </li>
+                    <li>. 발행가능기간 : @MasterFromDate.ToString() ~ @MasterToDate.ToString() </li>
+                    <li>
+                        . 사용가능매체 : @{ if (CouponGbn == "P")
+                         {<text>PC,모바일</text>}
+                         else
+                         {<text>모바일전용</text>}}
+                    </li>
+                    <li>. 금액   :  @CouponDiscountMoney   . 할인율 : @CouponDiscountRate</li>
+                    <li>
+                        . 발행방법 : @{ if (IssueMethodGbn == "A")
+                         {<text>자동발행 </text>}
+                         else if (IssueMethodGbn == "B")
+                         {<text>수동발행</text>}}
+                    </li>
+                    <li>
+                        . 자동발행 Type : @{ if (IssueMethodWithAuto == "A")
+                         {<text>Action 발행(회원가입등..) </text>}
+                         else if (IssueMethodWithAuto == "B")
+                         {<text>Batch 발행(생일등...)</text>}}
+                    </li>
+
                 </ul>
             </div>
         </div>
 
         <div class="panel">
-            <h4>쿠폰적용 상품 리스트</h4>
+            <h4>[ @CouponName ]- 적용된 상품의 리스트</h4>
             <form name="frm01" id="frm01" aciton="/AdminCoupon/CouponProductCreate" method="post">
                 <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"]" /> 
 
@@ -181,7 +245,7 @@
     @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
     <input type="hidden" name="CdCoupon" id="CdCoupon" value="@Request["CdCoupon"]" />
         <div class="panel">
-            <h4>쿠폰적용 상품 리스트</h4>
+            <h4>[ @CouponName ]- 적용된 상품의 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
                 <colgroup>

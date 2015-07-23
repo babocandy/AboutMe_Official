@@ -33,6 +33,9 @@
 <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
 <script>
+    var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+    var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+
     var glID_DUP_CHECKED = false;  //아이디 중복확인 여부
     var glREGISTER_ING = false;  //저장처리중
     function fSetNewID() {
@@ -167,7 +170,8 @@
         var strM_DI = f.M_DI.value;
         var strWORK_TMP_ID = f.WORK_TMP_ID.value;
 
-        var strURL = "/MemberShip/AjaxJOIN_Register";
+        //var strURL = "/MemberShip/AjaxJOIN_Register";
+        var strURL = glHTTPS_DOMAIN + "/MemberShip/AjaxJOIN_Register";
 
         glREGISTER_ING = true;  //저장 진행중 --------------------
 
@@ -240,7 +244,8 @@
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
 
-        var strURL = "/MemberShip/AjaxID_DUPCheck";
+        //var strURL = "/MemberShip/AjaxID_DUPCheck";
+        var strURL = glHTTPS_DOMAIN + "/MemberShip/AjaxID_DUPCheck";
 
         $.ajax({
             url: strURL,
@@ -437,7 +442,8 @@
                                     <tr>
                                         <th><span>주소</span></th>
                                         <td colspan="3" class="addr">
-                                            <input type="text" class="ipttypea" style="width:200px" title="우편번호" id="M_ZIPCODE" name="M_ZIPCODE" maxlength="7" readonly />
+                                            <input type="text" class="ipttypea" style="width:120px" title="우편번호" id="M_ZIPCODE" name="M_ZIPCODE" maxlength="7" readonly />
+                                            &nbsp;&nbsp;
                                             <a href="javascript:sample2_execDaumPostcode();" class="btn_white_w96h38 typeb" >우편번호 찾기</a>
                                             <br />
                                             <input type="text" class="ipttypea mt8 mr10" style="width:350px" title="주소입력" id="M_ADDR1" name="M_ADDR1" maxlength="50" readonly />

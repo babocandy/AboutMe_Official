@@ -382,5 +382,163 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_ISSUED_DETAIL_SEL_Result>("SP_ADMIN_COUPON_ISSUED_LIST_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, cD_COUPONParameter);
         }
+    
+        public virtual int SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(string m_ID, Nullable<int> iDX_COUPON_NUMBER, string mETHOD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            var mETHODParameter = mETHOD != null ?
+                new ObjectParameter("METHOD", mETHOD) :
+                new ObjectParameter("METHOD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE", m_IDParameter, iDX_COUPON_NUMBERParameter, mETHODParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_COMMON_CNT_Result> SP_COUPON_AVAILABLE_LIST_CNT(string m_ID, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_COMMON_CNT_Result>("SP_COUPON_AVAILABLE_LIST_CNT", m_IDParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_COMMON_CNT_Result> SP_COUPON_COMMON_CNT()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_COMMON_CNT_Result>("SP_COUPON_COMMON_CNT");
+        }
+    
+        public virtual ObjectResult<SP_COUPON_ISSUED_DETAIL_SEL_Result> SP_COUPON_ISSUED_DETAIL_SEL(Nullable<int> iDX_COUPON_NUMBER)
+        {
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_ISSUED_DETAIL_SEL_Result>("SP_COUPON_ISSUED_DETAIL_SEL", iDX_COUPON_NUMBERParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_DOWNLOADABLE_LIST_Result> SP_COUPON_DOWNLOADABLE_LIST(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_DOWNLOADABLE_LIST_Result>("SP_COUPON_DOWNLOADABLE_LIST", m_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_ISSUED_DETAIL_SEL_Result> SP_COUPON_AVAILABLE_LIST_SEL(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_ISSUED_DETAIL_SEL_Result>("SP_COUPON_AVAILABLE_LIST_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result> SP_COUPON_VIEW_PRODUCT_DETAIL_SEL(string m_ID, Nullable<int> iDX_COUPON_SERIAL)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDX_COUPON_SERIALParameter = iDX_COUPON_SERIAL.HasValue ?
+                new ObjectParameter("IDX_COUPON_SERIAL", iDX_COUPON_SERIAL) :
+                new ObjectParameter("IDX_COUPON_SERIAL", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result>("SP_COUPON_VIEW_PRODUCT_DETAIL_SEL", m_IDParameter, iDX_COUPON_SERIALParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result> SP_COUPON_PRODUCT_LIST_SEL(string m_ID, Nullable<int> iDX_COUPON_SERIAL, Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDX_COUPON_SERIALParameter = iDX_COUPON_SERIAL.HasValue ?
+                new ObjectParameter("IDX_COUPON_SERIAL", iDX_COUPON_SERIAL) :
+                new ObjectParameter("IDX_COUPON_SERIAL", typeof(int));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result>("SP_COUPON_PRODUCT_LIST_SEL", m_IDParameter, iDX_COUPON_SERIALParameter, pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_COMMON_CNT_Result> SP_COUPON_PRODUCT_LIST_CNT(string m_ID, Nullable<int> iDX_COUPON_SERIAL, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDX_COUPON_SERIALParameter = iDX_COUPON_SERIAL.HasValue ?
+                new ObjectParameter("IDX_COUPON_SERIAL", iDX_COUPON_SERIAL) :
+                new ObjectParameter("IDX_COUPON_SERIAL", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_COMMON_CNT_Result>("SP_COUPON_PRODUCT_LIST_CNT", m_IDParameter, iDX_COUPON_SERIALParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_MASTER_INFO_SEL_Result> SP_COUPON_MASTER_INFO_SEL(string m_ID, Nullable<int> iDX_COUPON_SERIAL)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDX_COUPON_SERIALParameter = iDX_COUPON_SERIAL.HasValue ?
+                new ObjectParameter("IDX_COUPON_SERIAL", iDX_COUPON_SERIAL) :
+                new ObjectParameter("IDX_COUPON_SERIAL", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_MASTER_INFO_SEL_Result>("SP_COUPON_MASTER_INFO_SEL", m_IDParameter, iDX_COUPON_SERIALParameter);
+        }
     }
 }
