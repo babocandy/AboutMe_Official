@@ -76,7 +76,7 @@
 						<!--//list2-->
 						<!--list3-->
 						<div class="list list3">
-							<p class="tit"><a href="/shopping/selectshop_list.asp">수입브랜드</a></p>
+							<p class="tit"><a href="/shopping/selectshop_list.asp">기타브랜드</a></p>
 							<div class="sublist">
 								<ul>
 									<li><a href="#">엘라바쉐</a></li>
@@ -105,9 +105,7 @@
 									<li><img src="/aboutCom/images/common/temp_gnbbanner1_260228_3.jpg" alt="" /></li>
 								</ul>
 								<ul class="nav moveslidernav">
-									<li class="cnt"><a href="javascript:"><img src="/aboutCom/images/common/nav_banner.gif" alt="" /></a></li>
-									<li><a href="javascript:"><img src="/aboutCom/images/common/nav_banner.gif" alt="" /></a></li>
-									<li><a href="javascript:"><img src="/aboutCom/images/common/nav_banner.gif" alt="" /></a></li>
+									
 								</ul>
 							</div>
 						</div>
@@ -125,9 +123,9 @@
 				<li><a href="/event//main.asp" class="menu"><img src="/aboutCom/images/common/m_event.gif" class="imgInteractive" alt="이벤트" /></a></li>
 				<!--//이벤트-->
 
-				<!--VIP샵-->
+				<!--VIP샵
 				<li><a href="#" class="menu"><img src="/aboutCom/images/common/m_vip.gif" class="imgInteractive" alt="VIP샵" /></a></li>
-				<!--//VIP샵-->
+				VIP샵-->
 			</ul>
 		</div>
 		<!--gnb-->
@@ -142,6 +140,12 @@
 		</div>
 		<!--//util-->
 
+		<!--2015-07-23 추가 : 검색-->
+		<div class="h_search">
+			<span class="ipt_hearch"><input type="text" value="입력하세요" onclick="this.value=''" /><a href="#" class="btn_hsearch"><img src="/aboutCom/images/common/btn_search2.gif" alt="" /></a></span>
+		</div>
+		<!--//2015-07-23 추가 : 검색-->
+		
 		<!--쇼핑백-->
 		<div class="cart">
 			<a href="#" class="viewcart">
@@ -155,60 +159,75 @@
 			<div class="lycart"><i></i>
 				<a href="#" class="lycart_close"></a>
 				<p class="tit">쇼핑백</p>
-				<ul>
-					<li>
-						<!--이미지 96X96 사이즈 들어갑니다.-->
-						<span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
-						<span class="pro_detail">
-							<em class="pro_tit">퓨어 화이트 토너</em>
-							<em class="price">
-								<del>32,000원</del>
-								25,000원
-							</em>
-						</span>
-						<span class="pro_control">
-							<a href="#" class="del"></a>
-							<input type="text" class="ipttypeb" value="2"  />
-						</span>
-					</li>
-					<li>
-						<!--이미지 96X96 사이즈 들어갑니다.-->
-						<span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
-						<span class="pro_detail">
-							<em class="pro_tit">퓨어 화이트 토너</em>
-							<em class="price">
-								<del>32,000원</del>
-								25,000원
-							</em>
-						</span>
-						<span class="pro_control">
-							<a href="#" class="del"></a>
-							<input type="text" class="ipttypeb" value="1"  />
-						</span>
-					</li>
-					<li>
-						<!--이미지 96X96 사이즈 들어갑니다.-->
-						<span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
-						<span class="pro_detail">
-							<em class="pro_tit">퓨어 화이트 토너</em>
-							<em class="price">
-								<del>32,000원</del>
-								25,000원
-							</em>
-						</span>
-						<span class="pro_control">
-							<a href="#" class="del"></a>
-							<input type="text" class="ipttypeb" value="2"  />
-						</span>
-					</li>
-				</ul>
-				<div class="pagearea">
-					<div class="pagingtype2">
-						<a href="#" class="prev"></a>
-						1 / 10
-						<a href="#" class="next"></a>
+				
+				<!--2015-07-23 수정-->
+				<!--쇼핑백 상품이 없을 때-->
+				<div class="noitem">
+					<img src="/aboutCom/images/common/ico_cart.gif" alt="" />
+					<p class="txt">상품이 비어있습니다.</p>
+				</div>
+				<!--//쇼핑백 상품이 없을 때-->
+
+				<!--쇼핑백 상품이 있을 때-->
+				<div class="haveitem" style="display:none">
+					<ul>
+						<li>
+							<!--이미지 96X96 사이즈 들어갑니다.-->
+							<span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
+							<span class="pro_detail">
+								<em class="pro_tit">퓨어 화이트 토너</em>
+								<em class="price">
+									<del>32,000원</del>
+									25,000원
+								</em>
+							</span>
+							<span class="pro_control">
+								<a href="#" class="del"></a>
+								<input type="text" class="ipttypeb" value="2"  />
+							</span>
+						</li>
+						<li>
+							<!--이미지 96X96 사이즈 들어갑니다.-->
+							<span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
+							<span class="pro_detail">
+								<em class="pro_tit">퓨어 화이트 토너</em>
+								<em class="price">
+									<del>32,000원</del>
+									25,000원
+								</em>
+							</span>
+							<span class="pro_control">
+								<a href="#" class="del"></a>
+								<input type="text" class="ipttypeb" value="1"  />
+							</span>
+						</li>
+						<li>
+							<!--이미지 96X96 사이즈 들어갑니다.-->
+							<span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
+							<span class="pro_detail">
+								<em class="pro_tit">퓨어 화이트 토너</em>
+								<em class="price">
+									<del>32,000원</del>
+									25,000원
+								</em>
+							</span>
+							<span class="pro_control">
+								<a href="#" class="del"></a>
+								<input type="text" class="ipttypeb" value="2"  />
+							</span>
+						</li>
+					</ul>
+					<div class="pagearea">
+						<div class="pagingtype2">
+							<a href="#" class="prev"></a>
+							1 / 10
+							<a href="#" class="next"></a>
+						</div>
 					</div>
 				</div>
+				<!--//쇼핑백 상품이 있을 때-->
+				<!--//2015-07-23 수정-->
+
 				<div class="btngroup">
 					<a class="btn_brown_w185h48" href="#">쇼핑백 가기<img alt="" class="detailimg" src="/aboutCom/images/common/ico_arrow.png" /></a>
 				</div>

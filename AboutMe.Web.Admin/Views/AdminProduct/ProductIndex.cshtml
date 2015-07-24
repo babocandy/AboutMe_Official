@@ -512,13 +512,9 @@
                                             <th>아이콘</th>
                                             <td>
                                                 <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (ViewBag.iconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
-                                                <label for="icon2"><input type="checkbox" id="iconYn" name="iconYn" value="T" @if (ViewBag.iconYn.ToString().IndexOf('T') != -1) { <text> checked</text> } /><span class="txt mr5">TIME</span></label>
-                                                <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (ViewBag.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">COUPON</span></label>
-                                                <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="D" @if (ViewBag.iconYn.ToString().IndexOf('D') != -1) { <text> checked</text> } /><span class="txt mr5">1+1</span></label>
                                                 <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (ViewBag.iconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="O" @if (ViewBag.iconYn.ToString().IndexOf('O') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (ViewBag.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SET</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="U" @if (ViewBag.iconYn.ToString().IndexOf('U') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (ViewBag.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (ViewBag.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -538,13 +534,9 @@
                     <th><input type="checkbox" id="IconBatchChk" name="IconBatchChk" value="Y" /> 아이콘 일괄변경</th>
                     <td>
                         <label for="icon1"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="N" @if (ViewBag.BatchIconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">NEW</span></label>
-                        <label for="icon2"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="T" @if (ViewBag.BatchIconYn.ToString().IndexOf('T') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">TIME</span></label>
-                        <label for="icon3"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (ViewBag.BatchIconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">COUPON</span></label>
-                        <label for="icon3"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="D" @if (ViewBag.BatchIconYn.ToString().IndexOf('D') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">1+1</span></label>
                         <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="B" @if (ViewBag.BatchIconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">BEST</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="O" @if (ViewBag.BatchIconYn.ToString().IndexOf('O') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SOLD OUT</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (ViewBag.BatchIconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SET</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="U" @if (ViewBag.BatchIconYn.ToString().IndexOf('U') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">커스텀</span></label>
+                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (ViewBag.BatchIconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SOLD OUT</span></label>
+                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (ViewBag.BatchIconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">커스텀</span></label>
                     </td>
                     <th>출력수</th>
                     <td>
@@ -609,19 +601,11 @@
                     {
                         if (item.ICON_YN.ToString().IndexOf('N') != -1)
                         { ICON_NAME = ICON_NAME + ",NEW"; }
-                        if (item.ICON_YN.ToString().IndexOf('T') != -1)
-                        { ICON_NAME = ICON_NAME + ",TIME"; }
-                        if (item.ICON_YN.ToString().IndexOf('C') != -1)
-                        { ICON_NAME = ICON_NAME + ",COUPON"; }
-                        if (item.ICON_YN.ToString().IndexOf('D') != -1)
-                        { ICON_NAME = ICON_NAME + ",1+1"; }
                         if (item.ICON_YN.ToString().IndexOf('B') != -1)
                         { ICON_NAME = ICON_NAME + ",BEST"; }
-                        if (item.ICON_YN.ToString().IndexOf('O') != -1)
-                        { ICON_NAME = ICON_NAME + ",SOLD OUT"; }
                         if (item.ICON_YN.ToString().IndexOf('S') != -1)
-                        { ICON_NAME = ICON_NAME + ",SET"; }
-                        if (item.ICON_YN.ToString().IndexOf('U') != -1)
+                        { ICON_NAME = ICON_NAME + ",SOLD OUT"; }
+                        if (item.ICON_YN.ToString().IndexOf('C') != -1)
                         { ICON_NAME = ICON_NAME + ",커스텀"; }
                     }
                     

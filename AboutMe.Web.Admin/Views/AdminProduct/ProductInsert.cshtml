@@ -599,13 +599,9 @@
                         <th>아이콘</th>
                         <td colspan="3">
                             <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" /><span class="txt mr5">NEW</span></label>
-                            <label for="icon2"><input type="checkbox" id="iconYn" name="iconYn" value="T" /><span class="txt mr5">TIME</span></label>
-                            <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="C" /><span class="txt mr5">COUPON</span></label>
-                            <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="D" /><span class="txt mr5">1+1</span></label>
                             <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" /><span class="txt mr5">BEST</span></label>
-                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="O" /><span class="txt mr5">SOLD OUT</span></label>
-                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" /><span class="txt mr5">SET</span></label>
-                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="U" /><span class="txt mr5">커스텀</span></label>
+                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" /><span class="txt mr5">SOLD OUT</span></label>
+                            <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" /><span class="txt mr5">커스텀</span></label>
                         </td>
                     </tr>
                     <tr>
@@ -690,6 +686,7 @@
                         <th>함께하면 좋은상품<br/>(","로 구분)</th>
                         <td colspan="3">
                             <input type="text" style="width:550px;" class="input-sm text-left" id="WITH_PRODUCT_LIST" name="WITH_PRODUCT_LIST" maxlength="300" value="" />
+                            <a href="/AdminProduct/PopProductIndex" class="btn btn-primary small" target="_blank" onclick="openScrollYes(this.href, this.target, '1300', '600');return false;">상품검색</a>
                         </td>
                     </tr>
                 </tbody>

@@ -167,7 +167,7 @@
         </div>
 
         <div class="panel">
-            <h3 class="sub-header">[ @CouponName ]- 적용된 상품의 리스트 </h3>
+            <h3 class="sub-header">[ @CouponName ]- 적용 대상 상품의 리스트 </h3>
             <div class="alert alert-info">
                 <ul>
                     <li>. 쿠폰명  :  @CouponName  / 사용가능여부  :  @UsableYN</li>
@@ -212,7 +212,7 @@
         </div>
 
         <div class="panel">
-            <h4>[ @CouponName ]- 적용된 상품의 리스트</h4>
+            <h4>[ @CouponName ]- 적용 대상 상품의 리스트</h4>
             <form name="frm01" id="frm01" aciton="/AdminCoupon/CouponProductCreate" method="post">
                 <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"]" /> 
 
@@ -240,12 +240,12 @@
         </div>
 
 
-@using (Html.BeginForm("CouponProductCreateProc", "AdminCoupon", FormMethod.Post, new { id = "frm02", name = "frm02", onsubmit = "return frmCheck();" }))
+@using (Html.BeginForm("CouponProductCreateProc", "AdminCoupon", FormMethod.Post, new { id = "frm02", name = "frm02" }))
 { 
     @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
     <input type="hidden" name="CdCoupon" id="CdCoupon" value="@Request["CdCoupon"]" />
         <div class="panel">
-            <h4>[ @CouponName ]- 적용된 상품의 리스트</h4>
+            <h4>[ @CouponName ]- 적용 대상 상품의 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
                 <colgroup>
@@ -303,13 +303,13 @@
         </div>
         <div class="btn_area">
             <a class="btn btn-default middium" href="javascript:document.frm02.submit();"> 선택한 상품을 적용 >> </a>
-            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductList"> 상위(쿠폰 적용상품)리스트 </a>
+            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductList?CdCoupon=@Request["CdCoupon"].ToString()"> 상위(쿠폰 적용상품)리스트 </a>
         </div>
 
      }
 
 
-    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = 100, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&CdCoupon=" + Request["CdCoupon"].ToString() });}
 
 
 
