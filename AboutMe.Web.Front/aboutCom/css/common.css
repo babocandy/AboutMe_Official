@@ -371,8 +371,8 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 /*review_popup*/
 .reviewpop_wrap {display:none;position:fixed; left:0; top:0; width:100%; height:100%; z-index:10; }
 .reviewpop_wrap .dim {width:100%; height:100%; position:fixed; left:0; top:0;background:#000; opacity:0.5;  filter: alpha(opacity=50);}
-.reviewpop {position:relative; padding:40px; position:absolute; left:50%; top:30px; width:800px; margin-left:-400px; background:#fff;box-sizing:border-box;}
-.reviewpop  .reviewpop_close {position:absolute; right:60px; top:80px}
+.reviewpop {position:relative; padding:20px 20px 30px; position:absolute; left:50%; top:30px; width:800px; margin-left:-400px; background:#fff;box-sizing:border-box;}
+.reviewpop  .reviewpop_close {position:absolute; right:60px; top:60px}
 .reviewpop .reviewpop_top {}
 .reviewpop .reviewpop_top .title_area { padding-bottom:16px; text-align:center; border-top:2px solid #696361; border-bottom:1px solid #bbb5b4;}
 .reviewpop .reviewpop_top .title_area .title {margin-top:24px;font-size:26px; color:#696361;}
@@ -475,17 +475,18 @@ body.popup {min-width:0;overflow:hidden;}
 .coupon_used .btngroup a + a{margin-left:2px;}
 
 /*쿠폰 적용대상 보기 팝업*/
-.coupon_info h3{margin-bottom:10px;font-size:18px;color:#1b1818;}
+.coupon_info{height:453px;}
+.coupon_info h3{margin-bottom:6px;font-size:18px;color:#1b1818;}
 .coupon_info .selected_coupon{margin-top:20px}
 .coupon_info .selected_coupon table{width:100%;border:1px solid #bbb5b4;table-layout:fixed;}
-.coupon_info .selected_coupon table thead tr th{padding:19px 0;background-color:#f9f6f5;font-size:14px;color:#1b1818;font-weight:normal;}
-.coupon_info .selected_coupon table tbody tr td{padding:21px 0 18px;font-size:13px;color:#696361;font-weight:bold;text-align:center;}
-.coupon_info .applies_goods .prolist{padding:8px 17px 12px;height:370px;border:1px solid #efe8e6;box-sizing:border-box;}
+.coupon_info .selected_coupon table thead tr th{padding:14px 0 13px;background-color:#f9f6f5;font-size:14px;color:#1b1818;font-weight:normal;}
+.coupon_info .selected_coupon table tbody tr td{padding:15px 0 13px;font-size:13px;color:#696361;font-weight:bold;text-align:center;}
+.coupon_info .applies_goods .prolist{padding:0 20px 19px;border:1px solid #efe8e6;box-sizing:border-box;}
 .coupon_info .applies_goods .prolist ul:after{content:"";display:block;clear:both;}
-.coupon_info .applies_goods .prolist ul li{float:left;position:relative;padding:32px 0 0 126px;width:50%;height:116px;box-sizing:border-box;}
-.coupon_info .applies_goods .prolist ul li.pro_info .photo{position:absolute;top:12px;left:0;width:96px;}
+.coupon_info .applies_goods .prolist ul li{float:left;position:relative;padding:20px 0 0 126px;width:50%;height:116px;min-height:116px;border-top:0;box-sizing:border-box;}
+.coupon_info .applies_goods .prolist ul li.pro_info .photo{position:absolute;top:20px;left:0;width:96px;}
 .coupon_info .applies_goods .prolist ul li.pro_info .photo img{width:96px;}
-.coupon_info .applies_goods .prolist ul li.pro_info .detail{}
+.coupon_info .applies_goods .prolist ul li.pro_info .detail{padding-top:20px;}
 .coupon_info .applies_goods .prolist ul li.pro_info .detail .tit{font-size:14px;color:#1b1818;}
 .coupon_info .applies_goods .prolist ul li.pro_info .detail .stit{margin-top:6px;font-family:"Dotum";font-size:11px;color:#bbb5b4;}
 .coupon_info .applies_goods .prolist ul li.pro_info .detail .price{margin-top:10px;font-size:16px;color:#1b1818;font-weight:bold;}

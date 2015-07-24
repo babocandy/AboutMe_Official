@@ -195,6 +195,10 @@ $(function(){
 	var movesliderIdx= 0;
 	var movesliderWidth = $(".moveslider .moveslidercon li").width(); //li의 넓이
 	var movesliderLength = $(".moveslider .moveslidercon li").length; //li의 갯수
+	$(".gnb_banner .slide li").each(function(){
+		$(".moveslidernav").append("<li><a href='#'><img src='/aboutCom/images/common/nav_banner.gif' alt='' /></a></li> ");
+	});
+	$(".moveslidernav li:eq(0)").addClass("cnt");
 	$(".moveslider .moveslidernav a").on("click", function(){
 		movesliderIdx = $(this).parent().index();
 		$(".moveslider .moveslidercon").animate({"margin-left": -(movesliderWidth*movesliderIdx)},300,"easeInExpo");

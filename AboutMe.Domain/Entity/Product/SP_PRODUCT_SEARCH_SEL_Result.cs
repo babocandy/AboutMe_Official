@@ -11,7 +11,7 @@ namespace AboutMe.Domain.Entity.Product
 {
     using System;
     
-    public partial class SP_PRODUCT_SEL_Result
+    public partial class SP_PRODUCT_SEARCH_SEL_Result
     {
         public int IDX { get; set; }
         public string C_CATE_CODE { get; set; }

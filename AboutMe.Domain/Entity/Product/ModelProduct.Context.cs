@@ -145,5 +145,35 @@ namespace AboutMe.Domain.Entity.Product
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
         }
+    
+        public virtual ObjectResult<SP_PRODUCT_SEARCH_CNT_Result> SP_PRODUCT_SEARCH_CNT(string sEARCH_KEYWORD)
+        {
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCH_CNT_Result>("SP_PRODUCT_SEARCH_CNT", sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_SEARCH_SEL_Result> SP_PRODUCT_SEARCH_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sORT_GBN, string sEARCH_KEYWORD)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sORT_GBNParameter = sORT_GBN != null ?
+                new ObjectParameter("SORT_GBN", sORT_GBN) :
+                new ObjectParameter("SORT_GBN", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCH_SEL_Result>("SP_PRODUCT_SEARCH_SEL", pAGEParameter, pAGESIZEParameter, sORT_GBNParameter, sEARCH_KEYWORDParameter);
+        }
     }
 }
