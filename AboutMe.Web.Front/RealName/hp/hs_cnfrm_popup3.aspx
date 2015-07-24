@@ -1,5 +1,23 @@
 <%@ Page Language="C#" %>
 <%@ Import namespace="OkNameComLib" %>
+
+<%@ Import Namespace = "System" %>
+<%@ Import Namespace = "System.Configuration" %>
+<%
+string REAL_NAME_memId = ConfigurationSettings.AppSettings["REAL_NAME_memId"]; //회원사코드
+string REAL_NAME_serverIp = ConfigurationSettings.AppSettings["REAL_NAME_serverIp"]; //PrivateIP
+string REAL_NAME_siteDomain = ConfigurationSettings.AppSettings["REAL_NAME_siteDomain"]; //회원사 도메인
+string REAL_NAME_logPath = ConfigurationSettings.AppSettings["REAL_NAME_logPath"]; //로그파일 생성 경로
+string REAL_NAME_keyPath = ConfigurationSettings.AppSettings["REAL_NAME_keyPath"]; //키파일 경로
+
+string REAL_NAME_returnUrl_HP = ConfigurationSettings.AppSettings["REAL_NAME_returnUrl_HP"]; //HP:본인인증 완료후 리턴될 URL (도메인 포함 full path)
+//string REAL_NAME_returnUrl_IPIN = ConfigurationSettings.AppSettings["REAL_NAME_returnUrl_IPIN"]; //IPIN:본인인증 완료후 리턴될 URL (도메인 포함 full path)
+
+string REAL_NAME_SubmitLocalURL = ConfigurationSettings.AppSettings["REAL_NAME_SubmitLocalURL"]; //실명인증완료후 submit 경로 : 실제 - HTTPS 적용필요
+    
+%>
+
+
 <%
     //**************************************************************************
 	// 파일명 : hs_cnfrm_popup3.aspx
@@ -21,7 +39,7 @@
 	//########################################################################
 	//# KCB로부터 부여받은 회원사코드 설정 (12자리)
 	//########################################################################
-    String memId = "P19960000000";								// *** 회원사코드 ***
+    String memId = REAL_NAME_memId; // "P19960000000";								// *** 회원사코드 ***
 
 	//########################################################################
 	//# 운영전환시 변경 필요
@@ -35,13 +53,13 @@
 	//# 파일은 매월초에 갱신되며 만일 파일이 갱신되지 않으면 복화화데이터가 깨지는 현상이 발생됨.
 	// # 키파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
 	//########################################################################
-	String keyPath = "c:\\WWW\\REALNAME\\module\\key\\okname.key";
+    String keyPath = REAL_NAME_keyPath; // "c:\\WWW\\REALNAME\\module\\key\\okname.key";
 
 	//########################################################################
 	//# 로그 경로 지정 및 권한 부여 (hs_cnfrm_popup2.aspx에서 설정된 값과 동일하게 설정)
 	// # 로그파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
 	//########################################################################
-    String logPath = "c:\\WWW\\REALNAME\\module\\log";
+    String logPath = REAL_NAME_logPath; // "c:\\WWW\\REALNAME\\module\\log";
 
 	//########################################################################
 	// # 옵션값에 'L'을 추가하는 경우에만 로그가 생성됨. 예) options="SL"
@@ -137,7 +155,8 @@
 %>
 
 	    //opener.document.kcbResultForm_HP.action = "/MemberShip/RealNameResult";
-	    opener.document.kcbResultForm_HP.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
+	    //opener.document.kcbResultForm_HP.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
+	    opener.document.kcbResultForm_HP.action = "<%=REAL_NAME_SubmitLocalURL%>";
 	    opener.document.kcbResultForm_HP.submit();
 		
 		self.close();

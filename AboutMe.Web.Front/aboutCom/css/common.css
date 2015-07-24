@@ -146,7 +146,7 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 /*select*/
 .outSelA {display: inline-block;position: relative; text-align: left; vertical-align: middle;}
 .outSelA .tag_select {position: relative;display: block; border-bottom:2px solid #1b1818; box-sizing: border-box;color: #262727;cursor: pointer;	font-size: 20px; height: 38px; line-height: 26px;	overflow: hidden;	z-index: 10;	}
-.outSelA .tag_select::before {display: block; position: absolute;right: 1px;top: 1px; width:19px; height: 19px; background: url("/aboutCom/images/common/bg_select.png") no-repeat scroll 0 0;	content: "";	}
+.outSelA .tag_select::after {display: block; position: absolute;right: 1px;top: 1px; width:19px; height: 19px; background: url("/aboutCom/images/common/bg_select.png") no-repeat scroll 0 0;	content: "";	}
 .outSelA .tag_options {background: none repeat scroll 0 0 #fff;	border: 1px solid #e2e2e2;	box-sizing: border-box;	height: 152px;	margin: 0;overflow-x: hidden;overflow-y: auto;position: absolute;
 	top: 27px;width: 100%;	z-index: 29;	}
 .outSelA .tag_options li {	box-sizing: border-box;cursor: pointer;font-size: 13px;line-height: 16px;padding: 7px 10px 7px 5px;}
@@ -155,7 +155,7 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 
 .outSelB {display: inline-block;position: relative; text-align: left; width:140px; vertical-align: middle;}
 .outSelB .tag_select {position: relative;display: block; border:1px solid #efe8e6; box-sizing: border-box; padding-left:15px; color: #262727;cursor: pointer;	font-size: 13px; height: 38px; line-height: 36px;	color:#696361; overflow: hidden;	z-index: 10;	}
-.outSelB .tag_select::before {display: block; position: absolute; right: 1px;top: 1px; width:37px; height: 36px; background: url("/aboutCom/images/common/bg_select2.gif") no-repeat scroll 0 0;	content: "";	}
+.outSelB .tag_select:after {display: block; position: absolute; right: 1px;top: 1px; width:37px; height: 36px; background: url("/aboutCom/images/common/bg_select2.gif") no-repeat scroll 0 0;	content: "";	}
 .outSelB .tag_options {background: none repeat scroll 0 0 #fff;	border: 1px solid #e2e2e2;	box-sizing: border-box;	height: 152px;	margin: 0;overflow-x: hidden;overflow-y: auto;position: absolute;
 	top: 37px;width: 100%;	z-index: 29;	}
 .outSelB .tag_options li {	box-sizing: border-box;cursor: pointer;font-size: 13px; line-height: 16px;padding: 7px 10px 7px 16px;}
@@ -165,7 +165,7 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 .selecttypeC {text-align:center;}
 .selecttypeC .sort {display: inline-block; position:relative;  width:210px; margin-right:56px;}
 .selecttypeC .sort .tit {width:100%; background: url("/aboutCom/images/common/bg_select.png") no-repeat right 0;	 border-bottom:2px solid #1b1818; box-sizing: border-box;color: #262727;cursor: pointer;	font-size: 20px; height: 38px; line-height: 26px; text-align:left;}
-.selecttypeC .sort.on .tit {color:#33c1e5;}
+.selecttypeC .sort.on .tit {color:#33c1e5; font-weight:bold;}
 .selecttypeC .sort.on .tit a {color:#33c1e5;}
 .selecttypeC .sort ul {display:none;width:100%; position:absolute; left:0; top:38px; padding-top:22px; padding-bottom:15px; text-align:left; background:#fff; box-sizing: border-box; z-index:20;}
 .selecttypeC .sort ul li {font-size:14px; margin-left:20px;  padding-left:30px;line-height:30px;}
@@ -509,6 +509,7 @@ body.popup {min-width:0;overflow:hidden;}
 .write_review.pro table tbody tr.edit th span{display:inline-block;margin-top:6px;font-size:12px;color:#bbb5b4;}
 .write_review.pro table tbody tr.edit td .txtareatypea{padding:8px;height:46px;}
 .write_review.pro table tbody tr.attach td{overflow:hidden;}
+.write_review.pro table tbody tr.attach td .fileField{display:none;}
 .write_review.pro table tbody tr.attach td .imgbox{float:left;display:inline-block;width:80px;height:80px;}
 .write_review.pro table tbody tr.attach td .imgbox img{width:100%;height:100%;}
 .write_review.pro table tbody tr.attach td input[type="text"]{float:left;}
@@ -519,6 +520,16 @@ body.popup {min-width:0;overflow:hidden;}
 .write_review.pro .note ul li:first-child{margin-top:0;}
 .write_review.pro .btngroup a + a{margin-left:2px;}
 
+/*비밀번호 변경 팝업*/
+.pwchange{margin-top:20px;width:380px;height:234px;}
+.pwchange table{width:100%;table-layout:fixed;}
+.pwchange table tr th,
+.pwchange table tr td{border:1px solid #efe8e6;}
+.pwchange table tr th{padding:20px 0 18px 29px;border-right:0;background-color:#f9f6f5;font-size:14px;color:#1b1818;font-weight:normal;text-align:left;}
+.pwchange table tr td{padding:8px 10px 8px 11px;border-left:0;}
+.pwchange .btngroup a + a{margin-left:2px;}
+
+
 /* IE8 only */
 @media \0screen {
 	.ipttypea {padding-top:8px;}
@@ -527,4 +538,5 @@ body.popup {min-width:0;overflow:hidden;}
 	.counttypea input{padding-top:8px;}
 	.counttypeb input{padding-top:5px;}
 	.ipttypedate input {padding-top:8px;}
+	#header .h_search .ipt_hearch input {padding-top:9px}
 }

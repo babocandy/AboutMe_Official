@@ -887,9 +887,9 @@ namespace AboutMe.Web.Front.Controllers
             //새로 세팅된 비밀번호 메일로 전송 ----------------------
             string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
             string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
-            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
+            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_temp_pswd.html");  //메일 스킨 txt Read
             skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
-            skin_body = skin_body.Replace("$$M_NAME$$", strNEW_PWD);  //신규암호
+            skin_body = skin_body.Replace("$$M_PWD$$", strNEW_PWD);  //신규암호
 
             string MAIL_SUBJECT = "[AboutMe]어바웃미 비밀번호가 변경되었습니다.";
             string MAIL_BODY = skin_body;
