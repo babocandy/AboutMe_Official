@@ -75,10 +75,10 @@
         </div>
 
         <div class="panel">
-            <h3 class="sub-header">쿠폰적용 대상 상품 리스트</h3>
+            <h3 class="sub-header">쿠폰 적용된 상품 리스트</h3>
             <div class="alert alert-info">
                 <ul>
-                    <li>· 쿠폰에 적용할 수 있는 상품의 리스트입니다.</li>
+                    <li>· 쿠폰에 적용된 상품의 리스트입니다.</li>
                     <li>. 쿠폰명  :  @CouponName  / 사용가능여부  :  @UsableYN</li>
                     <li>
                         · 쿠폰용도구분 : @{ if (CouponGbn == "M")
@@ -120,9 +120,10 @@
         </div>
 
         <div class="panel">
-            <h4>[ @CouponName ]쿠폰적용 대상 상품 리스트</h4>
-            @using (Html.BeginForm("CouponProductList", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            <h4>[ @CouponName ]쿠폰에 적용된 상품 리스트</h4>
+            @using (Html.BeginForm("CouponProductList", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01"}))
             {
+                <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
 
@@ -149,7 +150,7 @@
         </div>
 
         <div class="panel">
-            <h4>[ @CouponName ]쿠폰적용 대상 상품 리스트</h4>
+            <h4>[ @CouponName ]쿠폰에 적용된 상품 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
                 <colgroup>
@@ -200,7 +201,7 @@
         </div>
 
 
-        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&CdCoupon=" + Request["CdCoupon"].ToString() });}
 
 
         <!--버튼모음--

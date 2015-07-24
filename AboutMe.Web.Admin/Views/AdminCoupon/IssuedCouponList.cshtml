@@ -112,7 +112,7 @@
 
         <div class="panel">
             <h4>발행된 쿠폰 리스트</h4>
-            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("Index", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -142,7 +142,7 @@
                                                             </option>
                                                         </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
                                                         <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
-                                                        <input type="submit" value=" Search >> ">
+                                                        
                                                     </td>
                                                 </tr>
                                             </tbody>
