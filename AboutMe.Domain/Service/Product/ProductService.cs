@@ -73,6 +73,51 @@ namespace AboutMe.Domain.Service.Product
 
         #endregion
 
+
+        #region 상품 검색 리스트
+        public List<SP_PRODUCT_SEARCH_SEL_Result> GetProductSearchList(Product_front_search_entity product_front_search_entity)
+        {
+
+            List<SP_PRODUCT_SEARCH_SEL_Result> lst = new List<SP_PRODUCT_SEARCH_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                //try {
+                lst = ProductContext.SP_PRODUCT_SEARCH_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.SORT_GBN, product_front_search_entity.SEARCH_KEYWORD).ToList();
+                //}catch
+                //{
+                //      ProductContext.Dispose();
+                //}
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region 상품 검색 카운트
+        public int GetProductSearchCnt(Product_front_search_entity product_front_search_entity)
+        {
+            List<SP_PRODUCT_SEARCH_CNT_Result> lst = new List<SP_PRODUCT_SEARCH_CNT_Result>();
+            int productCount = -1;
+
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+
+                lst = ProductContext.SP_PRODUCT_SEARCH_CNT(product_front_search_entity.SEARCH_KEYWORD).ToList();
+                if (lst != null && lst.Count > 0)
+                    productCount = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return productCount;
+
+        }
+        #endregion
+
+
         #endregion
 
         #region 카테고리
