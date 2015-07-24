@@ -1,5 +1,23 @@
 <%@ Page Language="C#" %>
 <%@ Import namespace="OkNameComLib" %>
+
+<%@ Import Namespace = "System" %>
+<%@ Import Namespace = "System.Configuration" %>
+<%
+string REAL_NAME_memId = ConfigurationSettings.AppSettings["REAL_NAME_memId"]; //회원사코드
+string REAL_NAME_serverIp = ConfigurationSettings.AppSettings["REAL_NAME_serverIp"]; //PrivateIP
+string REAL_NAME_siteDomain = ConfigurationSettings.AppSettings["REAL_NAME_siteDomain"]; //회원사 도메인
+string REAL_NAME_logPath = ConfigurationSettings.AppSettings["REAL_NAME_logPath"]; //로그파일 생성 경로
+string REAL_NAME_keyPath = ConfigurationSettings.AppSettings["REAL_NAME_keyPath"]; //키파일 경로
+
+//string REAL_NAME_returnUrl_HP = ConfigurationSettings.AppSettings["REAL_NAME_returnUrl_HP"]; //HP:본인인증 완료후 리턴될 URL (도메인 포함 full path)
+string REAL_NAME_returnUrl_IPIN = ConfigurationSettings.AppSettings["REAL_NAME_returnUrl_IPIN"]; //IPIN:본인인증 완료후 리턴될 URL (도메인 포함 full path)
+
+string REAL_NAME_SubmitLocalURL = ConfigurationSettings.AppSettings["REAL_NAME_SubmitLocalURL"]; //실명인증완료후 submit 경로 : 실제 - HTTPS 적용필요
+    
+%>
+
+
 <%
 	//아이핀팝업에서 조회한 PERSONALINFO이다.
 	String encPsnlInfo = Request.Form.Get("encPsnlInfo");
@@ -15,10 +33,10 @@
 
     // 암호화키 파일 설정 (ipin2.aspx에서 설정된 값과 동일)
 	// 키파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
-    String keyPath = "c:\\WWW\\REALNAME\\module\\key\\okname.key";
+    String keyPath = REAL_NAME_keyPath; // "c:\\WWW\\REALNAME\\module\\key\\okname.key";
 
 	// 회원사코드 (테스트인 경우 'P00000000000'를 사용하며 운영시 발급받은 회원사코드를 설정)
-	String memId    = "P19960000000";
+    String memId = REAL_NAME_memId; // "P19960000000";
 
 	// 웹서비스 EndPointURL
 	//String endPointURL = "http://twww.ok-name.co.kr:8888/KcbWebService/OkNameService";	// 테스트서버 <<<<<<<<<<<<<<<<<<<<
@@ -26,7 +44,7 @@
 
     // 로그 경로 지정 및 권한 부여 (ipin1.asp에서 설정된 값과 동일)
 	// 로그파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
-	String logPath = "c:\\okname\\log";
+    String logPath = REAL_NAME_logPath; // "c:\\okname\\log";
 
 	// 옵션값에 'L'을 추가하는 경우에만 로그가 생성됨. 예) options="SL"
 	String options = "SL";
@@ -99,7 +117,8 @@ function fncOpenerSubmit() {
 %>
 
     //opener.document.kcbOutForm_IPIN.action = "/MemberShip/RealNameResult";
-    opener.document.kcbOutForm_IPIN.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
+    //opener.document.kcbOutForm_IPIN.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
+    opener.document.kcbOutForm_IPIN.action = "<%=REAL_NAME_returnUrl_IPIN%>";  //실제-> https
     opener.document.kcbOutForm_IPIN.submit();
 	self.close();
 }
