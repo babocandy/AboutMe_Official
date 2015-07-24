@@ -629,6 +629,28 @@
     <Compile Include="Entity\Product\TB_LOG_USER.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Recallbbs\RecallUserModel.cs" />
+    <Compile Include="Entity\Recallbbs\ModelRecallbbs.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelRecallbbs.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\ModelRecallbbs.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelRecallbbs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\ModelRecallbbs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelRecallbbs.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\SP_TB_RECALL_BBS_CNT_Result.cs">
+      <DependentUpon>ModelRecallbbs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\SP_TB_RECALL_BBS_SEL_Result.cs">
+      <DependentUpon>ModelRecallbbs.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Review\ModelReview.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -687,6 +709,8 @@
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\Promotion\PromotionService.cs" />
     <Compile Include="Service\Promotion\IPromotionService.cs" />
+    <Compile Include="Service\Recallbbs\RecallbbsService.cs" />
+    <Compile Include="Service\Recallbbs\IRecallbssService.cs" />
     <Compile Include="Service\Review\IReviewService.cs" />
     <Compile Include="Service\Review\ReviewService.cs" />
   </ItemGroup>
@@ -921,6 +945,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelReview.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Recallbbs\ModelRecallbbs.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelRecallbbs.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Recallbbs\ModelRecallbbs.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelRecallbbs.edmx</DependentUpon>
+      <LastGenOutput>ModelRecallbbs.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Recallbbs\ModelRecallbbs.edmx.diagram">
+      <DependentUpon>ModelRecallbbs.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Recallbbs\ModelRecallbbs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelRecallbbs.edmx</DependentUpon>
+      <LastGenOutput>ModelRecallbbs.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Review\ModelReview.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelReview.edmx</DependentUpon>

@@ -1,0 +1,136 @@
+﻿@model AboutMe.Domain.Entity.Recallbbs.RECALL_INDEX
+@{
+    ViewBag.Title = "교환/반품신청 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+<link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+<script src="/aboutCom/js/lib/jquery-ui.js"></script>
+<script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
+}
+@Model.SearchParam.start_date
+<!--container-->
+<div id="container" class="return">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>교환/반품<br />신청<i></i></h2>
+                <!--mypage_menu-->
+                @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                <!--//mypage_menu-->
+            </div>
+            <!--//h2_area-->
+            <!--꼭 읽어주세요-->
+            <div class="userread">
+                <p class="tit">꼭 읽어주세요</p>
+                <ul class="ps_list">
+                    <li>주문취소는 배송 시작 전 단계에서만 기능합니다. 주문내역에서 취소 가능합니다.</li>
+                    <li>이후에는 반품으로 진행되며, 단순변심으로 인한 반품일 경우 반품배송비가 추가 발생할 수 있습니다. </li>
+                    <li>주문내역에서 선택 후 교환/반품 신청 가능합니다.</li>
+                </ul>
+            </div>
+            <!--//꼭 읽어주세요-->
+        </div>
+        <!--//mypage_top-->
+        <!--주문내역 totla리스트-->
+        <div class="contypeb">
+            <!--조회기간-->
+            <div class="termcheck">
+                <h3>조회기간</h3>
+                <ul class="termlist">
+                    <li class="cnt"><a href="#">1개월</a></li>
+                    <li><a href="#">3개월</a></li>
+                    <li><a href="#">4개월</a></li>
+                    <li><a href="#">1년</a></li>
+                    <li><a href="#">기간</a></li>
+                </ul>
+                <span class="ipttypedate ml20"><input type="text" id="start_date" name="start_date" class="" style="width:120px"></span>
+                -
+                <span class="ipttypedate"><input type="text" id="end_date" name="end_date" class="" style="width:120px"></span>
+                <a href="#" class="btn_brown_w96h38">조회</a>
+                <script type="text/javascript">
+						$(function() {
+						    $("#start_date").datepicker({
+								//showOtherMonths: true,
+								//numberOfMonths: 2,
+								dayNamesMin: ['S','M','T','W','T','F','S'],
+								dateFormat: "yy. mm. dd",
+								showOn: "both",
+								buttonText: "조회 시작일 달력",
+								buttonImage: "/aboutCom/images/mypage/bl_cal.gif",
+								buttonImageOnly: true,
+								onClose:function(selectedDate){
+									$(this).datepicker("option",selectedDate);
+								}
+							});
+						    $("#end_date").datepicker({
+								//showOtherMonths: true,
+								//numberOfMonths: 2,
+								dayNamesMin: ['S','M','T','W','T','F','S'],
+								dateFormat: "yy. mm. dd",
+								showOn: "both",
+								buttonText: "조회 시작일 달력",
+								buttonImage: "/aboutCom/images/mypage/bl_cal.gif",
+								buttonImageOnly: true,
+								onClose:function(selectedDate){
+									$(this).datepicker("option",selectedDate);
+								}
+							});
+						});
+                </script>
+            </div>
+            <!--//조회기간-->
+            <!--주문리스트-->
+            <div class="oderlist">
+                <div class="tabletypeb">
+                    <table>
+                        <colgroup><col width="100" /><col width="186" /><col width="*" /><col width="160" /><col width="130" /></colgroup>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>주문번호</th>
+                                <th>제목</th>
+                                <th>작성일</th>
+                                <th>진행상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BbsList)
+                            { 
+                            <tr>
+                                <td>@item.IDX</td>
+                                <td>@item.ORDER_CODE</td>
+                                <td class="subj"><a href="/Mypage/Recall/RecallView?IDX=@item.IDX">@item.TITLE</a></td>
+                                <td>@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</td>
+                                @if (item.STATUS == 2)
+                                { 
+                                    <td >처리완료</td>
+                                }
+                                else
+                                {
+                                    <td class="fcblue">처리중</td>
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--//주문리스트-->
+            <!--페이징-->
+            @{
+                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = 12, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.SearchParam.page, QueryStr = "start_date=" + Model.SearchParam.start_date + "&end_date=" + Model.SearchParam.end_date });
+            }
+            <!--//페이징-->
+
+        </div>
+        <!--//주문내역 total리스트-->
+
+
+    </div>
+</div>
+<!--//container-->

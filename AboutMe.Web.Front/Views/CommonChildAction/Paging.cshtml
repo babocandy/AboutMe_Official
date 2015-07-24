@@ -1,10 +1,9 @@
 ﻿@*@model IEnumerable<MvcCsBoard.Controllers.PagingValue>*@
 @model AboutMe.Common.Data.PagingProps
 
-@Request.Url.LocalPath
-<br />
+@*Request.Url.LocalPath*@
 
-<div class="paging">
+<div class="paging mt30">
 
     @if (Model.HasPreviousBlock)
     {
