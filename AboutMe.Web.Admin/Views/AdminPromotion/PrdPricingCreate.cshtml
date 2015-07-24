@@ -37,22 +37,39 @@
 
     <script language="javascript">
 
-        function frmCheck() {
-            //alert("여기입니다");
+    function frmCheck() {
+        //alert("여기입니다");
 
 
-            /**
-            var f = document.frm01;
 
+        var f = document.frm01;
 
-            if (f.SEL_PMO_PRODUCT_CATEGORY.value == '') {
-                alert("프로모션 종류를 선택하세요.");
-                f.SEL_PMO_PRODUCT_CATEGORY.focus();
+        @if (ViewData["PMO_PRODUCT_CATEGORY"].ToString() == "02") {
+           
+            <text>
+        
+            if(f.inst_TB_PROMOTION_BY_PRODUCT_PRICE_PMO_ONE_ONE_P_CODE.value == '')
+            {
+                alert("[1+1 증정품 상품코드]에 위[상품코드]와 동일한 상품코드를 입력하세요");
+                f.inst_TB_PROMOTION_BY_PRODUCT_PRICE_PMO_ONE_ONE_P_CODE.focus();
                 return false;
             }
-            **/
 
+         
+            if(f.inst_TB_PROMOTION_BY_PRODUCT_PRICE_PMO_ONE_ONE_PRICE.value == '')
+            {
+                alert("[1+1 증정품 가격]을 '0'으로 입력하였습니다..");
+                f.inst_TB_PROMOTION_BY_PRODUCT_PRICE_PMO_ONE_ONE_PRICE.focus();
+                f.inst_TB_PROMOTION_BY_PRODUCT_PRICE_PMO_ONE_ONE_PRICE.value = 0 ;
+                return false;
+            }
+        
+            </text>
         }
+            
+            
+         return true;
+      }
 
 
 
@@ -92,46 +109,46 @@
 
 }
 
-@section Left {
+        @section Left {
 
-    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
-}
+        @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+        }
 
-@section Header{
-    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
-}
+        @section Header{
+        @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+        }
 
-@section Body{
+        @section Body{
 
-    <div class="content">
-        <!--path-->
-        <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        <div class="content">
+            <!--path-->
+            <div class="path">
+                <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
         </div>
         <!--//path-->
 
         <div class="panel">
             <h3 class="sub-header">상품별 프로모션 가격정보 등록</h3>
 
-            @using (Html.BeginForm("PrdPricingCreate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+        @using (Html.BeginForm("PrdPricingCreate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
                                         <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()" />
 
                                         <table class="table table_row">
-                                            <colgroup><col width="25%" /><col width="75%" /></colgroup>
-                                            <tbody>
+                                        <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                        <tbody>
 
-                                                <tr>
-                                                    <th>상품코드</th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.P_CODE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.P_CODE)</font></td>
+                                            <tr>
+                                                <th>상품코드</th>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.P_CODE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.P_CODE)</font></td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>프로모션 종류 </th>
                                                     <td>
-                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
                                                         {
                                                             <text>
                                                                 <input type="checkbox" id="CheckCdPromotiontTotal" name="CheckCdPromotionTotal" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
@@ -165,14 +182,14 @@
                                                 <tr>
                                                     <th>활성화/비활성화 </th>
                                                     <td>
-                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N") { 
+        @if (ViewData["PromotionUsableYN"].ToString() != "N") {
                                                             @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "Y") <text> 활성화</text>
                                                         }
                                                         else
                                                         {
                                                             @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "Y",new {disabled = "true"}) <text>활성화 <font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
                                                         }
-                                                        @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "N", new { Checked = "true" }) 비활성화
+        @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN, "N", new { Checked = "true" }) 비활성화
                                                         <font color="RED">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT_PRICE.USABLE_YN)</font>
 </td>
 
