@@ -41,6 +41,7 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
             container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());
             **/
+            container.RegisterType<AboutMe.Domain.Service.Recallbbs.IRecallbbsService, AboutMe.Domain.Service.Recallbbs.RecallbbsService>(); //취소/반품게시판
 
             container.RegisterType<AboutMe.Web.Front.Controllers.AccountController>(new InjectionConstructor());
 
