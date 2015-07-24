@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 using AboutMe.Domain.Service.Review;
 
 using System.Diagnostics;
@@ -14,6 +15,7 @@ using AboutMe.Web.Front.Models;
 using AboutMe.Domain.Entity.Review;
 
 using AboutMe.Common.Helper;
+using AboutMe.Common.Data;
 
 namespace AboutMe.Web.Front.Controllers
 {
@@ -52,7 +54,7 @@ namespace AboutMe.Web.Front.Controllers
         {
             
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
-            ViewBag.img_path_product = _img_path_product; //이미지디렉토리경로
+            ViewBag.img_path_review = _img_path_review; //이미지디렉토리경로
             model.PageNo = page;
             model.CompleteList = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);           
             model.TotalItem = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
@@ -72,11 +74,11 @@ namespace AboutMe.Web.Front.Controllers
             //상품정보
             if (Pcode != null)
             {
-                SP_REVIEW_GET_PRODUCT_INFO_Result productInfo = _ReviewService.GetProductInfo(Pcode);
-                ViewBag.Pname = productInfo.P_NAME;
+                model.ProductInfo = _ReviewService.GetProductInfo(Pcode);
+                /*ViewBag.Pname = productInfo.P_NAME;
                 ViewBag.Pimg = _img_path_product + productInfo.MAIN_IMG;
                 ViewBag.PsubTitle = productInfo.P_SUB_TITLE;
-                ViewBag.PcateCode = productInfo.P_CATE_CODE;
+                ViewBag.PcateCode = productInfo.P_CATE_CODE;*/
             }
 
             return View(model);
@@ -93,17 +95,18 @@ namespace AboutMe.Web.Front.Controllers
             Debug.WriteLine("Pcode - " + model.Pcode);
             Debug.WriteLine("Mid - " + model.Mid);
 
-            //상품정보
+            /**
+             * 상품정보 
+             */
             if (model.Pcode != null)
             {
-                SP_REVIEW_GET_PRODUCT_INFO_Result productInfo = _ReviewService.GetProductInfo(model.Pcode);
-                ViewBag.Pname = productInfo.P_NAME;
-                ViewBag.Pimg = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath") + productInfo.MAIN_IMG;
-                ViewBag.PsubTitle = productInfo.P_SUB_TITLE;
-                ViewBag.PcateCode = productInfo.P_CATE_CODE;
+                model.ProductInfo = _ReviewService.GetProductInfo(model.Pcode);
             }
 
-            if (ReviewHelper.IsBeauty(ViewBag.PcateCode))
+            /**
+             * 뷰티일때만 피부타입 유효성 체크
+             */
+            if (ReviewHelper.IsBeauty(model.ProductInfo.P_CATE_CODE))
             {
                 var valueToClean = ModelState["SkinType"];
                 valueToClean.Errors.Clear(); 
@@ -111,6 +114,25 @@ namespace AboutMe.Web.Front.Controllers
 
 
            if (ModelState.IsValid){
+
+               ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = true };
+
+               // rename, resize, and upload
+               //return object that contains {bool Success,string ErrorMessage,string ImageName}
+               Debug.WriteLine("model.UploadImage - " + model.UploadImage );
+              
+               if (model.UploadImage != null)
+               {
+                   ImageResult imageResult = imageUpload.RenameUploadFile( model.UploadImage );
+                   Debug.WriteLine("imageResult.Success - " + imageResult.Success);
+                   Debug.WriteLine("imageResult.ErrorMessage - " + imageResult.ErrorMessage);
+                   if (imageResult.Success)
+                   {
+                       Debug.WriteLine(" imageResult.ImageName - " + imageResult.ImageName);
+                       model.AddImage = imageResult.ImageName;
+                       
+                   }
+               }
 
                Tuple<string, string> ret =  _ReviewService.InsertMyReview(model.Mid, model.OrderDetailIdx, model.Pcode, model.SkinType, model.Comment, model.AddImage);
                model.ResultMessage = ret.Item2;

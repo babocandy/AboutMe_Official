@@ -34,5 +34,6 @@ namespace AboutMe.Domain.Entity.Order
         public int POINT_ACCML { get; set; }
         public int ORDER_PRICE { get; set; }
         public int EMP_DISCOUNT_PRICE { get; set; }
+        public Nullable<int> IDX_COUPON_NUMBER { get; set; }
     }
 }

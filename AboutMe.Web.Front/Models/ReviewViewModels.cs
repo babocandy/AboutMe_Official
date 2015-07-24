@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.Web;
 using AboutMe.Domain.Entity.Review;
 
 namespace AboutMe.Web.Front.Models
@@ -22,7 +22,10 @@ namespace AboutMe.Web.Front.Models
         [Required(ErrorMessage = "*")]
         public string Comment { get; set; }
 
+        public HttpPostedFileBase UploadImage { get; set; }
         public string AddImage { get; set; }
+        
+        public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
 
         public string ResultNum { get; set; }
         public string ResultMessage { get; set; }
@@ -34,6 +37,6 @@ namespace AboutMe.Web.Front.Models
         public int PageNo { get; set; }
         public int PageSize { get { return 10; } }
         public int TotalItem { get; set; }
-        
+        public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
     }
 }

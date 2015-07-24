@@ -701,6 +701,7 @@
     <Content Include="aboutCom\images\membership\Thumbs.db" />
     <Content Include="aboutCom\images\sample\Thumbs.db" />
     <Content Include="aboutCom\images\shopping\Thumbs.db" />
+    <Content Include="Content\child.html" />
     <Content Include="aboutCom\images\mypage\Thumbs.db" />
     <Content Include="aboutCom\images\review\Thumbs.db" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -803,15 +804,17 @@
     <Content Include="Views\Order\Step1AddressInfo.cshtml" />
     <Content Include="Views\Order\Step1PayInfo.cshtml" />
     <Content Include="Views\Order\CouponPop.cshtml" />
-    <Content Include="Views\Shared\_AboutMeLayoutPopup.cshtml" />
-    <Content Include="Views\Mypage\Retire.cshtml" />
-    <Content Include="Views\CommonChildAction\Paging.cshtml" />
+    <Content Include="Views\Order\InipayTest.cshtml" />
+    <Content Include="Views\Order\OrderProcess.cshtml" />
+    <Content Include="Views\Order\OrderResult.cshtml" />
     <Content Include="Views\AboutMePartial\_MyPageSubMenu.cshtml" />
     <Content Include="Views\Mypage\MyModify.cshtml" />
     <Content Include="Views\Mypage\Pop_PwChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\Product\" />
+    <Folder Include="Upload\Review\" />
     <Folder Include="Views\ReviewViewModels\" />
   </ItemGroup>
   <ItemGroup>
@@ -832,6 +835,9 @@
       <Project>{1c6378e7-6069-4915-946c-1eee9ef3ffe0}</Project>
       <Name>AboutMe.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

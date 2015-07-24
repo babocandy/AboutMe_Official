@@ -3,9 +3,9 @@
     Layout = null;
 }
 
-@helper SelectOption(string pcode, string coupon_cd)
+@helper SelectOption(string pcode, int? coupon_idx)
 {
-    Html.RenderAction("SelectCouponOption", "Order", new { P_CODE = pcode , COUPON_CD=coupon_cd});
+    Html.RenderAction("SelectCouponOption", "Order", new { P_CODE = pcode, COUPON_IDX = coupon_idx });
 }
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
@@ -23,25 +23,127 @@
     <script src="/aboutCom/js/lib/jquery.dotdotdot.js" type="text/javascript"></script>
     <script src="/aboutCom/js/script.js" type="text/javascript"></script>
     <script language="javascript">
+
+
+        function formatnumber(v1) {
+            var str = new Array();
+            v1 = String(v1);
+            for (var i = 1; i <= v1.length; i++) {
+                if (i % 3) str[v1.length - i] = v1.charAt(v1.length - i);
+                else str[v1.length - i] = ',' + v1.charAt(v1.length - i);
+            }
+            return str.join('').replace(/^,/, '');
+        }
         function couponSelect(selectbox, pcode)
         {
             // alert(pcode);
             var sbox = "#COUPON_"+pcode+" option:selected";
             var RATE_OR_MONEY = $(sbox).attr("RATE_OR_MONEY");
-            var COUPON_MONEY = $(sbox).attr("RATE_OR_MONEY");
-            var COUPON_DISCOUNT_RATE = $(sbox).attr("RATE_OR_MONEY");
+            var COUPON_MONEY = $(sbox).attr("COUPON_MONEY");
+            var COUPON_DISCOUNT_RATE = $(sbox).attr("COUPON_DISCOUNT_RATE");
+            var P_Price = $(selectbox).attr("data-price"); //단가
+            var P_Cnt = $(selectbox).attr("data-pcount");
+            var select_value = $(selectbox).val();
+            var is_cancel = false;
+            //기적용된 쿠폰이 있는지 검사
+            if (select_value != '') {
+                $(".selectstyleb").each(function (idx) {
+                    var bx = $(this);
+                    if ($(selectbox).attr('id') != bx.attr('id')) {
 
-            if (RATE_OR_MONEY == "R")
-            {
-            
+                        if ($(selectbox).val().trim() == bx.val().trim()) {
+                            if (confirm('해당쿠폰으로 적용된 상품이 존재합니다.\n적용된 쿠폰을 취소하고 현재상품에 적용하시겠습니까?')) {
+                                var bx_pcode = bx.attr("data-pcode");
+                                var bx_pcount = bx.attr("data-pcount");
+                                var bx_price = bx.attr("data-price");
+                                var bx_total = bx_price * bx_pcount;
+                                bx.val('');
+                                var soptionObj = $("#COUPON_" + bx_pcode + " option:selected");
+                                var optionObj = $("#COUPON_" + bx_pcode + " option[value='']");
+                               
+                                //초기화
+                                bx.nextAll("ul").children("li:eq(" + bx[0].selectedIndex + ")").addClass("open_selected").siblings().removeClass("open_selected");
+                                bx.next("div").children('a').html(bx.children("option:eq(" + bx[0].selectedIndex + ")").text());
+                                $("#COUPON_PRICE_" + bx_pcode).html(formatnumber(bx_total));
+                                $("#COUPON_PRICE_" + bx_pcode).attr("data-couponprice", bx_total);
+                                CalSumPrice();
+                            }
+                            else {
+                                $(selectbox).val('');
+                                is_cancel = true;
+                                //초기화
+                                $(selectbox).nextAll("ul").children("li:eq(" + $(selectbox)[0].selectedIndex + ")").addClass("open_selected").siblings().removeClass("open_selected");
+                                $(selectbox).next("div").children('a').html($(selectbox).children("option:eq(" + $(selectbox)[0].selectedIndex + ")").text());
+                                return false;
+                            }
+                        }
+                    }
+                });
             }
+
+            if (is_cancel) {
+                return;
+            }
+
+            var saleprice = 0;
+            var product_price = P_Price;
+
+            if (RATE_OR_MONEY == "R") {
+                //단가 쿠폰적용하여 수량을 곱해줌
+                if (P_Price > 0 && COUPON_DISCOUNT_RATE > 0) {
+                    saleprice = Math.floor(P_Price / 100) * COUPON_DISCOUNT_RATE;
+                } else {
+                    saleprice = 0;
+                }
+                saleprice = saleprice * P_Cnt;
+            } else {
+                saleprice = COUPON_MONEY;
+            }
+
+            var totalPrice = product_price * P_Cnt;
+
+            if (saleprice > 0) {
+                totalPrice = totalPrice - saleprice;
+            }
+
+            $("#COUPON_PRICE_" + pcode).html(formatnumber(totalPrice));
+            $("#COUPON_PRICE_" + pcode).attr("data-couponprice", totalPrice);
+            CalSumPrice();
         }
-        
+
         function setCoupon()
         {
-
+            var arrP = new Array;
+            $(".selectstyleb").each(function (idx) {
+                var obj = new Object();
+                obj.ORDER_DETAIL_IDX = $(this).attr('data-detail-idx');
+                obj.COUPON_IDX = $(this).val();
+                arrP.push(obj);
+            });
+            if (confirm('쿠폰을 적용하시겠습니까?')) {
+                window.opener.setOrderCoupon(arrP);
+                self.close();
+            }
         }
 
+        function CalSumPrice()
+        {
+            var total_order = 0;
+            var total_sale = 0;
+            var total_coupon = 0;
+            $(".selectstyleb").each(function (idx) {
+                var bx = $(this);
+                var bx_pcode = bx.attr("data-pcode");
+                var bx_pcount = bx.attr("data-pcount");
+                total_order = total_order + parseInt($("#ORDER_PRICE_" + bx_pcode).attr("data-orderprice"));
+                total_coupon = total_coupon + parseInt($("#COUPON_PRICE_" + bx_pcode).attr("data-couponprice"));
+                total_sale = total_sale + (total_order - total_coupon);
+            });
+
+            $("#total_order_price").html(formatnumber(total_order));
+            $("#total_sale_price").html(formatnumber(total_sale));
+            $("#total_price").html(formatnumber(total_coupon));
+        }
     </script>
     <title>ABOUT ME</title>
 </head>
@@ -49,18 +151,40 @@
     <!-- 할인 쿠폰 사용 팝업 -->
     <div class="popupwrap">
         <div class="pop">
-            <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
             <!--pop_top-->
             <div class="pop_top">
                 <div class="title_area">
                     <p class="title">할인 쿠폰 사용</p>
                 </div>
+                <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
             </div>
             <!--//pop_top-->
             <!-- coupon_info -->
             <div class="coupon_used">
                 <!-- 상품 쿠폰 -->
                 <div class="product_coupon">
+                    <div class="saleapply">
+                        <ul>
+                            <li class="pprice">
+                                <dl>
+                                    <dt>총 상품금액</dt>
+                                    <dd><strong id="total_order_price">0</strong>원</dd>
+                                </dl>
+                            </li>
+                            <li class="sprice">
+                                <dl>
+                                    <dt>총 할인 금액</dt>
+                                    <dd><strong id="total_sale_price">0</strong>원</dd>
+                                </dl>
+                            </li>
+                            <li class="tprice">
+                                <dl>
+                                    <dt>총 할인적용금액</dt>
+                                    <dd><strong id="total_price">0</strong>원</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="prolist">
                         <ul>
                             @foreach (var item in @Model.OrderList)
@@ -73,10 +197,11 @@
                                     <p class="stit">피부 노화를 집중적이고 총체적으로 해결해주는 2중 기능성 발효공법 에멀전</p>
                                 </div>
                                 <div class="couponsel" >
-                                    <select class="selectstyleb" title="" name="COUPON_@item.P_CODE" id="COUPON_@item.P_CODE" data-pcode="@item.P_CODE" onchange="couponSelect(this,'@item.P_CODE')">
-                                        @SelectOption(@item.P_CODE, @item.CD_COUPON)
+                                    <select class="selectstyleb" title="" name="COUPON_@item.P_CODE" id="COUPON_@item.P_CODE" data-pcode="@item.P_CODE" data-pcount="@item.P_COUNT" data-price="@item.EMP_DISCOUNT_PRICE" data-detail-idx="@item.ORDER_DETAIL_IDX" onchange="couponSelect(this,'@item.P_CODE')">
+                                        @SelectOption(@item.P_CODE, @item.IDX_COUPON_NUMBER)
                                     </select>
-                                    <p class="saleprice">할인금액 <strong name="COUPON_PRICE_@item.P_CODE">@item.COUPON_DISCOUNT_AMT.ToString("#,#0.")</strong>원</p>
+                                    <p class="saleprice">주문금액 <strong id="ORDER_PRICE_@item.P_CODE" data-orderprice="@item.ORDER_PRICE">@item.ORDER_PRICE.ToString("#,#0.")</strong>원</p>
+                                    <p class="saleprice">할인금액 <strong id="COUPON_PRICE_@item.P_CODE" data-couponprice="@item.COUPON_DISCOUNT_PRICE">@item.COUPON_DISCOUNT_PRICE.ToString("#,#0.")</strong>원</p>
                                 </div>
                             </li>
                             }
@@ -93,5 +218,10 @@
         </div>
     </div>
     <!-- //할인 쿠폰 사용 팝업-->
+    <script language="javascript">
+        $(document).ready(function () {
+            CalSumPrice();
+        });
+    </script>
 </body>
 </html>
