@@ -42,10 +42,23 @@ namespace AboutMe.Web.Front.Controllers
         [CustomAuthorize]  //마이페이지 메인
         public ActionResult Main()
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = Config.GetConfigValue("HTTP_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            if (HttpContext.Request.Url.Port != 80)
+            {
+                strHTTPS_DOMAIN = strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+                strHTTP_DOMAIN = strHTTP_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+            }
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //탈퇴시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //탈퇴시 사용됨.
+
+
             this.ViewBag.M_ID = MemberInfo.GetMemberId();
             this.ViewBag.M_NAME = MemberInfo.GetMemberName();
             this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName();
+            this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피무고민코드
 
 
             return View();
@@ -358,6 +371,164 @@ namespace AboutMe.Web.Front.Controllers
             return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
 
         }
+
+        //회원 피부고민  수정 -저장 Ajax 리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize]
+        public ActionResult AjaxSkinTroubleProc()
+        {
+            //로그 기록 준비
+            string log_memo = "내 피부고민 수정";
+            string log_comment = "내 피부고민 수정";
+            UserLog userlog = new UserLog();
+
+            string M_ID = MemberInfo.GetMemberId();  //폼값 대신 세션값 사용
+            //피부고민 : 입력항목 post
+            string M_SKIN_TROUBLE_CD = HttpContext.Request.Form["M_SKIN_TROUBLE_CD"]; //
+
+            if (M_ID == "")
+            {
+                return Json(new { ERR_CODE = "999", ERR_MSG = "로그인 정보를 찾을수 없습니다. 다시 로그인 해 주십시오" });
+            }
+
+            ReturnDic retDic = _MemberService.SetMemberSkinTroubleUpdate(M_ID, M_SKIN_TROUBLE_CD);   //피부고민 수정
+            /*
+            if (retDic.ERR_CODE == "10") //오류
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('오류!. 회원정보를 찾을 수 없습니다. 다시로그인후 시도하십시오.'); location.href='/MemberShip/Login';</script>");
+            }
+            */
+            //로그 기록
+            if (retDic.ERR_CODE == "0")
+            {
+                CookieSessionStore cookiesession = new CookieSessionStore();
+                cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", M_SKIN_TROUBLE_CD);  //피부고민 세션 세팅
+                cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", M_SKIN_TROUBLE_CD);  //피부고민 세션 세팅 -평문
+
+                log_comment = log_comment + "성공";
+                log_memo = log_memo + "성공";
+            }
+            else
+            {
+                log_comment = log_comment + "실패";
+                log_memo = log_memo + "실패";
+            }
+            log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+            log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+            log_memo = log_memo + "|M_ID:" + M_ID;
+            log_memo = log_memo + "|M_SKIN_TROUBLE_CD:" + M_SKIN_TROUBLE_CD;
+            userlog.UserLogSave(log_memo, log_comment);
+
+
+            return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
+
+        }
+
+
+        // 임직원신청 팝업 폼
+        [CustomAuthorize]
+        public ActionResult StaffRequest()
+        {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = Config.GetConfigValue("HTTP_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
+            if (HttpContext.Request.Url.Port != 80)
+            {
+                strHTTPS_DOMAIN = strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+                strHTTP_DOMAIN = strHTTP_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
+            }
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //비밀번호 수정시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //비밀번호 수정시 사용됨.
+
+
+            string M_ID = MemberInfo.GetMemberId();
+            string M_NAME = MemberInfo.GetMemberName();
+            string M_GBN = MemberInfo.GetMemberGBN();
+
+            this.ViewBag.M_ID = M_ID;
+            this.ViewBag.M_NAME = M_NAME;
+            this.ViewBag.M_GBN = M_GBN;
+
+            if (M_GBN=="S")
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('이미 임직원 이십니다.'); self.close();</script>");
+            }
+            return View();
+        }
+
+        // 임직원신청 저장 :Ajax 리턴
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize]
+        public ActionResult AjaxStaffRequestProc()
+        {
+            //로그 기록 준비
+            string log_memo = "임직원신청";
+            string log_comment = "임직원신청";
+            UserLog userlog = new UserLog();
+
+            string M_ID = MemberInfo.GetMemberId();  //폼값 대신 세션값 사용
+            string M_NAME = MemberInfo.GetMemberName(); //폼값 대신 세션값 사용
+            string M_GRADE = MemberInfo.GetMemberGrade(); //폼값 대신 세션값 사용
+            //임직원신청 : 입력항목 post
+            string STAFF_COMPANY = HttpContext.Request.Form["STAFF_COMPANY"]; //
+            string STAFF_ID= HttpContext.Request.Form["STAFF_ID"]; //
+            string STAFF_NAME= HttpContext.Request.Form["STAFF_NAME"]; //
+
+            if (M_ID == "")
+            {
+                return Json(new { ERR_CODE = "999", ERR_MSG = "로그인 정보를 찾을수 없습니다. 다시 로그인 해 주십시오" });
+            }
+
+            if(MemberInfo.GetMemberGBN()=="S") //이미 임직원임
+            {
+                log_comment = log_comment + "실패-이미 임직원";
+                log_memo = log_memo + "실패-이미 임직원";
+                log_memo = log_memo + "|M_ID:" + M_ID;
+                log_memo = log_memo + "|M_NAME:" + M_NAME;
+                log_memo = log_memo + "|M_GRADE:" + M_GRADE;
+                log_memo = log_memo + "|STAFF_COMPANY:" + STAFF_COMPANY;
+                log_memo = log_memo + "|STAFF_ID:" + STAFF_ID;
+                log_memo = log_memo + "|STAFF_NAME:" + STAFF_NAME;
+                userlog.UserLogSave(log_memo, log_comment);
+
+                return Json(new { ERR_CODE = "998", ERR_MSG = "이미 임직원이십니다. 필요시 다시로그인해 주십시오." });
+            }
+
+            ReturnDic retDic = _MemberService.SetMemberStaffRequestInert(M_ID, M_NAME, M_GRADE, STAFF_COMPANY, STAFF_ID, STAFF_NAME);   //임직원신청 등록
+            /*
+            if (retDic.ERR_CODE == "10") //오류
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('오류!. 회원정보를 찾을 수 없습니다. 다시로그인후 시도하십시오.'); location.href='/MemberShip/Login';</script>");
+            }
+            */
+            //로그 기록
+            if (retDic.ERR_CODE == "0")
+            {
+                log_comment = log_comment + "성공";
+                log_memo = log_memo + "성공";
+            }
+            else
+            {
+                log_comment = log_comment + "실패";
+                log_memo = log_memo + "실패";
+            }
+            log_memo = log_memo + "|retDic.ERR_CODE:" + retDic.ERR_CODE;
+            log_memo = log_memo + "|retDic.ERR_MSG:" + retDic.ERR_MSG;
+            log_memo = log_memo + "|M_ID:" + M_ID;
+            log_memo = log_memo + "|M_NAME:" + M_NAME;
+            log_memo = log_memo + "|M_GRADE:" + M_GRADE;
+            log_memo = log_memo + "|STAFF_COMPANY:" + STAFF_COMPANY;
+            log_memo = log_memo + "|STAFF_ID:" + STAFF_ID;
+            log_memo = log_memo + "|STAFF_NAME:" + STAFF_NAME;
+            userlog.UserLogSave(log_memo, log_comment);
+
+
+            return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
+        }
+
+
 
 
         public ActionResult test()

@@ -154,7 +154,7 @@ namespace AboutMe.Web.Front.Controllers
                 this.ViewBag.ERR_MSG = "로그인 성공!";
                 //return RedirectToAction("Index", "AdminUser"); // 로그인 성공
 
-                //관리자 세션or 쿠키 저장
+                //사용자 세션or 쿠키 저장
                 CookieSessionStore cookiesession = new CookieSessionStore();
                 cookiesession.SetSecretSession("M_ID", result.M_ID);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_NAME", result.M_NAME);  //로그인 세션 세팅

@@ -37,5 +37,6 @@ namespace AboutMe.Domain.Service.Member
         ReturnDic SetMemberUpdate(string m_ID = "", string m_MOBILE = "--", string m_PHONE = "--", string m_EMAIL = "@", string m_ZIPCODE = "", string m_ADDR1 = "", string m_ADDR2 = "", string m_ISSMS = "N", string m_ISEMAIL = "N", string m_ISDM = "N"); //회원정보 수정
         ReturnDic SetMemberPWDChange(string m_ID = "", string m_PWD_OLD = "", string m_PWD_NEW = ""); //회원 비밀번호 변경
         ReturnDic SetMemberSkinTroubleUpdate(string m_ID = "", string m_SKIN_TROUBLE_CD = ""); //회원 피부트러블 변경
+        ReturnDic SetMemberStaffRequestInert(string m_ID = "", string m_NAME = "", string m_GRADE = "", string sTAFF_COMPANY = "", string sTAFF_ID = "", string sTAFF_NAME = ""); //임직원 신청 등록
     }
 }
