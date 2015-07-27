@@ -16,7 +16,7 @@ namespace AboutMe.Web.Mobile.Common
         //회원로그인 여부 : true: 로그인, false :로그인 안 함
         public static bool IsMemberLogin()
         {
-            bool bRet =false; //기본 로그인 암함
+            bool bRet = false; //기본 로그인 암함
             if (GetMemberId() != null)
                 if (GetMemberId() != "")
                     bRet = true;

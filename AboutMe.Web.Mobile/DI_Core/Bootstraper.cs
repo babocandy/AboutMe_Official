@@ -26,6 +26,8 @@ namespace AboutMe.Web.Mobile.DI_Core
             var container = new UnityContainer();
 
             container.RegisterType<AboutMe.Domain.Service.Product.IProductService, AboutMe.Domain.Service.Product.ProductService>(); //상품관리
+            container.RegisterType<AboutMe.Domain.Service.Member.IMemberService, AboutMe.Domain.Service.Member.MemberService>(); //회원관리
+            container.RegisterType<AboutMe.Domain.Service.Cart.ICartService, AboutMe.Domain.Service.Cart.CartService>(); //Cart
 
             /**
            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminMemberService, AboutMe.Domain.Service.AdminEtc.AdminMemberService>();   //샘플용임
