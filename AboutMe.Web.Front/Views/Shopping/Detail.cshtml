@@ -273,7 +273,7 @@
                             </div>
                             <!--//상세정보-->
                             <!--리뷰-->
-                            @{Html.RenderAction("ShoppingDetailReviewInfo", "CommonChildAction", new { P_CODE = @ViewBag.P_CODE });}
+                            @{Html.RenderAction("InShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
                             <!--//리뷰-->
                             <!--품질보증-->
                             <div class="menu" id="tabCon3">
