@@ -13,6 +13,8 @@ namespace AboutMe.Domain.Entity.Product
         {
             PAGE = 1;
             PAGESIZE = 6;
+            SEARCH_KEYWORD = "";
+            SORT_GBN = "NEW";
         }
         public int IDX { get; set; }
         public string P_CATE_CODE { get; set; }
@@ -25,5 +27,6 @@ namespace AboutMe.Domain.Entity.Product
         public int PAGE { get; set; }
         [DefaultValue(10)]
         public int PAGESIZE { get; set; }
+        public string SEARCH_KEYWORD { get; set; }
     }
 }

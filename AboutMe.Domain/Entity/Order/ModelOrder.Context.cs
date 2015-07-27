@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.Order
         }
     
     
-        public virtual int SP_ORDER_PAY(Nullable<int> oRDER_IDX, string pAY_GBN, string cARD_GBN, string iNSTLMT_AT, string bANK_CODE, string pAT_TID, string rEAL_ACCOUNT_AT, string cASHRECEIPT_SE_CODE, string cASHRECEIPT_RESULT_CODE, string hTTP_USER_AGENT, string pAT_GUBUN, string sVR_DOMAIN)
+        public virtual ObjectResult<SP_ORDER_PAY_Result> SP_ORDER_PAY(Nullable<int> oRDER_IDX, string pAY_GBN, string cARD_GBN, string iNSTLMT_AT, string bANK_CODE, string pAT_TID, string rEAL_ACCOUNT_AT, string cASHRECEIPT_SE_CODE, string cASHRECEIPT_RESULT_CODE, string hTTP_USER_AGENT, string pAT_GUBUN, string sVR_DOMAIN)
         {
             var oRDER_IDXParameter = oRDER_IDX.HasValue ?
                 new ObjectParameter("ORDER_IDX", oRDER_IDX) :
@@ -78,7 +78,7 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("SVR_DOMAIN", sVR_DOMAIN) :
                 new ObjectParameter("SVR_DOMAIN", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_PAY", oRDER_IDXParameter, pAY_GBNParameter, cARD_GBNParameter, iNSTLMT_ATParameter, bANK_CODEParameter, pAT_TIDParameter, rEAL_ACCOUNT_ATParameter, cASHRECEIPT_SE_CODEParameter, cASHRECEIPT_RESULT_CODEParameter, hTTP_USER_AGENTParameter, pAT_GUBUNParameter, sVR_DOMAINParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_PAY_Result>("SP_ORDER_PAY", oRDER_IDXParameter, pAY_GBNParameter, cARD_GBNParameter, iNSTLMT_ATParameter, bANK_CODEParameter, pAT_TIDParameter, rEAL_ACCOUNT_ATParameter, cASHRECEIPT_SE_CODEParameter, cASHRECEIPT_RESULT_CODEParameter, hTTP_USER_AGENTParameter, pAT_GUBUNParameter, sVR_DOMAINParameter);
         }
     
         public virtual ObjectResult<SP_ORDER_STEP2_Result> SP_ORDER_STEP1(string m_ID, string sESSION_ID, string p_CODE_LIST, string p_COUNT_LIST)
@@ -219,6 +219,213 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("DEVICE_GBN", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_STEP2_COUPON_SEARCH_Result>("SP_ORDER_STEP2_COUPON_SEARCH", m_IDParameter, p_CODEParameter, dEVICE_GBNParameter);
+        }
+    
+        public virtual ObjectResult<SP_ORDER_MEMBER_SEL_Result> SP_ORDER_MEMBER_SEL(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_MEMBER_SEL_Result>("SP_ORDER_MEMBER_SEL", m_IDParameter);
+        }
+    
+        public virtual int SP_ORDER_STEP2_COUPON_APPLY(string m_ID, Nullable<int> oRDER_DETAIL_IDX, Nullable<int> iDX_COUPON_NUMBER)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_COUPON_APPLY", m_IDParameter, oRDER_DETAIL_IDXParameter, iDX_COUPON_NUMBERParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_ORDER_STEP2_POINT_APPLY(string m_ID, Nullable<int> oRDER_IDX, Nullable<int> uSE_POINT)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var uSE_POINTParameter = uSE_POINT.HasValue ?
+                new ObjectParameter("USE_POINT", uSE_POINT) :
+                new ObjectParameter("USE_POINT", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ORDER_STEP2_POINT_APPLY", m_IDParameter, oRDER_IDXParameter, uSE_POINTParameter);
+        }
+    
+        public virtual int SP_ORDER_STEP2_TRANSCOUPON_APPLY(string m_ID, Nullable<int> oRDER_IDX, Nullable<int> iDX_COUPON_NUMBER)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_TRANSCOUPON_APPLY", m_IDParameter, oRDER_IDXParameter, iDX_COUPON_NUMBERParameter);
+        }
+    
+        public virtual int SP_ORDER_STEP2_SENDER_RECEIVER_SAVE(Nullable<int> oRDER_IDX, string sENDER_NAME, string sENDER_POST1, string sENDER_POST2, string sENDER_ADDR1, string sENDER_ADDR2, string sENDER_TEL1, string sENDER_TEL2, string sENDER_TEL3, string sENDER_HP1, string sENDER_HP2, string sENDER_HP3, string sENDER_EMAIL1, string sENDER_EMAIL2, string rECEIVER_NAME, string rECEIVER_POST1, string rECEIVER_POST2, string rECEIVER_ADDR1, string rECEIVER_ADDR2, string rECEIVER_TEL1, string rECEIVER_TEL2, string rECEIVER_TEL3, string rECEIVER_HP1, string rECEIVER_HP2, string rECEIVER_HP3, string oRDER_MEMO, string nOMEMBER_PASS)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var sENDER_NAMEParameter = sENDER_NAME != null ?
+                new ObjectParameter("SENDER_NAME", sENDER_NAME) :
+                new ObjectParameter("SENDER_NAME", typeof(string));
+    
+            var sENDER_POST1Parameter = sENDER_POST1 != null ?
+                new ObjectParameter("SENDER_POST1", sENDER_POST1) :
+                new ObjectParameter("SENDER_POST1", typeof(string));
+    
+            var sENDER_POST2Parameter = sENDER_POST2 != null ?
+                new ObjectParameter("SENDER_POST2", sENDER_POST2) :
+                new ObjectParameter("SENDER_POST2", typeof(string));
+    
+            var sENDER_ADDR1Parameter = sENDER_ADDR1 != null ?
+                new ObjectParameter("SENDER_ADDR1", sENDER_ADDR1) :
+                new ObjectParameter("SENDER_ADDR1", typeof(string));
+    
+            var sENDER_ADDR2Parameter = sENDER_ADDR2 != null ?
+                new ObjectParameter("SENDER_ADDR2", sENDER_ADDR2) :
+                new ObjectParameter("SENDER_ADDR2", typeof(string));
+    
+            var sENDER_TEL1Parameter = sENDER_TEL1 != null ?
+                new ObjectParameter("SENDER_TEL1", sENDER_TEL1) :
+                new ObjectParameter("SENDER_TEL1", typeof(string));
+    
+            var sENDER_TEL2Parameter = sENDER_TEL2 != null ?
+                new ObjectParameter("SENDER_TEL2", sENDER_TEL2) :
+                new ObjectParameter("SENDER_TEL2", typeof(string));
+    
+            var sENDER_TEL3Parameter = sENDER_TEL3 != null ?
+                new ObjectParameter("SENDER_TEL3", sENDER_TEL3) :
+                new ObjectParameter("SENDER_TEL3", typeof(string));
+    
+            var sENDER_HP1Parameter = sENDER_HP1 != null ?
+                new ObjectParameter("SENDER_HP1", sENDER_HP1) :
+                new ObjectParameter("SENDER_HP1", typeof(string));
+    
+            var sENDER_HP2Parameter = sENDER_HP2 != null ?
+                new ObjectParameter("SENDER_HP2", sENDER_HP2) :
+                new ObjectParameter("SENDER_HP2", typeof(string));
+    
+            var sENDER_HP3Parameter = sENDER_HP3 != null ?
+                new ObjectParameter("SENDER_HP3", sENDER_HP3) :
+                new ObjectParameter("SENDER_HP3", typeof(string));
+    
+            var sENDER_EMAIL1Parameter = sENDER_EMAIL1 != null ?
+                new ObjectParameter("SENDER_EMAIL1", sENDER_EMAIL1) :
+                new ObjectParameter("SENDER_EMAIL1", typeof(string));
+    
+            var sENDER_EMAIL2Parameter = sENDER_EMAIL2 != null ?
+                new ObjectParameter("SENDER_EMAIL2", sENDER_EMAIL2) :
+                new ObjectParameter("SENDER_EMAIL2", typeof(string));
+    
+            var rECEIVER_NAMEParameter = rECEIVER_NAME != null ?
+                new ObjectParameter("RECEIVER_NAME", rECEIVER_NAME) :
+                new ObjectParameter("RECEIVER_NAME", typeof(string));
+    
+            var rECEIVER_POST1Parameter = rECEIVER_POST1 != null ?
+                new ObjectParameter("RECEIVER_POST1", rECEIVER_POST1) :
+                new ObjectParameter("RECEIVER_POST1", typeof(string));
+    
+            var rECEIVER_POST2Parameter = rECEIVER_POST2 != null ?
+                new ObjectParameter("RECEIVER_POST2", rECEIVER_POST2) :
+                new ObjectParameter("RECEIVER_POST2", typeof(string));
+    
+            var rECEIVER_ADDR1Parameter = rECEIVER_ADDR1 != null ?
+                new ObjectParameter("RECEIVER_ADDR1", rECEIVER_ADDR1) :
+                new ObjectParameter("RECEIVER_ADDR1", typeof(string));
+    
+            var rECEIVER_ADDR2Parameter = rECEIVER_ADDR2 != null ?
+                new ObjectParameter("RECEIVER_ADDR2", rECEIVER_ADDR2) :
+                new ObjectParameter("RECEIVER_ADDR2", typeof(string));
+    
+            var rECEIVER_TEL1Parameter = rECEIVER_TEL1 != null ?
+                new ObjectParameter("RECEIVER_TEL1", rECEIVER_TEL1) :
+                new ObjectParameter("RECEIVER_TEL1", typeof(string));
+    
+            var rECEIVER_TEL2Parameter = rECEIVER_TEL2 != null ?
+                new ObjectParameter("RECEIVER_TEL2", rECEIVER_TEL2) :
+                new ObjectParameter("RECEIVER_TEL2", typeof(string));
+    
+            var rECEIVER_TEL3Parameter = rECEIVER_TEL3 != null ?
+                new ObjectParameter("RECEIVER_TEL3", rECEIVER_TEL3) :
+                new ObjectParameter("RECEIVER_TEL3", typeof(string));
+    
+            var rECEIVER_HP1Parameter = rECEIVER_HP1 != null ?
+                new ObjectParameter("RECEIVER_HP1", rECEIVER_HP1) :
+                new ObjectParameter("RECEIVER_HP1", typeof(string));
+    
+            var rECEIVER_HP2Parameter = rECEIVER_HP2 != null ?
+                new ObjectParameter("RECEIVER_HP2", rECEIVER_HP2) :
+                new ObjectParameter("RECEIVER_HP2", typeof(string));
+    
+            var rECEIVER_HP3Parameter = rECEIVER_HP3 != null ?
+                new ObjectParameter("RECEIVER_HP3", rECEIVER_HP3) :
+                new ObjectParameter("RECEIVER_HP3", typeof(string));
+    
+            var oRDER_MEMOParameter = oRDER_MEMO != null ?
+                new ObjectParameter("ORDER_MEMO", oRDER_MEMO) :
+                new ObjectParameter("ORDER_MEMO", typeof(string));
+    
+            var nOMEMBER_PASSParameter = nOMEMBER_PASS != null ?
+                new ObjectParameter("NOMEMBER_PASS", nOMEMBER_PASS) :
+                new ObjectParameter("NOMEMBER_PASS", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_SENDER_RECEIVER_SAVE", oRDER_IDXParameter, sENDER_NAMEParameter, sENDER_POST1Parameter, sENDER_POST2Parameter, sENDER_ADDR1Parameter, sENDER_ADDR2Parameter, sENDER_TEL1Parameter, sENDER_TEL2Parameter, sENDER_TEL3Parameter, sENDER_HP1Parameter, sENDER_HP2Parameter, sENDER_HP3Parameter, sENDER_EMAIL1Parameter, sENDER_EMAIL2Parameter, rECEIVER_NAMEParameter, rECEIVER_POST1Parameter, rECEIVER_POST2Parameter, rECEIVER_ADDR1Parameter, rECEIVER_ADDR2Parameter, rECEIVER_TEL1Parameter, rECEIVER_TEL2Parameter, rECEIVER_TEL3Parameter, rECEIVER_HP1Parameter, rECEIVER_HP2Parameter, rECEIVER_HP3Parameter, oRDER_MEMOParameter, nOMEMBER_PASSParameter);
+        }
+    
+        public virtual ObjectResult<SP_ORDER_RESULT_DETAIL_Result> SP_ORDER_RESULT_DETAIL(string oRDER_CODE, string m_ID, string sESSION_ID)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var sESSION_IDParameter = sESSION_ID != null ?
+                new ObjectParameter("SESSION_ID", sESSION_ID) :
+                new ObjectParameter("SESSION_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_RESULT_DETAIL_Result>("SP_ORDER_RESULT_DETAIL", oRDER_CODEParameter, m_IDParameter, sESSION_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ORDER_RESULT_PRODUCT_LIST_Result> SP_ORDER_RESULT_PRODUCT_LIST(string oRDER_CODE, string m_ID, string sESSION_ID)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var sESSION_IDParameter = sESSION_ID != null ?
+                new ObjectParameter("SESSION_ID", sESSION_ID) :
+                new ObjectParameter("SESSION_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_RESULT_PRODUCT_LIST_Result>("SP_ORDER_RESULT_PRODUCT_LIST", oRDER_CODEParameter, m_IDParameter, sESSION_IDParameter);
         }
     }
 }

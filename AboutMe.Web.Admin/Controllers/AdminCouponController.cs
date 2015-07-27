@@ -8,6 +8,7 @@ using AboutMe.Common.Helper;
 using AboutMe.Domain.Service.AdminCoupon;
 using AboutMe.Domain.Entity.AdminCoupon;
 
+using AboutMe.Web.Admin.Common.Filters;
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -66,6 +67,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         // GET: AdminCoupon
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
 
@@ -86,7 +88,7 @@ namespace AboutMe.Web.Admin.Controllers
             return View(_AdminCouponService.GetAdminCouponList(SearchCol, SearchKeyword, Page, PageSize).ToList());
         }
 
-
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Create()
         {
 
@@ -103,6 +105,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
         public ActionResult Create([Bind(Prefix = "inst_TB_COUPON_MASTER", Exclude = "IDX,CD_COUPON,COUPON_NUM_CHECK_TF,ISSUE_MAX_LIMIT,INS_DATE")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade)
         {
@@ -125,7 +128,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
 
-
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult CouponProductList(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX"
             , string SortDir = "DESC", int Page = 1, int PageSize = 10 , string CdCoupon = "0")
         {
@@ -171,8 +174,9 @@ namespace AboutMe.Web.Admin.Controllers
         //CouponProductCreate
 
         //쿠폰 적용할 대상상품 리스트 -- 생성페이지
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult CouponProductCreate(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX"
-        , string SortDir = "DESC", int Page = 1, int PageSize = 10, string CdCoupon = "0")
+        , string SortDir = "DESC", int Page = 1, int PageSize = 100, string CdCoupon = "0")
         {
 
 
@@ -205,7 +209,7 @@ namespace AboutMe.Web.Admin.Controllers
             };
 
             mMyMultiModelForProductForCreate.inst_SP_ADMIN_COUPON_PRODUCT_FOR_CREATE_DETAIL_SEL_Result 
-                = _AdminCouponService.GetAdminCouponProductForCreateList(SearchCol, SearchKeyword, Page, PageSize, CdCoupon).ToList();
+                = _AdminCouponService.GetAdminCouponProductForCreateList(SearchCol, SearchKeyword, Page, 100, CdCoupon).ToList();
 
             return View(mMyMultiModelForProductForCreate);
 
@@ -219,6 +223,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult CouponProductCreateProc(string CdCoupon, string[] Check_ins_cd_coupon)
         {
 
@@ -265,6 +270,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         //발행된 쿠폰리스트 
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult IssuedCouponList(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX"
             , string SortDir = "DESC", int Page = 1, int PageSize = 10 , string CdCoupon = "0")
         {
@@ -300,7 +306,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         //IssueExcute
-
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult IssueExcute( string CdCoupon)
         {
 
@@ -325,8 +331,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
-
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult IssueExcuteEntire( string CdCoupon)
         {
 

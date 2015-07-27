@@ -1,25 +1,43 @@
 <%@ Page Language="C#" %>
 <%@ Import namespace="OkNameComLib" %>
+
+<%@ Import Namespace = "System" %>
+<%@ Import Namespace = "System.Configuration" %>
+<%
+string REAL_NAME_memId = ConfigurationSettings.AppSettings["REAL_NAME_memId"]; //회원사코드
+string REAL_NAME_serverIp = ConfigurationSettings.AppSettings["REAL_NAME_serverIp"]; //PrivateIP
+string REAL_NAME_siteDomain = ConfigurationSettings.AppSettings["REAL_NAME_siteDomain"]; //회원사 도메인
+string REAL_NAME_logPath = ConfigurationSettings.AppSettings["REAL_NAME_logPath"]; //로그파일 생성 경로
+string REAL_NAME_keyPath = ConfigurationSettings.AppSettings["REAL_NAME_keyPath"]; //키파일 경로
+
+//string REAL_NAME_returnUrl_HP = ConfigurationSettings.AppSettings["REAL_NAME_returnUrl_HP"]; //HP:본인인증 완료후 리턴될 URL (도메인 포함 full path)
+string REAL_NAME_returnUrl_IPIN = ConfigurationSettings.AppSettings["REAL_NAME_returnUrl_IPIN"]; //IPIN:본인인증 완료후 리턴될 URL (도메인 포함 full path)
+
+string REAL_NAME_SubmitLocalURL = ConfigurationSettings.AppSettings["REAL_NAME_SubmitLocalURL"]; //실명인증완료후 submit 경로 : 실제 - HTTPS 적용필요
+    
+%>
+
+
 <%
 	// KCB 테스트서버를 호출할 경우
-	String idpUrl    = "https://tmpin.ok-name.co.kr:5443/tis/ti/POTI90B_SendCertInfo.jsp";
+	//String idpUrl    = "https://tmpin.ok-name.co.kr:5443/tis/ti/POTI90B_SendCertInfo.jsp";
 	// KCB 운영서버를 호출할 경우
-	//String idpUrl    = "https://ipin.ok-name.co.kr/tis/ti/POTI90B_SendCertInfo.jsp";
+	String idpUrl    = "https://ipin.ok-name.co.kr/tis/ti/POTI90B_SendCertInfo.jsp";
 
 	// 아이핀 인증을 마치고 돌아올 페이지 주소. opener(ipin1.aspx)의 도메일과 일치하도록 설정해야 함.
 	// (http://www.test.co.kr과 http://test.co.kr는 다른 도메인으로 인식하며, http 및 https도 일치해야 함)
 	//String returnUrl = "http://"+Request.Url.Host+"/realname/ipin/ipin3.aspx";  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	String returnUrl = "http://aboutme-dev.cstone.co.kr/realname/ipin/ipin3.aspx";  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    String returnUrl = REAL_NAME_returnUrl_IPIN; // "http://aboutme-dev.cstone.co.kr/realname/ipin/ipin3.aspx";  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	String idpCode   = "V";//웹사이트 선호본인확인기관(KCB기관)코드
-	String memId    = "P19960000000";//회원사코드 (테스트인 경우 'P00000000000'를 사용하며 운영시 발급받은 회원사코드를 설정)
+    String memId = REAL_NAME_memId; // "P19960000000";//회원사코드 (테스트인 경우 'P00000000000'를 사용하며 운영시 발급받은 회원사코드를 설정)
 
 	// 파라미터 정의
 
 	// 암호화키 파일 설정 (절대경로) - 파일은 주어진 파일명으로 자동 생성되며 매월마다 갱신됨. 
 	// 웹서버에 해당파일을 생성할 권한 필요.
 	// 키파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
-    String keyPath = "c:\\WWW\\REALNAME\\module\\key\\okname.key";
+    String keyPath = REAL_NAME_keyPath; // "c:\\WWW\\REALNAME\\module\\key\\okname.key";
 
 	String reserved1 = "0";
 	String reserved2 = "0";
@@ -30,7 +48,7 @@
 
 	// 로그 경로 지정 및 권한 부여 (절대경로)
 	// 로그파일경로는 웹루트(www 또는 html 등)하위로 설정하면 보안상 위험하므로 웹루트 이외의 경로로 설정!!
-    String logPath = "c:\\WWW\\REALNAME\\module\\log";
+    String logPath = REAL_NAME_logPath; // "c:\\WWW\\REALNAME\\module\\log";
 
 	// 옵션값에 'L'을 추가하는 경우에만 로그가 생성됨. 예) options="CL"
 	String options = "C";

@@ -22,6 +22,7 @@ namespace AboutMe.Common.Helper
             addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
             fileType = "image";  //파일 type:image/file
             fileMaxSize = 5000000; //파일 max size 5MB
+            Width = 500; //이미지 기본 사이즈
         }
         // set default size here
         public int Width { get; set; }
@@ -65,8 +66,11 @@ namespace AboutMe.Common.Helper
 
             var path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), fileName);
 
-            //모바일 path
-            var mobile_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "mobile_"+fileName);
+            //썸네일이미지 resize path
+            var resize_type_500_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R500_"+fileName);
+            var resize_type_270_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R270_" + fileName);
+            var resize_type_120_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R120_" + fileName);
+            var resize_type_64_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R64_" + fileName);
 
             string extension = Path.GetExtension(file.FileName);
 
@@ -103,16 +107,47 @@ namespace AboutMe.Common.Helper
 
                     if (addMobileImage) //모바일 이미지 추가시
                     {
-                        file.SaveAs(mobile_path);
-                        Image mobile_imgOriginal = Image.FromFile(mobile_path);
-                        this.Width = 300; //모바일 사이즈
+                        //500size
+                        file.SaveAs(resize_type_500_path);
+                        Image r500_imgOriginal = Image.FromFile(resize_type_500_path);
+                        this.Width = 500; //500 썸네일 사이즈
 
-                        //pass in whatever value you want
-                        Image mobile_imgActual = Scale(mobile_imgOriginal);
-                        mobile_imgOriginal.Dispose();
-                        mobile_imgActual.Save(mobile_path);
-                        mobile_imgActual.Dispose();
+                        Image r500_imgActual = Scale(r500_imgOriginal);
+                        r500_imgOriginal.Dispose();
+                        r500_imgActual.Save(resize_type_500_path);
+                        r500_imgActual.Dispose();
 
+                        //270size
+                        file.SaveAs(resize_type_270_path);
+                        Image r270_imgOriginal = Image.FromFile(resize_type_270_path);
+                        this.Width = 270; //270 썸네일 사이즈
+
+                        Image r270_imgActual = Scale(r270_imgOriginal);
+                        r270_imgOriginal.Dispose();
+                        r270_imgActual.Save(resize_type_270_path);
+                        r270_imgActual.Dispose();
+
+
+                        //120size
+                        file.SaveAs(resize_type_120_path);
+                        Image r120_imgOriginal = Image.FromFile(resize_type_120_path);
+                        this.Width = 120; //120 썸네일 사이즈
+
+                        Image r120_imgActual = Scale(r120_imgOriginal);
+                        r120_imgOriginal.Dispose();
+                        r120_imgActual.Save(resize_type_120_path);
+                        r120_imgActual.Dispose();
+
+
+                        //64size
+                        file.SaveAs(resize_type_64_path);
+                        Image r64_imgOriginal = Image.FromFile(resize_type_64_path);
+                        this.Width = 64; //64 썸네일 사이즈
+
+                        Image r64_imgActual = Scale(r64_imgOriginal);
+                        r64_imgOriginal.Dispose();
+                        r64_imgActual.Save(resize_type_64_path);
+                        r64_imgActual.Dispose();
                     }
                 }
 
@@ -218,6 +253,8 @@ namespace AboutMe.Common.Helper
             {
                 destWidth = Width;
                 destHeight = (float)(sourceHeight * Width / sourceWidth);
+                //destWidth = sourceWidth;
+                //destHeight = sourceHeight;
             }
 
             Bitmap bmPhoto = new Bitmap((int)destWidth, (int)destHeight,

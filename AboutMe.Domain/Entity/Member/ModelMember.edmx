@@ -79,6 +79,15 @@
         <Function Name="SP_MEMBER_REALNAME_LOG_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WORK_TMP_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_MEMBER_STAFF_REQUEST_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="M_GRADE" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_COMPANY" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_MEMBER_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="M_MOBILE" Type="varchar" Mode="In" />
@@ -225,6 +234,15 @@
             <Parameter Name="RET_M_NAME" Mode="InOut" Type="String" />
             <Parameter Name="RET_M_CREDATE" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_MEMBER_STAFF_REQUEST_INS">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_NAME" Mode="In" Type="String" />
+            <Parameter Name="M_GRADE" Mode="In" Type="String" />
+            <Parameter Name="STAFF_COMPANY" Mode="In" Type="String" />
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="STAFF_NAME" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_MEMBER_VIEW_Result">
           <Property Type="Int32" Name="M_NO" Nullable="false" />
@@ -353,6 +371,7 @@
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_DI" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_DI" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_PWD" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_PWD" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_ID" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_ID" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_STAFF_REQUEST_INS" FunctionName="AboutMeModel2.Store.SP_MEMBER_STAFF_REQUEST_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

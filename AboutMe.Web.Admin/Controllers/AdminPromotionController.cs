@@ -8,6 +8,8 @@ using AboutMe.Common.Helper;
 using AboutMe.Domain.Service.AdminPromotion;
 using AboutMe.Domain.Entity.AdminPromotion;
 
+using AboutMe.Web.Admin.Common.Filters;
+
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminPromotionController : BaseAdminController
@@ -58,7 +60,7 @@ namespace AboutMe.Web.Admin.Controllers
         #region 전체할인 ==================================================================================================
 
         // GET: AdminPromotion
-      
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Index(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
 
@@ -100,6 +102,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
         public ActionResult Create([Bind(Prefix = "inst_TB_PROMOTION_BY_TOTAL", Include = "PMO_TOTAL_NAME,PMO_TOTAL_CATEGORY,PMO_TOTAL_RATE_OR_MONEY,PMO_TOTAL_DISCOUNT_RATE,PMO_TOTAL_DISCOUNT_MONEY,PMO_TOTAL_DATE_FROM,PMO_TOTAL_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_TOTAL tb_promotion_by_total, string[] CheckMemGrade)
         {
@@ -150,7 +153,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
-        
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Update (string CdPromotionTotal)
         {
 
@@ -180,6 +183,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Update([Bind(Prefix = "inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0]", Include = "PMO_TOTAL_NAME,PMO_TOTAL_CATEGORY,PMO_TOTAL_DISCOUNT_RATE,PMO_TOTAL_DISCOUNT_MONEY,PMO_TOTAL_DATE_FROM,PMO_TOTAL_DATE_TO,USABLE_YN", Exclude = "PMO_TOTAL_RATE_OR_MONEY")]  TB_PROMOTION_BY_TOTAL tb_promotion_by_total, string[] CheckMemGrade, string CdPromotionTotal)
         {
 
@@ -235,6 +239,7 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품별할인 ========================================================================================
 
         // GET: AdminPromotion
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdIndex(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
 
@@ -261,6 +266,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         //[Bind(Exclude="Id")]Product productToCreate
         //public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdCreate()
         {
 
@@ -276,6 +282,7 @@ namespace AboutMe.Web.Admin.Controllers
      
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_PRODUCT  , string[] CheckMemGrade)
         public ActionResult PrdCreate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
         {
@@ -331,6 +338,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         //[Bind(Exclude="Id")]Product productToCreate
         //public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdUpdate(string CdPromotionProduct)
         {
 
@@ -352,6 +360,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdUpdate([Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
         {
             
@@ -442,6 +451,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         // 상품별할인 프로모션에 소속된 상품(가격)리스트
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdPricingIndex(string CdPromotionProduct)
         {
 
@@ -497,6 +507,7 @@ namespace AboutMe.Web.Admin.Controllers
         //가격정보 생성
         //[Bind(Exclude="Id")]Product productToCreate
         //public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdPricingCreate(string CdPromotionProduct)
         {
 
@@ -519,7 +530,7 @@ namespace AboutMe.Web.Admin.Controllers
                 PmoProductDateFrom = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_FROM);
                 PmoProductDateTo = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_TO);
             }
-
+            ViewData["PMO_PRODUCT_CATEGORY"] = TotalLst[0].PMO_PRODUCT_CATEGORY; 
             ViewData["PromotionStartTime"] = PmoProductDateFrom;
             ViewData["PromotionEndTime"] = PmoProductDateTo;
             ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
@@ -540,6 +551,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdPricingCreate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT_PRICE", Include = "P_CODE,PMO_PRICE,PMO_ONE_ONE_P_CODE,PMO_ONE_ONE_PRICE,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
         {
 
@@ -549,9 +561,30 @@ namespace AboutMe.Web.Admin.Controllers
                 inst_TB_PROMOTION_BY_PRODUCT_PRICE = new TB_PROMOTION_BY_PRODUCT_PRICE(),
                 inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList()
             };
+
+
+            //[1]프로모션 마스터 정보 가져오기 ===========================================================
+            //프로모션 시작시간 가져오기 
+            Nullable<DateTime> PmoProductDateFrom = null;
+            //프로모션 종료시간 가져오기
+            Nullable<DateTime> PmoProductDateTo = null;
+
+            List<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> TotalLst = _AdminPromotionService.GetAdminPromotionByProductDetail(CdPromotionProduct).ToList();
+            if (TotalLst.Count > 0)
+            {
+                PmoProductDateFrom = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_FROM);
+                PmoProductDateTo = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_TO);
+            }
+
+            ViewData["PMO_PRODUCT_CATEGORY"] = TotalLst[0].PMO_PRODUCT_CATEGORY; 
+            ViewData["PromotionStartTime"] = PmoProductDateFrom;
+            ViewData["PromotionEndTime"] = PmoProductDateTo;
+            ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
+            //==============================================================================================
+
             
 
-            int is_success = 1;
+            int is_success = 0;
             int isPcodeExist = 0; //상품코드 유효성 검증여부 
             int PcodeDupCnt = 0 ;
 
@@ -592,8 +625,15 @@ namespace AboutMe.Web.Admin.Controllers
             }
 
 
-            //return View(mMyMultiModelForProductPricing);
-            return RedirectToAction("PrdPricingIndex" ,new { CdPromotionProduct = CdPromotionProduct });
+         
+            if (is_success == 1)
+            {
+                return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
+            }
+            else 
+            {
+                return View(mMyMultiModelForProductPricing);
+            }
 
 
         }
@@ -617,6 +657,7 @@ namespace AboutMe.Web.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdPricingUpdate(string UsableYN, string PCode, string CdPromotionProduct, string[] CheckCdPromotionTotal , string idx )
         {
 

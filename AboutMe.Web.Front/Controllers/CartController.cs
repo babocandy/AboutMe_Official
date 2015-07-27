@@ -177,7 +177,7 @@ namespace AboutMe.Web.Front.Controllers
 
         public ActionResult FlyingCart(int page=1)
         {
-            int PageSize = 1;
+            int PageSize = 3;
             List<SP_TB_CART_LIST_Result> lst = new List<SP_TB_CART_LIST_Result>();
             lst = _cartservice.CartList(_user_profile.M_ID, _user_profile.SESSION_ID);
 
