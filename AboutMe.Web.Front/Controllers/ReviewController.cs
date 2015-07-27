@@ -26,6 +26,14 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
+        /**
+         * 
+         */
+        public JsonResult GetReviewProductList()
+        {
+            return Json(new { });
+        }
+
         [ChildActionOnly]
         public ActionResult InShoppingDetail(string P_CODE)
         {
