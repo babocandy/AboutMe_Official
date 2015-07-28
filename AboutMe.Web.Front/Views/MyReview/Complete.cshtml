@@ -72,7 +72,7 @@
 
                      <span class="userage">@ReviewHelper.ConvertAge(item.M_BIRTHDAY), @ReviewHelper.ConvertGenger(item.M_SEX)<em class="skin @(ReviewHelper.ConvertSkinType(item.SKIN_TYPE))"></em></span>
                  </div>
-                 <p class="txtdotdot">
+                 <p class="txtdotdot" style="">
                      @item.COMMENT
                  </p>
              </div>
@@ -80,7 +80,7 @@
                  <div class="writer">
                      <span class="userage">@ReviewHelper.ConvertAge(item.M_BIRTHDAY), @ReviewHelper.ConvertGenger(item.M_SEX)<em class="skin @(ReviewHelper.ConvertSkinType(item.SKIN_TYPE))"></em></span>
                  </div>
-                 @item.COMMENT
+                @Html.Raw(Html.Encode(item.COMMENT).Replace("\n", "<br />"));
                  @if (item.IS_PHOTO=="Y")
                  {
                     <img src="@ViewBag.img_path_review@item.ADD_IMAGE" alt="" />
