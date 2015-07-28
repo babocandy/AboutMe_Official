@@ -1,19 +1,178 @@
-﻿
+﻿@model AboutMe.Domain.Entity.Order.MyORDER_INDEX
 @{
-    Layout = null;
+    ViewBag.Title = "주문배송조회 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 }
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script src="/aboutCom/js/lib/jquery-ui.js"></script>
+    <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
 
-<!DOCTYPE html>
+    <script language="javascript">
+    function ChangeDate(d) {
+        var from_date, to_date;
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>MyOrder</title>
-</head>
-<body>
-    <div> 
-        @Html.ActionLink("aaaaa", "Detail")
+        if (d == "1") //1개월
+        {
+            from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
 
+        }
+        else if (d == "3") {
+            from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (d == "4") {
+            from_date = '@DateTime.Now.AddMonths(-4).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (d == "12") {
+            from_date = '@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else//  전체기간
+        {
+            from_date = '';
+            to_date = '';
+        }
+
+        $("#FromDate").val(from_date);
+        $("#ToDate").val(to_date);
+
+    }
+
+    function onSearch()
+    {
+        document.searchFrm.submit();
+    }
+</script>
+}
+		<!--container-->
+    <div id="container" class="myorder">
+        <div class="container1080">
+            <!--mypage_top-->
+            <div class="mypage_top">
+                <!--h2_area-->
+                <div class="h2_area">
+                    <h2>주문/배송<br />조회<i></i></h2>
+                    <!--mypage_menu-->
+                    @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                    <!--//mypage_menu-->
+                </div>
+                <!--//h2_area-->
+                <!--꼭 읽어주세요-->
+                <div class="userread">
+                    <p class="tit">꼭 읽어주세요</p>
+                    <ul class="ps_list">
+                        <li>
+                            주문취소는 배송 시작 전 단계에서만 가능합니다. 이후에는 반품으로 진행되며,<br />
+                            단순변심으로 인한 반품일 경우 반품배송비가 추가 발생할 수 있습니다.
+                        </li>
+                        <li>고객님께서 직접 구매확정 하지 않은 경우 배송완료 후 14일에 자동 전환됩니다. </li>
+                        <li>구매확정 후 리뷰쓰기가 가능합니다.</li>
+                    </ul>
+                </div>
+                <!--//꼭 읽어주세요-->
+            </div>
+            <!--//mypage_top-->
+            <!--주문내역 totla리스트-->
+            <div class="contypeb">
+                <!--조회기간-->
+                <div class="termcheck">
+                    <h3>조회기간</h3>
+                    <form name="searchFrm" method="post" action="">
+                        <ul class="termlist">
+                            <li><a href="#none" onclick="ChangeDate('1')">1개월</a></li>
+                            <li><a href="#none" onclick="ChangeDate('3')">3개월</a></li>
+                            <li><a href="#none" onclick="ChangeDate('4')">4개월</a></li>
+                            <li><a href="#none" onclick="ChangeDate('12')">1년</a></li>
+                            <li class="cnt"><a href="#none" onclick="ChangeDate('')">기간</a></li>
+                        </ul>
+                        <span class="ipttypedate ml20"><input type="text" id="FromDate" name="FromDate" class="" style="width:120px" value="@Model.FromDate"></span>
+                        -
+                        <span class="ipttypedate"><input type="text" id="ToDate" name="ToDate" class="" style="width:120px" value="@Model.ToDate"></span>
+                        <a href="#none" class="btn_brown_w96h38" onclick="onSearch();">조회</a>
+                    </form>
+                    <script type="text/javascript">
+						    $(function() {
+						        $("#FromDate").datepicker({
+						            //showOtherMonths: true,
+						            //numberOfMonths: 2,
+						            dayNamesMin: ['S','M','T','W','T','F','S'],
+						            dateFormat: "yy-mm-dd",
+						            showOn: "both",
+						            buttonText: "조회 시작일 달력",
+						            buttonImage: "/aboutCom/images/mypage/bl_cal.gif",
+						            buttonImageOnly: true,
+						            onClose:function(selectedDate){
+						                $(this).datepicker("option",selectedDate);
+						            }
+						        });
+						        $("#ToDate").datepicker({
+						            //showOtherMonths: true,
+						            //numberOfMonths: 2,
+						            dayNamesMin: ['S','M','T','W','T','F','S'],
+						            dateFormat: "yy-mm-dd",
+						            showOn: "both",
+						            buttonText: "조회 시작일 달력",
+						            buttonImage: "/aboutCom/images/mypage/bl_cal.gif",
+						            buttonImageOnly: true,
+						            onClose:function(selectedDate){
+						                $(this).datepicker("option",selectedDate);
+						            }
+						        });
+						    });
+                    </script>
+
+                </div>
+                <!--//조회기간-->
+                <!--주문리스트-->
+                <div class="oderlist">
+                    <p class="title">주문내역은 웹사이트를 통해 주문하신 <span>최근 1년간</span>의 내역을 확인하실 수 있습니다.</p>
+                    <div class="tabletypeb">
+                        <table>
+                            <colgroup><col width="186" /><col width="161" /><col width="*" /><col width="161" /><col width="130" /><col width="176" /></colgroup>
+                            <thead>
+                                <tr>
+                                    <th>주문번호</th>
+                                    <th>주문일자</th>
+                                    <th>주문 상품 정보</th>
+                                    <th>결제금액</th>
+                                    <th>진행상태</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model.OrderList)
+                                { 
+                                <tr>
+                                    <td>@item.ORDER_CODE</td>
+                                    <td>@String.Format("{0:yyyy-MM-dd}", @item.ORDER_DATE)</td>
+                                    <td><a href="/MyPage/MyOrder/OrderView?OrderCode=@item.ORDER_CODE&FromDate=@Model.FromDate&ToDate=@Model.ToDate&page=@Model.Page">@item.P_NAME </a></td>
+                                    <td class="fwbold">@String.Format("{0:#,#0.}", @item.TOTAL_PAY_PRICE)원</td>
+                                    <td>@item.ORDER_STATUS_NM</td>
+                                    <td>
+                                        <a href="#" class="btn_white_w96h38 typeb">배송조회</a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--//주문리스트-->
+                <!--페이징-->
+                @{
+                    Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.OrderCnt, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = "FromDate="+@Model.FromDate+"&ToDate="+@Model.ToDate });
+                }
+                <!--//페이징-->
+
+            </div>
+            <!--//주문내역 total리스트-->
+
+
+        </div>
     </div>
-</body>
-</html>
+    <!--//container-->

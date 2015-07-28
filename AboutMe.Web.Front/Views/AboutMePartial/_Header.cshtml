@@ -139,8 +139,6 @@
         $("#header .lycart").hide();
     }
 
-    //주문/장바구니/찜 처리모듈 --------------------------------------------
-    jQuery.extend({ stringify: function (a) { var c = typeof a; if (c != "object" || a === null) return c == "string" && (a = '"' + a + '"'), String(a); else { var d, b, f = [], e = a && a.constructor == Array; for (d in a) b = a[d], c = typeof b, a.hasOwnProperty(d) && (c == "string" ? b = '"' + b + '"' : c == "object" && b !== null && (b = jQuery.stringify(b)), f.push((e ? "" : '"' + d + '":') + String(b))); return (e ? "[" : "{") + String(f) + (e ? "]" : "}") } } });
 
     // 장바구니담기
     function Cart_Product_Input(p_code, p_count) {
@@ -156,12 +154,10 @@
     //var arr = [ {"p_code":"1111111", "p_count":"1" }, {"p_code":"1111111", "p_count":"1" }];
     function Cart_Input(arrayOfObjects) {
 
-        var jobj = encodeURIComponent(jQuery.stringify(arrayOfObjects));
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
 
         var src_url = "/Cart/CartInput";
         var param = "data=" + jobj;
-
-        alert(param);
 
         $.ajax({
             cache: false,
@@ -175,7 +171,10 @@
 
                 if (data.result == "true") {
                     //  ow_no("/order/cart_confirm.asp",'cart_confirm', "416","270");
-                    alert("장바구니에 담았습니다.");
+                    if (confirm("장바구니에 담았습니다. 장바구니로 이동하시겠습니까?"))
+                    {
+                        location.href = "/Cart/";
+                    }
                 }
                 else {
                     if (data.msg != "") {
@@ -229,11 +228,10 @@
     //찜하기 저장
     function Wish_Input(arrayOfObjects) {
 
-        var jobj = encodeURIComponent(jQuery.stringify(arrayOfObjects));
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
 
         var src_url = "/Cart/WishInput";
         var param = "data=" + jobj;
-        //var result = jQuery.parseJSON(getHttpRequest(src_url, 'POST', param));
 
         $.ajax({
             cache: false,
@@ -281,7 +279,7 @@
     //찜하기 삭제
     function Wish_Delete(arrayOfObjects) {
 
-        var jobj = encodeURIComponent(jQuery.stringify(arrayOfObjects));
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
 
         var src_url = "/Cart/WishDelete";
         var param = "data=" + jobj;

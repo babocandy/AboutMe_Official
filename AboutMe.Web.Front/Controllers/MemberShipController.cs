@@ -10,6 +10,7 @@ using AboutMe.Common.Helper;
 using AboutMe.Web.Front.Common;
 
 using AboutMe.Domain.Service.Cart;
+using AboutMe.Domain.Service.Order;
 
 using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
@@ -31,14 +32,14 @@ namespace AboutMe.Web.Front.Controllers
     {
         private IMemberService _MemberService;
         private ICartService _Cartservice;
+        private IOrderService _orderservice;
 
-
-        public MemberShipController(IMemberService _memberService, ICartService _cartservice)
+        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice)
         {
             this._MemberService = _memberService;
             this._Cartservice = _cartservice;
+            this._orderservice = _orderservice;
         }
-
 
         //사용자 로그인 폼
         public ActionResult Login(string RedirectUrl = "", string OrderList = "")
@@ -162,6 +163,7 @@ namespace AboutMe.Web.Front.Controllers
                 cookiesession.SetSecretSession("M_EMAIL", result.M_EMAIL);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_PHONE", result.M_PHONE);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_GBN", result.M_GBN);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", "");  //비회원주문 ORDER_CODE
 
                 cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅
 
@@ -230,6 +232,31 @@ namespace AboutMe.Web.Front.Controllers
             return RedirectToAction("InsertOrderStep1", "Order", new { OrderList = OrderList }); // 주문페이지로이동
         }
 
+        
+        //비회원 주문조회 로그인
+        [HttpPost]
+        public ActionResult NoMemOrderLoginProc(string orderNum, string orderPwd, string RedirectUrl = "")
+        {
+            string OrderCode = "";
+            OrderCode = _orderservice.OrderNomeberLoginChk(orderNum, orderPwd);
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('주문정보를 찾을수 없습니다. 다시 확인해주세요.');history.go(-1);</script>");
+            }
+            else
+            {
+                //비회원 주문 코드 세팅
+                CookieSessionStore cookiesession = new CookieSessionStore();
+                cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", OrderCode);  //비회원주문 ORDER_CODE
+                
+                if (RedirectUrl != "")
+                    return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
+                else
+                    return RedirectToAction("", "MyPage/MyOrder");
+                
+            }
+        }
+
         //사용자 로그아웃 처리
         public ActionResult Logout()
         {
@@ -243,6 +270,7 @@ namespace AboutMe.Web.Front.Controllers
             cookiesession.SetSecretSession("M_EMAIL", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("M_PHONE", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", "");  //로그인 세션 세팅
+            cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", "");  //비회원주문 ORDER_CODE
 
             cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", "");  //로그인 세션 세팅 -평문
 
@@ -732,18 +760,21 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
-        //아이디찾기 팝업:결과
+        //아이디찾기 -처리
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult IdSearch_End(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        public ActionResult AjaxIdSearchProc(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
         {
             //로그 기록 준비
             string log_memo = "아이디찾기";
             string log_comment = "아이디찾기";
             UserLog userlog = new UserLog();
 
+            string strERR_CODE = "";
+            string strERR_MSG = "";
 
-            if (M_NAME == "" || M_EMAIL == "" || M_MOBILE=="")
+
+            if (M_NAME == "" || M_EMAIL == "" || M_MOBILE == "")
             {
                 log_comment = log_comment + "실패 : param오류";
                 log_memo = log_memo + "실패 : param오류";
@@ -752,7 +783,10 @@ namespace AboutMe.Web.Front.Controllers
                 log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
                 userlog.UserLogSave(log_memo, log_comment);
 
-                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/IdSearch';</script>");
+                //return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/IdSearch';</script>");
+                strERR_CODE = "1";
+                strERR_MSG = "이름,이메일,핸드폰 값 모두가 전달되어야 합니다";
+                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_ID = "", M_NAME = "", M_CREDATE = "" });
             }
 
             //아이디 찾기 - DB처리
@@ -771,7 +805,11 @@ namespace AboutMe.Web.Front.Controllers
                 log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
                 userlog.UserLogSave(log_memo, log_comment);
 
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/IdSearch';</script>");
+                //return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/IdSearch';</script>");
+                strERR_CODE = "10";
+                strERR_MSG = retDic.ERR_MSG;
+                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_NAME = "", M_CREDATE = "" });
+
             }
 
             this.ViewBag.M_ID = retDic.ETC1; //찾아진 ID
@@ -793,6 +831,23 @@ namespace AboutMe.Web.Front.Controllers
 
 
 
+            //return View();
+            strERR_CODE = retDic.ERR_CODE;
+            strERR_MSG = retDic.ERR_MSG;
+            return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_ID = retDic.ETC1, M_NAME = retDic.ETC2, M_CREDATE = retDic.ETC3 });
+
+        }
+
+        //아이디찾기 팝업:결과
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IdSearch_End(string M_ID = "", string M_NAME = "", string M_CREDATE = "")
+        {
+
+            this.ViewBag.M_ID = M_ID; //찾아진 ID
+            this.ViewBag.M_NAME = M_NAME; //찾아진 이름
+            this.ViewBag.M_CREDATE = M_CREDATE; //찾아진 가입일
+
             return View();
         }
 
@@ -802,11 +857,14 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
-        //비밀번호 찾기  팝업:결과
+        //비밀번호 찾기  팝업:처리
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PwSearch_End(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        public ActionResult AjaxPwSearchProc(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
         {
+            string strERR_CODE = "";
+            string strERR_MSG = "";
+
             //로그 기록 준비
             string log_memo = "비밀번호 찾기";
             string log_comment = "비밀번호 찾기";
@@ -822,12 +880,15 @@ namespace AboutMe.Web.Front.Controllers
                 log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
                 userlog.UserLogSave(log_memo, log_comment);
 
-                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/PwSearch';</script>");
+                //return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/PwSearch';</script>");
+                strERR_CODE = "1";
+                strERR_MSG = "아이디,이름,이메일,핸드폰 값 모두가 전달되어야 합니다";
+                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
             }
 
             //신규비밀번호 랜덤생성
-            string strNEW_PWD ="";
-            string strNEW_PWD_MD5 ="";
+            string strNEW_PWD = "";
+            string strNEW_PWD_MD5 = "";
             string strNEW_PWD_SHA256_HASH = "";
 
             Random r = new Random();
@@ -840,7 +901,7 @@ namespace AboutMe.Web.Front.Controllers
             strNEW_PWD_MD5 = objEnc.MD5Hash(strNEW_PWD);   //MD5 
             strNEW_PWD_SHA256_HASH = objEnc.SHA256Hash(strNEW_PWD_MD5);   //MD5->HA256_HASH
 
-           
+
 
             //비밀번호 찾기 - DB처리
             ReturnDic retDic = _MemberService.GetMemberFindPWD(M_ID, M_NAME, M_EMAIL, M_MOBILE, strNEW_PWD_SHA256_HASH);
@@ -858,9 +919,13 @@ namespace AboutMe.Web.Front.Controllers
                 log_memo = log_memo + "|inputM_EMAIL:" + M_EMAIL;
                 log_memo = log_memo + "|inputM_MOBILE:" + M_MOBILE;
                 log_memo = log_memo + "|strNEW_PWD:" + strNEW_PWD;
-                userlog.UserLogSave(log_memo, log_comment); 
-                
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/PwSearch';</script>");
+                userlog.UserLogSave(log_memo, log_comment);
+
+               // return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/PwSearch';</script>");
+                strERR_CODE = retDic.ERR_CODE;
+                strERR_MSG = retDic.ERR_MSG;
+                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+            
             }
 
             this.ViewBag.M_NAME = retDic.ETC1; //찾아진 이름
@@ -909,8 +974,22 @@ namespace AboutMe.Web.Front.Controllers
             //ViewBag.mail_err_no = mObj.err_no;
             //ViewBag.mail_err_msg = mObj.err_msg;
 
+            //return View();
+            strERR_CODE = retDic.ERR_CODE;
+            strERR_MSG = retDic.ERR_MSG;
+            return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+        }
+        //비밀번호 찾기  팝업:결과
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PwSearch_End(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        {
 
 
+            this.ViewBag.M_ID = M_ID;
+            this.ViewBag.M_NAME = M_NAME;
+            this.ViewBag.M_EMAIL = M_EMAIL;
+            this.ViewBag.M_MOBILE = M_MOBILE;
 
             return View();
         }
