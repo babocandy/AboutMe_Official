@@ -90,16 +90,20 @@ namespace AboutMe.Domain.Service.Review
         /*
          * 
          */
-        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetReviewProductList(int? tailIdx, string categoryCode,string sort)
+        public Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort)
         {
             List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
 
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
             using (ReviewEntities context = new ReviewEntities())
             {
-                lst = context.SP_REVIEW_PRODUCT_SEL(tailIdx, categoryCode, sort).ToList();
+                lst = context.SP_REVIEW_PRODUCT_SEL(tailIdx, categoryCode, sort, total).ToList();
             }
 
-            return lst;
+            Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int>(lst,   Convert.ToInt32(total.Value) );
+
+            return tp;
         }
     }
 }

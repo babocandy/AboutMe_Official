@@ -19,12 +19,12 @@ namespace AboutMe.Domain.Entity.Review
         public string M_NAME { get; set; }
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
-        public string P_CATE_CODE { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
         public string P_IMG1_S { get; set; }
         public int P_COUNT { get; set; }
         public string P_INFO_DETAIL_WEB { get; set; }
         public string P_INFO_DETAIL_MOBILE { get; set; }
         public string P_SUB_TITLE { get; set; }
+        public string C_CATE_CODE { get; set; }
     }
 }

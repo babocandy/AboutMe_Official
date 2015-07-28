@@ -22,7 +22,6 @@ namespace AboutMe.Domain.Entity.Review
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public string P_SUB_TITLE { get; set; }
-        public string P_CATE_CODE { get; set; }
         public string P_MAIN_IMG { get; set; }
         public string P_INFO_DETAIL_WEB { get; set; }
         public string P_INFO_DETAIL_MOBILE { get; set; }
@@ -33,5 +32,6 @@ namespace AboutMe.Domain.Entity.Review
         public string ADD_IMAGE { get; set; }
         public string IS_PHOTO { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public string C_CATE_CODE { get; set; }
     }
 }

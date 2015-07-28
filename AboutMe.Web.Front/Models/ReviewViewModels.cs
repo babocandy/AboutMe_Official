@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 using AboutMe.Domain.Entity.Review;
 using AboutMe.Domain.Entity.Product;
+using AboutMe.Common.Helper;
+using System.Diagnostics;
 
 namespace AboutMe.Web.Front.Models
 {
@@ -46,7 +48,8 @@ namespace AboutMe.Web.Front.Models
         public List<SP_CATEGORY_DEPTH_SEL_Result> CategoryBeauty { get; set; }
         public List<SP_CATEGORY_DEPTH_SEL_Result> CategorySelShop{ get; set; }
         public string CategoryCodeHealth { get; set; }
-        
+
+        private List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> _reviews;
         public string DefaultCategoryCode
         {
             get
@@ -63,9 +66,26 @@ namespace AboutMe.Web.Front.Models
             }
         }
 
-        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> Products { get; set; }
+        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> Reviews
+        {
+            get
+            {
+                return _reviews;
+            }
+            set
+            {
+                _reviews = value;
+                foreach (var item in _reviews)
+                {
+                    item.M_BIRTHDAY = ReviewHelper.ConvertAge(item.M_BIRTHDAY);
+                    item.M_SEX = ReviewHelper.ConvertGenger(item.M_SEX);
+                    item.SKIN_TYPE = ReviewHelper.ConvertSkinType(item.SKIN_TYPE);
+                    item.PRIZE_GRADE = ReviewHelper.isBest(item.PRIZE_GRADE);
+                }
+            }
+        }
 
-
+        public int Total {get;set; }
 
     }
 

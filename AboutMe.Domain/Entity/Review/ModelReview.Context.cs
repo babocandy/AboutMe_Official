@@ -114,7 +114,7 @@ namespace AboutMe.Domain.Entity.Review
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_COMPLETE_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual ObjectResult<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> SP_REVIEW_PRODUCT_SEL(Nullable<int> tAIL_IDX, string cATE_CODE, string sORT)
+        public virtual ObjectResult<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> SP_REVIEW_PRODUCT_SEL(Nullable<int> tAIL_IDX, string cATE_CODE, string sORT, ObjectParameter tOTAL)
         {
             var tAIL_IDXParameter = tAIL_IDX.HasValue ?
                 new ObjectParameter("TAIL_IDX", tAIL_IDX) :
@@ -128,7 +128,7 @@ namespace AboutMe.Domain.Entity.Review
                 new ObjectParameter("SORT", sORT) :
                 new ObjectParameter("SORT", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter, tOTAL);
         }
     }
 }

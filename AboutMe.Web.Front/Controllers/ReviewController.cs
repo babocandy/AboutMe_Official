@@ -36,8 +36,9 @@ namespace AboutMe.Web.Front.Controllers
             model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", "103", "");
             model.CategoryCodeHealth = "102100100";
 
-            model.Products = _ReviewService.GetReviewProductList(null, model.DefaultCategoryCode, model.DefaultSort);
-
+            var tp = _ReviewService.GetReviewProductList(null, model.DefaultCategoryCode, model.DefaultSort);
+            model.Reviews = tp.Item1;
+            model.Total = tp.Item2;
 
 
             return View(model);
@@ -52,9 +53,11 @@ namespace AboutMe.Web.Front.Controllers
         public JsonResult GetReviewProductList(ReviewProductListParam param)   
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
-            model.Products = _ReviewService.GetReviewProductList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
+            var tp = _ReviewService.GetReviewProductList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
+            model.Reviews = tp.Item1;
+            model.Total = tp.Item2;
 
-            var jsonData = new { Products = model.Products, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } };
+            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
