@@ -3,18 +3,28 @@ body {min-width:320px; font-family: 'NanumBarunGothicLight'; font-size:12px;}
 
 /* header */
 .header {position:relative; width:100%; z-index:30;}
-.header .h_top {position:relative; height:44px; background:#403836;}
+.header .h_top {position:relative; height:45px; background:#fff; border-bottom:1px solid #f7f3f2;}
 .header .h_top h1 {text-align:center;}
-.header .h_top h1 img {margin-top:15px; width:121px;}
+.header .h_top h1 img {margin-top:15px; width:132px;}
 .header .h_top .openlnb {position:absolute; left:15px; top:16px;}
 .header .h_top .openlnb img {width:15px;}
-.header .h_top .btn_cart {position:absolute; right:12px; top:13px;}
-.header .h_top .btn_cart img {width:19px;}
+.header .h_top .btn_cart {position:absolute; right:12px; top:7px;}
+.header .h_top .btn_cart img {width:22px;}
+.header .h_top .btn_cart .num {position:absolute; left:12px; top:-1px; font-size:9px; color:#fff;font-family:"OpenSansBold";}
 .header .lnb_area {display:none; position:relative; width:100%; height:100%;}
 .header .lnb_area .dim {position:fixed; left:0; top:0; width:100%; height:100%; background:#000; opacity:0.7;  filter: alpha(opacity=70);z-index:1}
 .header .lnb_area .lnb {position:fixed; left:-280px; top:0; width:280px; height:100%; z-index:5; overflow-y:auto; }
-.header .lnb_area .lnbclose {display:block;  position:absolute; left:293px; top:-24px; width:15px; height:12px; background:url("/aboutCom/images/common/bul30.png") 0 -408px no-repeat; background-size:cover; z-index:5; font-size:0; }
+.header .lnb_area .lnbclose {display:block;  position:absolute; left:286px; top:-70px; width:30px; height:30px; background:url("/aboutCom/images/common/btn_lnbclose.gif") 0 0px no-repeat; background-size:cover; z-index:5; font-size:0; }
+.header .btn_search {position:absolute; right:50px; top:14px;}
+.header .btn_search img {width:16px;}
+.header .h_menu { background:#fff; border-bottom:1px solid #dddad9;}
+.header .h_menu ul{}
+.header .h_menu ul:after {display:block; clear:both; content:'';}
+.header .h_menu ul li {float:left; width:33.3333%;}
+.header .h_menu ul li a {display:block; font-size:12px; padding:14px 0; text-align:center; color:#1b1818;font-weight:normal;-webkit-text-stroke-width:0.5px;}
+
 .lnb .userclass_info {padding:18px 15px; font-size:13px; color:#1c1c1c;background:#fff;}
+.lnb .logintxt {padding:15px; font-size:13px; color:#1c1c1c;background:#fff;}
 .lnb .userclass_info.vip span {color:#403836; border-bottom:1px solid #403836;}
 .lnb .userclass_info.gold span {color:#bfa32c; border-bottom:1px solid #bfa32c;}
 .lnb .userclass_info.siver span {color:#aaaaaa; border-bottom:1px solid #aaaaaa;}
@@ -45,12 +55,18 @@ body {min-width:320px; font-family: 'NanumBarunGothicLight'; font-size:12px;}
 
 
 /* footer */
-.footer {position:relative; padding-bottom:24px; width:100%; background:#696361; z-index:20;}
-.footer .tel_area {height:56px; padding-top:18px;  text-align:center; box-sizing:border-box;}
+.footer {position:relative; padding-bottom:24px; width:100%; background:#584e4c; z-index:20;}
+.setgood .footer {padding-bottom:100px;}
+.footer .btn_term {border:1px solid #9f9998; margin:10px 15px 0 15px;}
+.footer .btn_term a {color:#b8b5b4; display:block; padding:6px 0; text-align:center;}
+.footer .btn_term a:after {display:inline-block; content:''; margin-left:6px; width:8px; height:6px; background:url("/aboutCom/images/common/bg_term.gif") 0 0 no-repeat; background-size:cover;}
+.footer .btn_term a.on:after {background-position: 0 -20px;}
+.footer .term_area {display:none;}
+.footer .tel_area {height:58px; padding-top:15px; box-sizing:border-box; text-align:center; box-sizing:border-box; border-bottom:1px solid #837b7a;}
 .footer .tel_area .tel {}
-.footer .tel_area .tel img {width:111px; margin-top:2px;}
-.footer .tel_area .txt {display:inline-block; text-align:left; color:#fff; font-size:9px; margin-left:10px;}
-.footer .address {border-top:1px solid #827c7a; padding:19px 15px; font-size:10px; color:#fff;}
+.footer .tel_area .tel img {width:84px; margin-top:2px;}
+.footer .tel_area .txt {display:block; padding-top:7px;  text-align:center; color:#fff; font-size:10px;}
+.footer .address {padding:19px 15px; font-size:10px; color:#fff;}
 .footer .address dl {width:286px; margin:0 auto;overflow:hidden;}
 .footer .address dt {float:left; width:64px; letter-spacing:-1px}
 .footer .address dd {float:left; margin-left:11px;  width:208px; letter-spacing:-1px}
@@ -61,7 +77,7 @@ body {min-width:320px; font-family: 'NanumBarunGothicLight'; font-size:12px;}
 .footer .f_link  li a {font-size:10px; color:#fff;}
 .footer .copy {margin-top:20px; text-align:center; font-family:"Verdana"; font-size:9px; color:#a7a7a7}
 .footer .copy img {width:245px;}
-.f_bottom {position:absolute; left:0; top:0; width:100%;}
+.f_bottom {position:fixed; left:0; bottom:0; width:100%; z-index:40;}
 .f_bottom .historyback {position:absolute; left:6px; bottom:6px;}
 .f_bottom img {width:40px;}
 .f_bottom .documtop {position:absolute; right:6px; bottom:6px;}
@@ -70,7 +86,7 @@ body {min-width:320px; font-family: 'NanumBarunGothicLight'; font-size:12px;}
 .container {position:relative;  z-index:10;}
 
 /*뒤로가기*/
-.container .h2_area {position:relative; text-align:center;  border-bottom:1px solid #d9d4d3; background:#fff;}
+.container .h2_area {position:relative; text-align:center;  border-bottom:1px solid #dddad9; background:#fff;}
 .container .h2_area h2 {padding:12px 0 10px 0; font-size:14px; color:#333; text-align:center;}
 .container .historyback {position:absolute; left:15px; top:14px;}
 .container .historyback img {width:13px;}

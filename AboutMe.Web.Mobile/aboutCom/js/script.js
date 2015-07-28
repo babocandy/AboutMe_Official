@@ -46,8 +46,18 @@ $(function(){
 			});
 		}
 	});
-	
-	/*스크롤시 나오는 하단버튼*/
+	/*footer*/
+	$(".footer .btn_term").toggle(function(e){
+		e.preventDefault();
+		$(".footer .term_area").css({"display":"block"});
+		$(".footer .btn_term a").addClass("on");
+	}, function(e){
+		e.preventDefault();
+		$(".footer .term_area").css({"display":"none"});
+		$(".footer .btn_term a").removeClass("on");
+	});
+
+	/*스크롤시 나오는 하단버튼
 	var scrollTop;
 	var scrollBottom;
 	$(window).scroll(function(){
@@ -60,7 +70,7 @@ $(function(){
 		}else if(scrollBottom < 244){
 			$(".f_bottom .historyback, .f_bottom .documtop").css({"position":"absolute"});
 		}
-	});
+	});*/
 	$(".documtop").on("click", function(){
 		$('html, body').stop().animate({ scrollTop : 0 },300 ,"easeInExpo");
 	});
@@ -387,6 +397,10 @@ $(function(){
 	});
 
 	/*이벤트 하단 바로구매*/
+	$(".buy_product").css({"display":"none"})
+	if( $("*").is(".setgood") ){
+		$(".buy_product").css({"display":"block"})
+	}
 	$(".buy_product .slidedown").click(function(e){
 		e.preventDefault();
 		$(this).hide();
@@ -404,11 +418,152 @@ $(function(){
 		scrollTop=$(window).scrollTop();
 		scrollBottom = $(document).height()-$(window).height()-$(window).scrollTop();
 		if (scrollTop >=44 && scrollBottom > 244){
-			$(".buy_product").css({"position":"fixed"});
+			//$(".buy_product").css({"position":"fixed"});
+			$(".footer").css({"z-index":"20"});
 		}else if(scrollBottom < 244){
-			$(".buy_product").css({"position":"absolute"});
+			//$(".buy_product").css({"position":"absolute"});
+			//$(".footer").css({"z-index":"0"});
 		}
 	});
+
+	/* 매거진 */
+	if( $(".magazin_area").length ){
+		//Var
+		var curIdx = $("#magazin_list .listwrap ul li.cnt").index(),
+			itemWid = $("#magazin_list .listwrap ul li").eq(0).outerWidth(),
+			itemCount = $("#magazin_list .listwrap ul li").length,
+			itemMargin = 10,
+			listWid = (itemWid * itemCount) + (itemMargin * (itemCount-1)),
+			halfWid = itemWid/2,
+			curPos = 0,
+			movePos, maxPos, winWid;
+
+		//List Init
+		$("#magazin_list .listwrap ul").css("width",listWid+"px");
+
+		//View Init
+		if($("#magazin_list .listwrap ul li.cnt").hasClass("movie")){
+			// Movie
+			$("#magazin_view .viewarea .bigimg").hide();
+			$("#magazin_view .viewarea .moviearea").show();
+		} else{
+			// Picture
+			$("#magazin_view .viewarea .moviearea").hide();
+			$("#magazin_view .viewarea .bigimg").show();
+		}
+
+		//Windows Resize
+		$(window).resize(function(){
+			winWid = $(window).outerWidth();
+			if(winWid >= (listWid+30) && curPos != 0){
+				curPos = 0;
+				$("#magazin_list .listwrap").css({"left":0});
+			}
+		}).trigger("resize");
+
+		//List Swipe
+		$("#magazin_list .listwrap").on("movestart", function(e){
+			winWid = $(window).outerWidth();
+			maxPos = listWid-winWid+30;
+			if(winWid >= (listWid+30)){
+				console.log(winWid,maxPos);
+				e.preventDefault();
+				return;
+			}
+		}).on("move", function(e){
+			movePos = curPos + e.distX,
+			$(this).stop().animate({"left":movePos+"px"},1);
+
+			if(movePos > halfWid) {
+				//Min Over Position
+				$(this).stop().animate({"left":halfWid+"px"},1);
+			} else if(movePos < -(maxPos+halfWid)) {
+				//Max Over Position
+				$(this).stop().animate({"left":-(maxPos+halfWid)+"px"},1);
+			}
+			console.log(movePos);
+		}).on("moveend", function(e){
+			if(movePos >= halfWid) movePos = 0;
+			else if(movePos <= -(maxPos+halfWid)) movePos = -maxPos;
+			curPos = movePos;
+			$(this).stop().animate({"left":curPos+"px"},300,"easeOutQuad");
+
+			e.preventDefault();
+		});
+
+		//Item Touch
+		$("#magazin_list").on("click", ".listwrap ul li", function(e){
+			e.preventDefault();
+			var _item = $(this),
+				itemIdx = _item.index(),
+				titleTXT = _item.find("a img").attr("data-title"),
+				picLOC = _item.find("a img").attr("data-pic");
+
+			$("#magazin_list .listwrap ul li").removeClass("cnt");
+			$("#magazin_list .listwrap ul li").eq(itemIdx).addClass("cnt");
+
+			$("#magazin_view .viewarea .magazin_tit").html(titleTXT);
+
+			if( _item.hasClass("movie") ){
+				// Movie
+				$("#magazin_view .viewarea .moviearea .movie iframe").attr("src",picLOC);
+
+				$("#magazin_view .viewarea .bigimg").hide();
+				$("#magazin_view .viewarea .moviearea").show();
+			} else{
+				// Picture
+				$("#magazin_view .viewarea .bigimg img").attr("src",picLOC);
+
+				$("#magazin_view .viewarea .moviearea").hide();
+				$("#magazin_view .viewarea .bigimg").show();
+			}
+		});
+
+		//Go Prev & Next
+		$("#magazin_view").on("click", ".btn_area a", function(e){
+			e.preventDefault();
+			winWid = $(window).outerWidth();
+			curIdx = $("#magazin_list .listwrap ul li.cnt").index();
+
+			if($(this).hasClass("prev")){
+				//prev item
+				if(curIdx <= 0) return;
+
+				/*
+				if( (((itemWid*(curIdx+1)) - winWid) - curPos) > 0){
+					curPos -= itemWid;
+					$("#magazin_list .listwrap").stop().animate({"left":curPos+"px"},300,"easeOutQuad");
+				}
+				*/
+
+				$("#magazin_list .listwrap ul li").eq(curIdx-1).trigger("click");
+			} else{
+				//next item
+				if(curIdx >= ($("#magazin_list .listwrap ul li").length-1)) return;
+
+				var nextIdx = curIdx+1;
+
+				console.log("nextIdx",nextIdx);
+
+				console.log( itemWid * nextIdx + itemWid );
+
+				var lastItemBoundEnd = itemWid * nextIdx + itemWid;
+				if (winWid < lastItemBoundEnd){
+
+
+				}
+				/*
+				if( (((itemWid*(curIdx+2)) - winWid) + curPos) >= 0){
+					curPos -= itemWid;
+					$("#magazin_list .listwrap").stop().animate({"left":curPos+"px"},300,"easeOutQuad");
+				}
+				*/
+
+				$("#magazin_list .listwrap ul li").eq(nextIdx).trigger("click");
+			}
+		});
+
+	}
 
 	/*매장안내*/
 	$(".store_list ul li .branch_info .btn_mapview").toggle(function(e){

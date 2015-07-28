@@ -42,3 +42,39 @@
 .store_list ul li .branch_info .btn_mapview:after {display:inline-block; margin-left:5px;  width:10px; height:5px; content:''; background:url("/aboutCom/images/common/bul20.png") 0 0; background-size:cover;}
 .store_list ul li .map {display:none; border-top:1px solid #d9d4d3; width:100%;}
 .store_list ul li .map img {width:100%;}
+
+/*매거진*/
+.magazin .boxtypeb{padding:0;}
+.magazin  h3{margin:0 auto;padding-top:25px;width:127px;}
+.magazin  h3 img{width:100%;height:39px;}
+.magazin .magazin_area{margin-top:25px;}
+.magazin .magazin_area .magazin_list{position:relative;padding-bottom:6px;height:102px;border-bottom:1px solid #acaaa9;overflow:hidden;}
+.magazin .magazin_area .magazin_list:after{content:"";display:block;position:absolute;bottom:0;left:0;width:100%;height:4px;background-color:#fff;}
+.magazin .magazin_area .magazin_list .listwrap{position:absolute;top:0;left:0;margin-left:15px;}
+.magazin .magazin_area .magazin_list .listwrap ul{width:9999px;}
+.magazin .magazin_area .magazin_list .listwrap ul:after{content:"";display:block;clear:both;}
+.magazin .magazin_area .magazin_list .listwrap ul li{float:left;position:relative;margin-left:10px;width:80px;height:102px;}
+.magazin .magazin_area .magazin_list .listwrap ul li:first-child{margin-left:0;}
+.magazin .magazin_area .magazin_list .listwrap ul li i{display:block;position:absolute;top:0;left:0;width:100%;height:100%;background:url("/aboutCom/images/aboutme/bg_thumb.png") 0 0 no-repeat;background-size:cover;}
+.magazin .magazin_area .magazin_list .listwrap ul li.cnt i{background:url("/aboutCom/images/aboutme/bg_thumb_on.png") 0 0 no-repeat;background-size:cover;}
+.magazin .magazin_area .magazin_list .listwrap ul li.movie i{background:url("/aboutCom/images/aboutme/bg_movie.png") 0 0 no-repeat;background-size:cover;}
+.magazin .magazin_area .magazin_list .listwrap ul li.cnt.movie i{background:url("/aboutCom/images/aboutme/bg_movie_on.png") 0 0 no-repeat;background-size:cover;}
+.magazin .magazin_area .magazin_list .listwrap ul li a{display:block;width:79px;height:100px;}
+.magazin .magazin_area .magazin_list .listwrap ul li a img{width:100%;height:100%;}
+.magazin .magazin_area .magazin_view{position:relative;}
+.magazin .magazin_area .magazin_view .btn_area a{display:inline-block;position:absolute;top:23px;left:15px;width:15px;height:29px;background:url("/aboutCom/images/aboutme/btn_slide.png") 0 0 no-repeat;background-size:cover;font-size:0;text-indent:-9999px;}
+.magazin .magazin_area .magazin_view .btn_area a.next{left:auto;right:13px;background-position:-16px 0;}
+.magazin .magazin_area .magazin_view .viewarea{padding:20px 0 30px;}
+.magazin .magazin_area .magazin_view .viewarea .magazin_tit{padding:0 40px;font-size:11px;color:#696361;text-align:center;}
+.magazin .magazin_area .magazin_view .viewarea .magazin_tit strong{display:block;margin-top:8px;font-size:18px;color:#1b1818;}
+.magazin .magazin_area .magazin_view .viewarea .bigimg{position:relative;margin-top:20px;height:366px;}
+.magazin .magazin_area .magazin_view .viewarea .bigimg img{position:absolute;top:0;right:20px;width:527px;height:354px;}
+.magazin .magazin_area .magazin_view .viewarea .bigimg i{display:block;position:absolute;top:0;right:14px;width:540px;height:366px;background:url("/aboutCom/images/aboutme/bg_book.png") 0 0 no-repeat;background-size:cover;}
+.magazin .magazin_area .magazin_view .viewarea .moviearea{position:relative;margin-top:20px;height:180px;}
+.magazin .magazin_area .magazin_view .viewarea .moviearea iframe{position:absolute;top:0;left:50%;margin-left:-145px;}
+
+
+@media all and (min-width:568px){
+	.magazin .magazin_area .magazin_view .viewarea .bigimg img{right:50%;margin-right:-264px;}
+	.magazin .magazin_area .magazin_view .viewarea .bigimg i{right:50%;margin-right:-270px;}
+}
