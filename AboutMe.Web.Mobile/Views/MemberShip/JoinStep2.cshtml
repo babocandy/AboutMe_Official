@@ -1,0 +1,221 @@
+﻿@{
+    ViewBag.Title = "Mobile-JoinStep2";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+
+@{
+    //실명인증 작업구분을위한 unique한 값 생성 :50 byte 이내
+    Random r = new Random();
+    int randomNumber = r.Next(10000000, 90000000);
+    string strNOW_TIME = @DateTime.Now.ToString("yyyyMMdd_HHmmss");
+    string strWORK_TMP_ID = @strNOW_TIME + "_" + @randomNumber.ToString();
+
+}
+
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/membership.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+<script type="text/javascript">
+    $(function () {
+        $(".allagree_check").change(function () {
+            var agreechkbox = $(".agree_check");
+            var is_check = $(this).is(":checked");
+            if (is_check) {
+                $(".agree_check").prop("checked", is_check);
+                agreechkbox.parent().addClass("chkcon_on")
+            } else {
+                $(".agree_check").prop("checked", is_check);
+                agreechkbox.parent().removeClass("chkcon_on")
+            }
+        });
+    });
+
+
+
+    function fAgreeAllToggle()
+    {
+        var f = document.frmJOIN_AGREE;
+        if(f.AGREE_ALL.checked==true)
+        {
+            alert("checked...");
+            f.AGREE_BASIC1.checked = true;
+            f.AGREE_BASIC2.checked = true;
+            f.AGREE_BASIC3.checked = true;
+            f.AGREE_BASIC4.checked = true;
+            f.agree5.checked = true;
+            f.agree6.checked = true;
+            alert("checked...");
+        }
+        else
+        {
+            alert("un checked...");
+            f.AGREE_BASIC1.checked = false;
+            f.AGREE_BASIC2.checked = false;
+            f.AGREE_BASIC3.checked = false;
+            f.AGREE_BASIC4.checked = false;
+            f.agree5.checked = false;
+            f.agree6.checked = false;
+            alert("un checked...");
+
+        }
+    }
+
+    function fGoNextStep() {
+        var f = document.frmJOIN_AGREE;
+        if (!f.AGREE_BASIC1.checked) {
+            alert("웹사이트 /모바일 이용약관에 동의하셔야 합니다.");
+            f.AGREE_BASIC1.focus();
+            return;
+        }
+        if (!f.AGREE_BASIC2.checked) {
+            alert("쇼핑몰 이용약관에 동의하셔야 합니다.");
+            f.AGREE_BASIC2.focus();
+            return;
+        }
+        if (!f.AGREE_BASIC3.checked) {
+            alert("개인정보 수집 및 이용에 동의하셔야 합니다.");
+            f.AGREE_BASIC3.focus();
+            return;
+        }
+        if (!f.AGREE_BASIC4.checked) {
+            alert("개인정보 위탁에 동의하셔야 합니다.");
+            f.AGREE_BASIC4.focus();
+            return;
+        }
+
+        //if (!f.agree5.checked) {
+        //    alert("개인정보 제3자 제공에 동의하셔야 합니다.");
+        //    f.agree5.focus();
+        //    return;
+        //}
+        if (!f.agree6.checked) {
+            alert("고유식별정보 수집 및 이용에 동의하셔야 합니다.");
+            f.agree6.focus();
+            return;
+        }
+
+        if (f.agree5.checked)
+            f.M_AGREE.value = "Y";
+        else
+            f.M_AGREE.value = "N";
+
+        if (f.agree6.checked)
+            f.M_AGREE2.value = "Y";
+        else
+            f.M_AGREE2.value = "N";
+
+        f.targte = "";
+        f.action = "/MemberShip/JoinStep3";
+        f.submit();
+    }
+
+    function fGoCancel() {
+        if (confirm("회원가입을 중단하시겠습니까?"))
+            window.location.href = "/";
+    }
+</script>
+
+}
+
+@section Body{
+
+    <div class="wrap join">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div class="container step2">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>회원가입</h2>
+            </div>
+            <!-- 약관동의 -->
+            <div class="boxtypeb">
+                <!-- 회원가입 순서 -->
+                <div class="joinstep">
+                    <h3 class="hidden">약관동의</h3>
+                    <ul>
+                        <li><i class="ico_d1"></i><br />01.<br />실명확인</li>
+                        <li class="cnt"><i class="ico_d2"></i><br />02.<br />약관동의<span class="hidden">-현재위치</span></li>
+                        <li><i class="ico_d3"></i><br />03.<br />회원정보입력</li>
+                        <li><i class="ico_d4"></i><br />04.<br />가입완료</li>
+                    </ul>
+                </div>
+                <p class="msg">이용약관과 개인정보 보호정책은 서비스 사이트 이용 및 상품 매매 규정 사항입니다. 가입 전에 반드시 읽어보시고, 동의하셔야 회원 가입이 완료됩니다.</p>
+                <!-- //회원가입 순서 -->
+            </div>
+            <!-- 약관동의 -->
+            <div class="boxtypea agreeform">
+
+@using (Html.BeginForm("JoinStep3", "MemberShip", FormMethod.Post, new { id = "frmJOIN_AGREE", name = "frmJOIN_AGREE" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+        <input type="text" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
+        <input type="hidden" name="M_AGREE" value="" />
+        <input type="hidden" name="M_AGREE2" value="" />
+
+
+                    <fieldset>
+                        <legend>약관동의 폼</legend>
+                        <ul>
+                            <li class="all">
+                                <label class="chkcon" for="allagree"><input type="checkbox" id="allagree" name="AGREE_ALL" title="" class="allagree_check" /> <span class="txt">모든약관 동의</span></label>
+                            </li>
+                            <li>
+                                <label class="chkcon" for="agree1"><input type="checkbox" id="agree1" name="AGREE_BASIC1" title="" class="agree_check" /> <span class="txt">웹사이트/모바일 이용약관</span></label>
+                                <a href="#none" class="view">내용보기<i></i></a>
+                            </li>
+                            <li>
+                                <label class="chkcon" for="agree2"><input type="checkbox" id="agree2" name="AGREE_BASIC2" title="" class="agree_check" /> <span class="txt">쇼핑몰 이용약관</span></label>
+                                <a href="#none" class="view">내용보기<i></i></a>
+                            </li>
+                            <li>
+                                <label class="chkcon" for="agree3"><input type="checkbox" id="agree3" name="AGREE_BASIC3" title="" class="agree_check" /> <span class="txt">개인정보 수집 및 이용</span></label>
+                                <a href="#none" class="view">내용보기<i></i></a>
+                            </li>
+                            <li>
+                                <label class="chkcon" for="agree4"><input type="checkbox" id="agree4" name="AGREE_BASIC4" title="" class="agree_check" /> <span class="txt">개인정보 위탁</span></label>
+                                <a href="#none" class="view">내용보기<i></i></a>
+                            </li>
+                            <li>
+                                <label class="chkcon" for="agree5"><input type="checkbox" id="agree5" name="agree5" value="Y" title="" class="agree_check" /> <span class="txt">개인정보 제3자 제공 (선택사항)</span></label>
+                                <a href="#none" class="view">내용보기<i></i></a>
+                            </li>
+                            <li>
+                                <label class="chkcon" for="agree6"><input type="checkbox" id="agree6" name="agree6" value="Y" title="" class="agree_check" /> <span class="txt">고유식별정보 수집 및 이용</span></label>
+                                <a href="#none" class="view">내용보기<i></i></a>
+                            </li>
+                        </ul>
+                        <a href="javascript:fGoNextStep();" class="btn btn_brown_h40">확인</a><a href="javascript:fGoCancel();" class="btn btn_white_h40">취소</a>
+                    </fieldset>
+
+}
+
+            </div>
+            <!-- //약관동의 -->
+        </div>
+        <!--//container-->
+
+
+        <!--footer-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--//footer-->
+    </div>
+
+    }
+
+
+    @section Footer{
+
+    }
