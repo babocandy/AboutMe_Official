@@ -39,7 +39,7 @@ namespace AboutMe.Web.Front.Controllers
         /**
          * 상품 이미지 폴더
          */
-        protected string _img_path_product{
+        public string _img_path_product{
             get
             {
                 return AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
@@ -49,7 +49,7 @@ namespace AboutMe.Web.Front.Controllers
         /**
          * 리뷰 이미지 폴더
          */
-        protected string _img_path_review
+        public string _img_path_review
         {
             get
             {

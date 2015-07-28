@@ -568,7 +568,7 @@
                                         <tr>
                                             <th>상품명</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:150px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="50" value="@Html.DisplayFor(model => model.P_NAME)" />
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="50" value="@Html.DisplayFor(model => model.P_NAME)" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -577,17 +577,21 @@
                                                 <input type="text" style="width:550px;" class="input-sm text-left" id="P_SUB_TITLE" name="P_SUB_TITLE" maxlength="100" value="@Html.DisplayFor(model => model.P_SUB_TITLE)" />
                                             </td>
                                         </tr>
+                                        @{
+                                            string ICONYN = "";
+                                            ICONYN = string.IsNullOrEmpty(Model.ICON_YN) ? "" : Model.ICON_YN;
+                                        }
                                         <tr>
                                             <th>아이콘</th>
                                             <td colspan="3">
-                                                <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (Model.ICON_YN.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
-                                                <label for="icon2"><input type="checkbox" id="iconYn" name="iconYn" value="T" @if (Model.ICON_YN.ToString().IndexOf('T') != -1) { <text> checked</text> } /><span class="txt mr5">TIME</span></label>
-                                                <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (Model.ICON_YN.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">COUPON</span></label>
-                                                <label for="icon3"><input type="checkbox" id="iconYn" name="iconYn" value="D" @if (Model.ICON_YN.ToString().IndexOf('D') != -1) { <text> checked</text> } /><span class="txt mr5">1+1</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (Model.ICON_YN.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="O" @if (Model.ICON_YN.ToString().IndexOf('O') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (Model.ICON_YN.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SET</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="U" @if (Model.ICON_YN.ToString().IndexOf('U') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
+                                                <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (ICONYN.ToString().IndexOf('N') != -1)
+                                                                                                                              { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (ICONYN.ToString().IndexOf('B') != -1)
+                                                                                                                              { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (ICONYN.ToString().IndexOf('S') != -1)
+                                                                                                                              { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
+                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (ICONYN.ToString().IndexOf('C') != -1)
+                                                                                                                              { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -676,6 +680,7 @@
                                             <th>함께하면 좋은상품<br />(","로 구분)</th>
                                             <td colspan="3">
                                                 <input type="text" style="width:550px;" class="input-sm text-left" id="WITH_PRODUCT_LIST" name="WITH_PRODUCT_LIST" maxlength="300" value="@Html.DisplayFor(model => model.WITH_PRODUCT_LIST)" />
+                                                <a href="/AdminProduct/PopProductIndex" class="btn btn-primary small" target="_blank" onclick="openScrollYes(this.href, this.target, '1300', '600');return false;">상품검색</a>
                                             </td>
                                         </tr>
                                     </tbody>

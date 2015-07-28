@@ -86,5 +86,20 @@ namespace AboutMe.Domain.Service.Review
 
             return ret;
         }
+
+        /*
+         * 
+         */
+        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetReviewProductList(int? tailIdx, string categoryCode,string sort)
+        {
+            List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_PRODUCT_SEL(tailIdx, categoryCode, sort).ToList();
+            }
+
+            return lst;
+        }
     }
 }

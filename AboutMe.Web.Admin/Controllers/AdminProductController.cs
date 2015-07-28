@@ -521,7 +521,7 @@ namespace AboutMe.Web.Admin.Controllers
                 {
                     //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
                     //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
-                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
 
                     // rename, resize, and upload
                     //return object that contains {bool Success,string ErrorMessage,string ImageName}
@@ -542,7 +542,7 @@ namespace AboutMe.Web.Admin.Controllers
                     //OTHER_IMG1.SaveAs(Server.MapPath(Product_path) + OTHER_IMG1.FileName);
                     //tb_product_info.OTHER_IMG1 = OTHER_IMG1.FileName;
 
-                    ImageUpload imageUpload1 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload1 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult1 = imageUpload1.RenameUploadFile(OTHER_IMG1);
                     if (imageResult1.Success)
                     {
@@ -559,7 +559,7 @@ namespace AboutMe.Web.Admin.Controllers
                     //OTHER_IMG2.SaveAs(Server.MapPath(Product_path) + OTHER_IMG2.FileName);
                     //tb_product_info.OTHER_IMG2 = OTHER_IMG2.FileName;
 
-                    ImageUpload imageUpload2 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload2 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult2 = imageUpload2.RenameUploadFile(OTHER_IMG2);
                     if (imageResult2.Success)
                     {
@@ -572,7 +572,7 @@ namespace AboutMe.Web.Admin.Controllers
                 }
                 if (OTHER_IMG3 != null)
                 {
-                    ImageUpload imageUpload3 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload3 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult3 = imageUpload3.RenameUploadFile(OTHER_IMG3);
                     if (imageResult3.Success)
                     {
@@ -656,7 +656,7 @@ namespace AboutMe.Web.Admin.Controllers
                 #region 파일 업로드
                 if (MAIN_IMG != null)
                 {
-                    ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult = imageUpload.RenameUploadFile(MAIN_IMG);
                     if (imageResult.Success)
                     {
@@ -674,7 +674,7 @@ namespace AboutMe.Web.Admin.Controllers
 
                 if (OTHER_IMG1 != null)
                 {
-                    ImageUpload imageUpload1 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload1 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult1 = imageUpload1.RenameUploadFile(OTHER_IMG1);
                     if (imageResult1.Success)
                     {
@@ -692,7 +692,7 @@ namespace AboutMe.Web.Admin.Controllers
                 }
                 if (OTHER_IMG2 != null)
                 {
-                    ImageUpload imageUpload2 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload2 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult2 = imageUpload2.RenameUploadFile(OTHER_IMG2);
                     if (imageResult2.Success)
                     {
@@ -709,7 +709,7 @@ namespace AboutMe.Web.Admin.Controllers
                 }
                 if (OTHER_IMG3 != null)
                 {
-                    ImageUpload imageUpload3 = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true };
+                    ImageUpload imageUpload3 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult3 = imageUpload3.RenameUploadFile(OTHER_IMG3);
                     if (imageResult3.Success)
                     {
@@ -928,6 +928,73 @@ namespace AboutMe.Web.Admin.Controllers
             #endregion
 
             return Content(sw.ToString(), "application/ms-excel");
+
+        }
+        #endregion
+
+        #region 팝업 상품 리스트
+        public ActionResult PopProductIndex(ProductSearch_Entity productSearch_Entity)
+        {
+
+            this.ViewBag.iconYn = Request.Form["iconYn"];
+
+            this.ViewBag.PageSize = productSearch_Entity.PageSize;
+            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+            if (!string.IsNullOrEmpty(this.ViewBag.SearchKeyword))
+            {
+                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
+                productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
+            }
+            this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
+
+            productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
+            this.ViewBag.cateCode = productSearch_Entity.cateCode;
+            this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
+            this.ViewBag.cateCode1 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(0, 3);
+            this.ViewBag.cateCode2 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(3, 3);
+            this.ViewBag.cateCode3 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(6, 3);
+            if (string.IsNullOrEmpty(this.ViewBag.iconYn))
+            {
+                this.ViewBag.iconYn = "";
+            }
+            
+            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
+            {
+                this.ViewBag.searchDisplayY = "";
+                productSearch_Entity.searchDisplayY = "";
+            }
+            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
+            {
+                this.ViewBag.searchDisplayN = "";
+                productSearch_Entity.searchDisplayN = "";
+            }
+            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+            this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
+            if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
+            {
+                this.ViewBag.FROM_DATE = "";
+                productSearch_Entity.FROM_DATE = "";
+            }
+            this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
+            if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
+            {
+                this.ViewBag.TO_DATE = "";
+                productSearch_Entity.TO_DATE = "";
+            }
+
+            int TotalRecord = 0;
+            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
+
+            this.ViewBag.TotalRecord = TotalRecord;
+            this.ViewBag.Page = productSearch_Entity.Page;
+
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+
+            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
 
         }
         #endregion

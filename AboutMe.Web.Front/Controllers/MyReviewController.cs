@@ -11,7 +11,7 @@ using System.Diagnostics;
 using AboutMe.Web.Front.Models;
 using AboutMe.Web.Front.Common.Filters;
 using AboutMe.Web.Front.Common;
-using AboutMe.Web.Front.Models;
+
 using AboutMe.Domain.Entity.Review;
 
 using AboutMe.Common.Helper;
@@ -23,7 +23,6 @@ namespace AboutMe.Web.Front.Controllers
     [Route("{action=Ready}")]
     public class MyReviewController : BaseFrontController
     {
-        // GET: AdminProduct
         private IReviewService _ReviewService;
 
         public MyReviewController(IReviewService _reviewService)
@@ -64,22 +63,22 @@ namespace AboutMe.Web.Front.Controllers
 
         [HttpGet]
         [CustomAuthorize]
-        public ActionResult Write(int? OrderDetailIdx, string Pcode = null)
+        public ActionResult Write(int? ORDER_DETAIL_IDX, string P_CODE = null)
         {
             MyReviewInsertViewModel model = new MyReviewInsertViewModel();
-            model.Mid = _user_profile.M_ID;
-            model.OrderDetailIdx = OrderDetailIdx;
-            model.Pcode = Pcode;
+            model.M_ID = _user_profile.M_ID;
+            model.ORDER_DETAIL_IDX = ORDER_DETAIL_IDX;
+            model.P_CODE = P_CODE;
+
+            
 
             //상품정보
-            if (Pcode != null)
+            if (P_CODE != null)
             {
-                model.ProductInfo = _ReviewService.GetProductInfo(Pcode);
-                /*ViewBag.Pname = productInfo.P_NAME;
-                ViewBag.Pimg = _img_path_product + productInfo.MAIN_IMG;
-                ViewBag.PsubTitle = productInfo.P_SUB_TITLE;
-                ViewBag.PcateCode = productInfo.P_CATE_CODE;*/
+                model.ProductInfo = _ReviewService.GetProductInfo(P_CODE);
             }
+            Debug.WriteLine("P_CODE: " + P_CODE);
+            Debug.WriteLine("model.ProductInfo: " + model.ProductInfo);
 
             return View(model);
         }
@@ -91,24 +90,24 @@ namespace AboutMe.Web.Front.Controllers
         {
 
             Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
-            Debug.WriteLine("OrderDetailIdx - " + model.OrderDetailIdx);
-            Debug.WriteLine("Pcode - " + model.Pcode);
-            Debug.WriteLine("Mid - " + model.Mid);
+            Debug.WriteLine("OrderDetailIdx - " + model.ORDER_DETAIL_IDX);
+            Debug.WriteLine("Pcode - " + model.P_CODE);
+            Debug.WriteLine("Mid - " + model.M_ID);
 
             /**
              * 상품정보 
              */
-            if (model.Pcode != null)
+            if (model.P_CODE != null)
             {
-                model.ProductInfo = _ReviewService.GetProductInfo(model.Pcode);
+                model.ProductInfo = _ReviewService.GetProductInfo(model.P_CODE);
             }
 
             /**
              * 뷰티일때만 피부타입 유효성 체크
              */
-            if (ReviewHelper.IsBeauty(model.ProductInfo.P_CATE_CODE))
+            if (!ReviewHelper.IsBeauty(model.ProductInfo.P_CATE_CODE))
             {
-                var valueToClean = ModelState["SkinType"];
+                var valueToClean = ModelState["SKIN_TYPE"];
                 valueToClean.Errors.Clear(); 
             }
 
@@ -129,12 +128,12 @@ namespace AboutMe.Web.Front.Controllers
                    if (imageResult.Success)
                    {
                        Debug.WriteLine(" imageResult.ImageName - " + imageResult.ImageName);
-                       model.AddImage = imageResult.ImageName;
+                       model.ADD_IMAGE = imageResult.ImageName;
                        
                    }
                }
 
-               Tuple<string, string> ret =  _ReviewService.InsertMyReview(model.Mid, model.OrderDetailIdx, model.Pcode, model.SkinType, model.Comment, model.AddImage);
+               Tuple<string, string> ret = _ReviewService.InsertMyReview(model.M_ID, model.ORDER_DETAIL_IDX, model.P_CODE, model.SKIN_TYPE, model.COMMENT, model.ADD_IMAGE);
                model.ResultMessage = ret.Item2;
                model.ResultNum = ret.Item1;
 
@@ -143,17 +142,17 @@ namespace AboutMe.Web.Front.Controllers
 
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
 
-            if (model.OrderDetailIdx == null )
+            if (model.ORDER_DETAIL_IDX == null )
             {
                  ModelState.AddModelError("", "*주문상세일련번호가 필요합니다.");
             }
 
-            if (model.Pcode == null && model.Pcode == "")
+            if (model.P_CODE == null && model.P_CODE == "")
             {
                 ModelState.AddModelError("", "*상품코드가 필요합니다.");
             }
 
-            if (model.Mid == null && model.Mid == "")
+            if (model.M_ID == null && model.M_ID == "")
             {
                 ModelState.AddModelError("", "*회원아이디가 필요합니다.");
             }

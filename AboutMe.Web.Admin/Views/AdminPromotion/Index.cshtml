@@ -41,7 +41,7 @@
             <a class="btn btn-default middium" href="/AdminPromotion/Create">신규 프로모션 등록</a>
             <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
         </div>
-
+        <!--
         <div class="panel">
             <h3 class="sub-header">기본설정</h3>
             <div class="alert alert-info">
@@ -51,7 +51,7 @@
                 </ul>
             </div>
         </div>
-
+            -->
         <div class="panel">
             <h4>전체할인 프로모션 리스트</h4>
 
@@ -111,7 +111,7 @@
                             <td class="brnone">@Html.ActionLink(item.PMO_TOTAL_NAME, "Update", new { CdPromotionTotal = item.CD_PROMOTION_TOTAL })</td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_TOTAL_CATEGORY_NAME)</td>
                           
-                            <td>@Html.DisplayFor(modelItem => item.PMO_TOTAL_RATE_OR_MONEY)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PMO_TOTAL_RATE_OR_MONEY) </td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_TOTAL_DISCOUNT_RATE)%</td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_TOTAL_DISCOUNT_MONEY)</td>
                           

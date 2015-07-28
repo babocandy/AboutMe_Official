@@ -459,5 +459,39 @@ namespace AboutMe.Domain.Service.Member
             return rObj;
         }
 
+
+        //회원 임직원 신청 등록
+        //리턴:ReturnDic
+        public ReturnDic SetMemberStaffRequestInert(string m_ID = "", string m_NAME = "", string m_GRADE = "", string sTAFF_COMPANY = "", string sTAFF_ID = "", string sTAFF_NAME = "")
+        {
+
+            int nERR_CODE = 0; //에러 없음
+            string strERR_MSG = ""; //에러 없음
+
+            using (MemberEntities MemberContext = new MemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = MemberContext.SP_MEMBER_STAFF_REQUEST_INS(m_ID, m_NAME, m_GRADE, sTAFF_COMPANY, sTAFF_ID, sTAFF_NAME, objOutParam);
+                nERR_CODE = (int)objOutParam.Value;
+
+                if (nERR_CODE != 0)
+                    strERR_MSG = "임직원 신청 등록 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+
+
+                /** }catch()
+                 {
+                       MemberContext.Dispose();
+                 }**/
+            }
+
+            //결과 리턴
+            ReturnDic rObj = new ReturnDic();
+            rObj.ERR_CODE = nERR_CODE.ToString();
+            rObj.ERR_MSG = strERR_MSG;
+
+            return rObj;
+        }
+
     } //class
 } //namespace

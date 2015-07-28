@@ -35,5 +35,6 @@ namespace AboutMe.Domain.Entity.Product
         public string REGDATE { get; set; }
         public string P_CATE_CODE { get; set; }
         public int P_VIEW_COUNT { get; set; }
+        public string P_SUB_TITLE { get; set; }
     }
 }

@@ -356,5 +356,34 @@ namespace AboutMe.Domain.Entity.Member
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_FIND_ID", m_NAMEParameter, m_EMAILParameter, m_MOBILEParameter, eRR_CODE, rET_M_ID, rET_M_NAME, rET_M_CREDATE);
         }
+    
+        public virtual int SP_MEMBER_STAFF_REQUEST_INS(string m_ID, string m_NAME, string m_GRADE, string sTAFF_COMPANY, string sTAFF_ID, string sTAFF_NAME, ObjectParameter eRR_CODE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var m_NAMEParameter = m_NAME != null ?
+                new ObjectParameter("M_NAME", m_NAME) :
+                new ObjectParameter("M_NAME", typeof(string));
+    
+            var m_GRADEParameter = m_GRADE != null ?
+                new ObjectParameter("M_GRADE", m_GRADE) :
+                new ObjectParameter("M_GRADE", typeof(string));
+    
+            var sTAFF_COMPANYParameter = sTAFF_COMPANY != null ?
+                new ObjectParameter("STAFF_COMPANY", sTAFF_COMPANY) :
+                new ObjectParameter("STAFF_COMPANY", typeof(string));
+    
+            var sTAFF_IDParameter = sTAFF_ID != null ?
+                new ObjectParameter("STAFF_ID", sTAFF_ID) :
+                new ObjectParameter("STAFF_ID", typeof(string));
+    
+            var sTAFF_NAMEParameter = sTAFF_NAME != null ?
+                new ObjectParameter("STAFF_NAME", sTAFF_NAME) :
+                new ObjectParameter("STAFF_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_STAFF_REQUEST_INS", m_IDParameter, m_NAMEParameter, m_GRADEParameter, sTAFF_COMPANYParameter, sTAFF_IDParameter, sTAFF_NAMEParameter, eRR_CODE);
+        }
     }
 }

@@ -54,7 +54,7 @@
 
         <div class="panel">
             <h4>쿠폰정책 리스트</h4>
-            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("Index", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -129,7 +129,7 @@
                             <td class="brnone">@Html.ActionLink(item.COUPON_NAME, "Update", new { CdCoupon = item.CD_COUPON })</td>
                             <td>@if(item.COUPON_GBN == "M") { <text>지불쿠폰</text> } else { <text>배송쿠폰</text>} </td>
                             <td>@if(item.RATE_OR_MONEY == "R") {<text>정률</text> } else {<text>정액</text>}</td>
-                            <td>@if(item.USABLE_DEVICE_GBN == "P") {<text>PC</text> } else {<text>Mobile</text>} </td>
+                            <td>@if(item.USABLE_DEVICE_GBN == "P") {<text>PC/MOBILE</text> } else {<text>Mobile</text>} </td>
                             <td>@{if(item.ISSUE_METHOD_GBN == "A") {<text>자동</text> } else {<text>수동</text>}} </td>
 
 

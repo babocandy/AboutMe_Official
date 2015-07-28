@@ -25,7 +25,8 @@
     else if (Model.ResultNum == "0")
     {
         <script>
-            window.opener.location.reload(true);
+            //window.opener.location.reload(true);
+            window.opener.location = "/MyPage/MyReview/Complete";
             self.close();
         </script>
     }
@@ -35,8 +36,25 @@
             document.getElementById("UploadImage").click();
         }
 
-        function changeUploadFile() {
-            document.frm.ImageFileName.value = document.frm.UploadImage.value;
+        function changeUploadFile(file) {
+            var filename = file.value;
+            filename = filename.split(/(\\|\/)/g).pop();
+
+            document.frm.ImageFileName.value = filename;
+
+            //이미지 미리보기 등록
+            if (FileReader != undefined) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var previewImage = document.getElementById("previewImage");
+                    previewImage.src = e.target.result;
+                }
+
+                console.log(file.files)
+                reader.readAsDataURL(file.files[0]);
+            }
+
         }
     </script>
 
@@ -60,9 +78,9 @@
                 {
                     @Html.AntiForgeryToken()
                     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
-                 <input type="hidden" name="Mid" value="@(Model.Mid)" />
-                <input type="hidden" name="OrderDetailIdx" value="@(Model.OrderDetailIdx)" />
-                <input type="hidden" name="Pcode" value="@(Model.Pcode)" />
+                    <input type="hidden" name="M_ID" value="@(Model.M_ID)" />
+                    <input type="hidden" name="ORDER_DETAIL_IDX" value="@(Model.ORDER_DETAIL_IDX)" />
+                    <input type="hidden" name="P_CODE" value="@(Model.P_CODE)" />
 
                 <fieldset>
                     <legend>상품 리뷰 등록 폼</legend>
@@ -98,33 +116,46 @@ else
 
                                 @if (ReviewHelper.IsBeauty(Model.ProductInfo.P_CATE_CODE))
                                 {
-                                    <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SkinType)</span>피부타입</th>
+                                    <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
                                     <td class="skintype">
-                                        <select class="selectstyleb" title="" name="SkinType">
-                                            <option selected="selected" value="">선택하세요</option>
-                                            <option value="10">건성</option>
-                                            <option value="20">중성</option>
-                                            <option value="30">지복합성</option>
-                                        </select>
+
+                                        @{
+                                            List<SelectListItem> items = new List<SelectListItem>();
+                                            items.Add(new SelectListItem { Text = "건성", Value = "10" });
+                                            items.Add(new SelectListItem { Text = "중성", Value = "20" });
+                                            items.Add(new SelectListItem { Text = "지복합성", Value = "30" });
+
+
+                                            foreach (var xx in items)
+                                            {
+                                                if (xx.Value == Model.SKIN_TYPE)
+                                                {
+                                                    xx.Selected = true;
+                                                    break;
+                                                }
+                                            }
+                                    }
+                                   @Html.DropDownList("SKIN_TYPE", items, "-선택하세요-", new { @class = "selectstyleb" })
+
 
                                     </td>
                                 }
   
                             </tr>
                             <tr class="edit">
-                                <th><span>@Html.ValidationMessageFor(model => model.Comment)</span>내용<br /><span>0 / 000 자</span></th>
+                                <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /><span>0 / 000 자</span></th>
                                 <td colspan="3">                                   
-                                    <textarea name="Comment" class="txtareatypea" style="width:100%"></textarea>                                    
+                                    <textarea name="COMMENT" class="txtareatypea" style="width:100%">@Model.COMMENT</textarea>                                    
                                 </td>                                
                             </tr>
                             <tr class="attach">
                                 <th>사진첨부</th>
                                 <td colspan="3">
                                     <span class="imgbox">
-                                        <img src="/aboutCom/images/review/write_imgnone.jpg" alt="" />
+                                        <img id="previewImage" src="/aboutCom/images/review/write_imgnone.jpg" alt="" />
                                     </span>
-                                    <input type="text" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" />
-                                    <input type="file" id="UploadImage" name="UploadImage" style="visibility:hidden;width:0px;" onchange="changeUploadFile();" />
+                                    <input type="text" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" value=""/>
+                                    @Html.TextBoxFor(m => m.UploadImage, new { type = "file",style="visibility:hidden;width:0px;", onchange="changeUploadFile(this);" })
                                     <a href="#" class="btn_white_w96h38 ml5" onclick="findUploadFile(); return false;">찾아보기</a>
                                 </td>
                             </tr>

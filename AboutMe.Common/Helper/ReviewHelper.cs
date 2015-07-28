@@ -58,5 +58,11 @@ namespace AboutMe.Common.Helper
         {
             return pCateCode.Substring(0, 3) == "101" ? true : false;
         }
+
+        public static string isBest(string pz)
+        {
+            return pz == "00" ? "best_choice" : "";
+            
+        }
     }
 }

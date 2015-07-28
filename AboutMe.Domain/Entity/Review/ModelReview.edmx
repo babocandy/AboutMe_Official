@@ -33,6 +33,11 @@
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
           <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="SP_REVIEW_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TAIL_IDX" Type="int" Mode="In" />
+          <Parameter Name="CATE_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="SORT" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_REVIEW_PRODUCT_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="COMMENT" Type="text" Mode="In" />
@@ -66,7 +71,7 @@
           <Parameter Name="P_CODE" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_REVIEW_PRODUCT_COMPLETE_CNT" ReturnType="Collection(Int32)">
-            <Parameter Name="M_ID" Mode="In" Type="String" />
+          <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_REVIEW_PRODUCT_COMPLETE_SEL" ReturnType="Collection(ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />
@@ -74,6 +79,11 @@
             <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
             <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
             <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_PRODUCT_SEL" ReturnType="Collection(ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result)">
+            <Parameter Name="TAIL_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="SORT" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_REVIEW_PRODUCT_READY_SEL_Result">
@@ -164,6 +174,32 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODUCT_COMPLETE_CNT" FunctionName="ReviewModel.Store.SP_REVIEW_PRODUCT_COMPLETE_CNT" />
           <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODUCT_COMPLETE_SEL" FunctionName="ReviewModel.Store.SP_REVIEW_PRODUCT_COMPLETE_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="PRIZE_GRADE" ColumnName="PRIZE_GRADE" />
+                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
+                <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODUCT_SEL" FunctionName="ReviewModel.Store.SP_REVIEW_PRODUCT_SEL" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result">
                 <ScalarProperty Name="IDX" ColumnName="IDX" />
