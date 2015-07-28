@@ -35,10 +35,7 @@
         </Function>
         <Function Name="SP_REVIEW_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TAIL_IDX" Type="int" Mode="In" />
-          <Parameter Name="CATE_BEAUTY" Type="varchar" Mode="In" />
-          <Parameter Name="CATE_HEALTH" Type="varchar" Mode="In" />
-          <Parameter Name="CATE_SEL_SHOP" Type="varchar" Mode="In" />
-          <Parameter Name="CATE_THEMA" Type="varchar" Mode="In" />
+          <Parameter Name="CATE_CODE" Type="varchar" Mode="In" />
           <Parameter Name="SORT" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_REVIEW_PRODUCT_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -85,10 +82,7 @@
           </FunctionImport>
           <FunctionImport Name="SP_REVIEW_PRODUCT_SEL" ReturnType="Collection(ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result)">
             <Parameter Name="TAIL_IDX" Mode="In" Type="Int32" />
-            <Parameter Name="CATE_BEAUTY" Mode="In" Type="String" />
-            <Parameter Name="CATE_HEALTH" Mode="In" Type="String" />
-            <Parameter Name="CATE_SEL_SHOP" Mode="In" Type="String" />
-            <Parameter Name="CATE_THEMA" Mode="In" Type="String" />
+            <Parameter Name="CATE_CODE" Mode="In" Type="String" />
             <Parameter Name="SORT" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>

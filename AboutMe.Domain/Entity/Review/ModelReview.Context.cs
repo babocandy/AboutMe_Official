@@ -114,33 +114,21 @@ namespace AboutMe.Domain.Entity.Review
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_COMPLETE_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual ObjectResult<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> SP_REVIEW_PRODUCT_SEL(Nullable<int> tAIL_IDX, string cATE_BEAUTY, string cATE_HEALTH, string cATE_SEL_SHOP, string cATE_THEMA, string sORT)
+        public virtual ObjectResult<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> SP_REVIEW_PRODUCT_SEL(Nullable<int> tAIL_IDX, string cATE_CODE, string sORT)
         {
             var tAIL_IDXParameter = tAIL_IDX.HasValue ?
                 new ObjectParameter("TAIL_IDX", tAIL_IDX) :
                 new ObjectParameter("TAIL_IDX", typeof(int));
     
-            var cATE_BEAUTYParameter = cATE_BEAUTY != null ?
-                new ObjectParameter("CATE_BEAUTY", cATE_BEAUTY) :
-                new ObjectParameter("CATE_BEAUTY", typeof(string));
-    
-            var cATE_HEALTHParameter = cATE_HEALTH != null ?
-                new ObjectParameter("CATE_HEALTH", cATE_HEALTH) :
-                new ObjectParameter("CATE_HEALTH", typeof(string));
-    
-            var cATE_SEL_SHOPParameter = cATE_SEL_SHOP != null ?
-                new ObjectParameter("CATE_SEL_SHOP", cATE_SEL_SHOP) :
-                new ObjectParameter("CATE_SEL_SHOP", typeof(string));
-    
-            var cATE_THEMAParameter = cATE_THEMA != null ?
-                new ObjectParameter("CATE_THEMA", cATE_THEMA) :
-                new ObjectParameter("CATE_THEMA", typeof(string));
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
     
             var sORTParameter = sORT != null ?
                 new ObjectParameter("SORT", sORT) :
                 new ObjectParameter("SORT", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_SEL", tAIL_IDXParameter, cATE_BEAUTYParameter, cATE_HEALTHParameter, cATE_SEL_SHOPParameter, cATE_THEMAParameter, sORTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter);
         }
     }
 }

@@ -90,13 +90,13 @@ namespace AboutMe.Domain.Service.Review
         /*
          * 
          */
-        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetReviewProductList(int? tailIdx, string cateBeauty, string cateHealth, string cateSelShop, string cateThema, string sort)
+        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetReviewProductList(int? tailIdx, string categoryCode,string sort)
         {
             List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                lst = context.SP_REVIEW_PRODUCT_SEL(tailIdx, cateBeauty, cateHealth, cateSelShop, cateThema, sort);
+                lst = context.SP_REVIEW_PRODUCT_SEL(tailIdx, categoryCode, sort).ToList();
             }
 
             return lst;
