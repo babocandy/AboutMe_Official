@@ -32,6 +32,8 @@ namespace AboutMe.Web.Front.Controllers
             M_EMAIL = MemberInfo.GetMemberEmail()
             ,
             M_M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD()  //회원 피부트러블 코드  char(9)
+            ,
+            NOMEMBER_ORDER_CODE = MemberInfo.GetNomemberOrderCode()
         };
 
         /**

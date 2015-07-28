@@ -112,5 +112,17 @@ namespace AboutMe.Domain.Service.Cart
             return result.COUNT;
         }
         #endregion
+
+        #region Wish List
+        public List<SP_TB_WISHLIST_LIST_Result> WishList(string m_id, int? page, int? pagesize)
+        {
+            List<SP_TB_WISHLIST_LIST_Result> result = new List<SP_TB_WISHLIST_LIST_Result>();
+            using (CartEntities EfContext = new CartEntities())
+            {
+                result = EfContext.SP_TB_WISHLIST_LIST(m_id, page, pagesize).ToList();
+            }
+            return result;
+        }
+        #endregion
     }
 }

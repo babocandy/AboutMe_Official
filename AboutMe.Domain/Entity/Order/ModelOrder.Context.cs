@@ -427,5 +427,94 @@ namespace AboutMe.Domain.Entity.Order
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_RESULT_PRODUCT_LIST_Result>("SP_ORDER_RESULT_PRODUCT_LIST", oRDER_CODEParameter, m_IDParameter, sESSION_IDParameter);
         }
+    
+        public virtual ObjectResult<SP_ORDER_NOMEMBER_LOGIN_Result> SP_ORDER_NOMEMBER_LOGIN(string oRDER_CODE, string nOMEMBER_PASS)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var nOMEMBER_PASSParameter = nOMEMBER_PASS != null ?
+                new ObjectParameter("NOMEMBER_PASS", nOMEMBER_PASS) :
+                new ObjectParameter("NOMEMBER_PASS", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_NOMEMBER_LOGIN_Result>("SP_ORDER_NOMEMBER_LOGIN", oRDER_CODEParameter, nOMEMBER_PASSParameter);
+        }
+    
+        public virtual ObjectResult<SP_MYPAGE_ORDERLIST_Result> SP_MYPAGE_ORDERLIST(string oRDER_CODE, string m_ID, string fROM_DATE, string tO_DATE, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var fROM_DATEParameter = fROM_DATE != null ?
+                new ObjectParameter("FROM_DATE", fROM_DATE) :
+                new ObjectParameter("FROM_DATE", typeof(string));
+    
+            var tO_DATEParameter = tO_DATE != null ?
+                new ObjectParameter("TO_DATE", tO_DATE) :
+                new ObjectParameter("TO_DATE", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MYPAGE_ORDERLIST_Result>("SP_MYPAGE_ORDERLIST", oRDER_CODEParameter, m_IDParameter, fROM_DATEParameter, tO_DATEParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual ObjectResult<SP_MYPAGE_ORDERLIST_CNT_Result> SP_MYPAGE_ORDERLIST_CNT(string oRDER_CODE, string m_ID, string fROM_DATE, string tO_DATE)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var fROM_DATEParameter = fROM_DATE != null ?
+                new ObjectParameter("FROM_DATE", fROM_DATE) :
+                new ObjectParameter("FROM_DATE", typeof(string));
+    
+            var tO_DATEParameter = tO_DATE != null ?
+                new ObjectParameter("TO_DATE", tO_DATE) :
+                new ObjectParameter("TO_DATE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MYPAGE_ORDERLIST_CNT_Result>("SP_MYPAGE_ORDERLIST_CNT", oRDER_CODEParameter, m_IDParameter, fROM_DATEParameter, tO_DATEParameter);
+        }
+    
+        public virtual ObjectResult<SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result> SP_MYPAGE_ORDERLIST_DETAIL_INFO(string oRDER_CODE, string m_ID)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result>("SP_MYPAGE_ORDERLIST_DETAIL_INFO", oRDER_CODEParameter, m_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result> SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST(string oRDER_CODE, string m_ID)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result>("SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST", oRDER_CODEParameter, m_IDParameter);
+        }
     }
 }

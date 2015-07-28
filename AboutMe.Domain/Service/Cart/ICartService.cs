@@ -29,5 +29,7 @@ namespace AboutMe.Domain.Service.Cart
         int WishInsert(string m_id, string p_code);
         //Delete
         int WishDelete(string m_id, int idx);
+
+        List<SP_TB_WISHLIST_LIST_Result> WishList(string m_id, int? page, int? pagesize);
     }
 }

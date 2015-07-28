@@ -26,7 +26,20 @@
 
     }
 
-
+    function ChkOrderLogin() {
+        var f = document.frmNoMemLOGIN;
+        if ($("#orderNum").val().trim() == "") {
+            alert("주문번호를 입력하세요");
+            return false;
+        }
+        if ($("#orderPwd").val().trim() == "") {
+            alert("비회원 주문 비밀번호를 입력하세요");
+            return false;
+        }
+        //f.action = "/MemberShip/LoginProc/";
+        f.action = "/MemberShip/NoMemOrderLoginProc/";
+        f.submit();
+    }
 </script>
 
 
@@ -93,13 +106,17 @@
                 <!--//회원로그인-->
                 <!--비회원로그인-->
                 <div class="nomember_check contypea">
-                    <h3><img src="/aboutCom/images/membership/h3_nomember_check.gif" alt="비회원 주문/배송조회" /></h3>
-                    <div class="iptarea">
-                        <label for="orderNum"><span class="txt">주문번호</span><input type="text" id="orderNum" class="ipttypea h35" style="width:200px" /></label>
-                        <label for="orderPw" class="mt10"><span class="txt">비밀번호</span><input type="password" id="orderPw" class="ipttypea h35" style="width:200px" /></label>
-                        <a href="#" class="btn_check btn_brown_w175h80">주문/배송 조회</a>
-                        <p class="ps_txt">결제 완료 후 안내해드린 주문번호와<br />주문 결제 시에  입력하셨던 비밀번호를 입력해주세요.</p>
-                    </div>
+                    @using (Html.BeginForm("NoMemLoginProc", "MemberShip", FormMethod.Post, new { id = "frmNoMemLOGIN", name = "frmNoMemLOGIN" }))
+                    {
+                        <h3><img src="/aboutCom/images/membership/h3_nomember_check.gif" alt="비회원 주문/배송조회" /></h3>
+                        <div class="iptarea">
+                            <label for="orderNum"><span class="txt">주문번호</span><input type="text" id="orderNum" name="orderNum" class="ipttypea h35" style="width:200px" /></label>
+                            <label for="orderPwd" class="mt10"><span class="txt">비밀번호</span><input type="password" id="orderPwd" name="orderPwd" class="ipttypea h35" style="width:200px" /></label>
+                            <a href="#none" class="btn_check btn_brown_w175h80" onclick="return ChkOrderLogin();">주문/배송 조회</a>
+                            <p class="ps_txt">결제 완료 후 안내해드린 주문번호와<br />주문 결제 시에  입력하셨던 비밀번호를 입력해주세요.</p>
+                        </div>
+                        <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
+                    }
                     <div class="contact">
                         <span class="cti">고객센터</span>
                         <p class="ctxt"><img src="/aboutCom/images/membership/txt_callnum.gif" alt="" /><span>평일 : 오전 10시 ~ 12시, 오후 2시 ~ 5시<br />토,일 공휴일 : 휴무</span>							</p>
