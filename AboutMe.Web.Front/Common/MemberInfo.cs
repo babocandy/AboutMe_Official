@@ -98,6 +98,13 @@ namespace AboutMe.Web.Front.Common
         }
 
 
+        //비회원 주문번호
+        public static string GetNomemberOrderCode()
+        {
+            CookieSessionStore cookiesession = new CookieSessionStore();
+            string NOMEMBER_ORDER_CODE = cookiesession.GetSecretSession("NOMEMBER_ORDER_CODE");
+            return NOMEMBER_ORDER_CODE;
+        }
 
     }
 }

@@ -198,6 +198,41 @@ namespace AboutMe.Domain.Service.Order
         }
         #endregion
 
+        #region 비회원 주문조회 로그인
+        public string OrderNomeberLoginChk(string ORDER_CODE, string NOMEMBER_PASS)
+        {
+            SP_ORDER_NOMEMBER_LOGIN_Result info = new SP_ORDER_NOMEMBER_LOGIN_Result();
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                info = EfContext.SP_ORDER_NOMEMBER_LOGIN(ORDER_CODE, NOMEMBER_PASS).FirstOrDefault();
+            }
+            return info.ORDER_CODE;
+        }
+        #endregion
 
+        #region My Order List
+        public List<SP_MYPAGE_ORDERLIST_Result> MyOrderList(string OrderCode, string Mid, string FromDate, string ToDate, int? Page, int PageSize)
+        {
+            List<SP_MYPAGE_ORDERLIST_Result> lst = new List<SP_MYPAGE_ORDERLIST_Result>();
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                lst = EfContext.SP_MYPAGE_ORDERLIST(OrderCode, Mid,FromDate, ToDate, Page, PageSize).ToList();
+            }
+
+            return lst;
+        }
+        #endregion
+
+        #region My Order List Count
+        public int MyOrderListCount(string OrderCode, string Mid, string FromDate, string ToDate)
+        {
+            SP_MYPAGE_ORDERLIST_CNT_Result result = new SP_MYPAGE_ORDERLIST_CNT_Result();
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                result = EfContext.SP_MYPAGE_ORDERLIST_CNT(OrderCode, Mid, FromDate, ToDate).FirstOrDefault();
+            }
+            return result.COUNT;
+        }
+        #endregion
     }
 }

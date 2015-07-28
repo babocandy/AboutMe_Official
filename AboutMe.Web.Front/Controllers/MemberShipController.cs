@@ -10,6 +10,7 @@ using AboutMe.Common.Helper;
 using AboutMe.Web.Front.Common;
 
 using AboutMe.Domain.Service.Cart;
+using AboutMe.Domain.Service.Order;
 
 using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
@@ -31,14 +32,14 @@ namespace AboutMe.Web.Front.Controllers
     {
         private IMemberService _MemberService;
         private ICartService _Cartservice;
+        private IOrderService _orderservice;
 
-
-        public MemberShipController(IMemberService _memberService, ICartService _cartservice)
+        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice)
         {
             this._MemberService = _memberService;
             this._Cartservice = _cartservice;
+            this._orderservice = _orderservice;
         }
-
 
         //사용자 로그인 폼
         public ActionResult Login(string RedirectUrl = "", string OrderList = "")
@@ -162,6 +163,7 @@ namespace AboutMe.Web.Front.Controllers
                 cookiesession.SetSecretSession("M_EMAIL", result.M_EMAIL);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_PHONE", result.M_PHONE);  //로그인 세션 세팅
                 cookiesession.SetSecretSession("M_GBN", result.M_GBN);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", "");  //비회원주문 ORDER_CODE
 
                 cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅
 
@@ -230,6 +232,31 @@ namespace AboutMe.Web.Front.Controllers
             return RedirectToAction("InsertOrderStep1", "Order", new { OrderList = OrderList }); // 주문페이지로이동
         }
 
+        
+        //비회원 주문조회 로그인
+        [HttpPost]
+        public ActionResult NoMemOrderLoginProc(string orderNum, string orderPwd, string RedirectUrl = "")
+        {
+            string OrderCode = "";
+            OrderCode = _orderservice.OrderNomeberLoginChk(orderNum, orderPwd);
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('주문정보를 찾을수 없습니다. 다시 확인해주세요.');history.go(-1);</script>");
+            }
+            else
+            {
+                //비회원 주문 코드 세팅
+                CookieSessionStore cookiesession = new CookieSessionStore();
+                cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", OrderCode);  //비회원주문 ORDER_CODE
+                
+                if (RedirectUrl != "")
+                    return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
+                else
+                    return RedirectToAction("", "MyPage/MyOrder");
+                
+            }
+        }
+
         //사용자 로그아웃 처리
         public ActionResult Logout()
         {
@@ -243,6 +270,7 @@ namespace AboutMe.Web.Front.Controllers
             cookiesession.SetSecretSession("M_EMAIL", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("M_PHONE", "");  //로그인 세션 세팅
             cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", "");  //로그인 세션 세팅
+            cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", "");  //비회원주문 ORDER_CODE
 
             cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", "");  //로그인 세션 세팅 -평문
 

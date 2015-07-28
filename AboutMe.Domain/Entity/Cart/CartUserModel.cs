@@ -50,4 +50,13 @@ namespace AboutMe.Domain.Entity.Cart
         public Int32 TotalPage { get; set; }
         public IEnumerable<SP_TB_CART_LIST_Result> CartList { get; set; }
     }
+
+    public class MYPAGE_WISHLIST_MODEL
+    {
+        public int WishCnt { get; set; }
+        public int? Page { get; set; }
+        public int? PageCnt { get; set; }
+        public USER_PROFILE UserProfile { get; set; }
+        public List<SP_TB_WISHLIST_LIST_Result> WishList { get; set; }
+    }
 }

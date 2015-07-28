@@ -27,6 +27,8 @@ namespace AboutMe.Domain.Service.Order
         string OrderPaySave(ORDER_PAY_PARAM Param);
         List<SP_ORDER_RESULT_PRODUCT_LIST_Result> OrderResultProductList(string ORDER_CODE, string M_ID, string SESSION_ID);
         SP_ORDER_RESULT_DETAIL_Result OrderResultDetailInfo(string ORDER_CODE, string M_ID, string SESSION_ID);
-
+        string OrderNomeberLoginChk(string ORDER_CODE, string NOMEMBER_PASS);
+        List<SP_MYPAGE_ORDERLIST_Result> MyOrderList(string OrderCode, string Mid, string FromDate, string ToDate, int? Page, int PageSize);
+        int MyOrderListCount(string OrderCode, string Mid, string FromDate, string ToDate);
     }
 }

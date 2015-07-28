@@ -170,5 +170,22 @@ namespace AboutMe.Domain.Entity.Cart
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_WISH_CNT_Result>("SP_TB_WISHLIST_PRODUCT_DEL", m_IDParameter, iDXParameter);
         }
+    
+        public virtual ObjectResult<SP_TB_WISHLIST_LIST_Result> SP_TB_WISHLIST_LIST(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_WISHLIST_LIST_Result>("SP_TB_WISHLIST_LIST", m_IDParameter, pAGEParameter, pAGESIZEParameter);
+        }
     }
 }

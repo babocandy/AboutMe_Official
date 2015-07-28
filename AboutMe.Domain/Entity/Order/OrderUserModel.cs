@@ -286,4 +286,15 @@ namespace AboutMe.Domain.Entity.Order
         public SP_ORDER_RESULT_DETAIL_Result DetailInfo { get; set; }
     }
     
+    //MyPage 주문내역
+    public class MyORDER_INDEX
+    {
+        public int? Page { get; set; }
+        public int PageSize { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public int OrderCnt { get; set; }
+        public USER_PROFILE UserProfile { get; set; }
+        public List<SP_MYPAGE_ORDERLIST_Result> OrderList { get; set; }
+    }
 }
