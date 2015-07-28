@@ -5,7 +5,7 @@ using AboutMe.Domain.Entity.Review;
 using AboutMe.Domain.Entity.Product;
 using AboutMe.Common.Helper;
 using System.Diagnostics;
-
+using System;
 namespace AboutMe.Web.Front.Models
 {
     public class MyReviewInsertViewModel
@@ -81,6 +81,7 @@ namespace AboutMe.Web.Front.Models
                     item.M_SEX = ReviewHelper.ConvertGenger(item.M_SEX);
                     item.SKIN_TYPE = ReviewHelper.ConvertSkinType(item.SKIN_TYPE);
                     item.PRIZE_GRADE = ReviewHelper.isBest(item.PRIZE_GRADE);
+                    item.COMMENT = item.COMMENT.Replace(Environment.NewLine, "<br />");
                 }
             }
         }

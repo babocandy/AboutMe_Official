@@ -65,7 +65,8 @@
         /**/
         // init Masonry
         $grid = $('#reviewConts').masonry({
-            itemSelector: ".grid"
+            itemSelector: ".grid",
+            transitionDuration: 0
         });
         // layout Masonry after each image loads
         $grid.imagesLoaded().progress(function () {
@@ -75,17 +76,6 @@
         /*
         //example  http://masonry.desandro.com/methods.html#appended
 
-        var $container = $('#reviewConts');
-        msnry = new Masonry($container, { itemSelector: '.grid' });
-        msnry.layout();
-
-        $container.imagesLoaded().progress(function () {
-            msnry.layout();
-        });
-
-        $container.imagesLoaded(function () {
-            msnry.layout();
-        });
        */
     }
     function getReviewProducList() {
@@ -297,7 +287,7 @@
                                     }
                                    
                                     <div class="txt txtdotdot">
-                                        @item.COMMENT
+                                        @Html.Raw(item.COMMENT);
                                     </div>
                                 </div>
                             </div>
