@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Mobile-Login";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+
+}
+
+<!--container-->
+@section Body{
+
+    <div class="wrap mymain">
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>마이페이지</h2>
+            </div>
+            <!-- 회원정보 -->
+            <div>
+                <h3>사용자 정보</h3>
+                <div class="userinfo boxtypea">
+                    <!-- vip gold siver bronze	class 사용-->
+                    <p class="bronze">
+                        <strong>@ViewBag.M_NAME</strong> 님은<br />
+                        <span>@ViewBag.M_GRADE_NAME 클래스</span>입니다.
+                    </p>
+                    <a href="#" class="btn btn_white_h30 btn_viwebf" style="width:102px">회원혜택보기</a>
+                </div>
+                <dl class="mypoint">
+                    <dt><i class="bl_lgpoint"></i>포인트</dt>
+                    <dd><i class="bl_smpoint"></i><strong>126,298</strong></dd>
+                </dl>
+            </div>
+            <!-- //회원정보 -->
+            <!-- 진행중인 주문/배송현황 -->
+            <div class="myinfobox boxtypea">
+                <h3>진행중인 주문/배송현황</h3>
+                <div class="deliveryflow">
+                    <ul>
+                        <li class="cnt"><span class="bg_d0">진행중<br /><strong>02</strong>건</span><span class="hidden">-현재위치</span></li>
+                        <li><i class="ico_d1"></i>입금대기<br /><strong>01</strong>건</li>
+                        <li><i class="ico_d2"></i>결제완료<br /><strong>00</strong>건</li>
+                        <li><i class="ico_d3"></i>상품준비중<br /><strong>00</strong>건</li>
+                        <li><i class="ico_d4"></i>배송중<br /><strong>00</strong>건</li>
+                        <li><i class="ico_d5"></i>배송완료<br /><strong>01</strong>건</li>
+                    </ul>
+                </div>
+                <div class="myinfo_list">
+                    <ul>
+                        <li><a href="#link"><span>배송/주문 조회 <em>진행 중 <strong>02</strong>건</em></span><i class="arrow_right"></i></a></li>
+                        <li>
+                            <a href="#link"><span>교환/반품 신청 <em>진행 중 <strong>0</strong>건</em></span><i class="arrow_right"></i></a>
+                            <div class="btn_group">
+                                <a href="#none" class="btn btn_white_h30">쿠폰북</a><a href="#none" class="btn btn_white_h30">1:1문의</a><a href="#none" class="btn btn_white_h30">찜목록</a>
+                            </div>
+                            <div class="concerns">
+                                <p class="ctit">내 피부고민 설정<a href="#none" class="btn_set"><i class="bl_set"></i></a></p>
+                                <div class="msgbox">
+                                    <dl>
+                                        <dt>
+                                            <i class="ico_concerns"></i>
+                                            <span class="contxt">보습</span>
+                                        </dt>
+                                        <dd>
+                                            <p>
+                                                <span>이효리</span>님,<br />
+                                                5 Step  수분가득 보습케어로
+                                                피부고민을 해결해보세요!
+                                            </p>
+                                            <a href="#none" class="viewlink">상품보기 ></a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="#link"><span>나의리뷰</span><i class="arrow_right"></i></a></li>
+                        <li><a href="#link"><span>회원정보수정</span><i class="arrow_right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- //진행중인 주문/배송현황 -->
+        </div>
+        <!--//container-->
+
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+</div>
+
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+
+}
+<!--//footer-->

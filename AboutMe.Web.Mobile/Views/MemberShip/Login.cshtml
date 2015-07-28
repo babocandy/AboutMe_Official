@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Mobile-Login";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/membership.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+<script>
+    var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+    function fGoLogin() {
+        var f = document.frmLOGIN;
+        if (f.ID.value.length < 2) {
+            alert("아이디를 입력하세요");
+            return;
+        }
+        if (f.PW.value.length < 4) {
+            alert("비밀번호를 입력하세요");
+            return;
+        }
+        //f.action = "/MemberShip/LoginProc/";
+        f.action = glHTTPS_DOMAIN + "/MemberShip/LoginProc";
+        f.submit();
+
+    }
+
+
+</script> 
+}
+
+<!--container-->
+@section Body{
+
+    <div class="wrap login">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>로그인</h2>
+            </div>
+            <div class="boxtypea">
+                <ul class="tabs tabtypeb">
+                    <li class="cnt"><a href="#login_tab1">회원 로그인</a></li>
+                    <li><a href="#login_tab2">비회원 주문/배송 조회</a></li>
+                </ul>
+                <!-- 회원 로그인 입력 -->
+                <div id="login_tab1" class="loginform tab_content" style="display:block">
+@using (Html.BeginForm("LoginProc", "MemberShip", FormMethod.Post, new { id = "frmLOGIN", name = "frmLOGIN" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                              
+                            <fieldset>
+                            <legend>회원 로그인 폼</legend>
+                            <h3 class="hidden">로그인 정보 입력</h3>
+                            <div class="input_group">
+                                <label>아이디<br /><input type="text" class="ipttypea" style="width:100%;" title="아이디 입력" id="id" name="ID" value="" maxlength="13" /></label>
+                                <label>비밀번호<br /><input type="password" class="ipttypea" style="width:100%;" title="비밀번호 입력" id="pw" name="PW" value="" maxlength="12" /></label>
+                            </div>
+                            <div class="chk_remember mt20">
+                                <label class="chkcon v2"><input type="checkbox" name="" title="로그인상태 유지" /> <span class="txt">로그인상태 유지</span></label>
+
+                                <label class="chkcon v2"><input type="checkbox" name="" title="아이디저장" /> <span class="txt">아이디저장</span></label>
+                            </div>
+                                <a href="javascript:fGoLogin();" class="btn btn_brown_h50 lock mt20">로그인</a>
+                            <a href="#none" class="btn btn_white_h50 f13 mt10">비회원주문하기</a>
+                        </fieldset>
+
+    <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
+    <input type="hidden" name="OrderList" value="@ViewBag.OrderList">
+
+}
+                </div>
+                <!-- //회원 로그인 입력 -->
+                <!-- 비회원주문 입력 -->
+                <div id="login_tab2" class="loginform tab_content">
+                    <form action="">
+                        <fieldset>
+                            <legend>비회원 주문/배송 조회 폼</legend>
+                            <h3 class="hidden">비회원 주문/배송 조회 입력</h3>
+                            <div class="input_group">
+                                <label>주문번호<br /><input type="text" class="ipttypea" style="width:100%;" title="주문번호 입력" /></label>
+                                <label>비밀번호<br /><input type="password" class="ipttypea" style="width:100%;" title="비밀번호 입력" /></label>
+                            </div>
+                            <a href="#none" class="btn btn_brown_h50 mt30">주문/배송조회</a>
+                        </fieldset>
+                    </form>
+                </div>
+                <!-- //비회원주문 입력 -->
+                <!-- 서브링크 -->
+                <div class="sublink">
+                    <ul>
+                        <li><a href="/MemberShip/IdSearch">아이디 찾기</a></li>
+                        <li><a href="/MemberShip/PwSearch">비밀번호 찾기</a></li>
+                        <li><a href="/MemberShip/JoinStep1">회원가입</a></li>
+                    </ul>
+                </div>
+                <!-- //서브링크 -->
+                <!-- 알려드립니다 -->
+                <div class="info_msg">
+                    <h3><i class="bl_info"></i>알려드립니다</h3>
+                    <ul>
+                        <li>회원가입 없이 비회원으로 구매하실 수도 있습니다.</li>
+                        <li>회원가입 후 구매 시 할인 쿠폰 제공, 적립금 및 마일리지 혜택이 있습니다.</li>
+                    </ul>
+                </div>
+                <!-- //알려드립니다 -->
+            </div>
+        </div>
+        <!--//container-->
+
+
+
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    </div>
+}
+<!--//container-->
+<!--footer-->
+@section Footer{
+
+}
+<!--//footer-->
