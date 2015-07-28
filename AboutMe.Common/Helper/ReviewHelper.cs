@@ -61,7 +61,7 @@ namespace AboutMe.Common.Helper
 
         public static string isBest(string pz)
         {
-            return pz == "00" ? "best_choice" : "";
+            return pz == "99" ? "best_choice" : "";
             
         }
     }

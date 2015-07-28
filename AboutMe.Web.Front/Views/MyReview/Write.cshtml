@@ -88,7 +88,7 @@
                     <table summary="상품찾기, 피부타입, 제목">
                         <caption>상품 리뷰 등록 입력 표</caption>
                         <colgroup>
-@if (ReviewHelper.IsBeauty(Model.ProductInfo.P_CATE_CODE))
+@if (ReviewHelper.IsBeauty(Model.ProductInfo.C_CATE_CODE))
 {
                             <col width="147" />
                             <col width="*" />
@@ -114,7 +114,7 @@ else
                                     </div>
                                 </td>
 
-                                @if (ReviewHelper.IsBeauty(Model.ProductInfo.P_CATE_CODE))
+                                @if (ReviewHelper.IsBeauty(Model.ProductInfo.C_CATE_CODE))
                                 {
                                     <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
                                     <td class="skintype">
