@@ -24,6 +24,10 @@
     <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
     <script>
+        var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+        var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+
+        var glREGISTER_ING = false;  //저장처리중
 
         function fSetEmailDomain() {
             var f = document.frmPopSearch;
@@ -32,7 +36,19 @@
             }
         }
 
-          function fGoFind() {
+        function fComplete() {
+            var f = document.frmPopSearch;
+            f.action = "/MemberShip/IdSearch_End";
+            f.method = "post";
+            f.submit();
+        }
+
+        function fGoFind() {
+
+            if (glREGISTER_ING == true) {
+                alert("처리중입니다. 잠시만 기다려 주세요")
+            }
+
             var f = document.frmPopSearch;
             if (f.M_NAME.value.length < 2) {
                 alert("이름을 입력하세요");
@@ -63,10 +79,50 @@
                 return;
             }
 
-            f.action = "/MemberShip/IdSearch_End";
-            f.target = "";
-            f.submit();
+            //f.action = "/MemberShip/IdSearch_End";
+            //f.action = glHTTPS_DOMAIN +"/MemberShip/IdSearch_End";
+            //f.target = "";
+           // f.submit();
 
+            var strTOKEN = f.__RequestVerificationToken.value;
+            var strM_NAME = f.M_NAME.value;
+            var strM_EMAIL = f.M_EMAIL.value;
+            var strM_MOBILE = f.M_MOBILE.value;
+
+            var strURL = glHTTPS_DOMAIN + "/MemberShip/AjaxIdSearchProc";
+
+            glREGISTER_ING = true;
+
+            $.ajax({
+                url: strURL,
+                async: false,  //동기 통신
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: strTOKEN
+                    , M_NAME: strM_NAME
+                    , M_EMAIL: strM_EMAIL
+                    , M_MOBILE: strM_MOBILE
+
+                },
+                success: function (retDATA) {
+                    if (retDATA.ERR_CODE == "0") {
+                        f.M_ID.value = retDATA.M_ID;
+                        f.M_CREDATE.value = retDATA.M_CREDATE;
+                        glREGISTER_ING = false;
+                        fComplete();
+
+                    }
+                    else {
+                        glREGISTER_ING = false;
+                        alert("아이디 찾기 실패! " + retDATA.ERR_MSG);
+                    }
+                },
+                error: function (e) {
+                    glREGISTER_ING = false;
+                    alert("ajax 오류발생1");
+                }
+            }); //ajax
 
         } //func
 
@@ -95,6 +151,11 @@
                     <input type="hidden" name="M_EMAIL" value="" />
                     <input type="hidden" name="M_MOBILE" value="" />
 
+    <!--리턴값-->
+    <input type="hidden" name="M_ID" value="" />
+    <input type="hidden" name="M_CREDATE" value="" />
+
+                                                            
                     <fieldset>
                         <legend>아이디 찾기 폼</legend>
                         <table summary="이름,이메일,핸드폰 번호">
@@ -114,7 +175,7 @@
                                         <input type="text" class="ipttypea" style="width:100px" title="이메일주소 입력" name="M_EMAIL_1" maxlength="30" value="" />
                                         &nbsp;&nbsp;@@&nbsp;&nbsp;
                                         <input type="text" class="ipttypea mr10" style="width:100px" title="이메일 도메인 입력" name="M_EMAIL_2" maxlength="50" value="" />
-                                        <select class="selectstyleb" title="이메일 도메인 선택" name="M_EMAIL_SEL" onchange="javascript:fSetEmailDomain()">
+                                        <select class="selectstyleb" title="이메일 도메인 선택" name="M_EMAIL_SEL" onchange="javascript: fSetEmailDomain();">
                                             <option value="">직접입력</option>
                                             <option value="daum.net">daum.net</option>
                                             <option value="hanmail.net">hanmail.net</option>
