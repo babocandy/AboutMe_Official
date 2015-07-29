@@ -72,8 +72,6 @@ namespace AboutMe.Web.Front.Controllers
             model.ORDER_DETAIL_IDX = ORDER_DETAIL_IDX;
             model.P_CODE = P_CODE;
 
-            
-
             //상품정보
             if (P_CODE != null)
             {

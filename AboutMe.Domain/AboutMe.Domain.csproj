@@ -177,6 +177,7 @@
     <Compile Include="Entity\AdminCoupon\TB_COUPON_PRODUCT.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminDisplay\AdminDisplayModels.cs" />
     <Compile Include="Entity\AdminDisplay\ModelAdminDisplay.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,6 +192,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelAdminDisplay.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminDisplay\SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result.cs">
+      <DependentUpon>ModelAdminDisplay.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminEtc\AdminEtc_EntityPartial.cs" />
     <Compile Include="Entity\AdminEtc\AdminEtc_Metadata.cs" />
@@ -728,6 +732,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
+    <Compile Include="Service\AdminDisplay\AdminDisplayService.cs" />
+    <Compile Include="Service\AdminDisplay\IAdminDisplayService.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
     <Compile Include="Service\AdminEtc\IAdminMemberService.cs" />

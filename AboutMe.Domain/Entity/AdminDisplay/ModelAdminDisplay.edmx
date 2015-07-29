@@ -4,20 +4,55 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AboutMeModel5.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AboutMeModel5.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="URL" Type="varchar" Mode="In" />
+          <Parameter Name="IMG" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AboutMeModel5StoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AboutMeModel5" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="AdminDisplayEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="AdminDisplayEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="URL" Mode="In" Type="String" />
+            <Parameter Name="IMG" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL" ReturnType="Collection(AboutMeModel5.SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result)" />
+        </EntityContainer>
+        <ComplexType Name="SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="URL" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="IMG" Nullable="true" MaxLength="100" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AboutMeModel5StoreContainer" CdmEntityContainer="AdminDisplayEntities" />
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel5StoreContainer" CdmEntityContainer="AdminDisplayEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER" FunctionName="AboutMeModel5.Store.SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER" FunctionName="AboutMeModel5.Store.SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL" FunctionName="AboutMeModel5.Store.SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel5.SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="IMG" ColumnName="IMG" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

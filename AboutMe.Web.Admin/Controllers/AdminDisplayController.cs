@@ -8,11 +8,22 @@ using System.Diagnostics;
 using AboutMe.Web.Admin.Models;
 using AboutMe.Web.Admin.Common.Filters;
 using AboutMe.Web.Admin.Common;
+using AboutMe.Domain.Entity.AdminDisplay;
+using AboutMe.Domain.Service.AdminDisplay;
+using AboutMe.Common.Helper;
+using AboutMe.Common.Data;
+
 
 namespace AboutMe.Web.Admin.Controllers
 {
-    public class AdminDisplayController : Controller
+    public class AdminDisplayController : BaseAdminController
     {
+        private IAdminDisplayService _Service;
+        public AdminDisplayController(IAdminDisplayService service)
+        {
+            this._Service = service;
+        }
+
         [CustomAuthorize]
         public ActionResult Index()
         {
@@ -20,9 +31,32 @@ namespace AboutMe.Web.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult SaveWebMainBanner()
+        [HttpPost]
+        public ActionResult SaveWebMainBanner(WebMainBannerParam param)
         {
-            return View();
+            //param.IDX
+
+            Debug.WriteLine("------------------>");
+            Debug.WriteLine("url :"+param.URL);
+
+            string imgName = null;
+            if (param.IMG != null)
+            {
+                ImageUpload imageUpload = new ImageUpload { UploadPath = _img_path_display, addMobileImage = false };
+                ImageResult imageResult = imageUpload.RenameUploadFile(param.IMG);
+                if (imageResult.Success)
+                {
+                    imgName = imageResult.ImageName;
+                }
+            }
+
+            Debug.WriteLine(param.IDX.ToString());
+            Debug.WriteLine(param.URL);
+            Debug.WriteLine(imgName);
+
+            _Service.SaveWebMainBanner(param.IDX, param.URL, imgName);
+           
+            return RedirectToAction("Index");
         }
 
         public ActionResult RemoveWebMainBanner()

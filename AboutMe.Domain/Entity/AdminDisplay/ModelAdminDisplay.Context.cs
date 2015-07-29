@@ -12,6 +12,8 @@ namespace AboutMe.Domain.Entity.AdminDisplay
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AdminDisplayEntities : DbContext
     {
@@ -25,5 +27,36 @@ namespace AboutMe.Domain.Entity.AdminDisplay
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual int SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER(Nullable<int> iDX, string uRL, string iMG)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var uRLParameter = uRL != null ?
+                new ObjectParameter("URL", uRL) :
+                new ObjectParameter("URL", typeof(string));
+    
+            var iMGParameter = iMG != null ?
+                new ObjectParameter("IMG", iMG) :
+                new ObjectParameter("IMG", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER", iDXParameter, uRLParameter, iMGParameter);
+        }
+    
+        public virtual int SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER", iDXParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result> SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result>("SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL");
+        }
     }
 }
