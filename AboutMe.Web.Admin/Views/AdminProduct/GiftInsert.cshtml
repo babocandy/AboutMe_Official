@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "ProductInsert";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Scripts{
+
+    <script language="javascript">
+
+        $(function () {
+           
+        });
+
+        function formChk() {
+
+            var f = document.bform;
+            var deny_pattern = /[^(a-zA-Z0-9)]/;
+            var deny_pattern_id = /[^(a-z0-9)]/;
+            var deny_pattern_hp = /[^(0-9)*-]/;
+            var deny_patternOnlyEng = /[^(sa-zA-Z)]/;
+
+
+            if (f.GIFT_NAME.value == '') {
+                alert("사은품명을 입력하세요.");
+                f.GIFT_NAME.focus();
+                return false;
+            }
+
+            if (f.GIFT_COUNT.value == '') {
+                alert("사은품 수량을 입력하세요.");
+                f.GIFT_COUNT.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.GIFT_COUNT.value) == 0) {
+                alert("사은품 수량을 입력하세요.");
+                f.GIFT_COUNT.value = "";
+                f.GIFT_COUNT.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.GIFT_COUNT.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.GIFT_COUNT.value = "";
+                document.bform.GIFT_COUNT.focus();
+                return false;
+            }
+
+            if (f.START_PRICE.value == "") {
+                alert("최소구매금액을 입력해 주세요!");
+                f.START_PRICE.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.START_PRICE.value) == 0) {
+                alert("최소구매금액을 입력하세요.");
+                f.START_PRICE.value = "";
+                f.START_PRICE.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.START_PRICE.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.START_PRICE.value = "";
+                document.bform.START_PRICE.focus();
+                return false;
+            }
+
+            if (f.END_PRICE.value == "") {
+                alert("최대 구매금액을 입력해 주세요!");
+                f.END_PRICE.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.END_PRICE.value) == 0) {
+                alert("최대 구매금액을 입력하세요.");
+                f.END_PRICE.value = "";
+                f.END_PRICE.focus();
+                return false;
+            }
+
+            if (deny_pattern_hp.test(f.END_PRICE.value)) {
+                alert("숫자만 입력해 주십시오.");
+                document.bform.END_PRICE.value = "";
+                document.bform.END_PRICE.focus();
+                return false;
+            }
+
+
+            if (f.GIFT_IMG.value == "") {
+                alert("사은품이미지를 올려 주세요!");
+                f.GIFT_IMG.focus();
+                return false;
+            }
+
+            if (deleteSpace(f.GIFT_IMG.value) == 0) {
+                alert("사은품이미지를 올려 주세요.");
+                f.GIFT_IMG.value = "";
+                f.GIFT_IMG.focus();
+                return false;
+            }
+
+            document.bform.submit();
+
+        }
+
+
+        //문자열 안의 공백 지우기
+        function deleteSpace(str) {
+            var out = "";
+
+            for (common_i = 0; common_i < str.length; common_i++) {
+                if (str.charAt(common_i) == " ") {
+                    continue;
+                }
+                out += str.charAt(common_i);
+            }
+            return out.length;
+        }
+
+        function selChange(obj_selectbox, sel_index) {
+            alert(obj_selectbox[sel_index].value);
+        }
+
+
+
+
+    </script>
+
+
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+        @using (Html.BeginForm("GiftInsert", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", enctype = "multipart/form-data", onsubmit = "return formChk();" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                            <div class="panel">
+                                <h3 class="sub-header">사은품관리</h3>
+                                <table class="table table_row">
+                                    <colgroup><col width="15%" /><col width="35%" /><col width="15%" /><col width="35%" /></colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>*사은품명</th>
+                                            <td>
+                                                <input type="text" style="width:250px;" class="input-sm text-left" id="GIFT_NAME" name="GIFT_NAME" maxlength="50" value="" />
+                                            </td>
+                                            <th>*사은품수량</th>
+                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="GIFT_COUNT" name="GIFT_COUNT" maxlength="8" value="" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th>*구매금액</th>
+                                            <td colspan="3"><input type="text" style="width:70px;" class="input-sm text-left" id="START_PRICE" name="START_PRICE" maxlength="8" value="" /> 원이상
+                                                <input type="text" style="width:70px;" class="input-sm text-left" id="END_PRICE" name="END_PRICE" maxlength="8" value="" /> 원 미만
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>*사은품이미지</th>
+                                            <td colspan="3">
+                                                <input type="file" id="GIFT_IMG" name="GIFT_IMG" maxlength="100" value="" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>*사용여부</th>
+                                            <td colspan="3">
+                                                <input type="radio" id="DISPLAY_YN" name="DISPLAY_YN" value="Y" checked /> 사용 
+                                                <input type="radio" id="DISPLAY_YN" name="DISPLAY_YN" value="N" /> 미사용 
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="btn_area">
+                                <a class="btn btn-default small" href="#" onclick="formChk();">등록</a>
+                                <a class="btn btn-primary small" href="/AdminProduct/GiftIndex">목록</a>
+                            </div>
+        }
+    </div>
+    <!--//content-->
+}

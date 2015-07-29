@@ -119,6 +119,36 @@
         <Function Name="SP_ADMIN_CATEGORY_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_GIFT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_DISPLAY_YN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_GIFT_DETAIL_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_GIFT_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GIFT_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="GIFT_COUNT" Type="int" Mode="In" />
+          <Parameter Name="START_PRICE" Type="int" Mode="In" />
+          <Parameter Name="END_PRICE" Type="int" Mode="In" />
+          <Parameter Name="GIFT_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_GIFT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_DISPLAY_YN" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_GIFT_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="GIFT_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="GIFT_COUNT" Type="int" Mode="In" />
+          <Parameter Name="GIFT_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
           <Parameter Name="memo" Type="varchar" Mode="In" />
@@ -443,6 +473,36 @@
             <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
             <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_CNT" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_GIFT_CNT_Result)">
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_DISPLAY_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_GIFT_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_DISPLAY_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_DETAIL_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_GIFT_DETAIL_VIEW_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_INS">
+            <Parameter Name="GIFT_NAME" Mode="In" Type="String" />
+            <Parameter Name="GIFT_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="START_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="END_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="GIFT_NAME" Mode="In" Type="String" />
+            <Parameter Name="GIFT_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -640,6 +700,31 @@
           <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_GIFT_DETAIL_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="GIFT_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="GIFT_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="USED_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="START_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="END_PRICE" Nullable="true" />
+          <Property Type="String" Name="GIFT_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_GIFT_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="GIFT_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="GIFT_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="USED_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="START_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="END_PRICE" Nullable="true" />
+          <Property Type="String" Name="GIFT_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="REGDATE" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_GIFT_CNT_Result">
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -897,6 +982,45 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_CNT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_GIFT_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_GIFT_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="GIFT_NAME" ColumnName="GIFT_NAME" />
+                <ScalarProperty Name="GIFT_COUNT" ColumnName="GIFT_COUNT" />
+                <ScalarProperty Name="USED_COUNT" ColumnName="USED_COUNT" />
+                <ScalarProperty Name="START_PRICE" ColumnName="START_PRICE" />
+                <ScalarProperty Name="END_PRICE" ColumnName="END_PRICE" />
+                <ScalarProperty Name="GIFT_IMG" ColumnName="GIFT_IMG" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_DETAIL_VIEW" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_DETAIL_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_GIFT_DETAIL_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="GIFT_NAME" ColumnName="GIFT_NAME" />
+                <ScalarProperty Name="GIFT_COUNT" ColumnName="GIFT_COUNT" />
+                <ScalarProperty Name="USED_COUNT" ColumnName="USED_COUNT" />
+                <ScalarProperty Name="START_PRICE" ColumnName="START_PRICE" />
+                <ScalarProperty Name="END_PRICE" ColumnName="END_PRICE" />
+                <ScalarProperty Name="GIFT_IMG" ColumnName="GIFT_IMG" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_UPD" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
