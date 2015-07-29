@@ -15,6 +15,9 @@ namespace AboutMe.Domain.Service.Review
 {
     public class ReviewService : IReviewService
     {
+        /**
+         * 마이리뷰 상품. 작성 가능 
+         */
         public List<SP_REVIEW_PRODUCT_READY_SEL_Result> GetMyReviewReadyList(string mid)
         {
             List<SP_REVIEW_PRODUCT_READY_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_READY_SEL_Result>();
@@ -30,6 +33,10 @@ namespace AboutMe.Domain.Service.Review
             return lst;
        }
 
+        /**
+         * 
+         * 제품 정보 
+         */
         public SP_REVIEW_GET_PRODUCT_INFO_Result GetProductInfo(string pcode)
         {
             using (ReviewEntities context = new ReviewEntities())
@@ -38,6 +45,9 @@ namespace AboutMe.Domain.Service.Review
             }
         }
 
+        /**
+         * 마이리뷰 상품. 작성완료  
+         */
         public Tuple<string, string>  InsertMyReview(string mid, int? orderDetailIdx, string pCode, string skinType, string comment, string addImage  ){
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -55,7 +65,7 @@ namespace AboutMe.Domain.Service.Review
         }
 
         /**
-         * 마이리뷰, 작성완료 목록 조회
+         * 마이리뷰 상품. 작성완료 목록 조회
          */
         public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetMyReviewCompleteList(string mid, int? pageNo=1, int? pageSize=10)
         {
@@ -73,7 +83,7 @@ namespace AboutMe.Domain.Service.Review
         }
 
         /**
-         * 마이리뷰, 작성완료 목록 총수
+         * 마이리뷰 상품. 작성완료 목록 총수
          */
         public int GetMyReviewCompleteCnt(string mid)
         {
@@ -88,7 +98,7 @@ namespace AboutMe.Domain.Service.Review
         }
 
         /*
-         * 
+         * 상품 리뷰 목록 조회
          */
         public Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort)
         {
@@ -102,6 +112,25 @@ namespace AboutMe.Domain.Service.Review
             }
 
             Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int>(lst,   Convert.ToInt32(total.Value) );
+
+            return tp;
+        }
+
+        /**
+         * 상품코드별 상품리뷰 조회
+         */
+        public Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10)
+        {
+            List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
+
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL(pcode, pageNo, pageSize, total).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int>(lst, Convert.ToInt32(total.Value));
 
             return tp;
         }

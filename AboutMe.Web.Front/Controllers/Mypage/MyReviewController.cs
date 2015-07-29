@@ -55,8 +55,10 @@ namespace AboutMe.Web.Front.Controllers
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
             ViewBag.img_path_review = _img_path_review; //이미지디렉토리경로
             model.PageNo = page;
-            model.CompleteList = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);           
-            model.TotalItem = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
+
+
+            model.Reviews = ReviewHelper.GetDataForDisplay(_ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page));
+            model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
 
             return View(model);
         }

@@ -119,7 +119,7 @@
 
                 var html = "<div class='grid'>";
 
-                if (d.PRIZE_GRADE != "") {
+                if (d.IS_BEST) {
                     html += "<span class='best_choice'><img src='/aboutCom/images/review/ico_best.png' alt='best'></span>";
                 }
 
@@ -136,14 +136,14 @@
                 html += "<div class='comments'>";
                 html += "<div class='writer'>";
                 html += "<span class='id'>" + d.M_ID + "</span>";
-                html += "<span class='userage'>" + d.M_BIRTHDAY + d.M_SEX + "</span>";
+                html += "<span class='userage'>" + d.M_BIRTHDAY + " " +d.M_SEX + "</span>";
                 html += "<span class='skin " + d.SKIN_TYPE + "' ></span>";
                 html += "</div>";
 
 
                 html += "<div class='reviewtxt'>";
 
-                if (d.IS_PHOTO == "Y") {
+                if (d.IS_PHOTO ) {
                     html += "<img src='" + img_path_review + d.ADD_IMAGE + "' alt=''>";
                 }
 
@@ -258,7 +258,7 @@
                             <!--
                                 best 선정시 class="best_choice" 추가됩니다.
                             -->
-                            @if ( !String.IsNullOrEmpty( item.PRIZE_GRADE )  )
+                            @if ( item.IS_BEST  )
                             {
                                 <span class="best_choice"><img src="/aboutCom/images/review/ico_best.png" alt="best"></span>
                             }
@@ -281,7 +281,7 @@
                                     <span class="skin @item.SKIN_TYPE"></span>
                                 </div>
                                 <div class="reviewtxt">
-                                    @if (@item.IS_PHOTO == "Y")
+                                    @if (@item.IS_PHOTO )
                                     {
                                         <img src="@myController._img_path_review@item.ADD_IMAGE" alt="">
                                     }

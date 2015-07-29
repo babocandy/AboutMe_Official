@@ -130,5 +130,22 @@ namespace AboutMe.Domain.Entity.Review
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter, tOTAL);
         }
+    
+        public virtual ObjectResult<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL(string p_CODE, Nullable<int> pAGE, Nullable<int> pAGESIZE, ObjectParameter tOTAL)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL", p_CODEParameter, pAGEParameter, pAGESIZEParameter, tOTAL);
+        }
     }
 }
