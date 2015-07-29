@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    @helper fGradeCssName(string argGradeCode="B")
+    {
+        var grade_css = "bronze";
+        switch (argGradeCode)
+        {
+            case "B": grade_css = "bronze";
+                break;
+            case "S": grade_css = "sliver";
+                break;
+            case "G": grade_css = "gold";
+                break;
+            case "V": grade_css = "vip";
+                break;
+
+        }
+        @(@grade_css)
+
+}
+
+    //모바일 레이아웃 util 메뉴 만들기
+    @helper fMakeRightTopMenu_Util()
+{
+    bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
+    if (bLogin)  //로그인 상황
+    {
+    	<!--로그인 시-->
+        <!-- 등급별 css
+            vip : vip
+            gold :  gold
+            sliver : sliver
+            bronze : bronze
+        -->
+
+    <div class="userclass_info @fGradeCssName(@ViewBag.M_GRADE) " >
+        <strong>@ViewBag.M_NAME</strong>님은
+        <span>@ViewBag.M_GRADE_NAME 클래스</span>입니다.
+    </div>
+
+
+    }
+    else //비 로그인 상황
+    {
+			<!--미로그인시-->
+        <div class="logintxt">
+            로그인을 해주세요
+            <a href="/MemberShip/Login" class="btn btn_gray_h25 ml10" style="width:80px;">로그인</a>
+        </div>
+			<!--//미로그인시-->
+    }
+} //fMakeRightTopMenu_Util()
+
+}
+
+<!-- RightTop Util html 만들기-->
+@fMakeRightTopMenu_Util()

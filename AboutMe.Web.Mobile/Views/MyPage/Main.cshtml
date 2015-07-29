@@ -8,21 +8,22 @@
 }
 
 
-<!--header-->
 @section Header{
 
 }
-<!--//header-->
+
 @section Scripts{
 
 
 }
 
-<!--container-->
+
 @section Body{
 
     <div class="wrap mymain">
+    <!--header-->
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
 
 
         <!--container-->
@@ -98,13 +99,13 @@
         </div>
         <!--//container-->
 
+        <!--footer-->
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--//footer-->
 </div>
 
 }
-<!--//container-->
-<!--footer-->
+
 @section Footer{
 
 }
-<!--//footer-->

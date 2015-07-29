@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+
+    //모바일 푸터 만들기
+    @helper fMakeFooterMenu()
+{
+    bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
+    if (bLogin)  //로그인 상황
+    {
+        <div class="btn_group mt15">
+            <a href="@ViewBag.PC_VERSION_URL" class="btn btn_gray_h25 mr5">PC 버전</a><a href="/MemberShip/Logout" class="btn btn_gray_h25">로그아웃</a>
+        </div>
+
+    }
+    else //비 로그인 상황
+    {
+			<!--미로그인시-->
+    <div class="btn_group mt15">
+        <a href="@ViewBag.PC_VERSION_URL" class="btn btn_gray_h25 mr5">PC 버전</a><a href="/MemberShip/Login" class="btn btn_gray_h25">로그인</a>
+    </div>
+			<!--//미로그인시-->
+    }
+} //fMakeRightTopMenu_Util()
+
+}
+
+<!-- RightTop Util html 만들기-->
+@fMakeFooterMenu()

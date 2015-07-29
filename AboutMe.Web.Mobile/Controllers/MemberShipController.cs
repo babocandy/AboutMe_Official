@@ -968,7 +968,37 @@ namespace AboutMe.Web.Mobile.Controllers
             return View();
         }
 
+        //모바일 = 약관상세1. 웹사이트/모바일 이용약관
+        public ActionResult pop_terms1()
+        {
+            return View();
+        }
 
+        //모바일 = 약관상세2. 쇼핑몰 이용약관
+         public ActionResult pop_terms2()
+        {
+            return View();
+        }
+         //모바일 = 약관상세3. 개인정보 수집 및 이용
+        public ActionResult pop_terms3()
+        {
+            return View();
+        }
+        //모바일 = 약관상세4. 개인정보 위탁
+        public ActionResult pop_terms4()
+        {
+            return View();
+        }
+        //모바일 = 약관상세5. 개인정보 제3자 제공 (선택사항)
+        public ActionResult pop_terms5()
+        {
+            return View();
+        }
+        //모바일 = 약관상세6. 고유식별정보 수집 및 이용
+        public ActionResult pop_terms6()
+        {
+            return View();
+        }
 
     } //class
 } //namespace
