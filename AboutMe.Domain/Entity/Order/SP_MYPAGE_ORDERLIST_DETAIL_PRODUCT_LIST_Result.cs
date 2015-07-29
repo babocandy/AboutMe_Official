@@ -36,5 +36,7 @@ namespace AboutMe.Domain.Entity.Order
         public Nullable<int> REAL_PAY_PRICE { get; set; }
         public int POINT_ACCML { get; set; }
         public string ORDER_DETAIL_STATUS { get; set; }
+        public string DELIVERY_NUM { get; set; }
+        public string ORDER_DETAIL_STATUS_NM { get; set; }
     }
 }

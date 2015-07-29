@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AdminOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AdminOrderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="SP_ADMIN_ORDER_DETAIL_DELIVERY_NUM_INPUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
           <Parameter Name="DELIVERY_NUM" Type="varchar" Mode="In" />
@@ -120,8 +120,7 @@
         <Function Name="SP_ADMIN_ORDERLIST_DETAIL_LOG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="AdminOrderModelStoreContainer">
-        </EntityContainer>
+        <EntityContainer Name="AdminOrderModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -285,9 +284,9 @@
           <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="P_COUNT" Nullable="false" />
-          <Property Type="String" Name="PROMOTION" Nullable="true" />
+          <Property Type="String" Name="PROMOTION" Nullable="false" MaxLength="8" />
           <Property Type="Int32" Name="SELLING_PRICE" Nullable="false" />
-          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_PRICE" Nullable="false" />
           <Property Type="Int32" Name="USE_POINT" Nullable="false" />
           <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
           <Property Type="Int32" Name="POINT_ACCML" Nullable="false" />
@@ -297,16 +296,15 @@
           <Property Type="String" Name="ORDER_DETAIL_STATUS_NM" Nullable="false" MaxLength="10" />
           <Property Type="DateTime" Name="ORDER_DETAIL_STATUS_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
-          <Property Type="String" Name="PROMOTION_TYPE" Nullable="true" />
-          <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="true" />
-          <Property Type="String" Name="COUPON_NAME" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="false" />
+          <Property Type="String" Name="PROMOTION_TYPE" Nullable="false" MaxLength="2" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="false" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="false" />
           <Property Type="Int32" Name="COUPON_DISCOUNT_PRICE" Nullable="false" />
-          <Property Type="Int32" Name="USE_POINT_PRICE" Nullable="false" />
           <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="false" />
-          <Property Type="Int32" Name="GRADE_DISCOUNT_PRICE" Nullable="false" />
-          <Property Type="String" Name="CD_COUPON" Nullable="true" />
+          <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="PROMOTION_NAME" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDER_LIST_Result" >
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -449,6 +447,14 @@
                 <ScalarProperty Name="ORDER_DETAIL_STATUS_DATE" ColumnName="ORDER_DETAIL_STATUS_DATE" />
                 <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
                 <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="PROMOTION_TYPE" ColumnName="PROMOTION_TYPE" />
+                <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
+                <ScalarProperty Name="COUPON_DISCOUNT_PRICE" ColumnName="COUPON_DISCOUNT_PRICE" />
+                <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
+                <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
+                <ScalarProperty Name="PROMOTION_NAME" ColumnName="PROMOTION_NAME" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

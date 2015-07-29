@@ -1,5 +1,8 @@
-﻿@{
+﻿@model AboutMe.Web.Front.Models.MyReviewCompleteViewModel
+@using AboutMe.Web.Front.Controllers
+@{
     Layout = null;
+    var myController = ViewContext.Controller as ReviewController;
 }
 <div class="menu" id="tabCon2">
     <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
@@ -23,135 +26,270 @@
             </div>
             <!--리뷰 슬라이드-->
             <div class="pur_review accordion">
-                <!---
-                    처음과 마지막  .pur_review .cont에 각각 "first", "last" class가 붙습니다.
-                -->
-                <div class="cont first  accordcont cnt">
-                    <div class="subj accordsubject">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <!--사진이 등록된 리뷰일 때 사용-->
-                            <span class="ico_photo">포토리뷰</span>
-                            <!--//사진이 등록된 리뷰일 때 사용-->
-                            <span class="userage">30대, 여<em class="skin dry"></em></span>
+                @{
+                    var i = 0;
+                    var count = Model.Reviews.Count;
+
+                }
+                @foreach (var item in Model.Reviews)
+                {
+
+                    var cssClassName = "";
+                    var selectContent = "";
+
+                    if (i == 0)
+                    {
+                        cssClassName = "first";
+                        selectContent = "cnt";
+                    }
+                    else if (i >= count - 1)
+                    {
+                        cssClassName = "last";
+
+                    }
+
+                    <div class="cont accordcont @cssClassName @selectContent">
+
+                        <div class="subj accordsubject">
+                            <div class="writer">
+                                <span class="date">@item.INS_DATE</span>
+                                @if (item.IS_PHOTO )
+                                {
+                         <!--사진이 등록된 리뷰일 때 사용-->
+                                    <span class="ico_photo">포토리뷰</span>
+                         <!--//사진이 등록된 리뷰일 때 사용-->
+                                }
+
+
+                                <span class="userage">@item.M_BIRTHDAY, @item.M_SEX<em class="skin @item.SKIN_TYPE"></em></span>
+                            </div>
+                            <p class="txtdotdot" style="">
+                                @Html.Raw(item.COMMENT);
+                            </p>
                         </div>
-                        <p class="txtdotdot">
-                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                        </p>
-                    </div>
-                    <div class="contxt accordtxt">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin dry"></em></span>
+                        <div class="contxt accordtxt">
+                            <div class="writer">
+                                <span class="userage">@item.M_BIRTHDAY, @item.M_SEX<em class="skin @item.SKIN_TYPE"></em></span>
+                            </div>
+                            @Html.Raw(item.COMMENT);
+                            @if (item.IS_PHOTO)
+                            {
+                                <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
+                            }
                         </div>
-                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! <br />
-                        <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
+
                     </div>
-                </div>
-                <div class="cont accordcont">
-                    <div class="subj accordsubject">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                        </div>
-                        <p class="txtdotdot">
-                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                        </p>
-                    </div>
-                    <div class="contxt accordtxt">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                        </div>
-                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!
-                    </div>
-                </div>
-                <div class="cont accordcont">
-                    <div class="subj accordsubject">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <!--사진이 등록된 리뷰일 때 사용-->
-                            <span class="ico_photo">포토리뷰</span>
-                            <!--//사진이 등록된 리뷰일 때 사용-->
-                            <!--
-                                skin type class
-                                건성 : dry
-                                중성 : normal
-                                지성 : oliy
-                            -->
-                            <span class="userage">30대, 여<em class="skin dry"></em></span>
-                        </div>
-                        <p class="txtdotdot">
-                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                        </p>
-                    </div>
-                    <div class="contxt accordtxt">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin dry"></em></span>
-                        </div>
-                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! <br />
-                        <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
-                    </div>
-                </div>
-                <div class="cont accordcont">
-                    <div class="subj accordsubject">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <!--사진이 등록된 리뷰일 때 사용-->
-                            <span class="ico_photo">포토리뷰</span>
-                            <!--//사진이 등록된 리뷰일 때 사용-->
-                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                        </div>
-                        <p class="txtdotdot">
-                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                        </p>
-                    </div>
-                    <div class="contxt accordtxt">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin normal"></em></span>
-                        </div>
-                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!</br />
-                        <img src="/aboutCom/images/sample/sample_detailadmin3.jpg" alt="" />
-                    </div>
-                </div>
-                <div class="cont last accordcont">
-                    <div class="subj accordsubject">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin olily"></em></span>
-                        </div>
-                        <p class="txtdotdot">
-                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플
-                        </p>
-                    </div>
-                    <div class="contxt accordtxt">
-                        <div class="writer">
-                            <span class="id">Kkon***</span>
-                            <span class="userage">30대, 여<em class="skin olily"></em></span>
-                        </div>
-                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요!
-                    </div>
-                </div>
+
+                            i++;
+                }
             </div>
             <!--//리뷰 슬라이드-->
+
+<script>
+    var pcode ="@Model.Pcode";
+    var img_path_review = "@myController._img_path_review";
+    var pageNo = @Model.PageNo;
+    var pageSize = @Model.PageSize;
+    var blockSize = @Model.PageSize;
+    var total = @Model.Total;
+
+    /*
+        init
+    */
+    $(function(){
+
+        //페이징 초기화
+        paging(pageNo, pageSize, blockSize, total, $(".paging"), "getReviewProducListByPageNo" );
+    });
+
+    /**
+        페이징
+    */
+    function paging(pno, psize, pbloc, total, $target, callback) {
+        var totalPage = Math.ceil(total / psize);
+        var totalBlock = Math.ceil(totalPage / pbloc);
+
+        var curBlock = Math.ceil(pno / pbloc);
+
+        var endPageNo = curBlock * pbloc;
+        if (endPageNo > totalPage) {
+            endPageNo = totalPage;
+        }
+        var startPageNo = (curBlock - 1) * pbloc + 1;
+
+        var prevStartPageNo;
+        var nextEndPageNo;
+        var isPrevBlock = false;
+        var isNextBlock = false;
+        if (1 < curBlock && curBlock < totalBlock) {
+            isPrevBlock = true;
+            isNextBlock = true;
+
+            prevStartPageNo = startPageNo - 1;
+            nextEndPageNo = endPageNo + 1;
+        } else if (curBlock == 1 && totalBlock > 1) {
+            isPrevBlock = false;
+            isNextBlock = true;
+            nextEndPageNo = endPageNo + 1;
+        } else if (curBlock == totalBlock && totalBlock > 1) {
+            isPrevBlock = true;
+            isNextBlock = false;
+            prevStartPageNo = startPageNo - 1;
+        }
+
+        var html = "";
+        if(isPrevBlock)
+        {
+            html += " <a href='' class='prev' onclick='"+callback+"("+prevStartPageNo+");return false;'>이전</a>";
+        }
+        else
+        {
+            html += "<a href='#' class='prev' onclick='return false;'>이전</a>";
+        }
+
+        for (var i = startPageNo; i <= endPageNo; i++)
+        {
+            if (i == pno)
+            {
+                html += "<strong>["+ i +"]</strong>";
+            }
+            else
+            {
+                html += "<a href='' onclick='"+callback+"("+i+");return false;'>"+i+"</a>";
+            }
+        }
+
+        if(isNextBlock)
+        {
+            html += " <a href='' class='next' onclick='"+callback+"("+nextEndPageNo+");return false;'>다음</a>";
+        }
+        else
+        {
+            html += "<a href='#' class='next' onclick='return false;'>다음</a>";
+        }
+
+        $target.html(html)
+
+    }//end func
+
+    /**
+        데이타 로드
+    */
+    function getReviewProducListByPageNo(no) {
+
+        $.ajax({
+            url: "@(Url.Action("GetReviewProductListInShopping", "Review"))",
+            type: "POST",
+            dataType: "json",
+            data: {
+                P_CODE: pcode
+                , PAGE_NO :no
+            },
+            success: function (data) {
+
+                console.log(data);
+
+                if (data.Success) {
+
+
+
+                    buildList(data.Reviews)
+
+                    paging(no, pageSize, blockSize, data.Total, $(".paging"), "getReviewProducListByPageNo" );
+                }else{
+
+
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }//end func
+
+    /**
+        목록 구성
+    */
+    function buildList(dd) {
+
+        var $container  = $(".pur_review")
+        $container.empty();
+
+
+        for (var i = 0; i < dd.length; i++) {
+            var d = dd[i];
+
+            var html = "";
+            var cssClassName = "";
+            var selectContent = "";
+            if (i == 0)
+            {
+                cssClassName = "first";
+                selectContent = "cnt";
+            }
+            else if (i >= dd.length - 1)
+            {
+                cssClassName = "last";
+            }
+
+            html = "<div class='cont accordcont "+cssClassName +" "+ selectContent+"'>";
+            html += "<div class='subj accordsubject'>";
+            html += "<div class='writer'>";
+            html += "<span class='date'>"+"날짜"+"</span>";
+
+            if(d.IS_PHOTO)  html += "<span class='ico_photo'>포토리뷰</span>";
+
+            html += "<span class='userage'>"+d.M_BIRTHDAY+","+ d.M_SEX+"<em class='skin "+d.SKIN_TYPE+"'></em></span>";
+            html += "</div>";
+
+            html += "<p class='txtdotdot' style=''>";
+            html += d.COMMENT;
+            html +=  "</p>";
+            html += "</div>";
+            html += "<div class='contxt accordtxt'>";
+            html += "<div class='writer'>";
+            html += "<span class='userage'>"+d.M_BIRTHDAY+", "+d.M_SEX+"<em class='skin "+d.SKIN_TYPE+"'></em></span>";
+            html += "</div>";
+            html +=  d.COMMENT;
+            if(d.IS_PHOTO ){
+                html += "<img src='"+img_path_review+d.ADD_IMAGE+"' alt='' />";
+            }
+
+            html += "</div>";
+
+            html += "</div>";
+
+            $container.append($(html));
+        }
+
+        /*아코디언타입 */
+        $(".accordion .accordcont .accordtxt").hide();
+        $(".accordion .accordcont.cnt .accordtxt").show();
+        $(".accordion .accordcont .accordsubject").click(function(){
+            if ( 'none' == $(this).parent().find(".accordtxt").css('display') ) {
+                $(".accordion .accordcont .accordtxt").slideUp();
+                $(this).parent().find(".accordtxt").slideDown();
+                $(".accordcont").removeClass("cnt");
+                $(this).parent().addClass("cnt");
+            }
+            else {
+                $(".accordion .accordcont .accordtxt").slideUp();
+                $(this).parent().removeClass("cnt");
+            }
+        });
+       
+
+    }//end func
+
+
+
+
+</script>
+
+
             <!--페이징-->
             <div class="paging">
-                <a href="#" class="prev">이전</a>
-                <!--현재 페이지-->
-                <strong>1</strong>
-                <!--//현재 페이지-->
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <a href="#">7</a>
-                <a href="#">8</a>
-                <a href="#">9</a>
-                <a href="#">10</a>
-                <a href="#" class="next">다음</a>
+
             </div>
             <!--//페이징-->
         </div>

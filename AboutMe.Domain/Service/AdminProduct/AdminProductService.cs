@@ -13,6 +13,8 @@ namespace AboutMe.Domain.Service.AdminProduct
     public class AdminProductService : IAdminProductService
     {
 
+        #region 카테고리
+
         #region 1depth 카테고리 리스트
         public List<SP_ADMIN_CATEGORY_ONE_SEL_Result> GetAdminCategoryOneList()
         {
@@ -160,8 +162,9 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
+        #endregion
 
-
+        #region 상품
 
         #region 상품 리스트
         public List<SP_ADMIN_PRODUCT_LIST_Result> GetAdminProductList(ProductSearch_Entity productSearch_Entity)
@@ -307,8 +310,110 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion 
         
+        #endregion
+
+        #region 사은품
+
+        #region 사은품 리스트
+        public List<SP_ADMIN_GIFT_SEL_Result> GetAdminGiftList(SP_TB_FREE_GIFT_INFO_Param Param)
+        {
+
+            List<SP_ADMIN_GIFT_SEL_Result> lst = new List<SP_ADMIN_GIFT_SEL_Result>();
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                lst = AdminProductContext.SP_ADMIN_GIFT_SEL(
+                    Param.PAGE
+                    , Param.PAGESIZE
+                    , Param.SEARCH_KEY
+                    , Param.SEARCH_KEYWORD
+                    , Param.SEARCH_DISPLAY_YN).ToList();
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region 사은품 카운트
+        public int GetAdminGiftCnt(SP_TB_FREE_GIFT_INFO_Param Param)
+        {
+            List<SP_ADMIN_GIFT_CNT_Result> lst = new List<SP_ADMIN_GIFT_CNT_Result>();
+            int giftCount = -1;
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                lst = AdminProductContext.SP_ADMIN_GIFT_CNT(
+                    Param.SEARCH_KEY
+                    , Param.SEARCH_KEYWORD
+                    , Param.SEARCH_DISPLAY_YN
+                    ).ToList();
+                if (lst != null && lst.Count > 0)
+                    giftCount = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return giftCount;
+
+        }
+        #endregion
+
+        #region 사은품 등록
+        public void InsertAdminGift(AdminGiftModel gift_info_model)
+        {
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                AdminProductContext.SP_ADMIN_GIFT_INS(
+                    gift_info_model.GIFT_NAME
+                   , gift_info_model.GIFT_COUNT
+                   , gift_info_model.START_PRICE
+                   , gift_info_model.END_PRICE
+                   , gift_info_model.GIFT_IMG
+                   , gift_info_model.DISPLAY_YN);
+
+            }
+        }
+        #endregion
+
+        #region 사은품 VIEW
+        public SP_ADMIN_GIFT_DETAIL_VIEW_Result ViewAdminGift(int idx)
+        {
+
+            SP_ADMIN_GIFT_DETAIL_VIEW_Result giftView;
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+                giftView = AdminProductContext.SP_ADMIN_GIFT_DETAIL_VIEW(idx).FirstOrDefault();
+            }
+            return giftView;
+        }
+        #endregion
+
+        #region 사은품 수정
+        public void UpdateAdminGift(AdminGiftModel gift_update_model)
+        {
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                AdminProductContext.SP_ADMIN_GIFT_UPD(
+                    gift_update_model.IDX
+                   , gift_update_model.GIFT_NAME
+                   , gift_update_model.GIFT_COUNT
+                   , gift_update_model.GIFT_IMG
+                   , gift_update_model.DISPLAY_YN
+                    );
+            }
+        }
+        #endregion
 
        
+
+        #endregion
 
     }
 }

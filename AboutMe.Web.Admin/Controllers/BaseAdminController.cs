@@ -38,7 +38,39 @@ namespace AboutMe.Web.Admin.Controllers
                param.Add(property.Name, property.GetValue(Obj));
            }
            return param;
-       }  
+       }
+
+       /**
+        * 상품 이미지 폴더
+        */
+       public string _img_path_product
+       {
+           get
+           {
+               return AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+           }
+       }
+
+       /**
+        * 리뷰 이미지 폴더
+        */
+       public string _img_path_review
+       {
+           get
+           {
+               return AboutMe.Common.Helper.Config.GetConfigValue("ReviewPhotoPath");
+           }
+       }
+       /**
+        * 전시 이미지 폴더
+        */
+       public string _img_path_display
+       {
+           get
+           {
+               return AboutMe.Common.Helper.Config.GetConfigValue("DisplayPath");
+           }
+       }
       
     }
 }

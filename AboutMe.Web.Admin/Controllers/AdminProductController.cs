@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+//using System.Reflection;
+using System.Web.Routing;
+
 using AboutMe.Common.Helper;
 using AboutMe.Domain.Service.AdminProduct;
 using AboutMe.Domain.Entity.AdminProduct;
@@ -1001,6 +1005,130 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         #endregion
+
+        #region 사은품관리
+
+        #region 사은품 리스트
+        public ActionResult GiftIndex(SP_TB_FREE_GIFT_INFO_Param Param)
+        {
+            GIFT_INDEX_MODEL m = new GIFT_INDEX_MODEL();
+            m.SearchOption = Param;
+            m.TotalCount = _AdminProductService.GetAdminGiftCnt(Param);
+            m.GiftList = _AdminProductService.GetAdminGiftList(Param).ToList();
+            return View(m);
+        }
+        #endregion
+
+        #region 사은품 등록
+
+        public ActionResult GiftInsert()
+        {
+            return View();
+        }
+
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
+        public ActionResult GiftInsert(AdminGiftModel admin_gift_model, HttpPostedFileBase GIFT_IMG)
+        {
+            if (ModelState.IsValid)
+            {
+
+                string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
+                #region 파일 업로드
+                if (GIFT_IMG != null)
+                {
+                    ImageUpload imageUpload = new ImageUpload { UploadPath = Product_path };
+
+                    ImageResult imageResult = imageUpload.RenameUploadFile(GIFT_IMG);
+                    if (imageResult.Success)
+                    {
+                        admin_gift_model.GIFT_IMG = imageResult.ImageName;
+                    }
+                    else
+                    {
+                        admin_gift_model.GIFT_IMG = "";
+                    }
+                }
+                #endregion
+
+                _AdminProductService.InsertAdminGift(admin_gift_model);
+
+                #region 사은품 등록 로그 생성
+                var serialised = JsonConvert.SerializeObject(admin_gift_model); //entity 클래스 값을 json 포맷으로 파싱
+                AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(serialised, "관리자사은품등록");
+                #endregion
+
+                return RedirectToAction("GiftIndex", new { SearchCol = "" });
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region 사은품 수정
+        public ActionResult GiftUpdate(int idx, SP_TB_FREE_GIFT_INFO_Param Param)
+        {
+            GIFT_DETAIL_MODEL m = new GIFT_DETAIL_MODEL();
+            m.GIFT_IDX = idx;
+            m.SearchOption = Param;
+            m.GiftDetailView = _AdminProductService.ViewAdminGift(idx);
+            return View(m);
+        }
+
+        // POST
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
+        public ActionResult GiftUpdate(SP_TB_FREE_GIFT_INFO_Param Param, AdminGiftModel admin_gift_model, HttpPostedFileBase GIFT_IMG)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string Gift_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
+                #region 파일 업로드
+                if (GIFT_IMG != null)
+                {
+                    ImageUpload imageUpload = new ImageUpload { UploadPath = Gift_path };
+
+                    ImageResult imageResult = imageUpload.RenameUploadFile(GIFT_IMG);
+                    if (imageResult.Success)
+                    {
+                        admin_gift_model.GIFT_IMG = imageResult.ImageName;
+                    }
+                    else
+                    {
+                        admin_gift_model.GIFT_IMG = admin_gift_model.OLD_GIFT_IMG;
+                    }
+                }
+                else
+                {
+                    admin_gift_model.GIFT_IMG = admin_gift_model.OLD_GIFT_IMG;
+                }
+                #endregion
+                _AdminProductService.UpdateAdminGift(admin_gift_model);
+                
+
+                #region 사은품 수정 로그 생성
+                var serialised = JsonConvert.SerializeObject(admin_gift_model);
+                serialised += JsonConvert.SerializeObject(Param);
+                AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(serialised, "관리자사은품수정");
+                #endregion
+
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("GiftIndex", param);
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #endregion
+
 
     }
 }

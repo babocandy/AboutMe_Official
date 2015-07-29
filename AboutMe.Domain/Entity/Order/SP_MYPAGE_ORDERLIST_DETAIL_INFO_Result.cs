@@ -46,5 +46,6 @@ namespace AboutMe.Domain.Entity.Order
         public int TOTAL_PAY_PRICE { get; set; }
         public int ACCML_POINT { get; set; }
         public string NOMEMBER_PASS { get; set; }
+        public string PAY_GBN { get; set; }
     }
 }

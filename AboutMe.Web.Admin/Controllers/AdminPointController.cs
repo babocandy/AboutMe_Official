@@ -20,7 +20,6 @@ namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminPointController : BaseAdminController
     {
-        // GET: AdminProduct
         private IAdminPointService _AdminPointService;
         public AdminPointController(IAdminPointService _adminPointService)
         {
