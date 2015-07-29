@@ -13,7 +13,18 @@ namespace AboutMe.Domain.Service.Recallbbs
     {
         //List
         List<SP_TB_RECALL_BBS_SEL_Result> RecallList(RECALLBBS_SEARCH param);
-        int RecallCount(string start_date, string end_date, string reg_id, string search_col, string search_keyword);
+
+        //Count
+        int RecallCount(RECALLBBS_SEARCH param);
         
+        //View
+        SP_TB_RECALL_BBS_VIEW_Result RecallView(int IDX);
+
+        //insert
+        int RecallBbsInsert(TB_RECALL_BBS itemRecall);
+
+        //update
+        void RecallBbsUpdate(TB_RECALL_BBS itemRecall);
+
     }
 }

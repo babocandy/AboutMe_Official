@@ -30,5 +30,9 @@ namespace AboutMe.Domain.Service.Order
         string OrderNomeberLoginChk(string ORDER_CODE, string NOMEMBER_PASS);
         List<SP_MYPAGE_ORDERLIST_Result> MyOrderList(string OrderCode, string Mid, string FromDate, string ToDate, int? Page, int PageSize);
         int MyOrderListCount(string OrderCode, string Mid, string FromDate, string ToDate);
+        List<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result> MyOrderDetailProductList(string OrderCode, string Mid);
+        SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result MyOrderDetailInfo(string OrderCode, string Mid);
+        void MyOrderMasterStatusChange(int OrderIdx, string TobeStatus, string Mid);
+        void MyOrderDetailStatusChange(int OrderDetailIdx, string TobeStatus, string Mid);
     }
 }

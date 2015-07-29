@@ -44,7 +44,7 @@
             }
         });
 
-        var jobj = encodeURIComponent(jQuery.stringify(arrP));
+        var jobj = encodeURIComponent(JSON.stringify(arrP));
 
         var src_url = "/Cart/CartCalculatePrice";
         var param = "data=" + jobj;
@@ -236,7 +236,7 @@
             return;
         }
         else {
-            var jobj = jQuery.stringify(arrP);
+            var jobj = JSON.stringify(arrP);
             var f = document.cartform;
             f.IDX.value = '';
             f.CNT.value = '';

@@ -234,5 +234,50 @@ namespace AboutMe.Domain.Service.Order
             return result.COUNT;
         }
         #endregion
+
+        #region My Order 상세 : 상품목록
+        public List<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result> MyOrderDetailProductList(string OrderCode, string Mid)
+        {
+            List<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result> lst = new List<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result>();
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                lst = EfContext.SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST(OrderCode, Mid).ToList();
+            }
+            return lst;
+        }
+        #endregion
+
+        #region My Order 상세 : 주문정보
+        public SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result MyOrderDetailInfo(string OrderCode, string Mid)
+        {
+            SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result result = new SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result();
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                result = EfContext.SP_MYPAGE_ORDERLIST_DETAIL_INFO(OrderCode, Mid).FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+        #region My Order Master 상태변경
+        public void MyOrderMasterStatusChange(int OrderIdx, string TobeStatus, string Mid)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE(OrderIdx, TobeStatus, Mid);
+            }
+        }
+        #endregion
+
+        #region My Order Detail 상태변경
+        public void MyOrderDetailStatusChange(int OrderDetailIdx, string TobeStatus, string Mid)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE(OrderDetailIdx, TobeStatus, Mid);
+            }
+        }
+        #endregion
+
     }
 }

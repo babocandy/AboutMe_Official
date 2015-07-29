@@ -1013,7 +1013,6 @@ namespace AboutMe.Web.Admin.Controllers
         {
             GIFT_INDEX_MODEL m = new GIFT_INDEX_MODEL();
             m.SearchOption = Param;
-            this.ViewBag.Gift_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
             m.TotalCount = _AdminProductService.GetAdminGiftCnt(Param);
             m.GiftList = _AdminProductService.GetAdminGiftList(Param).ToList();
             return View(m);
@@ -1070,10 +1069,13 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 사은품 수정
-        public ActionResult GiftUpdate(int idx)
+        public ActionResult GiftUpdate(int idx, SP_TB_FREE_GIFT_INFO_Param Param)
         {
-            SP_ADMIN_GIFT_DETAIL_VIEW_Result giftView = _AdminProductService.ViewAdminGift(idx);
-            return View(giftView);
+            GIFT_DETAIL_MODEL m = new GIFT_DETAIL_MODEL();
+            m.GIFT_IDX = idx;
+            m.SearchOption = Param;
+            m.GiftDetailView = _AdminProductService.ViewAdminGift(idx);
+            return View(m);
         }
 
         // POST
@@ -1084,11 +1086,11 @@ namespace AboutMe.Web.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
+                string Gift_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
                 #region 파일 업로드
                 if (GIFT_IMG != null)
                 {
-                    ImageUpload imageUpload = new ImageUpload { UploadPath = Product_path };
+                    ImageUpload imageUpload = new ImageUpload { UploadPath = Gift_path };
 
                     ImageResult imageResult = imageUpload.RenameUploadFile(GIFT_IMG);
                     if (imageResult.Success)
@@ -1115,7 +1117,8 @@ namespace AboutMe.Web.Admin.Controllers
                 adminlog.AdminLogSave(serialised, "관리자사은품수정");
                 #endregion
 
-                return RedirectToAction("GiftIndex");
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("GiftIndex", param);
             }
             else
             {

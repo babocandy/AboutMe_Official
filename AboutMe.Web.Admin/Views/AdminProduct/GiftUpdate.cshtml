@@ -1,4 +1,5 @@
-﻿@model AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_GIFT_DETAIL_VIEW_Result
+﻿@model AboutMe.Domain.Entity.AdminProduct.GIFT_DETAIL_MODEL
+@using System.Reflection;
 @{
     ViewBag.Title = "ProductInsert";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
@@ -91,11 +92,23 @@
             <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
         </div>
         <!--//path-->
+        @{string Gift_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");}
         @using (Html.BeginForm("GiftUpdate", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", enctype = "multipart/form-data", onsubmit = "return formChk();" }))
         {
             @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
-                                    <input type="hidden" name="IDX" value="@Model.IDX">
-                                    <input type="hidden" name="OLD_GIFT_IMG" value="@Model.GIFT_IMG">
+                                    <input type="hidden" name="IDX" value="@Model.GiftDetailView.IDX">
+                                    <input type="hidden" name="OLD_GIFT_IMG" value="@Model.GiftDetailView.GIFT_IMG">
+                                    {
+                                    //Model.SearchOption을 Hidden box로 생성
+                                    Type type = Model.SearchOption.GetType();
+                                    PropertyInfo[] properties = type.GetProperties();
+
+                                    foreach (PropertyInfo property in properties)
+                                    {
+                                        @Html.Hidden(property.Name, property.GetValue(Model.SearchOption))
+                                    }
+                                    }
+
                                     <div class="panel">
                                         <h3 class="sub-header">사은품관리</h3>
                                         <table class="table table_row">
@@ -104,28 +117,34 @@
                                                 <tr>
                                                     <th>*사은품명</th>
                                                     <td>
-                                                        <input type="text" style="width:250px;" class="input-sm text-left" id="GIFT_NAME" name="GIFT_NAME" maxlength="50" value="@Model.GIFT_NAME" />
+                                                        <input type="text" style="width:250px;" class="input-sm text-left" id="GIFT_NAME" name="GIFT_NAME" maxlength="50" value="@Model.GiftDetailView.GIFT_NAME" />
                                                     </td>
                                                     <th>*사은품수량</th>
-                                                    <td><input type="text" style="width:70px;" class="input-sm text-left" id="GIFT_COUNT" name="GIFT_COUNT" maxlength="8" value="@Model.GIFT_COUNT" /></td>
+                                                    <td><input type="text" style="width:70px;" class="input-sm text-left" id="GIFT_COUNT" name="GIFT_COUNT" maxlength="8" value="@Model.GiftDetailView.GIFT_COUNT" /></td>
                                                 </tr>
                                                 <tr>
                                                     <th>*구매금액</th>
                                                     <td colspan="3">
-                                                        @Model.START_PRICE 원이상 @Model.END_PRICE 원 미만
+                                                        @string.Format("{0:#,##0}", Model.GiftDetailView.START_PRICE) 원이상 ~ @string.Format("{0:#,##0}", Model.GiftDetailView.END_PRICE) 원 미만
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>*사은품이미지</th>
                                                     <td colspan="3">
                                                         <input type="file" id="GIFT_IMG" name="GIFT_IMG" maxlength="100" value="" />
+                                                        @if ( @Model.GiftDetailView.GIFT_IMG.ToString() != "")
+                                                        {
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Gift_path@Model.GiftDetailView.GIFT_IMG" width="100" height="100" /></span>
+                                                        }
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>*사용여부</th>
                                                     <td colspan="3">
-                                                        <input type="radio" id="DISPLAY_YN" name="DISPLAY_YN" value="Y" @if (Model.DISPLAY_YN == "Y"){<text>checked</text>}/> 사용
-                                                        <input type="radio" id="DISPLAY_YN" name="DISPLAY_YN" value="N" @if (Model.DISPLAY_YN == "N") { <text> checked</text>} /> 미사용
+                                                        <input type="radio" id="DISPLAY_YN" name="DISPLAY_YN" value="Y" @if (Model.GiftDetailView.DISPLAY_YN == "Y")
+                                                                                                                        {<text>checked</text>}/> 사용
+                                                        <input type="radio" id="DISPLAY_YN" name="DISPLAY_YN" value="N" @if (Model.GiftDetailView.DISPLAY_YN == "N")
+                                                                                                                        { <text> checked</text>} /> 미사용
                                                     </td>
                                                 </tr>
 
@@ -135,7 +154,7 @@
 
                                     <div class="btn_area">
                                         <a class="btn btn-default small" href="#" onclick="formChk();">수정</a>
-                                        <a class="btn btn-primary small" href="/AdminProduct/GiftIndex">목록</a>
+                                        @Html.ActionLink("목록", "GiftIndex", @Model.SearchOption, new { @class = "btn btn-primary small" })
                                     </div>
         }
     </div>

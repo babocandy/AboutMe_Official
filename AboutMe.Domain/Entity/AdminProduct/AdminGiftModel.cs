@@ -7,6 +7,8 @@ using AboutMe.Domain.Entity.Common;
 
 namespace AboutMe.Domain.Entity.AdminProduct
 {
+
+    #region 사은품 모델 엔티티
     public class AdminGiftModel
     {
         public AdminGiftModel()
@@ -19,7 +21,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
             this.END_PRICE = 0;
             this.GIFT_IMG = "";
             this.OLD_GIFT_IMG = "";
-            this.DISPLAY_YN = "N";
+            this.DISPLAY_YN = "Y";
             this.INS_DATE = "";
 
         }
@@ -35,9 +37,10 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string DISPLAY_YN { get; set; }
         public string INS_DATE { get; set; }
 
-
     }
+    #endregion
 
+    #region 사은품 파라메터 엔티티 
     public class SP_TB_FREE_GIFT_INFO_Param
     {
         public SP_TB_FREE_GIFT_INFO_Param()
@@ -80,22 +83,27 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public int PAGESIZE { get; set; }
         public string SEARCH_DISPLAY_YN { get; set; }
     }
+    #endregion
 
+    #region 사은품 리스트 엔티티
     public class GIFT_INDEX_MODEL
     {
         public SP_TB_FREE_GIFT_INFO_Param SearchOption { set; get; }
         public List<SP_ADMIN_GIFT_SEL_Result> GiftList { get; set; }
         public Int32 TotalCount { get; set; }
     }
+    #endregion
 
+    #region 사은품 상세페이지 엔티티
     public class GIFT_DETAIL_MODEL
     {
         public Int32 GIFT_IDX { get; set; }
         public SP_TB_FREE_GIFT_INFO_Param SearchOption { set; get; }
-        public List<SP_ADMIN_GIFT_DETAIL_VIEW_Result> GiftDetailList { get; set; }
-
+        public SP_ADMIN_GIFT_DETAIL_VIEW_Result GiftDetailView { get; set; }
     }
+    #endregion
 
+    #region 사은품 update 엔티티
     public class GIFT_UPDATE_MODEL
     {
         public Int32 GIFT_IDX { get; set; }
@@ -103,7 +111,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public AdminGiftModel adminGiftModel { get; set; }
 
     }
-
-   
+    #endregion
 
 }

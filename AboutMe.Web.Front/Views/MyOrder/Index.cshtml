@@ -154,7 +154,7 @@
                                     <td class="fwbold">@String.Format("{0:#,#0.}", @item.TOTAL_PAY_PRICE)원</td>
                                     <td>@item.ORDER_STATUS_NM</td>
                                     <td>
-                                        <a href="#" class="btn_white_w96h38 typeb">배송조회</a>
+                                        <a href="/MyPage/MyOrder/OrderView?OrderCode=@item.ORDER_CODE&FromDate=@Model.FromDate&ToDate=@Model.ToDate&page=@Model.Page" class="btn_white_w96h38 typeb">상세조회</a>
                                     </td>
                                 </tr>
                                 }

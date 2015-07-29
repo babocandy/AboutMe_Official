@@ -3,7 +3,8 @@
     ViewBag.Title = "찜한상품 - ABOUT ME";
     ViewBag.TopClass = "mypage";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
-     
+    
+    string ProductPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");     
 }
 
 @section Scripts {
@@ -115,11 +116,13 @@
             <!-- 상품리스트 -->
             <ul class="product_list">
                 @foreach (var item in Model.WishList)
-                { 
+                {
+                    string img1 = ProductPath + "R270_" + item.MAIN_IMG;
+                    string img2 = ProductPath + "R270_" + item.OTHER_IMG1;
                 <li>
                     <a href="/shopping/detail?pcode=@item.P_CODE" class="list">
                         <span class="photo">
-                            <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="">
+                            <img src="@img1" data-pic="@img2" class="item" alt="">
                         </span>
                         <span class="info">
                             @if (item.SOLDOUT_YN == "Y")

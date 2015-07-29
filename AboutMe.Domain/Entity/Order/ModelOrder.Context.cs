@@ -516,5 +516,39 @@ namespace AboutMe.Domain.Entity.Order
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result>("SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST", oRDER_CODEParameter, m_IDParameter);
         }
+    
+        public virtual int SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE(Nullable<int> oRDER_DETAIL_IDX, string tOBE_STATUS, string rEG_ID)
+        {
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var tOBE_STATUSParameter = tOBE_STATUS != null ?
+                new ObjectParameter("TOBE_STATUS", tOBE_STATUS) :
+                new ObjectParameter("TOBE_STATUS", typeof(string));
+    
+            var rEG_IDParameter = rEG_ID != null ?
+                new ObjectParameter("REG_ID", rEG_ID) :
+                new ObjectParameter("REG_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE", oRDER_DETAIL_IDXParameter, tOBE_STATUSParameter, rEG_IDParameter);
+        }
+    
+        public virtual int SP_ADMIN_ORDER_MASTER_STATUS_CHANGE(Nullable<int> oRDER_IDX, string tOBE_STATUS, string rEG_ID)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var tOBE_STATUSParameter = tOBE_STATUS != null ?
+                new ObjectParameter("TOBE_STATUS", tOBE_STATUS) :
+                new ObjectParameter("TOBE_STATUS", typeof(string));
+    
+            var rEG_IDParameter = rEG_ID != null ?
+                new ObjectParameter("REG_ID", rEG_ID) :
+                new ObjectParameter("REG_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_MASTER_STATUS_CHANGE", oRDER_IDXParameter, tOBE_STATUSParameter, rEG_IDParameter);
+        }
     }
 }

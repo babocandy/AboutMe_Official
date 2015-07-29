@@ -3,14 +3,59 @@
     ViewBag.Title = "교환/반품신청 - ABOUT ME";
     ViewBag.TopClass = "mypage";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    
+    var dash = "-";
 }
 
 @section Scripts {
 <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
 <script src="/aboutCom/js/lib/jquery-ui.js"></script>
 <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
-}
-@Model.SearchParam.start_date
+<script>
+
+    function goSearch() {
+        alert(1);
+    }
+
+    function ChgDateType(val) {
+        var now_date = '@DateTime.Now.ToString("yyyy-MM-dd")'; 
+
+        switch (val) {
+            case 1: $("#start_date").val('@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")');
+                    $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
+                    $("#dateType").val("1");
+                    break;
+            case 2: $("#start_date").val('@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")');
+                    $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
+                    $("#dateType").val("2");
+                    break;
+            case 3: $("#start_date").val('@DateTime.Now.AddMonths(-4).ToString("yyyy-MM-dd")');
+                    $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
+                    $("#dateType").val("3");
+                    break;
+            case 4: $("#start_date").val('@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")');
+                    $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
+                    $("#dateType").val("4");
+                    break;
+            case 5: $("#start_date").val("");
+                    $("#end_date").val("");
+                    $("#dateType").val("5");
+                    break;
+        }
+    }
+
+    function goSearch() {
+        var frm = document.frm;
+        if ($.trim($("#start_date").val()) == "" && $.trim($("#end_date").val()) != "") { alert("조회 시작일을 입력하세요."); $("#start_date").focus; return false; }
+        if ($.trim($("#start_date").val()) != "" && $.trim($("#end_date").val()) == "") { alert("조회 종료일을 입력하세요."); $("#end_date").focus; return false; }
+        if ($("#start_date").val().split("-").join("") > $("#end_date").val().split("-").join("")) {
+            alert("조회 시작일이 조회 종료일 보다 큽니다."); $("#start_date").focus; return false;
+        }
+        frm.submit();
+    }
+
+</script>
+} 
 <!--container-->
 <div id="container" class="return">
     <div class="container1080">
@@ -39,26 +84,58 @@
         <!--주문내역 totla리스트-->
         <div class="contypeb">
             <!--조회기간-->
-            <div class="termcheck">
-                <h3>조회기간</h3>
-                <ul class="termlist">
-                    <li class="cnt"><a href="#">1개월</a></li>
-                    <li><a href="#">3개월</a></li>
-                    <li><a href="#">4개월</a></li>
-                    <li><a href="#">1년</a></li>
-                    <li><a href="#">기간</a></li>
-                </ul>
-                <span class="ipttypedate ml20"><input type="text" id="start_date" name="start_date" class="" style="width:120px"></span>
-                -
-                <span class="ipttypedate"><input type="text" id="end_date" name="end_date" class="" style="width:120px"></span>
-                <a href="#" class="btn_brown_w96h38">조회</a>
+            <div class="termcheck"> 
+                @using (Html.BeginForm("Index", "Recall", FormMethod.Get, new { id = "frm", name = "frm", onsubmit = "return frmCheck();" })) { 
+                    <input type="hidden" name="dateType" id="dateType" value="@Model.SearchParam.dateType"/>
+                    <h3>조회기간</h3>
+                    <ul class="termlist">
+                       @if (Model.SearchParam.dateType.Equals("1")){
+                           <li class="cnt"><a href="javascript:" onclick="ChgDateType(1);">1개월</a></li>}
+                       else{
+                           <li ><a href="javascript:" onclick="ChgDateType(1);">1개월</a></li>
+                       }                         
+                       @if (Model.SearchParam.dateType.Equals("2"))
+                       {
+                            <li class="cnt"><a href="javascript:" onclick="ChgDateType(2);">3개월</a></li>}
+                       else
+                       {
+                            <li><a href="javascript:" onclick="ChgDateType(2);">3개월</a></li>
+                       } 
+                       @if (Model.SearchParam.dateType.Equals("3"))
+                       {
+                            <li class="cnt"><a href="javascript:" onclick="ChgDateType(3);">4개월</a></li>}
+                       else
+                       {
+                            <li><a href="javascript:" onclick="ChgDateType(3);">4개월</a></li>
+                       }     
+                       @if (Model.SearchParam.dateType.Equals("4"))
+                       {
+                        <li class="cnt"><a href="javascript:" onclick="ChgDateType(4);">1년</a></li>}
+                       else
+                       {
+                        <li><a href="javascript:" onclick="ChgDateType(4);">1년</a></li>
+                       }        
+                       @if (Model.SearchParam.dateType.Equals("5"))
+                       {
+                        <li class="cnt"><a href="javascript:" onclick="ChgDateType(5);">기간</a></li>}
+                       else
+                       {
+                        <li><a href="javascript:" onclick="ChgDateType(5);">기간</a></li>
+                       }  
+                    </ul>
+                    <span class="ipttypedate ml20"><input type="text" id="start_date" name="start_date" class="" value="@Model.SearchParam.start_date" style="width:120px"></span>
+                    @dash
+                    <span class="ipttypedate"><input type="text" id="end_date" name="end_date" class="" value="@Model.SearchParam.end_date" style="width:120px"></span>
+                    <a href="javascript:" onclick="goSearch();"  class="btn_brown_w96h38">조회</a>
+                    <a href="/Mypage/Recall/RecallWrite?order_code=20150723-100053&order_detail_idx=1&mode=NEW" class="btn_brown_w96h38">작성</a>
+                }
                 <script type="text/javascript">
 						$(function() {
 						    $("#start_date").datepicker({
 								//showOtherMonths: true,
 								//numberOfMonths: 2,
 								dayNamesMin: ['S','M','T','W','T','F','S'],
-								dateFormat: "yy. mm. dd",
+								dateFormat: "yy-mm-dd",
 								showOn: "both",
 								buttonText: "조회 시작일 달력",
 								buttonImage: "/aboutCom/images/mypage/bl_cal.gif",
@@ -71,9 +148,9 @@
 								//showOtherMonths: true,
 								//numberOfMonths: 2,
 								dayNamesMin: ['S','M','T','W','T','F','S'],
-								dateFormat: "yy. mm. dd",
+								dateFormat: "yy-mm-dd",
 								showOn: "both",
-								buttonText: "조회 시작일 달력",
+								buttonText: "조회 종료일 달력",
 								buttonImage: "/aboutCom/images/mypage/bl_cal.gif",
 								buttonImageOnly: true,
 								onClose:function(selectedDate){
@@ -98,7 +175,11 @@
                                 <th>진행상태</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody> 
+                            @if (Model.BbsList.Count < 1)
+                            {
+                                <tr><td colspan="5">데이터가 없습니다.</td></tr>
+                            }
                             @foreach (var item in Model.BbsList)
                             { 
                             <tr>
@@ -123,7 +204,7 @@
             <!--//주문리스트-->
             <!--페이징-->
             @{
-                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = 12, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.SearchParam.page, QueryStr = "start_date=" + Model.SearchParam.start_date + "&end_date=" + Model.SearchParam.end_date });
+                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.BbsCount, RecordPerPage = Model.SearchParam.pagesize, PagePerBlock = 10, CurrentPage = Model.SearchParam.page, QueryStr = "start_date=" + Model.SearchParam.start_date + "&end_date=" + Model.SearchParam.end_date });
             }
             <!--//페이징-->
 

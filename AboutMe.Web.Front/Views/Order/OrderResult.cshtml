@@ -11,7 +11,10 @@
 }
 @section Scripts {
 <link href="/aboutCom/css/cart.css" rel="stylesheet" />
-
+    <script language="javascript">
+        var openwin = window.open("/Content/child.html", "childwin", "width=300,height=150");
+        openwin.close();
+    </script>
 }
 @helper GridHeader()
 {

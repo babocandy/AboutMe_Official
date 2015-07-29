@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AboutMeModel4.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
+          <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_MYPAGE_ORDERLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
@@ -291,6 +301,16 @@
             <Parameter Name="ORDER_CODE" Mode="In" Type="String" />
             <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE">
+            <Parameter Name="ORDER_DETAIL_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
@@ -481,6 +501,7 @@
           <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
           <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
           <Property Type="String" Name="NOMEMBER_PASS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -505,7 +526,9 @@
           <Property Type="Int32" Name="ORDER_PRICE" Nullable="false" />
           <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
           <Property Type="Int32" Name="POINT_ACCML" Nullable="false" />
-          <Property Type="String" Name="ORDER_DETAIL_STATUS" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ORDER_DETAIL_STATUS" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="DELIVERY_NUM" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="ORDER_DETAIL_STATUS_NM" Nullable="false" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_Result">
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -828,9 +851,13 @@
                 <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
                 <ScalarProperty Name="POINT_ACCML" ColumnName="POINT_ACCML" />
                 <ScalarProperty Name="ORDER_DETAIL_STATUS" ColumnName="ORDER_DETAIL_STATUS" />
+                <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
+                <ScalarProperty Name="ORDER_DETAIL_STATUS_NM" ColumnName="ORDER_DETAIL_STATUS_NM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
