@@ -28,14 +28,13 @@ $(function(){
 		$(".container").css({"position":"fixed"});
 		$(".f_bottom ").hide();
 	});
-	$(".lnbclose").click(function(e){
+	$(".lnbclose, .lnb_area .dim").click(function(e){
 		e.preventDefault();
 		$(".lnb").stop().animate({"left":"-280px"},"100", function(){$(".lnb_area").hide()});
 		$(".container").css({"position":"relative"});
 		$(".f_bottom ").show();
 	});
-	$(".nav li a").on("click", function(e){
-		e.preventDefault();
+	$(".nav li a").on("click", function(){
 		if($(this).parent(".slidetype").hasClass("on")){
 			$(this).parent().find(".depth2").slideUp(300, function(){
 				$(this).parent(".slidetype").removeClass("on");
@@ -406,12 +405,14 @@ $(function(){
 		$(this).hide();
 		$(".buy_product .slideup").show();
 		$(".buy_product .dim").css({"display":"block"});
+		$(".f_bottom").hide();
 		$("body").bind('touchmove', function(e){e.preventDefault()});
 	});
 	$(".buy_product .slideup").click(function(e){
 		$(this).hide();
 		$(".buy_product .slidedown").show();
 		$(".buy_product .dim").css({"display":"none"});
+		$(".f_bottom").show();
 		$("body").unbind('touchmove');
 	});
 	$(window).scroll(function(){
@@ -573,5 +574,59 @@ $(function(){
 		e.preventDefault();
 		$(this).parent().parent().find(".map").slideUp(300);
 	});
+
+	/*전시 메인*/
+	$(".display_bnr .slider li").each(function(){
+		$(".display_bnr .nav ul").append("<li><a href='#'></a></li> ");
+	});
+	$(".display_bnr .nav li").eq(0).addClass("cnt");
+	$(".display_bnr .slider li").eq(0).show();
+
+	var display_bnr_navW = $(".display_bnr .nav").width(); 
+	$(".display_bnr .nav").css({"margin-left":-(display_bnr_navW/2)});
+	
+	var displayBnr_idx =0; 
+	$(".display_bnr .nav ul li a").on("click", function(e){
+		e.preventDefault();
+		displayBnr_idx = $(this).parent().index();
+		$(".display_bnr .slider li").fadeOut(500);
+		$(".display_bnr .slider li:eq("+displayBnr_idx+")").fadeIn(500);
+		$(".display_bnr .nav ul li").removeClass("cnt");
+		$(".display_bnr .nav ul li:eq("+displayBnr_idx+")").addClass("cnt");
+	});
+	
+	var displayBnr_length = $(".display_bnr .nav li").length;
+	function displayBnr_left(){
+		if(displayBnr_idx==0){
+			displayBnr_idx =displayBnr_length;
+		}
+		displayBnr_idx--;
+		$(".display_bnr .nav li:eq("+displayBnr_idx+") a").click();
+	}
+	function displayBnr_right(){
+		displayBnr_idx++;
+		if(displayBnr_idx==displayBnr_length){
+			displayBnr_idx = 0;
+		}
+		$(".display_bnr .nav li:eq("+displayBnr_idx+") a").click();
+	}
+
+	//손꾸락 //swipeleft, swiperight, swipeup, swipedown
+	$(".display_bnr .slider").on('swipeleft', function(e) {
+		displayBnr_right();
+	}).on('swiperight', function(e) {
+		displayBnr_left();
+	}).on('movestart', function(e) {
+		if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+			e.preventDefault();
+			return;
+		}
+	}).on('move', function(e) {
+		if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+			e.preventDefault();
+			return;
+		}
+	}); 
+
 
 });

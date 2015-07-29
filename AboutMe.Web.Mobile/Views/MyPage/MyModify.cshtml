@@ -258,19 +258,19 @@
                                     <dd><a href="/MyPage/Pop_PwChange" class="btn btn_white_h30">비밀번호 변경</a></dd>
                                 </dl>
                             </li>
-                            <li>
+                            <li class="inlinetype">
                                 <dl>
                                     <dt>이름<i class="bl_essential"></i></dt>
                                     <dd>@Model.M_NAME</dd>
                                 </dl>
                             </li>
-                            <li>
+                            <li class ="inlinetype">
                                 <dl>
                                     <dt>성별<i class="bl_essential"></i></dt>
                                     <dd>@fM_SEX_NAME(@Model.M_SEX)</dd>
                                 </dl>
                             </li>
-                            <li>
+                            <li class="inlinetype">
                                 <dl>
                                     <dt>생년월일<i class="bl_essential"></i></dt>
                                     <dd>@Model.M_BIRTHDAY</dd>
@@ -282,10 +282,10 @@
                                     <dd class="frm_phone">
                                         <span class="selbox select_a">
                                             <select title="휴대번호 앞자리 선택" name="M_MOBILE_1">
-                                                <option value="010" @fSelected("010",@ViewBag.M_MOBILE_1)>010</option>
-                                                <option value="011" @fSelected("011",@ViewBag.M_MOBILE_1)>011</option>
-                                                <option value="016" @fSelected("016",@ViewBag.M_MOBILE_1)>016</option>
-                                                <option value="019" @fSelected("019",@ViewBag.M_MOBILE_1)>019</option>
+                                                <option value="010" @fSelected("010", @ViewBag.M_MOBILE_1)>010</option>
+                                                <option value="011" @fSelected("011", @ViewBag.M_MOBILE_1)>011</option>
+                                                <option value="016" @fSelected("016", @ViewBag.M_MOBILE_1)>016</option>
+                                                <option value="019" @fSelected("019", @ViewBag.M_MOBILE_1)>019</option>
                                             </select>
                                         </span><span class="hypen">-</span><input type="tel" class="ipttypea" title="휴대번호 가운데자리 입력" name="M_MOBILE_2" maxlength="4" value="@ViewBag.M_MOBILE_2" /><span class="hypen">-</span><input type="tel" class="ipttypea" title="휴대번호 끝자리 입력" name="M_MOBILE_3" maxlength="4" value="@ViewBag.M_MOBILE_3" />
                                     </dd>

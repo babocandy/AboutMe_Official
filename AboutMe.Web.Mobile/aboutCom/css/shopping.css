@@ -47,8 +47,18 @@
 .product_list li .detail .price del {display:block;font-size:10px; color:#696361; }
 .product_list li .btn_cart {display: block;position: absolute; right: 20px; bottom: 22px; width: 19px; height: 18px; background: url("/aboutCom/images/cart/btn_cart.gif") no-repeat  0 0; background-size: cover ;}
 
-.display_bnr {padding:15px;}
-.display_bnr img {width:100%}
+.display_bnr {position:relative; padding:15px;}
+.display_bnr .nav {position:absolute; left:50%; bottom:20px; overflow:hidden; z-index:5}
+.display_bnr .nav ul {}
+.display_bnr .nav ul li {float:left; margin-left:2px;}
+.display_bnr .nav ul li:first-child {margin-left:0;} 
+.display_bnr .nav ul li a {display:block; width:7px; height:7px; background:url("/aboutCom/images/common/bnr_nav.png") 0 0 no-repeat; background-size:cover;}
+.display_bnr .nav ul li.cnt a {background-position:-10px 0;}
+.display_bnr .slider li {display:none; padding:15px; position:absolute; left:0; top:0;}
+.dummy {visibility:hidden}
+.dummy img {width:100%}
+.display_bnr .slider img {width:100%}
+
 .best_sellers .imgtit {width:100%}
 .top_bnr {position:relative; border-bottom:1px solid #dedad9;}
 .top_bnr img {width:100%;}

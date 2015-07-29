@@ -45,9 +45,13 @@ $(function(){
 		$(".lybeauty").show();
 	});
 
-	/*뮤비*/
+	/*영상 나오기*/
+	var mainMvUrl =$(".mvarea .movie iframe").attr("src");
+	var mainMv ='<iframe width="810" height="410" src="'+mainMvUrl+'" frameborder="0" allowfullscreen></iframe>';
+	$(".mvarea .movie").html("");
 	$(".btn_mv").click(function(e){
 		e.preventDefault();
+		$(".mvarea .movie").html(mainMv);
 		$(".mv_area .lymv").show();
 		$(".mv_area .lymv").animate({"width":"1080px", "height":"540px"});
 		$(".btn_mv").hide();
@@ -58,7 +62,9 @@ $(function(){
 		$(".mv_area .lymv").animate({"width":"0", "height":"0"},function(){
 			$(".mv_area .lymv").hide();
 		});
+		$(".mvarea .movie").html("");
 	});
+
 
 	/*시스타기획배너*/
 	$(".m_banner .list1").show();
