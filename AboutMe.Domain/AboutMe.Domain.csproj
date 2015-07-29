@@ -177,6 +177,21 @@
     <Compile Include="Entity\AdminCoupon\TB_COUPON_PRODUCT.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminDisplay\ModelAdminDisplay.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminDisplay.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminDisplay\ModelAdminDisplay.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminDisplay\ModelAdminDisplay.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminDisplay.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminEtc\AdminEtc_EntityPartial.cs" />
     <Compile Include="Entity\AdminEtc\AdminEtc_Metadata.cs" />
     <Compile Include="Entity\AdminEtc\ADMIN_MEMBER.cs">
@@ -767,6 +782,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelAdminCoupon.edmx</DependentUpon>
       <LastGenOutput>ModelAdminCoupon.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\AdminDisplay\ModelAdminDisplay.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminDisplay.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminDisplay\ModelAdminDisplay.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminDisplay.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminDisplay.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminDisplay\ModelAdminDisplay.edmx.diagram">
+      <DependentUpon>ModelAdminDisplay.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminDisplay\ModelAdminDisplay.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminDisplay.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminDisplay.cs</LastGenOutput>
     </None>
     <None Include="Entity\AdminEtc\ModelAdminEtc.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

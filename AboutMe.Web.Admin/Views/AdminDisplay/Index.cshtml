@@ -1,0 +1,157 @@
+﻿@model AboutMe.Web.Admin.Models.AdminDisplayWebMainViewModel
+@using AboutMe.Common.Helper
+
+@{
+    ViewBag.Title = "Point";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+    <script>
+
+        function saveMainBanner(my) {
+
+            var myForm = $(my).parent().parent().find("form");
+            myForm.action = "/AdminDisplay/"
+            myForm.submit()
+        }
+
+    </script>
+}
+
+@section Body{
+
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">전시관리</a> &gt; <strong>웹메인 메인</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3 class="sub-header">웹메인관리</h3>
+    </div>
+
+    <div class="panel">
+        <h4>메인 배너 -1080*540</h4>
+        <div class="tar mb10">
+            <a href="#" class="btn btn-success middium btn_add_table" style="width:100px">추가</a>
+        </div>
+        <table class="table table_row main_bnr_table">
+            <colgroup><col width="20%"><col width="*"><col width="15%"></colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt=""><br><p class="tac">  <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <form>
+                            <input type="file" name="IMG" style="width:80%; margin-left:35px;">
+                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%">
+                            <input type="hidden" name="IDX" value="33" />
+                        </form>
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large" onclick="saveMainBanner(this); return false;">저장</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script type="text/javascript">
+            $(function () {
+                $(".btn_add_table").click(function () {
+                    var addTableLast = $(".main_bnr_table tr").last();
+                    $(".main_bnr_table tr:eq(0)").clone().insertAfter(addTableLast);
+                });
+            });
+        </script>
+    </div>
+
+    <div class="panel">
+        <h4>중간 배너 -805*256</h4>
+        <table class="table table_row">
+            <colgroup><col width="20%"><col width="*"><col width="15%"></colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt=""><br><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;">
+                        URL : <input type="text" class="input-sm mt5" style="width:80%">
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <h4>상품전시- 사이즈 미정</h4>
+        <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+        <table class="table table_col">
+            <colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
+            <tbody>
+                <tr>
+                    <td class="brnone">
+                        <img src="" alt=""><br><p class="tac mt5"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p><br><br>
+                        <input type="file" style="width:80%; margin-left:38px;">
+                        URL : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                    <td>
+                        <img src="" alt=""><br><p class="tac mt5">스킨톤업마사지크림</p><br><br>
+                        상품코드 : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                    <td>
+                        <img src="" alt=""><br><p class="tac mt5">스킨톤업마사지크림</p><br><br>
+                        상품코드 : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                    <td class="brnone">
+                        <img src="" alt=""><br><p class="tac mt5">스킨톤업마사지크림</p><br><br>
+                        상품코드 : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="brnone">
+                        <img src="" alt=""><br><p class="tac mt5"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p><br><br>
+                        <input type="file" style="width:80%; margin-left:38px;">
+                        URL : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                    <td>
+                        <img src="" alt=""><br><p class="tac mt5">스킨톤업마사지크림</p><br><br>
+                        상품코드 : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                    <td>
+                        <img src="" alt=""><br><p class="tac mt5">스킨톤업마사지크림</p><br><br>
+                        상품코드 : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                    <td class="brnone">
+                        <img src="" alt=""><br><p class="tac mt5">스킨톤업마사지크림</p><br><br>
+                        상품코드 : <input type="text" class="input-sm mt5" style="width:80%">
+                        <a href="#" class="btn btn-default small mt10">저장</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--//content-->
+</div>
+
+}
