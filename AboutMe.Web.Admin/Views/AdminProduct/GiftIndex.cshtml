@@ -1,0 +1,221 @@
+﻿@model AboutMe.Domain.Entity.AdminProduct.GIFT_INDEX_MODEL
+@{
+    ViewBag.Title = "ProductIndex";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Scripts{
+
+    <script language="javascript">
+
+    
+
+    $(function () {
+    });
+
+
+    function bsearch() {
+        var f = document.bform;
+
+        f.target = "";
+        f.page.value = "";
+        f.submit();
+
+    }
+
+    function rePageSize() {
+        var f = document.bform;
+
+        f.Page.value = "";
+        f.action = "/AdminProduct/GiftIndex";
+        f.target = "";
+        f.method = "post"
+        f.submit();
+    }
+
+
+    //검색
+    function frmCheck() {
+        var f = document.bform;
+        f.action = "/AdminProduct/GiftIndex";
+        f.target = "";
+        f.method = "post"
+        f.submit();
+    }
+
+
+    //문자열 안의 공백 지우기
+    function deleteSpace(str) {
+        var out = "";
+
+        for (common_i = 0; common_i < str.length; common_i++) {
+            if (str.charAt(common_i) == " ") {
+                continue;
+            }
+            out += str.charAt(common_i);
+        }
+        return out.length;
+    }
+
+
+    //숫자값만 입력가능하게
+    function NumObj(obj) {
+        if (isNaN(obj.value)) {
+            alert("숫자만 가능합니다.");
+            obj.value = "";
+            return false;
+        }
+        else {
+            //alert("숫자");
+            return true;
+        }
+
+    }
+
+
+
+
+
+    </script>
+
+
+}
+@section Body{
+
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">사은품관리</h3>
+            <form action="" id="bform" method="post" name="bform">
+                <input type="hidden" name="Page" id="Page" value="@this.ViewBag.Page" />
+                
+                @Html.AntiForgeryToken()<div class="tar mb10">
+                    <a class="btn btn-default middium" href="/AdminProduct/GiftInsert">사은품등록</a>
+                    @if (Model.SearchOption.SEARCH_KEYWORD != "")
+                    {
+                        <a class="btn btn-default middium" href="/AdminProduct/GiftIndex">검색초기화</a>
+                    }
+                </div>
+
+                <table class="table table_row">
+                    <colgroup><col style="width:12%" /><col style="width:auto" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="vam">검색</th>
+                            <td class="condition_seacth">
+                                <select name="SEARCH_KEY" style="width:100px;">
+                                    <option value="GIFT_NAME" @if (@Model.SearchOption.SEARCH_KEY == "GIFT_NAME")
+                                                              { <text> selected</text> }>사은품명</option>
+                                </select>
+ 
+                                <input type="text" value="@Model.SearchOption.SEARCH_KEYWORD" placeholder="" class="input-sm text-left" name="SEARCH_KEYWORD" id="SEARCH_KEYWORD" maxlength="20"> 
+
+                                <select name="SEARCH_DISPLAY_YN" style="width:100px;">
+                                    <option value="" @if (Model.SearchOption.SEARCH_DISPLAY_YN == "") { <text> selected</text> }>전체</option>
+                                    <option value="Y" @if (Model.SearchOption.SEARCH_DISPLAY_YN == "Y") { <text> selected</text> }>전시</option>
+                                    <option value="N" @if (Model.SearchOption.SEARCH_DISPLAY_YN == "N") { <text> selected</text> }>비전시</option>
+                                </select>
+                                <a href="javascript:frmCheck();" class="btn btn-default small">검색</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+        </div>
+        <div class="panel">
+            <div class="">
+                <table class="table table_row">
+                    <colgroup><col width="9%" /><col width="11%" /><col width="5%" /><col width="5%" /><col width="9%" /><col width="30%" /><col width="6%" /><col width="5%" /></colgroup>
+                    <tr>
+                        <th>총검색</th>
+                        <td>@Model.TotalCount 건</td>
+                        <th>출력수</th>
+                        <td>
+                            <select name="PageSize" onchange="javascript:rePageSize();">
+                                <option value="10" @if (Model.SearchOption.PAGESIZE == 10) { <text> selected</text> }>10개</option>
+                                <option value="20" @if (Model.SearchOption.PAGESIZE == 20)
+                                                   { <text> selected</text> }>20개</option>
+                                <option value="50" @if (Model.SearchOption.PAGESIZE == 50)
+                                                   { <text> selected</text> }>50개</option>
+                                <option value="100" @if (Model.SearchOption.PAGESIZE == 100)
+                                                    { <text> selected</text> }>100개</option>
+                                <option value="200" @if (Model.SearchOption.PAGESIZE == 200)
+                                                    { <text> selected</text> }>200개</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <table class="table table_col addtable">
+                <colgroup></colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">사은품명</th>
+                        <th scope="col">사은품이미지</th>
+                        <th scope="col">전체수량</th>
+                        <th scope="col">사용수량</th>
+                        <th scope="col">남은수량</th>
+                        <th scope="col">사용여부</th>
+                        <th scope="col">구매금액</th>
+                        <th scope="col">등록일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        if (Model.TotalCount < 1)
+                        {
+                            <tr>
+                                <td colspan="13" class="brnone">No data...</td>
+                            </tr>
+                        }
+                    }
+                    @{ var i = 0; }
+                    @foreach (var item in Model.GiftList)
+                    {
+                        <tr>
+                            <td>@item.IDX</td>
+                            <td>
+                                <a href="/AdminProduct/GiftUpdate?idx=@item.IDX">
+                                    @item.GIFT_NAME
+                                </a>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.GIFT_IMG))
+                                {
+                                    <span id="SPAN_MAIN_IMG"><a href="/AdminProduct/GiftUpdate?idx=@item.IDX"><img src="@ViewBag.Gift_path@item.GIFT_IMG" width="70" height="70" /></a></span>
+                                }
+                            </td>
+                        <td>@string.Format("{0:#,##0}", item.GIFT_COUNT) </td>
+                        <td>@string.Format("{0:#,##0}", item.USED_COUNT) </td>
+                        <td>@string.Format("{0:#,##0}", item.GIFT_COUNT - item.USED_COUNT) </td>
+                        <td>@item.DISPLAY_YN</td>
+                        <td>@string.Format("{0:#,##0}", item.START_PRICE) 원 </td>
+                        <td>@item.REGDATE</td>
+                </tr>
+                            i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalCount, RecordPerPage = Model.SearchOption.PAGESIZE, PagePerBlock = 10, CurrentPage = Model.SearchOption.PAGE, QueryStr = "SearchCol=&SearchKeyword=&SortCol=&SortDir="});}
+
+    </div>
+    <!--//content-->
+}
