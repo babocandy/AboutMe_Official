@@ -198,6 +198,7 @@
     <Compile Include="Common\Filters\CustomAuthorizeOtherAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminCouponController.cs" />
+    <Compile Include="Controllers\AdminDisplayController.cs" />
     <Compile Include="Controllers\AdminFrontMemberController.cs" />
     <Compile Include="Controllers\AdminMemberController.cs" />
     <Compile Include="Controllers\AdminPointController.cs" />
@@ -218,6 +219,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminDisplayViewModels.cs" />
     <Compile Include="Models\AdminPointViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1260,7 +1262,7 @@
     <Content Include="Views\Notice\Index.cshtml" />
     <Content Include="Views\Notice\New.cshtml" />
     <Content Include="Views\AdminFrontMember\Edit.cshtml" />
-    <Content Include="Views\AdminPoint\PointIndex.cshtml" />
+    <Content Include="Views\AdminPoint\Index.cshtml" />
     <Content Include="Views\AdminPoint\MemberPointUpdate.cshtml" />
     <Content Include="Views\AdminProduct\ProductPriceIndex.cshtml" />
     <Content Include="Views\AdminPoint\MyPointHistory.cshtml" />
@@ -1294,6 +1296,10 @@
     <Content Include="Views\AdminReview\Index.cshtml" />
     <Content Include="Views\AdminProduct\PopProductIndex.cshtml" />
     <Content Include="Views\AdminFrontMember\ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL.cshtml" />
+    <Content Include="Views\AdminProduct\GiftIndex.cshtml" />
+    <Content Include="Views\AdminProduct\GiftInsert.cshtml" />
+    <Content Include="Views\AdminProduct\GiftUpdate.cshtml" />
+    <Content Include="Views\AdminDisplay\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

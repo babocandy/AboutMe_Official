@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Mobile-PwChange";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+}
+
+
+@section Header{
+
+}
+
+@section Scripts{
+
+
+<script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
+
+<script>
+        var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+        var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+
+        var glREGISTER_ING = false;  //저장처리중
+
+        //비밀번호 저장 성공후 -> 다음 스텝으로 이동
+        function fGoRegisterComplete() {
+            //self.close();
+            location.href="/MyPage/MyModify";  //모바일은 팝업이 아님
+        }
+
+        function fGoSave() {
+            var f = document.frmPWCHANGE;
+
+            if (glREGISTER_ING) {
+                alert("비밀번호변경 처리중입니다. 잠시만 기다려 주십시오.");
+                return;
+            }
+
+            if (f.M_PWD_OLD.value.length <4) {
+                alert("[현재 비밀번호]를 입력하세요");
+                return;
+            }
+
+            if (f.M_PWD_NEW.value != f.M_PWD_NEW2.value) {
+                alert("[새로운 비밀번호]와 [새로운 비밀번호 확인]이 일치하지 않습니다.");
+                return;
+            }
+
+            //새로운암호 유효성 검증
+            if (fIsValidMemberPWD(f.M_PWD_NEW.value) == false) {
+                return;
+            }
+
+
+
+
+            var strTOKEN = f.__RequestVerificationToken.value;
+            var strM_ID = f.M_ID.value;
+            var strM_PWD_OLD = f.M_PWD_OLD.value;
+            var strM_PWD_NEW = f.M_PWD_NEW.value;
+
+            //var strURL = "/MyPage/AjaxPop_PwChangeProc";
+            var strURL = glHTTPS_DOMAIN + "/MyPage/AjaxPop_PwChangeProc";
+
+            glREGISTER_ING = true;  //저장 진행중 --------------------
+
+            $.ajax({
+                url: strURL,
+                async: false,  //동기 통신
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: strTOKEN
+                    , M_ID: strM_ID
+                    , M_PWD_OLD: strM_PWD_OLD
+                    , M_PWD_NEW: strM_PWD_NEW
+
+                },
+                success: function (retDATA) {
+                    if (retDATA.ERR_CODE == "0") {
+                        glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                        alert("비밀번호가 변경되었습니다.");
+                        fGoRegisterComplete(); //다음 스텝으로 이동
+                    }
+                    else {
+                        glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                        alert("비밀번호 변경중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
+                    }
+                },
+                error: function (e) {
+                    glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                    alert("ajax 오류발생2");
+                }
+            }); //ajax
+        } //func
+
+
+
+</script>
+}
+
+
+@section Body{
+
+    <div class="wrap pwchange">
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
+
+
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>비밀번호변경</h2>
+            </div>
+            <!-- 비밀번호변경 -->
+            <div class="mywrite_form boxtypea">
+
+@using (Html.BeginForm("AjaxPop_PwChangeProc", "MyPage", FormMethod.Post, new { id = "frmPWCHANGE", name = "frmPWCHANGE" }))
+{
+    @Html.AntiForgeryToken()                                           //폼 데이터 위조 방지 토큰 생성
+    <input type="hidden" name="M_ID" value="@ViewBag.M_ID" />
+    
+
+                    <fieldset>
+                        <legend>비밀번호변경</legend>
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>현재 비밀번호</dt>
+                                    <dd class="frm_ipt100per"><input type="password" class="ipttypea" title="현재 비밀번호 입력" name="M_PWD_OLD" value="" maxlength="12" /></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>새로운 비밀번호</dt>
+                                    <dd class="frm_ipt100per"><input type="password" class="ipttypea" title="새로운 비밀번호 입력" name="M_PWD_NEW" value="" maxlength="12" /></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>새로운 비밀번호 확인</dt>
+                                    <dd class="frm_ipt100per"><input type="password" class="ipttypea" title="새로운 비밀번호 확인 입력" name="M_PWD_NEW2" value="" maxlength="12" /></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <div class="btn_group">
+                            <a href="javascript:fGoSave();" class="btn btn_gray_h40">수정</a><a href="javascript:location.href='/MyPage/MyModify';" class="btn btn_white_h40 v2">취소</a>
+                        </div>
+                    </fieldset>
+}
+            </div>
+            <!-- 비밀번호변경 -->
+        </div>
+        <!--//container-->
+
+
+    <!--footer-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+</div>
+
+}
+
+@section Footer{
+
+}

@@ -662,5 +662,110 @@ namespace AboutMe.Domain.Entity.AdminProduct
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_BATCH_UPD", p_CODEParameter, iCON_BATCH_CHKParameter, iCON_YNParameter, dISPLAY_YNParameter, sOLDOUT_YNParameter, p_OUTLET_YNParameter);
         }
+
+        public virtual ObjectResult<SP_ADMIN_GIFT_CNT_Result> SP_ADMIN_GIFT_CNT(string sEARCH_KEY, string sEARCH_KEYWORD, string sEARCH_DISPLAY_YN)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+
+            var sEARCH_DISPLAY_YNParameter = sEARCH_DISPLAY_YN != null ?
+                new ObjectParameter("SEARCH_DISPLAY_YN", sEARCH_DISPLAY_YN) :
+                new ObjectParameter("SEARCH_DISPLAY_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_GIFT_CNT_Result>("SP_ADMIN_GIFT_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter, sEARCH_DISPLAY_YNParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_GIFT_SEL_Result> SP_ADMIN_GIFT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD, string sEARCH_DISPLAY_YN)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+
+            var sEARCH_DISPLAY_YNParameter = sEARCH_DISPLAY_YN != null ?
+                new ObjectParameter("SEARCH_DISPLAY_YN", sEARCH_DISPLAY_YN) :
+                new ObjectParameter("SEARCH_DISPLAY_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_GIFT_SEL_Result>("SP_ADMIN_GIFT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter, sEARCH_DISPLAY_YNParameter);
+        }
+
+        public virtual ObjectResult<SP_ADMIN_GIFT_DETAIL_VIEW_Result> SP_ADMIN_GIFT_DETAIL_VIEW(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_GIFT_DETAIL_VIEW_Result>("SP_ADMIN_GIFT_DETAIL_VIEW", iDXParameter);
+        }
+
+        public virtual int SP_ADMIN_GIFT_INS(string gIFT_NAME, Nullable<int> gIFT_COUNT, Nullable<int> sTART_PRICE, Nullable<int> eND_PRICE, string gIFT_IMG, string dISPLAY_YN)
+        {
+            var gIFT_NAMEParameter = gIFT_NAME != null ?
+                new ObjectParameter("GIFT_NAME", gIFT_NAME) :
+                new ObjectParameter("GIFT_NAME", typeof(string));
+
+            var gIFT_COUNTParameter = gIFT_COUNT.HasValue ?
+                new ObjectParameter("GIFT_COUNT", gIFT_COUNT) :
+                new ObjectParameter("GIFT_COUNT", typeof(int));
+
+            var sTART_PRICEParameter = sTART_PRICE.HasValue ?
+                new ObjectParameter("START_PRICE", sTART_PRICE) :
+                new ObjectParameter("START_PRICE", typeof(int));
+
+            var eND_PRICEParameter = eND_PRICE.HasValue ?
+                new ObjectParameter("END_PRICE", eND_PRICE) :
+                new ObjectParameter("END_PRICE", typeof(int));
+
+            var gIFT_IMGParameter = gIFT_IMG != null ?
+                new ObjectParameter("GIFT_IMG", gIFT_IMG) :
+                new ObjectParameter("GIFT_IMG", typeof(string));
+
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_GIFT_INS", gIFT_NAMEParameter, gIFT_COUNTParameter, sTART_PRICEParameter, eND_PRICEParameter, gIFT_IMGParameter, dISPLAY_YNParameter);
+        }
+
+        public virtual int SP_ADMIN_GIFT_UPD(Nullable<int> iDX, string gIFT_NAME, Nullable<int> gIFT_COUNT, string gIFT_IMG, string dISPLAY_YN)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+
+            var gIFT_NAMEParameter = gIFT_NAME != null ?
+                new ObjectParameter("GIFT_NAME", gIFT_NAME) :
+                new ObjectParameter("GIFT_NAME", typeof(string));
+
+            var gIFT_COUNTParameter = gIFT_COUNT.HasValue ?
+                new ObjectParameter("GIFT_COUNT", gIFT_COUNT) :
+                new ObjectParameter("GIFT_COUNT", typeof(int));
+
+            var gIFT_IMGParameter = gIFT_IMG != null ?
+                new ObjectParameter("GIFT_IMG", gIFT_IMG) :
+                new ObjectParameter("GIFT_IMG", typeof(string));
+
+            var dISPLAY_YNParameter = dISPLAY_YN != null ?
+                new ObjectParameter("DISPLAY_YN", dISPLAY_YN) :
+                new ObjectParameter("DISPLAY_YN", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_GIFT_UPD", iDXParameter, gIFT_NAMEParameter, gIFT_COUNTParameter, gIFT_IMGParameter, dISPLAY_YNParameter);
+        }
     }
 }

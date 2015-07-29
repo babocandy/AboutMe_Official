@@ -14,66 +14,170 @@
 
     <script>
 
-        var categoryCode = "@Model.DefaultCategoryCode";
-        var sort = "@Model.DefaultSort";//포토순
-        var tailIdx;
 
-        function selectCategoryMenu(cc) {
-            categoryCode = cc;
-
-            getReviewProducList();
-        }
-
-        function sorting(s) {
-            sort = s;
-
-            getReviewProducList();
-        }
-
-        function moremore() {
-            getReviewProducList();
-        }
 
 
     </script>
 
 
 <script type="text/javascript">
-    //<![CDATA[
+
+
+    var $grid;
+
+
+    var img_path_product = "@myController._img_path_product";
+    var img_path_review = "@myController._img_path_review";
+
+    var categoryCode = "@Model.DefaultCategoryCode";
+    var sort = "@Model.DefaultSort";//포토순
+    var tailIdx = @Model.Reviews.Last().IDX;
+
+    console.log("tailIdx", tailIdx);
+
+    // select category
+    function selectCategoryMenu(cc) {
+        if (categoryCode != cc) categoryCode = cc;
+        tailIdx = undefined;
+        removeAllItems();
+
+        getReviewProducList();
+    }
+
+    //
+    function sorting(s) {
+        if (sort != s) sort = s;
+        tailIdx = undefined;
+        removeAllItems();
+        getReviewProducList();
+    }
+
+    //더 보기
+    function moreView() {
+        getReviewProducList();
+    }
+
     $(function () {
-
-        //example  http://masonry.desandro.com/methods.html#appended
-        var $msnryContainer = $("#reviewConts");
-        $msnryContainer.imagesLoaded(function () {
-            $msnryContainer.masonry({
-                transitionDuration: 0,
-                itemSelector: '.grid'
-            });
-        })
-
+        initMasonry();
     });
 
+    function initMasonry() {
+        /**/
+        // init Masonry
+        $grid = $('#reviewConts').masonry({
+            itemSelector: ".grid",
+            transitionDuration: 0
+        });
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress(function () {
+            $grid.masonry('layout');
+        });
 
+        /*
+        //example  http://masonry.desandro.com/methods.html#appended
+
+       */
+    }
     function getReviewProducList() {
+        console.log(tailIdx, categoryCode, sort);
+
         $.ajax({
             url: "@(Url.Action("GetReviewProductList", "Review"))",
             type: "POST",
             dataType: "json",
             data: {
                 TAIL_IDX: tailIdx
-                ,CATEGORY_CODE:categoryCode
-                ,SORT:sort
+                , CATEGORY_CODE: categoryCode
+                , SORT: sort
             },
             success: function (data) {
                 //alert(data.success);
                 console.log(data);
+
+                if (data.Success) {
+
+
+                    addItems(data.Reviews);
+
+                    $("#totalReview").text(data.Total);
+
+                }
             },
             error: function (e) {
                 console.log(e);
             }
         });
-    }
-    //]]>
+    }//end func
+
+    function addItems(list) {
+        if (list.length > 0) {
+
+            //var $items = [];
+            for (var i = 0 ; i < list.length ; ++i) {
+                var d = list[i];
+
+
+                var html = "<div class='grid'>";
+
+                if (d.IS_BEST) {
+                    html += "<span class='best_choice'><img src='/aboutCom/images/review/ico_best.png' alt='best'></span>";
+                }
+
+                //<!--제품 이름 및 정보-->
+                html += "<div class='product_info'>";
+                html += "<div class='photo'><img src='" + img_path_product + d.P_MAIN_IMG + "' alt''></div>";
+                html += "<div class='detail'>";
+                html += "<p class='tit'>" + d.P_NAME + "</p>";
+                html += "<p class='stit'>" + (d.P_SUB_TITLE ? d.P_SUB_TITLE : "") + "</p>";
+
+                html += "</div>";
+                html += "</div>";
+
+                html += "<div class='comments'>";
+                html += "<div class='writer'>";
+                html += "<span class='id'>" + d.M_ID + "</span>";
+                html += "<span class='userage'>" + d.M_BIRTHDAY + " " +d.M_SEX + "</span>";
+                html += "<span class='skin " + d.SKIN_TYPE + "' ></span>";
+                html += "</div>";
+
+
+                html += "<div class='reviewtxt'>";
+
+                if (d.IS_PHOTO ) {
+                    html += "<img src='" + img_path_review + d.ADD_IMAGE + "' alt=''>";
+                }
+
+                html += "<div class='txt txtdotdot'>";
+                html += d.COMMENT;
+                html += "</div>";
+                html += "</div>";
+                html += "</div>"; //end comment
+
+                html += "</div>"; //end grid
+
+
+
+                var elem = $(html);
+                $grid.masonry().append(elem).masonry('appended', elem).masonry();
+            }
+
+            console.log("d.IDX", d.IDX)
+
+            //꼬리값 물기
+            if (tailIdx != d.IDX) {
+                tailIdx = d.IDX;
+            }
+        } else {
+            alert("더 이상 결과값이 없습니다.");
+        }
+    }//end func
+
+    function removeAllItems() {
+        $(".grid").each(function () {
+            $grid.masonry('remove', this)
+        });
+    }//end func
+
 </script>
 
 }
@@ -138,7 +242,7 @@
                 </div>
 
                 <div class="reviewConts_area">
-                    <span class="totaltxt">총 <strong>100</strong>개의 상품이 있습니다.</span>
+                    <span class="totaltxt">총 <strong id="totalReview">@Model.Total</strong>개의 상품이 있습니다.</span>
                     <!--sort-->
                     <div class="sort">
                         <ul>
@@ -148,15 +252,15 @@
                     </div>
                     <!--//sort-->
                     <div id="reviewConts" class="bocksitls">
-                      @foreach (var item in Model.Products)
+                      @foreach (var item in Model.Reviews)
                       {
                         <div class="grid">
                             <!--
                                 best 선정시 class="best_choice" 추가됩니다.
                             -->
-                            @if ( !String.IsNullOrEmpty( item.PRIZE_GRADE )  )
+                            @if ( item.IS_BEST  )
                             {
-                                <span class="@ReviewHelper.isBest(item.PRIZE_GRADE)"><img src="/aboutCom/images/review/ico_best.png" alt="best"></span>
+                                <span class="best_choice"><img src="/aboutCom/images/review/ico_best.png" alt="best"></span>
                             }
                             
                             <!--제품 이름 및 정보-->
@@ -173,19 +277,17 @@
                             <div class="comments">
                                 <div class="writer">
                                     <span class="id">@item.M_ID</span>
-                                    <span class="userage">@ReviewHelper.ConvertAge( @item.M_BIRTHDAY), @ReviewHelper.ConvertGenger( @item.M_SEX)</span>
-                                    <!--
-                                        피부타입 css
-                                        건성 : dry
-                                        중성 : normal
-                                        지성 : oily
-                                    -->
-                                    <span class="skin @ReviewHelper.ConvertSkinType( @item.SKIN_TYPE)"></span>
+                                    <span class="userage"> @item.M_BIRTHDAY,  @item.M_SEX</span>
+                                    <span class="skin @item.SKIN_TYPE"></span>
                                 </div>
                                 <div class="reviewtxt">
-                                    <img src="@myController._img_path_review@item.ADD_IMAGE" alt="">
+                                    @if (@item.IS_PHOTO )
+                                    {
+                                        <img src="@myController._img_path_review@item.ADD_IMAGE" alt="">
+                                    }
+                                   
                                     <div class="txt txtdotdot">
-                                        @item.COMMENT
+                                        @Html.Raw(item.COMMENT);
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +298,7 @@
                 </div>
 
 
-                <a href="#" class="btn_more" onclick="moremore(); return false;">더보기<i></i></a>
+                <a href="#" class="btn_more" onclick="moreView(); return false;">더보기<i></i></a>
 
 
             </div>

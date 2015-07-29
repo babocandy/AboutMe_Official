@@ -55,8 +55,10 @@ namespace AboutMe.Web.Front.Controllers
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
             ViewBag.img_path_review = _img_path_review; //이미지디렉토리경로
             model.PageNo = page;
-            model.CompleteList = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);           
-            model.TotalItem = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
+
+
+            model.Reviews = ReviewHelper.GetDataForDisplay(_ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page));
+            model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
 
             return View(model);
         }
@@ -77,8 +79,8 @@ namespace AboutMe.Web.Front.Controllers
             {
                 model.ProductInfo = _ReviewService.GetProductInfo(P_CODE);
             }
-            Debug.WriteLine("P_CODE: " + P_CODE);
-            Debug.WriteLine("model.ProductInfo: " + model.ProductInfo);
+           // Debug.WriteLine("P_CODE: " + P_CODE);
+            //Debug.WriteLine("model.ProductInfo: " + model.ProductInfo);
 
             return View(model);
         }
@@ -89,10 +91,10 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult Write(MyReviewInsertViewModel model)
         {
 
-            Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
-            Debug.WriteLine("OrderDetailIdx - " + model.ORDER_DETAIL_IDX);
-            Debug.WriteLine("Pcode - " + model.P_CODE);
-            Debug.WriteLine("Mid - " + model.M_ID);
+           // Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
+            //Debug.WriteLine("OrderDetailIdx - " + model.ORDER_DETAIL_IDX);
+            //Debug.WriteLine("Pcode - " + model.P_CODE);
+            //Debug.WriteLine("Mid - " + model.M_ID);
 
             /**
              * 상품정보 
@@ -105,7 +107,7 @@ namespace AboutMe.Web.Front.Controllers
             /**
              * 뷰티일때만 피부타입 유효성 체크
              */
-            if (!ReviewHelper.IsBeauty(model.ProductInfo.P_CATE_CODE))
+            if (!ReviewHelper.IsBeauty(model.ProductInfo.C_CATE_CODE))
             {
                 var valueToClean = ModelState["SKIN_TYPE"];
                 valueToClean.Errors.Clear(); 
@@ -123,11 +125,11 @@ namespace AboutMe.Web.Front.Controllers
                if (model.UploadImage != null)
                {
                    ImageResult imageResult = imageUpload.RenameUploadFile( model.UploadImage );
-                   Debug.WriteLine("imageResult.Success - " + imageResult.Success);
-                   Debug.WriteLine("imageResult.ErrorMessage - " + imageResult.ErrorMessage);
+                  // Debug.WriteLine("imageResult.Success - " + imageResult.Success);
+                   //Debug.WriteLine("imageResult.ErrorMessage - " + imageResult.ErrorMessage);
                    if (imageResult.Success)
                    {
-                       Debug.WriteLine(" imageResult.ImageName - " + imageResult.ImageName);
+                       //Debug.WriteLine(" imageResult.ImageName - " + imageResult.ImageName);
                        model.ADD_IMAGE = imageResult.ImageName;
                        
                    }

@@ -18,6 +18,12 @@
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
           <Parameter Name="RET_MESSAGE" Type="nvarchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="TOTAL" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_REVIEW_PRODUCT_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
@@ -37,6 +43,7 @@
           <Parameter Name="TAIL_IDX" Type="int" Mode="In" />
           <Parameter Name="CATE_CODE" Type="varchar" Mode="In" />
           <Parameter Name="SORT" Type="varchar" Mode="In" />
+          <Parameter Name="TOTAL" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_REVIEW_PRODUCT_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
@@ -84,6 +91,13 @@
             <Parameter Name="TAIL_IDX" Mode="In" Type="Int32" />
             <Parameter Name="CATE_CODE" Mode="In" Type="String" />
             <Parameter Name="SORT" Mode="In" Type="String" />
+            <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL" ReturnType="Collection(ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_REVIEW_PRODUCT_READY_SEL_Result">
@@ -93,22 +107,22 @@
           <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
           <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
           <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="P_COUNT" Nullable="false" />
           <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
         </ComplexType>
         <ComplexType Name="SP_REVIEW_GET_PRODUCT_INFO_Result">
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
           <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
           <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
         </ComplexType>
         <ComplexType Name="SP_REVIEW_PRODUCT_COMPLETE_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="true" />
@@ -120,7 +134,6 @@
           <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
           <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
@@ -131,6 +144,7 @@
           <Property Type="String" Name="ADD_IMAGE" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -148,13 +162,13 @@
                 <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
                 <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
-                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
                 <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
                 <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
                 <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
                 <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
                 <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -163,12 +177,12 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_GET_PRODUCT_INFO_Result">
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
-                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
                 <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
                 <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
                 <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
                 <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -185,7 +199,6 @@
                 <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
-                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
                 <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
                 <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
                 <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
@@ -196,6 +209,7 @@
                 <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
                 <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -211,7 +225,6 @@
                 <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
-                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
                 <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
                 <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
                 <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
@@ -222,6 +235,32 @@
                 <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
                 <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL" FunctionName="ReviewModel.Store.SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_PRODUCT_COMPLETE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="PRIZE_GRADE" ColumnName="PRIZE_GRADE" />
+                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
+                <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

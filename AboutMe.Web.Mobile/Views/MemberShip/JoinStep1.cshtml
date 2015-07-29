@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Mobile-JoinStep1";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+
+@{
+    //실명인증 작업구분을위한 unique한 값 생성 :50 byte 이내
+    Random r = new Random();
+    int randomNumber = r.Next(10000000, 90000000);
+    string strNOW_TIME = @DateTime.Now.ToString("yyyyMMdd_HHmmss");
+    string strWORK_TMP_ID = @strNOW_TIME + "_" + @randomNumber.ToString();
+
+}
+
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/membership.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+<script>
+    //HP
+    function jsSubmitHP() {
+        window.open("", "auth_popup", "width=430,height=590,scrollbar=yes");
+        var form1 = document.formREAL_NAME;
+        form1.target = "auth_popup";
+        form1.action = "/RealName/hp/hs_cnfrm_popup2.aspx";
+        form1.submit();
+        //popupWindowHP.focus();
+    }
+
+    //ipin
+    function jsSubmitIPIN() {
+        var popupWindow = window.open("", "kcbPop", "left=200, top=100, status=0, width=450, height=550");
+        var form1 = document.formREAL_NAME;
+        form1.target = "kcbPop";
+        form1.action = "/RealName/ipin/ipin2.aspx";
+        form1.submit();
+
+        popupWindow.focus();
+    }
+
+</script>
+
+}
+
+
+@section Body{
+
+    <div class="wrap join">
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div class="container step1">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>회원가입</h2>
+            </div>
+            <!-- 실명확인 -->
+            <div class="boxtypeb">
+                <!-- 회원가입 순서 -->
+                <div class="joinstep">
+                    <h3 class="hidden">실명확인</h3>
+                    <ul>
+                        <li class="cnt"><i class="ico_d1"></i><br />01.<br />실명확인<span class="hidden">-현재위치</span></li>
+                        <li><i class="ico_d2"></i><br />02.<br />약관동의</li>
+                        <li><i class="ico_d3"></i><br />03.<br />회원정보입력</li>
+                        <li><i class="ico_d4"></i><br />04.<br />가입완료</li>
+                    </ul>
+                </div>
+                <p class="msg">고객님의 가입여부 확인 및 개인 정보보호를 위해 실명확인 서비스를 실시하고 있습니다. 원하시는 인증방법을 선택 해 주세요.</p>
+                <!-- //회원가입 순서 -->
+                <!-- 인증선택 -->
+                <div class="certify">
+                    <span class="phone">
+                        <i class="ico_phone"></i>
+                        <a href="javascript:jsSubmitHP();" class="btn btn_brown_h30">휴대폰 인증</a>
+                    </span>
+                    <span class="ipin">
+                        <i class="ico_ipin"></i>
+                        <a href="javascript:jsSubmitIPIN();" class="btn btn_brown_h30">아이핀 인증</a>
+                    </span>
+                </div>
+                <!-- //인증선택 -->
+                <!-- 알려드립니다 -->
+                <div class="info_msg">
+                    <h3><i class="bl_info"></i>알려드립니다</h3>
+                    <p>
+                        정보통신망 이용촉진 및 정보보호 등에 관한 법률 제23조의 2 (주민등록
+                        번호의 사용 제한)에 의거하여 주민등록번호 사용을 원칙적으로 금지하
+                        는 개정된 정보통신망법이 2012년 8월 18일부터 시행되었고, 회원님들
+                        의 주민등록번호를 수집, 보관, 이용할 수 없게 되었습니다.<br />
+                        <a href="#none">[※ 정보통신망 이용촉진 및 정보보호 등에 관한 법률 전문보기]</a><br />
+
+                        회원가입을 원하시는 회원님들은 개정법에 따라 안전한 인증수단인
+                        본인 인증을 이용하여 주시기 바랍니다.
+                    </p>
+                </div>
+                <!-- //알려드립니다 -->
+            </div>
+            <!-- //실명확인 -->
+        </div>
+
+
+        <form name="formREAL_NAME" method="post" target="" action="">
+            <input type="hidden" name="test" value="test" />
+
+        </form>
+
+
+        <!-- 본인확인 처리결과 정보_HP -->
+        @using (Html.BeginForm("RealNameResult", "MemberShip", FormMethod.Post, new { id = "kcbResultForm_HP", name = "kcbResultForm_HP" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                            <input type="hidden" name="mem_id" value="" />
+                            <input type="hidden" name="tx_seqno" value="" />
+                            <input type="hidden" name="result_cd" value="" />
+                            <input type="hidden" name="result_msg" value="" />
+                            <input type="hidden" name="cert_dt_tm" value="" />
+                            <input type="hidden" name="di" value="" />
+                            <input type="hidden" name="ci" value="" />
+                            <input type="hidden" name="name" value="" />
+                            <input type="hidden" name="birthday" value="" />
+                            <input type="hidden" name="gender" value="" />
+                            <input type="hidden" name="nation" value="" />
+                            <input type="hidden" name="tel_com_cd" value="" />
+                            <input type="hidden" name="tel_no" value="" />
+
+                            <input type="hidden" name="M_JOIN_MODE" value="hp" />
+                            <input type="hidden" name="WORK_TMP_ID" value="@strWORK_TMP_ID" />
+        }
+
+        <!-- 본인확인 처리결과 정보_ipin -->
+        @using (Html.BeginForm("RealNameResult", "MemberShip", FormMethod.Post, new { id = "kcbOutForm_IPIN", name = "kcbOutForm_IPIN" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                            <input type="hidden" name="encPsnlInfo" />
+                            <input type="hidden" name="virtualno" />
+                            <input type="hidden" name="dupinfo" />
+                            <input type="hidden" name="realname" />
+                            <input type="hidden" name="cprequestnumber" />
+                            <input type="hidden" name="age" />
+                            <input type="hidden" name="sex" />
+                            <input type="hidden" name="nationalinfo" />
+                            <input type="hidden" name="birthdate" />
+                            <input type="hidden" name="coinfo1" />
+                            <input type="hidden" name="coinfo2" />
+                            <input type="hidden" name="ciupdate" />
+                            <input type="hidden" name="cpcode" />
+                            <input type="hidden" name="authinfo" />
+
+                            <input type="hidden" name="M_JOIN_MODE" value="ipin" />
+                            <input type="hidden" name="WORK_TMP_ID" value="@strWORK_TMP_ID" />
+        }
+
+
+        <!--//container-->
+
+
+    <!--footer-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+</div>
+
+}
+
+
+@section Footer{
+
+}

@@ -29,6 +29,14 @@
             <li><a href="#">고객센터</a></li>
         </ul>
     </div>
+<!--
+    <div class="btn_group mt15">
+        <a href="#" class="btn btn_gray_h25 mr5">PC 버전</a><a href="#" class="btn btn_gray_h25">로그인</a>
+    </div>
+-->
+    <!--로그인 여부에 따른 메뉴 조정-->
+    @{Html.RenderAction("ChildFooterMenu", "CommonChildAction");}
+
     <div class="copy">
         <img src="/aboutCom/images/common/f_copy.gif" alt="" />
     </div>

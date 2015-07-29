@@ -19,7 +19,7 @@ namespace AboutMe.Domain.Service.Review
         Tuple<string, string> InsertMyReview(string mid, int? orderDetailIdx, string pCode, string skinType, string comment, string addImage);
         List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetMyReviewCompleteList(string mid, int? pageNo = 1, int? pageSize = 10);
         int GetMyReviewCompleteCnt(string mid);
-        List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetReviewProductList(int? tailIdx, string categoryCode, string sort);
-
+        Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort);
+        Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10);
     }
 }

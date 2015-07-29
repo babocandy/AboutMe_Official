@@ -14,11 +14,11 @@ namespace AboutMe.Domain.Entity.Review
     public partial class SP_REVIEW_GET_PRODUCT_INFO_Result
     {
         public string P_SUB_TITLE { get; set; }
-        public string P_CATE_CODE { get; set; }
         public string P_TAG { get; set; }
         public string P_INFO_DETAIL_MOBILE { get; set; }
         public string P_INFO_DETAIL_WEB { get; set; }
         public string MAIN_IMG { get; set; }
         public string P_NAME { get; set; }
+        public string C_CATE_CODE { get; set; }
     }
 }

@@ -23,12 +23,23 @@
     <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
     <script>
+        var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+        var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+
+        var glREGISTER_ING = false;  //저장처리중
 
         function fSetEmailDomain() {
             var f = document.frmPopSearch;
             if (f.M_EMAIL_SEL.selectedIndex > 0) {
                 f.M_EMAIL_2.value = f.M_EMAIL_SEL[f.M_EMAIL_SEL.selectedIndex].value;
             }
+        }
+
+        function fComplete() {
+            var f = document.frmPopSearch;
+            f.action = "/MemberShip/PwSearch_End";
+            f.method = "post";
+            f.submit();
         }
 
         function fGoFind() {
@@ -66,10 +77,51 @@
                 return;
             }
 
-            f.action = "/MemberShip/PwSearch_End";
-            f.target = "";
-            f.submit();
+            //f.action = "/MemberShip/PwSearch_End";
+            //f.target = "";
+            //f.submit();
 
+            var strTOKEN = f.__RequestVerificationToken.value;
+            var strM_ID = f.M_ID.value;
+            var strM_NAME = f.M_NAME.value;
+            var strM_EMAIL = f.M_EMAIL.value;
+            var strM_MOBILE = f.M_MOBILE.value;
+
+            var strURL = glHTTPS_DOMAIN + "/MemberShip/AjaxPwSearchProc";
+
+            glREGISTER_ING = true;
+
+            $.ajax({
+                url: strURL,
+                async: false,  //동기 통신
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: strTOKEN
+                    , M_ID: strM_ID
+                    , M_NAME: strM_NAME
+                    , M_EMAIL: strM_EMAIL
+                    , M_MOBILE: strM_MOBILE
+
+                },
+                success: function (retDATA) {
+                    if (retDATA.ERR_CODE == "0") {
+                        f.M_ID.value = retDATA.M_ID;
+                        f.M_CREDATE.value = retDATA.M_CREDATE;
+                        glREGISTER_ING = false;
+                        fComplete();
+
+                    }
+                    else {
+                        glREGISTER_ING = false;
+                        alert("비밀번호 찾기 실패! " + retDATA.ERR_MSG);
+                    }
+                },
+                error: function (e) {
+                    glREGISTER_ING = false;
+                    alert("ajax 오류발생1");
+                }
+            }); //ajax
 
         } //func
 
@@ -109,11 +161,11 @@
                             <tbody>
                                 <tr>
                                     <th><span>아이디</span></th>
-                                    <td><input type="text" class="ipttypea" style="width:233px" title="아이디 입력" name="M_ID" maxlength="12"/></td>
+                                    <td><input type="text" class="ipttypea" style="width:233px" title="아이디 입력" name="M_ID" maxlength="12" value=""/></td>
                                 </tr>
                                 <tr>
                                     <th><span>이름</span></th>
-                                    <td><input type="text" class="ipttypea" style="width:233px" title="이름 입력" name="M_NAME" maxlength="20" /></td>
+                                    <td><input type="text" class="ipttypea" style="width:233px" title="이름 입력" name="M_NAME" maxlength="20" value="" /></td>
                                 </tr>
                                 <tr>
                                     <th><span>이메일</span></th>
@@ -157,7 +209,7 @@
                             </tbody>
                         </table>
                         <p class="txt_agree">
-                            <label class="chkcon" for="agree"><input type="checkbox" id="agree" name="" title="agree" class="agree_check" /> <span class="txt">비밀번호 찾기 위해 이름,이메일,핸드폰 번호 제공에 동의합니다.</span></label>
+                            <label class="chkcon" for="agree"><input type="checkbox" id="agree" name="agree" title="agree" class="agree_check" /> <span class="txt">비밀번호 찾기 위해 이름,이메일,핸드폰 번호 제공에 동의합니다.</span></label>
                         </p>
                         <div class="btngroup mt20">
                             <a href="javascript:fGoFind();" class="btn_brown_w96h38">비밀번호 찾기</a>

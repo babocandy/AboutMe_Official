@@ -1,7 +1,136 @@
 ﻿
+@using AboutMe.Common.Helper
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
 }
 
-<h2>Index</h2>
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+    <div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">기본설정</a> &gt; <a href="#">혜택관리</a> &gt; <strong>리뷰관리</strong>
+    </div>
+    <!--//path-->
+    <div class="panel">
+        <h3 class="sub-header">포인트관리</h3>
+        <h4>회원 검색</h4>
+        <div class="alert alert-info">
+            @using (Html.BeginForm("Index", "AdminReview", FormMethod.Post, new { id = "frm", name = "frm", onsubmit = "return frmCheck();", @class = "form-inline" }))
+            {
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+
+                            @{
+                List<SelectListItem> items = new List<SelectListItem>();
+                items.Add(new SelectListItem { Text = "아이디", Value = "M_ID" });
+                items.Add(new SelectListItem { Text = "상품코드", Value = "P_CODE" });
+                items.Add(new SelectListItem { Text = "상품카테고리", Value = "C_CATE_CODE" });
+
+
+
+                foreach (var xx in items)
+                {
+                    if (xx.Value == Model.SearchKey)
+                    {
+                        xx.Selected = true;
+                        break;
+                    }
+                }
+                            }
+                            @Html.DropDownList("searchKey", items, "-대상 선택-", new { style = "width:100px;" })
+
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="txt1" class="input-sm" title="검색어 입력" style="width:400px;" name="searchValue" value="@Model.SearchValue" />
+                        </div>
+                        <button class="btn btn-default btn-xs" onclick="document.frm.submit(); return false;">검색하기</button>
+                        <a href="@(Request.Url.PathAndQuery)" class=" btn btn-primary btn-xs">취소</a>
+                    </div>
+                    <div class="col-md-4  text-right">
+                        <div class="form-group">
+                            @{
+                List<SelectListItem> pageSizeItems = new List<SelectListItem>();
+                pageSizeItems.Add(new SelectListItem { Text = "10개씩", Value = "10" });
+                pageSizeItems.Add(new SelectListItem { Text = "20개씩", Value = "20" });
+
+                foreach (var xx in pageSizeItems)
+                {
+                    if (xx.Value.AsInt() == Model.PageSize)
+                    {
+                        xx.Selected = true;
+                        break;
+                    }
+                }
+
+                            }
+                            @Html.DropDownList("pageSize", pageSizeItems, new { style = "width:150px;", @onchange = "document.frm.submit();" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="panel">
+        <table class="table table_col">
+            <colgroup><col width="8%" /><col width="*" /><col width="20%" /><col width="20%" /><col width="8%" /></colgroup>
+            <thead>
+                <tr>
+                    <th scope="col" class="brnone">No.</th>
+                    <th scope="col">이름(아이디)</th>
+                    <th scope="col">가입일</th>
+                    <th scope="col">포인트</th>
+                    <th scope="col" class="brnone">등급</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.MemberList)
+                {
+                    <tr>
+                        <!--<td class="brnone"><input type="checkbox" value="50,000" title="선택" /></td>-->
+                        <td class="brnone">@item.M_NO</td>
+                        <td>@Html.ActionLink(string.Format("{0}({1})", item.M_NAME, item.M_ID), null, null, new { onclick = string.Format("openScrollYes('/AdminPoint/MemberPointUpdate?M_ID={0}','_blank', '1000', '600'); return false;", @item.M_ID), @class = "btn" })</td>
+                        <td>@item.M_CREDATE.ToShortDateString()</td>
+                        <td>@item.M_POINT</td>
+                        <td>@MemberCode2Label.Grade2Label(item.M_GRADE)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+        </div>
+
+
+    @{
+        string queryStr = null;
+        if (!Model.SearchKey.IsEmpty())
+        {
+            queryStr += "searchKey=" + Model.SearchKey;
+        }
+
+        if (!Model.SearchValue.IsEmpty())
+        {
+            queryStr += "&searchValue=" + Model.SearchValue;
+        }
+
+        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
+    }
+
+
+}
+
 

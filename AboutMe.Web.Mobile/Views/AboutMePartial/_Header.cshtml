@@ -16,20 +16,13 @@
         <div class="dim"></div>
         <a href="#" class="lnbclose">닫으시오</a>
         <div class="lnb">
-            <!-- 등급별 css
-                vip : vip
-                gold :  gold
-                sliver : sliver
-                bronze : bronze
-            -->
-            <div class="userclass_info bronze">
-                <strong>최고운</strong>님은
-                <span>BRONZE 클래스</span>입니다.
-            </div>
+            <!--로그인 여부에 따른 메뉴 조정-->
+            @{Html.RenderAction("ChildLayoutMenu_Util", "CommonChildAction");}
+
             <a href="#" class="btn_cart"><img src="/aboutCom/images/common/btn_lnbcart.gif" alt="쇼핑백" /></a>
             <div class="nav">
                 <ul class="depth1">
-                    <li><a href="#">마이페이지</a></li>
+                    <li><a href="/MyPage/Main">마이페이지</a></li>
                     <li><a href="#">주문/배송 조회</a></li>
                     <li class="slidetype">
                         <a href="#">브랜드소개</a>

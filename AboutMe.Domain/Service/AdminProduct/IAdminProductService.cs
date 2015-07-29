@@ -65,5 +65,19 @@ namespace AboutMe.Domain.Service.AdminProduct
         //List<SP_ADM_ADMIN_DEPT_SEL_Result> GetAdmDeptList();
         #endregion
 
+        #region 사은품
+
+        //사은품 리스트
+        List<SP_ADMIN_GIFT_SEL_Result> GetAdminGiftList(SP_TB_FREE_GIFT_INFO_Param Param);
+        //사은품 카운트
+        int GetAdminGiftCnt(SP_TB_FREE_GIFT_INFO_Param Param);
+        //사은품 등록
+        void InsertAdminGift(AdminGiftModel gift_info_model);
+        //사은품 보기
+        SP_ADMIN_GIFT_DETAIL_VIEW_Result ViewAdminGift(int idx);
+        //사은품 수정
+        void UpdateAdminGift(AdminGiftModel gift_update_model);
+        
+        #endregion
     }
 }

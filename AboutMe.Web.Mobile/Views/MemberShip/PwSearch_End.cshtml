@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Mobile-PWSearchEnd";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/membership.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+ 
+}
+
+
+@section Body{
+
+    <div class="wrap">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>비밀번호 찾기</h2>
+            </div>
+            <!-- 비밀번호 찾기 결과 -->
+            <div class="search_result boxtypea">
+                <i class="ico_person"></i>
+                <div class="msgbox">
+                    <p class="rsltinfo">
+                        <em>@ViewBag.M_NAME</em>님 입력하신 <strong>이메일</strong>로<br />
+                        비밀번호를 전송하였습니다.
+                    </p>
+                </div>
+                <a href="/MemberShip/Login" class="btn btn_brown_h50 lock">로그인</a>
+            </div>
+            <!-- //비밀번호 찾기 결과 -->
+        </div>
+        <!--//container-->
+
+
+        <!--footer-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--//footer-->
+    </div>
+}
+
+@section Footer{
+
+}
+
