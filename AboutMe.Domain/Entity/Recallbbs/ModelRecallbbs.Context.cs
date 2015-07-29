@@ -27,8 +27,9 @@ namespace AboutMe.Domain.Entity.Recallbbs
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<TB_RECALL_BBS> TB_RECALL_BBS { get; set; }
     
-        public virtual ObjectResult<SP_TB_RECALL_BBS_SEL_Result> SP_TB_RECALL_BBS_SEL(string sTART_DATE, string eND_DATE, string rEG_ID, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        public virtual ObjectResult<SP_TB_RECALL_BBS_SEL_Result> SP_TB_RECALL_BBS_SEL(string sTART_DATE, string eND_DATE, string rEG_ID, string oRDER_CODE, Nullable<int> pAGE, Nullable<int> pAGESIZE)
         {
             var sTART_DATEParameter = sTART_DATE != null ?
                 new ObjectParameter("START_DATE", sTART_DATE) :
@@ -42,21 +43,9 @@ namespace AboutMe.Domain.Entity.Recallbbs
                 new ObjectParameter("REG_ID", rEG_ID) :
                 new ObjectParameter("REG_ID", typeof(string));
     
-            var sEARCH_COLParameter = sEARCH_COL != null ?
-                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
-                new ObjectParameter("SEARCH_COL", typeof(string));
-    
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-    
-            var sORT_COLParameter = sORT_COL != null ?
-                new ObjectParameter("SORT_COL", sORT_COL) :
-                new ObjectParameter("SORT_COL", typeof(string));
-    
-            var sORT_DIRParameter = sORT_DIR != null ?
-                new ObjectParameter("SORT_DIR", sORT_DIR) :
-                new ObjectParameter("SORT_DIR", typeof(string));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
             var pAGEParameter = pAGE.HasValue ?
                 new ObjectParameter("PAGE", pAGE) :
@@ -66,10 +55,10 @@ namespace AboutMe.Domain.Entity.Recallbbs
                 new ObjectParameter("PAGESIZE", pAGESIZE) :
                 new ObjectParameter("PAGESIZE", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_RECALL_BBS_SEL_Result>("SP_TB_RECALL_BBS_SEL", sTART_DATEParameter, eND_DATEParameter, rEG_IDParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_RECALL_BBS_SEL_Result>("SP_TB_RECALL_BBS_SEL", sTART_DATEParameter, eND_DATEParameter, rEG_IDParameter, oRDER_CODEParameter, pAGEParameter, pAGESIZEParameter);
         }
     
-        public virtual ObjectResult<SP_TB_RECALL_BBS_CNT_Result> SP_TB_RECALL_BBS_CNT(string sTART_DATE, string eND_DATE, string rEG_ID, string sEARCH_COL, string sEARCH_KEYWORD)
+        public virtual ObjectResult<SP_TB_RECALL_BBS_CNT_Result> SP_TB_RECALL_BBS_CNT(string sTART_DATE, string eND_DATE, string rEG_ID, string oRDER_CODE)
         {
             var sTART_DATEParameter = sTART_DATE != null ?
                 new ObjectParameter("START_DATE", sTART_DATE) :
@@ -83,15 +72,86 @@ namespace AboutMe.Domain.Entity.Recallbbs
                 new ObjectParameter("REG_ID", rEG_ID) :
                 new ObjectParameter("REG_ID", typeof(string));
     
-            var sEARCH_COLParameter = sEARCH_COL != null ?
-                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
-                new ObjectParameter("SEARCH_COL", typeof(string));
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
     
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_RECALL_BBS_CNT_Result>("SP_TB_RECALL_BBS_CNT", sTART_DATEParameter, eND_DATEParameter, rEG_IDParameter, oRDER_CODEParameter);
+        }
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_RECALL_BBS_CNT_Result>("SP_TB_RECALL_BBS_CNT", sTART_DATEParameter, eND_DATEParameter, rEG_IDParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
+        public virtual ObjectResult<SP_TB_RECALL_BBS_VIEW_Result> SP_TB_RECALL_BBS_VIEW(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_RECALL_BBS_VIEW_Result>("SP_TB_RECALL_BBS_VIEW", iDXParameter);
+        }
+    
+        public virtual int SP_TB_RECALL_BBS_INS(string oRDER_CODE, Nullable<int> oRDER_DETAIL_IDX, Nullable<int> gUBUN, string tITLE, string cONTENTS, Nullable<int> sTATUS, string rEG_ID, ObjectParameter nEW_IDX)
+        {
+            var oRDER_CODEParameter = oRDER_CODE != null ?
+                new ObjectParameter("ORDER_CODE", oRDER_CODE) :
+                new ObjectParameter("ORDER_CODE", typeof(string));
+    
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var gUBUNParameter = gUBUN.HasValue ?
+                new ObjectParameter("GUBUN", gUBUN) :
+                new ObjectParameter("GUBUN", typeof(int));
+    
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+    
+            var cONTENTSParameter = cONTENTS != null ?
+                new ObjectParameter("CONTENTS", cONTENTS) :
+                new ObjectParameter("CONTENTS", typeof(string));
+    
+            var sTATUSParameter = sTATUS.HasValue ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(int));
+    
+            var rEG_IDParameter = rEG_ID != null ?
+                new ObjectParameter("REG_ID", rEG_ID) :
+                new ObjectParameter("REG_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_RECALL_BBS_INS", oRDER_CODEParameter, oRDER_DETAIL_IDXParameter, gUBUNParameter, tITLEParameter, cONTENTSParameter, sTATUSParameter, rEG_IDParameter, nEW_IDX);
+        }
+    
+        public virtual int SP_TB_RECALL_BBS_UPD(Nullable<int> iDX, Nullable<int> gUBUN, string tITLE, string cONTENTS, string cONFIRM_CONTENTS, Nullable<int> sTATUS, string aDM_ID, ObjectParameter eRR_CODE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var gUBUNParameter = gUBUN.HasValue ?
+                new ObjectParameter("GUBUN", gUBUN) :
+                new ObjectParameter("GUBUN", typeof(int));
+    
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+    
+            var cONTENTSParameter = cONTENTS != null ?
+                new ObjectParameter("CONTENTS", cONTENTS) :
+                new ObjectParameter("CONTENTS", typeof(string));
+    
+            var cONFIRM_CONTENTSParameter = cONFIRM_CONTENTS != null ?
+                new ObjectParameter("CONFIRM_CONTENTS", cONFIRM_CONTENTS) :
+                new ObjectParameter("CONFIRM_CONTENTS", typeof(string));
+    
+            var sTATUSParameter = sTATUS.HasValue ?
+                new ObjectParameter("STATUS", sTATUS) :
+                new ObjectParameter("STATUS", typeof(int));
+    
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_RECALL_BBS_UPD", iDXParameter, gUBUNParameter, tITLEParameter, cONTENTSParameter, cONFIRM_CONTENTSParameter, sTATUSParameter, aDM_IDParameter, eRR_CODE);
         }
     }
 }
