@@ -28,40 +28,45 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult Index()
         {
             AdminDisplayWebMainViewModel model = new AdminDisplayWebMainViewModel();
+
+            model.WebMainBannerList =  _Service.GetWebMainBanner();
+
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost]        
         public ActionResult SaveWebMainBanner(WebMainBannerParam param)
         {
-            //param.IDX
 
-            Debug.WriteLine("------------------>");
-            Debug.WriteLine("url :"+param.URL);
+            string imgName = param.IMG_NAME;
 
-            string imgName = null;
-            if (param.IMG != null)
+            if (param.IMG_FILE != null)
             {
                 ImageUpload imageUpload = new ImageUpload { UploadPath = _img_path_display, addMobileImage = false };
-                ImageResult imageResult = imageUpload.RenameUploadFile(param.IMG);
+                ImageResult imageResult = imageUpload.RenameUploadFile(param.IMG_FILE);
+
                 if (imageResult.Success)
                 {
                     imgName = imageResult.ImageName;
                 }
             }
 
-            Debug.WriteLine(param.IDX.ToString());
-            Debug.WriteLine(param.URL);
-            Debug.WriteLine(imgName);
+            if(  !String.IsNullOrEmpty( param.URL ) || !String.IsNullOrEmpty(imgName) )
+            {
+                _Service.SaveWebMainBanner(param.IDX, param.URL, imgName);
+            }
 
-            _Service.SaveWebMainBanner(param.IDX, param.URL, imgName);
-           
             return RedirectToAction("Index");
         }
 
-        public ActionResult RemoveWebMainBanner()
+        public ActionResult RemoveWebMainBanner(WebMainBannerParam param)
         {
-            return View();
+            if (param.IDX != null )
+            {
+                _Service.RemoveWebMainBanner(param.IDX);
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult MobileMain()

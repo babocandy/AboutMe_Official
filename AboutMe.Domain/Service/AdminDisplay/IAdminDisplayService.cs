@@ -13,6 +13,6 @@ namespace AboutMe.Domain.Service.AdminDisplay
     {
         void SaveWebMainBanner(int? idx, string url, string img);
         void RemoveWebMainBanner(int? idx);
-        List<SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result> GetWebMainBanner();
+        List<SP_ADMIN_DISPLAY_SEL_Result> GetWebMainBanner();
     }
 }

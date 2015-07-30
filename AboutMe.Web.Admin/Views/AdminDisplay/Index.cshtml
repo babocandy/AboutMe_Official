@@ -15,12 +15,44 @@
 
     <script>
 
-        function saveMainBanner(my) {
+    function saveMainBanner(my) {
+        var $myForm = $(my).parent().parent().find("form");
+        $myForm.attr("action", "@Url.Action("SaveWebMainBanner", "AdminDisplay")") ;
 
-            var myForm = $(my).parent().parent().find("form");
-            myForm.action = "/AdminDisplay/SaveWebMainBanner";
-            //myForm.method = "post";
-            myForm.submit()
+            var idx = $myForm.find("[name=IDX]").val();
+            var url = $myForm.find("[name=URL]").val();
+            var img = $myForm.find("[name=IMG_FILE]").val();
+            if (img == "") img = $myForm.find("[name=IMG_NAME]").val();
+           
+
+            if (url == "" && img == "") {
+                alert("한개라도 입력해야합니다.");
+                return;
+            }
+
+            //console.log(idx);
+            //return;
+
+            $myForm.submit();
+        }
+
+        function removeMainBanner(my) {
+           
+            var $myForm = $(my).parent().parent().parent().find("form");
+            $myForm.attr("action", "@Url.Action("RemoveWebMainBanner", "AdminDisplay")");
+
+            var idx = $myForm.find("input[name=IDX]").val();
+
+            //console.log(idx);
+            //return;
+
+            if (idx == "") {
+                alert("삭제할 수 없습니다.");
+                return;
+            }
+
+            $myForm.submit()
+
         }
 
     </script>
@@ -42,36 +74,63 @@
     <div class="panel">
         <h4>메인 배너 -1080*540</h4>
         <div class="tar mb10">
-            <a href="#" class="btn btn-success middium btn_add_table" style="width:100px">추가</a>
+            <!--<a href="#" class="btn btn-success middium btn_add_table" style="width:100px">추가</a>-->
         </div>
         <table class="table table_row main_bnr_table">
             <colgroup><col width="20%"><col width="*"><col width="15%"></colgroup>
             <tbody>
+
+                @foreach (var item in Model.WebMainBannerList)
+                {
+                    <tr>
+                        <th scope="row" class="vam">
+                            <img src="" alt=""><br><p class="tac"> @item.IMG <a href="#" class="btn btn-info small" onclick="removeMainBanner(this); return false;">삭제</a></p>
+                        </th>
+                        <td>
+                            @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+
+                                <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                                <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@item.URL">
+                                <input type="hidden" name="IDX" value="@item.IDX" />
+                                <input type="hidden" name="IMG_NAME" value="@item.IMG" />
+                            }
+                            <!--/form>-->
+                        </td>
+                        <td class="tac">
+                            <a href="#" class="btn btn-default large" onclick="saveMainBanner(this); return false;">저장</a>
+                        </td>
+                    </tr>
+                }
                 <tr>
                     <th scope="row" class="vam">
-                        <img src="" alt=""><br><p class="tac">  <a href="#" class="btn btn-info small">삭제</a></p>
+                        <!--<img src="" alt=""><br><p class="tac">  <a href="#" class="btn btn-info small" onclick="removeMainBanner(this); return false;">삭제</a></p>-->
                     </th>
                     <td>
-                        <form method="post">
-                            <input type="file" name="IMG" style="width:80%; margin-left:35px;">
-                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%">
+                        @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                           
+                            <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%">
                             <input type="hidden" name="IDX" value="" />
-                        </form>
+                            <input type="hidden" name="IMG_NAME" />
+                        }
+                        <!--/form>-->
                     </td>
                     <td class="tac">
-                        <a href="#" class="btn btn-default large" onclick="saveMainBanner(this); return false;">저장</a>
+                        <a href="#" class="btn btn-warning large" onclick="saveMainBanner(this); return false;">추가</a>
                     </td>
                 </tr>
             </tbody>
         </table>
 
         <script type="text/javascript">
-            $(function () {
+            /*$(function () {
                 $(".btn_add_table").click(function () {
                     var addTableLast = $(".main_bnr_table tr").last();
                     $(".main_bnr_table tr:eq(0)").clone().insertAfter(addTableLast);
                 });
-            });
+            });*/
         </script>
     </div>
 
