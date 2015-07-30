@@ -1,0 +1,96 @@
+﻿<script>
+    /**
+        이미지 타입 전시물 저장
+    */
+    function saveImageTypeDisplayer(frm) {
+
+        var idx = frm.IDX.value;
+        var url = frm.URL.value;
+        var img = frm.IMG_FILE.value;
+        if (img == "") img = frm.IMG_NAME.value;
+
+        if (url == "" && img == "") {
+            alert("한개라도 입력해야합니다.");
+            return;
+        }
+
+        frm.submit();
+    }
+
+    /**
+        상품 타입 전시물 저장
+    */
+    function saveProductTypeDisplayer(frm) {
+        var pcode = frm.P_CODE.value;
+
+        if (pcode == "") {
+            alert("상품코드를 입력해야 합니다.");
+            document.location.reload(true);
+            return;
+        }
+
+        frm.submit();
+    }
+
+
+    /**
+        Link 타입 전시물 저장
+    */
+    function saveLinkTypeDisplayer(frm) {
+        var title1 = frm.TITLE1.value;
+        var title2 = frm.TITLE1.value;
+        var url = frm.URL.value;
+
+        if (title1 == "" && title2 == "" & url == "") {
+            alert("한개라도 입력해야 합니다.");
+            //document.location.reload(true);
+            return;
+        }
+
+        frm.submit();
+    }
+
+
+    /**
+        전시물 삭제
+    */
+    function removeDisplayer(frm) {
+
+        frm.action = "@Url.Action("RemoveDisplayer", "AdminDisplay")";
+        var idx = frm.IDX.value;
+
+        if (idx == "") {
+            alert("삭제할 수 없습니다.");
+            return;
+        }
+
+        if (confirm("삭제하시겠습니까?")) {
+            frm.submit();
+        }
+    }
+
+    /**
+        전시물의 이미지만 삭제
+    */
+    function removeOnlyImage(frm) {
+        frm.action = "@Url.Action("RemoveOnlyImageInDisplayer", "AdminDisplay")";
+        var idx = frm.IDX.value;
+
+        if (idx == "") {
+            alert("삭제할 수 없습니다.");
+            return;
+        }
+
+        if (confirm("삭제하시겠습니까?")) {
+            frm.submit();
+        }
+    }
+
+    var rNum = "@TempData["ResultNum"]";
+    var rMsg = "@TempData["ResultMessage"]";
+
+    if (rNum != "0" && rNum != "") {
+        alert(rMsg);
+    }
+
+</script>

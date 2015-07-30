@@ -97,8 +97,6 @@ namespace AboutMe.Domain.Service.AdminPoint
             }
             
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
-            Debug.WriteLine("UpdateMemberPointUse retNum:  " + retNum.Value);
-            Debug.WriteLine("UpdateMemberPointUse retMsg:  " + retMsg.Value);
 
             return tp;
         }
