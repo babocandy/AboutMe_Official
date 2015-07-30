@@ -11,6 +11,7 @@ namespace AboutMe.Domain.Entity.AdminDisplay
     {
         public int? IDX { get; set; }
         public string URL { get; set; }
-        public HttpPostedFileBase IMG { get; set; }
+        public string IMG_NAME { get; set; }
+        public HttpPostedFileBase IMG_FILE { get; set; }
     }
 }

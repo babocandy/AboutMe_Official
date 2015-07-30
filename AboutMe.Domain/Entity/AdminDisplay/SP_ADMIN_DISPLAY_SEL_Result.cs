@@ -11,10 +11,13 @@ namespace AboutMe.Domain.Entity.AdminDisplay
 {
     using System;
     
-    public partial class SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result
+    public partial class SP_ADMIN_DISPLAY_SEL_Result
     {
         public int IDX { get; set; }
         public string URL { get; set; }
         public string IMG { get; set; }
+        public string P_CODE { get; set; }
+        public string TITLE1 { get; set; }
+        public string TITLE2 { get; set; }
     }
 }

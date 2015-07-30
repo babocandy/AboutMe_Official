@@ -28,11 +28,28 @@ namespace AboutMe.Domain.Entity.AdminDisplay
         }
     
     
-        public virtual int SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER(Nullable<int> iDX, string uRL, string iMG)
+        public virtual int SP_ADMIN_DISPLAY_REMOVE(Nullable<int> iDX)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
                 new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_REMOVE", iDXParameter);
+        }
+    
+        public virtual int SP_ADMIN_DISPLAY_SAVE(Nullable<int> iDX, string kIND, string sUB_KIND, string uRL, string iMG, string p_CODE, string tITLE1, string tITLE2)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var kINDParameter = kIND != null ?
+                new ObjectParameter("KIND", kIND) :
+                new ObjectParameter("KIND", typeof(string));
+    
+            var sUB_KINDParameter = sUB_KIND != null ?
+                new ObjectParameter("SUB_KIND", sUB_KIND) :
+                new ObjectParameter("SUB_KIND", typeof(string));
     
             var uRLParameter = uRL != null ?
                 new ObjectParameter("URL", uRL) :
@@ -42,21 +59,36 @@ namespace AboutMe.Domain.Entity.AdminDisplay
                 new ObjectParameter("IMG", iMG) :
                 new ObjectParameter("IMG", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_SAVE_WEB_MAIN_BANNER", iDXParameter, uRLParameter, iMGParameter);
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var tITLE1Parameter = tITLE1 != null ?
+                new ObjectParameter("TITLE1", tITLE1) :
+                new ObjectParameter("TITLE1", typeof(string));
+    
+            var tITLE2Parameter = tITLE2 != null ?
+                new ObjectParameter("TITLE2", tITLE2) :
+                new ObjectParameter("TITLE2", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_SAVE", iDXParameter, kINDParameter, sUB_KINDParameter, uRLParameter, iMGParameter, p_CODEParameter, tITLE1Parameter, tITLE2Parameter);
         }
     
-        public virtual int SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER(Nullable<int> iDX)
+        public virtual ObjectResult<SP_ADMIN_DISPLAY_SEL_Result> SP_ADMIN_DISPLAY_SEL(Nullable<int> iDX, string kIND, string sUB_KIND)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
                 new ObjectParameter("IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_REMOVE_WEB_MAIN_BANNER", iDXParameter);
-        }
+            var kINDParameter = kIND != null ?
+                new ObjectParameter("KIND", kIND) :
+                new ObjectParameter("KIND", typeof(string));
     
-        public virtual ObjectResult<SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result> SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL_Result>("SP_ADMIN_DISPLAY_WEB_MAIN_BANNER_SEL");
+            var sUB_KINDParameter = sUB_KIND != null ?
+                new ObjectParameter("SUB_KIND", sUB_KIND) :
+                new ObjectParameter("SUB_KIND", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_DISPLAY_SEL_Result>("SP_ADMIN_DISPLAY_SEL", iDXParameter, kINDParameter, sUB_KINDParameter);
         }
     }
 }
