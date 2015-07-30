@@ -17,10 +17,12 @@ using System.IO;
 using System.Web.UI;
 
 using AboutMe.Web.Front.Common.Filters;
+using System.Web.Script.Serialization;
 
 
 namespace AboutMe.Web.Front.Controllers
 {
+ 
     public class MypageController : BaseFrontController
     {
         private IMemberService _MemberService;
@@ -214,7 +216,7 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-        //회원정보 수정 -저장 Ajax 리턴
+        //회원정보 수정 -저장 Ajax 리턴 :JSONP
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize]
@@ -224,6 +226,7 @@ namespace AboutMe.Web.Front.Controllers
             string log_memo = "회원정보 수정";
             string log_comment = "회원정보 수정";
             UserLog userlog = new UserLog();
+
 
             string M_ID = MemberInfo.GetMemberId();  //폼값 대신 세션값 사용
             //회원수정 : 입력항목 post
@@ -239,7 +242,10 @@ namespace AboutMe.Web.Front.Controllers
 
             if (M_ID == "")
             {
-                return Json(new { ERR_CODE = "999", ERR_MSG = "로그인 정보를 찾을수 없습니다. 다시 로그인 해 주십시오" });
+                   return Json(new { ERR_CODE = "999", ERR_MSG = "로그인 정보를 찾을수 없습니다. 다시 로그인 해 주십시오" });
+                //Response.Write(string.Format("{0}({1});", CALLBACK_FUNCTION, serializer.Serialize(new { ERR_CODE = "999", ERR_MSG = "로그인 정보를 찾을수 없습니다. 다시 로그인 해 주십시오" })));
+                //return CALLBACK_FUNCTION + "(" + serializer.Serialize(new { ERR_CODE = "999", ERR_MSG = "로그인 정보를 찾을수 없습니다. 다시 로그인 해 주십시오" }) + ")";
+
             }
 
             ReturnDic retDic = _MemberService.SetMemberUpdate(M_ID, M_MOBILE,  M_PHONE,  M_EMAIL,  M_ZIPCODE, M_ADDR1, M_ADDR2, M_ISSMS, M_ISEMAIL, M_ISDM);   //회원정보 수정
@@ -281,8 +287,27 @@ namespace AboutMe.Web.Front.Controllers
             userlog.UserLogSave(log_memo, log_comment);
 
 
-            return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
 
+            return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
+ /*
+            //JSON rturn
+            if (string.IsNullOrEmpty(CALLBACK_FUNCTION))
+            {
+                //return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
+                //Response.Write(string.Format("{0}({1});", CALLBACK_FUNCTION, serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG })));
+                return CALLBACK_FUNCTION + "(" + serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG }) + ")";
+            }
+            else
+            {
+                // JSONP return
+                //JavaScriptSerializer serializer = new JavaScriptSerializer();
+                //Response.Write(string.Format("{0}({1});", CALLBACK_FUNCTION, serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG })));
+                return CALLBACK_FUNCTION + "(" + serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG }) + ")";
+
+                //return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG }, CALLBACK_FUNCTION);
+            }
+
+*/
         }
 
         

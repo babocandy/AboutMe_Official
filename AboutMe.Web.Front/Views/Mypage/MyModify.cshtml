@@ -79,7 +79,7 @@
         var f = document.frmMEMBER;
 
         if (glREGISTER_ING) {
-            alert("회원가입 처리중입니다. 잠시만 기다려 주십시오.");
+            alert("회원정보 수정 처리중입니다. 잠시만 기다려 주십시오.");
             return;
         }
 
@@ -160,6 +160,9 @@
             async: false,  //동기 통신
             type: 'POST',
             dataType: 'json',
+            //dataType: 'jsonp',  //<<<<<<<<<<<<<<<
+            //jsonp: 'callback',  //<<<<<<<<<<<
+            //jsonpCallback: 'fCallbackProcessMemberModify',
             data: {
                 __RequestVerificationToken: strTOKEN
                 , M_ID: strM_ID
@@ -173,10 +176,11 @@
                 , M_ISSMS: strM_ISSMS
                 , M_ISEMAIL: strM_ISEMAIL
                 , M_ISDM: strM_ISDM
-
+              //  , callback: 'fCallbackProcessMemberModify'  //<<<<<<<<<<<<<<<<<<<<<<<
 
             },
             success: function (retDATA) {
+                
                 if (retDATA.ERR_CODE == "0") {
                     glREGISTER_ING = false; //저장 진행중 종료 --------------------
                     alert("회원정보가 수정되었습니다.");
@@ -186,6 +190,7 @@
                     glREGISTER_ING = false; //저장 진행중 종료 --------------------
                     alert("회원정보 수정중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
                 }
+
             },
             error: function (e) {
                 glREGISTER_ING = false; //저장 진행중 종료 --------------------
@@ -193,6 +198,20 @@
             }
         }); //ajax
     } //func
+
+/*
+    function fCallbackProcessMemberModify(retDATA) {
+        if (retDATA.ERR_CODE == "0") {
+            glREGISTER_ING = false; //저장 진행중 종료 --------------------
+            alert("callback in 회원정보가 수정되었습니다.");
+            fGoRegisterComplete(); //다음 스텝으로 이동
+        }
+        else {
+            glREGISTER_ING = false; //저장 진행중 종료 --------------------
+            alert("callback in 회원정보 수정중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
+        }
+    }
+*/
 
 </script>
 

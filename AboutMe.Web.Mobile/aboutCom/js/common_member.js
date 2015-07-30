@@ -1,4 +1,7 @@
-﻿//Full Screen popup 
+﻿
+//document.domain = "aboutmeshop.com";
+
+//Full Screen popup 
 function fPopFull(argURL,argWIN_NAME)
 {
 var win_POP_obj ;	
