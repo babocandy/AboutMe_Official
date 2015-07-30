@@ -16,7 +16,8 @@
 .reviewConts_area .sort ul {float:right; overflow:hidden;padding-left:1px;}
 .reviewConts_area .sort ul li {float:left; margin-left:-1px; border:1px solid #bbb5b4; padding:8px 13px 5px; background:#fff; font-size:11px; font-family:"Dotum"; letter-spacing:-1px;}
 .reviewConts_area .sort ul li a {color:#696361;}
-.reviewConts_area .sort ul li.cnt a {color:#1b1818;}
+.reviewConts_area .sort ul li.cnt{position:relative;border:1px solid #1b1818;}
+.reviewConts_area .sort ul li.cnt a {color:#1b1818; font-weight:bold;}
 #reviewConts {}
 .bocksitls {position:relative; width:1098px; margin-left:-9px; overflow:hidden;}
 #reviewConts .grid {position:relative; float:left; width:348px; margin:5px 9px;  background:#fff; padding:29px 19px 15px; border:1px solid #fff; border-bottom:1px solid #efe8e6; width:348px; box-sizing:border-box; cursor:pointer;}
@@ -33,18 +34,25 @@
 #reviewConts .grid .tag span {display:inline-block; padding-top:2px; font-size:14px; color:#1b1818; background:#efe8e6}
 
 #reviewConts .grid .comments {margin-top:20px; padding-top:20px; background:url("/aboutCom/images/review/bg_dotted.gif") 0 0 repeat-x;}
+#reviewConts .grid .comments .idhit {position:relative; margin-bottom:20px;}
+#reviewConts .grid .comments .idhit .id {color:#1b1818; font-size:12px;}
+#reviewConts .grid .comments .idhit .hit {position:absolute; right:0; top:0; color:#696361; font-size:12px;}
 #reviewConts .grid .comments .writer {position:relative;}
-#reviewConts .grid .comments .writer .id {font-size:12px; color:#1b1818; font-weight:bold;}
+#reviewConts .grid .comments .writer .id {position:absolute; right:0; top:0; font-size:12px; color:#1b1818; font-weight:bold;}
 #reviewConts .grid .comments .writer .hits {display:inline-block;margin-left:6px; padding-left:9px; font-size:12px; color:#696361; background:url("/aboutCom/images/review/bg_bar2.gif") 0 0 no-repeat;}
-#reviewConts .grid .comments .writer .userage {display:inline-block;margin-left:6px; padding-left:9px; font-size:12px; color:#696361; background:url("/aboutCom/images/review/bg_bar2.gif") 0 0 no-repeat;}
-#reviewConts .grid .comments .writer .skin {position:absolute; right:0; top:0; display:block; width:81px; height:18px; background:url("/aboutCom/images/review/bg_skintype.gif") right 0 no-repeat; font-size:0;}
-#reviewConts .grid .comments .writer .skin.dry {background-position:right -100px;}
-#reviewConts .grid .comments .writer .skin.normal {background-position:right -43px;}
-#reviewConts .grid .comments .writer .skin.oily {background-position:right 0;}
+#reviewConts .grid .comments .writer .userage {display:inline-block;margin-left:11px; padding-left:11px; font-size:15px; color:#1b1818; background:url("/aboutCom/images/review/bg_bar2.gif") 0 0 no-repeat; vertical-align:middle;}
+#reviewConts .grid .comments .writer .skin { display:inline-block; width:81px; height:18px; background:url("/aboutCom/images/review/bg_skintype.png") 0 0 no-repeat; font-size:0; vertical-align:middle;}
+#reviewConts .grid .comments .writer .skin.dry {background-position:0 -100px;}
+#reviewConts .grid .comments .writer .skin.normal {background-position:0 -43px;}
+#reviewConts .grid .comments .writer .skin.oily {background-position:0 0;}
 #reviewConts .grid .comments .reviewtxt {margin-top:12px; font-size:13px; color:#696361;line-height:20px;}
 #reviewConts .grid .comments .reviewtxt img {max-width:308px; margin-bottom:5px;}
 #reviewConts .grid .comments .reviewtxt .title {margin-top:17px;font-size:16px; color:#001818; margin-bottom:10px; }
-#reviewConts .grid .comments .reviewtxt .txt {/*height:60px*/; margin-bottom:17px;}
+#reviewConts .grid .comments .reviewtxt .txt {/* height:60px;  */margin-bottom:17px;}
 
 .btn_more {display:block; width:100%; padding:12px 0 11px; text-align:center; margin-top:35px; border:1px solid #696361; font-size:16px; color:#696361;}
 .btn_more i {display:block; width:16px; height:10px; margin:0 auto; margin-top:5px; background:url("/aboutCom/images/common/bul20.png") 0 -295px no-repeat;}
+
+.nodata {background:#fff; padding:250px 0; margin-top:22px;}
+.nodata p {padding-top:98px; background:url("/aboutCom/images/common/ico_nodata2.gif") center 0 no-repeat; text-align:center; font-size:18px; color:#696361; line-height:26px; }
+.nodata p strong {color:#1b1818;}

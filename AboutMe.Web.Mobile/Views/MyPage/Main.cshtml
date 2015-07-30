@@ -2,6 +2,55 @@
     ViewBag.Title = "Mobile-Login";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
+
+@{
+
+    @helper fSkinTroubleDisplay(string argCD="", string argNAME="")
+    {
+        string trouble_ico_class = "ico_concerns";
+        string m_trouble_name = "보습";
+        string str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+        switch (argCD)
+        {
+            case "101201100": m_trouble_name = "보습"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101202100": m_trouble_name = "탄력/주름"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101203100": m_trouble_name = "브라이트닝"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101204100": m_trouble_name = "화이트닝"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101205100": m_trouble_name = "안티에이징"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101206100": m_trouble_name = "피지,모공"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101207100": m_trouble_name = "생기,활력"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101208100": m_trouble_name = "자외선 차단"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+        }
+        <div class="msgbox">
+            <dl>
+                <dt>
+                    <i class="@trouble_ico_class"></i>
+                    <span class="contxt">@m_trouble_name</span>
+                </dt>
+                <dd>
+                    <p>
+                        <span>@argNAME</span>님,<br />
+                        @str_comment
+                    </p>
+                    <a href="/Shopping/Index?CATE_CD=@argCD" class="viewlink">상품보기 ></a>
+                </dd>
+            </dl>
+        </div>
+
+
+} //func
+  
+}
+
+
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
@@ -72,6 +121,8 @@
                             </div>
                             <div class="concerns">
                                 <p class="ctit">내 피부고민 설정<a href="#none" class="btn_set"><i class="bl_set"></i></a></p>
+                                @fSkinTroubleDisplay(@ViewBag.M_SKIN_TROUBLE_CD, @ViewBag.M_NAME)
+                                <!--
                                 <div class="msgbox">
                                     <dl>
                                         <dt>
@@ -80,7 +131,7 @@
                                         </dt>
                                         <dd>
                                             <p>
-                                                <span>이효리</span>님,<br />
+                                                <span>@ViewBag.M_NAME</span>님,<br />
                                                 5 Step  수분가득 보습케어로
                                                 피부고민을 해결해보세요!
                                             </p>
@@ -88,6 +139,7 @@
                                         </dd>
                                     </dl>
                                 </div>
+                                    -->
                             </div>
                         </li>
                         <li><a href="#link"><span>나의리뷰</span><i class="arrow_right"></i></a></li>

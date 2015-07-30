@@ -41,6 +41,16 @@ namespace AboutMe.Web.Front.Controllers
             this._orderservice = _orderservice;
         }
 
+        public ActionResult Index()
+        {
+            // return View();
+            if (MemberInfo.IsMemberLogin())
+                return RedirectToAction("Main", "MyPage"); //MyPage메인 으로 이동
+            else
+                return RedirectToAction("Login", "MemberShip"); //로그인페이지로 이동
+        }
+
+
         //사용자 로그인 폼
         public ActionResult Login(string RedirectUrl = "", string OrderList = "")
         {

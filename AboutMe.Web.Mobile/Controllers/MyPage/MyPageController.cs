@@ -58,7 +58,7 @@ namespace AboutMe.Web.Mobile.Controllers.MyPage
             this.ViewBag.M_NAME = MemberInfo.GetMemberName();
             this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName();
-            this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피무고민코드
+            this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피부고민코드
 
 
             return View();

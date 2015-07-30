@@ -38,6 +38,14 @@ namespace AboutMe.Web.Mobile.Controllers
             this._Cartservice = _cartservice;
         }
 
+        public ActionResult Index()
+        {
+            // return View();
+            if(MemberInfo.IsMemberLogin())
+                return RedirectToAction("Main", "MyPage"); //MyPage메인 으로 이동
+            else
+                return RedirectToAction("Login", "MemberShip"); //로그인페이지로 이동
+        }
 
         //모바일 사용자 로그인 폼
         public ActionResult Login(string RedirectUrl = "", string OrderList = "")

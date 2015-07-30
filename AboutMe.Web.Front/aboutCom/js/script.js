@@ -483,6 +483,9 @@ $(function(){
 			$(".selecttypeC .sort").removeClass("open"); 
 		}  
 	});
+	$(".selecttypeC .sort.nolist .tit").on("click",function(e){
+		$(this).parent().addClass("on")
+	});
 
 	$(".selecttypeC .sort ul li").click(function(e){
 		e.preventDefault();
