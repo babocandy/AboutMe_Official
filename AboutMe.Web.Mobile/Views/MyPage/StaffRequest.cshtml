@@ -8,31 +8,32 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=1323, user-scalable = yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="Keywords" content="ABOUT ME" />
     <meta name="Description" content="ABOUT ME" />
     <link href="/aboutCom/css/import.css" rel="stylesheet" />
     <script src="/aboutCom/js/lib/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="/aboutCom/js/lib/jquery.easing-1.3.min.js" type="text/javascript"></script>
-    <script src="/aboutCom/js/lib/dropdown.js" type="text/javascript"></script>
     <script src="/aboutCom/js/lib/jquery.countdown.js" type="text/javascript"></script>
-    <script src="/aboutCom/js/lib/jquery.dotdotdot.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.event.move.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.event.swipe.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.lazyload.min.js" type="text/javascript"></script>
     <script src="/aboutCom/js/script.js" type="text/javascript"></script>
     <title>ABOUT ME</title>
-    
-       <script>
+
+
+    <script>
         var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
         var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
         var glREGISTER_ING = false;  //저장처리중
-        function fGoSaveStaffRequest()
-        {
+        function fGoSaveStaffRequest() {
             var f = document.frmSTAFF_REQUEST;
-            if (f.STAFF_COMPANY.selectedIndex ==0)
-            {
+            if (f.STAFF_COMPANY.selectedIndex == 0) {
                 alert("소속 회사를 선택하세요.");
                 return;
             }
-            if (f.STAFF_ID.value.length <2) {
+            if (f.STAFF_ID.value.length < 2) {
                 alert("사번을 입력하세요.");
                 return;
             }
@@ -94,77 +95,75 @@
         }
     </script>
 
+
 </head>
-<body class="popup">
-    <!--임직원인증신청-->
-    <div class="popupwrap confirm">
-        <div class="pop">
-            <!--pop_top-->
-            <div class="pop_top">
-                <div class="title_area">
-                    <p class="title">임직원인증신청</p>
-                </div>
-                <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
-            </div>
-            <!--//pop_top-->
-            <!--pop_bottom-->
-            <div class="pop_bottom">
+
+<body>
+    <div class="container popupwrap">
+        <div class="pop_head">
+            <a href="#" class="pop_close" onclick="self.close()">닫기</a>
+        </div>
+        <div class="confirm">
+            <h2>임직원인증신청</h2>
+
 @using (Html.BeginForm("AjaxStaffRequestProc", "MyPage", FormMethod.Post, new { id = "frmSTAFF_REQUEST", name = "frmSTAFF_REQUEST" }))
 {
     @Html.AntiForgeryToken()                                           //폼 데이터 위조 방지 토큰 생성
 
 
 
-<input type="hidden" name="M_ID" value="@ViewBag.M_ID" />
-<input type="hidden" name="M_NAME" value="@ViewBag.M_NAME" />
-<input type="hidden" name="M_GBN" value="@ViewBag.M_GBN" />
+            <input type="hidden" name="M_ID" value="@ViewBag.M_ID" />
+            <input type="hidden" name="M_NAME" value="@ViewBag.M_NAME" />
+            <input type="hidden" name="M_GBN" value="@ViewBag.M_GBN" />
+    
 
-                        <fieldset>
-                        <legend>임직원인증신청 폼</legend>
-                        <table summary="아이디,이름,회사명,사번">
-                            <caption>임직원인증신청 입력 표</caption>
-                            <colgroup>
-                                <col width="86">
-                                <col width="104">
-                                <col width="86">
-                                <col width="104">
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th><span>아이디</span></th>
-                                    <td>@ViewBag.M_ID</td>
-                                    <th><span>이름</span></th>
-                                    <td>@ViewBag.M_NAME</td>
-                                </tr>
-                                <tr>
-                                    <th><span>회사명</span></th>
-                                    <td colspan="3">
-                                        <select class="selectstyleb" title="" name="STAFF_COMPANY">
+                <fieldset>
+                    <legend>임직원인증신청 폼</legend>
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>아이디</dt>
+                                <dd>@ViewBag.M_ID</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>이름</dt>
+                                <dd>@ViewBag.M_NAME</dd>
+                            </dl>
+                        </li>
+                        <li class="company">
+                            <dl>
+                                <dt>회사명</dt>
+                                <dd>
+                                    <span class="selbox select_a">
+                                        <select title="회사명 선택" name="STAFF_COMPANY">
                                             <option value="">선택해주세요.</option>
                                             <option value="삼양제넥스">삼양제넥스</option>
                                             <option value="삼양데이터시스템">삼양데이터시스템</option>
                                         </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><span>사번</span></th>
-                                    <td colspan="3"><input type="text" class="ipttypea" title="사번" name="STAFF_ID" value="" maxlength="25" /> </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="btngroup mt20">
-                            <a href="javascript:fGoSaveStaffRequest();" class="btn_brown_w96h38">신청</a>
-                            <a href="javascript:self.close();" class="btn_white_w96h38 typeb">취소</a>
-                        </div>
-                        <div class="cscenter mt40">
-                            <img src="/aboutCom/images/etc/contact.jpg" alt="고객센터 문의 080.740.7983 평일 : 오전 10시 ~ 12시 오후  2시 ~ 5시 휴무 : 토,일 공휴일" />
-                        </div>
-                    </fieldset>
+                                    </span>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="employee">
+                            <dl>
+                                <dt>사번</dt>
+                                <dd><input class="ipttypea" title="사번 입력" name="STAFF_ID" value="" maxlength="25" /></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <div class="btn_group">
+                        <a href="javascript:fGoSaveStaffRequest();" class="btn btn_brown_h30">확인</a><a href="#none" onclick="self.close()" class="btn btn_white_h30 v2">취소</a>
+                    </div>
+                    <p class="contact">
+                        <span class="number">고객센터 문의 : <img src="/aboutCom/images/membership/txt_csnumber.png" alt="080.740.7983"></span><br />
+                        평일 오전 10시 - 12시 / 오후 2시 - 5시(토,일,공휴일 휴무)
+                    </p>
+                </fieldset>
 }
-            </div>
-            <!--//pop_bottom-->
         </div>
     </div>
-    <!--//임직원인증신청-->
 </body>
+
 </html>

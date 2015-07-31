@@ -20,6 +20,11 @@ namespace AboutMe.Common.Helper
         /// </summary>
         public String AES_encrypt(String Input, String key)
         {
+            if (string.IsNullOrEmpty(Input))
+                Input = "";
+            if (string.IsNullOrEmpty(key))
+                key = "";
+
             RijndaelManaged aes = new RijndaelManaged();
             aes.KeySize = 256;
             aes.BlockSize = 128;
