@@ -1,0 +1,165 @@
+﻿@model AboutMe.Web.Admin.Models.AdminDisplayMobileMainViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+
+@{
+    ViewBag.Title = "Point";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+    @{Html.RenderPartial("~/Views/AdminDisplay/_Display.cshtml");}
+}
+
+
+@section Body{
+
+<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">전시관리</a> &gt; <strong>모바일메인 메인</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3 class="sub-header">모바일메인관리</h3>
+    </div>
+
+    <div class="panel">
+        <h4>메인 배너 -640*840</h4>
+
+        <table class="table table_row main_bnr_table">
+            <colgroup><col width="20%" /><col width="*" /><col width="15%" /></colgroup>
+            <tbody>
+                
+                
+                @foreach (var item in Model.MobileMainBannerList)
+                {
+                    <tr>
+                        <th scope="row" class="vam">
+                            <img src="" alt=""><br>
+                            <p class="tac">
+                                @item.IMG
+                                <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a>
+                            </p>
+                        </th>
+                        <td>
+                            @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+
+                                <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                                <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@item.URL">
+                                <input type="hidden" name="IDX" value="@item.IDX" />
+                                <input type="hidden" name="IMG_NAME" value="@item.IMG" />
+                                <input type="hidden" name="KIND" value="@DisplayerCodes.MOBILE_MAIN_BANNER" />
+                            }
+                            <!--/form>-->
+                        </td>
+                        <td class="tac">
+                            <a href="#" class="btn btn-default large" onclick="saveImageTypeDisplayer(this.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">저장</a>
+                        </td>
+                    </tr>
+                }
+
+                <tr>
+                    <th scope="row" class="vam">
+                        <!--<img src="" alt=""><br><p class="tac">  <a href="#" class="btn btn-info small" onclick="removeMainBanner(this); return false;">삭제</a></p>-->
+                    </th>
+                    <td>
+                        @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                            <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%">
+                            <input type="hidden" name="IDX" value="" />
+                            <input type="hidden" name="IMG_NAME" />
+                            <input type="hidden" name="KIND" value="@DisplayerCodes.MOBILE_MAIN_BANNER" />
+                        }
+                        <!--/form>-->
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-warning large" onclick="saveImageTypeDisplayer(this.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">추가</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <h4>Talk on Beauty -640*350</h4>
+        <table class="table table_row">
+            <colgroup><col width="20%" /><col width="*" /><col width="15%" /></colgroup>
+            <tbody>
+
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt=""><br>
+                        <p class="tac">
+                            @Model.MobileTalkOnBeauty.IMG
+                            <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a>
+                        </p>
+                    </th>
+                    <td>
+                        @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+
+                            <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                            <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MobileTalkOnBeauty.URL">
+                            <input type="hidden" name="IDX" value="@Model.MobileTalkOnBeauty.IDX" />
+                            <input type="hidden" name="IMG_NAME" value="@Model.MobileTalkOnBeauty.IMG" />
+                            <input type="hidden" name="KIND" value="@DisplayerCodes.MOBILE_MAIN_TALK" />
+                        }
+                        <!--/form>-->
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large" onclick="saveImageTypeDisplayer(this.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">저장</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <h4>The 1 Best -640*350</h4>
+        <table class="table table_row">
+            <colgroup><col width="20%" /><col width="*" /><col width="15%" /></colgroup>
+            <tbody>
+
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt=""><br>
+                        <p class="tac">
+                            @Model.MobileBest.IMG
+                            <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a>
+                        </p>
+                    </th>
+                    <td>
+                        @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+
+                            <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                            <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MobileBest.URL">
+                            <input type="hidden" name="IDX" value="@Model.MobileBest.IDX" />
+                            <input type="hidden" name="IMG_NAME" value="@Model.MobileBest.IMG" />
+                            <input type="hidden" name="KIND" value="@DisplayerCodes.MOBILE_MAIN_BEST" />
+                        }
+                        <!--/form>-->
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large" onclick="saveImageTypeDisplayer(this.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">저장</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--//content-->
+
+}

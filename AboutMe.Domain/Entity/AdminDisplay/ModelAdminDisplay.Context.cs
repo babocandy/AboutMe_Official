@@ -37,7 +37,7 @@ namespace AboutMe.Domain.Entity.AdminDisplay
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_REMOVE", iDXParameter);
         }
     
-        public virtual int SP_ADMIN_DISPLAY_SAVE(Nullable<int> iDX, string kIND, string sUB_KIND, string uRL, string iMG, string p_CODE, string tITLE1, string tITLE2)
+        public virtual int SP_ADMIN_DISPLAY_SAVE(Nullable<int> iDX, string kIND, string sUB_KIND, Nullable<int> sEQ, string uRL, string iMG, string p_CODE, string tITLE1, string tITLE2, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -50,6 +50,10 @@ namespace AboutMe.Domain.Entity.AdminDisplay
             var sUB_KINDParameter = sUB_KIND != null ?
                 new ObjectParameter("SUB_KIND", sUB_KIND) :
                 new ObjectParameter("SUB_KIND", typeof(string));
+    
+            var sEQParameter = sEQ.HasValue ?
+                new ObjectParameter("SEQ", sEQ) :
+                new ObjectParameter("SEQ", typeof(int));
     
             var uRLParameter = uRL != null ?
                 new ObjectParameter("URL", uRL) :
@@ -71,15 +75,11 @@ namespace AboutMe.Domain.Entity.AdminDisplay
                 new ObjectParameter("TITLE2", tITLE2) :
                 new ObjectParameter("TITLE2", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_SAVE", iDXParameter, kINDParameter, sUB_KINDParameter, uRLParameter, iMGParameter, p_CODEParameter, tITLE1Parameter, tITLE2Parameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_SAVE", iDXParameter, kINDParameter, sUB_KINDParameter, sEQParameter, uRLParameter, iMGParameter, p_CODEParameter, tITLE1Parameter, tITLE2Parameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual ObjectResult<SP_ADMIN_DISPLAY_SEL_Result> SP_ADMIN_DISPLAY_SEL(Nullable<int> iDX, string kIND, string sUB_KIND)
+        public virtual ObjectResult<SP_ADMIN_DISPLAY_SEL_Result> SP_ADMIN_DISPLAY_SEL(string kIND, string sUB_KIND, Nullable<int> sEQ)
         {
-            var iDXParameter = iDX.HasValue ?
-                new ObjectParameter("IDX", iDX) :
-                new ObjectParameter("IDX", typeof(int));
-    
             var kINDParameter = kIND != null ?
                 new ObjectParameter("KIND", kIND) :
                 new ObjectParameter("KIND", typeof(string));
@@ -88,7 +88,20 @@ namespace AboutMe.Domain.Entity.AdminDisplay
                 new ObjectParameter("SUB_KIND", sUB_KIND) :
                 new ObjectParameter("SUB_KIND", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_DISPLAY_SEL_Result>("SP_ADMIN_DISPLAY_SEL", iDXParameter, kINDParameter, sUB_KINDParameter);
+            var sEQParameter = sEQ.HasValue ?
+                new ObjectParameter("SEQ", sEQ) :
+                new ObjectParameter("SEQ", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_DISPLAY_SEL_Result>("SP_ADMIN_DISPLAY_SEL", kINDParameter, sUB_KINDParameter, sEQParameter);
+        }
+    
+        public virtual int SP_ADMIN_DISPLAY_IMAGE_REMOVE(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_IMAGE_REMOVE", iDXParameter);
         }
     }
 }

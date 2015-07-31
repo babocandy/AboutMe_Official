@@ -5,6 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AboutMeModel5.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_DISPLAY_IMAGE_REMOVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_DISPLAY_REMOVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
@@ -12,16 +15,19 @@
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="KIND" Type="varchar" Mode="In" />
           <Parameter Name="SUB_KIND" Type="varchar" Mode="In" />
+          <Parameter Name="SEQ" Type="int" Mode="In" />
           <Parameter Name="URL" Type="varchar" Mode="In" />
           <Parameter Name="IMG" Type="varchar" Mode="In" />
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
           <Parameter Name="TITLE1" Type="varchar" Mode="In" />
           <Parameter Name="TITLE2" Type="varchar" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_DISPLAY_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="KIND" Type="varchar" Mode="In" />
           <Parameter Name="SUB_KIND" Type="varchar" Mode="In" />
+          <Parameter Name="SEQ" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="AboutMeModel5StoreContainer" />
       </Schema></edmx:StorageModels>
@@ -30,31 +36,40 @@
       <Schema Namespace="AboutMeModel5" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AdminDisplayEntities" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="SP_ADMIN_DISPLAY_REMOVE">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_DISPLAY_SAVE">
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="KIND" Mode="In" Type="String" />
             <Parameter Name="SUB_KIND" Mode="In" Type="String" />
+            <Parameter Name="SEQ" Mode="In" Type="Int32" />
             <Parameter Name="URL" Mode="In" Type="String" />
             <Parameter Name="IMG" Mode="In" Type="String" />
             <Parameter Name="P_CODE" Mode="In" Type="String" />
             <Parameter Name="TITLE1" Mode="In" Type="String" />
             <Parameter Name="TITLE2" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_DISPLAY_SEL" ReturnType="Collection(AboutMeModel5.SP_ADMIN_DISPLAY_SEL_Result)">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="KIND" Mode="In" Type="String" />
             <Parameter Name="SUB_KIND" Mode="In" Type="String" />
+            <Parameter Name="SEQ" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_DISPLAY_IMAGE_REMOVE">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_DISPLAY_SEL_Result">
-          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="Int32" Name="IDX" Nullable="true" />
           <Property Type="String" Name="URL" Nullable="true" MaxLength="300" />
-          <Property Type="String" Name="IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IMG" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="TITLE1" Nullable="true" MaxLength="300" />
           <Property Type="String" Name="TITLE2" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="SEQ" Nullable="true" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -73,9 +88,13 @@
                 <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
                 <ScalarProperty Name="TITLE1" ColumnName="TITLE1" />
                 <ScalarProperty Name="TITLE2" ColumnName="TITLE2" />
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_DISPLAY_IMAGE_REMOVE" FunctionName="AboutMeModel5.Store.SP_ADMIN_DISPLAY_IMAGE_REMOVE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
