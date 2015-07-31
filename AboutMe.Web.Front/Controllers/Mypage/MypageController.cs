@@ -289,25 +289,7 @@ namespace AboutMe.Web.Front.Controllers
 
 
             return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
- /*
-            //JSON rturn
-            if (string.IsNullOrEmpty(CALLBACK_FUNCTION))
-            {
-                //return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
-                //Response.Write(string.Format("{0}({1});", CALLBACK_FUNCTION, serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG })));
-                return CALLBACK_FUNCTION + "(" + serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG }) + ")";
-            }
-            else
-            {
-                // JSONP return
-                //JavaScriptSerializer serializer = new JavaScriptSerializer();
-                //Response.Write(string.Format("{0}({1});", CALLBACK_FUNCTION, serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG })));
-                return CALLBACK_FUNCTION + "(" + serializer.Serialize(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG }) + ")";
 
-                //return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG }, CALLBACK_FUNCTION);
-            }
-
-*/
         }
 
         

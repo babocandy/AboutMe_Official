@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Mobile-Brand";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+
+
+
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+}
+
+
+@section Header{
+
+}
+
+@section Scripts{
+
+
+}
+
+
+@section Body{
+
+    <div class="wrap brand">
+    <!--header-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+    <!--//header-->
+    <!--container-->
+    <div class="container">
+        <div class="h2_area">
+            <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+            <h2>브랜드스토리</h2>
+        </div>
+
+        <!--브랜드스토리-->
+        <div class="brandstroy">
+            <h2 class="tit"><img src="/aboutCom/images/aboutme/tit_aboutme.png" alt="ABOUTME 브랜드스토리" /></h2>
+            <div class="cont">
+                <p class="stit1"><img src="/aboutCom/images/aboutme/txt_aboutme1.png" alt="Philosophy 건강한 아름다움 구현을 위한 In & Out 밸런스" /></p>
+                <div class="contxt">
+                    <p>작은 원료들은 그저 알갱이로 존재하는 것이 아닙니다.</p>
+                    <p>
+                        최적화된 추출,<br />
+                        가공으로 원료가 가진 힘이 제 안에 깊이응축 되고 서로 다른 원료간의 만남으로 새로운 시너지가 발현됩니다.
+                    </p>
+                    <p>
+                        삼양은 90년간원료가 지닌 놀라운 힘, 그리고 적절한 밸런스를 연구해 왔습니다.<br />
+                        작은 재료에도 각각에 맞는 비율이 있듯이, 아름다움을 만드는 것 역시 나에게 꼭 맞는 적절한 밸런스가 중요하다고생각합니다.
+                    </p>
+                    <p>
+                        어바웃미는 당신에게 꼭 맞는 밸런스를 위해 당신의 안부터 밖까지 찬찬히 들여다 봅니다.<br />
+                        내 몸에 일어나는 작은 변화들, 그리고 나를 사로잡고있는 고민들까지.<br />
+                        당신에게 진짜 필요한 것은 무엇인지, 부족한 것은 없는지, 넘치는 것들은 무엇인지 고민합니다.
+                    </p>
+                    <p>
+                        어바웃미가 제안하는 피부 깊숙이 건강한 에너지를<br /> 채우는화장품과 맛있게 먹으면서 예뻐지는 뷰티푸드로
+                        건강한 아름다움을 위한 올바른 밸런스를만들어 보세요.
+                    </p>
+                </div>
+            </div>
+            <div class="cont">
+                <p class="stit2"><img src="/aboutCom/images/aboutme/txt_aboutme2.png" alt="CONCEPT 피부나이를 되돌리세요" /></p>
+                <div class="contxt pb25">
+                    <p>
+                        피부 나이를 되돌리는 원료 과학,<br />
+                        <strong>Time Capsule Technology</strong> 시간보존비법
+                    </p>
+                    <p>
+                        원료가 지닌 탁월한 효능의 활성 성분을 통해<br />
+                        피부 나이를 되돌리는, <strong>원료의 힘</strong>
+                    </p>
+                    <p>
+                        식품(소재) 기업 역사에 기반한 안전하고 효과적인<br />
+                        원료과학 기술과 노하우의 <strong>삼양 90년</strong>
+                    </p>
+                    <p>
+                        ‘추출-활성-배합-안정화-전달’ 기술로 활성 성분을<br />
+                        피부 및 체내 깊숙이 전달하는 <strong>5가지 원료과학</strong>
+                    </p>
+                </div>
+                <img src="/aboutCom/images/aboutme/img_aboutme1.png" class="img1" alt="원료의 힘 - 삼양 90년 기술노하우 - 5가지 원료 과학" />
+            </div>
+            <div class="cont v2">
+                <img src="/aboutCom/images/aboutme/img_aboutme2.png" class="img2" alt="-추출: 최상의 효과를 내는 시기에 원료 추출 -활성: 발효, 숙성, 배양 등 유효성분 활성화 -배합: 복합 원료의 시너지를 이끌어내는 이상적인 조합과 비율로 원료배합 -안정화:보관시에도 균일한 효능이 발현 되도록 안정적인 포뮬러 개발 -전달:유효성분의 피부/체네 흡수 촉진" />
+            </div>
+        </div>
+        <!--//브랜드스토리-->
+        <!--스토어, 매거진 링크-->
+        <div class="linkarea">
+            <a href="/Aboutme/Store"><img src="/aboutCom/images/aboutme/bnr_store.jpg" alt="" /></a>
+            <a href="/Aboutme/Magazin" class="mt15"><img src="/aboutCom/images/aboutme/bnr_magazin.jpg" alt="" /></a>
+        </div>
+        <!--//스토어, 매거진 링크-->
+    </div>
+    <!--//container-->
+
+
+    <!--footer-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    <!--//footer-->
+</div>
+
+}
+
+@section Footer{
+
+}
