@@ -1,0 +1,189 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="Keywords" content="ABOUT ME" />
+    <meta name="Description" content="ABOUT ME" />
+    <link href="/aboutCom/css/import.css" rel="stylesheet" />
+    <script src="/aboutCom/js/lib/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.easing-1.3.min.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.countdown.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.event.move.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.event.swipe.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/jquery.lazyload.min.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/script.js" type="text/javascript"></script>
+    <title>ABOUT ME</title>
+
+
+    <script type="text/javascript">
+    var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+    var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+    var glREGISTER_ING = false;  //저장처리중
+
+
+
+    //
+    function fSkinTrouble_ClearCss() {
+        $("#skintype1").removeClass("cnt");
+        $("#skintype2").removeClass("cnt");
+        $("#skintype3").removeClass("cnt");
+        $("#skintype4").removeClass("cnt");
+        $("#skintype5").removeClass("cnt");
+        $("#skintype6").removeClass("cnt");
+        $("#skintype7").removeClass("cnt");
+        $("#skintype8").removeClass("cnt");
+    }
+    function fSkinTrouble_Choice(argSKIN_TROUBLE_CD) {
+        var f = document.frmSKIN_TROUBLE;
+        var strID = "";
+        if (argSKIN_TROUBLE_CD == "101201100") strID = "1";
+        else if (argSKIN_TROUBLE_CD == "101202100") strID = "2";
+        else if (argSKIN_TROUBLE_CD == "101203100") strID = "3";
+        else if (argSKIN_TROUBLE_CD == "101204100") strID = "4";
+        else if (argSKIN_TROUBLE_CD == "101205100") strID = "5";
+        else if (argSKIN_TROUBLE_CD == "101206100") strID = "6";
+        else if (argSKIN_TROUBLE_CD == "101207100") strID = "7";
+        else if (argSKIN_TROUBLE_CD == "101208100") strID = "8";
+
+        fSkinTrouble_ClearCss();
+        if (strID != "")
+            $("#skintype" + strID).addClass("cnt");  // css ON 처리
+
+        f.M_SKIN_TROUBLE_CD.value = argSKIN_TROUBLE_CD;
+    }
+    function fGoSave_SKIN_TROUBLE() {
+        var f = document.frmSKIN_TROUBLE;
+        var strSEL = f.M_SKIN_TROUBLE_CD.value;
+        if (strSEL == "101201100" || strSEL == "101202100" || strSEL == "101203100" || strSEL == "101204100" || strSEL == "101205100" || strSEL == "101206100" || strSEL == "101207100" || strSEL == "101208100")
+        {; }
+        else
+        {
+            alert("내 피부고민을 선택하세요.");
+            return;
+        }
+
+        var strTOKEN = f.__RequestVerificationToken.value;
+        var strM_ID = f.M_ID.value;
+        var strM_SKIN_TROUBLE_CD = f.M_SKIN_TROUBLE_CD.value;
+
+        var strURL = "/MyPage/AjaxSkinTroubleProc";  //피부고민은 ajax http통신
+        //var strURL = glHTTPS_DOMAIN + "/MyPage/AjaxSkinTroubleProc";
+
+        glREGISTER_ING = true;  //저장 진행중 --------------------
+
+        $.ajax({
+            url: strURL,
+            async: false,  //동기 통신
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                __RequestVerificationToken: strTOKEN
+                , M_ID: strM_ID
+                , M_SKIN_TROUBLE_CD: strM_SKIN_TROUBLE_CD
+
+
+            },
+            success: function (retDATA) {
+                if (retDATA.ERR_CODE == "0") {
+                    glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                    alert("내 피부 고민 설정이 수정되었습니다.");
+                    opener.window.location.reload();  //다음 스텝으로 이동 =새로고침
+                    self.close();
+                }
+                else {
+                    glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                    alert("내 피부 고민 설정 수정중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
+                }
+            },
+            error: function (e) {
+                glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                alert("ajax 오류발생2");
+            }
+        }); //ajax
+    }
+
+    $(document).ready(function () {
+        fSkinTrouble_Choice("@ViewBag.M_SKIN_TROUBLE_CD"); //기존 설정값 표현
+    });
+
+
+    </script>
+
+</head>
+
+<body>
+    <div class="container popupwrap">
+        <div class="pop_head">
+            <a href="#" class="pop_close" onclick="self.close()">닫기</a>
+        </div>
+        <div class="concerns">
+            <h2>내 피부고민 설정</h2>
+            <!-- 내 피부고민 설정 -->
+            <p class="member">피부고민을 선택해주세요.</p>
+            <div class="concerns_sel">
+                <!--
+                    피부 타입 클래스 =>
+                        mo : 보습(Moisturizing)
+                        wr : 탄력/주름(Wrinkles)
+                        br : 브라이트닝(Brightening)
+                        wh : 화이트닝(Whitening)
+                        aa : 안티에이징(Anti-Aging)
+                        fj : 피지/모공(fiji)
+                        vi : 생기/활력(Vitality)
+                        uv : 자외선차단(UV protection)
+                -->
+                <ul class="typelist">
+                    <li class="mo" id="skintype1">
+                        <a href="javascript: fSkinTrouble_Choice('101201100');">보습</a>
+                    </li>
+                    <li class="wr" id="skintype2">
+                        <a href="javascript: fSkinTrouble_Choice('101202100');">탄력/주름</a>
+                    </li>
+                    <li class="br" id="skintype3">
+                        <a href="javascript: fSkinTrouble_Choice('101203100');">브라이트닝</a>
+                    </li>
+                    <li class="wh" id="skintype4">
+                        <a href="javascript: fSkinTrouble_Choice('101204100');">화이트닝</a>
+                    </li>
+                    <li class="aa" id="skintype5">
+                        <a href="javascript: fSkinTrouble_Choice('101205100');">안티에이징</a>
+                    </li>
+                    <li class="fj" id="skintype6">
+                        <a href="javascript: fSkinTrouble_Choice('101206100');">피지,모공</a>
+                    </li>
+                    <li class="vi" id="skintype7">
+                        <a href="javascript: fSkinTrouble_Choice('101207100');">생기,활력</a>
+                    </li>
+                    <li class="uv" id="skintype8">
+                        <a href="javascript: fSkinTrouble_Choice('101208100');">자외선차단</a>
+                    </li>
+                </ul>
+
+                <div class="btn_group">
+                    <a href="javascript:fGoSave_SKIN_TROUBLE();" class="btn btn_brown_h40">확인</a><a href="#none" onclick="self.close()" class="btn btn_white_h40 v2">취소</a>
+                </div>
+            </div>
+            <!-- 내 피부고민 설정 -->
+        </div>
+    </div>
+
+    <!--피부고민 설정-->
+    @using (Html.BeginForm("AjaxSkinTroubleProc", "MyPage", FormMethod.Post, new { id = "frmSKIN_TROUBLE", name = "frmSKIN_TROUBLE" }))
+    {
+        @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                            <input type="hidden" name="M_ID" value="@ViewBag.M_ID" />
+                            <input type="hidden" name="M_SKIN_TROUBLE_CD" value="@ViewBag.M_SKIN_TROUBLE_CD" />
+    }
+
+</body>
+
+</html>

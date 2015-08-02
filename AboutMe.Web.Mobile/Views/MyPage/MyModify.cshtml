@@ -139,6 +139,17 @@
             return;
         }
 
+        f.M_MOBILE.value = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
+        f.M_PHONE.value = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "-" + f.M_PHONE_3.value;
+        f.M_EMAIL.value = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value;
+
+        f.method = "post";
+        f.target = "";
+        f.action = glHTTPS_DOMAIN + "/Mypage/MyModifyProc";
+        f.submit();
+
+        /*
+        //---- Ajax 의 경우 ----------------
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
         var strM_MOBILE = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
@@ -199,6 +210,8 @@
                 alert("ajax 오류발생2");
             }
         }); //ajax
+        */
+
     } //func
 
 </script>
@@ -238,7 +251,10 @@
 
                 <input type="hidden" name="M_ID" value="@Model.M_ID">
 
-
+    <input type="hidden" name="M_MOBILE" value="">
+    <input type="hidden" name="M_PHONE" value="">
+    <input type="hidden" name="M_EMAIL" value="">
+    
                     <fieldset>
                         <legend>회원정보입력 폼</legend>
                         <div class="title">

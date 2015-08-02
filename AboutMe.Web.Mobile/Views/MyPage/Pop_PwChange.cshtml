@@ -53,7 +53,14 @@
             }
 
 
+            f.method = "post";
+            f.target = "";
+            f.action = glHTTPS_DOMAIN + "/MyPage/Pop_PwChangeProc";
+            f.submit();
 
+
+            /*
+            //---Ajax 의 경우 ---------------------
 
             var strTOKEN = f.__RequestVerificationToken.value;
             var strM_ID = f.M_ID.value;
@@ -93,6 +100,8 @@
                     alert("ajax 오류발생2");
                 }
             }); //ajax
+            */
+
         } //func
 
 

@@ -72,9 +72,11 @@
             return;
         }
 
-        //f.action = "/MemberShip/PwSearch_End";
-        //f.target = "";
-        //f.submit();
+        f.action = glHTTPS_DOMAIN + "/MemberShip/PwSearchProc";
+        f.target = "";
+        f.submit();
+        /* 
+        //Ajax방식의 경우 --------------------------------
 
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
@@ -117,6 +119,7 @@
                 alert("ajax 오류발생1");
             }
         }); //ajax
+        */
 
     } //func
 

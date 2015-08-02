@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1323, user-scalable = yes" />
+    <meta name="Keywords" content="ABOUT ME" />
+    <meta name="Description" content="ABOUT ME" />
+    <script src="/aboutCom/js/lib/jquery-1.8.3.min.js" type="text/javascript"></script>
+
+    <!-- 각 페이지별 코딩에 따라 css or js 변경필요-->
+
+
+    <script type="text/javascript">
+
+        function fGoJsonpTest() {
+            var f = document.frmTEST;
+
+            var strM_ID = f.M_ID.value;
+
+            var strURL = "/Home/AjaxTestJsonpRet?callback=fCAll_BACK";
+
+
+            $.ajax({
+                url: strURL,
+                async: false,  //동기 통신
+                type: 'POST',
+                //            dataType: 'json',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                data: {
+                    M_ID: strM_ID
+                },
+               // success: function () {
+               //     alert("success! ");
+               // },
+                error: function (e) {
+                    glREGISTER_ING = false; //저장 진행중 종료 --------------------
+                    alert("ajax 오류발생2");
+                }
+            }); //ajax
+        }
+
+        function fCAll_BACK(retDATA) {
+            alert("in Callback...... ");
+            alert("in Callback retDATA.ERR_CODE:" + retDATA.ERR_CODE + ", retDATA.M_ID" + retDATA.M_ID);
+        }
+
+
+    </script>
+
+    <title>ABOUT ME</title>
+</head>
+<body>
+
+    <!--header-->
+    <!--//header-->
+    <!--container-->
+
+
+    <div class="wrap mypage">
+
+
+        <!--container-->
+        <div>
+
+            <form name="frmTEST" method="post" action="">
+                <input type="text" name="M_ID" value="12ab가나" />
+            </form>
+            <a href="javascript:fGoJsonpTest();">[Jsonp test]</a>
+
+        </div>
+
+        <!--//container-->
+
+
+    </div>
+    <!--//container-->
+
+</body>
+</html>

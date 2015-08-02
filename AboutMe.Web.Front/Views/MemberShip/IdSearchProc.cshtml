@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=1323, user-scalable = yes" />
+        <meta name="Keywords" content="ABOUT ME" />
+        <meta name="Description" content="ABOUT ME" />
+        <link href="/aboutCom/css/import.css" rel="stylesheet" />
+        <script src="/aboutCom/js/lib/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="/aboutCom/js/lib/jquery.easing-1.3.min.js" type="text/javascript"></script>
+        <script src="/aboutCom/js/lib/dropdown.js" type="text/javascript"></script>
+        <script src="/aboutCom/js/lib/jquery.countdown.js" type="text/javascript"></script>
+        <script src="/aboutCom/js/lib/jquery.dotdotdot.js" type="text/javascript"></script>
+        <script src="/aboutCom/js/script.js" type="text/javascript"></script>
+        <title>ABOUT ME</title>
+        <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
+
+        <script>
+            var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+            var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+
+            $(document).ready(function () {
+
+                var f = document.frmPopSearch;
+                f.action = glHTTP_DOMAIN+"/MemberShip/IdSearch_End";
+                f.method = "post";
+                f.target = "";
+                f.submit();
+
+            });
+
+
+        </script>
+
+    </head>
+</head>
+<body>
+    <div> 
+@using (Html.BeginForm("IdSearch_End", "MemberShip", FormMethod.Post, new { id = "frmPopSearch", name = "frmPopSearch" }))
+ {
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+    <input type="hidden" name="M_ID" value="@ViewBag.M_ID" />
+    <input type="hidden" name="M_NAME" value="@ViewBag.M_NAME" />
+    <input type="hidden" name="M_CREDATE" value="@ViewBag.M_CREDATE" />
+ }
+    </div>
+</body>
+</html>
