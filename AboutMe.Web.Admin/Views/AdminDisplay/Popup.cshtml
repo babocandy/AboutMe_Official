@@ -1,0 +1,184 @@
+﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupListViewModel
+@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "Point";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+    @{Html.RenderPartial("~/Views/AdminDisplay/_Display.cshtml");}
+}
+
+
+@section Body{
+
+	<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">전시관리</a> &gt; <strong>팝업관리</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3 class="sub-header">팝업관리</h3>
+    </div>
+    <div class="tar mb10">
+        <a href="@Url.Action("PopupAdd",Model.SearchParam)" class="btn btn-default middium" >팝업추가</a>
+    </div>
+
+    <div class="panel">
+@using (Html.BeginForm("Popup", "AdminDisplay", FormMethod.Get, new { id = "frmSearch", name = "frmSearch" }))
+{
+        <table class="table table_row">
+            <colgroup><col width="20%"><col width="*"></colgroup>
+            <tbody>
+                <tr>
+                    <th>전시여부</th>
+                    <td>
+                        @{
+                            string checkedDisplay = Model.SearchParam.IS_DISPLAY == "N" ? "checked" : "";
+                            string checkedExprie = Model.SearchParam.IS_EXPIRE == "Y" ? "checked" : "";
+                        }
+                        <label for="sale1"><input type="checkbox" id="sale1" name="IS_DISPLAY" value="N" @checkedDisplay onchange="document.frmSearch.submit(); return false;"><span class="txt mr5">비전시</span></label>
+                        <label for="sale2"><input type="checkbox" id="sale2" name="IS_EXPIRE" value="Y" @checkedExprie onchange="document.frmSearch.submit(); return false;"><span class="txt mr5">전시내림</span></label>
+                        <span style="vertical-align:sub;">검색 : </span>
+
+           
+                            @{
+                                List<SelectListItem> items = new List<SelectListItem>();
+                                items.Add(new SelectListItem { Text = "제목", Value = "TITLE" });
+                                items.Add(new SelectListItem { Text = "웹URL", Value = "WEB_LINK" });
+                                items.Add(new SelectListItem { Text = "모바일URL", Value = "WEB_LINK" });
+
+
+
+                                foreach (var xx in items)
+                                {
+                                    if (xx.Value == Model.SearchParam.SEARCH_KEY)
+                                    {
+                                        xx.Selected = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            @Html.DropDownList("SEARCH_KEY", items, "-선택-", new { style = "width:80px;" })
+
+                  
+  
+                        <input type="text" style="width:120px" class="input-sm" name="SEARCH_VALUE" value="@Model.SearchParam.SEARCH_VALUE">
+                        <a href="#" class="btn btn-default small" onclick="document.frmSearch.submit(); return false;">검색</a>
+                        <input type="hidden" name="PAGE" value="@Model.SearchParam.PAGE" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+}
+    </div>
+
+    <div class="panel">
+        <h4>총 검색 :@(Model.Total)개</h4>
+        <table class="table table_col">
+            <colgroup>
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+                <col width="" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>매체구분</th>
+                    <th>웹 이미지</th>
+                    <th>모바일 이미지</th>
+                    <th>제목</th>
+                    <th>웹URL</th>
+                    <th>모바일URL</th>
+                    <th>게시기간</th>
+                    <th>등록일</th>
+                    <th>전시여부</th>
+                    <th>편집</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.PopupList)
+                {
+                    <tr>
+                        <td>@item.IDX</td>
+                        <td>@item.MEDIA_GBN</td>
+                        <td><img src="@item.WEB_IMG" alt="" /></td>
+                        <td><img src="@item.MOBILE_IMG" alt="" /></td>
+                        <td>@item.TITLE</td>
+                        <td>@item.WEB_LINK</td>
+                        <td>@item.MOBILE_LINK</td>
+                        <td>@item.DISPLAY_START~@item.DISPLAY_END</td>
+                        <td>
+                          @item.INS_DATE
+                        </td>
+                        <td>
+                           
+@using (Html.BeginForm("PopupUpdateDisplay", "AdminDisplay", FormMethod.Post, new {  }))
+{
+                            if (item.IS_DISPLAY)
+                            {
+                                <span>전시</span><br />
+                                <span class="btn btn-info small mt5" onclick="this.parentElement.submit(); return false;">비전시</span>
+                                <input type="hidden" name="IS_DISPLAY" value="N"   />
+                                
+                            }
+                            else
+                            {
+                                <span>비전시</span><br />
+                                <span class="btn btn-info small mt5" onclick="this.parentElement.submit(); return false;">전시</span>
+                                 <input type="hidden" name="IS_DISPLAY" value="Y" />
+                            }
+                            <input type="hidden" name="IDX" value="@item.IDX" />
+}
+                        </td>
+                        <td>
+
+                            <a href="@Url.Action(string.Format("PopupUpdate/{0}", item.IDX), Model.SearchParam)" class="btn btn-success small">수정</a><br />
+
+
+                        @using (Html.BeginForm("PopupRemove", "AdminDisplay", FormMethod.Post, new { }))
+                        {
+                                                    <a href="#" class="btn btn-primary small mt5" onclick="this.parentElement.submit(); return false;">삭제</a>
+                                                    <input type="hidden" name="IDX" value="@item.IDX" />
+                        }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @{
+            
+            string search = "SEARCH_KEY=" + Model.SearchParam.SEARCH_KEY;
+            search += "&SEARCH_VALUE=" + Model.SearchParam.SEARCH_VALUE;
+            search += "&IS_DISPLAY=" + Model.SearchParam.IS_DISPLAY;
+            search += "&IS_EXPIRE=" + Model.SearchParam.IS_EXPIRE;
+            
+        }
+
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.SearchParam.PAGE, QueryStr = search });}
+
+    </div>
+
+
+
+    <!--//content-->
+}

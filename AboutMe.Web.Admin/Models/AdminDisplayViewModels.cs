@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AboutMe.Domain.Entity.AdminPoint;
 using AboutMe.Domain.Entity.AdminDisplay;
+using System.Web;
 
 
 namespace AboutMe.Web.Admin.Models
@@ -63,5 +65,76 @@ namespace AboutMe.Web.Admin.Models
         public SP_ADMIN_DISPLAY_SEL_Result Mobile10 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result Mobile11 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result Mobile12 { get; set; }
+    }
+
+    public class AdminDisplayPopupListViewModel
+    {
+        public  List<PopupInfo> PopupList { get; set; }
+        public int Total { get; set; }
+        public PopupSearchParam SearchParam { get; set; }
+    }
+
+    public class AdminDisplayPopupSaveViewModel
+    {
+        public string IDX { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public string MEDIA_GBN { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public string TITLE { get; set; }
+        
+        public HttpPostedFileBase WEB_IMG_FILE { get; set; }
+        public string WEB_IMG_NAME { get; set; }
+
+        public int? POS_TOP { get; set; }
+        public int? POS_LEFT { get; set; }
+
+        public int? SIZE_WIDTH { get; set; }
+        public int? SIZE_HEIGHT { get; set; }
+
+        public string WEB_LINK { get; set; }
+        public string WEB_TARGET { get; set; }
+
+        public HttpPostedFileBase MOBILE_IMG_FILE { get; set; }
+        public string MOBILE_IMG_NAME{ get; set; }
+        public string MOBILE_LINK { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public string IS_DISPLAY { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        [RegularExpression("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}$", ErrorMessage = "[형식 에러]")]
+        public string DISPLAY_START { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        [RegularExpression("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}$", ErrorMessage = "[형식 에러]")]
+        public string DISPLAY_END { get; set; }
+
+        public PopupSearchParam SearchParam { get; set; }
+
+        /*
+         * 
+public class MyViewModel
+{
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public bool IsPeriod { get; set; }
+
+    public RouteValueDictionary RouteValues
+    {
+        get
+        {
+            var rvd = new RouteValueDictionary();
+            rvd["name"] = Name;
+            rvd["surname"] = Surname;
+            rvd["isPeriod"] = IsPeriod;
+            return rvd;
+        }
+    }
+}
+         */
     }
 }

@@ -29,6 +29,68 @@
           <Parameter Name="SUB_KIND" Type="varchar" Mode="In" />
           <Parameter Name="SEQ" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_POPUP_ADD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MEDIA_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_START" Type="datetime" Mode="In" />
+          <Parameter Name="DISPLAY_END" Type="datetime" Mode="In" />
+          <Parameter Name="POS_TOP" Type="int" Mode="In" />
+          <Parameter Name="POS_LEFT" Type="int" Mode="In" />
+          <Parameter Name="SIZE_WIDTH" Type="int" Mode="In" />
+          <Parameter Name="SIZE_HEIGHT" Type="int" Mode="In" />
+          <Parameter Name="WEB_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_LINK" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_TARGET" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_LINK" Type="varchar" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_POPUP_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_POPUP_REMOVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_POPUP_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_VALUE" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="IS_EXPIRE" Type="varchar" Mode="In" />
+          <Parameter Name="TOTAL" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_POPUP_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="MEDIA_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_START" Type="datetime" Mode="In" />
+          <Parameter Name="DISPLAY_END" Type="datetime" Mode="In" />
+          <Parameter Name="POS_TOP" Type="int" Mode="In" />
+          <Parameter Name="POS_LEFT" Type="int" Mode="In" />
+          <Parameter Name="SIZE_WIDTH" Type="int" Mode="In" />
+          <Parameter Name="SIZE_HEIGHT" Type="int" Mode="In" />
+          <Parameter Name="WEB_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_LINK" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_TARGET" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_IMG" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_LINK" Type="varchar" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_POPUP_UPDATE_DISPLAY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
         <EntityContainer Name="AboutMeModel5StoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -59,6 +121,68 @@
           <FunctionImport Name="SP_ADMIN_DISPLAY_IMAGE_REMOVE">
           <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POPUP_ADD">
+            <Parameter Name="MEDIA_GBN" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_START" Mode="In" Type="DateTime" />
+            <Parameter Name="DISPLAY_END" Mode="In" Type="DateTime" />
+            <Parameter Name="POS_TOP" Mode="In" Type="Int32" />
+            <Parameter Name="POS_LEFT" Mode="In" Type="Int32" />
+            <Parameter Name="SIZE_WIDTH" Mode="In" Type="Int32" />
+            <Parameter Name="SIZE_HEIGHT" Mode="In" Type="Int32" />
+            <Parameter Name="WEB_IMG" Mode="In" Type="String" />
+            <Parameter Name="WEB_LINK" Mode="In" Type="String" />
+            <Parameter Name="WEB_TARGET" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_IMG" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_LINK" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POPUP_SEL" ReturnType="Collection(AboutMeModel5.SP_ADMIN_POPUP_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_VALUE" Mode="In" Type="String" />
+            <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+            <Parameter Name="IS_EXPIRE" Mode="In" Type="String" />
+            <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POPUP_UPDATE_DISPLAY">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POPUP_REMOVE">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POPUP_UPDATE">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="MEDIA_GBN" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_START" Mode="In" Type="DateTime" />
+            <Parameter Name="DISPLAY_END" Mode="In" Type="DateTime" />
+            <Parameter Name="POS_TOP" Mode="In" Type="Int32" />
+            <Parameter Name="POS_LEFT" Mode="In" Type="Int32" />
+            <Parameter Name="SIZE_WIDTH" Mode="In" Type="Int32" />
+            <Parameter Name="SIZE_HEIGHT" Mode="In" Type="Int32" />
+            <Parameter Name="WEB_IMG" Mode="In" Type="String" />
+            <Parameter Name="WEB_LINK" Mode="In" Type="String" />
+            <Parameter Name="WEB_TARGET" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_IMG" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_LINK" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_POPUP_INFO" ReturnType="Collection(AboutMeModel5.SP_ADMIN_POPUP_INFO_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_DISPLAY_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="true" />
@@ -70,6 +194,36 @@
           <Property Type="Int32" Name="SEQ" Nullable="true" />
           <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_POPUP_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="MEDIA_GBN" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="DISPLAY_START" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DISPLAY_END" Nullable="true" Precision="23" />
+          <Property Type="String" Name="WEB_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="WEB_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MOBILE_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MOBILE_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_POPUP_INFO_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="MEDIA_GBN" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="DISPLAY_START" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DISPLAY_END" Nullable="true" Precision="23" />
+          <Property Type="String" Name="WEB_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="WEB_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MOBILE_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MOBILE_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="POS_TOP" Nullable="true" />
+          <Property Type="Int32" Name="POS_LEFT" Nullable="true" />
+          <Property Type="Int32" Name="SIZE_WIDTH" Nullable="true" />
+          <Property Type="Int32" Name="SIZE_HEIGHT" Nullable="true" />
+          <Property Type="String" Name="WEB_TARGET" Nullable="true" MaxLength="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -95,6 +249,48 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_DISPLAY_IMAGE_REMOVE" FunctionName="AboutMeModel5.Store.SP_ADMIN_DISPLAY_IMAGE_REMOVE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POPUP_ADD" FunctionName="AboutMeModel5.Store.SP_ADMIN_POPUP_ADD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POPUP_SEL" FunctionName="AboutMeModel5.Store.SP_ADMIN_POPUP_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel5.SP_ADMIN_POPUP_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="MEDIA_GBN" ColumnName="MEDIA_GBN" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
+                <ScalarProperty Name="DISPLAY_START" ColumnName="DISPLAY_START" />
+                <ScalarProperty Name="DISPLAY_END" ColumnName="DISPLAY_END" />
+                <ScalarProperty Name="WEB_IMG" ColumnName="WEB_IMG" />
+                <ScalarProperty Name="WEB_LINK" ColumnName="WEB_LINK" />
+                <ScalarProperty Name="MOBILE_IMG" ColumnName="MOBILE_IMG" />
+                <ScalarProperty Name="MOBILE_LINK" ColumnName="MOBILE_LINK" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POPUP_UPDATE_DISPLAY" FunctionName="AboutMeModel5.Store.SP_ADMIN_POPUP_UPDATE_DISPLAY" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POPUP_REMOVE" FunctionName="AboutMeModel5.Store.SP_ADMIN_POPUP_REMOVE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POPUP_UPDATE" FunctionName="AboutMeModel5.Store.SP_ADMIN_POPUP_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_POPUP_INFO" FunctionName="AboutMeModel5.Store.SP_ADMIN_POPUP_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel5.SP_ADMIN_POPUP_INFO_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="MEDIA_GBN" ColumnName="MEDIA_GBN" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
+                <ScalarProperty Name="DISPLAY_START" ColumnName="DISPLAY_START" />
+                <ScalarProperty Name="DISPLAY_END" ColumnName="DISPLAY_END" />
+                <ScalarProperty Name="WEB_IMG" ColumnName="WEB_IMG" />
+                <ScalarProperty Name="WEB_LINK" ColumnName="WEB_LINK" />
+                <ScalarProperty Name="MOBILE_IMG" ColumnName="MOBILE_IMG" />
+                <ScalarProperty Name="MOBILE_LINK" ColumnName="MOBILE_LINK" />
+                <ScalarProperty Name="POS_TOP" ColumnName="POS_TOP" />
+                <ScalarProperty Name="POS_LEFT" ColumnName="POS_LEFT" />
+                <ScalarProperty Name="SIZE_WIDTH" ColumnName="SIZE_WIDTH" />
+                <ScalarProperty Name="SIZE_HEIGHT" ColumnName="SIZE_HEIGHT" />
+                <ScalarProperty Name="WEB_TARGET" ColumnName="WEB_TARGET" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

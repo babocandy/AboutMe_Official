@@ -37,7 +37,7 @@ namespace AboutMe.Web.Front.Models
     public class MyReviewCompleteViewModel
     {
 
-        public List<ReviewProductDisplay> Reviews{ get; set; }
+        public List<ReviewProductInfo> Reviews { get; set; }
 
         public int PageNo { get; set; }
         public int PageSize { get { return 10; } }
