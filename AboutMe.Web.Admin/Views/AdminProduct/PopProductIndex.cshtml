@@ -1,5 +1,5 @@
-﻿@model IEnumerable<AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_PRODUCT_LIST_Result>
-
+﻿@model AboutMe.Domain.Entity.AdminProduct.PRODUCT_INDEX_MODEL
+@using System.Reflection;
 @{
     ViewBag.Title = "PopProductIndex";
     Layout = null;
@@ -293,12 +293,12 @@
             <div class="panel">
                 <h3 class="sub-header">상품관리</h3>
                 <form action="" id="bform" method="post" name="bform">
-                    <input type="hidden" name="searchStatus" id="searchStatus" value="@this.ViewBag.searchStatus" />
-                    <input type="hidden" name="Page" id="Page" value="@this.ViewBag.Page" />
-                    <input type="hidden" name="cateCode" id="cateCode" value="@this.ViewBag.cateCode" />
+                    <input type="hidden" name="searchStatus" id="searchStatus" value="@Model.productSearch_Entity.searchStatus" />
+                    <input type="hidden" name="Page" id="Page" value="@Model.productSearch_Entity..Page" />
+                    <input type="hidden" name="cateCode" id="cateCode" value="@Model.productSearch_Entity.cateCode" />
 
                     @Html.AntiForgeryToken()<div class="tar mb10">
-                        @if (ViewBag.searchStatus == "Y")
+                        @if (Model.productSearch_Entity.searchStatus == "Y")
                         {
                             <a class="btn btn-default middium" href="/AdminProduct/PopProductIndex">검색초기화</a>
                         }
@@ -315,13 +315,13 @@
                                     <td>
                                         @(Html.Kendo().DatePicker()
                           .Name("FROM_DATE")
-                          .Value(ViewBag.FROM_DATE)
+                                  .Value(Model.productSearch_Entity.FROM_DATE)
                           .HtmlAttributes(new { style = "width:120px" })
                                         )
                                         ~
                                         @(Html.Kendo().DatePicker()
                           .Name("TO_DATE")
-                          .Value(ViewBag.TO_DATE)
+                                  .Value(Model.productSearch_Entity.TO_DATE)
                           .HtmlAttributes(new { style = "width:120px" })
                                         )
                                         <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
@@ -333,10 +333,12 @@
                                     <th rowspan="5">검색조건</th>
                                     <td rowspan="5" class="condition_seacth">
                                         <select name="SearchKey" style="width:170px;">
-                                            <option value="P_CODE" @if (ViewBag.SearchKey == "P_CODE") { <text> selected</text> }>상품품번</option>
-                                            <option value="P_NAME" @if (ViewBag.SearchKey == "P_NAME") { <text> selected</text> }>상품명</option>
+                                            <option value="P_CODE" @if (Model.productSearch_Entity.SearchKey == "P_CODE")
+                                                                   { <text> selected</text> }>상품품번</option>
+                                            <option value="P_NAME" @if (Model.productSearch_Entity.SearchKey == "P_NAME")
+                                                                   { <text> selected</text> }>상품명</option>
                                         </select><br />
-                                        <input type="text" value="@ViewBag.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
+                                        <input type="text" value="@Model.productSearch_Entity.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
                                         <a href="javascript:frmCheck();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
                                     </td>
                                 </tr>
@@ -344,10 +346,14 @@
                                 <tr>
                                     <th>판매상태</th>
                                     <td>
-                                        <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (ViewBag.searchDisplayY == "Y") { <text> checked</text> } /><span class="txt mr5">전시</span></label>
-                                        <label for="sale2"><input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (ViewBag.searchDisplayN == "Y") { <text> checked</text> } /><span class="txt mr5">비전시</span></label>
-                                        <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (ViewBag.soldoutYn == "Y") { <text> checked</text> } /><span class="txt mr5">품절</span></label>
-                                        <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (ViewBag.POutletYn == "Y") { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
+                                        <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (Model.productSearch_Entity.searchDisplayY == "Y")
+                                                                                                                                      { <text> checked</text> } /><span class="txt mr5">전시</span></label>
+                                        <label for="sale2"><input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (Model.productSearch_Entity.searchDisplayN == "Y")
+                                                                                                                                      { <text> checked</text> } /><span class="txt mr5">비전시</span></label>
+                                        <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (Model.productSearch_Entity.soldoutYn == "Y")
+                                                                                                                            { <text> checked</text> } /><span class="txt mr5">품절</span></label>
+                                        <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (Model.productSearch_Entity.POutletYn == "Y")
+                                                                                                                            { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -361,10 +367,14 @@
                                 <tr>
                                     <th>아이콘</th>
                                     <td>
-                                        <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (ViewBag.iconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
-                                        <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (ViewBag.iconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
-                                        <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (ViewBag.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
-                                        <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (ViewBag.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
+                                        <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('N') != -1)
+                                                                                                                      { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
+                                        <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('B') != -1)
+                                                                                                                      { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
+                                        <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('S') != -1)
+                                                                                                                      { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
+                                        <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('C') != -1)
+                                                                                                                      { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
                                     </td>
                                 </tr>
                             </tbody>
@@ -378,15 +388,20 @@
                         <colgroup><col width="9%" /><col width="11%" /><col width="5%" /><col width="5%" /><col width="9%" /><col width="30%" /><col width="6%" /><col width="5%" /></colgroup>
                         <tr>
                             <th>총검색</th>
-                            <td>@ViewBag.TotalRecord 건</td>
+                            <td>@Model.TotalCount 건</td>
                             <th>출력수</th>
                             <td>
                                 <select name="PageSize" onchange="javascript:rePageSize();">
-                                    <option value="10" @if (ViewBag.PageSize == 10) { <text> selected</text> }>10개</option>
-                                    <option value="20" @if (ViewBag.PageSize == 20) { <text> selected</text> }>20개</option>
-                                    <option value="50" @if (ViewBag.PageSize == 50) { <text> selected</text> }>50개</option>
-                                    <option value="100" @if (ViewBag.PageSize == 100) { <text> selected</text> }>100개</option>
-                                    <option value="200" @if (ViewBag.PageSize == 200) { <text> selected</text> }>200개</option>
+                                    <option value="10" @if (Model.productSearch_Entity.PageSize == 10)
+                                                       { <text> selected</text> }>10개</option>
+                                    <option value="20" @if (Model.productSearch_Entity.PageSize == 20)
+                                                       { <text> selected</text> }>20개</option>
+                                    <option value="50" @if (Model.productSearch_Entity.PageSize == 50)
+                                                       { <text> selected</text> }>50개</option>
+                                    <option value="100" @if (Model.productSearch_Entity.PageSize == 100)
+                                                        { <text> selected</text> }>100개</option>
+                                    <option value="200" @if (Model.productSearch_Entity.PageSize == 200)
+                                                        { <text> selected</text> }>200개</option>
                                 </select>
                             </td>
                         </tr>
@@ -412,21 +427,31 @@
                     <tbody>
                         @if (Model != null)
                         {
-                            if (Model.Count() < 1)
+                            if (Model.TotalCount < 1)
                             {
                                 <tr>
                                     <td colspan="11" class="brnone">No data...</td>
                                 </tr>
                             }
                         }
-                        @{ var i = 0; }
-                        @foreach (var item in Model)
+                        @{ var i = 0;
+                           string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+                           Type type = Model.productSearch_Entity.GetType();
+                           PropertyInfo[] properties = type.GetProperties();}
+                        @foreach (var item in Model.ProductList)
                         {
+                            //query string만들기 idx를 맨처음으로
+                            RouteValueDictionary param = new RouteValueDictionary();
+                            param.Add("pcode", item.P_CODE);
+                            foreach (PropertyInfo property in properties)
+                            {
+                                param.Add(property.Name, property.GetValue(Model.productSearch_Entity));
+                            }
                             <tr>
                                 <td>
                                     @if (!string.IsNullOrEmpty(item.MAIN_IMG))
                                     {
-                                        <span id="SPAN_MAIN_IMG"><img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" width="70" height="70" /></span>
+                                        <span id="SPAN_MAIN_IMG"><img src="@Product_path@item.MAIN_IMG" width="70" height="70" /></span>
                                     }
                                 </td>
                                 <td>
@@ -466,8 +491,17 @@ i++;
                     </tbody>
                 </table>
             </div>
-
-            @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&SortCol=" + ViewBag.SortCol + "&SortDir=" + ViewBag.SortDir });}
-
+            @{
+                //paging 파라메터
+                string PagingParam = "";
+                foreach (PropertyInfo property in properties)
+                {
+                    if (property.Name != "Page")
+                    {
+                        PagingParam = PagingParam + property.Name + "=" + property.GetValue(Model.productSearch_Entity) + "&";
+                    }
+                }
+            }
+            @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalCount, RecordPerPage = Model.productSearch_Entity.PageSize, PagePerBlock = 10, CurrentPage = Model.productSearch_Entity.Page, QueryStr = PagingParam });}
         </div>
         <!--//content-->

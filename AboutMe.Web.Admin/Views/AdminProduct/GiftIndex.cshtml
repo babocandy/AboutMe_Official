@@ -101,14 +101,14 @@
         <div class="panel">
             <h3 class="sub-header">사은품관리</h3>
             <form action="" id="bform" method="post" name="bform">
-                <input type="hidden" name="Page" id="Page" value="@this.ViewBag.Page" />
+                <input type="hidden" name="Page" id="Page" value="@Model.SearchOption.PAGE" />
                 
                 @Html.AntiForgeryToken()<div class="tar mb10">
                     <a class="btn btn-default middium" href="/AdminProduct/GiftInsert">사은품등록</a>
-                    @if (Model.SearchOption.SEARCH_KEYWORD != "")
-                    {
+                   @*if (Model.SearchOption.SEARCH_KEYWORD != "")
+                    {*@
                         <a class="btn btn-default middium" href="/AdminProduct/GiftIndex">검색초기화</a>
-                    }
+                   @*  }*@
                 </div>
 
                 <table class="table table_row">
