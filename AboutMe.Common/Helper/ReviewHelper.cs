@@ -37,7 +37,7 @@ namespace AboutMe.Common.Helper
                 d.ADD_IMAGE = item.ADD_IMAGE;
 
                 d.IS_BEAUTY = IsBeauty(item.CATE_GBN);
-                d.IS_BEST = IsBest(item.PRIZE_GRADE);
+                d.IS_BEST = item.IS_BEST == "Y" ? true : false;
                 d.IS_PHOTO = item.IS_PHOTO == "Y" ? true : false;
 
                 d.INS_DATE = item.INS_DATE.Value.ToString("yyyy.MM.dd");

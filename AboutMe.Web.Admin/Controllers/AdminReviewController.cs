@@ -12,18 +12,18 @@ using AboutMe.Web.Admin.Common;
 using AboutMe.Common.Helper;
 using AboutMe.Common.Data;
 
-using AboutMe.Domain.Service.Review;
+using AboutMe.Domain.Service.AdminReview;
 
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminReviewController : BaseAdminController
     {
 
-        private IReviewService _ReviewService;
+        private IAdminReviewService _service;
 
-        public AdminReviewController(IReviewService _adminPointService)
+        public AdminReviewController(IAdminReviewService s)
         {
-            this._ReviewService = _adminPointService;
+            this._service = s;
         }
 
         // GET: AdminReviewController

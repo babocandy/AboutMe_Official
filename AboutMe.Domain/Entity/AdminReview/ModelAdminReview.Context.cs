@@ -12,6 +12,8 @@ namespace AboutMe.Domain.Entity.AdminReview
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AdminReviewEntities : DbContext
     {
@@ -25,5 +27,26 @@ namespace AboutMe.Domain.Entity.AdminReview
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> SP_ADMIN_REVIEW_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, ObjectParameter tOTAL)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_VALUEParameter = sEARCH_VALUE != null ?
+                new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
+                new ObjectParameter("SEARCH_VALUE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>("SP_ADMIN_REVIEW_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, tOTAL);
+        }
     }
 }
