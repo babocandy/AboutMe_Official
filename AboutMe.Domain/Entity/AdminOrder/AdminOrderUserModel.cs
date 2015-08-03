@@ -35,7 +35,7 @@ namespace AboutMe.Domain.Entity.AdminOrder
             this.SEARCH_COL = "";
             this.SEARCH_KEYWORD = "";
             this.PAGE = 1;
-            this.PAGESIZE = 5;
+            this.PAGESIZE = 20;
         }
         
          private string _delivery_from_date;
@@ -129,35 +129,32 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public List<string> LogList { get; set; }
     }
 
-    /*
-    public class CART_INSERT
+    public class INIREPAY_MODEL
     {
-        public string p_code { get; set; }
-        public string p_count { get; set; }
+        public Int32 ORDER_IDX { get; set; }
+        public SP_ADMIN_ORDERLIST_DETAIL_BODY_Result MasterInfo { set; get; }
+        public SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result Top1Info { set; get; }
+        public List<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result> RepayList { get; set; }
     }
 
-
-    public class CART_INDEX_MODEL
+    public class INIREPAY_OK_MODEL
     {
-        public Int32 DownloadCouponCnt { set; get; }
-        public Int32 DownloadedCouponCnt { set; get; }
-        public Int32 MyPoint { get; set; }
-        public Int32 CartCnt { get; set; }
-        public Int32 SumPrice { get; set; }
-        public Int32 SumPoint { get; set; }
-        public string BannerUrl { get; set; }
-        public USER_PROFILE UserProfile { get; set; }
-        public List<SP_TB_CART_LIST_Result> CartList { get; set; }
-        public List<SP_TB_CART_LIST_Result> BuyWillList { get; set; }
+        public Int32 ORDER_IDX { get; set; }
+        public string oldtid { set; get; }   //원거래번호
+        public string price { set; get; }    //취소할금액
+        public string confirm_price { set; get; }  //재승인금액 (결제금액-취소할금액)
+        public string buyeremail { set; get; } //이메일주소
     }
-    public class CART_FLYING_MODEL
+    public class INIREPAY_RESULT
     {
-        public Int32 CartCnt { get; set; }
-        public Int32 CurrentPage { get; set; }
-        public Int32 PrevPage { get; set; }
-        public Int32 NextPage { get; set; }
-        public Int32 TotalPage { get; set; }
-        public IEnumerable<SP_TB_CART_LIST_Result> CartList { get; set; }
+        public Int32 ORDER_IDX { get; set; }
+        public string TID { set; get; }   //신 거래번호
+        public string ResultCode { set; get; }    //부분취소결과코드 "00"이면 성공 그외 실패
+        public string ResultMsg { set; get; } //결과메시지
+        public string PRTC_TID { set; get; }  //원거래TID
+        public string PRTC_Remains { set; get; }  //최종결제금액
+        public string PRTC_Price { set; get; }  //부분취소한금액
+        public string PRTC_Cnt { set; get; }  //재승인횟수(최대9회)
+        public string PRTC_Type { set; get; }  //부분취소,재승인 구분값(0:재승인  1:부분취소) 
     }
-     * */
 }

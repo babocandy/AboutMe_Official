@@ -48,5 +48,6 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public Nullable<int> COUPON_DISCOUNT_AMT { get; set; }
         public Nullable<int> GRADE_DISCOUNT_AMT { get; set; }
         public Nullable<int> EMP_DISCOUNT_AMT { get; set; }
+        public string PAY_GBN { get; set; }
     }
 }

@@ -454,5 +454,85 @@ namespace AboutMe.Domain.Entity.AdminOrder
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_LIST_Cnt>("SP_ADMIN_ORDER_LIST_CNT", fROM_DATEParameter, tO_DATEParameter, mEMBER_GBNParameter, mEMBER_GRADE_BParameter, mEMBER_GRADE_SParameter, mEMBER_GRADE_GParameter, mEMBER_GRADE_VParameter, pAY_GBNParameter, pAT_GUBUN_WParameter, pAT_GUBUN_MParameter, dETAIL_STATUS_20Parameter, dETAIL_STATUS_10Parameter, dETAIL_STATUS_30Parameter, dETAIL_STATUS_40Parameter, dETAIL_STATUS_50Parameter, dETAIL_STATUS_60Parameter, dETAIL_STATUS_90Parameter, dETAIL_STATUS_80Parameter, dETAIL_STATUS_70Parameter, dELIVERY_FROM_DATEParameter, dELIVERY_TO_DATEParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
         }
+    
+        public virtual int SP_ADMIN_ORDER_PART_CANCEL_INSERT(Nullable<int> oRDER_IDX, string pAT_TID, string oLD_PAT_TID, Nullable<long> cANCEL_PRICE, Nullable<long> rEMAINS_PRICE, string eMAIL, Nullable<long> pRTC_Remains, string pRTC_Type, Nullable<long> pRTC_Price, Nullable<int> pRTC_Cnt, string rEG_ID, string rEG_IP)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var pAT_TIDParameter = pAT_TID != null ?
+                new ObjectParameter("PAT_TID", pAT_TID) :
+                new ObjectParameter("PAT_TID", typeof(string));
+    
+            var oLD_PAT_TIDParameter = oLD_PAT_TID != null ?
+                new ObjectParameter("OLD_PAT_TID", oLD_PAT_TID) :
+                new ObjectParameter("OLD_PAT_TID", typeof(string));
+    
+            var cANCEL_PRICEParameter = cANCEL_PRICE.HasValue ?
+                new ObjectParameter("CANCEL_PRICE", cANCEL_PRICE) :
+                new ObjectParameter("CANCEL_PRICE", typeof(long));
+    
+            var rEMAINS_PRICEParameter = rEMAINS_PRICE.HasValue ?
+                new ObjectParameter("REMAINS_PRICE", rEMAINS_PRICE) :
+                new ObjectParameter("REMAINS_PRICE", typeof(long));
+    
+            var eMAILParameter = eMAIL != null ?
+                new ObjectParameter("EMAIL", eMAIL) :
+                new ObjectParameter("EMAIL", typeof(string));
+    
+            var pRTC_RemainsParameter = pRTC_Remains.HasValue ?
+                new ObjectParameter("PRTC_Remains", pRTC_Remains) :
+                new ObjectParameter("PRTC_Remains", typeof(long));
+    
+            var pRTC_TypeParameter = pRTC_Type != null ?
+                new ObjectParameter("PRTC_Type", pRTC_Type) :
+                new ObjectParameter("PRTC_Type", typeof(string));
+    
+            var pRTC_PriceParameter = pRTC_Price.HasValue ?
+                new ObjectParameter("PRTC_Price", pRTC_Price) :
+                new ObjectParameter("PRTC_Price", typeof(long));
+    
+            var pRTC_CntParameter = pRTC_Cnt.HasValue ?
+                new ObjectParameter("PRTC_Cnt", pRTC_Cnt) :
+                new ObjectParameter("PRTC_Cnt", typeof(int));
+    
+            var rEG_IDParameter = rEG_ID != null ?
+                new ObjectParameter("REG_ID", rEG_ID) :
+                new ObjectParameter("REG_ID", typeof(string));
+    
+            var rEG_IPParameter = rEG_IP != null ?
+                new ObjectParameter("REG_IP", rEG_IP) :
+                new ObjectParameter("REG_IP", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_PART_CANCEL_INSERT", oRDER_IDXParameter, pAT_TIDParameter, oLD_PAT_TIDParameter, cANCEL_PRICEParameter, rEMAINS_PRICEParameter, eMAILParameter, pRTC_RemainsParameter, pRTC_TypeParameter, pRTC_PriceParameter, pRTC_CntParameter, rEG_IDParameter, rEG_IPParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result> SP_ADMIN_ORDER_PART_CANCEL_SELECT(Nullable<int> oRDER_IDX)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result>("SP_ADMIN_ORDER_PART_CANCEL_SELECT", oRDER_IDXParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result> SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT(Nullable<int> oRDER_IDX)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result>("SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT", oRDER_IDXParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result> SP_ADMIN_ORDER_TO_DELIVERYEXCEL(string oRDER_IDX_LIST)
+        {
+            var oRDER_IDX_LISTParameter = oRDER_IDX_LIST != null ?
+                new ObjectParameter("ORDER_IDX_LIST", oRDER_IDX_LIST) :
+                new ObjectParameter("ORDER_IDX_LIST", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result>("SP_ADMIN_ORDER_TO_DELIVERYEXCEL", oRDER_IDX_LISTParameter);
+        }
     }
 }

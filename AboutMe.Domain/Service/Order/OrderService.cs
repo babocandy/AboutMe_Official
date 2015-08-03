@@ -279,5 +279,15 @@ namespace AboutMe.Domain.Service.Order
         }
         #endregion
 
+        #region 부분취소 입력 (전체취소시 이니시스 로그 남김)
+        public void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_PART_CANCEL_INSERT(ORDER_IDX, PAT_TID, OLD_PAT_TID, CANCEL_PRICE, REMAINS_PRICE, EMAIL, PRTC_REMAINS, PRTC_TYPE, PRTC_PRICE, PRTC_CNT, REG_ID, REG_IP);
+            }
+        }
+        #endregion
+
     }
 }

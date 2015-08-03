@@ -15,6 +15,20 @@
           <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="OLD_PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="CANCEL_PRICE" Type="bigint" Mode="In" />
+          <Parameter Name="REMAINS_PRICE" Type="bigint" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="PRTC_Remains" Type="bigint" Mode="In" />
+          <Parameter Name="PRTC_Type" Type="char" Mode="In" />
+          <Parameter Name="PRTC_Price" Type="bigint" Mode="In" />
+          <Parameter Name="PRTC_Cnt" Type="int" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REG_IP" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_MYPAGE_ORDERLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
@@ -310,6 +324,20 @@
             <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
             <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
             <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="OLD_PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="CANCEL_PRICE" Mode="In" Type="Int64" />
+            <Parameter Name="REMAINS_PRICE" Mode="In" Type="Int64" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="PRTC_Remains" Mode="In" Type="Int64" />
+            <Parameter Name="PRTC_Type" Mode="In" Type="String" />
+            <Parameter Name="PRTC_Price" Mode="In" Type="Int64" />
+            <Parameter Name="PRTC_Cnt" Mode="In" Type="Int32" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+            <Parameter Name="REG_IP" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
@@ -858,6 +886,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_PART_CANCEL_INSERT" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_PART_CANCEL_INSERT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

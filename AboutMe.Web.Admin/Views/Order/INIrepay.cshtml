@@ -1,0 +1,304 @@
+﻿@model AboutMe.Domain.Entity.AdminOrder.INIREPAY_MODEL
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>INIpay5.0 부분취소 목록</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+    <link rel="stylesheet" href="/Content/inipay/css/group.css" type="text/css">
+    <style>
+        BODY {
+            FONT-SIZE: 10pt;
+            COLOR: #433f37;
+            LINE-HEIGHT: 19px;
+            FONT-FAMILY: 굴림,verdana;
+        }
+
+        TR {
+            FONT-SIZE: 10pt;
+            COLOR: #433f37;
+            LINE-HEIGHT: 19px;
+            FONT-FAMILY: 굴림,verdana;
+        }
+
+        TD {
+            FONT-SIZE: 10pt;
+            COLOR: #433f37;
+            LINE-HEIGHT: 19px;
+            FONT-FAMILY: 굴림,verdana;
+        }
+
+        TABLE {
+            BORDER-RIGHT: medium none;
+            BORDER-TOP: medium none;
+            BORDER-LEFT: medium none;
+            BORDER-BOTTOM: medium none;
+        }
+
+        IMG {
+            BORDER-RIGHT: medium none;
+            BORDER-TOP: medium none;
+            BORDER-LEFT: medium none;
+            BORDER-BOTTOM: medium none;
+        }
+
+        .pl_01 {
+            PADDING-RIGHT: 10px;
+            PADDING-LEFT: 10px;
+            PADDING-BOTTOM: 0px;
+            LINE-HEIGHT: 19px;
+            PADDING-TOP: 1px;
+        }
+
+        .pl_03 {
+            FONT-SIZE: 20pt;
+            COLOR: #ffffff;
+            LINE-HEIGHT: 29px;
+            FONT-FAMILY: 굴림,verdana;
+        }
+
+        .a:link {
+            FONT-SIZE: 9pt;
+            COLOR: #333333;
+            TEXT-DECORATION: none;
+        }
+
+        .a:visited {
+            FONT-SIZE: 9pt;
+            COLOR: #333333;
+            TEXT-DECORATION: none;
+        }
+
+        .a:hover {
+            FONT-SIZE: 9pt;
+            COLOR: #0174cd;
+            TEXT-DECORATION: underline;
+        }
+
+        .txt_03a:link {
+            FONT-SIZE: 8pt;
+            COLOR: #333333;
+            LINE-HEIGHT: 18px;
+            TEXT-DECORATION: none;
+        }
+
+        .txt_03a:visited {
+            FONT-SIZE: 8pt;
+            COLOR: #333333;
+            LINE-HEIGHT: 18px;
+            TEXT-DECORATION: none;
+        }
+
+        .txt_03a:hover {
+            FONT-SIZE: 8pt;
+            COLOR: #ec5900;
+            LINE-HEIGHT: 18px;
+            TEXT-DECORATION: underline;
+        }
+    </style>
+
+    <link href="/cmsManager/aboutCom/css/style.css" rel="stylesheet" type="text/css" />
+    <script language="javascript">
+
+    var openwin;
+
+    function repay()
+    {
+	    // 더블클릭으로 인한 중복승인을 방지하려면 반드시 confirm()을
+	    // 사용하십시오.
+	    if(document.ini.oldtid.value == "")
+	    {
+		    alert("원거래 TID가 빠졌습니다. 필수항목입니다.");
+		    return false;
+	    }
+	    else if(document.ini.price.value == "")
+	    {
+		    alert("취소할 금액이 빠졌습니다. 필수항목입니다.");
+		    return false;
+	    }
+	    else if(document.ini.confirm_price.value == "")
+	    {
+		    alert("승인요청금액이 빠졌습니다. 필수항목입니다.");
+		    return false;
+	    }
+	    else if(document.ini.buyeremail.value == "")
+	    {
+		    alert("구매자 이메일 주소가 빠졌습니다. 필수항목입니다.");
+		    return false;
+	    }
+	    else if(confirm("부분취소 하시겠습니까?"))
+	    {
+		    disable_click();
+		    openwin = window.open("/Content/inipay/loading.html","childwin","width=299,height=149");
+		    return true;
+	    }
+	    else
+	    {
+		    return false;
+	    }
+    }
+
+    function enable_click()
+    {
+	    document.ini.clickcontrol.value = "enable"
+    }
+
+    function disable_click()
+    {
+	    document.ini.clickcontrol.value = "disable"
+    }
+
+    function focus_control()
+    {
+	    if(document.ini.clickcontrol.value == "disable")
+		    openwin.focus();
+    }
+        </script>
+        <script language="JavaScript" type="text/JavaScript">
+    <!--
+    function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+      if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+        document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+      else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+    }
+    MM_reloadPage(true);
+
+    function MM_jumpMenu(targ,selObj,restore){ //v3.0
+      eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+      if (restore) selObj.selectedIndex=0;
+    }
+    //-->
+    </script>
+</head>
+<body bgcolor="#FFFFFF" text="#242424" leftmargin=0 topmargin=15 marginwidth=0 marginheight=0 bottommargin=0 rightmargin=0 onload="javascript:enable_click()" onfocus="javascript:focus_control()">
+    <center>
+        <form name="ini" method="post" action="/Order/INIrepayProcess" onsubmit="return repay()">
+            <table width="632" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td height="85" background="/Content/inipay/img/card.gif" style="padding:0 0 0 64">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="3%" valign="top"><img src="/Content/inipay/img/title_01.gif" width="8" height="27" vspace="5"></td>
+                        <td width="97%" height="40" class="pl_03"><font color="#FFFFFF"><b>부분취소 요청</b></font></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+            </table>
+
+            <table width="550" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td bgcolor="#FFFFFF" style="padding:8 0 0 56">
+
+                        <font color=blue><b>** PG사취소히스토리 (주문번호: @Model.MasterInfo.ORDER_CODE) **<br></b></font>
+                        <table summary="" class="list" style="width:550" border="1" cellspacing="0" cellpadding="1">
+                            <colgroup>
+                                <col width="100" />
+                                <col width="100" />
+                                <col width="150" />
+                                <col width="150" />
+                            </colgroup>
+                            <tr background="img/center.gif">
+                                <td align="center">취소금액</td>
+                                <td align="center">남은결제액</td>
+                                <td align="center">취소일자</td>
+                                <td align="center">실행자</td>
+                            </tr>
+                            <tbody>
+                                @if (Model.RepayList.Count() == 0)
+                                {
+                                    <tr>
+                                        <td align="center" colspan="4">검색된 자료가 없습니다.</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.RepayList)
+                                    {
+                                        <tr>
+                                            <td align="right" style="padding:0 10 0 0">@item.PRTC_PRICE</td>
+                                            <td align="right" style="padding:0 10 0 0">@item.PRTC_REMAINS</td>
+                                            <td align="center">@item.REG_DATE</td>
+                                            <td align="center">@item.REG_ID (@item.REG_IP)</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+            <table width="510" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="7"><img src="/Content/inipay/img/life.gif" width="7" height="30"></td>
+                    <td background="/Content/inipay/img/center.gif">
+                        <img src="/Content/inipay/img/icon03.gif" width="12" height="10"> <b>
+                            정보를 기입하신 후 결제버튼을 눌러주십시오.
+                        </b>
+                    </td>
+                    <td width="8"><img src="/Content/inipay/img/right.gif" width="8" height="30"></td>
+                </tr>
+            </table>
+
+            <table cellspacing="0" cellpadding="0" width="470" border="0">
+            <tr>
+                <td width="18" align="center"><img src="/Content/inipay/img/icon02.gif" width="7" height="7"></td>
+                <td width="177" height="26">원거래번호</td>
+                <td width="300"><input type="text" id="oldtid" name="oldtid" style="width:300px" value="@Model.Top1Info.TID" readonly></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center" background="/Content/inipay/img/line.gif" height="1"></td>
+            </tr>
+            <tr>
+                <td width="18" align="center"><img src="/Content/inipay/img/icon02.gif" width="7" height="7"></td>
+                <td width="109" height="25">취소할금액</td>
+                <td width="343"><input type="text" id="price" name="price" value="@Model.Top1Info.PAY_PRICE"></td>
+            </tr>
+            <tr>
+                <td height="1" colspan="3" align="center" background="/Content/inipay/img/line.gif"></td>
+            </tr>
+            <tr>
+                <td width="18" align="center"><img src="/Content/inipay/img/icon02.gif" width="7" height="7"></td>
+                <td width="109" height="25">승인요청금액</td>
+                <td width="343"><input type="text" id="confirm_price" name="confirm_price" value="0">
+                <p><font color="#ff0000"><b>* [이전승인금액 - 취소할 금액]</b></font></p></td>
+            </tr>
+            <tr>
+                <td height="1" colspan="3" align="center" background="/Content/inipay/img/line.gif"></td>
+            </tr>
+            <tr>
+                <td width="18" align="center"><img src="/Content/inipay/img/icon02.gif" width="7" height="7"></td>
+                <td width="109" height="25">구매자이메일</td>
+                <td width="343"><input type="text" id="buyeremail" name="buyeremail" value="@Model.Top1Info.EMAIL"></td>
+                                    
+            </tr>
+            <tr>
+                <td height="1" colspan="3" align="center" background="/Content/inipay/img/line.gif"></td>
+            </tr>
+            <tr valign="bottom">
+                <td height="40" colspan="3" align="center">
+                    <input type="image" id="btn_pay"  src="/Content/inipay/img/button_03.gif" />
+
+                </td>
+            </tr>
+            <tr valign="bottom">
+                <td height="45" colspan="3"></td>
+            </tr>
+            </table>
+    </center>
+
+    <!--
+    상점아이디.
+    테스트를 마친 후, 발급받은 아이디로 바꾸어 주십시오.
+    -->
+    <!--  수정 금지 -->
+    <input type=hidden name=clickcontrol value="">
+    <input type=hidden name="ORDER_IDX" value="@Model.ORDER_IDX">
+    </form>
+</body>
+</html>

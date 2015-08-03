@@ -88,7 +88,7 @@
         function changeStaus(detail_idx, asis_status, asis_status_name) {
             var f = document.dumyForm;
             var tobe_status = $("#ORDER_STATUS_" + detail_idx).val().trim();
-            alert(tobe_status);
+            
             if (asis_status == tobe_status)
             {
                 alert("현재 주문상태가 ["+asis_status_name+"]상태입니다.다른 상태를 선택해주세요.");
@@ -137,7 +137,48 @@
             ow_yes(xurl, tar, wid, hei); //팝업
         }
 
+        function order_part_cancel() {
 
+            ow_yes('/Order/INIrepay?ORDER_IDX=@Model.ORDER_IDX', 'INIrepay', '650', '400');
+        }
+        //전체취소
+        function order_cancel() {
+            var f = document.dumyForm;
+
+            if (confirm('주문을 전체 취소 하시겠습니까?')) {
+                f.ORDER_DETAIL_IDX.value = "";
+                f.DELIVERY_NUM.value = "";
+                f.TOBE_STATUS.value = "90";
+                f.action = "/Order/OrderCancel";
+                f.submit();
+            }
+        }
+
+        //상태 일괄변경
+        function MutiStatusChange() {
+            var tobe = $("#MULTI_CHANGE_STATUS").val();
+            var tobe_nm = $("#MULTI_CHANGE_STATUS").data("kendoDropDownList").text();
+            if (tobe == "" || tobe == "undefined") {
+                alert("일괄변경할 상태를 선택해주세요.");
+                return false;
+            }
+
+            if (tobe == "99")
+            {
+                alert("기타 상태로는 변경할 수 없습니다.")
+                return false;
+            }
+            var f = document.dumyForm
+
+            if (confirm( tobe_nm + "(으)로 일괄 변경하시겠습니까?")) {
+                f.ORDER_DETAIL_IDX.value = "";
+                f.DELIVERY_NUM.value = "";
+                f.TOBE_STATUS.value = tobe;
+                f.RedirectAction.value = "Detail";
+                f.action = "/Order/OrderMasterStatusUpdate";
+                f.submit();
+            }
+        }
     </script>
 }
 @section Left {
@@ -221,6 +262,7 @@
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
     }
+
 </script>
 <!-- 다음 우편번호 검색-->
     <form name="dumyForm" method="POST">
@@ -228,6 +270,8 @@
         @Html.Hidden("ORDER_DETAIL_IDX", "")
         @Html.Hidden("TOBE_STATUS","")
         @Html.Hidden("DELIVERY_NUM", "")
+        @Html.Hidden("RedirectAction", "")
+        
         @{
             //Model.SearchOption을 Hidden box로 생성
             Type type = Model.SearchOption.GetType();
@@ -382,8 +426,14 @@
     </div>	
     <div class="mt10 tar">
         <a class="btn btn-default middium" href="#">포인트 수동 관리</a>
-        <a class="btn btn-default middium" href="#">PG사 부분 취소</a>
-        <a class="btn btn-default middium" href="#">주문전체취소</a>
+        @if (Model.BodyInfo.PAY_GBN == "1") //신용카드일경우에만
+        { 
+            <a class="btn btn-default middium" href="#none" onclick="order_part_cancel();">PG사부분취소</a>
+        }
+        @if (Model.BodyInfo.ORDER_STATUS != "90") //취소가아니면
+        {
+            <a class="btn btn-default middium" href="#none" onclick="order_cancel();">PG사&주문전체취소</a>
+        }
         <a class="btn btn-default middium" href="#">주문전체반품</a>
     </div>
 </div>
@@ -418,10 +468,10 @@
                         .Name("MULTI_CHANGE_STATUS")
                         .DataTextField("Text")
                         .DataValueField("Value")
-                        .HtmlAttributes(new { style = "width:120px" })
+                        .HtmlAttributes(new { style = "width:200px" })
                         .BindTo(new List<SelectListItem>() {
                             new SelectListItem() {
-                                Text = "선택해주세요",
+                                Text = "변경할상태를 선택해주세요",
                                 Value = ""
                             },new SelectListItem() {
                                 Text = "결제대기",
@@ -458,12 +508,16 @@
                             new SelectListItem() {
                                 Text = "취소",
                                 Value = "90"
+                            },
+                            new SelectListItem() {
+                                Text = "기타",
+                                Value = "99"
                             }
                         })
-                        .Value("")
+                        .Value(Model.BodyInfo.ORDER_STATUS)
                     )
 		</span> 
-		<a href="#none" id="allStatusChangBtn" class="btn btn-default small">변경</a>
+        <a href="#none" id="allStatusChangBtn" class="btn btn-default small" onclick="MutiStatusChange();">변경</a>
         @(Html.Kendo().Tooltip()
         .For("#allStatusChangBtn")
         .Content("상태코드만 변경됩니다.")
