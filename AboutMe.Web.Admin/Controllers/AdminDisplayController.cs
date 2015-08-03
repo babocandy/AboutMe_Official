@@ -355,22 +355,11 @@ namespace AboutMe.Web.Admin.Controllers
            
             TempData["SearchParam"] = model.SearchParam;
 
-            Debug.WriteLine("idx: " + model.IDX);
-            Debug.WriteLine("TITLE: " + model.TITLE);
-
             if (ModelState.IsValid)
             {
 
                 PopupParam p = transViewModelToPopupParam(model);
-
-             
-
                 var tp = _Service.PopupUpdate(p);
-
-                Debug.WriteLine(tp.Item1);
-                Debug.WriteLine(tp.Item2);
-
-               // model.SearchParam.IDX = null;
                 return RedirectToAction("Popup", "AdminDisplay", model.SearchParam);
             }
 
@@ -392,6 +381,7 @@ namespace AboutMe.Web.Admin.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
+        //팝업 추가, 수정시 공통 사용
         private PopupParam transViewModelToPopupParam(AdminDisplayPopupSaveViewModel model)
         {
             PopupParam p = new PopupParam();

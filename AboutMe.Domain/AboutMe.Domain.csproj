@@ -473,6 +473,21 @@
     <Compile Include="Entity\AdminPromotion\TB_PROMOTION_PRODUCT_VS_TOTAL.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminReview\ModelAdminReview.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminReview.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\ModelAdminReview.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\ModelAdminReview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Cart\CartUserModel.cs" />
     <Compile Include="Entity\Cart\ModelCart.Context.cs">
       <AutoGen>True</AutoGen>
@@ -760,6 +775,8 @@
     <Compile Include="Service\AdminPromotion\IAdminPromotionService.cs" />
     <Compile Include="Service\AdminOrder\AdminOrderService.cs" />
     <Compile Include="Service\AdminOrder\IAdminOrderService.cs" />
+    <Compile Include="Service\AdminReview\IAdminReviewService.cs" />
+    <Compile Include="Service\AdminReview\AdminReviewService.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Coupon\CouponService.cs" />
@@ -931,6 +948,23 @@
     <None Include="Entity\AdminPromotion\ModelAdminPromotion.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ModelAdminPromotion1.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\AdminReview\ModelAdminReview.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminReview.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminReview\ModelAdminReview.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminReview.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminReview\ModelAdminReview.edmx.diagram">
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminReview\ModelAdminReview.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminReview.cs</LastGenOutput>
     </None>
     <None Include="Entity\Cart\ModelCart.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
