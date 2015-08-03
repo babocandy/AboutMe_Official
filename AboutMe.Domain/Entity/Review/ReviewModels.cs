@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AboutMe.Domain.Entity.Review
 {
 
-    public class ReviewProductDisplay
+    public class ReviewProductInfo
     {
         public int? IDX { get; set; }
         public string M_ID { get; set; }

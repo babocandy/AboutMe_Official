@@ -217,6 +217,12 @@
             alert("휴대폰을 입력하세요.");
             return;
         }
+
+        if (confirm("회원 기본정보를 수정 하시겠습니까?"))
+        {; }
+        else
+        { return; }
+
         //f.action = "/AdminFrontMember/EditOK_Basic";
         //f.submit();
 
@@ -281,6 +287,13 @@
             alert("비밀번호를 변경하려면 6자이상 입력하세요.");
             return;
         }
+
+        if (confirm("비밀번호를 변경 하시겠습니까?"))
+        {; }
+        else
+        { return; }
+
+
         //f.action = "/AdminFrontMember/EditOK_PWD";
         //f.submit();
         var strTOKEN = f.__RequestVerificationToken.value;
@@ -332,6 +345,13 @@
             alert("임직원이 아닌 경우 소속회사 및 사번을 입력하시면 안됩니다.");
             return;
         }
+
+        if (confirm("임직원 정보를 수정 하시겠습니까?"))
+        {; }
+        else
+        { return; }
+
+
         //f.action = "/AdminFrontMember/EditOK_Staff";
         //f.submit();
         var strTOKEN = f.__RequestVerificationToken.value;

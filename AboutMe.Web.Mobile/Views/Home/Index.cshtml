@@ -1,31 +1,385 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Mobile-Home";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@{
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    @helper fSkinTroubleDisplay(string argCD = "", string argNAME = "")
+{
+    string trouble_ico_class = "type1";
+    string m_trouble_name = "보습";
+    string str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+    switch (argCD)
+    {
+        case "101201100": m_trouble_name = "보습"; trouble_ico_class = "type1"; str_comment = "<strong>5 Step 수분가득 보습케어</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101202100": m_trouble_name = "탄력/주름"; trouble_ico_class = "type2"; str_comment = "<strong>5 Step 촉촉하게 채워주는 스페셜 케어</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101203100": m_trouble_name = "브라이트닝"; trouble_ico_class = "type3"; str_comment = "<strong>5 Step 싱그러운 피부리듬 회복케어</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101204100": m_trouble_name = "화이트닝"; trouble_ico_class = "type4"; str_comment = "<strong>5 Step 닦아내고 채워주는 이중케어</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101205100": m_trouble_name = "안티에이징"; trouble_ico_class = "type5"; str_comment = "<strong>5 Step 피부체력강화 집중케어</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101206100": m_trouble_name = "피지,모공"; trouble_ico_class = "type6"; str_comment = "<strong>5 Step 쫀쫀하고 탄탄한 어린 모공만들기</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101207100": m_trouble_name = "생기,활력"; trouble_ico_class = "type7"; str_comment = "<strong>5 Step 환하고 윤기나는 미백&영양케어</strong>로<br />피부고민을 해결해보세요!";
+            break;
+        case "101208100": m_trouble_name = "자외선 차단"; trouble_ico_class = "type8"; str_comment = "<strong>5 Step 영양 수분가득 자외선 차단</strong>으로<br />피부고민을 해결해보세요!";
+            break;
+    }
+
+    <div class="login" >
+        <p class="tittxt"><strong>@argNAME</strong> 님, @Html.Raw(@str_comment)</p>
+        <!--
+        피부타입별 class
+        보습 :  type1
+        탄력/주름 : type2
+        브라이트닝 : type3
+        화이트닝 : type4
+        안티에이징: type5
+        피지/모공: type6
+        생기/활력 : type7
+        자외선차단: type8
+        -->
+        <span class="ico_skin @trouble_ico_class"></span>
+        <p class="txt_skintype"><span>@m_trouble_name</span></p>
+        <a href="/Shopping/Index?CATE_CD=@argCD" class="btn btn_white_h30 btn_viewprd">상품보기</a>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    
+
+
+} //func
+
+}
+
+
+
+
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/main.css" rel="stylesheet" />
+    <script src="/aboutCom/js/main.js" type="text/javascript"></script>
+}
+
+
+@section Header{
+
+}
+
+@section Scripts{
+
+<script type="text/javascript">
+    $(function () {
+        //타임세일 현재날짜와 종료날짜를 입력해주세요.
+        $('#timesale').countdown({
+            starttimestamp: "2014,07,12,12,00,00",	//현재날짜
+            endtimestamp: "2014,07,13,10,20,30",	//종료날짜
+            callback: function (m) {
+                $('#timesale').html(m);
+            }
+        });
+        //Lazy Load Script
+        $("img.lazyload").lazyload({
+            threshold: 100,
+            effect: "fadeIn",
+            skip_invisible: false
+        });
+    });
+</script>
+
+}
+
+
+@section Body{
+
+    <div class="wrap mymain">
+        <!--header-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <!--//header-->
+
+        <!--container-->
+        <div class="container">
+            <!--메인롤링배너-->
+            <div class="mainbnr">
+                <h2>메인배너</h2>
+                <div class="nav"><ul></ul></div>
+                <ul class="slider">
+                    <li>
+                        <!--타임세일 배너-->
+                        <div class="timesale">
+                            <img src="/aboutCom/images/sample/mainbnr1.jpg" class="wper100" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" />
+                            <div class="timearea">
+                                <p id="timesale" class="main_time"></p>
+                            </div>
+                        </div>
+                        <!--//타임세일 배너-->
+                    </li>
+                    <li><img src="/aboutCom/images/sample/mainbnr1.jpg" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></li>
+                    <li><img src="/aboutCom/images/sample/mainbnr1.jpg" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></li>
+                </ul>
+            </div>
+            <!--//메인롤링배너-->
+            <!--mainevent-->
+            <div class="mainevent">
+                <h2>Event</h2>
+                <div class="imgbnr">
+                    <a href="#link"><img class="lazyload" data-original="/aboutCom/images/sample/event_ban2.jpg" alt="엄마와 나 나이들지 않는 피부로 체력강화, 엄마와 딸이 함께 아름다워지는 화장대 2015. 06. 18 ~ 2015. 07. 30" /></a>
+                </div>
+
+                <!--상품 리스트가 1개일 때 사용-->
+                <div class="probnr pb15" style="display:none">
+                    <div class="detail">
+                        <!--
+                    .ico_best
+                    .ico_coupon
+                    .ico_time
+                    .ico_soldout
+                    .ico_set
+                    -->
+                        <span class="ico ico_best">BEST</span>
+                        <span class="tit">멀티 사인즈 에이트<br />올 데이 브라이트</span>
+                        <span class="price">
+                            <del>32,000원</del>
+                            <strong>25,000</strong>원
+                        </span>
+                    </div>
+                    <div class="photo"><img src="/aboutCom/images/sample/thumb270_2.jpg" alt="" /></div>
+                </div>
+
+                <!--상품 리스트가 2개이상일 때 사용-->
+                <div class="eventpro_bnr">
+                    <div class="btnarea">
+                        <a href="#" class="prev">이전</a>
+                        <a href="#" class="next">다음</a>
+                    </div>
+                    <ul class="slider">
+                        <li>
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
+                            <span class="tit">이뮤젠 에센셜 트리트먼1</span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                <strong>25,000</strong>원
+                            </span>
+                        </li>
+                        <li>
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
+                            <span class="tit">이뮤젠 에센셜 트리트먼2</span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                <strong>25,000</strong>원
+                            </span>
+                        </li>
+                        <li>
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
+                            <span class="tit">이뮤젠 에센셜 트리트먼3</span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                <strong>25,000</strong>원
+                            </span>
+                        </li>
+                        <li>
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
+                            <span class="tit">이뮤젠 에센셜 트리트먼4</span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                <strong>25,000</strong>원
+                            </span>
+                        </li>
+                        <li>
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
+                            <span class="tit">이뮤젠 에센셜 트리트먼5</span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                <strong>25,000</strong>원
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="imgbnr_wrap">
+                    <div class="imgbnr">
+                        <a href="#link"><img class="lazyload" data-original="/aboutCom/images/sample/event_ban4.jpg" alt="엄마와 나 나이들지 않는 피부로 체력강화, 엄마와 딸이 함께 아름다워지는 화장대 2015. 06. 18 ~ 2015. 07. 30" /></a>
+                    </div>
+                    <div class="probnr">
+                        <div class="detail">
+
+                            <!--
+                        .ico_best
+                        .ico_coupon
+                        .ico_time
+                        .ico_soldout
+                        .ico_set
+                        -->
+
+                            <span class="ico ico_best">BEST</span>
+                            <span class="tit">멀티 사인즈 에이트<br />올 데이 브라이트</span>
+                            <span class="price">
+                                <del>32,000원</del>
+                                <strong>25,000</strong>원
+                            </span>
+                        </div>
+                        <div class="photo"><img src="/aboutCom/images/sample/thumb270_2.jpg" alt="" /></div>
+                    </div>
+                </div>
+
+                <div class="imgbnr mt15">
+                    <img class="lazyload" data-original="/aboutCom/images/sample/event_ban3.jpg" alt="씨스타 뷰티 아이템 효린, 보라, 소유, 다솜이가 사랑하는 어바웃미 잇아이템 2015.06.18~2015.07.30" />
+                </div>
+
+                <a href="#" class="btn_moreevent">이벤트 더보기</a>
+            </div>
+            <!--//mainevent-->
+            <!--스킨타입 추천-->
+            <div class="skintype_recom">
+                <h2>Skintype &amp; Care</h2>
+                @if (@ViewBag.IS_LOGIN == true)
+                {
+                <!--로그인시-->
+                    @fSkinTroubleDisplay(@ViewBag.M_SKIN_TROUBLE_CD, @ViewBag.M_NAME)
+                    <!--
+                <div class="login" style="display:none">
+                    <p class="tittxt"><strong>@ViewBag.M_NAME</strong> 님, <strong>5 Step  수분가득 보습케어</strong>로<br />피부고민을 해결해보세요!</p>
+
+                    <span class="ico_skin type6"></span>
+                    <p class="txt_skintype"><span>피지/모공</span></p>
+                    <a href="#" class="btn btn_white_h30 btn_viewprd">상품보기</a>
+                </div>
+                        -->
+                <!--//로그인시-->
+                }
+                else
+                {
+                <!--비로그인시-->
+                    <div class="nologin">
+                        <p class="tittxt">로그인을 하시면 <br /><strong>피부고민 별 상품을 추천</strong>해드립니다.</p>
+                        <img src="/aboutCom/images/common/ico_skintype_all.jpg" class="ico_all" alt="" />
+                        <a href="/MemberShip/Login" class="btn btn_brown_h30 btn_login">로그인</a>
+                    </div>
+                <!--//비로그인시-->
+                }
+            </div>
+            <!--//스킨타입 추천-->
+            <!--최다리뷰상품-->
+            <div class="review_wrap">
+                <h2>최다리뷰 상품</h2>
+                <div class="top">
+                    <div class="txtarea">
+                        <p class="tit">Talk on Beauty</p>
+                        <p class="num">1,980</p>
+                        <p class="txt">최다<strong>리뷰</strong> 상품은?</p>
+                    </div>
+                    <img class="lazyload bg_img" data-original="/aboutCom/images/common/bg_review1.jpg" alt="" />
+                </div>
+                <div class="review">
+                    <div class="proarea">
+                        <div class="photo"><img src="/aboutCom/images/sample/thumb120.jpg" alt="" /></div>
+                        <div class="detail">
+                            <p class="tit">굿 나이트 모이스처 앰플</p>
+                            <p class="price"><del>4,800원</del><strong>4,000</strong>원</p>
+                        </div>
+                    </div>
+                    <div class="txtarea">
+                        <!--
+                    피부타입별 class
+                    건성 : dry
+                    중성 : normal
+                    지복합성 :oily
+                    -->
+                        <div class="info">
+                            <span class="skin oily"></span>
+                            <span class="writer">
+                                <strong class="id">kkon**</strong>
+                                <span class="age">40대, 여</span>
+                            </span>
+                        </div>
+                        <div class="userrivew">
+                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고  않고 계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--//최다리뷰상품-->
+            <!--최다판매상품-->
+            <div class="review_wrap">
+                <h2>최다판매 상품</h2>
+                <div class="top">
+                    <div class="txtarea">
+                        <p class="tit">The 1 Best</p>
+                        <p class="num">1,980</p>
+                        <p class="txt">최다<strong>판매</strong> 상품은?</p>
+                    </div>
+                    <img class="lazyload bg_img" data-original="/aboutCom/images/common/bg_review2.jpg" alt="" />
+                </div>
+                <div class="review">
+                    <div class="proarea">
+                        <div class="photo"><img src="/aboutCom/images/sample/thumb120.jpg" alt="" /></div>
+                        <div class="detail">
+                            <p class="tit">굿 나이트 모이스처 앰플</p>
+                            <p class="price"><del>4,800원</del><strong>4,000</strong>원</p>
+                        </div>
+                    </div>
+                    <div class="txtarea">
+                        <!--
+                    피부타입별 class
+                    건성 : dry
+                    중성 : normal
+                    지복합성 :oily
+                    -->
+                        <div class="info">
+                            <span class="skin oily"></span>
+                            <span class="writer">
+                                <strong class="id">kkon**</strong>
+                                <span class="age">40대, 여</span>
+                            </span>
+                        </div>
+                        <div class="userrivew">
+                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고  않고 계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--//최다판매상품-->
+            <!--hotnow-->
+            <div class="hotnow">
+                <h2>Hot Now</h2>
+                <div class="btn_area">
+                    <a href="javascript:" class="prev off"></a>
+                    <a href="javascript:" class="next"></a>
+                </div>
+                <div class="lagre_img">
+                    <ul>
+                        <li><img src="/aboutCom/images/common/img_hotnow1.jpg" alt="" /></li>
+                        <li><img src="/aboutCom/images/common/img_hotnow2.jpg" alt="" /></li>
+                        <li><img src="/aboutCom/images/common/img_hotnow3.jpg" alt="" /></li>
+                        <li><img src="/aboutCom/images/common/img_hotnow4.jpg" alt="" /></li>
+                    </ul>
+                </div>
+                <div class="thum_img">
+                    <ul>
+                        <li class="li1 cnt"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
+                        <li class="li2"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
+                        <li class="li3"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
+                        <li class="li4"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--//hotnow-->
+
+
+        </div>
+        <!--//container-->
+
+
+
+        <!--footer-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--//footer-->
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+}
+
+@section Footer{
+
+}

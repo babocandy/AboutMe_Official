@@ -2,6 +2,63 @@
     ViewBag.Title = "Mobile-Login";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
+
+@{
+
+    @helper fSkinTroubleDisplay(string argCD="", string argNAME="")
+    {
+        string trouble_ico_class = "mo";
+        string m_trouble_name = "보습";
+        string str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+        switch (argCD)
+        {
+            case "101201100": m_trouble_name = "보습"; trouble_ico_class = "mo"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+                break;
+            case "101202100": m_trouble_name = "탄력/주름"; trouble_ico_class = "wr"; str_comment = "5 Step 촉촉하게 채워주는 스페셜 케어로 피부고민을 해결해보세요!";
+                break;
+            case "101203100": m_trouble_name = "브라이트닝"; trouble_ico_class = "br"; str_comment = "5 Step 싱그러운 피부리듬 회복케어로 피부고민을 해결해보세요!";
+                break;
+            case "101204100": m_trouble_name = "화이트닝"; trouble_ico_class = "wh"; str_comment = "5 Step 닦아내고 채워주는 이중케어로 피부고민을 해결해보세요!";
+                break;
+            case "101205100": m_trouble_name = "안티에이징"; trouble_ico_class = "aa"; str_comment = "5 Step 피부체력강화 집중케어로 피부고민을 해결해보세요!";
+                break;
+            case "101206100": m_trouble_name = "피지,모공"; trouble_ico_class = "fj"; str_comment = "5 Step 쫀쫀하고 탄탄한 어린 모공만들기로 피부고민을 해결해보세요!";
+                break;
+            case "101207100": m_trouble_name = "생기,활력"; trouble_ico_class = "vi"; str_comment = "5 Step 환하고 윤기나는 미백&영양케어로 피부고민을 해결해보세요!";
+                break;
+            case "101208100": m_trouble_name = "자외선 차단"; trouble_ico_class = "uv"; str_comment = "영양 수분가득 자외선 차단으로 피부고민을 해결해보세요!";
+                break;
+        }
+        <div class="msgbox">
+            <dl>
+                <!--
+                피부 타입 클래스 =>
+                mo : 보습(Moisturizing)
+                wr : 탄력/주름(Wrinkles)
+                br : 브라이트닝(Brightening)
+                wh : 화이트닝(Whitening)
+                aa : 안티에이징(Anti-Aging)
+                fj : 피지/모공(fiji)
+                vi : 생기/활력(Vitality)
+                uv : 자외선차단(UV protection)
+                  -->
+                <dt class="@trouble_ico_class">@m_trouble_name</dt>
+                <dd>
+                    <p>
+                        <span>@argNAME</span>님,<br />
+                        @str_comment
+                    </p>
+                    <a href="/Shopping/Index?CATE_CD=@argCD" class="viewlink">상품보기 ></a>
+                </dd>
+            </dl>
+        </div>
+
+
+} //func
+  
+}
+
+
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
@@ -41,7 +98,7 @@
                         <strong>@ViewBag.M_NAME</strong> 님은<br />
                         <span>@ViewBag.M_GRADE_NAME 클래스</span>입니다.
                     </p>
-                    <a href="#" class="btn btn_white_h30 btn_viwebf" style="width:102px">회원혜택보기</a>
+                    <a href="/Customer/Benefit" class="btn btn_white_h30 btn_viwebf" style="width:102px">회원혜택보기</a>
                 </div>
                 <dl class="mypoint">
                     <dt><i class="bl_lgpoint"></i>포인트</dt>
@@ -71,27 +128,38 @@
                                 <a href="#none" class="btn btn_white_h30">쿠폰북</a><a href="#none" class="btn btn_white_h30">1:1문의</a><a href="#none" class="btn btn_white_h30">찜목록</a>
                             </div>
                             <div class="concerns">
-                                <p class="ctit">내 피부고민 설정<a href="#none" class="btn_set"><i class="bl_set"></i></a></p>
-                                <div class="msgbox">
-                                    <dl>
-                                        <dt>
-                                            <i class="ico_concerns"></i>
-                                            <span class="contxt">보습</span>
-                                        </dt>
-                                        <dd>
-                                            <p>
-                                                <span>이효리</span>님,<br />
-                                                5 Step  수분가득 보습케어로
-                                                피부고민을 해결해보세요!
-                                            </p>
-                                            <a href="#none" class="viewlink">상품보기 ></a>
-                                        </dd>
-                                    </dl>
-                                </div>
+                                <p class="ctit">내 피부고민 설정<a href="/MyPage/Pop_SkinTrouble" onclick="window.open(this.href);return false;" class="btn_set" ><i class="bl_set"></i></a></p>
+                                @fSkinTroubleDisplay(@ViewBag.M_SKIN_TROUBLE_CD, @ViewBag.M_NAME)
+                                <!--
+								<div class="msgbox">
+									<dl>
+										
+											피부 타입 클래스 =>
+												mo : 보습(Moisturizing)
+												wr : 탄력/주름(Wrinkles)
+												br : 브라이트닝(Brightening)
+												wh : 화이트닝(Whitening)
+												aa : 안티에이징(Anti-Aging)
+												fj : 피지/모공(fiji)
+												vi : 생기/활력(Vitality)
+												uv : 자외선차단(UV protection)
+										
+										<dt class="mo">보습</dt>
+										<dd>
+											<p>
+												<span>이효리</span>님,<br />
+												5 Step  수분가득 보습케어로
+												피부고민을 해결해보세요!
+											</p>
+											<a href="#none" class="viewlink">상품보기 ></a>
+										</dd>
+									</dl>
+								</div>
+                                    -->
                             </div>
                         </li>
                         <li><a href="#link"><span>나의리뷰</span><i class="arrow_right"></i></a></li>
-                        <li><a href="#link"><span>회원정보수정</span><i class="arrow_right"></i></a></li>
+                        <li><a href="/MyPage/MyModify"><span>회원정보수정</span><i class="arrow_right"></i></a></li>
                     </ul>
                 </div>
             </div>

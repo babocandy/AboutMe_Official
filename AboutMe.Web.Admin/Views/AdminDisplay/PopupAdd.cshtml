@@ -1,0 +1,22 @@
+﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupSaveViewModel
+
+@{
+    ViewBag.Title = "PopupAdd";
+    ViewBag.ButtonName = "등록";
+    ViewBag.SubTitle = "팝업등록(팝업)";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+    @{Html.RenderPartial("~/Views/AdminDisplay/_Display.cshtml");}
+}
+
+
+@section Body{
+    @{Html.RenderPartial("~/Views/AdminDisplay/_PopupAlter.cshtml", Model);}
+}

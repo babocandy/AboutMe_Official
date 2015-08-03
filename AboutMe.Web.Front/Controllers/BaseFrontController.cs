@@ -57,6 +57,17 @@ namespace AboutMe.Web.Front.Controllers
             }
         }
 
+        /**
+         * 전시 이미지 폴더
+         */
+        public string _img_path_display
+        {
+            get
+            {
+                return AboutMe.Common.Helper.Config.GetConfigValue("DisplayPath");
+            }
+        }
+
        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
        {
           

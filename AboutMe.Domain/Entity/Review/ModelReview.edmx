@@ -110,16 +110,12 @@
           <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
           <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="P_COUNT" Nullable="false" />
-          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
         </ComplexType>
         <ComplexType Name="SP_REVIEW_GET_PRODUCT_INFO_Result">
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
-          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
@@ -135,9 +131,6 @@
           <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="PRIZE_GRADE" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="3" />
           <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
@@ -145,6 +138,7 @@
           <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
           <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -165,8 +159,6 @@
                 <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
                 <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
                 <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
@@ -178,8 +170,6 @@
               <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_GET_PRODUCT_INFO_Result">
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
                 <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
                 <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
@@ -200,9 +190,6 @@
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
-                <ScalarProperty Name="PRIZE_GRADE" ColumnName="PRIZE_GRADE" />
                 <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
                 <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
                 <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
@@ -210,6 +197,7 @@
                 <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
                 <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -226,15 +214,14 @@
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
-                <ScalarProperty Name="PRIZE_GRADE" ColumnName="PRIZE_GRADE" />
                 <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
                 <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
                 <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
                 <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
                 <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -251,9 +238,6 @@
                 <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
-                <ScalarProperty Name="PRIZE_GRADE" ColumnName="PRIZE_GRADE" />
                 <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
                 <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
                 <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
@@ -261,6 +245,7 @@
                 <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
                 <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

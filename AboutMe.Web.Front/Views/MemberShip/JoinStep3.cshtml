@@ -142,6 +142,16 @@
             return;
         }
 
+        f.M_MOBILE.value = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
+        f.M_PHONE.value = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "-" + f.M_PHONE_3.value;
+        f.M_EMAIL.value = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value;
+
+        f.action = glHTTPS_DOMAIN + "/MemberShip/JOIN_Register";
+        f.target = "";
+        f.submit();
+        /*
+        //---- Ajax 방식일 경우 ------------------------------------------
+
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
         var strM_PWD = f.M_PWD.value;
@@ -225,6 +235,9 @@
                 alert("ajax 오류발생2");
             }
         }); //ajax
+
+        */
+
     } //func
 
 
@@ -244,8 +257,8 @@
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
 
-        //var strURL = "/MemberShip/AjaxID_DUPCheck";
-        var strURL = glHTTPS_DOMAIN + "/MemberShip/AjaxID_DUPCheck";
+        var strURL = "/MemberShip/AjaxID_DUPCheck";  //계정 중복은 http통신
+        //var strURL = glHTTPS_DOMAIN + "/MemberShip/AjaxID_DUPCheck";
 
         $.ajax({
             url: strURL,
@@ -309,8 +322,11 @@
 
                     <input type="hidden" name="M_AGREE" value="@ViewBag.M_AGREE" />
                     <input type="hidden" name="M_AGREE2" value="@ViewBag.M_AGREE2" />
-                                        
 
+                    <input type="hidden" name="M_MOBILE" value="" />
+                    <input type="hidden" name="M_PHONE" value="" />
+                    <input type="hidden" name="M_EMAIL" value="" />
+                
                     <fieldset>
                         <legend>회원가입 정보 입력 폼</legend>
                         <h3><img src="/aboutCom/images/membership/h3_userinfo.gif" alt="기본정보" /><span>표시는 필수 입력 항목입니다.</span></h3>

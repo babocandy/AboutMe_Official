@@ -36,6 +36,14 @@
                 alert("사번을 입력하세요.");
                 return;
             }
+            f.method = "post";
+            f.targte = "";
+            f.action = glHTTPS_DOMAIN + "/MyPage/StaffRequestProc";;
+            f.submit();
+
+            /*
+            //Ajax의 경우 ---------------------
+
 
             var strTOKEN = f.__RequestVerificationToken.value;
             var strM_ID = f.M_ID.value;
@@ -80,6 +88,8 @@
                     alert("ajax 오류발생2");
                 }
             }); //ajax
+
+            */
 
         }
     </script>

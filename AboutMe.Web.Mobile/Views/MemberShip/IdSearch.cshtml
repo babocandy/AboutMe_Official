@@ -73,11 +73,13 @@
             alert("아이디 찾기 위해 이름,이메일,핸드폰 번호 제공에 동의하여야 합니다.");
             return;
         }
-        //f.action = "/MemberShip/IdSearch_End";
-        //f.action = glHTTPS_DOMAIN + "/MemberShip/IdSearch_End";
-        //f.target = "";
-        //f.submit();
 
+        f.action = glHTTPS_DOMAIN + "/MemberShip/IdSearchProc";
+        f.target = "";
+        f.submit();
+
+        /*
+        //---- Ajax방식의 경우 -----------------------
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_NAME = f.M_NAME.value;
         var strM_EMAIL = f.M_EMAIL.value;
@@ -117,7 +119,7 @@
                 alert("ajax 오류발생1");
             }
         }); //ajax
-
+        */
 
     } //func
 

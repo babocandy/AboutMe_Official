@@ -38,10 +38,23 @@ namespace AboutMe.Web.Mobile.Controllers
             this._Cartservice = _cartservice;
         }
 
+        public ActionResult Index()
+        {
+            // return View();
+            if(MemberInfo.IsMemberLogin())
+                return RedirectToAction("Main", "MyPage"); //MyPage메인 으로 이동
+            else
+                return RedirectToAction("Login", "MemberShip"); //로그인페이지로 이동
+        }
 
         //모바일 사용자 로그인 폼
         public ActionResult Login(string RedirectUrl = "", string OrderList = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //로그인시 사용됨.
 
             if (!string.IsNullOrEmpty(OrderList))
             {
@@ -63,12 +76,6 @@ namespace AboutMe.Web.Mobile.Controllers
 
 
 
-            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
-            if (HttpContext.Request.Url.Port != 80)
-                strHTTPS_DOMAIN = strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
-
-            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
-
 
             //test ---------
             this.ViewBag.Request_Url_Host = Request.Url.Host;
@@ -86,7 +93,12 @@ namespace AboutMe.Web.Mobile.Controllers
         public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "")
         {
             //string HTTP_DOMAIN = Config.GetConfigValue("HTTP_DOMAIN");
-            string strHTTP_DOMAIN = "http://" + Request.Url.Authority;  // ==> http://현재doamin[:port]
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //로그인시 사용됨.
+
             UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
 
             //로그 기록 준비
@@ -233,6 +245,12 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 사용자 로그아웃 처리
         public ActionResult Logout()
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //로그인시 사용됨.
+
             string LOGOUT_M_ID = MemberInfo.GetMemberId();  //
 
             CookieSessionStore cookiesession = new CookieSessionStore();
@@ -262,7 +280,7 @@ namespace AboutMe.Web.Mobile.Controllers
 
             //return RedirectToAction("Login", "Member"); // 로그인 페이지로 이동
 
-            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='/MemberShip/Login';</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/Login';</script>");
         }
 
 
@@ -270,6 +288,11 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 사용자 회원가입- Step1 -실명인증
         public ActionResult JoinStep1()
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //로그인시 사용됨.
 
             return View();
         }
@@ -278,8 +301,14 @@ namespace AboutMe.Web.Mobile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RealNameResult(string WORK_TMP_ID = "", string M_JOIN_MODE = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //로그인시 사용됨.
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //로그인시 사용됨.
+
             if (WORK_TMP_ID == null || WORK_TMP_ID == "" || M_JOIN_MODE == "" || M_JOIN_MODE == null)
-                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('실명인증 정보가 전달되지 않았습니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/JoinStep1';</script>");
 
             //실명인증 정상여부 판단.<<<<<<<<<<<<<<<<<<<<<<
 
@@ -422,12 +451,12 @@ namespace AboutMe.Web.Mobile.Controllers
             ReturnDic retDic = _MemberService.GetMemberFindDI(argdi);
             if (retDic.ERR_CODE == "10") //이미 가입한 실명인증회원임            
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/Login';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='" + strHTTP_DOMAIN + "/MemberShip/Login';</script>");
             }
 
             if (retDic.ERR_CODE == "20") //DI 파라메타 전달오류        
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/JoinStep1';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='" + strHTTP_DOMAIN + "/MemberShip/JoinStep1';</script>");
             }
 
             if (retDic.ERR_CODE != "0") //DI 기타오류        
@@ -438,7 +467,9 @@ namespace AboutMe.Web.Mobile.Controllers
 
 
             //성공: 다음 스텝 이동<<<<<<<<<<<<<<<<<<<<<<
-            return RedirectToAction("JoinStep2", "MemberShip", new { WORK_TMP_ID = WORK_TMP_ID }); // 실명인증 성공 -> Go Step2
+            //return RedirectToAction("JoinStep2", "MemberShip", new { WORK_TMP_ID = WORK_TMP_ID }); // 실명인증 성공 -> Go Step2
+            this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
+            return View();
         }
 
 
@@ -465,15 +496,11 @@ namespace AboutMe.Web.Mobile.Controllers
             }
 
 
-            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + HttpContext.Request.Url.Host; //ex)https://www.aboutme.co.kr
-            string strHTTP_DOMAIN = Config.GetConfigValue("HTTP_PROTOCOL") + HttpContext.Request.Url.Host; //ex)http://www.aboutme.co.kr
-            if (HttpContext.Request.Url.Port != 80)
-            {
-                strHTTPS_DOMAIN = strHTTPS_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
-                strHTTP_DOMAIN = strHTTP_DOMAIN + ":" + HttpContext.Request.Url.Port.ToString();
-            }
-            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;  //회원가입시 사용됨.
-            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  //회원가입시 사용됨.
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  
 
 
             this.ViewBag.WORK_TMP_ID = WORK_TMP_ID;
@@ -515,8 +542,17 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 사용자 회원 신규가입 -저장: ajax > JSON리턴
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AjaxJOIN_Register(string M_ID = "")
+       // public ActionResult AjaxJOIN_Register(string M_ID = "")
+        public ActionResult JOIN_Register(string M_ID = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;
+
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
+
             //로그 기록 준비
             string log_memo = "모바일 회원 신규가입";
             string log_comment = "모바일 회원 신규가입";
@@ -537,7 +573,9 @@ namespace AboutMe.Web.Mobile.Controllers
                 //return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
                 strERR_CODE = "1";
                 strERR_MSG = "회원 아이디가 전달되지 않았습니다.";
-                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+                //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+                return Content("<script language='javascript' type='text/javascript'>alert('회원아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+
             }
 
             //회원가입 : 입력항목 post
@@ -610,8 +648,8 @@ namespace AboutMe.Web.Mobile.Controllers
                 log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
                 userlog.UserLogSave(log_memo, log_comment);
 
-                //return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
-                return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
+                return Content("<script language='javascript' type='text/javascript'>alert('오류발생. ERR_CODE:" + retDic.ERR_MSG + "'); history.go(-1);</script>");
+                //return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
             }
 
 
@@ -671,42 +709,70 @@ namespace AboutMe.Web.Mobile.Controllers
             log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
             userlog.UserLogSave(log_memo, log_comment);
 
-            //신규회원가입 축하메일 발송 --------------------------
-            string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
-            string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
-            string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
-            skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
-            skin_body = skin_body.Replace("$$M_NAME$$", M_NAME);  //이름
-            skin_body = skin_body.Replace("$$M_ID$$", M_ID);  //아이디
+            //가입 축하메일 발송
+            if (strERR_CODE == "0")
+            {
+                //신규회원가입 축하메일 발송 --------------------------
+                string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
+                string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+                string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_join.html");  //메일 스킨 txt Read
+                skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
+                skin_body = skin_body.Replace("$$M_NAME$$", M_NAME);  //이름
+                skin_body = skin_body.Replace("$$M_ID$$", M_ID);  //아이디
 
-            string MAIL_SUBJECT = "[AboutMe]어바웃미 회원가입을 축하합니다.";
-            string MAIL_BODY = skin_body;
+                string MAIL_SUBJECT = "[AboutMe]어바웃미 회원가입을 축하합니다.";
+                string MAIL_BODY = skin_body;
 
 
-            //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
-            string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
-            string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
-            string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
-            string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
-            string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
+                //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+                string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+                string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+                string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+                string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+                string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
 
-            //메일 발송
-            MailSender mObj = new MailSender();
-            mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+                //메일 발송
+                MailSender mObj = new MailSender();
+                mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+            }
+
 
             //ViewBag.mail_err_no = mObj.err_no;
             //ViewBag.mail_err_msg = mObj.err_msg;
 
-            return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+            //다음 스텝 이동
+            //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+            if (strERR_CODE == "0")  //회원가입 저장 성공
+            {
+                //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
+                //return RedirectToAction(uh.Action("JoinStep4", "MemberShip", new { M_ID = M_ID }, "http")); // 회원가입 저장 성공 -> Go Step4  http://
+
+                this.ViewBag.M_ID = M_ID;
+                return View();
+
+
+            }
+            else  //회원가입 저장중 오류발생
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
+            }
 
         }
 
         //모바일 사용자 회원가입- Step4 -가입완료 : DB에서 확인 필요
         public ActionResult JoinStep4(string M_ID = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;
+
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
+
             if (M_ID == null || M_ID == "")
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('회원계정이 전달되지 않았습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('회원계정이 전달되지 않았습니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/JoinStep1';</script>");
 
             }
 
@@ -714,7 +780,7 @@ namespace AboutMe.Web.Mobile.Controllers
             SP_MEMBER_VIEW_Result result = _MemberService.GetMemberView(M_ID);
             if (result == null)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('회원가입후 DB조회에 실패하였습니다.'); location.href='/MemberShip/JoinStep1';</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('회원가입후 DB조회에 실패하였습니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/JoinStep1';</script>");
             }
 
             this.ViewBag.M_ID = result.M_ID;
@@ -729,6 +795,12 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 아이디 찾기 폼
         public ActionResult IdSearch()
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN; 
+            
             return View();
         }
 
@@ -736,8 +808,17 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 아이디찾기 -처리
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AjaxIdSearchProc(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        //public ActionResult AjaxIdSearchProc(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        public ActionResult IdSearchProc(string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;
+
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
+
             //로그 기록 준비
             string log_memo = "모바일 아이디찾기";
             string log_comment = "모바일 아이디찾기";
@@ -759,7 +840,9 @@ namespace AboutMe.Web.Mobile.Controllers
                 //return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/IdSearch';</script>");
                 strERR_CODE = "1";
                 strERR_MSG = "이름,이메일,핸드폰 값 모두가 전달되어야 합니다";
-                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_ID = "", M_NAME = "",M_CREDATE=""  });
+                //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_ID = "", M_NAME = "",M_CREDATE=""  });
+                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/IdSearch';</script>");
+
             }
 
             //아이디 찾기 - DB처리
@@ -781,7 +864,8 @@ namespace AboutMe.Web.Mobile.Controllers
                 //return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/IdSearch';</script>");
                 strERR_CODE = "10";
                 strERR_MSG = retDic.ERR_MSG;
-                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_NAME = "", M_CREDATE = "" });
+                //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_NAME = "", M_CREDATE = "" });
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='" + strHTTP_DOMAIN + "/MemberShip/IdSearch';</script>");
 
             }
 
@@ -807,7 +891,10 @@ namespace AboutMe.Web.Mobile.Controllers
             //return View();
             strERR_CODE = retDic.ERR_CODE;
             strERR_MSG = retDic.ERR_MSG;
-            return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_ID = retDic.ETC1, M_NAME = retDic.ETC2, M_CREDATE = retDic.ETC3 });
+            //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG, M_ID = retDic.ETC1, M_NAME = retDic.ETC2, M_CREDATE = retDic.ETC3 });
+
+            return View(); //중간 경우 폼 : Why post & Token
+
 
         }
 
@@ -816,7 +903,11 @@ namespace AboutMe.Web.Mobile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult IdSearch_End(string M_ID = "", string M_NAME = "", string M_CREDATE = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
 
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  
 
             this.ViewBag.M_ID = M_ID; //찾아진 ID
             this.ViewBag.M_NAME = M_NAME; //찾아진 이름
@@ -828,14 +919,29 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 비밀번호 찾기  폼
         public ActionResult PwSearch()
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;  
+
             return View();
         }
 
         //모바일 비밀번호 찾기  :처리
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AjaxPwSearchProc(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        //public ActionResult AjaxPwSearchProc(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
+        public ActionResult PwSearchProc(string M_ID = "", string M_NAME = "", string M_EMAIL = "", string M_MOBILE = "")
         {
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;
+
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
+
             string strERR_CODE = "";
             string strERR_MSG = "";
 
@@ -857,7 +963,9 @@ namespace AboutMe.Web.Mobile.Controllers
                 //return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='/MemberShip/PwSearch';</script>");
                 strERR_CODE = "1";
                 strERR_MSG = "아이디,이름,이메일,핸드폰 값 모두가 전달되어야 합니다";
-                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+                //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+                return Content("<script language='javascript' type='text/javascript'>alert('이름,이메일,핸드폰 값 모두가 전달되어야 합니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/PwSearch';</script>");
+
             }
 
             //신규비밀번호 랜덤생성
@@ -898,7 +1006,9 @@ namespace AboutMe.Web.Mobile.Controllers
                 // return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='/MemberShip/PwSearch';</script>");
                 strERR_CODE = retDic.ERR_CODE;
                 strERR_MSG = retDic.ERR_MSG;
-                return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+                //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); location.href='" + strHTTP_DOMAIN + "/MemberShip/PwSearch';</script>");
+
 
             }
 
@@ -951,7 +1061,9 @@ namespace AboutMe.Web.Mobile.Controllers
             //return View();
             strERR_CODE = retDic.ERR_CODE;
             strERR_MSG = retDic.ERR_MSG;
-            return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+            //return Json(new { ERR_CODE = strERR_CODE, ERR_MSG = strERR_MSG });
+
+            return View();
         }
         //모바일  비밀번호 찾기  :결과
         [HttpPost]
@@ -960,10 +1072,14 @@ namespace AboutMe.Web.Mobile.Controllers
         {
 
 
-            this.ViewBag.M_ID = M_ID;
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
+            this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;
+
+
             this.ViewBag.M_NAME = M_NAME;
-            this.ViewBag.M_EMAIL = M_EMAIL;
-            this.ViewBag.M_MOBILE = M_MOBILE;
 
             return View();
         }

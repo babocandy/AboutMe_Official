@@ -11,13 +11,13 @@ namespace AboutMe.Common.Helper
     public class ReviewHelper
     {
 
-        public static List<ReviewProductDisplay> GetDataForDisplay(List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> r){
+        public static List<ReviewProductInfo> GetDataForDisplay(List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> r){
 
-            List<ReviewProductDisplay> list =  new List<ReviewProductDisplay>();
+            List<ReviewProductInfo> list = new List<ReviewProductInfo>();
 
             foreach (var item in r)
             {
-                var d = new ReviewProductDisplay();
+                var d = new ReviewProductInfo();
 
                 d.IDX = item.IDX;
                 d.M_ID = item.M_ID;
@@ -37,7 +37,7 @@ namespace AboutMe.Common.Helper
                 d.ADD_IMAGE = item.ADD_IMAGE;
 
                 d.IS_BEAUTY = IsBeauty(item.CATE_GBN);
-                d.IS_BEST = IsBest(item.PRIZE_GRADE);
+                d.IS_BEST = item.IS_BEST == "Y" ? true : false;
                 d.IS_PHOTO = item.IS_PHOTO == "Y" ? true : false;
 
                 d.INS_DATE = item.INS_DATE.Value.ToString("yyyy.MM.dd");

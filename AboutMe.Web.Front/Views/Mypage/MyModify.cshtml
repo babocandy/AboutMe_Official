@@ -66,7 +66,7 @@
         }
     }
 
-    //회우너정보 수정 저장 성공후 -> 마이페이지 메인으로 이동
+    //회원정보 수정 저장 성공후 -> 마이페이지 메인으로 이동
     function fGoRegisterComplete() {
         window.location.href = "/MyPage/Main";
         //var f = document.frmMEMBER;
@@ -79,7 +79,7 @@
         var f = document.frmMEMBER;
 
         if (glREGISTER_ING) {
-            alert("회원가입 처리중입니다. 잠시만 기다려 주십시오.");
+            alert("회원정보 수정 처리중입니다. 잠시만 기다려 주십시오.");
             return;
         }
 
@@ -132,6 +132,17 @@
             return;
         }
 
+        f.M_MOBILE.value = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
+        f.M_PHONE.value = f.M_PHONE_1.value + "-" + f.M_PHONE_2.value + "-" + f.M_PHONE_3.value;
+        f.M_EMAIL.value = f.M_EMAIL_1.value + "@@" + f.M_EMAIL_2.value;
+
+        f.method = "post";
+        f.target = "";
+        f.action = glHTTPS_DOMAIN + "/Mypage/MyModifyProc";
+        f.submit();
+
+        /*
+        //---- Ajax 의 경우 ----------------
         var strTOKEN = f.__RequestVerificationToken.value;
         var strM_ID = f.M_ID.value;
         var strM_MOBILE = f.M_MOBILE_1.value + "-" + f.M_MOBILE_2.value + "-" + f.M_MOBILE_3.value;
@@ -160,6 +171,9 @@
             async: false,  //동기 통신
             type: 'POST',
             dataType: 'json',
+            //dataType: 'jsonp',  //<<<<<<<<<<<<<<<
+            //jsonp: 'callback',  //<<<<<<<<<<<
+            //jsonpCallback: 'fCallbackProcessMemberModify',
             data: {
                 __RequestVerificationToken: strTOKEN
                 , M_ID: strM_ID
@@ -173,10 +187,11 @@
                 , M_ISSMS: strM_ISSMS
                 , M_ISEMAIL: strM_ISEMAIL
                 , M_ISDM: strM_ISDM
-
+              //  , callback: 'fCallbackProcessMemberModify'  //<<<<<<<<<<<<<<<<<<<<<<<
 
             },
             success: function (retDATA) {
+                
                 if (retDATA.ERR_CODE == "0") {
                     glREGISTER_ING = false; //저장 진행중 종료 --------------------
                     alert("회원정보가 수정되었습니다.");
@@ -186,13 +201,20 @@
                     glREGISTER_ING = false; //저장 진행중 종료 --------------------
                     alert("회원정보 수정중 오류가 발생했습니다.\n\n 오류내용:" + retDATA.ERR_MSG);
                 }
+
             },
             error: function (e) {
                 glREGISTER_ING = false; //저장 진행중 종료 --------------------
                 alert("ajax 오류발생2");
             }
         }); //ajax
+
+        */
+
+
     } //func
+
+
 
 </script>
 
@@ -245,7 +267,11 @@
 
 
            <input type="hidden" name="M_ID" value="@Model.M_ID">
-    
+
+    <input type="hidden" name="M_MOBILE" value="">
+    <input type="hidden" name="M_PHONE" value="">
+    <input type="hidden" name="M_EMAIL" value="">
+
                         <fieldset>
                             <legend>회원정보 수정 입력 폼</legend>
                             <h3><img src="/aboutCom/images/mypage/h3_modify.gif" alt="정보수정" /><span>표시는 필수 입력 항목입니다.</span></h3>
