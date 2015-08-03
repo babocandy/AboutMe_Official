@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.AdminReview
         }
     
     
-        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> SP_ADMIN_REVIEW_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, ObjectParameter tOTAL)
+        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> SP_ADMIN_REVIEW_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, string mEDIA_GBN, Nullable<System.DateTime> sEL_DATE_FROM, Nullable<System.DateTime> sEL_DATE_TO, string iS_PHOTO, string iS_DISPLAY, ObjectParameter tOTAL)
         {
             var pAGEParameter = pAGE.HasValue ?
                 new ObjectParameter("PAGE", pAGE) :
@@ -46,7 +46,57 @@ namespace AboutMe.Domain.Entity.AdminReview
                 new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
                 new ObjectParameter("SEARCH_VALUE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>("SP_ADMIN_REVIEW_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, tOTAL);
+            var mEDIA_GBNParameter = mEDIA_GBN != null ?
+                new ObjectParameter("MEDIA_GBN", mEDIA_GBN) :
+                new ObjectParameter("MEDIA_GBN", typeof(string));
+    
+            var sEL_DATE_FROMParameter = sEL_DATE_FROM.HasValue ?
+                new ObjectParameter("SEL_DATE_FROM", sEL_DATE_FROM) :
+                new ObjectParameter("SEL_DATE_FROM", typeof(System.DateTime));
+    
+            var sEL_DATE_TOParameter = sEL_DATE_TO.HasValue ?
+                new ObjectParameter("SEL_DATE_TO", sEL_DATE_TO) :
+                new ObjectParameter("SEL_DATE_TO", typeof(System.DateTime));
+    
+            var iS_PHOTOParameter = iS_PHOTO != null ?
+                new ObjectParameter("IS_PHOTO", iS_PHOTO) :
+                new ObjectParameter("IS_PHOTO", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>("SP_ADMIN_REVIEW_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, mEDIA_GBNParameter, sEL_DATE_FROMParameter, sEL_DATE_TOParameter, iS_PHOTOParameter, iS_DISPLAYParameter, tOTAL);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_INFO_Result> SP_ADMIN_REVIEW_PRODUCT_INFO(Nullable<int> iDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>("SP_ADMIN_REVIEW_PRODUCT_INFO", iDXParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_ADMIN_REVIEW_PRODUCT_UPDATE(Nullable<int> iDX, string iS_BEST, string iS_DISPLAY, string cOMMENT, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var iS_BESTParameter = iS_BEST != null ?
+                new ObjectParameter("IS_BEST", iS_BEST) :
+                new ObjectParameter("IS_BEST", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            var cOMMENTParameter = cOMMENT != null ?
+                new ObjectParameter("COMMENT", cOMMENT) :
+                new ObjectParameter("COMMENT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_PRODUCT_UPDATE", iDXParameter, iS_BESTParameter, iS_DISPLAYParameter, cOMMENTParameter, rET_NUM, rET_MESSAGE);
         }
     }
 }

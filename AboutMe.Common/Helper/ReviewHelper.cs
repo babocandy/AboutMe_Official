@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 
 using AboutMe.Domain.Entity.Review;
+using AboutMe.Domain.Entity.AdminReview;
+using AboutMe.Common.Data;
 
 namespace AboutMe.Common.Helper
 {
     public class ReviewHelper
     {
-
         public static List<ReviewProductInfo> GetDataForDisplay(List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> r){
 
             List<ReviewProductInfo> list = new List<ReviewProductInfo>();
@@ -36,9 +39,9 @@ namespace AboutMe.Common.Helper
                 d.COMMENT = item.COMMENT;
                 d.ADD_IMAGE = item.ADD_IMAGE;
 
-                d.IS_BEAUTY = IsBeauty(item.CATE_GBN);
-                d.IS_BEST = item.IS_BEST == "Y" ? true : false;
-                d.IS_PHOTO = item.IS_PHOTO == "Y" ? true : false;
+                d.IS_BEAUTY = item.CATE_GBN == "101" ? true : false;
+                d.IS_BEST = item.IS_BEST == CommonCode.YES ? true : false;
+                d.IS_PHOTO = item.IS_PHOTO == CommonCode.YES ? true : false;
 
                 d.INS_DATE = item.INS_DATE.Value.ToString("yyyy.MM.dd");
 
@@ -46,6 +49,76 @@ namespace AboutMe.Common.Helper
             }
             return list;
         }
+
+        /**
+         * 관리자 사용자 화면용 - 목록
+         */
+        public static List<AdminReviewUserModel> GetDataForAdminUser(List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> r)
+        {
+
+            List<AdminReviewUserModel> list = new List<AdminReviewUserModel>();
+
+            foreach (var item in r)
+            {
+                var d = new AdminReviewUserModel();
+    
+                d.IDX = item.IDX;
+                d.M_ID = item.M_ID;
+                d.P_CODE = item.P_CODE;
+                d.P_NAME = item.P_NAME;
+                d.C_CATE_CODE = item.C_CATE_CODE;
+                d.CATE_GBN = item.CATE_GBN == "101" ? "뷰티" : "헬스";
+                d.COMMENT = item.COMMENT;
+                d.IS_PHOTO = item.IS_PHOTO;
+                d.INS_DATE = item.INS_DATE.Value.ToShortDateString();
+                d.IS_BEST = item.IS_BEST == "Y" ? "O" : "";
+
+                d.P_MAIN_IMG = item.P_MAIN_IMG;
+                d.VIEW_CNT = item.VIEW_CNT ?? 0;
+                d.M_GRADE = MemberCode.GetNameByCode( item.M_GRADE );
+                d.MEDIA_GBN = item.MEDIA_GBN != null ? MediaCode.GetNameByCode(item.MEDIA_GBN) : "";
+                d.ADD_IMAGE = item.ADD_IMAGE;
+                d.IS_DISPLAY = item.IS_DISPLAY == "Y" ? "전시" : "비전시";
+
+                list.Add(d);
+            }
+            return list;
+        }
+
+        /**
+         * 관리자 사용자 화면용 - 수정
+         */
+        public static List<AdminReviewUserModel> GetDataForAdminUserSave(List<SP_ADMIN_REVIEW_PRODUCT_INFO_Result> r)
+        {
+
+            List<AdminReviewUserModel> list = new List<AdminReviewUserModel>();
+
+            foreach (var item in r)
+            {
+                var d = new AdminReviewUserModel();
+
+                d.IDX = item.IDX;
+                d.M_ID = item.M_ID;
+                d.P_CODE = item.P_CODE;
+                d.P_NAME = item.P_NAME;
+                d.C_CATE_CODE = item.C_CATE_CODE;
+                d.CATE_GBN = item.CATE_GBN;
+                d.COMMENT = item.COMMENT;
+                d.IS_PHOTO = item.IS_PHOTO;
+                d.INS_DATE = item.INS_DATE.ToShortDateString();
+                d.IS_BEST = item.IS_BEST;
+                d.P_MAIN_IMG = item.P_MAIN_IMG;
+                d.VIEW_CNT = item.VIEW_CNT ?? 0;
+                d.M_GRADE = item.M_GRADE;
+                d.MEDIA_GBN = item.MEDIA_GBN != null ? MediaCode.GetNameByCode(item.MEDIA_GBN) : "";
+                d.ADD_IMAGE = item.ADD_IMAGE;
+                d.IS_DISPLAY = item.IS_DISPLAY;
+                
+                list.Add(d);
+            }
+            return list;
+        }
+
 
         /*
          * 스킨타입값 변경-> css className
@@ -56,15 +129,15 @@ namespace AboutMe.Common.Helper
 
             string ret = "";
 
-            if (code == "10")
+            if (code == SkinTypeCode.Dry)
             {
                 ret = "dry";
             }
-            else if (code == "20")
+            else if (code == SkinTypeCode.Normal)
             {
                 ret = "normal";
             }
-            else if (code == "30")
+            else if (code == SkinTypeCode.Oily)
             {
                 ret = "oily";
             }
@@ -93,15 +166,15 @@ namespace AboutMe.Common.Helper
             return (gender == "1") ? "남자" : "여자";
         }
 
-        public static bool IsBeauty(string pCateCode )
+        /**
+         * 뷰티 체크
+         */
+        public static bool CheckBeauty(string pCateCode)
         {
             return pCateCode.Substring(0, 3) == "101" ? true : false;
         }
 
-        public static bool IsBest(string pz)
-        {
-            return pz == "99" ? true : false;
-            
-        }
+
+
     }
 }

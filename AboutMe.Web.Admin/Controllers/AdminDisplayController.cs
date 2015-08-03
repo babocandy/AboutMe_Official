@@ -35,22 +35,22 @@ namespace AboutMe.Web.Admin.Controllers
            
             
             //웹메인 배너 조회
-            model.WebMainBannerList = _Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCodes.WEB_MAIN_BANNER });
+            model.WebMainBannerList = _Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_BANNER });
 
             //웹 메인 중간 배너
-            model.WebMiddleBanner = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCodes.WEB_MAIN_MIDDLE_BANNER }));
+            model.WebMiddleBanner = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MIDDLE_BANNER }));
 
             //상품전시 그룹 1
-            model.WebProductDisplay10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_10, SEQ= 1 }));
-            model.WebProductDisplay11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_10, SEQ= 2 }));
-            model.WebProductDisplay12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_10, SEQ=3} ));
-            model.WebProductDisplay13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_10, SEQ=4} ));
+            model.WebProductDisplay10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ= 1 }));
+            model.WebProductDisplay11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ= 2 }));
+            model.WebProductDisplay12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ=3} ));
+            model.WebProductDisplay13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ=4} ));
 
             //상품전시 그룹 2
-            model.WebProductDisplay20 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_20, SEQ=1} ));
-            model.WebProductDisplay21 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_20, SEQ=2} ));
-            model.WebProductDisplay22 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_20, SEQ=3} ));
-            model.WebProductDisplay23 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_20, SEQ=4} ));
+            model.WebProductDisplay20 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_20, SEQ=1} ));
+            model.WebProductDisplay21 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_20, SEQ=2} ));
+            model.WebProductDisplay22 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_20, SEQ=3} ));
+            model.WebProductDisplay23 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_20, SEQ=4} ));
  
             return View(model);
         }
@@ -65,9 +65,9 @@ namespace AboutMe.Web.Admin.Controllers
             AdminDisplayMobileMainViewModel model = new AdminDisplayMobileMainViewModel();
 
             //웹메인 배너 조회
-            model.MobileMainBannerList = _Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.MOBILE_MAIN_BANNER});
-            model.MobileTalkOnBeauty = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.MOBILE_MAIN_TALK}));
-            model.MobileBest = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.MOBILE_MAIN_BEST}));
+            model.MobileMainBannerList = _Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.MOBILE_MAIN_BANNER});
+            model.MobileTalkOnBeauty = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.MOBILE_MAIN_TALK}));
+            model.MobileBest = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.MOBILE_MAIN_BEST}));
 
             return View(model);
         }
@@ -81,16 +81,16 @@ namespace AboutMe.Web.Admin.Controllers
             AdminDisplayCartViewModel model = new AdminDisplayCartViewModel();
 
             //웹
-            model.Web = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCodes.CART_WEB }));
+            model.Web = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.CART_WEB }));
 
             //모바일
-            model.Mobile = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.CART_MOBILE}));
+            model.Mobile = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.CART_MOBILE}));
 
             //상품전시
-            model.CommonDisplay10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.CART_PRODUCT_DISPLAY, SUB_KIND= DisplayerCodes.SUB_KIND_10, SEQ=1}));
-            model.CommonDisplay11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.CART_PRODUCT_DISPLAY, SUB_KIND=DisplayerCodes.SUB_KIND_10, SEQ=2}));
-            model.CommonDisplay12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.CART_PRODUCT_DISPLAY, SUB_KIND=DisplayerCodes.SUB_KIND_10, SEQ=3}));
-            model.CommonDisplay13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCodes.CART_PRODUCT_DISPLAY, SUB_KIND=DisplayerCodes.SUB_KIND_10, SEQ=4}));
+            model.CommonDisplay10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.CART_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ=1}));
+            model.CommonDisplay11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.CART_PRODUCT_DISPLAY, SUB_KIND=DisplayerCode.SUB_KIND_10, SEQ=2}));
+            model.CommonDisplay12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.CART_PRODUCT_DISPLAY, SUB_KIND=DisplayerCode.SUB_KIND_10, SEQ=3}));
+            model.CommonDisplay13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.CART_PRODUCT_DISPLAY, SUB_KIND=DisplayerCode.SUB_KIND_10, SEQ=4}));
 
             return View(model);
         }
@@ -104,14 +104,14 @@ namespace AboutMe.Web.Admin.Controllers
             AdminDisplayGBNViewModel model = new AdminDisplayGBNViewModel();
             
             //배너
-            model.Banner10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND= DisplayerCodes.GBN_BANNER,SUB_KIND= DisplayerCodes.SUB_KIND_10,SEQ= 1}));
-            model.Banner11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.GBN_BANNER,SUB_KIND= DisplayerCodes.SUB_KIND_10,SEQ= 2}));
-            model.Banner12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.GBN_BANNER,SUB_KIND= DisplayerCodes.SUB_KIND_10,SEQ= 3}));
-            model.Banner13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.GBN_BANNER,SUB_KIND= DisplayerCodes.SUB_KIND_10,SEQ= 4}));
+            model.Banner10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND= DisplayerCode.GBN_BANNER,SUB_KIND= DisplayerCode.SUB_KIND_10,SEQ= 1}));
+            model.Banner11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.GBN_BANNER,SUB_KIND= DisplayerCode.SUB_KIND_10,SEQ= 2}));
+            model.Banner12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.GBN_BANNER,SUB_KIND= DisplayerCode.SUB_KIND_10,SEQ= 3}));
+            model.Banner13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.GBN_BANNER,SUB_KIND= DisplayerCode.SUB_KIND_10,SEQ= 4}));
 
             //링크
-            model.Link10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.GBN_LINK, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ= 1}));
-            model.Link11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.GBN_LINK, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ= 2}));
+            model.Link10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.GBN_LINK, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ= 1}));
+            model.Link11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.GBN_LINK, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ= 2}));
 
             return View(model);
         }
@@ -125,14 +125,14 @@ namespace AboutMe.Web.Admin.Controllers
             AdminDisplayProductBannerViewModel model = new AdminDisplayProductBannerViewModel();
 
             //웹
-            model.Web10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.PDT_DETAIL_WEB, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ=  1}));
-            model.Web11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.PDT_DETAIL_WEB, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ=  2}));
-            model.Web12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.PDT_DETAIL_WEB, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ=  3}));
+            model.Web10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.PDT_DETAIL_WEB, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ=  1}));
+            model.Web11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.PDT_DETAIL_WEB, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ=  2}));
+            model.Web12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.PDT_DETAIL_WEB, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ=  3}));
 
             //모바일
-            model.Mobile10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.PDT_DETAIL_MOBILE, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ=  1}));
-            model.Mobile11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.PDT_DETAIL_MOBILE, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ=  2}));
-            model.Mobile12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCodes.PDT_DETAIL_MOBILE, SUB_KIND=DisplayerCodes.SUB_KIND_10,SEQ=  3}));
+            model.Mobile10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.PDT_DETAIL_MOBILE, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ=  1}));
+            model.Mobile11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.PDT_DETAIL_MOBILE, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ=  2}));
+            model.Mobile12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam {KIND=DisplayerCode.PDT_DETAIL_MOBILE, SUB_KIND=DisplayerCode.SUB_KIND_10,SEQ=  3}));
 
             return View(model);
         }

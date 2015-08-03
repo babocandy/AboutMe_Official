@@ -11,25 +11,25 @@ namespace AboutMe.Domain.Entity.AdminReview
 {
     using System;
     
-    public partial class SP_ADMIN_REVIEW_PRODUCT_SEL_Result
+    public partial class SP_ADMIN_REVIEW_PRODUCT_INFO_Result
     {
-        public Nullable<int> IDX { get; set; }
-        public string M_ID { get; set; }
+        public int IDX { get; set; }
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public string C_CATE_CODE { get; set; }
+        public string IS_BEST { get; set; }
         public string CATE_GBN { get; set; }
         public string COMMENT { get; set; }
         public string IS_PHOTO { get; set; }
-        public Nullable<System.DateTime> INS_DATE { get; set; }
-        public string IS_BEST { get; set; }
-        public string P_MAIN_IMG { get; set; }
         public Nullable<int> VIEW_CNT { get; set; }
         public string M_GRADE { get; set; }
         public string MEDIA_GBN { get; set; }
         public string ADD_IMAGE { get; set; }
-        public string IS_DISPLAY { get; set; }
+        public System.DateTime INS_DATE { get; set; }
+        public string M_ID { get; set; }
         public string M_NAME { get; set; }
+        public string P_MAIN_IMG { get; set; }
+        public string IS_DISPLAY { get; set; }
         public string SKIN_TYPE { get; set; }
     }
 }

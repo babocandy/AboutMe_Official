@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AboutMe.Domain.Entity.AdminDisplay;
+using AboutMe.Common.Data;
 
 namespace AboutMe.Common.Helper
 {
@@ -21,17 +22,17 @@ namespace AboutMe.Common.Helper
 
                 d.IDX = item.IDX;
 
-                if (item.MEDIA_GBN == "10")
+                if (item.MEDIA_GBN == MediaCode.ALL)
                 {
-                    d.MEDIA_GBN = "전체";
+                    d.MEDIA_GBN = MediaCode.ALL_NAME;
                 }
-                else if (item.MEDIA_GBN == "20")
+                else if (item.MEDIA_GBN == MediaCode.WEB)
                 {
-                    d.MEDIA_GBN = "웹";
+                    d.MEDIA_GBN = MediaCode.WEB_NAME;
                 }
-                else if (item.MEDIA_GBN == "30")
+                else if (item.MEDIA_GBN == MediaCode.MOBILE)
                 {
-                    d.MEDIA_GBN = "모바일";
+                    d.MEDIA_GBN = MediaCode.MOBILE_NAME;
                 }
 
                 d.TITLE = item.TITLE;
