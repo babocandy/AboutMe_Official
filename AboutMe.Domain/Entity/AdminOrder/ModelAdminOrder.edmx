@@ -76,6 +76,26 @@
           <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="OLD_PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="CANCEL_PRICE" Type="bigint" Mode="In" />
+          <Parameter Name="REMAINS_PRICE" Type="bigint" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="PRTC_Remains" Type="bigint" Mode="In" />
+          <Parameter Name="PRTC_Type" Type="char" Mode="In" />
+          <Parameter Name="PRTC_Price" Type="bigint" Mode="In" />
+          <Parameter Name="PRTC_Cnt" Type="int" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REG_IP" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_PART_CANCEL_SELECT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_ORDER_RECEIVER_EDIT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
           <Parameter Name="RECEIVER_NAME" Type="varchar" Mode="In" />
@@ -110,6 +130,9 @@
           <Parameter Name="DELIVERY_TO_DATE" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_TO_DELIVERYEXCEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX_LIST" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_ORDERLIST_DETAIL_BODY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
@@ -241,6 +264,29 @@
             <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
             <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="OLD_PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="CANCEL_PRICE" Mode="In" Type="Int64" />
+            <Parameter Name="REMAINS_PRICE" Mode="In" Type="Int64" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="PRTC_Remains" Mode="In" Type="Int64" />
+            <Parameter Name="PRTC_Type" Mode="In" Type="String" />
+            <Parameter Name="PRTC_Price" Mode="In" Type="Int64" />
+            <Parameter Name="PRTC_Cnt" Mode="In" Type="Int32" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+            <Parameter Name="REG_IP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_PART_CANCEL_SELECT" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result)">
+          <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_TO_DELIVERYEXCEL" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result)">
+            <Parameter Name="ORDER_IDX_LIST" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_BODY_Result">
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -278,6 +324,7 @@
           <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="true" />
           <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="true" />
           <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="true" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -337,6 +384,47 @@
           <Property Type="Int32" Name="ORDER_STATUS_80" DefaultValue="0" Nullable="true" />
           <Property Type="Int32" Name="ORDER_STATUS_90" ConcurrencyMode="None" DefaultValue="0" Nullable="true" />
           <Property Type="Int32" Name="ORDER_STATUS_99" DefaultValue="0" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
+          <Property Type="String" Name="PAT_TID" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="OLD_PAT_TID" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="CANCEL_PRICE" Nullable="false" />
+          <Property Type="Int64" Name="REMAINS_PRICE" Nullable="false" />
+          <Property Type="String" Name="EMAIL" Nullable="true" MaxLength="255" />
+          <Property Type="Int64" Name="PRTC_REMAINS" Nullable="true" />
+          <Property Type="String" Name="PRTC_TYPE" Nullable="true" MaxLength="1" />
+          <Property Type="Int64" Name="PRTC_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="PRTC_CNT" Nullable="true" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="REG_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="REG_IP" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result">
+          <Property Type="String" Name="TID" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="PAY_PRICE" Nullable="true" />
+          <Property Type="String" Name="EMAIL" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="PRTC_CNT" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result">
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
+          <Property Type="String" Name="ORDER_CODE" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="ORDER_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ORDER_NAME" Nullable="true" MaxLength="46" />
+          <Property Type="String" Name="EMP_YN" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="false" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="PAY_NM" Nullable="false" MaxLength="14" />
+          <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
+          <Property Type="String" Name="ORDER_STATUS_NM" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="PROMOTION_NM" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="PMO_PRODUCT_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FREEGIFT_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DELIVERY_NUM" Nullable="true" MaxLength="40" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -424,6 +512,7 @@
                 <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
                 <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
                 <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -463,6 +552,60 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_LIST_Cnt">
                 <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_PART_CANCEL_INSERT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_PART_CANCEL_INSERT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_PART_CANCEL_SELECT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_PART_CANCEL_SELECT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="PAT_TID" ColumnName="PAT_TID" />
+                <ScalarProperty Name="OLD_PAT_TID" ColumnName="OLD_PAT_TID" />
+                <ScalarProperty Name="CANCEL_PRICE" ColumnName="CANCEL_PRICE" />
+                <ScalarProperty Name="REMAINS_PRICE" ColumnName="REMAINS_PRICE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PRTC_REMAINS" ColumnName="PRTC_REMAINS" />
+                <ScalarProperty Name="PRTC_TYPE" ColumnName="PRTC_TYPE" />
+                <ScalarProperty Name="PRTC_PRICE" ColumnName="PRTC_PRICE" />
+                <ScalarProperty Name="PRTC_CNT" ColumnName="PRTC_CNT" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
+                <ScalarProperty Name="REG_IP" ColumnName="REG_IP" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result">
+                <ScalarProperty Name="TID" ColumnName="TID" />
+                <ScalarProperty Name="PAY_PRICE" ColumnName="PAY_PRICE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PRTC_CNT" ColumnName="PRTC_CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_TO_DELIVERYEXCEL" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_TO_DELIVERYEXCEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="ORDER_NAME" ColumnName="ORDER_NAME" />
+                <ScalarProperty Name="EMP_YN" ColumnName="EMP_YN" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="PAY_NM" ColumnName="PAY_NM" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+                <ScalarProperty Name="ORDER_STATUS_NM" ColumnName="ORDER_STATUS_NM" />
+                <ScalarProperty Name="PROMOTION_NM" ColumnName="PROMOTION_NM" />
+                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
+                <ScalarProperty Name="FREEGIFT_NAME" ColumnName="FREEGIFT_NAME" />
+                <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

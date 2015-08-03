@@ -4,16 +4,15 @@
     function gotoPage(p) {
         $("#sform")[0].reset();
         var f = document.sform;
-        f.PAGE.value = p;
         f.action = "/Order";
+        f.PAGE.value = p;
+        f.ORDER_IDX = "";
+        f.TOBE_STATUS = "";
         f.submit();
     }
 </script>
-<br />
+
 <div class="paging">
-
-
-    <br />
 
     @if (Model.HasPreviousBlock)
     {

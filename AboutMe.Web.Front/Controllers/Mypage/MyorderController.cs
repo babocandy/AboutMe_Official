@@ -136,6 +136,7 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult OrderCancel(string OrderCode)
         {
             string Mid = _user_profile.M_ID;
+            string REG_IP = Request.ServerVariables["REMOTE_HOST"];
             StringBuilder SBuilder = new StringBuilder();
 
             if (!_user_profile.IS_LOGIN)
@@ -162,6 +163,11 @@ namespace AboutMe.Web.Front.Controllers
                     SBuilder.AppendFormat("<script language='javascript'>alert(\"PG사(이니시스) 결제 취소중 에러가 발생했습니다.\\n에러메시지:{0} \\n관리자에게 문의하시기 바랍니다.\");history.go(-1);</script>", InipayResult.ResultMsg);
                     return Content(SBuilder.ToString());
                 }
+                else
+                {
+                    _orderservice.OrderPartCancelInsert(info.ORDER_IDX, info.PAT_TID, info.PAT_TID, Convert.ToInt32(info.TOTAL_PAY_PRICE), 0, info.SENDER_EMAIL, 0, "8", Convert.ToInt32(info.TOTAL_PAY_PRICE), 0, Mid, REG_IP); //type 8 :주문자이니시스취소로그
+                }
+
             }
 
             _orderservice.MyOrderMasterStatusChange(info.ORDER_IDX, "90", Mid); //취소
