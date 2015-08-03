@@ -32,5 +32,10 @@ namespace AboutMe.Web.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Update()
+        {
+            return View();
+        }
     }
 }

@@ -1,7 +1,4 @@
-﻿
-@using AboutMe.Common.Helper
-
-@{
+﻿@{
     ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
@@ -12,123 +9,291 @@
 
 @section Header{
     @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+}
+
+@section Scripts{
+
+<script>
+
+    function search_date_change(v) {
+        //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
+
+        var from_date, to_date;
+
+        if (v == "1") //-7 ~오늘
+        {
+            from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "2") //-15~오늘
+        {
+            from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "3") // -한달~오늘
+        {
+            from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else//  전체기간
+        {
+            from_date = '';
+            to_date = '';
+        }
+
+        $('#SEL_DATE_FROM').val(from_date);
+        $('#SEL_DATE_TO').val(to_date);
+    }
+
+
+    //DatePicker
+    $(document).ready(function () {
+        // create DatePicker from input HTML element
+        $("#SEL_DATE_FROM").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+
+        $("#SEL_DATE_TO").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+    });
+
+    function search() {
+
+
+    }
+
+</script>
+
 }
 
 @section Body{
-    <div class="content">
+<!--content-->
+<div class="content">
     <!--path-->
     <div class="path">
-        <a href="/index.asp">HOME</a> &gt; <a href="#">기본설정</a> &gt; <a href="#">혜택관리</a> &gt; <strong>리뷰관리</strong>
+        <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
     </div>
     <!--//path-->
+
     <div class="panel">
-        <h3 class="sub-header">포인트관리</h3>
-        <h4>회원 검색</h4>
-        <div class="alert alert-info">
-            @using (Html.BeginForm("Index", "AdminReview", FormMethod.Post, new { id = "frm", name = "frm", onsubmit = "return frmCheck();", @class = "form-inline" }))
-            {
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
+        <h3 class="sub-header">상품리뷰관리</h3>
+        <div class="">
 
-                            @{
-                List<SelectListItem> items = new List<SelectListItem>();
-                items.Add(new SelectListItem { Text = "아이디", Value = "M_ID" });
-                items.Add(new SelectListItem { Text = "상품코드", Value = "P_CODE" });
-                items.Add(new SelectListItem { Text = "상품카테고리", Value = "C_CATE_CODE" });
-
-
-
-                foreach (var xx in items)
-                {
-                    if (xx.Value == Model.SearchKey)
-                    {
-                        xx.Selected = true;
-                        break;
-                    }
-                }
-                            }
-                            @Html.DropDownList("searchKey", items, "-대상 선택-", new { style = "width:100px;" })
-
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="txt1" class="input-sm" title="검색어 입력" style="width:400px;" name="searchValue" value="@Model.SearchValue" />
-                        </div>
-                        <button class="btn btn-default btn-xs" onclick="document.frm.submit(); return false;">검색하기</button>
-                        <a href="@(Request.Url.PathAndQuery)" class=" btn btn-primary btn-xs">취소</a>
-                    </div>
-                    <div class="col-md-4  text-right">
-                        <div class="form-group">
-                            @{
-                List<SelectListItem> pageSizeItems = new List<SelectListItem>();
-                pageSizeItems.Add(new SelectListItem { Text = "10개씩", Value = "10" });
-                pageSizeItems.Add(new SelectListItem { Text = "20개씩", Value = "20" });
-
-                foreach (var xx in pageSizeItems)
-                {
-                    if (xx.Value.AsInt() == Model.PageSize)
-                    {
-                        xx.Selected = true;
-                        break;
-                    }
-                }
-
-                            }
-                            @Html.DropDownList("pageSize", pageSizeItems, new { style = "width:150px;", @onchange = "document.frm.submit();" })
-                        </div>
-                    </div>
-                </div>
-            }
+@using (Html.BeginForm("Index", "AdminReview", FormMethod.Get, new { id = "frm", name = "frm" }))
+{
+            <table class="table table_row">
+                <colgroup><col width="10%" /><col width="*" /><col width="10%" /><col width="20%" /><col width="9%" /><col width="23%" /><col width="8%" /></colgroup>
+                <tbody>
+                    <tr>
+                        <th>등록일</th>
+                        <td colspan="3">
+                            <input type="text" id="SEL_DATE_FROM" name="SEL_DATE_FROM" class="input-sm" style="width:120px" maxlength="10">
+                            ~
+                            <input type="text" id="SEL_DATE_TO" name="SEL_DATE_TO" class="input-sm" style="width:120px" maxlength="10">
+                            <a href="#" class="btn btn-primary small" onclick="search_date_change('1'); return false;" >7일전</a>
+                            <a href="#" class="btn btn-primary small" onclick="search_date_change('2'); return false;">15일전</a>
+                            <a href="#" class="btn btn-primary small" onclick="search_date_change('3'); return false;">한달전</a>
+                            <a href="#" class="btn btn-primary small" onclick="search_date_change('4'); return false;">전체</a>
+                        </td>
+                        <th rowspan="3">검색조건</th>
+                        <td rowspan="3" class="condition_seacth">
+                            <select style="width:170px;" name="SEARCH_KEY">
+                                <option>상품품번</option>
+                                <option>상품품번</option>
+                                <option>상품품번</option>
+                                <option>상품품번</option>
+                                <option>상품품번</option>
+                            </select><br />
+                            <input type="text" name="SEARCH_VALUE" value="다중검색" class="input-sm mt10" id="txt1" style="width:170px; height:94px;">
+                        </td>
+                        <td rowspan="3">
+                            <a href="#" class="btn btn-default large btn_search" style="height:120px; line-height:90px;" onclick="search(); return false;">검색</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>매체구분</th>
+                        <td>
+                            <label for="sort1"><input type="radio" id="sort1" name="MEDIA_GBN" value="10" /><span class="txt mr5">전체</span></label>
+                            <label for="sort2"><input type="radio" id="sort2" name="MEDIA_GBN" value="20" /><span class="txt mr5">WEB</span></label>
+                            <label for="sort3"><input type="radio" id="sort3" name="MEDIA_GBN" value="30" /><span class="txt mr5">MOBILE</span></label>
+                        </td>
+                        <th>상품평</th>
+                        <td>
+                            <label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" /><span class="txt mr5">전체</span></label>
+                            <label for="sort5"><input type="radio" id="sort5" name="IS_PHOTO" value="Y" /><span class="txt mr5">포토</span></label>
+                            <label for="sort6"><input type="radio" id="sort6" name="IS_PHOTO" value="N" /><span class="txt mr5">텍스트</span></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>전시여부</th>
+                        <td colspan="3">
+                            <label for="sort7"><input type="radio" id="sort7" name="IS_DISPLAY" /><span class="txt mr5">전체</span></label>
+                            <label for="sort8"><input type="radio" id="sort8" name="IS_DISPLAY" value="Y" /><span class="txt mr5">전시</span></label>
+                            <label for="sort9"><input type="radio" id="sort9" name="IS_DISPLAY" value="N" /><span class="txt mr5">비전시</span></label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+}
         </div>
     </div>
 
-
     <div class="panel">
+        <h4>총 검색 :4개</h4>
         <table class="table table_col">
-            <colgroup><col width="8%" /><col width="*" /><col width="20%" /><col width="20%" /><col width="8%" /></colgroup>
+            <colgroup><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""></colgroup>
             <thead>
                 <tr>
-                    <th scope="col" class="brnone">No.</th>
-                    <th scope="col">이름(아이디)</th>
-                    <th scope="col">가입일</th>
-                    <th scope="col">포인트</th>
-                    <th scope="col" class="brnone">등급</th>
+                    <th>No</th>
+                    <th>베스트지정</th>
+                    <th>매체구분</th>
+                    <th>포토이미지</th>
+                    <th>내용</th>
+                    <th>회원 ID</th>
+                    <th>등급</th>
+                    <th>카테고리</th>
+                    <th>상품이미지</th>
+                    <th>상품품번</th>
+                    <th>조회</th>
+                    <th>전시여부</th>
+                    <th>등록일</th>
+                    <th>수정</th>
                 </tr>
             </thead>
             <tbody>
-
-                @foreach (var item in Model.MemberList)
-                {
-                    <tr>
-                        <!--<td class="brnone"><input type="checkbox" value="50,000" title="선택" /></td>-->
-                        <td class="brnone">@item.M_NO</td>
-                        <td>@Html.ActionLink(string.Format("{0}({1})", item.M_NAME, item.M_ID), null, null, new { onclick = string.Format("openScrollYes('/AdminPoint/MemberPointUpdate?M_ID={0}','_blank', '1000', '600'); return false;", @item.M_ID), @class = "btn" })</td>
-                        <td>@item.M_CREDATE.ToShortDateString()</td>
-                        <td>@item.M_POINT</td>
-                        <td>@MemberCode2Label.Grade2Label(item.M_GRADE)</td>
-                    </tr>
-                }
+                <tr>
+                    <td>4</td>
+                    <td>O</td>
+                    <td>웹</td>
+                    <td><img src="" alt="" /></td>
+                    <td>퓨어화이트 스킨</td>
+                    <td>sky12345</td>
+                    <td></td>
+                    <td>
+                        기타
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        45
+                    </td>
+                    <td>
+                        전시
+                    </td>
+                    <td>
+                        2015-07-30
+                    </td>
+                    <td>
+                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>O</td>
+                    <td>모바일</td>
+                    <td><img src="" alt="" /></td>
+                    <td>퓨어화이트 스킨</td>
+                    <td>sky12345</td>
+                    <td></td>
+                    <td>
+                        헬스
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        45
+                    </td>
+                    <td>
+                        비전시
+                    </td>
+                    <td>
+                        2015-07-30
+                    </td>
+                    <td>
+                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>O</td>
+                    <td>웹</td>
+                    <td><img src="" alt="" /></td>
+                    <td>퓨어화이트 스킨</td>
+                    <td>sky12345</td>
+                    <td></td>
+                    <td>
+                        뷰티
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        45
+                    </td>
+                    <td>
+                        전시
+                    </td>
+                    <td>
+                        2015-07-30
+                    </td>
+                    <td>
+                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>O</td>
+                    <td>웹</td>
+                    <td><img src="" alt="" /></td>
+                    <td>퓨어화이트 스킨</td>
+                    <td>sky12345</td>
+                    <td></td>
+                    <td>
+                        뷰티
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        45
+                    </td>
+                    <td>
+                        전시
+                    </td>
+                    <td>
+                        2015-07-30
+                    </td>
+                    <td>
+                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
+                    </td>
+                </tr>
             </tbody>
         </table>
+
+        @{
+    /*
+            string queryStr = null;
+            if (!Model.SearchKey.IsEmpty())
+            {
+                queryStr += "searchKey=" + Model.SearchKey;
+            }
+
+            if (!Model.SearchValue.IsEmpty())
+            {
+                queryStr += "&searchValue=" + Model.SearchValue;
+            }
+           
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
+             *  */
+        }
+
+
     </div>
 
-        </div>
+</div>
+<!--//content-->
 
 
-    @{
-        string queryStr = null;
-        if (!Model.SearchKey.IsEmpty())
-        {
-            queryStr += "searchKey=" + Model.SearchKey;
-        }
-
-        if (!Model.SearchValue.IsEmpty())
-        {
-            queryStr += "&searchValue=" + Model.SearchValue;
-        }
-
-        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
-    }
 
 
 }
