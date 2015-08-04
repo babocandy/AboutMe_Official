@@ -74,8 +74,8 @@
                 .ico_set
                 
                 <span class="ico ico_best">BEST</span>-->
-                <span class="tit">@Model.P_NAME</span>
-                <span class="tittxt">@Model.P_NAME</span>
+                <span class="tit">@(new HtmlString(Model.P_NAME))</span>
+                <span class="tittxt">@(new HtmlString(Model.P_SUB_TITLE))</span>
             </div>
             <!--제품사진슬라이드-->
             <div class="produt_photo">

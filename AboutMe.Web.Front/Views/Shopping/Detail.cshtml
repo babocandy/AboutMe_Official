@@ -116,8 +116,8 @@
                         <!--//상품해당아이콘-->
                         <div class="pro_tit">
                             <!--각각 2줄씩 제한-->
-                            <p class="tit">@Model.P_SUB_TITLE</p>
-                            <p class="stit">@Model.P_NAME</p>
+                            <p class="tit">@(new HtmlString(Model.P_SUB_TITLE))</p>
+                            <p class="stit">@(new HtmlString(Model.P_NAME))</p>
                         </div>
                         <div class="pro_info">
                             <ul>
