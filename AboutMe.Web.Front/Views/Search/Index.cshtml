@@ -107,8 +107,8 @@
                                     <span class="info">
                                         <span class="ico ico_new">NEW</span>
                                         <span class="title">
-                                            <em class="product_tit">@item.P_SUB_TITLE</em>
-                                            <em class="product_name">@item.P_NAME</em>
+                                            <em class="product_tit">@(new HtmlString(item.P_SUB_TITLE))</em>
+                                            <em class="product_name">@(new HtmlString(item.P_NAME))</em>
                                         </span>
                                         <em class="price">
                                             <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>

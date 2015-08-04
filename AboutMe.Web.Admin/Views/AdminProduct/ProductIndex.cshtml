@@ -223,6 +223,20 @@
         f.submit();
     }
 
+    function excelDw() {
+        var f = document.bform;
+        var cmt;
+        cmt = "검색하신 데이타를 엑셀로 내려받으시겠습니까?"
+        if (confirm(cmt)) {
+            f.action = "/AdminProduct/ProductExcel";
+            f.target = "";
+            f.method = "post"
+            f.submit();
+        }
+
+    }
+
+
 
 
 
@@ -447,7 +461,7 @@
             
                    @Html.AntiForgeryToken()<div class="tar mb10">
                                 <a class="btn btn-default middium" href="/AdminProduct/ProductInsert">상품등록</a>
-                                <a class="btn btn-default middium" href="/AdminProduct/ProductExcel">엑셀다운로드</a>
+                                               <a class="btn btn-default middium" href="#none" onclick="javasript:excelDw();">엑셀다운로드</a>
                                 @if (Model.productSearch_Entity.searchStatus=="Y")
                                 {
                                     <a class="btn btn-default middium" href="/AdminProduct/ProductIndex">검색초기화</a>
