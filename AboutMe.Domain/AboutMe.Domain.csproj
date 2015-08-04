@@ -715,6 +715,34 @@
     <Compile Include="Entity\Product\TB_LOG_USER.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Qna\QnaModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QnaModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaUserModel.cs" />
+    <Compile Include="Entity\Qna\SP_TB_QNA_CNT_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_TB_QNA_SEL_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_TB_QNA_VIEW_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\TB_QNA.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Recallbbs\RecallUserModel.cs" />
     <Compile Include="Entity\Recallbbs\ModelRecallbbs.Context.cs">
       <AutoGen>True</AutoGen>
@@ -806,6 +834,8 @@
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\Promotion\PromotionService.cs" />
     <Compile Include="Service\Promotion\IPromotionService.cs" />
+    <Compile Include="Service\Qna\IQnaService.cs" />
+    <Compile Include="Service\Qna\QnaService.cs" />
     <Compile Include="Service\Recallbbs\RecallbbsService.cs" />
     <Compile Include="Service\Recallbbs\IRecallbssService.cs" />
     <Compile Include="Service\Review\IReviewService.cs" />
@@ -1080,6 +1110,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelRecallbbs.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Qna\QnaModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QnaModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Qna\QnaModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+      <LastGenOutput>QnaModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Qna\QnaModel.edmx.diagram">
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Qna\QnaModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+      <LastGenOutput>QnaModel.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Recallbbs\ModelRecallbbs.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelRecallbbs.edmx</DependentUpon>

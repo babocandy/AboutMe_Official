@@ -75,6 +75,12 @@
           <Parameter Name="HTTP_USER_AGENT" Type="varchar" Mode="In" />
           <Parameter Name="PAT_GUBUN" Type="varchar" Mode="In" />
           <Parameter Name="SVR_DOMAIN" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Num" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_BankCode" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Name" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_InputName" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Date" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Time" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ORDER_RESULT_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
@@ -190,6 +196,12 @@
             <Parameter Name="HTTP_USER_AGENT" Mode="In" Type="String" />
             <Parameter Name="PAT_GUBUN" Mode="In" Type="String" />
             <Parameter Name="SVR_DOMAIN" Mode="In" Type="String" />
+            <Parameter Name="VACT_Num" Mode="In" Type="String" />
+            <Parameter Name="VACT_BankCode" Mode="In" Type="String" />
+            <Parameter Name="VACT_Name" Mode="In" Type="String" />
+            <Parameter Name="VACT_InputName" Mode="In" Type="String" />
+            <Parameter Name="VACT_Date" Mode="In" Type="String" />
+            <Parameter Name="VACT_Time" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_STEP1" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />
@@ -467,6 +479,12 @@
           <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
           <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
           <Property Type="String" Name="NOMEMBER_PASS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_Num" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_BankCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
         </ComplexType>
         <ComplexType Name="SP_ORDER_RESULT_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -529,7 +547,12 @@
           <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
           <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
           <Property Type="String" Name="NOMEMBER_PASS" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="PAY_GBN" Nullable="false" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="VACT_Num" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_BankCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -751,6 +774,12 @@
                 <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
                 <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
                 <ScalarProperty Name="NOMEMBER_PASS" ColumnName="NOMEMBER_PASS" />
+                <ScalarProperty Name="VACT_Num" ColumnName="VACT_Num" />
+                <ScalarProperty Name="VACT_BankCode" ColumnName="VACT_BankCode" />
+                <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
+                <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -850,6 +879,12 @@
                 <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
                 <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
                 <ScalarProperty Name="NOMEMBER_PASS" ColumnName="NOMEMBER_PASS" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="VACT_Num" ColumnName="VACT_Num" />
+                <ScalarProperty Name="VACT_BankCode" ColumnName="VACT_BankCode" />
+                <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
+                <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
+                <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
