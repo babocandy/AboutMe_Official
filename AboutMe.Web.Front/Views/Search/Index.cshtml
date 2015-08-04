@@ -27,6 +27,11 @@
             var f = document.bform;
             //alert('ok');
             //alert(f.P_CATE_CODE_3DEPTH[0].checked);
+            if (f.SEARCH_KEWWORD.value == '') {
+                alert('검색어를 입력해 주세요')
+                f.SEARCH_KEWWORD.focus();
+                return false;
+            }
             f.target = "";
             f.PAGE.value = 1;
             f.submit();

@@ -14,6 +14,20 @@ namespace AboutMe.Domain.Service.Product
 
         #region 상품
 
+        #region 상품 메인 리스트
+        public List<SP_PRODUCT_MAIN_SEL_Result> GetProductMainList(string cate)
+        {
+
+            List<SP_PRODUCT_MAIN_SEL_Result> lst = new List<SP_PRODUCT_MAIN_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_PRODUCT_MAIN_SEL(cate).ToList();
+            }
+
+            return lst;
+        }
+        #endregion
+
         #region 상품 리스트
         public List<SP_PRODUCT_SEL_Result> GetProductList(Product_front_search_entity product_front_search_entity)
         {
