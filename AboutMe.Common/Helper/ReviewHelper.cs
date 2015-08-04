@@ -35,13 +35,13 @@ namespace AboutMe.Common.Helper
                 d.C_CATE_CODE = item.C_CATE_CODE;
 
 
-                d.SKIN_TYPE = ConvertSkinType(item.SKIN_TYPE);
+                d.SKIN_TYPE = SkinTypeCode.GetNameByCode(item.SKIN_TYPE);
                 d.COMMENT = item.COMMENT;
                 d.ADD_IMAGE = item.ADD_IMAGE;
 
-                d.IS_BEAUTY = item.CATE_GBN == "101" ? true : false;
-                d.IS_BEST = item.IS_BEST == CommonCode.YES ? true : false;
-                d.IS_PHOTO = item.IS_PHOTO == CommonCode.YES ? true : false;
+                d.IS_BEAUTY = item.CATE_GBN == CategoryCode.BEAUTY ? true : false;
+                d.IS_BEST = item.IS_BEST == YNCode.YES ? true : false;
+                d.IS_PHOTO = item.IS_PHOTO == YNCode.YES ? true : false;
 
                 d.INS_DATE = item.INS_DATE.Value.ToString("yyyy.MM.dd");
 
@@ -67,18 +67,18 @@ namespace AboutMe.Common.Helper
                 d.P_CODE = item.P_CODE;
                 d.P_NAME = item.P_NAME;
                 d.C_CATE_CODE = item.C_CATE_CODE;
-                d.CATE_GBN = item.CATE_GBN == "101" ? "뷰티" : "헬스";
+                d.CATE_GBN = CategoryCode.GetNameByCode( item.CATE_GBN );//== "101" ? "뷰티" : "헬스";
                 d.COMMENT = item.COMMENT;
                 d.IS_PHOTO = item.IS_PHOTO;
                 d.INS_DATE = item.INS_DATE.Value.ToShortDateString();
-                d.IS_BEST = item.IS_BEST == "Y" ? "O" : "";
+                d.IS_BEST = item.IS_BEST == YNCode.YES ? "O" : "";
 
                 d.P_MAIN_IMG = item.P_MAIN_IMG;
                 d.VIEW_CNT = item.VIEW_CNT ?? 0;
                 d.M_GRADE = MemberCode.GetNameByCode( item.M_GRADE );
                 d.MEDIA_GBN = item.MEDIA_GBN != null ? MediaCode.GetNameByCode(item.MEDIA_GBN) : "";
                 d.ADD_IMAGE = item.ADD_IMAGE;
-                d.IS_DISPLAY = item.IS_DISPLAY == "Y" ? "전시" : "비전시";
+                d.IS_DISPLAY = item.IS_DISPLAY == YNCode.YES ? "전시" : "비전시";
 
                 list.Add(d);
             }
@@ -119,33 +119,6 @@ namespace AboutMe.Common.Helper
             return list;
         }
 
-
-        /*
-         * 스킨타입값 변경-> css className
-         */
-        public static string ConvertSkinType(string code)
-        {
-            //10=건성, 20=중성, 30=지복합성
-
-            string ret = "";
-
-            if (code == SkinTypeCode.Dry)
-            {
-                ret = "dry";
-            }
-            else if (code == SkinTypeCode.Normal)
-            {
-                ret = "normal";
-            }
-            else if (code == SkinTypeCode.Oily)
-            {
-                ret = "oily";
-            }
-
-            return ret;
-
-        }
-
         /**
          * 나이대
          */
@@ -171,7 +144,7 @@ namespace AboutMe.Common.Helper
          */
         public static bool CheckBeauty(string pCateCode)
         {
-            return pCateCode.Substring(0, 3) == "101" ? true : false;
+            return pCateCode.Substring(0, 3) == CategoryCode.BEAUTY? true : false;
         }
 
 

@@ -6,10 +6,39 @@ using System.Threading.Tasks;
 
 namespace AboutMe.Common.Data
 {
-    public class CommonCode
+    public class BaseCode
+    {
+
+    }
+
+    public class YNCode
     {        
         public static string YES = "Y";
         public static string NO = "N";
+    }
+
+    public class CategoryCode
+    {
+        public static string BEAUTY = "101";
+        public static string HEALTH = "102";
+        public static string SEL_SHOP = "103";
+
+        public static string BEAUTY_NAME = "뷰티";
+        public static string HEALTH_NAME = "헬스";
+        public static string SEL_SHOP_NAME = "셀렉샵";
+
+        public static Dictionary<String, String> List = new Dictionary<string, string>(){
+            { BEAUTY, BEAUTY_NAME},
+            { HEALTH, HEALTH_NAME},
+            { SEL_SHOP, SEL_SHOP_NAME}
+        };
+
+        public static string GetNameByCode(string code)
+        {
+            return List[code];
+        }
+
+
     }
 
     public class MemberCode
@@ -62,16 +91,16 @@ namespace AboutMe.Common.Data
 
     //팝업,리뷰등에서 사용
     public class MediaCode{
-        public static string ALL = "10";
-        public static string WEB = "20";
-        public static string MOBILE = "30";
+        public static string BOTH = "30";
+        public static string WEB = "10";
+        public static string MOBILE = "20";
 
-        public static string ALL_NAME = "전체";
+        public static string BOTH_NAME = "전체";
         public static string WEB_NAME = "웹";
         public static string MOBILE_NAME = "모바일";
 
         public static Dictionary<String, String> List = new Dictionary<string, string>(){
-            { ALL, ALL_NAME},
+            { BOTH, BOTH_NAME},
             { WEB, WEB_NAME},
             { MOBILE, MOBILE_NAME}
         };
@@ -90,6 +119,21 @@ namespace AboutMe.Common.Data
         public static string Dry = "10";
         public static string Normal = "20";
         public static string Oily = "30";
+
+        public static string Dry_NAME = "dry";
+        public static string Normal_NAME = "normal";
+        public static string Oily_NAME = "oily";
+
+        public static Dictionary<String, String> List = new Dictionary<string, string>(){
+            { Dry, Dry_NAME},
+            { Normal, Normal_NAME},
+            { Oily, Oily_NAME}
+        };
+
+        public static string GetNameByCode(string code)
+        {
+            return List[code];
+        }
     }
 
     //전시물 코드

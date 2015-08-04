@@ -22,9 +22,9 @@ namespace AboutMe.Common.Helper
 
                 d.IDX = item.IDX;
 
-                if (item.MEDIA_GBN == MediaCode.ALL)
+                if (item.MEDIA_GBN == MediaCode.BOTH)
                 {
-                    d.MEDIA_GBN = MediaCode.ALL_NAME;
+                    d.MEDIA_GBN = MediaCode.BOTH_NAME;
                 }
                 else if (item.MEDIA_GBN == MediaCode.WEB)
                 {
@@ -37,7 +37,7 @@ namespace AboutMe.Common.Helper
 
                 d.TITLE = item.TITLE;
 
-                d.IS_DISPLAY = item.IS_DISPLAY =="Y" ? true : false;
+                d.IS_DISPLAY = item.IS_DISPLAY == YNCode.YES ? true : false;
                 d.DISPLAY_START = item.DISPLAY_START != null ? item.DISPLAY_START.Value.ToString("yyyy-MM-dd HH:mm") : "";
                 d.DISPLAY_END = item.DISPLAY_END != null ? item.DISPLAY_END.Value.ToString("yyyy-MM-dd HH:mm") : "";
                 d.WEB_IMG = item.WEB_IMG;
