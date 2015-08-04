@@ -32,6 +32,7 @@ namespace AboutMe.Web.Admin.Controllers
         {
             AdminReviewListViewModel model = new AdminReviewListViewModel();
 
+
             var tp = _service.ReviewPdtList(p);
             model.List = ReviewHelper.GetDataForAdminUser(tp.Item1);
             model.Total = tp.Item2;
@@ -70,13 +71,16 @@ namespace AboutMe.Web.Admin.Controllers
             model.Review = TempData["ReviewData"] as AdminReviewUserModel;
             TempData["ReviewData"] = model.Review;
 
-            //_service.
+ 
 
             if (ModelState.IsValid)
             {
                 AdminReviewSaveParam p = new AdminReviewSaveParam();
                 p.IDX = model.IDX;
                 //p.COMMENT = model.COMMENT;
+
+                
+
                 p.IS_DISPLAY = model.IS_DISPLAY;
                 p.IS_BEST = model.IS_BEST;
 
@@ -89,8 +93,30 @@ namespace AboutMe.Web.Admin.Controllers
             }
 
             return View(model);
+        }
 
+        /**
+         * 테마
+         */
+         [CustomAuthorize]
+        public ActionResult Thema()
+        {
+            AdminReviewThemaInputViewModel model = new AdminReviewThemaInputViewModel();
+            model.Thema = _service.ThemaList();
+            return View(model);
+        }
 
+        [HttpPost]
+        [CustomAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveThema(AdminReviewThemaParamToInputDB p)
+        {
+
+            _service.ThemaUpdate(p);
+
+            @TempData["ResultNum"] = "0";
+
+            return Redirect( Request.UrlReferrer.ToString() );
         }
     }
 }

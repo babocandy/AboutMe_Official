@@ -83,8 +83,10 @@
 
     <div class="panel">
         <h3 class="sub-header">상품리뷰관리</h3>
+        <div class="tar mb10">
+            <a href="#" class="btn btn-default middium" onclick="window.open('@Url.Action("Thema", "AdminReview")', 'window', 'width=800,height=700');" style="width:100px">테마설정</a>
+        </div>
         <div class="">
-
 @using (Html.BeginForm("Index", "AdminReview", FormMethod.Get, new { id = "frmSearch", name = "frmSearch" }))
 {
             <table class="table table_row">
@@ -130,23 +132,23 @@
                     <tr>
                         <th>매체구분</th>
                         <td>
-                            <label for="sort1"><input type="radio" id="sort1" name="MEDIA_GBN" value="" @(Model.RouteParam.MEDIA_GBN == null? "checked" : "") /><span class="txt mr5">전체</span></label>
-                            <label for="sort2"><input type="radio" id="sort2" name="MEDIA_GBN" value="@MediaCode.WEB" @(Model.RouteParam.MEDIA_GBN == MediaCode.WEB ? "checked" : "") /><span class="txt mr5">WEB</span></label>
-                            <label for="sort3"><input type="radio" id="sort3" name="MEDIA_GBN" value="@MediaCode.MOBILE" @(Model.RouteParam.MEDIA_GBN == MediaCode.MOBILE ? "checked" : "") /><span class="txt mr5">MOBILE</span></label>
+                            <!--<label for="sort1"><input type="radio" id="sort1" name="MEDIA_GBN" value="" @(Model.RouteParam.MEDIA_GBN == null? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                            <label for="sort2"><input type="checkbox" id="sort2" name="MEDIA_GBN_W" value="@MediaCode.WEB" @(Model.RouteParam.MEDIA_GBN_W == MediaCode.WEB ? "checked" : "") /><span class="txt mr5">WEB</span></label>
+                            <label for="sort3"><input type="checkbox" id="sort3" name="MEDIA_GBN_M" value="@MediaCode.MOBILE" @(Model.RouteParam.MEDIA_GBN_M == MediaCode.MOBILE ? "checked" : "") /><span class="txt mr5">MOBILE</span></label>
                         </td>
                         <th>상품평</th>
                         <td>
-                            <label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" value="" @(Model.RouteParam.IS_PHOTO == null? "checked" : "") /><span class="txt mr5">전체</span></label>
-                            <label for="sort5"><input type="radio" id="sort5" name="IS_PHOTO" value="Y" @(Model.RouteParam.IS_PHOTO == "Y" ? "checked" : "") /><span class="txt mr5">포토</span></label>
-                            <label for="sort6"><input type="radio" id="sort6" name="IS_PHOTO" value="N" @(Model.RouteParam.IS_PHOTO == "N" ? "checked" : "") /><span class="txt mr5">텍스트</span></label>
+                            <!--<label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" value="" @(Model.RouteParam.IS_PHOTO == null? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                            <label for="sort5"><input type="checkbox" id="sort5" name="IS_PHOTO_Y" value="@YNCode.YES" @(Model.RouteParam.IS_PHOTO_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">포토</span></label>
+                            <label for="sort6"><input type="checkbox" id="sort6" name="IS_PHOTO_N" value="@YNCode.NO" @(Model.RouteParam.IS_PHOTO_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">텍스트</span></label>
                         </td>
                     </tr>
                     <tr>
                         <th>전시여부</th>
                         <td colspan="3">
-                            <label for="sort7"><input type="radio" id="sort7" name="IS_DISPLAY" value="" @(Model.RouteParam.IS_DISPLAY == null ? "checked" : "") /><span class="txt mr5">전체</span></label>
-                            <label for="sort8"><input type="radio" id="sort8" name="IS_DISPLAY" value="Y" @(Model.RouteParam.IS_DISPLAY == "Y" ? "checked" : "") /><span class="txt mr5">전시</span></label>
-                            <label for="sort9"><input type="radio" id="sort9" name="IS_DISPLAY" value="N" @(Model.RouteParam.IS_DISPLAY == "N" ? "checked" : "") /><span class="txt mr5">비전시</span></label>
+                            <!--<label for="sort7"><input type="checkbox" id="sort7" name="IS_DISPLAY" value="" @(Model.RouteParam.IS_DISPLAY == null ? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                            <label for="sort8"><input type="checkbox" id="sort8" name="IS_DISPLAY_Y" value="@YNCode.YES" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">전시</span></label>
+                            <label for="sort9"><input type="checkbox" id="sort9" name="IS_DISPLAY_N" value="@YNCode.NO" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비전시</span></label>
                         </td>
                     </tr>
                 </tbody>
@@ -216,8 +218,6 @@
             string search = Utility01.ConvertObject2UriQuery(Model.RouteParam);
 
         }
-
-       @search
 
         @{ 
             Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });

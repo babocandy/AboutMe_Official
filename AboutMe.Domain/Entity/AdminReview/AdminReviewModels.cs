@@ -24,11 +24,21 @@ namespace AboutMe.Domain.Entity.AdminReview
 
         public string SEARCH_KEY { get; set; }
         public string SEARCH_VALUE { get; set; }
+        
         public string MEDIA_GBN { get;set; }
+        public string MEDIA_GBN_W { get; set; }
+        public string MEDIA_GBN_M { get; set; }
+
         public string SEL_DATE_FROM { get;set; }
         public string SEL_DATE_TO { get;set; }
+
         public string IS_PHOTO { get;set; }
+        public string IS_PHOTO_Y { get; set; }
+        public string IS_PHOTO_N { get; set; }
+
         public string IS_DISPLAY { get; set; }
+        public string IS_DISPLAY_Y { get; set; }
+        public string IS_DISPLAY_N { get; set; }
     }
 
     public class AdminReviewUserModel
@@ -62,4 +72,14 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string IS_DISPLAY{get;set;}
         public string IS_BEST{get;set;}
     }
+
+    public class AdminReviewThemaParamToInputDB
+    {
+        public int? IDX { get; set; }
+        public string TITLE { get; set; }
+        public string IS_DISPLAY { get; set; }
+        public string TAG { get; set; }
+    }
+
+
 }
