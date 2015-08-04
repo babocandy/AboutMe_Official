@@ -9,6 +9,7 @@ using AboutMe.Web.Front.Models;
 using AboutMe.Domain.Service.Review;
 using AboutMe.Domain.Service.Product;
 
+using AboutMe.Common.Data;
 using AboutMe.Common.Helper;
 using AboutMe.Domain.Entity.Review;
 
@@ -35,12 +36,12 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult Product()
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
-            model.CategoryBeauty = _ProductService.GetCategoryDeptList("SKIN_TYPE", "101", "");
-            model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", "103", "");
-            model.CategoryCodeHealth = "102100100";
+            model.CategoryBeauty = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.BEAUTY, "");
+            model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
+            model.CategoryCodeHealth = CategoryCode.HEALTH_DEFAULT;
 
-            var tp = _ReviewService.GetReviewProductList(null, model.DefaultCategoryCode, model.DefaultSort);
-            model.Reviews = ReviewHelper.GetDataForDisplay(tp.Item1);
+            var tp = _ReviewService.GetReviewProductList(null, CategoryCode.BEAUTY_DEFAULT, ReviewProductListViewModel.SORT_PHOTO);
+            model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
             model.Total = tp.Item2;
 
 
@@ -57,7 +58,7 @@ namespace AboutMe.Web.Front.Controllers
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
             var tp = _ReviewService.GetReviewProductList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
-            model.Reviews =  ReviewHelper.GetDataForDisplay( tp.Item1 );
+            model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
             model.Total = tp.Item2;
 
             var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } };
@@ -72,7 +73,7 @@ namespace AboutMe.Web.Front.Controllers
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
             
             var tp = _ReviewService.GetReviewProductListByProductCode(P_CODE);
-            model.Reviews = ReviewHelper.GetDataForDisplay(tp.Item1);
+            model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
             model.Total = tp.Item2;
             model.PageNo = 1;
             model.Pcode = P_CODE;
@@ -87,7 +88,7 @@ namespace AboutMe.Web.Front.Controllers
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
 
             var tp = _ReviewService.GetReviewProductListByProductCode(param.P_CODE, param.PAGE_NO);
-            model.Reviews = ReviewHelper.GetDataForDisplay(tp.Item1);
+            model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
             model.Total = tp.Item2;
             model.Pcode = param.P_CODE;
 

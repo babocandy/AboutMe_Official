@@ -1,5 +1,7 @@
 ﻿@model AboutMe.Web.Front.Models.ReviewProductListViewModel
+@using AboutMe.Common.Data
 @using AboutMe.Common.Helper
+@using AboutMe.Web.Front.Models
 @using AboutMe.Web.Front.Controllers
 @{
     ViewBag.Title = "Review Product";
@@ -29,9 +31,9 @@
     var img_path_product = "@myController._img_path_product";
     var img_path_review = "@myController._img_path_review";
 
-    var categoryCode = "@Model.DefaultCategoryCode";
-    var sort = "@Model.DefaultSort";//포토순
-    var tailIdx = @Model.Reviews.Last().IDX;
+    var categoryCode = "@CategoryCode.BEAUTY_DEFAULT";
+    var sort = "@ReviewProductListViewModel.SORT_PHOTO";//포토순
+    var tailIdx = @(Model.Reviews.Count > 0 ? Model.Reviews.Last().IDX : -1);
 
     console.log("tailIdx", tailIdx);
 
@@ -203,7 +205,7 @@
                         @if (Model.CategoryBeauty.Count > 0)
                         {
                             <ul>
-                                <li><a href="#" onclick="selectCategoryMenu('101100100'); return false;">전체</a></li>
+                                <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.BEAUTY_DEFAULT'); return false;">전체</a></li>
                                 @foreach (var item in Model.CategoryBeauty)
                                 {
 
@@ -216,7 +218,7 @@
                     <div class="sort ">
                         <p class="tit">헬스</p>
                         <ul>
-                            <li><a href="#" onclick="selectCategoryMenu('102100100'); return false;">전체</a></li>
+                            <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.HEALTH_DEFAULT'); return false;">전체</a></li>
                         </ul>
                     </div>
                     <div class="sort">
@@ -224,7 +226,7 @@
                         @if (Model.CategorySelShop.Count > 0)
                         {
                             <ul>
-                                <li><a href="#" onclick="selectCategoryMenu('103100100'); return false;">전체</a></li>
+                                <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.SEL_SHOP_DEFAULT'); return false;">전체</a></li>
                                 @foreach (var item in Model.CategorySelShop)
                                 {
                                     <li><a href="#" onclick="selectCategoryMenu('@item.CATE_CODE');return false;">@item.DEPTH2_NAME</a></li>
@@ -246,8 +248,8 @@
                     <!--sort-->
                     <div class="sort">
                         <ul>
-                            <li class="cnt"><a href="#" onclick="sorting('0');return false;">포토리뷰순</a></li>
-                            <li><a href="#" onclick="sorting('1');return false;">최신순</a></li>
+                            <li class="cnt"><a href="#" onclick="sorting('@ReviewProductListViewModel.SORT_PHOTO');return false;">포토리뷰순</a></li>
+                            <li><a href="#" onclick="sorting('@ReviewProductListViewModel.SORT_LASTEST');return false;">최신순</a></li>
                         </ul>
                     </div>
                     <!--//sort-->

@@ -84,16 +84,9 @@
                     <!--//상품사진-->
                     <!--상품정보-->
                     <div class="info_area">
-                        <!--sns버튼-->
-                        <div class="sns">
-                            <ul>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_weibo.gif" alt="웨이보" /></a></li>
-                            </ul>
-                        </div>
-                        <!--//sns버튼-->
+                        @{ Html.RenderAction("SnsInProductDetail", "SNS", new { P_CODE = @ViewBag.P_CODE }); }
+                        
+    
                         <!--상품해당아이콘-->
                         <div class="ico_area">
                             <span class="ico_time">TIME</span>

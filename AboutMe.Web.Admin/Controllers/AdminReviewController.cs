@@ -76,7 +76,7 @@ namespace AboutMe.Web.Admin.Controllers
             {
                 AdminReviewSaveParam p = new AdminReviewSaveParam();
                 p.IDX = model.IDX;
-                p.COMMENT = model.COMMENT;
+                //p.COMMENT = model.COMMENT;
                 p.IS_DISPLAY = model.IS_DISPLAY;
                 p.IS_BEST = model.IS_BEST;
 

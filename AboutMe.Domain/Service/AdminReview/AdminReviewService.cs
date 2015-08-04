@@ -72,7 +72,7 @@ namespace AboutMe.Domain.Service.AdminReview
         }
 
         /**
-         * 팝업 수정
+         * 상품리뷰  수정
          */
         public Tuple<string, string> ReviewPdtUpdate(AdminReviewSaveParam p)
         {
@@ -81,7 +81,7 @@ namespace AboutMe.Domain.Service.AdminReview
 
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                context.SP_ADMIN_REVIEW_PRODUCT_UPDATE(p.IDX, p.IS_BEST, p.IS_DISPLAY, p.COMMENT, retNum, retMsg);
+                context.SP_ADMIN_REVIEW_PRODUCT_UPDATE(p.IDX, p.IS_BEST, p.IS_DISPLAY, retNum, retMsg);
             }
 
             return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());

@@ -58,7 +58,7 @@ namespace AboutMe.Domain.Entity.AdminReview
 
     public class AdminReviewSaveParam{
         public int? IDX { get; set; }
-        public string COMMENT { get; set; }
+        //public string COMMENT { get; set; }
         public string IS_DISPLAY{get;set;}
         public string IS_BEST{get;set;}
     }

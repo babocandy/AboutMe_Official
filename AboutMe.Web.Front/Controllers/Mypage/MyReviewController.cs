@@ -30,13 +30,6 @@ namespace AboutMe.Web.Front.Controllers
             this._ReviewService = _reviewService;
         }
 
-        // GET: MyReview
-        /*
-        public ActionResult Index()
-        {
-            return View();
-        }*/
-
         /**
          * 작성가능한 리뷰 목록 조회
          */
@@ -53,11 +46,11 @@ namespace AboutMe.Web.Front.Controllers
         {
             
             MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
-            ViewBag.img_path_review = _img_path_review; //이미지디렉토리경로
+           // ViewBag.img_path_review = _img_path_review; //이미지디렉토리경로
             model.PageNo = page;
 
 
-            model.Reviews = ReviewHelper.GetDataForDisplay(_ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page));
+            model.Reviews = ReviewHelper.GetDataForUser(_ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page));
             model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
 
             return View(model);
@@ -65,20 +58,19 @@ namespace AboutMe.Web.Front.Controllers
 
         [HttpGet]
         [CustomAuthorize]
-        public ActionResult Write(int? ORDER_DETAIL_IDX, string P_CODE = null)
+        //public ActionResult Write(int? ORDER_DETAIL_IDX, string P_CODE = null)
+        public ActionResult Write(MyReviewPdtInputParam p)
         {
             MyReviewInsertViewModel model = new MyReviewInsertViewModel();
             model.M_ID = _user_profile.M_ID;
-            model.ORDER_DETAIL_IDX = ORDER_DETAIL_IDX;
-            model.P_CODE = P_CODE;
+            model.ORDER_DETAIL_IDX = p.ORDER_DETAIL_IDX;
+            model.P_CODE = p.P_CODE;
 
             //상품정보
-            if (P_CODE != null)
+            if (p.P_CODE != null)
             {
-                model.ProductInfo = _ReviewService.GetProductInfo(P_CODE);
+                model.ProductInfo = _ReviewService.GetProductInfo(p.P_CODE);
             }
-           // Debug.WriteLine("P_CODE: " + P_CODE);
-            //Debug.WriteLine("model.ProductInfo: " + model.ProductInfo);
 
             return View(model);
         }
@@ -88,12 +80,6 @@ namespace AboutMe.Web.Front.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Write(MyReviewInsertViewModel model)
         {
-
-           // Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
-            //Debug.WriteLine("OrderDetailIdx - " + model.ORDER_DETAIL_IDX);
-            //Debug.WriteLine("Pcode - " + model.P_CODE);
-            //Debug.WriteLine("Mid - " + model.M_ID);
-
             /**
              * 상품정보 
              */
@@ -115,16 +101,11 @@ namespace AboutMe.Web.Front.Controllers
            if (ModelState.IsValid){
 
                ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = true };
-
-               // rename, resize, and upload
-               //return object that contains {bool Success,string ErrorMessage,string ImageName}
                Debug.WriteLine("model.UploadImage - " + model.UploadImage );
               
                if (model.UploadImage != null)
                {
                    ImageResult imageResult = imageUpload.RenameUploadFile( model.UploadImage );
-                  // Debug.WriteLine("imageResult.Success - " + imageResult.Success);
-                   //Debug.WriteLine("imageResult.ErrorMessage - " + imageResult.ErrorMessage);
                    if (imageResult.Success)
                    {
                        //Debug.WriteLine(" imageResult.ImageName - " + imageResult.ImageName);
@@ -133,15 +114,24 @@ namespace AboutMe.Web.Front.Controllers
                    }
                }
 
-               Tuple<string, string> ret = _ReviewService.InsertMyReview(model.M_ID, model.ORDER_DETAIL_IDX, model.P_CODE, model.SKIN_TYPE, model.COMMENT, model.ADD_IMAGE);
-               model.ResultMessage = ret.Item2;
-               model.ResultNum = ret.Item1;
+               MyReviewPdtParamOnSaveToDb p = new MyReviewPdtParamOnSaveToDb();
+               p.M_ID = model.M_ID;
+               p.ORDER_DETAIL_IDX =  model.ORDER_DETAIL_IDX;
+               p.P_CODE = model.P_CODE;
+               p.SKIN_TYPE = model.SKIN_TYPE;
+               p.COMMENT = model.COMMENT;
+               p.ADD_IMAGE =  model.ADD_IMAGE;
+
+               Tuple<string, string> ret = _ReviewService.InsertMyReview(p);
+
+               TempData["ResultNum"] = ret.Item1;
+               TempData["ResultMessage"] = ret.Item2;
 
                return View(model);
            }
 
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
-
+            /*
             if (model.ORDER_DETAIL_IDX == null )
             {
                  ModelState.AddModelError("", "*주문상세일련번호가 필요합니다.");
@@ -155,15 +145,52 @@ namespace AboutMe.Web.Front.Controllers
             if (model.M_ID == null && model.M_ID == "")
             {
                 ModelState.AddModelError("", "*회원아이디가 필요합니다.");
-            }
+            }*/
 
             return View(model);
         }
 
-
-        public ActionResult Update()
+        [HttpGet]
+        [CustomAuthorize]
+        [Route("Update/{id:int}")]
+        public ActionResult Update(int? id)
         {
-            return View();
+            MyReviewUpdateViewModel model = new MyReviewUpdateViewModel();
+
+            model.ReviewPdtInfo = ReviewHelper.GetDataForUserOnUpdate( _ReviewService.ReviewProductInfo(id) );
+            TempData["MyReveiwUpdateData"] = model.ReviewPdtInfo;
+            return View(model);
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        [ValidateAntiForgeryToken]
+        [Route("Update/{id:int}")]
+        public ActionResult Update(MyReviewUpdateViewModel model)
+        {
+            Debug.WriteLine("Update");
+
+            model.ReviewPdtInfo = TempData["MyReveiwUpdateData"] as ReviewProductInfo;
+            TempData["MyReveiwUpdateData"] = model.ReviewPdtInfo;
+
+            if (ModelState.IsValid)
+            {
+                MyReviewPdtParamOnSaveToDb p = new MyReviewPdtParamOnSaveToDb();
+                p.IDX = model.ReviewPdtInfo.IDX;
+                p.COMMENT = model.COMMENT;
+               
+
+                Tuple<string, string> ret = _ReviewService.UpdateMyReview(p);
+
+                TempData["ResultNum"] = ret.Item1;
+                TempData["ResultMessage"] = ret.Item2;
+
+                return View(model);
+            }
+
+            ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
+
+            return View(model);
         }
     }
 }

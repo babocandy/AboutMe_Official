@@ -14,7 +14,10 @@ namespace AboutMe.Common.Helper
 {
     public class ReviewHelper
     {
-        public static List<ReviewProductInfo> GetDataForDisplay(List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> r){
+        /**
+         * 프론트 사용자 화면용
+         */
+        public static List<ReviewProductInfo> GetDataForUser(List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> r){
 
             List<ReviewProductInfo> list = new List<ReviewProductInfo>();
 
@@ -27,7 +30,8 @@ namespace AboutMe.Common.Helper
                 d.M_NAME = item.M_NAME;
                 d.M_SEX = ConvertGenger(item.M_SEX);
                 d.M_BIRTHDAY = ConvertAge(item.M_BIRTHDAY);
-                
+                d.ORDER_DETAIL_IDX = item.ORDER_DETAIL_IDX;
+
                 d.P_CODE = item.P_CODE;
                 d.P_MAIN_IMG = item.P_MAIN_IMG;
                 d.P_SUB_TITLE = item.P_SUB_TITLE;
@@ -35,7 +39,7 @@ namespace AboutMe.Common.Helper
                 d.C_CATE_CODE = item.C_CATE_CODE;
 
 
-                d.SKIN_TYPE = SkinTypeCode.GetNameByCode(item.SKIN_TYPE);
+                d.SKIN_TYPE = SkinTypeCode.GetCssNameByCode(item.SKIN_TYPE);
                 d.COMMENT = item.COMMENT;
                 d.ADD_IMAGE = item.ADD_IMAGE;
 
@@ -49,6 +53,41 @@ namespace AboutMe.Common.Helper
             }
             return list;
         }
+
+        /**
+         * 프론트 사용자 화면용 - 수정시
+         */
+        public static ReviewProductInfo GetDataForUserOnUpdate(SP_REVIEW_PRODUCT_INFO_Result r)
+        {
+
+            ReviewProductInfo d = new ReviewProductInfo();
+
+
+            d.IDX = r.IDX;
+            d.M_ID = r.M_ID;
+            d.M_NAME = r.M_NAME;
+
+
+            d.P_CODE = r.P_CODE;
+            d.P_MAIN_IMG = r.P_MAIN_IMG;
+            d.P_SUB_TITLE = r.P_SUB_TITLE;
+            d.P_NAME = r.P_NAME;
+            d.C_CATE_CODE = r.C_CATE_CODE;
+
+
+            d.SKIN_TYPE = SkinTypeCode.GetNameByCode(r.SKIN_TYPE);
+            d.COMMENT = r.COMMENT;
+            d.ADD_IMAGE = r.ADD_IMAGE;
+
+            d.IS_BEAUTY = r.CATE_GBN == CategoryCode.BEAUTY ? true : false;
+            d.IS_BEST = r.IS_BEST == YNCode.YES ? true : false;
+            d.IS_PHOTO = r.IS_PHOTO == YNCode.YES ? true : false;
+
+            d.INS_DATE = r.INS_DATE.ToString("yyyy.MM.dd");
+
+            return d;
+        }
+
 
         /**
          * 관리자 사용자 화면용 - 목록

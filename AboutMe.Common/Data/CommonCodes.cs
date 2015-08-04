@@ -23,6 +23,10 @@ namespace AboutMe.Common.Data
         public static string HEALTH = "102";
         public static string SEL_SHOP = "103";
 
+        public static string BEAUTY_DEFAULT = "101100100";
+        public static string HEALTH_DEFAULT = "102100100";
+        public static string SEL_SHOP_DEFAULT = "103100100";
+
         public static string BEAUTY_NAME = "뷰티";
         public static string HEALTH_NAME = "헬스";
         public static string SEL_SHOP_NAME = "셀렉샵";
@@ -35,7 +39,7 @@ namespace AboutMe.Common.Data
 
         public static string GetNameByCode(string code)
         {
-            return List[code];
+            return code != null ? List[code] : "";
         }
 
 
@@ -63,7 +67,7 @@ namespace AboutMe.Common.Data
 
         public static string GetNameByCode(string code)
         {
-            return List[code];
+            return code != null ? List[code] : "";
         }
 
 
@@ -84,20 +88,22 @@ namespace AboutMe.Common.Data
 
         public static string GetNameByCode(string code)
         {
-            return List[code];
+            return code != null ? List[code] : "";
         }
 
     }
 
     //팝업,리뷰등에서 사용
     public class MediaCode{
-        public static string BOTH = "30";
+        
         public static string WEB = "10";
         public static string MOBILE = "20";
+        public static string BOTH = "30";
 
-        public static string BOTH_NAME = "전체";
+        
         public static string WEB_NAME = "웹";
         public static string MOBILE_NAME = "모바일";
+        public static string BOTH_NAME = "전체";
 
         public static Dictionary<String, String> List = new Dictionary<string, string>(){
             { BOTH, BOTH_NAME},
@@ -107,7 +113,7 @@ namespace AboutMe.Common.Data
 
         public static string GetNameByCode(string code)
         {
-            return List[code];
+            return code != null ? List[code] : "";
         }
        
 
@@ -120,9 +126,13 @@ namespace AboutMe.Common.Data
         public static string Normal = "20";
         public static string Oily = "30";
 
-        public static string Dry_NAME = "dry";
-        public static string Normal_NAME = "normal";
-        public static string Oily_NAME = "oily";
+        public static string Dry_NAME = "지성";
+        public static string Normal_NAME = "중성";
+        public static string Oily_NAME = "지복합성";
+
+        public static string Dry_CSS_NAME = "dry";
+        public static string Normal_CSS_NAME = "normal";
+        public static string Oily_CSS_NAME = "oily";
 
         public static Dictionary<String, String> List = new Dictionary<string, string>(){
             { Dry, Dry_NAME},
@@ -130,9 +140,20 @@ namespace AboutMe.Common.Data
             { Oily, Oily_NAME}
         };
 
+        public static Dictionary<String, String> ListCss = new Dictionary<string, string>(){
+            { Dry, Dry_CSS_NAME},
+            { Normal, Normal_CSS_NAME},
+            { Oily, Oily_CSS_NAME}
+        };
+
         public static string GetNameByCode(string code)
         {
-            return List[code];
+
+            return code != null ? List[code] : "";
+        }
+        public static string GetCssNameByCode(string code)
+        {
+            return code != null ? ListCss[code] : "";
         }
     }
 
