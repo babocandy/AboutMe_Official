@@ -12,6 +12,10 @@ namespace AboutMe.Domain.Service.Product
     public interface IProductService
     {
         #region 상품
+
+        //상품 모바일 메인 리스트
+        List<SP_PRODUCT_MAIN_SEL_Result> GetProductMainList(string cate);
+
         //상품 리스트
         List<SP_PRODUCT_SEL_Result> GetProductList(Product_front_search_entity product_front_search_entity);
         //상품 카운트

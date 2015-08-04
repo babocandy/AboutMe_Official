@@ -3,31 +3,49 @@
 	<div class="h_top">
 		<h1><a href="#"><img src="/aboutCom/images/common/h_logo.png" alt="ABOUTME" /></a></h1>
 		<a href="#" class="openlnb"><img src="/aboutCom/images/common/btn_nav.png" alt="" /></a>
-		<a href="#" class="btn_cart"><img src="/aboutCom/images/common/btn_cart.png" alt="" /></a>
+		<a href="#" class="btn_search"><img src="/aboutCom/images/common/btn_search.png" alt="" /></a>
+		<a href="#" class="btn_cart">
+			<span class="num">5</span>
+			<img src="/aboutCom/images/common/btn_cart.png" alt="" />
+		</a>
 	</div>
 	<!--h_top-->
 
-	<!--쇼핑백-->
-	<div class="lycart">
-	
+	<!--h_menu-->
+	<div class="h_menu">
+		<ul>
+			<li><a href="/aboutme/brand.asp">브랜드스토리</a></li>
+			<li><a href="/shopping/display_main.asp">쇼핑</a></li>
+			<li><a href="/event/main.asp">이벤트</a></li>
+		</ul>
 	</div>
-	<!--//쇼핑백-->
+	<!--//h_menu-->
 	
 	<!--lnb-->
 	<div class="lnb_area">
 		<div class="dim"></div>
 		<a href="#" class="lnbclose">닫으시오</a>
 		<div class="lnb">
+			<!--로그인 시-->
 			<!-- 등급별 css 
 				vip : vip
 				gold :  gold
 				sliver : sliver
 				bronze : bronze
 			-->
-			<div class="userclass_info bronze">
+			<div class="userclass_info bronze" style="display:none">
 				<strong>최고운</strong>님은 
 				<span>BRONZE 클래스</span>입니다.
 			</div>
+			<!--//로그인 시-->
+			
+			<!--미로그인시-->
+			<div class="logintxt">
+				로그인을 해주세요
+				<a href="#" class="btn btn_gray_h25 ml10" style="width:80px;">로그인</a>
+			</div>
+			<!--//미로그인시-->
+
 			<a href="#" class="btn_cart"><img src="/aboutCom/images/common/btn_lnbcart.gif" alt="쇼핑백" /></a>
 			<div class="nav">
 				<ul class="depth1">
@@ -66,7 +84,7 @@
 									<li><a href="#">뉴트리선케어</a></li>
 									<li><a href="#">웨이트케어</a></li>
 								</ul>
-								<p class="tit">셀렉샵</p>
+								<p class="tit">기타브랜드</p>
 								<ul>
 									<li><a href="#">엘라바쉐</a></li>
 									<li><a href="#">엘라바쉐</a></li>
@@ -75,10 +93,10 @@
 							</div>
 						</div>
 					</li>
+					<li><a href="#">이벤트</a></li>
+					<li><a href="#">멤버쉽혜택</a></li>
 					<li><a href="#">상품리뷰</a></li>
 					<li><a href="#">체험단리뷰</a></li>
-					<li><a href="#">이벤트</a></li>
-					<li><a href="#">VIP샵</a></li>
 					<li><a href="#">고객센터</a></li>
 					<li><a href="#">매장안내</a></li>
 				</ul>
