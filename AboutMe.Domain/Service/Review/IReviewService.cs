@@ -23,5 +23,6 @@ namespace AboutMe.Domain.Service.Review
         Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort);
         Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10);
         SP_REVIEW_PRODUCT_INFO_Result ReviewProductInfo(int? idx);
+        List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
     }
 }

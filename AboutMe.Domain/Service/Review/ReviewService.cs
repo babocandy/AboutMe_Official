@@ -171,6 +171,18 @@ namespace AboutMe.Domain.Service.Review
         }
 
 
+        public List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList()
+        {
+            List<SP_REVIEW_CATE_THEMA_SEL_Result> lst = new List<SP_REVIEW_CATE_THEMA_SEL_Result>();
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_CATE_THEMA_SEL().ToList();
+            }
+
+            return lst;
+        }
+
 
 
 

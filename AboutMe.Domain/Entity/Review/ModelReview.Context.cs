@@ -156,5 +156,10 @@ namespace AboutMe.Domain.Entity.Review
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_INFO_Result>("SP_REVIEW_PRODUCT_INFO", iDXParameter, rET_NUM, rET_MESSAGE);
         }
+    
+        public virtual ObjectResult<SP_REVIEW_CATE_THEMA_SEL_Result> SP_REVIEW_CATE_THEMA_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_CATE_THEMA_SEL_Result>("SP_REVIEW_CATE_THEMA_SEL");
+        }
     }
 }

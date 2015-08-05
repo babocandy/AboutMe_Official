@@ -60,10 +60,11 @@ namespace AboutMe.Web.Front.Models
         public static string SORT_PHOTO = "0";
         public static string SORT_LASTEST = "1";
 
-        public List<SP_CATEGORY_DEPTH_SEL_Result> CategoryBeauty { get; set; }
-        public List<SP_CATEGORY_DEPTH_SEL_Result> CategorySelShop{ get; set; }
+        public List<SP_CATEGORY_DEPTH_SEL_Result> CategoryBeauty { get; set; }        
         public string CategoryCodeHealth { get; set; }
+        public List<SP_CATEGORY_DEPTH_SEL_Result> CategorySelShop { get; set; }
 
+        public List<SP_REVIEW_CATE_THEMA_SEL_Result> CategoryThema { get; set; }
 
 
     }

@@ -107,12 +107,12 @@ namespace AboutMe.Domain.Entity.AdminReview
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_PRODUCT_UPDATE", iDXParameter, iS_BESTParameter, iS_DISPLAYParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual ObjectResult<SP_REVIEW_CATE_THEMA_SEL_Result> SP_REVIEW_CATE_THEMA_SEL()
+        public virtual ObjectResult<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> SP_ADMIN_REVIEW_CATE_THEMA_SEL()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_CATE_THEMA_SEL_Result>("SP_REVIEW_CATE_THEMA_SEL");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result>("SP_ADMIN_REVIEW_CATE_THEMA_SEL");
         }
     
-        public virtual int SP_REVIEW_CATE_THEMA_UPD(Nullable<int> iDX, string tITLE, string iS_DISPLAY, string tAG)
+        public virtual int SP_ADMIN_REVIEW_CATE_THEMA_UPD(Nullable<int> iDX, string tITLE, string iS_DISPLAY, string tAG)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -130,7 +130,7 @@ namespace AboutMe.Domain.Entity.AdminReview
                 new ObjectParameter("TAG", tAG) :
                 new ObjectParameter("TAG", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_CATE_THEMA_UPD", iDXParameter, tITLEParameter, iS_DISPLAYParameter, tAGParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_CATE_THEMA_UPD", iDXParameter, tITLEParameter, iS_DISPLAYParameter, tAGParameter);
         }
     }
 }

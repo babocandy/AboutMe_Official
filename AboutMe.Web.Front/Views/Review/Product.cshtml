@@ -16,9 +16,6 @@
 
     <script>
 
-
-
-
     </script>
 
 
@@ -237,8 +234,11 @@
                     <div class="sort">
                         <p class="tit">테마별</p>
                         <ul>
-                            <li><a href="#">테마1</a></li>
-                            <li><a href="#">테마2</a></li>
+                            @foreach (var item in Model.CategoryThema)
+                            {
+                                <li><a href="#" onclick="selectCategoryMenu('@item.CODE');return false;">@item.TITLE</a></li>
+                            }
+
                         </ul>
                     </div>
                 </div>

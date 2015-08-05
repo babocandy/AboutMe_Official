@@ -17,7 +17,7 @@ namespace AboutMe.Domain.Service.AdminReview
         Tuple<List<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>, string, string> ReviewPdtInfo(int? idx);
         Tuple<string, string> ReviewPdtUpdate(AdminReviewSaveParam p);
 
-        List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
+        List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
         void ThemaUpdate(AdminReviewThemaParamToInputDB p);
     }
 }
