@@ -82,4 +82,25 @@ namespace AboutMe.Domain.Entity.AdminReview
     }
 
 
+
+    public class AdminReviewExpUserModel
+    {
+        public int? IDX { get; set; }
+    }
+
+    public class AdminReviewExpMasterParamToInputDB
+    {
+        public string P_CODE { get; set; }
+        public string FROM_DATE { get; set; }
+        public string TO_DATE { get; set; }
+        public string IS_AUTH { get; set; }
+    }
+
+    public class AdminReviewExpMemberParamToInputDB
+    {
+        public int? MASTER_IDX { get; set; }
+        public string M_ID { get; set; }
+        public string M_NAME { get; set; }
+    }
+
 }

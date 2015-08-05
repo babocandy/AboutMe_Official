@@ -1,0 +1,226 @@
+﻿@model AboutMe.Web.Admin.Models.AdminReviewExpListViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+}
+
+@section Scripts{
+
+    <script>
+
+        function search_date_change(v) {
+            //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
+
+            var from_date, to_date;
+
+            if (v == "1") //-7 ~오늘
+            {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (v == "2") //-15~오늘
+            {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (v == "3") // -한달~오늘
+            {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $('#SEL_DATE_FROM').val(from_date);
+            $('#SEL_DATE_TO').val(to_date);
+        }
+
+
+        //DatePicker
+        $(document).ready(function () {
+            // create DatePicker from input HTML element
+            $("#SEL_DATE_FROM").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+
+            $("#SEL_DATE_TO").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+        });
+
+        function searching() {
+
+            document.frmSearch.submit();
+
+        }
+
+    </script>
+
+}
+
+@section Body{
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">체험단리뷰관리</h3>
+            <div class="tar mb10">
+                <a href="@Url.Action("Create", "AdminReviewExp")" class="btn btn-default middium" onclick="">리뷰등록권한설정</a>
+            </div>
+            <div class="">
+                @using (Html.BeginForm("Index", "AdminReviewExp", FormMethod.Get, new { id = "frmSearch", name = "frmSearch" }))
+                {
+                    <table class="table table_row">
+                        <colgroup><col width="10%" /><col width="*" /><col width="10%" /><col width="20%" /><col width="9%" /><col width="23%" /><col width="8%" /></colgroup>
+                        <tbody>
+                            <tr>
+                                <th>등록일</th>
+                                <td colspan="3">
+                                    <input type="text" id="SEL_DATE_FROM" name="SEL_DATE_FROM" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.SEL_DATE_FROM">
+                                    ~
+                                    <input type="text" id="SEL_DATE_TO" name="SEL_DATE_TO" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.SEL_DATE_TO">
+                                    <a href="#" class="btn btn-primary small" onclick="search_date_change('1'); return false;">7일전</a>
+                                    <a href="#" class="btn btn-primary small" onclick="search_date_change('2'); return false;">15일전</a>
+                                    <a href="#" class="btn btn-primary small" onclick="search_date_change('3'); return false;">한달전</a>
+                                    <a href="#" class="btn btn-primary small" onclick="search_date_change('4'); return false;">전체</a>
+                                </td>
+                                <th rowspan="3">검색조건</th>
+                                <td rowspan="3" class="condition_seacth">
+
+                                    @{
+                    List<SelectListItem> items = new List<SelectListItem>();
+
+                    items.Add(new SelectListItem { Text = "상품품번", Value = "P_CODE" });
+
+                    foreach (var xx in items)
+                    {
+                        if (xx.Value == Model.RouteParam.SEARCH_KEY)
+                        {
+                            xx.Selected = true;
+                            break;
+                        }
+                    }
+                                    }
+                                    @Html.DropDownList("SEARCH_KEY", items, "선택", new { style = "width:100px;" })
+
+                                    <br />
+                                    <input type="text" name="SEARCH_VALUE" value="@Model.RouteParam.SEARCH_VALUE" class="input-sm mt10" id="txt1" style="width:170px; height:94px;">
+                                </td>
+                                <td rowspan="3">
+                                    <a href="#" class="btn btn-default large btn_search" style="height:120px; line-height:90px;" onclick="searching(); return false;">검색</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>진행상태</th>
+                                <td>
+                                    <!--<label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" value="" @(Model.RouteParam.IS_PHOTO == null? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                                    <label for="sort5"><input type="checkbox" id="sort5" name="IS_PHOTO_Y" value="@YNCode.YES" @(Model.RouteParam.IS_PHOTO_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">포토</span></label>
+                                    <label for="sort6"><input type="checkbox" id="sort6" name="IS_PHOTO_N" value="@YNCode.NO" @(Model.RouteParam.IS_PHOTO_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">텍스트</span></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>전시여부</th>
+                                <td colspan="3">
+                                    <!--<label for="sort7"><input type="checkbox" id="sort7" name="IS_DISPLAY" value="" @(Model.RouteParam.IS_DISPLAY == null ? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                                    <label for="sort8"><input type="checkbox" id="sort8" name="IS_DISPLAY_Y" value="@YNCode.YES" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">전시</span></label>
+                                    <label for="sort9"><input type="checkbox" id="sort9" name="IS_DISPLAY_N" value="@YNCode.NO" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비전시</span></label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>총 검색 :@(Model.Total)개</h4>
+            <table class="table table_col">
+                <colgroup><col width=""></colgroup>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>상품명</th>
+                        <th>기간▼</th>
+                        <th>진행상태</th>
+                        <th>전시여부</th>
+                        <th>설정일▼</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3</td>
+                        <td class="tal">스킨 톤업 마사지 크림150ml </td>
+                        <td>2015.10.01 ~ 2015.10.14</td>
+                        <td>예약</td>
+                        <td>비전시</td>
+                        <td>2015-08-05</td>
+                        <td>
+                            <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
+                            <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="tal">스킨 톤업 마사지 크림150ml </td>
+                        <td>2015.10.01 ~ 2015.10.14</td>
+                        <td>예약</td>
+                        <td>비전시</td>
+                        <td>2015-08-05</td>
+                        <td>
+                            <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
+                            <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="tal">스킨 톤업 마사지 크림150ml </td>
+                        <td>2015.10.01 ~ 2015.10.14</td>
+                        <td>예약</td>
+                        <td>비전시</td>
+                        <td>2015-08-05</td>
+                        <td>
+                            <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
+                            <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @{
+
+                string search = Utility01.ConvertObject2UriQuery(Model.RouteParam);
+
+            }
+
+            @{
+                //Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });
+            }
+
+
+        </div>
+
+    </div>
+    <!--//content-->
+}
+
+

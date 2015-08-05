@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
-using System.Web.Mvc;
 
 using AboutMe.Domain.Entity.AdminReview;
 
@@ -30,5 +29,28 @@ namespace AboutMe.Web.Admin.Models
     public class AdminReviewThemaInputViewModel
     {
         public List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> Thema { get; set; }
+    }
+
+    public class AdminReviewExpListViewModel
+    {
+        public AdminReviewRouteParam RouteParam { get; set; }
+        public int? Total { get; set; }
+        public IList<AdminReviewExpUserModel> List { get; set; }
+    }
+
+    public class AdminReviewExpCreateViewModel
+    {
+       //
+        [Required(ErrorMessage = "*")]
+        public string P_CODE { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public string FROM_DATE { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public string TO_DATE { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public string IS_AUTH { get; set; }
     }
 }

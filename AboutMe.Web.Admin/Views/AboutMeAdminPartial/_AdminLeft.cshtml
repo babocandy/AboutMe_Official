@@ -242,6 +242,20 @@
 
     </ul>
             break;
+      case "AdminDisplay":  //쿠폰 관리
+                <h2>전시관리</h2>
+                <ul class="nav nav-sidebar depth1">
+                    <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("Index")><a href="/AdminDisplay/Index" class="menu ">웹메인메인</a></li>
+                    <li @fLeftMenuCSSOn("MobileMain")><a href="/AdminDisplay/MobileMain" class="menu ">모바일메인관리</a></li>
+                    <li @fLeftMenuCSSOn("Cart")><a href="/AdminDisplay/Cart" class="menu ">장바구니전시관리</a></li>
+                    <li @fLeftMenuCSSOn("GBNBanner")><a href="/AdminDisplay/GBNBanner" class="menu ">GNB배너관리</a></li>
+                    <li @fLeftMenuCSSOn("ProductDetailBanner")><a href="/AdminDisplay/ProductDetailBanner" class="menu ">상품상세 배너관리</a></li>
+                    <li><a href="#" class="menu ">이용안내설정관리</a></li>
+                    <li @fLeftMenuCSSOn("Popup")><a href="/AdminDisplay/Popup" class="menu ">팝업관리</a></li>
+
+                </ul>
+            break;
 
     } //switch
 

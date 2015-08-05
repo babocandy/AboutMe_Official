@@ -73,12 +73,6 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult MemberPointUpdate(AdminPointInsertViewModel model)
         {
-            Debug.WriteLine("ModelState.IsValid - " + ModelState.IsValid);
-            Debug.WriteLine("Type - " + model.Mid);
-            Debug.WriteLine("Type - " + model.Type);
-            Debug.WriteLine("Reason - " + model.Reason);
-            Debug.WriteLine("Point - " + model.Point);
-
             model.MemberProfile = _AdminPointService.GetMemberProfile(model.Mid);
 
             if (ModelState.IsValid)

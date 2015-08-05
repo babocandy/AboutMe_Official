@@ -19,5 +19,8 @@ namespace AboutMe.Domain.Service.AdminReview
 
         List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
         void ThemaUpdate(AdminReviewThemaParamToInputDB p);
+
+        int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p);
+        void ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p);
     }
 }
