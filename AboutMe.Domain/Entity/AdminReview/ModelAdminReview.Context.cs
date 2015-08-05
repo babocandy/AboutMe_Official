@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.AdminReview
         }
     
     
-        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> SP_ADMIN_REVIEW_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, ObjectParameter tOTAL)
+        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> SP_ADMIN_REVIEW_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, string mEDIA_GBN_W, string mEDIA_GBN_M, Nullable<System.DateTime> sEL_DATE_FROM, Nullable<System.DateTime> sEL_DATE_TO, string iS_PHOTO_Y, string iS_PHOTO_N, string iS_DISPLAY_Y, string iS_DISPLAY_N, ObjectParameter tOTAL)
         {
             var pAGEParameter = pAGE.HasValue ?
                 new ObjectParameter("PAGE", pAGE) :
@@ -46,7 +46,91 @@ namespace AboutMe.Domain.Entity.AdminReview
                 new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
                 new ObjectParameter("SEARCH_VALUE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>("SP_ADMIN_REVIEW_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, tOTAL);
+            var mEDIA_GBN_WParameter = mEDIA_GBN_W != null ?
+                new ObjectParameter("MEDIA_GBN_W", mEDIA_GBN_W) :
+                new ObjectParameter("MEDIA_GBN_W", typeof(string));
+    
+            var mEDIA_GBN_MParameter = mEDIA_GBN_M != null ?
+                new ObjectParameter("MEDIA_GBN_M", mEDIA_GBN_M) :
+                new ObjectParameter("MEDIA_GBN_M", typeof(string));
+    
+            var sEL_DATE_FROMParameter = sEL_DATE_FROM.HasValue ?
+                new ObjectParameter("SEL_DATE_FROM", sEL_DATE_FROM) :
+                new ObjectParameter("SEL_DATE_FROM", typeof(System.DateTime));
+    
+            var sEL_DATE_TOParameter = sEL_DATE_TO.HasValue ?
+                new ObjectParameter("SEL_DATE_TO", sEL_DATE_TO) :
+                new ObjectParameter("SEL_DATE_TO", typeof(System.DateTime));
+    
+            var iS_PHOTO_YParameter = iS_PHOTO_Y != null ?
+                new ObjectParameter("IS_PHOTO_Y", iS_PHOTO_Y) :
+                new ObjectParameter("IS_PHOTO_Y", typeof(string));
+    
+            var iS_PHOTO_NParameter = iS_PHOTO_N != null ?
+                new ObjectParameter("IS_PHOTO_N", iS_PHOTO_N) :
+                new ObjectParameter("IS_PHOTO_N", typeof(string));
+    
+            var iS_DISPLAY_YParameter = iS_DISPLAY_Y != null ?
+                new ObjectParameter("IS_DISPLAY_Y", iS_DISPLAY_Y) :
+                new ObjectParameter("IS_DISPLAY_Y", typeof(string));
+    
+            var iS_DISPLAY_NParameter = iS_DISPLAY_N != null ?
+                new ObjectParameter("IS_DISPLAY_N", iS_DISPLAY_N) :
+                new ObjectParameter("IS_DISPLAY_N", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>("SP_ADMIN_REVIEW_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, mEDIA_GBN_WParameter, mEDIA_GBN_MParameter, sEL_DATE_FROMParameter, sEL_DATE_TOParameter, iS_PHOTO_YParameter, iS_PHOTO_NParameter, iS_DISPLAY_YParameter, iS_DISPLAY_NParameter, tOTAL);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_PRODUCT_INFO_Result> SP_ADMIN_REVIEW_PRODUCT_INFO(Nullable<int> iDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>("SP_ADMIN_REVIEW_PRODUCT_INFO", iDXParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_ADMIN_REVIEW_PRODUCT_UPDATE(Nullable<int> iDX, string iS_BEST, string iS_DISPLAY, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var iS_BESTParameter = iS_BEST != null ?
+                new ObjectParameter("IS_BEST", iS_BEST) :
+                new ObjectParameter("IS_BEST", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_PRODUCT_UPDATE", iDXParameter, iS_BESTParameter, iS_DISPLAYParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_CATE_THEMA_SEL_Result> SP_REVIEW_CATE_THEMA_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_CATE_THEMA_SEL_Result>("SP_REVIEW_CATE_THEMA_SEL");
+        }
+    
+        public virtual int SP_REVIEW_CATE_THEMA_UPD(Nullable<int> iDX, string tITLE, string iS_DISPLAY, string tAG)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            var tAGParameter = tAG != null ?
+                new ObjectParameter("TAG", tAG) :
+                new ObjectParameter("TAG", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_CATE_THEMA_UPD", iDXParameter, tITLEParameter, iS_DISPLAYParameter, tAGParameter);
         }
     }
 }

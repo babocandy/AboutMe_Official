@@ -1,5 +1,5 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminPointMemberViewModel
-@using AboutMe.Common.Helper          
+@using AboutMe.Common.Data       
 
 @{
     ViewBag.Title = "Point";
@@ -48,7 +48,7 @@
                     }
                 }
                             }
-                            @Html.DropDownList("searchKey", items, "-대상 선택-", new { style = "width:100px;" })
+                            @Html.DropDownList("searchKey", items, "선택", new { style = "width:100px;" })
 
                         </div>
                         <div class="form-group">
@@ -105,7 +105,7 @@
                         <td>@Html.ActionLink(string.Format("{0}({1})", item.M_NAME, item.M_ID), null, null, new { onclick = string.Format("openScrollYes('/AdminPoint/MemberPointUpdate?M_ID={0}','_blank', '1000', '600'); return false;", @item.M_ID), @class = "btn" })</td>
                         <td>@item.M_CREDATE.ToShortDateString()</td>
                         <td>@item.M_POINT</td>
-                        <td>@MemberCode2Label.Grade2Label(item.M_GRADE)</td>
+                        <td>@MemberCode.GetNameByCode(item.M_GRADE)</td>
                     </tr>
                 }
             </tbody>

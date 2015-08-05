@@ -1,5 +1,6 @@
 ﻿@model AboutMe.Web.Front.Models.MyReviewInsertViewModel
 @using AboutMe.Common.Helper
+@using AboutMe.Common.Data
 @{
     ViewBag.Title = "Write";
     Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
@@ -16,22 +17,25 @@
         }
     </style>
 
-    @if (!Model.ResultNum.IsEmpty() && Model.ResultNum != "0")
-    {
-        <script>
-            alert("@(Model.ResultMessage)");
-        </script>
-    }
-    else if (Model.ResultNum == "0")
-    {
-        <script>
-            //window.opener.location.reload(true);
-            window.opener.location = "/MyPage/MyReview/Complete";
-            self.close();
-        </script>
-    }
-    
+
     <script>
+
+        //결과값 처리
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        console.log(rNum)
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+            window.opener.location = "@Url.Action("Complete", "MyReview")";//"/MyPage/MyReview/Complete";
+            self.close();
+        }
+
+
+
         function findUploadFile() {
             document.getElementById("UploadImage").click();
         }
@@ -88,7 +92,7 @@
                     <table summary="상품찾기, 피부타입, 제목">
                         <caption>상품 리뷰 등록 입력 표</caption>
                         <colgroup>
-@if (ReviewHelper.IsBeauty(Model.ProductInfo.C_CATE_CODE))
+@if (ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE))
 {
                             <col width="147" />
                             <col width="*" />
@@ -114,16 +118,16 @@ else
                                     </div>
                                 </td>
 
-                                @if (ReviewHelper.IsBeauty(Model.ProductInfo.C_CATE_CODE))
+                                @if (ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE))
                                 {
                                     <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
                                     <td class="skintype">
 
                                         @{
                                             List<SelectListItem> items = new List<SelectListItem>();
-                                            items.Add(new SelectListItem { Text = "건성", Value = "10" });
-                                            items.Add(new SelectListItem { Text = "중성", Value = "20" });
-                                            items.Add(new SelectListItem { Text = "지복합성", Value = "30" });
+                                            items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
+                                            items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
+                                            items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
 
 
                                             foreach (var xx in items)
@@ -135,7 +139,7 @@ else
                                                 }
                                             }
                                     }
-                                   @Html.DropDownList("SKIN_TYPE", items, "-선택하세요-", new { @class = "selectstyleb" })
+                                   @Html.DropDownList("SKIN_TYPE", items, "-선택-", new { @class = "selectstyleb" })
 
 
                                     </td>
@@ -143,7 +147,7 @@ else
   
                             </tr>
                             <tr class="edit">
-                                <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /><span>0 / 000 자</span></th>
+                                <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /></th>
                                 <td colspan="3">                                   
                                     <textarea name="COMMENT" class="txtareatypea" style="width:100%">@Model.COMMENT</textarea>                                    
                                 </td>                                

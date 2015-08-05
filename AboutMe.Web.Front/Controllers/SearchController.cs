@@ -44,6 +44,7 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.SEARCH_KEYWORD = product_front_search_entity.SEARCH_KEYWORD;           //검색어
             
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+
             return View(_ProductService.GetProductSearchList(product_front_search_entity).ToList());
         }
          #endregion

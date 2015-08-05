@@ -66,7 +66,7 @@ namespace AboutMe.Domain.Entity.Review
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_READY_SEL_Result>("SP_REVIEW_PRODUCT_READY_SEL", m_IDParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_REVIEW_PRODUCT_UPD(Nullable<int> iDX, string cOMMENT)
+        public virtual int SP_REVIEW_PRODUCT_UPD(Nullable<int> iDX, string cOMMENT, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -76,7 +76,7 @@ namespace AboutMe.Domain.Entity.Review
                 new ObjectParameter("COMMENT", cOMMENT) :
                 new ObjectParameter("COMMENT", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_PRODUCT_UPD", iDXParameter, cOMMENTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_PRODUCT_UPD", iDXParameter, cOMMENTParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<SP_REVIEW_GET_PRODUCT_INFO_Result> SP_REVIEW_GET_PRODUCT_INFO(string p_CODE)
@@ -146,6 +146,15 @@ namespace AboutMe.Domain.Entity.Review
                 new ObjectParameter("PAGESIZE", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>("SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL", p_CODEParameter, pAGEParameter, pAGESIZEParameter, tOTAL);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_PRODUCT_INFO_Result> SP_REVIEW_PRODUCT_INFO(Nullable<int> iDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_INFO_Result>("SP_REVIEW_PRODUCT_INFO", iDXParameter, rET_NUM, rET_MESSAGE);
         }
     }
 }

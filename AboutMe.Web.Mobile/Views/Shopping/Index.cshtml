@@ -16,239 +16,231 @@
     <!--//header-->
     @section Scripts{
 
-        <script>
-            // 카테고리
-            var cateIdx, oldcateIdx = -1;
-            function cateOpen(idx) {
-                if (!$(".categoryls>ul>li:eq(" + idx + ")>a").hasClass("disable")) {
-                    cateIdx = idx;
-                    if (cateIdx == oldcateIdx) {
-                        cateClose();
-                        oldcateIdx = -1;
-                    } else {
-                        if (oldcateIdx > -1) {
-                            $(".categoryls>ul>li:eq(" + oldcateIdx + ")>.subcatels").slideUp(0);
-                            $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").removeClass("cnt");
-                        }
-                        $("html, body").css({ "overflow-y": "hidden" });
-                        $("body").bind('touchmove', function (e) { e.preventDefault() });
-                        $(".categoryls .dimed").fadeIn();
-                        $(".categoryls>ul>li:eq(" + cateIdx + ") .subcatels").slideDown();
-                        $(".categoryls>ul>li:eq(" + cateIdx + ")>a").addClass("cnt");
-                        oldcateIdx = cateIdx;
-                    }
-                }
-            }
-            // 카테고리 1depth click
-            function cateOpen1(obj) {
-                var _this = obj;
-                $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").text($(_this).text());
-                $(".categoryls>ul>li:eq(1)>a").removeClass("disable");
-                $(".categoryls>ul>li:eq(2)>a").addClass("disable");
-                cateOpen(1);
-            }
-            // 카테고리 2depth click
-            function cateOpen2(obj) {
-                var _this = obj;
-                $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").text($(_this).text());
-                $(".categoryls>ul>li:eq(2)>a").removeClass("disable");
-                cateOpen(2);
-            }
-            // 카테고리 3depth click
-            function cateOpen3(obj) {
-                var _this = obj;
-                $(".categoryls>ul>li:eq(" + oldcateIdx + ")>a").text($(_this).text());
-                cateClose();
-            }
-            // 카테고리 3depth 있을때
-            function cate3Block() {
-                $(".categoryls>ul>li:eq(2)>a").show(0);
-            }
-            // 카테고리 3depth 없을때
-            function cate3None() {
-                $(".categoryls>ul>li:eq(2)>a").hide(0);
-            }
-            // 카테고리 close
-            function cateClose() {
-                oldcateIdx = -1;
-                $("html, body").css({ "overflow-y": "auto" });
-                $("body").unbind('touchmove');
-                $(".categoryls .dimed").fadeOut();
-                $(".categoryls>ul>li>a").removeClass("cnt");
-                $(".categoryls>ul>li>.subcatels").slideUp().removeClass("cnt");
-            }
-            $(function () {
-                // 카테고리 dimmed click
-                $(".categoryls .dimed").click(function () {
-                    cateClose();
-                });
-            });
-        </script>
+      <script language="javascript">
 
-        <script language="javascript">
+          $(function () {
+              //ajaxSelectCateCodeJavascriptInit();
+          });
 
-            $(function () {
-                //ajaxSelectCateCodeJavascriptInit();
-            });
+          function bsearch() {
+              var f = document.bform;
+              //alert('ok');
+              //alert(f.P_CATE_CODE_3DEPTH[0].checked);
+              f.target = "";
+              f.PAGE.value = 1;
+              f.submit();
+          }
+
+         
+          function sortGbn(code) {
+              var f = document.bform;
+              f.SORT_GBN.value = code;
+              bsearch();
+          }
+
+          function rePageSize() {
+              var f = document.bform;
+
+              f.target = "";
+              f.page.value = 1;
+              f.submit();
+          }
+
+         
 
         </script>
+
     }
 
     <!--container-->
     @section Body{
 
-        <div class="wrap display">
-            @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
-            <!--container-->
-            <div class="container">
-                <div class="h2_area">
-                    <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
-                    <h2>쇼핑</h2>
-                </div>
+    <div class="wrap display">
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+@using (Html.BeginForm("Index", "Shopping", FormMethod.Post, new { id = "bform", name = "bform" }))
+{
+    @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                            <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
+                            <input type="hidden" name="P_CATE_CODE" value="@ViewBag.P_CATE_CODE">
+                            <input type="hidden" name="DEPTH_NAME3" value="@ViewBag.DEPTH_NAME3">
+    <!--container-->
+    <div class="container">
+        @{
+    //뷰티,헬스,셀렉샵 분기시 초기화 작업
+    var divClassImg = "/aboutCom/images/shopping/h2_beauty.png";
+    
+    var subtitle1 = "뷰티";
+    var subtitle2 = "";
+        }
+        @if (ViewBag.P_CATE_CODE.Substring(0, 3) == "101") //뷰티
+        {
+        divClassImg = "/aboutCom/images/shopping/bnr_beauty.jpg";
+        subtitle1 = "뷰티";
+        subtitle2 = ViewBag.DEPTH_NAME3;
+        }
+        else if (ViewBag.P_CATE_CODE.Substring(0, 3) == "102") // 헬스
+        {
+        divClassImg = "/aboutCom/images/shopping/bnr_select.jpg";
+        subtitle1 = "헬스";
+        subtitle2 = ViewBag.DEPTH_NAME3;
+        }
+        else if (ViewBag.P_CATE_CODE.Substring(0, 3) == "103") //셀렉샵
+        {
+            divClassImg = "/aboutCom/images/shopping/bnr_select.jpg";
+        subtitle1 = "기타브랜드";
+        subtitle2 = ViewBag.DEPTH_NAME3;
+        }
 
-                <!-- category -->
-                <div class="categoryls">
-                    <div class="dimed"></div>
-                    <ul>
-                        <li>
-                            <a href="javascript:" onclick="cateOpen(0);">ALL</a>
-                            <div class="subcatels">
-                                <ul>
-                                    <li><a href="javascript:" onclick="cateOpen1(this);cate3Block();" class="cnt">전체dpe1</a></li>
-                                    <li><a href="javascript:" onclick="cateOpen1(this);cate3Block();">뷰티</a></li>
-                                    <li><a href="javascript:" onclick="cateOpen1(this);cate3None();">헬스</a></li>
-                                    <li><a href="javascript:" onclick="cateOpen1(this);cate3None();">셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵셀렉트샵</a></li>
-                                </ul>
-                                <a href="javascript:" onclick="cateClose();" class="btn_close">닫기</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:" onclick="cateOpen(1);" class="disable">ALL</a>
-                            <div class="subcatels">
-                                <ul>
-                                    <li><a href="javascript:" onclick="cateOpen2(this);">전체dpe2</a></li>
-                                    <li><a href="javascript:" onclick="cateOpen2(this);">뷰티</a></li>
-                                    <li><a href="javascript:" onclick="cateOpen2(this);">헬스</a></li>
-                                    <li><a href="javascript:" onclick="cateOpen2(this);">셀렉트샵</a></li>
-                                </ul>
-                                <a href="javascript:" onclick="cateClose();" class="btn_close">닫기</a>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="javascript:" onclick="cateOpen(2);" class="disable">ALL</a>
-                            <div class="subcatels">
-                                <ul>
-                                    <li><a href="#link" onclick="cateOpen3(this);">전체dpe3</a></li>
-                                    <li><a href="#link" onclick="cateOpen3(this);">뷰티</a></li>
-                                    <li><a href="#link" onclick="cateOpen3(this);">헬스</a></li>
-                                    <li><a href="#link" onclick="cateOpen3(this);">셀렉트샵</a></li>
-                                </ul>
-                                <a href="javascript:" onclick="cateClose();" class="btn_close">닫기</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- //category -->
-                <!--상품정렬-->
-                <div class="product_sort">
-                    <p class="total_txt">총 <strong>54</strong>개 상품이 있습니다.</p>
-                    <span class="sort">
-                        <span class="selbox select_a">
-                            <select name="" title="상품정렬 선택">
-                                <option>신상품순</option>
-                                <option>인기순</option>
-                                <option>최저가순</option>
-                                <option>최고가순</option>
-                            </select>
-                        </span>
-                    </span>
-                </div>
-                <!--상품정렬-->
-                <!--상품리스트-->
-                <div class="product_list">
-                    <ul>
-                        @foreach (var item in Model)
-                        {
-                            <li>
-                                <a href="/shopping/detail?pcode=@item.P_CODE">
-                                    <span class="photo"><img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" alt="" /></span>
-                                    <span class="ico ico_best">BEST</span>
-                                    <span class="p_tit">@item.P_NAME</span>
-                                    <span class="p_stit">@item.P_NAME</span>
-                                    <span class="price">
-                                        <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
-                                        @string.Format("{0:#,##0}", item.RESULT_PRICE)원
-                                    </span>
-                                </a>
-                            </li>
-                        }
-                        <li>
-                            <a href="#none">
-                                <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
-                                <span class="ico ico_best">BEST</span>
-                                <span class="p_tit">스킨 톤업 버블 워시</span>
-                                <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
-                                <span class="price">
-                                    <del>32,000원</del>
-                                    25,000원
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#none">
-                                <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
-                                <span class="ico ico_time">TIME</span>
-                                <span class="p_tit">스킨 톤업 버블 워시</span>
-                                <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
-                                <span class="price">
-                                    <del>32,000원</del>
-                                    25,000원
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#none">
-                                <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
-                                <span class="ico ico_best">BEST</span>
-                                <span class="p_tit">스킨 톤업 버블 워시</span>
-                                <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
-                                <span class="price">
-                                    <del>32,000원</del>
-                                    25,000원
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#none">
-                                <span class="photo"><img src="/aboutCom/images/sample/thumb270.gif" alt="" /></span>
-                                <span class="ico ico_time">TIME</span>
-                                <span class="p_tit">스킨 톤업 버블 워시</span>
-                                <span class="p_stit">조밀조밀 풍성한 거품이 피부톤을 맑고 깨끗하게 해주는 클렌징 폼 </span>
-                                <span class="price">
-                                    <del>32,000원</del>
-                                    25,000원
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--상품리스트-->
-                <!--페이징-->
-                <div class="paging">
-                    <a href="#" class="prev"></a>
-                    <strong>1</strong> / 50
-                    <a href="#" class="next"></a>
-                </div>
-                <!--//페이징-->
-
-
-
-            </div>
-            <!--//container-->
-            @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--뷰티배너-->
+        <div class="top_bnr">
+            <img src="@divClassImg" alt="" />
+            <dl class="txt">
+                <dt>@subtitle1</dt>
+                <dd>@subtitle2</dd>
+            </dl>
         </div>
-    }
+        <!--//뷰티배너-->
+    @if ((ViewBag.P_CATE_CODE.Substring(0, 3) == "101") && (ViewBag.P_CATE_CODE.Substring(3, 3) != "100"))
+    {
+        <!--뷰티메뉴소팅-->
+        <span class="beauty_sort">
+            <span class="selbox select_a">
+                <select name="P_CATE_CODE_3DEPTH" title="상품정렬 선택" onchange="javascript:bsearch();">
+                    <option value="">전체상품</option>
+                    @foreach (var item in ViewData["3DEPTH"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
+                    {
+                        <option @if ((!String.IsNullOrEmpty(ViewBag.P_CATE_CODE_3DEPTH)) && (ViewBag.P_CATE_CODE_3DEPTH.ToString().IndexOf(item.CATE_CODE) != -1)) { <text> selected </text>        } value="@item.CATE_CODE">@item.DEPTH3_NAME</option>
+                    }
+                </select>
+            </span>
+        </span>
+        <!--상품소팅-->
+}
+        <!--상품리스트-->
+        <div class="best_sellers">
+            <!--상품정렬-->
+            <div class="product_sort">
+                <p class="total_txt">총 <strong>@ViewBag.TotalRecord</strong>개 상품이 있습니다.</p>
+                <span class="sort">
+                    <span class="selbox select_a">
+                        <select name="SORT_GBN" title="상품정렬 선택" onchange="javascript:bsearch();">
+                            <option value="NEW" @if (ViewBag.SORT_GBN == "NEW") { <text> selected </text>        }>신상품순</option>
+                            <option value="LIKE" @if (ViewBag.SORT_GBN == "LIKE") { <text> selected </text>         }>인기순</option>
+                            <option value="UP" @if (ViewBag.SORT_GBN == "UP") { <text> selected </text>         }>최고가순</option>
+                            <option value="DOWN" @if (ViewBag.SORT_GBN == "DOWN") { <text> selected </text>         }>최저가순</option>
+                        </select>
+
+                    </span>
+                </span>
+            </div>
+            <!--상품정렬-->
+            <ul class="product_list">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="/shopping/detail?pcode=@item.P_CODE&SORT_GBN=@ViewBag.SORT_GBN&PAGE=@ViewBag.PAGE&P_CATE_CODE=@ViewBag.P_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3">
+                            <span class="photo"><img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" alt="" /></span>
+
+                            <span class="detail">
+                                @if (!string.IsNullOrEmpty(item.ICON_YN))
+                                {
+                                    if (item.ICON_YN.IndexOf('B') != -1)
+                                    { <text> <span class="ico_best">BEST</span></text> }
+                                    if (item.ICON_YN.IndexOf('S') != -1)
+                                    { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                    if (item.ICON_YN.IndexOf('N') != -1)
+                                    { <text> <span class="ico_new">NEW</span></text> }
+                                    if (item.ICON_YN.IndexOf('C') != -1)
+                                    { <text> <span class="ico_custom ">CUSTOM</span></text> }
+                                }                           
+                                <!--
+                                .ico_best
+                                .ico_coupon
+                                .ico_time
+                                .ico_soldout
+                                .ico_set
+                                -->
+                                <span class="tit">@(new HtmlString(item.P_NAME))</span>
+                                <span class="stit">@(new HtmlString(item.P_SUB_TITLE))</span>
+                                <span class="price"><del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span>
+                            </span>
+                        </a>
+                        <a href="javascript:Cart_Product_Input('@item.P_CODE','1');" class="btn_cart"></a>
+                    </li>
+                }
+                @* <li>
+                        <a href="#">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
+                            <span class="detail">
+                                <!--
+                                .ico_best
+                                .ico_coupon
+                                .ico_time
+                                .ico_soldout
+                                .ico_set
+                                -->
+                                <span class="ico_best">BEST</span>
+                                <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
+                                <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
+                                <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
+                            </span>
+                        </a>
+                        <a href="#" class="btn_cart"></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
+                            <span class="detail">
+                                <!--
+                                .ico_best
+                                .ico_coupon
+                                .ico_time
+                                .ico_soldout
+                                .ico_set
+                                -->
+                                <span class="ico_best">BEST</span>
+                                <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
+                                <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
+                                <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
+                            </span>
+                        </a>
+                        <a href="#" class="btn_cart"></a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
+                            <span class="detail">
+                                <!--
+                                .ico_best
+                                .ico_coupon
+                                .ico_time
+                                .ico_soldout
+                                .ico_set
+                                -->
+                                <span class="ico_best">BEST</span>
+                                <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
+                                <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
+                                <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
+                            </span>
+                        </a>
+                        <a href="#" class="btn_cart"></a>
+                    </li>*@
+            </ul>
+        </div>
+        <!--//상품리스트-->
+
+        <div class="paging">
+            <a class="prev" href="#"></a>
+            <strong>1</strong> / 50
+            <a class="next" href="#"></a>
+        </div>
+
+    </div>
+}    
     <!--//container-->
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+</div>
+   }
     <!--footer-->
     @section Footer{
 

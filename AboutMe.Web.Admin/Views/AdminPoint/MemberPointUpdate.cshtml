@@ -1,5 +1,5 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminPointInsertViewModel
-
+@using AboutMe.Common.Data
 @using AboutMe.Common.Helper
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
@@ -66,7 +66,7 @@
             <th scope="row" class="vam">이메일</th>
             <td>@Model.MemberProfile.M_EMAIL</td>
             <th scope="row" class="vam">회원등급</th>
-            <td>@MemberCode2Label.Grade2Label(Model.MemberProfile.M_GRADE)</td>
+            <td>@MemberCode.GetNameByCode(Model.MemberProfile.M_GRADE)</td>
         </tr>
         <tr>
             <th scope="row" class="vam">보유포인트</th>

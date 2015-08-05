@@ -1,4 +1,7 @@
-﻿@{
+﻿@model AboutMe.Web.Admin.Models.AdminReviewListViewModel
+@using AboutMe.Common.Helper 
+@using AboutMe.Common.Data        
+@{
     ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
@@ -59,8 +62,9 @@
         });
     });
 
-    function search() {
+    function searching() {
 
+        document.frmSearch.submit();
 
     }
 
@@ -79,9 +83,11 @@
 
     <div class="panel">
         <h3 class="sub-header">상품리뷰관리</h3>
+        <div class="tar mb10">
+            <a href="#" class="btn btn-default middium" onclick="window.open('@Url.Action("Thema", "AdminReview")', 'window', 'width=800,height=700');" style="width:100px">테마설정</a>
+        </div>
         <div class="">
-
-@using (Html.BeginForm("Index", "AdminReview", FormMethod.Get, new { id = "frm", name = "frm" }))
+@using (Html.BeginForm("Index", "AdminReview", FormMethod.Get, new { id = "frmSearch", name = "frmSearch" }))
 {
             <table class="table table_row">
                 <colgroup><col width="10%" /><col width="*" /><col width="10%" /><col width="20%" /><col width="9%" /><col width="23%" /><col width="8%" /></colgroup>
@@ -89,9 +95,9 @@
                     <tr>
                         <th>등록일</th>
                         <td colspan="3">
-                            <input type="text" id="SEL_DATE_FROM" name="SEL_DATE_FROM" class="input-sm" style="width:120px" maxlength="10">
+                            <input type="text" id="SEL_DATE_FROM" name="SEL_DATE_FROM" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.SEL_DATE_FROM">
                             ~
-                            <input type="text" id="SEL_DATE_TO" name="SEL_DATE_TO" class="input-sm" style="width:120px" maxlength="10">
+                            <input type="text" id="SEL_DATE_TO" name="SEL_DATE_TO" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.SEL_DATE_TO">
                             <a href="#" class="btn btn-primary small" onclick="search_date_change('1'); return false;" >7일전</a>
                             <a href="#" class="btn btn-primary small" onclick="search_date_change('2'); return false;">15일전</a>
                             <a href="#" class="btn btn-primary small" onclick="search_date_change('3'); return false;">한달전</a>
@@ -99,39 +105,50 @@
                         </td>
                         <th rowspan="3">검색조건</th>
                         <td rowspan="3" class="condition_seacth">
-                            <select style="width:170px;" name="SEARCH_KEY">
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                                <option>상품품번</option>
-                            </select><br />
-                            <input type="text" name="SEARCH_VALUE" value="다중검색" class="input-sm mt10" id="txt1" style="width:170px; height:94px;">
+
+                            @{
+                                List<SelectListItem> items = new List<SelectListItem>();
+
+                                items.Add(new SelectListItem { Text = "상품품번", Value = "P_CODE" });
+
+                                foreach (var xx in items)
+                                {
+                                    if (xx.Value == Model.RouteParam.SEARCH_KEY)
+                                    {
+                                        xx.Selected = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            @Html.DropDownList("SEARCH_KEY", items, "선택", new { style = "width:100px;" })
+   
+                            <br />
+                            <input type="text" name="SEARCH_VALUE" value="@Model.RouteParam.SEARCH_VALUE" class="input-sm mt10" id="txt1" style="width:170px; height:94px;">
                         </td>
                         <td rowspan="3">
-                            <a href="#" class="btn btn-default large btn_search" style="height:120px; line-height:90px;" onclick="search(); return false;">검색</a>
+                            <a href="#" class="btn btn-default large btn_search" style="height:120px; line-height:90px;" onclick="searching(); return false;">검색</a>
                         </td>
                     </tr>
                     <tr>
                         <th>매체구분</th>
                         <td>
-                            <label for="sort1"><input type="radio" id="sort1" name="MEDIA_GBN" value="10" /><span class="txt mr5">전체</span></label>
-                            <label for="sort2"><input type="radio" id="sort2" name="MEDIA_GBN" value="20" /><span class="txt mr5">WEB</span></label>
-                            <label for="sort3"><input type="radio" id="sort3" name="MEDIA_GBN" value="30" /><span class="txt mr5">MOBILE</span></label>
+                            <!--<label for="sort1"><input type="radio" id="sort1" name="MEDIA_GBN" value="" @(Model.RouteParam.MEDIA_GBN == null? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                            <label for="sort2"><input type="checkbox" id="sort2" name="MEDIA_GBN_W" value="@MediaCode.WEB" @(Model.RouteParam.MEDIA_GBN_W == MediaCode.WEB ? "checked" : "") /><span class="txt mr5">WEB</span></label>
+                            <label for="sort3"><input type="checkbox" id="sort3" name="MEDIA_GBN_M" value="@MediaCode.MOBILE" @(Model.RouteParam.MEDIA_GBN_M == MediaCode.MOBILE ? "checked" : "") /><span class="txt mr5">MOBILE</span></label>
                         </td>
                         <th>상품평</th>
                         <td>
-                            <label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" /><span class="txt mr5">전체</span></label>
-                            <label for="sort5"><input type="radio" id="sort5" name="IS_PHOTO" value="Y" /><span class="txt mr5">포토</span></label>
-                            <label for="sort6"><input type="radio" id="sort6" name="IS_PHOTO" value="N" /><span class="txt mr5">텍스트</span></label>
+                            <!--<label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" value="" @(Model.RouteParam.IS_PHOTO == null? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                            <label for="sort5"><input type="checkbox" id="sort5" name="IS_PHOTO_Y" value="@YNCode.YES" @(Model.RouteParam.IS_PHOTO_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">포토</span></label>
+                            <label for="sort6"><input type="checkbox" id="sort6" name="IS_PHOTO_N" value="@YNCode.NO" @(Model.RouteParam.IS_PHOTO_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">텍스트</span></label>
                         </td>
                     </tr>
                     <tr>
                         <th>전시여부</th>
                         <td colspan="3">
-                            <label for="sort7"><input type="radio" id="sort7" name="IS_DISPLAY" /><span class="txt mr5">전체</span></label>
-                            <label for="sort8"><input type="radio" id="sort8" name="IS_DISPLAY" value="Y" /><span class="txt mr5">전시</span></label>
-                            <label for="sort9"><input type="radio" id="sort9" name="IS_DISPLAY" value="N" /><span class="txt mr5">비전시</span></label>
+                            <!--<label for="sort7"><input type="checkbox" id="sort7" name="IS_DISPLAY" value="" @(Model.RouteParam.IS_DISPLAY == null ? "checked" : "") /><span class="txt mr5">전체</span></label>-->
+                            <label for="sort8"><input type="checkbox" id="sort8" name="IS_DISPLAY_Y" value="@YNCode.YES" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">전시</span></label>
+                            <label for="sort9"><input type="checkbox" id="sort9" name="IS_DISPLAY_N" value="@YNCode.NO" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비전시</span></label>
                         </td>
                     </tr>
                 </tbody>
@@ -141,7 +158,7 @@
     </div>
 
     <div class="panel">
-        <h4>총 검색 :4개</h4>
+        <h4>총 검색 :@(Model.Total)개</h4>
         <table class="table table_col">
             <colgroup><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""></colgroup>
             <thead>
@@ -163,128 +180,47 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>4</td>
-                    <td>O</td>
-                    <td>웹</td>
-                    <td><img src="" alt="" /></td>
-                    <td>퓨어화이트 스킨</td>
-                    <td>sky12345</td>
-                    <td></td>
-                    <td>
-                        기타
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        45
-                    </td>
-                    <td>
-                        전시
-                    </td>
-                    <td>
-                        2015-07-30
-                    </td>
-                    <td>
-                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>O</td>
-                    <td>모바일</td>
-                    <td><img src="" alt="" /></td>
-                    <td>퓨어화이트 스킨</td>
-                    <td>sky12345</td>
-                    <td></td>
-                    <td>
-                        헬스
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        45
-                    </td>
-                    <td>
-                        비전시
-                    </td>
-                    <td>
-                        2015-07-30
-                    </td>
-                    <td>
-                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>O</td>
-                    <td>웹</td>
-                    <td><img src="" alt="" /></td>
-                    <td>퓨어화이트 스킨</td>
-                    <td>sky12345</td>
-                    <td></td>
-                    <td>
-                        뷰티
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        45
-                    </td>
-                    <td>
-                        전시
-                    </td>
-                    <td>
-                        2015-07-30
-                    </td>
-                    <td>
-                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>O</td>
-                    <td>웹</td>
-                    <td><img src="" alt="" /></td>
-                    <td>퓨어화이트 스킨</td>
-                    <td>sky12345</td>
-                    <td></td>
-                    <td>
-                        뷰티
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        45
-                    </td>
-                    <td>
-                        전시
-                    </td>
-                    <td>
-                        2015-07-30
-                    </td>
-                    <td>
-                        <a class="btn btn-success small" href="#" onclick="window.open('/cmsManager/contents/pop_pr_management.html', 'window', 'width=800,height=400');">수정</a>
-                    </td>
-                </tr>
+                @foreach (var item in Model.List)
+                {
+                    <tr>
+                        <td>@item.IDX</td>
+                        <td>@item.IS_BEST</td>
+                        <td>@item.MEDIA_GBN</td>
+                        <td><img src="@item.ADD_IMAGE" alt="" /></td>
+                        <td>@item.P_NAME</td>
+                        <td>@item.M_ID</td>
+                        <td>@item.M_GRADE</td>
+                        <td>
+                            @item.CATE_GBN
+                        </td>
+                        <td><img src="@item.P_MAIN_IMG" alt="" /></td>
+                        <td>@item.P_CODE</td>
+                        <td>
+                            @item.VIEW_CNT
+                        </td>
+                        <td>
+                            @item.IS_DISPLAY
+                        </td>
+                        <td>
+                            @item.INS_DATE
+                        </td>
+                        <td>
+                            <a class="btn btn-success small" href="#" onclick="window.open('@Url.Action(string.Format("Update/{0}", item.IDX), "AdminReview", Model.RouteParam)', 'window', 'width=800,height=400');">수정</a>
+                        </td>
+                    </tr>
+                }
+
             </tbody>
         </table>
 
         @{
-    /*
-            string queryStr = null;
-            if (!Model.SearchKey.IsEmpty())
-            {
-                queryStr += "searchKey=" + Model.SearchKey;
-            }
 
-            if (!Model.SearchValue.IsEmpty())
-            {
-                queryStr += "&searchValue=" + Model.SearchValue;
-            }
-           
-            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalItem, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.PageNo, QueryStr = queryStr });
-             *  */
+            string search = Utility01.ConvertObject2UriQuery(Model.RouteParam);
+
+        }
+
+        @{ 
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });
         }
 
 

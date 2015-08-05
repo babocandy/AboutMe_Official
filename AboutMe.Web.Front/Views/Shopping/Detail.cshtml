@@ -84,20 +84,25 @@
                     <!--//상품사진-->
                     <!--상품정보-->
                     <div class="info_area">
-                        <!--sns버튼-->
-                        <div class="sns">
-                            <ul>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
-                                <li><a href="#"><img src="/aboutCom/images/common/sns_weibo.gif" alt="웨이보" /></a></li>
-                            </ul>
-                        </div>
-                        <!--//sns버튼-->
+                        @{ Html.RenderAction("SnsInProductDetail", "SNS", new { P_CODE = @ViewBag.P_CODE }); }
+                        
+    
                         <!--상품해당아이콘-->
                         <div class="ico_area">
-                            <span class="ico_time">TIME</span>
-                            <!--- 각 종류별 아이콘
+                            @if (!string.IsNullOrEmpty(Model.ICON_YN))
+                            {
+                                if (Model.ICON_YN.IndexOf('B') != -1)
+                                { <text> <span class="ico_best">BEST</span></text> }
+                                if (Model.ICON_YN.IndexOf('S') != -1)
+                                { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                if (Model.ICON_YN.IndexOf('N') != -1)
+                                { <text> <span class="ico_new">NEW</span></text> }
+                                if (Model.ICON_YN.IndexOf('C') != -1)
+                                { <text> <span class="ico_custom ">CUSTOM</span></text> }
+                            }
+                            
+                            <!---<span class="ico_time">TIME</span>
+                             각 종류별 아이콘
                         <span class="ico_new">NEW</span>
                         <span class="ico_coupon">COUPON</span>
                         <span class="ico_1_1">1+1</span>
@@ -111,8 +116,8 @@
                         <!--//상품해당아이콘-->
                         <div class="pro_tit">
                             <!--각각 2줄씩 제한-->
-                            <p class="tit">노폐물을 눈으로<br />직접 확인하는 휘핑 크림 제형</p>
-                            <p class="stit">@Model.P_NAME</p>
+                            <p class="tit">@(new HtmlString(Model.P_SUB_TITLE))</p>
+                            <p class="stit">@(new HtmlString(Model.P_NAME))</p>
                         </div>
                         <div class="pro_info">
                             <ul>

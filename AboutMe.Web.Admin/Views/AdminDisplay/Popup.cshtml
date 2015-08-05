@@ -1,5 +1,6 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupListViewModel
 @using AboutMe.Common.Data
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "Point";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
@@ -166,11 +167,13 @@
         </table>
 
         @{
-            
+            /*
             string search = "SEARCH_KEY=" + Model.SearchParam.SEARCH_KEY;
             search += "&SEARCH_VALUE=" + Model.SearchParam.SEARCH_VALUE;
             search += "&IS_DISPLAY=" + Model.SearchParam.IS_DISPLAY;
             search += "&IS_EXPIRE=" + Model.SearchParam.IS_EXPIRE;
+             * */
+            string search = Utility01.ConvertObject2UriQuery(Model.SearchParam);
             
         }
 

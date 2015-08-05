@@ -736,6 +736,9 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 엑셀 다운로드
         public ActionResult ProductExcel(ProductSearch_Entity productSearch_Entity)
         {
+
+            productSearch_Entity.Page = 1;
+            productSearch_Entity.PageSize = 10000;
             
             var products = new System.Data.DataTable("Product");
             //헤더 구성

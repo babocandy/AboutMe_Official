@@ -482,6 +482,7 @@
     <Compile Include="Entity\AdminPromotion\TB_PROMOTION_PRODUCT_VS_TOTAL.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminReview\AdminReviewModels.cs" />
     <Compile Include="Entity\AdminReview\ModelAdminReview.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -497,7 +498,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelAdminReview.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_PRODUCT_INFO_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\SP_REVIEW_CATE_THEMA_SEL_Result.cs">
       <DependentUpon>ModelAdminReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Cart\CartUserModel.cs" />
@@ -703,6 +710,9 @@
     <Compile Include="Entity\Product\SP_PRODUCT_DETAIL_VIEW_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MAIN_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Product\SP_PRODUCT_SEARCH_CNT_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
@@ -791,6 +801,9 @@
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_COMPLETE_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_INFO_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_READY_SEL_Result.cs">
