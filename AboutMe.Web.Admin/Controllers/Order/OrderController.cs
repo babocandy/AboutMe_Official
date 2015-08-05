@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
+using System.IO;
+using System.Data;
+using System.Data.OleDb;
+using System.Net;
 
 using System.Reflection;
 using System.Web.Routing;
@@ -339,6 +343,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
         {
             List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result> lst = new List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result>();
             lst = _adminorderservice.OrderDeliveryExcelList(OrderIdxStr).ToList();
+            /*
             HttpContext.Response.Clear();
             HttpContext.Response.Charset = "";
 
@@ -365,8 +370,227 @@ namespace AboutMe.Web.Admin.Controllers.Order
             }
             Response.Flush();
             HttpContext.Response.End();
+            */
+            string uploadPath = @"\Upload\DeliveryExcel\";
+            DateTime dt2 = new DateTime();
+            dt2 = DateTime.Now;
+            string now_dt = dt2.ToString("yyyyMMddHHmms");
 
-            return View();
+            string source = Server.MapPath(uploadPath+"delivery_templet.xls");
+            string file_name = "delivery_templet_" + now_dt + ".xls";
+            string create_path = uploadPath + @"Download\" + now_dt;
+            string dest = create_path + @"\" + file_name;
+            string sql = "";
+
+            if (!Directory.Exists(Server.MapPath(uploadPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(uploadPath));
+            }
+
+            if (!Directory.Exists(Server.MapPath(create_path)))
+            {
+                Directory.CreateDirectory(Server.MapPath(create_path));
+            }
+
+            System.IO.File.Copy(source, Server.MapPath(dest));
+            string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(dest));
+
+            OleDbConnection con = new System.Data.OleDb.OleDbConnection(excelConnectionString);
+            con.Open();
+            try
+            {
+                foreach (var row in lst)
+                {
+                    string delivery_num = (string.IsNullOrEmpty(row.DELIVERY_NUM) ? "" : row.DELIVERY_NUM.ToString().Trim());
+
+                    sql = "INSERT INTO [Sheet1$] ([ORDER IDX],[ORDER DETAIL IDX],[주문번호],[주문일자],[주문자명],[임직원여부],[상품코드],[상품명],[개수],[결제구분],[결제액],[상태],[프로모션종류],[프로모션명],[사은품명],[송장번호]) ";
+                    sql = sql + String.Format(" VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}');"
+                                    , row.ORDER_IDX.ToString().Trim(), row.ORDER_DETAIL_IDX.ToString().Trim(), row.ORDER_CODE.ToString().Trim(), row.ORDER_DATE.ToString().Trim(), row.ORDER_NAME.ToString().Trim()
+                                    , row.EMP_YN.ToString().Trim(), row.P_CODE.ToString().Trim(), row.P_NAME.ToString().Trim(), row.P_COUNT.ToString().Trim(), row.PAY_NM.ToString().Trim()
+                                    , row.REAL_PAY_PRICE.ToString().Trim(), row.ORDER_STATUS_NM.ToString().Trim(), row.PROMOTION_NM.ToString().Trim(), row.PMO_PRODUCT_NAME.ToString().Trim()
+                                    , row.FREEGIFT_NAME.ToString().Trim(), delivery_num);
+
+                    OleDbCommand Com = new OleDbCommand(sql, con);
+                    Com.ExecuteNonQuery();
+
+                }
+            }
+            finally
+            {
+                con.Close();                
+            }
+
+            return FileDownload(Server.MapPath(dest));
+
+        }
+
+        public ActionResult FileDownload(string filepath)
+        {
+
+            var filename = Path.GetFileName(filepath);
+
+            FileStream stream = new FileStream(filepath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            try
+            {
+                long bytesToRead = stream.Length;
+
+                Response.ContentType = @"application\octet-stream";
+                Response.AddHeader("Content-Transfer-Encoding", "binary");
+                Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}", Server.UrlPathEncode(filename).Replace("+", "%20")));
+                Response.AddHeader("Content-Length", Convert.ToString(stream.Length));
+
+                while (bytesToRead > 0)
+                {
+                    if (Response.IsClientConnected)
+                    {
+                        byte[] buffer = new Byte[10000];
+                        int length = stream.Read(buffer, 0, 10000);
+                        Response.OutputStream.Write(buffer, 0, length);
+                        Response.Flush();
+                        bytesToRead = bytesToRead - length;
+                    }
+                    else
+                    {
+                        bytesToRead = -1;
+                    }
+                }
+
+                Response.End();
+                return View();
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Close();
+                }
+            }
+        }
+
+
+        public ActionResult Delivery()
+        {
+            object result = TempData["UploadResult"];
+           // List<DELIVERTY_EXCEL_RESULT> lst = JsonConvert.DeserializeObject<List<DELIVERTY_EXCEL_RESULT>>(result);
+            return View(result);
+        }
+        
+        [HttpPost]
+        public ActionResult DeliveryExcelUpdate(IEnumerable<HttpPostedFileBase> ExcelUploadFile)
+        {
+            //저장경로
+            DateTime dt2 = new DateTime();
+            dt2 = DateTime.Now;
+            string now_dt = dt2.ToString("yyyyMMddHHmms");
+            string uploadPath = @"\Upload\DeliveryExcel\Upload\";
+            string sDirectory = uploadPath + now_dt;
+            string REG_ID = AdminUserInfo.GetAdmId();
+
+            List<DELIVERTY_EXCEL_RESULT> result = new List<DELIVERTY_EXCEL_RESULT>();
+
+            if (!Directory.Exists(Server.MapPath(uploadPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(uploadPath));
+            }
+
+
+            HttpPostedFileBase file =  ExcelUploadFile.FirstOrDefault();
+            if (file.ContentLength > 0)
+            {
+                string FileExt = string.Empty;
+                string FilePath = string.Empty;
+                string FileName = string.Empty;
+                   
+                FileName = Path.GetFileName(file.FileName);
+                FilePath = Path.Combine(sDirectory, Path.GetFileName(file.FileName));
+                FileExt = System.IO.Path.GetExtension(file.FileName);
+                
+                if (!Directory.Exists(Server.MapPath(sDirectory)))
+                {
+                    Directory.CreateDirectory(Server.MapPath(sDirectory));
+                }
+
+                file.SaveAs(Server.MapPath(FilePath));
+
+                
+                string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(FilePath));
+                OleDbConnection con = new System.Data.OleDb.OleDbConnection(excelConnectionString);
+                OleDbDataAdapter cmd = new System.Data.OleDb.OleDbDataAdapter("select * from [Sheet1$] ", con);
+
+                con.Open();
+                try
+                {
+                    System.Data.DataSet excelDataSet = new DataSet();
+                    cmd.Fill(excelDataSet);
+                    DataTable data = excelDataSet.Tables[0];
+
+                    DataRow[] arrdata = data.Select();
+                    int r = 0;
+                    int cnt = 0;
+                    int succ_cnt = 0;
+                    foreach (DataRow rw in arrdata)
+                    {
+                        object[] cval = rw.ItemArray;
+                        r++;
+                        cnt++;
+                        if (r > 0)
+                        {
+                            string order_idx = cval[0].ToString().Trim();
+                            string order_detail_idx = cval[1].ToString().Trim();
+                            string order_code = cval[2].ToString().Trim();
+                            string order_date = cval[3].ToString().Trim();
+                            string order_name = cval[4].ToString().Trim();
+                            string emp_yn = cval[5].ToString().Trim();
+                            string p_code = cval[6].ToString().Trim();
+                            string p_name = cval[7].ToString().Trim();
+                            string p_count = cval[8].ToString().Trim();
+                            string pay_nm = cval[9].ToString().Trim();
+                            string real_pay_price = cval[10].ToString().Trim();
+                            string order_status_nm = cval[11].ToString().Trim();
+                            string promotion_nm = cval[12].ToString().Trim();
+                            string pmo_product_name = cval[13].ToString().Trim();
+                            string freegift_name = cval[14].ToString().Trim();
+                            string delivery_num = cval[15].ToString().Trim();
+
+                            if (!string.IsNullOrEmpty(delivery_num))
+                            {
+                                if (!string.IsNullOrEmpty(order_detail_idx))
+                                {
+                                    DELIVERTY_EXCEL_RESULT dv = new DELIVERTY_EXCEL_RESULT();
+                                    dv.ORDER_IDX = order_idx;
+                                    dv.ORDER_DETAIL_IDX = order_detail_idx;
+                                    dv.ORDER_CODE = order_code;
+                                    dv.ORDER_DATE = order_date;
+                                    dv.ORDER_NAME = order_name;
+                                    dv.EMP_YN = emp_yn;
+                                    dv.P_CODE = p_code;
+                                    dv.P_NAME = p_name;
+                                    dv.P_COUNT = p_count;
+                                    dv.PAY_NM = pay_nm;
+                                    dv.REAL_PAY_PRICE = real_pay_price;
+                                    dv.ORDER_STATUS_NM = order_status_nm;
+                                    dv.PROMOTION_NM = promotion_nm;
+                                    dv.PMO_PRODUCT_NAME = pmo_product_name;
+                                    dv.FREEGIFT_NAME = freegift_name;
+                                    dv.DELIVERY_NUM = delivery_num;
+                                    result.Add(dv);
+
+                                    _adminorderservice.OrderDetailDeliveryUpdate(Convert.ToInt16(order_detail_idx), delivery_num, REG_ID);
+                                }
+                            }
+
+                        } //if end
+
+                    } //end foreach
+                }
+                finally
+                {
+                    con.Close();
+                }
+            } //end if
+            TempData["UploadResult"] = result;
+            return RedirectToAction("Delivery");
+          
         }
     }
 }

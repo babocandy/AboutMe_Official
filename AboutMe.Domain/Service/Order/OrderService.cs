@@ -75,9 +75,24 @@ namespace AboutMe.Domain.Service.Order
         public SP_ORDER_STEP2_RECENTADDR_INFO_Result OrderStep1RecentAddrInfo(string M_ID)
         {
             SP_ORDER_STEP2_RECENTADDR_INFO_Result info;
+            SP_ORDER_STEP2_RECENTADDR_INFO_Result defaultinfo = new SP_ORDER_STEP2_RECENTADDR_INFO_Result
+            {
+                RECEIVER_NAME = "",
+                RECEIVER_ADDR1 = "",
+                RECEIVER_ADDR2 = "",
+                RECEIVER_HP1 = "",
+                RECEIVER_HP2 = "",
+                RECEIVER_HP3 = "",
+                RECEIVER_POST1 = "",
+                RECEIVER_POST2 = "",
+                RECEIVER_TEL1 = "",
+                RECEIVER_TEL2= "",
+                RECEIVER_TEL3 =""
+            };
+            
             using (OrderEntities EfContext = new OrderEntities())
             {
-                info = EfContext.SP_ORDER_STEP2_RECENTADDR_INFO(M_ID).FirstOrDefault();
+                info = EfContext.SP_ORDER_STEP2_RECENTADDR_INFO(M_ID).DefaultIfEmpty(defaultinfo).FirstOrDefault();
             }
             return info;
         }
@@ -167,7 +182,7 @@ namespace AboutMe.Domain.Service.Order
             SP_ORDER_PAY_Result result = new SP_ORDER_PAY_Result();
             using (OrderEntities EfContext = new OrderEntities())
             {
-               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN).FirstOrDefault(); ;
+               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN, Param.VACT_Num, Param.VACT_BankCode, Param.VACT_Name, Param.VACT_InputName, Param.VACT_Date, Param.VACT_Time).FirstOrDefault(); 
             }
             return result.ORDER_CODE;
         }

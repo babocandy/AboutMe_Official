@@ -157,4 +157,24 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string PRTC_Cnt { set; get; }  //재승인횟수(최대9회)
         public string PRTC_Type { set; get; }  //부분취소,재승인 구분값(0:재승인  1:부분취소) 
     }
+
+    public class DELIVERTY_EXCEL_RESULT
+    {
+        public string ORDER_IDX { get; set; }
+        public string ORDER_DETAIL_IDX { set; get; }
+        public string ORDER_CODE { set; get; }
+        public string ORDER_DATE { set; get; }
+        public string ORDER_NAME { set; get; }
+        public string EMP_YN { set; get; }
+        public string P_CODE { set; get; }
+        public string P_NAME { set; get; }
+        public string P_COUNT { set; get; }
+        public string PAY_NM { set; get; }
+        public string REAL_PAY_PRICE { set; get; }
+        public string ORDER_STATUS_NM { set; get; }   
+        public string PROMOTION_NM { set; get; }   
+        public string PMO_PRODUCT_NAME { set; get; }   
+        public string FREEGIFT_NAME { set; get; }
+        public string DELIVERY_NUM { set; get; }   
+    }
 }

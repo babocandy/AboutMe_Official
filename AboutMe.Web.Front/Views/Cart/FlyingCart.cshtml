@@ -2,26 +2,28 @@
 <i></i>
 <a href="#" class="lycart_close" onclick="FlycartClose();"></a>
 <p class="tit">쇼핑백</p>
-<ul>
+
 @if (Model.CartCnt == 0)
 {
-    <li>
-        <span class="pro_detail">
-            <span class="photo"> </span>
-            <em class="pro_tit">장바구니가 비었습니다.</em>
-        </span>
-    </li>
+    <!--쇼핑백 상품이 없을 때-->
+    <div class="noitem">
+        <img src="/aboutCom/images/common/ico_cart.gif" alt="" />
+        <p class="txt">상품이 비어있습니다.</p>
+    </div>
+
 }
 else
-{ 
-    foreach (var item in Model.CartList)
-    { 
+{
+    <div class="haveitem">
+        <ul>
+    @foreach (var item in Model.CartList)
+    {
         <li>
             <span class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></span>
             <span class="pro_detail">
                 <em class="pro_tit">@item.P_NAME</em>
                 <em class="price">
-                    @if (@item.SELLING_PRICE > 0)
+                    @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
                     {
                         <del>@item.SELLING_PRICE.ToString("#,#0.") 원</del>
                     }
@@ -33,19 +35,23 @@ else
                 <input type="text" class="ipttypeb" value="@item.P_COUNT" />
             </span>
         </li>
+
     }
-}
-</ul>
-<div class="pagearea">
-@if (@Model.CartCnt > 0)
-{
-    <div class="pagingtype2">
-        <a href="#" class="prev" onclick="FlyCartLoad(@Model.PrevPage)"></a>
-        @Model.CurrentPage / @Model.TotalPage
-        <a href="#" class="next" onclick="FlyCartLoad(@Model.NextPage)"></a>
+        </ul>
+
+        <div class="pagearea">
+            @if (@Model.CartCnt > 0)
+            {
+                <div class="pagingtype2">
+                    <a href="#" class="prev" onclick="FlyCartLoad(@Model.PrevPage)"></a>
+                    @Model.CurrentPage / @Model.TotalPage
+                    <a href="#" class="next" onclick="FlyCartLoad(@Model.NextPage)"></a>
+                </div>
+            }
+        </div>
     </div>
 }
-</div>
+
 <div class="btngroup">
     <a class="btn_brown_w185h48" href="/Cart">쇼핑백 가기<img alt="" class="detailimg" src="/aboutCom/images/common/ico_arrow.png" /></a>
 </div>

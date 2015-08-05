@@ -330,6 +330,23 @@
                                     <em>TID</em><span>@Model.DetailInfo.PAT_TID</span>
                                 </li>
                             </ul>
+                            @if (Model.DetailInfo.PAY_GBN == "3") //가상계좌
+                            { 
+                            <ul class="payview ea4">
+                                <li>
+                                    <em>가상계좌번호</em><span>@Model.DetailInfo.VACT_Num</span>
+                                </li>
+                                <li>
+                                    <em>입금은행</em><span>@Model.DetailInfo.VACT_BankName</span>
+                                </li>
+                                <li>
+                                    <em>예금주명</em><span>@Model.DetailInfo.VACT_Name</span>
+                                </li>
+                                <li>
+                                    <em>입금 예정일</em><span>@Model.DetailInfo.VACT_Date 까지</span>
+                                </li>
+                            </ul>
+                            }
                             <!-- //결제 정보 -->
                         </div>
                         <div class="deliveryinfo contypea mt20">

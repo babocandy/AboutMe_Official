@@ -37,6 +37,7 @@ namespace AboutMe.Web.Front.DI_Core
 
             container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //Cart
             container.RegisterType<AboutMe.Domain.Service.Review.IReviewService, AboutMe.Domain.Service.Review.ReviewService>(); //Review
+            container.RegisterType<AboutMe.Domain.Service.Qna.IQnaService, AboutMe.Domain.Service.Qna.QnaService>(); //1:1문의
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
             container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());

@@ -1,0 +1,93 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_INDEX
+@{
+    ViewBag.Title = "1:1문의 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script src="/aboutCom/js/lib/jquery-ui.js"></script>
+    <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
+    <script> 
+        function goSave() {
+            var frm = document.frm;
+            if ($("#category").val() == "") { alert("구분을 선택해주세요."); return false; }
+            if ($.trim($("#title").val()) == "") { alert("제목을 입력해주세요."); $("#title").focus(); return false; }
+            if ($.trim($("#question").val()) == "") { alert("내용을 입력해주세요."); $("#question").focus(); return false; }
+            if (confirm("저장하시겠습니까?") == true) {
+                frm.submit();
+            }
+        }
+    </script>
+}
+<!--container-->
+<div id="container" class="myquestion">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>1:1 문의<i></i></h2>           
+                <!--mypage_menu-->
+                @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                <!--//mypage_menu-->
+            </div>
+            <!--//h2_area-->
+            <!--꼭 읽어주세요-->
+            <div class="userread">
+                <p class="tit">꼭 읽어주세요</p>
+                <ul class="ps_list">
+                    <li>주문하신 상품에 대한 교환/반품신청 신청은 “교환/반품 신청” 메뉴를 이용하여 주시기 바랍니다.</li>
+                    <li>고객 문의가 많아 답변이 지연될 수 있는 점은 양해 바라며, 빠른 처리를 위해 노력하겠습니다.</li>
+                    <li>“고객센터 >FAQ” 메뉴를 통해 더 많은 정보를 확인 하실 수 있습니다.</li>
+                </ul>
+            </div>
+            <!--//꼭 읽어주세요-->
+        </div>
+        <!--//mypage_top-->
+        <!--나의문의쓰기-->
+        <div class="contypeb">
+            <div class="tabletypec">
+                @using (Html.BeginForm("QnaAction", "Qna", FormMethod.Post, new { id = "frm", name = "frm", onsubmit = "return;" })){
+                    @Html.Hidden("idx", @Model.QnaView.IDX)
+                    @Html.Hidden("status", "1")
+                    @Html.Hidden("mode", @Model.mode)
+                <table>
+                    <colgroup><col width="147" /><col width="*" /></colgroup>
+                    <tr>
+                        <th>구분</th>
+                        <td>
+                            <select class="selectstyleb" title="" id="category" name="category">
+                                <option value="">선택</option>
+                                <option selected=@(Model.QnaView.CATEGORY =="1") value="1">상품문의</option>
+                                <option selected=@(Model.QnaView.CATEGORY =="2") value="2">배송관련</option>
+                                <option selected=@(Model.QnaView.CATEGORY =="3") value="3">구매관련</option>
+                                <option selected=@(Model.QnaView.CATEGORY =="4") value="4">반품관련</option>
+                                <option selected=@(Model.QnaView.CATEGORY =="5") value="5">기타</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>제목</th>
+                        <td><input type="text" class="ipttypea h35" style="width:910px;" id="title" name="title" value="@Model.QnaView.TITLE"/></td>
+                    </tr>
+                    <tr class="last">
+                        <th>내용</th>
+                        <td>
+                            <textarea class="textarea" style="width:910px; height:190px" id="question" name="question">@Model.QnaView.QUESTION</textarea>
+                        </td>
+                    </tr>
+                </table>
+                }
+            </div>
+            <div class="btngroup mt20">
+                @if(Model.mode =="NEW"){<a href="javascript:" onclick="goSave();" class="btn_brown_w96h38">문의</a>}
+                @if(Model.mode =="EDIT"){<a href="javascript:" onclick="goSave();" class="btn_brown_w96h38">수정</a>}
+                <a href="javascript:" onclick="history.back();" class="btn_white_w96h38 typeb">취소</a>
+            </div>
+        </div>
+        <!--나의문의쓰기-->
+    </div>
+</div>
+<!--//container-->

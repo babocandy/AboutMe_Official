@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.Order
         }
     
     
-        public virtual ObjectResult<SP_ORDER_PAY_Result> SP_ORDER_PAY(Nullable<int> oRDER_IDX, string pAY_GBN, string cARD_GBN, string iNSTLMT_AT, string bANK_CODE, string pAT_TID, string rEAL_ACCOUNT_AT, string cASHRECEIPT_SE_CODE, string cASHRECEIPT_RESULT_CODE, string hTTP_USER_AGENT, string pAT_GUBUN, string sVR_DOMAIN)
+        public virtual ObjectResult<SP_ORDER_PAY_Result> SP_ORDER_PAY(Nullable<int> oRDER_IDX, string pAY_GBN, string cARD_GBN, string iNSTLMT_AT, string bANK_CODE, string pAT_TID, string rEAL_ACCOUNT_AT, string cASHRECEIPT_SE_CODE, string cASHRECEIPT_RESULT_CODE, string hTTP_USER_AGENT, string pAT_GUBUN, string sVR_DOMAIN, string vACT_Num, string vACT_BankCode, string vACT_Name, string vACT_InputName, string vACT_Date, string vACT_Time)
         {
             var oRDER_IDXParameter = oRDER_IDX.HasValue ?
                 new ObjectParameter("ORDER_IDX", oRDER_IDX) :
@@ -78,7 +78,31 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("SVR_DOMAIN", sVR_DOMAIN) :
                 new ObjectParameter("SVR_DOMAIN", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_PAY_Result>("SP_ORDER_PAY", oRDER_IDXParameter, pAY_GBNParameter, cARD_GBNParameter, iNSTLMT_ATParameter, bANK_CODEParameter, pAT_TIDParameter, rEAL_ACCOUNT_ATParameter, cASHRECEIPT_SE_CODEParameter, cASHRECEIPT_RESULT_CODEParameter, hTTP_USER_AGENTParameter, pAT_GUBUNParameter, sVR_DOMAINParameter);
+            var vACT_NumParameter = vACT_Num != null ?
+                new ObjectParameter("VACT_Num", vACT_Num) :
+                new ObjectParameter("VACT_Num", typeof(string));
+    
+            var vACT_BankCodeParameter = vACT_BankCode != null ?
+                new ObjectParameter("VACT_BankCode", vACT_BankCode) :
+                new ObjectParameter("VACT_BankCode", typeof(string));
+    
+            var vACT_NameParameter = vACT_Name != null ?
+                new ObjectParameter("VACT_Name", vACT_Name) :
+                new ObjectParameter("VACT_Name", typeof(string));
+    
+            var vACT_InputNameParameter = vACT_InputName != null ?
+                new ObjectParameter("VACT_InputName", vACT_InputName) :
+                new ObjectParameter("VACT_InputName", typeof(string));
+    
+            var vACT_DateParameter = vACT_Date != null ?
+                new ObjectParameter("VACT_Date", vACT_Date) :
+                new ObjectParameter("VACT_Date", typeof(string));
+    
+            var vACT_TimeParameter = vACT_Time != null ?
+                new ObjectParameter("VACT_Time", vACT_Time) :
+                new ObjectParameter("VACT_Time", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_PAY_Result>("SP_ORDER_PAY", oRDER_IDXParameter, pAY_GBNParameter, cARD_GBNParameter, iNSTLMT_ATParameter, bANK_CODEParameter, pAT_TIDParameter, rEAL_ACCOUNT_ATParameter, cASHRECEIPT_SE_CODEParameter, cASHRECEIPT_RESULT_CODEParameter, hTTP_USER_AGENTParameter, pAT_GUBUNParameter, sVR_DOMAINParameter, vACT_NumParameter, vACT_BankCodeParameter, vACT_NameParameter, vACT_InputNameParameter, vACT_DateParameter, vACT_TimeParameter);
         }
     
         public virtual ObjectResult<SP_ORDER_STEP2_Result> SP_ORDER_STEP1(string m_ID, string sESSION_ID, string p_CODE_LIST, string p_COUNT_LIST)

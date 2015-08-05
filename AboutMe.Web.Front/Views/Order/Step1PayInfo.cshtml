@@ -266,8 +266,16 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
     HPP : 컨텐츠 또는 실물 결제 여부에 따라 HPP(1)과 HPP(2)중 선택 적용(HPP(1):컨텐츠, HPP(2):실물)
     Card(0): 신용카드 지불시에 이니시스 대표 가맹점인 경우에 필수적으로 세팅 필요 ( 자체 가맹점인 경우에는 카드사의 계약에 따라 설정) - 자세한 내용은 메뉴얼  참조
     OCB : OK CASH BAG 가맹점으로 신용카드 결제시에 OK CASH BAG 적립을 적용하시기 원하시면 "OCB" 세팅 필요 그 외에 경우에는 삭제해야 정상적인 결제 이루어짐
+        
+
+        va_recept : 현금영수증
     -->
-    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2)">
+    @{
+        //가상계좌 입금예정일
+        DateTime dt = DateTime.Now.AddDays(3); 
+        string vbankDate = dt.ToString("yyyyMMdd");
+    }
+    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):">
     <input type="hidden" id="oid" name="oid" size="40" value="@Model.OrderIdx">
     <input type="hidden" id="INIregno" name="INIregno" size="40">
 

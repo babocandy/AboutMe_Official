@@ -241,7 +241,7 @@
                 }
             });
             
-            var jobj = encodeURIComponent(orderidxstr);
+            //var jobj = encodeURIComponent(orderidxstr);
             var f = document.excelForm;
             f.OrderIdxStr.value = orderidxstr;
             f.action = "/Order/DeliveryExcelDownload";
@@ -261,7 +261,7 @@
 <!--content-->
 <div class="content">
     <iframe src="" width="0" height="0" id="download_iframe"></iframe>
-    <form id="excelForm" name="excelForm" method="post" target="download_iframe" action="/Order/DeliveryExcelDownload">
+    <form id="excelForm" name="excelForm" method="post" action="/Order/DeliveryExcelDownload">
         <input type="hidden" name="OrderIdxStr" id="OrderIdxStr" value="" />
     </form>
 @using (Html.BeginForm("Index", "Order", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
