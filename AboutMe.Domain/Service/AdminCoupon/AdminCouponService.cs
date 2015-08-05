@@ -62,7 +62,7 @@ namespace AboutMe.Domain.Service.AdminCoupon
         {
 
             int IsSuccess = 1;
-            string NewCdPromotionProduct = ""; //신규생성된 프로모션코드
+            string NewCdCoupon = ""; //신규생성된 쿠폰코드
 
             using (TransactionScope scope = new TransactionScope())
             {
@@ -71,18 +71,34 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
                     using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
                     {
-                        //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                        ObjectParameter objOutParam = new ObjectParameter("CREATED_CD_COUPON", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
 
+                        //마스터정보 insert
                         AdmCouponContext.SP_ADMIN_COUPON_MASTER_INS
                             ( Tb.COUPON_NAME,Tb.COUPON_AD_MSG,Tb.COUPON_USE_DESCRIPTION,Tb.COUPON_GBN
                               ,Tb.COUPON_GBN_M,Tb.RATE_OR_MONEY,Tb.SERVICE_LIFE_GBN,Tb.FIXED_PERIOD_FROM
                               ,Tb.FIXED_PERIOD_TO,Tb.EXRIRED_DAY_FROM_ISSUE_DT,Tb.DOWNLOAD_DATE_FROM,Tb.DOWNLOAD_DATE_TO
-                              ,Tb.USABLE_DEVICE_GBN,Tb.PRODUCT_APP_SCOPE_GBN,Tb.PRODUCT_APP_SCOPE_GBN,Tb.ISSUE_METHOD_GBN
+                              ,Tb.USABLE_DEVICE_GBN,Tb.PRODUCT_APP_SCOPE_GBN,Tb.MEMBER_APP_SCOPE_GBN,Tb.ISSUE_METHOD_GBN
                               ,Tb.ISSUE_METHOD_WITH_AUTO,Tb.COUPON_NUM_CHECK_TF,Tb.ISSUE_MAX_LIMIT,Tb.MASTER_FROM_DATE,Tb.MASTER_TO_DATE,Tb.USABLE_YN
-                              ,Tb.COUPON_DISCOUNT_MONEY,Tb.COUPON_DISCOUNT_RATE
+                              , Tb.COUPON_DISCOUNT_MONEY, Tb.COUPON_DISCOUNT_RATE, objOutParam
                             );
 
-                        //NewCdPromotionProduct = objOutParam.Value.ToString();
+                        NewCdCoupon = objOutParam.Value.ToString();
+                      
+                        //적용 회원등급 insert
+                        for (int i = 0; i < CheckMemGrade.Length; i++)
+                        {
+                             string[] MemGradeInfo = CheckMemGrade[i].Split('$');
+                             AdmCouponContext.SP_ADMIN_COUPON_MEM_GRADE_INS(NewCdCoupon, MemGradeInfo[0], MemGradeInfo[1]);
+                        }
+
+                        //전체상품 대상의 쿠폰이라면 지금 모든 상품을 대상으로 사용할 수 있게 INSERT 처리 
+                        if(Tb.PRODUCT_APP_SCOPE_GBN == "B" )
+                        {
+                            AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS(NewCdCoupon);
+                        }
+
+
                     }
 
                     scope.Complete();
@@ -105,7 +121,7 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
        
         //쿠폰마스터 상세정보 가져오기
-        public List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponList(string CdCoupon)
+        public List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponDetail(string CdCoupon)
         {
 
             List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> lst = new List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>();
@@ -382,6 +398,38 @@ namespace AboutMe.Domain.Service.AdminCoupon
                     {
                         ObjectParameter objOutParam01 = new ObjectParameter("EXCUTE_RESULT", typeof(int));//sp의 output parameter변수명을 동일하게 사용한다.
                         AdmCouponContext.SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_ENTIRE_INS(CdCoupon, AdminId, objOutParam01);
+                        ResultCode = Convert.ToInt32(objOutParam01.Value.ToString());
+                    }
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                }
+            }
+
+            return ResultCode;
+        }
+
+
+
+
+        //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/개별발행 INSERT(admin) 
+        public int InsAdminCouponIssue_WithNoNumcheck_Manual_Single(string CdCoupon, int CouponMoney, int CouponDiscountRate, string M_id, string AdminId, string IssuedMemo)
+        {
+
+            int ResultCode = -999; //실행결과코드
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+                    using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                    {
+                        ObjectParameter objOutParam01 = new ObjectParameter("EXCUTE_RESULT", typeof(int));//sp의 output parameter변수명을 동일하게 사용한다.
+                        AdmCouponContext.SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS(CdCoupon, CouponMoney, CouponDiscountRate, M_id, AdminId, IssuedMemo, objOutParam01);
                         ResultCode = Convert.ToInt32(objOutParam01.Value.ToString());
                     }
 

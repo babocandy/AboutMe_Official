@@ -33,6 +33,7 @@ namespace AboutMe.Web.Admin.Controllers
         {
             public TB_COUPON_MASTER inst_TB_COUPON_MASTER { get; set; }
             public List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result { get; set; }
+            public List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result> inst_SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result { get; set; }
             /**
             public TB_PROMOTION_BY_TOTAL_MEM_GRADE inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE { get; set; }
             public List<SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result> inst_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result { get; set; }
@@ -113,15 +114,114 @@ namespace AboutMe.Web.Admin.Controllers
 
             int is_success = 1;
 
+            DateTime FixedPeriodFrom, FixedPeriodTo ;
+            DateTime MasterFromDate, MasterToDate;
+
+            bool DateValid = true;
+            @TempData["jsMessage"] = "";
+
             if (ModelState.IsValid)
             {
-                is_success= _AdminCouponService.InsAdminCouponMaster(tb_coupon_master, CheckMemGrade);
+                MasterFromDate= tb_coupon_master.MASTER_FROM_DATE.Value;
+                MasterToDate= tb_coupon_master.MASTER_TO_DATE.Value;
 
-                return RedirectToAction("Index");
+                if (tb_coupon_master.FIXED_PERIOD_FROM.HasValue && tb_coupon_master.FIXED_PERIOD_TO.HasValue)
+                {
+                    FixedPeriodFrom= tb_coupon_master.FIXED_PERIOD_FROM.Value;
+                    FixedPeriodTo = tb_coupon_master.FIXED_PERIOD_TO.Value;
+
+                    if(FixedPeriodFrom < MasterFromDate) //고정기간의 시작일자가 발행가능기간보다 먼저이면 에러
+                    {
+                        DateValid = false;
+                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 발행가능기간보다 나중이어야 합니다.')</script>";
+                    }
+                }
+
+                if (DateValid == true)
+                {
+                    is_success = _AdminCouponService.InsAdminCouponMaster(tb_coupon_master, CheckMemGrade);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
             }
 
             return View();
             
+            //return RedirectToAction("Index", new { CdPromotionTotal = _CdPromotionTotal });
+
+        }
+
+
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult Update(string CdCoupon)
+        {
+
+            var mMyMultiModelForCreate = new MyMultiModelForCreate
+            {
+                 inst_TB_COUPON_MASTER = new TB_COUPON_MASTER()
+                ,inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result = new List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>()
+                ,inst_SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result =new List<SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result>()
+                //inst_TB_PROMOTION_BY_TOTAL_MEM_GRADE = new TB_PROMOTION_BY_TOTAL_MEM_GRADE()
+            };
+
+            mMyMultiModelForCreate.inst_SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result = _AdminCouponService.GetAdminCouponMemberGradeList(CdCoupon);
+            mMyMultiModelForCreate.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result = _AdminCouponService.GetAdminCouponDetail(CdCoupon);
+
+            return View(mMyMultiModelForCreate);
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
+        public ActionResult Update([Bind(Prefix = "inst_TB_COUPON_MASTER", Exclude = "IDX,CD_COUPON,COUPON_NUM_CHECK_TF,ISSUE_MAX_LIMIT,INS_DATE")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade)
+        {
+
+            /**
+            int is_success = 1;
+
+            DateTime FixedPeriodFrom, FixedPeriodTo;
+            DateTime MasterFromDate, MasterToDate;
+
+            bool DateValid = true;
+            @TempData["jsMessage"] = "";
+
+            if (ModelState.IsValid)
+            {
+                MasterFromDate = tb_coupon_master.MASTER_FROM_DATE.Value;
+                MasterToDate = tb_coupon_master.MASTER_TO_DATE.Value;
+
+                if (tb_coupon_master.FIXED_PERIOD_FROM.HasValue && tb_coupon_master.FIXED_PERIOD_TO.HasValue)
+                {
+                    FixedPeriodFrom = tb_coupon_master.FIXED_PERIOD_FROM.Value;
+                    FixedPeriodTo = tb_coupon_master.FIXED_PERIOD_TO.Value;
+
+                    if (FixedPeriodFrom < MasterFromDate) //고정기간의 시작일자가 발행가능기간보다 먼저이면 에러
+                    {
+                        DateValid = false;
+                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 발행가능기간보다 나중이어야 합니다.')</script>";
+                    }
+                }
+
+                if (DateValid == true)
+                {
+                    is_success = _AdminCouponService.InsAdminCouponMaster(tb_coupon_master, CheckMemGrade);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+             **/
+
+            return View();
+
             //return RedirectToAction("Index", new { CdPromotionTotal = _CdPromotionTotal });
 
         }
@@ -143,10 +243,8 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             //쿠폰마스터 정보를 ViewData에 저장 
-            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponDetail(CdCoupon).ToList();
             ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
-
-
 
 
             //AdminMemberService srv =  new AdminMemberService();
@@ -188,7 +286,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             //쿠폰마스터 정보를 ViewData에 저장 
-            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponDetail(CdCoupon).ToList();
             ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
 
 
@@ -284,7 +382,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             //쿠폰마스터 정보를 ViewData에 저장 
-            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponDetail(CdCoupon).ToList();
             ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
 
 
@@ -311,7 +409,7 @@ namespace AboutMe.Web.Admin.Controllers
         {
 
             //쿠폰마스터 정보를 ViewData에 저장 
-            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponList(CdCoupon).ToList();
+            List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> master_lst = _AdminCouponService.GetAdminCouponDetail(CdCoupon).ToList();
             ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] = master_lst;
 
 
@@ -329,6 +427,8 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
+        
+        //쿠폰 전체 대상 발행 / 번호 인증이 필요없는 쿠폰 / 일괄 발행 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
@@ -339,6 +439,34 @@ namespace AboutMe.Web.Admin.Controllers
             string AdminId = "TestAdminID000";
 
             ResultCode = _AdminCouponService.InsAdminCouponIssue_WithNoNumcheck_ManualEntire(CdCoupon, AdminId);
+
+            ViewBag.ResultCode = ResultCode.ToString();
+
+            if (ResultCode == 0) // 정상수행
+                return RedirectToAction("IssuedCouponList", new { CdCoupon = CdCoupon });
+            else
+                return RedirectToAction("IssueExcute", new { CdCoupon = CdCoupon });
+
+        }
+
+
+        //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/개별발행 INSERT(admin) 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult IssueExcuteSingle(string CdCoupon, [Bind(Include = "COUPON_MONEY,COUPON_DISCOUNT_RATE,M_ID,ISSUED_MEMO")]  TB_COUPON_ISSUED_DETAIL tb)
+        {
+
+            int ResultCode;
+            string AdminId = "TestAdminID000";
+
+            if (tb.COUPON_DISCOUNT_RATE == null)
+                tb.COUPON_DISCOUNT_RATE = 0;
+
+            if (tb.COUPON_MONEY == null)
+                tb.COUPON_MONEY = 0;
+
+            ResultCode = _AdminCouponService.InsAdminCouponIssue_WithNoNumcheck_Manual_Single(CdCoupon,tb.COUPON_MONEY.Value,tb.COUPON_DISCOUNT_RATE.Value,tb.M_ID, AdminId,tb.ISSUED_MEMO);
 
             ViewBag.ResultCode = ResultCode.ToString();
 

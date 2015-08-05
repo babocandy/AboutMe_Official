@@ -1,18 +1,41 @@
-﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_TOTAL*@
-
-@model AboutMe.Web.Admin.Controllers.AdminCouponController.MyMultiModelForCreate
-
+﻿@model AboutMe.Web.Admin.Controllers.AdminCouponController.MyMultiModelForCreate
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
+@functions{
+    protected string DisplayMemGradeCheck(string GradeVal) //val 에는 "A$B"값이 들어간다
+    {
+        /**
+        Model.SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_WITH_CD_SEL_Result[0] 을 LINQ로 뒤져서
+
+       'val' 파라미터값이 있으면
+       "checked" 를 리턴해준다.
+         **/
+
+        string rtn = "";
+
+        string[] Gv = GradeVal.Split('$');
+
+        var qry = from WD in Model.inst_SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result
+                  where WD.M_GBN == Gv[0] && WD.M_GRADE == Gv[1]
+                  select WD;
+
+        if (qry.Count() > 0)
+        {
+            rtn = "checked";
+        }
+
+
+        return rtn;
+    }
+}
 
 @section Scripts{
-
     @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
     {
         @Html.Raw(TempData["jsMessage"]);
     }
-    
+
     <script language="javascript">
 
         function frmCheck() {
@@ -20,9 +43,9 @@
 
             var f = document.frm01;
 
-      
-            //용도구분값이 지불쿠폰 일때 
-            
+
+            //용도구분값이 지불쿠폰 일때
+
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
             {
                 if (getRadioVal(f, 'inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN') == '') {
@@ -38,22 +61,22 @@
                     return false;
                 }
             }
-         
-              
-       
+
+
+
            //발행방법이 자동발행일때
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_GBN') == 'A') {
-                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO') == '') 
+                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO') == '')
                 {
                     alert("[발행방법]이 -자동발행-일때는 [자동발행TYPE]을 선택해야 합니다.");
                     f.inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO[0].focus();
                     return false;
                 }
             }
-         
-       
 
-           
+
+
+
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
 
                 //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
@@ -63,7 +86,7 @@
                     return false;
                 }
             }
-           
+
 
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
 
@@ -78,7 +101,7 @@
 
 
 
-           
+
             //alert("여기 " + getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
             //사용기간 기준구분 - 정상
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'R') {
@@ -102,7 +125,7 @@
             }
 
 
-       
+
             var is_mem_checked = false;
            // alert(f.CheckMemGrade.length);
 
@@ -116,11 +139,11 @@
             }
 
             if (is_mem_checked == false) {
-              
+
                  alert("적용회원등급을 선택하세요");
                  f.CheckMemGrade[0].focus();
                  return false;
-                
+
             }
 
             if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value != '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value != '') {
@@ -143,8 +166,8 @@
             }
 
 
-           
-            
+
+
             return true;
 
         }
@@ -153,7 +176,7 @@
             var val = "";
             // get list of radio buttons with specified name
             var radios = form.elements[name];
-          
+
 
             // loop through list of radio buttons
             // for (var i = 0; radios.length < i; i++)
@@ -219,166 +242,202 @@
 
         }
     </script>
-
 }
-
 @section Left {
-
     @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
 }
-
 @section Header{
     @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
 }
-
 @section Body{
-
     <div class="content">
         <!--path-->
         <div class="path">
             <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
         </div>
         <!--//path-->
-
         <div class="panel">
             <h3 class="sub-header">쿠폰정책 등록</h3>
-
-            @using (Html.BeginForm("Create", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("Update", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
-
+                                     <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
 
                                         <table class="table table_row">
                                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
                                             <tbody>
-
                                                 <tr>
                                                     <th>쿠폰명 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME , new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
-
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
                                                 </tr>
-                                                <tr>
+                                                <tㅇ>
                                                     <th>용도구분 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN, "M") 지불 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN, "S") 배송쿠폰 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN)</font></td>
-
-                                                </tr>
+                                                    <td>
+                                                        @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN == "M")
+                                                        {
+                                                            @:지불
+                                                        }
+                                                        else 
+                                                        {
+                                                            @:배송 
+                                                        }
+                                                    </td>
                                                 <tr>
                                                     <th>용도구분 2차 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN_M, "E") 일반이벤트 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN_M, "B") 생일쿠폰 일반이벤트 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN_M, "R") 회원가입 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN_M)</font></td>
+                                                    <td>
+                                                    @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M == "E")
+                                                    {
+                                                        @:일반이벤트 
+                                                    }
+                                                    else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M == "B")
+                                                    {
+                                                        @:생일쿠폰
+                                                    }else  if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M == "R")
+                                                    {
+                                                        @:회원가입
+                                                    }
+                                                    </td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>정률/정액 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.RATE_OR_MONEY)</font></td>
-
+                                                    <td>
+                                                        @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY == "R")
+                                                        {
+                                                            @:정률
+                                                        }
+                                                        else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY == "M")
+                                                        {
+                                                            @:정액
+                                                        }
+                                                                                                            
+                                                    </td>
                                                 </tr>
-
                                                 <tr>
                                                     <th>쿠폰 할인율(%) </th>
                                                     <td>
-                                                        @Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_RATE)</font>
+                                                        @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_RATE %
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th>쿠폰 할인금액 </th>
                                                     <td>
-                                                        @Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_DISCOUNT_MONEY)</font>
+                                                        @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY 
                                                     </td>
                                                 </tr>
 
 
-                                                             
                                                 <tr>
                                                     <th>사용기간기준 구분 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "A") 고정기간 기준 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "B") 실제 발행일기준 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN)</font></td>
-
+                                                    <td>
+                                                    
+                                                        @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].SERVICE_LIFE_GBN == "A")
+                                                        {
+                                                            @:고정기간 기준
+                                                        }
+                                                        else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].SERVICE_LIFE_GBN == "B")
+                                                        {
+                                                            @:발행일 기준
+                                                        }
+                                                      
+                                                    
+                                                    </td>
                                                 </tr>
-                                                
-                                                 <tr>
-                                                    <th>고정기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)</font></td>
 
+                                                <tr>
+                                                    <th>고정기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)</font></td>
                                                 </tr>
                                                 <tr>
                                                     <th>고정기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)</font></td>
-                                                </tr>
-                                                  
-                                                <tr>
-                                                    <th>발행일 기준 유효기간(DAY) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT)</font></td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)</font></td>
                                                 </tr>
 
+                                                <tr>
+                                                    <th>발행일 기준 유효기간(DAY) </th>
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].EXRIRED_DAY_FROM_ISSUE_DT, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT)</font></td>
+                                                </tr>
 
                                                 <tr>
                                                     <th>사용가능매체(PC,모바일) </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN, "P") PC  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN, "M") 모바일 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN)</font></td>
-
+                                                    <td>
+                                                        @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN == "P")
+                                                        {
+                                                            @:PC & Moblie
+                                                        }
+                                                        else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN == "M")
+                                                        {
+                                                            @: Moblie only
+                                                        }                                                    
+                                                    </td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <th>상품적용범위 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN, "A") 특정상품  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN, "B") 전체상품 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN)</font></td>
-
+                                                    <td>
+                                                    
+                                                        @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].PRODUCT_APP_SCOPE_GBN == "A")
+                                                        {
+                                                            @:특정상품
+                                                        }
+                                                        else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].PRODUCT_APP_SCOPE_GBN == "B")
+                                                        {
+                                                            @:전체상품
+                                                        }
+                                                                                                            
+                                                    </td>
                                                 </tr>
-                                               <!---
-                                                <tr>
-                                                    <th>회원적용범위 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "A") 전체회원  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "B") 등급회원전체 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "C") 특정회원 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN)</font></td>
 
-                                                </tr>
-                                                -->
                                                 <tr>
                                                     <th>발행방법 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN, "A") 자동발행(예를들면 회원가입시 자동발행)  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN, "B") 수동발행  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN)</font></td>
-
+                                                    <td>
+                                                        @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN == "A")
+                                                        {
+                                                            @:자동발행(예를들면 회원가입시 자동발행)
+                                                        }
+                                                        else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_GBN == "B")
+                                                        {
+                                                            @:수동발행
+                                                        }
+                                                    
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>자동발행TYPE </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_WITH_AUTO, "A") Action(회원가입..)  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_WITH_AUTO, "B") Batch  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_WITH_AUTO)</font></td>
-
+                                                    <td>
+                                                    @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO == "A")
+                                                        {
+                                                            @:Action(회원가입..)
+                                                        }
+                                                        else if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO == "B")
+                                                        {
+                                                            @:Batch
+                                                        }
+                                                     </td>
                                                 </tr>
 
 
-                                                
-                                                <!--
-                                                <tr>
-                                                    <th>다운로드가능기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_FROM)</font></td>
-
-                                                </tr>
-                                                <tr>
-                                                    <th>다운로드가능기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red"> @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_TO)</font></td>
-
-                                                </tr>
-                                                    -->
+                                               
                                                 <tr>
                                                     <th>발행가능기간(정책유효기간) 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
-
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
                                                 </tr>
                                                 <tr>
                                                     <th>발행가능기간(정책유효기간) 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.MASTER_TO_DATE, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
-
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
                                                 </tr>
                                                 <tr>
                                                     <th>발행 대상 회원등급 </th>
                                                     <td>
-                                                        <b>일반</b>   <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$B" />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$S" />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$G" />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="A$V" /> VIP
-                                                        <br><b>임직원</b> <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$B" />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$S" />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$G" />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" value="S$V" /> VIP
+                                                        일반 <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$B" @DisplayMemGradeCheck("A$B") />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$S" @DisplayMemGradeCheck("A$S") />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$G" @DisplayMemGradeCheck("A$G") />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$V" @DisplayMemGradeCheck("A$V") /> VIP
+                                                        <br>임직원 <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$B" @DisplayMemGradeCheck("S$B") />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$S" @DisplayMemGradeCheck("S$S") />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$G" @DisplayMemGradeCheck("S$G") /> >골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$V" @DisplayMemGradeCheck("S$V") /> VIP
                                                     </td>
-
                                                 </tr>
-
                                                 <tr>
                                                     <th>활성화/비활성화 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_YN, "N") 비활성화  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.USABLE_YN)</font></td>
-
+                                                    <td>@Html.RadioButtonFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN, "N") 비활성화  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.USABLE_YN)</font></td>
                                                 </tr>
-
 
                                                 <tr>
                                                     <th>저장</th>
@@ -391,12 +450,9 @@
 
             }
         </div>
-
         <div class="btn_area">
             <a class="btn btn-primary small" href="/AdminCoupon/Index">목록</a>
         </div>
 
-
     </div>
 }
-
