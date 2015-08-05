@@ -604,5 +604,22 @@ namespace AboutMe.Domain.Entity.AdminPromotion
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_ALL_PRODUCT_PRICE_IDX_DUP_SEL", p_CODEParameter, cD_PROMOTION_PRODUCTParameter, iDXParameter);
         }
+    
+        public virtual ObjectResult<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result> SP_PROMOTION_TOTAL_BY_PRODUCT_SEL(string p_CODE, string mEM_GBN, string mEM_GRADE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var mEM_GBNParameter = mEM_GBN != null ?
+                new ObjectParameter("MEM_GBN", mEM_GBN) :
+                new ObjectParameter("MEM_GBN", typeof(string));
+    
+            var mEM_GRADEParameter = mEM_GRADE != null ?
+                new ObjectParameter("MEM_GRADE", mEM_GRADE) :
+                new ObjectParameter("MEM_GRADE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result>("SP_PROMOTION_TOTAL_BY_PRODUCT_SEL", p_CODEParameter, mEM_GBNParameter, mEM_GRADEParameter);
+        }
     }
 }

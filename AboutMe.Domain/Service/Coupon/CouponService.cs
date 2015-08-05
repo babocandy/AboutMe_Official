@@ -14,7 +14,7 @@ namespace AboutMe.Domain.Service.Coupon
     public class CouponService : ICouponService
     {
 
-        #region 마이페이지 ============================================================
+        #region PC버전 마이페이지 ============================================================
 
         //다운로드 가능한 쿠폰 - pc버전 
         public List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponList(string M_Id)
@@ -66,7 +66,7 @@ namespace AboutMe.Domain.Service.Coupon
 
         }
 
-        //사용가능한 쿠폰 리스트 가져오기
+        //사용가능한 쿠폰 리스트 가져오기-PC버전
         public List<SP_COUPON_ISSUED_DETAIL_SEL_Result> GetCouponAvailableList(string M_ID, string SearchCol, string SearchKeyword, int Page, int PageSize)
         {
 
@@ -107,7 +107,7 @@ namespace AboutMe.Domain.Service.Coupon
         }
 
 
-        //쿠폰별 상품 리스트 가져오기
+        //쿠폰별 상품 리스트 가져오기 --PC/모바일 공통
         public List<SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result> GetCouponProductList(string M_ID,int IdxCouponNumber, string SearchCol, string SearchKeyword, int Page, int PageSize)
         {
 
@@ -126,7 +126,7 @@ namespace AboutMe.Domain.Service.Coupon
 
         }
 
-        //쿠폰별 상품 리스트 COUNT 가져오기 
+        //쿠폰별 상품 리스트 COUNT 가져오기 --PC모바일 공통
         public int GetCouponProductListCnt(string M_ID, int IdxCouponNumber, string SearchCol, string SearchKeyword)
         {
 
@@ -176,6 +176,29 @@ namespace AboutMe.Domain.Service.Coupon
 
 
         #endregion
+
+        #region PC버전 상품상세페이지 ================================================
+
+        //상품별, 회원별 사용가능 혹은 다운로드 가능한 쿠폰 TOP 1    - pc/모바일 공통 
+        public List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> GetCouponTop1_ByMem_ByPrd(string UsableDeviceGbn, string PCode, string M_Id)
+        {
+
+            List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> lst = new List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL(UsableDeviceGbn,PCode,M_Id).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        #endregion 
 
 
 
