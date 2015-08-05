@@ -11,7 +11,7 @@ namespace AboutMe.Domain.Entity.Product
 {
     using System;
     
-    public partial class SP_PRODUCT_MAIN_SEL_Result
+    public partial class SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result
     {
         public int IDX { get; set; }
         public Nullable<int> RESULT_PRICE { get; set; }

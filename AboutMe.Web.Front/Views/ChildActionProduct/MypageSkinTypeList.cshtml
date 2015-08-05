@@ -1,0 +1,91 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.Product.SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result>
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    string imgUrl = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+    <li>
+        <a href="/shopping/detail?pcode=@item.P_CODE">
+            <span class="photo"><img src="@imgUrl" alt="" /></span>
+            <span class="detail">
+                @if (!string.IsNullOrEmpty(item.ICON_YN))
+                {
+                    if (item.ICON_YN.IndexOf('B') != -1)
+                    { <text> <em class="ico ico_best">BEST</em></text> }
+                    if (item.ICON_YN.IndexOf('S') != -1)
+                    { <text> <em class="ico ico_soldout">SOLD OUT</em></text> }
+                    if (item.ICON_YN.IndexOf('N') != -1)
+                    { <text> <em class="ico ico_new">NEW</em></text> }
+                    if (item.ICON_YN.IndexOf('C') != -1)
+                    { <text> <em class="ico ico_custom ">커스텀</em></text> }
+                }
+                @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                {
+                    if (item.PMO_PRODUCT_CATEGORY == "01")
+                    { <text> <em class="ico ico_set">SET</em></text> }
+                    if (item.PMO_PRODUCT_CATEGORY == "02")
+                    { <text> <em class="ico ico_1_1">1+1</em></text> }
+                    if (item.PMO_PRODUCT_CATEGORY == "03")
+                    { <text> <em class="ico ico_time">TIME</em></text> }
+                }
+                @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                {
+                    <text> <em class="ico ico_coupon">COUPON</em></text>
+                }
+                <em class="ico ico_new">new</em>
+                <em class="tit">@(new HtmlString(item.P_SUB_TITLE))</em>
+                <em class="stit">@(new HtmlString(item.P_NAME))</em>
+                <em class="price">
+                    <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                    @string.Format("{0:#,##0}", item.RESULT_PRICE)원
+                </em>
+            </span>
+        </a>
+    </li>
+}
+
+
+@*<li>
+    <a href="#">
+        <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+        <span class="detail">
+            <em class="ico ico_new">new</em>
+            <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게2</em>
+            <em class="stit">스킨 톤업 버블 워시</em>
+            <em class="price">
+                <del>32,000원</del>
+                25,000원
+            </em>
+        </span>
+    </a>
+</li>
+<li>
+    <a href="#">
+        <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+        <span class="detail">
+            <em class="ico ico_new">new</em>
+            <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게3</em>
+            <em class="stit">스킨 톤업 버블 워시</em>
+            <em class="price">
+                <del>32,000원</del>
+                25,000원
+            </em>
+        </span>
+    </a>
+</li>
+<li>
+    <a href="#">
+        <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+        <span class="detail">
+            <em class="ico ico_new">new</em>
+            <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게4</em>
+            <em class="stit">스킨 톤업 버블 워시</em>
+            <em class="price">
+                <del>32,000원</del>
+                25,000원
+            </em>
+        </span>
+    </a>
+</li>*@
