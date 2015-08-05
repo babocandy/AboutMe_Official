@@ -6,12 +6,14 @@ using System.Web.Mvc;
 
 using AboutMe.Domain.Service.Qna;
 using AboutMe.Domain.Entity.Qna;
+using AboutMe.Web.Front.Common.Filters;
 
 namespace AboutMe.Web.Front.Controllers.Mypage
 {
 
     [RoutePrefix("MyPage/Qna")]
     [Route("{action=index}")]
+    [CustomAuthorize]
     public class QnaController : BaseFrontController
     {
         private IQnaService _qnaservice;
@@ -41,18 +43,19 @@ namespace AboutMe.Web.Front.Controllers.Mypage
 
         public ActionResult QnaDelete(int IDX)
         {
-            QNA_SEARCH param = new QNA_SEARCH(); 
-            
-            _qnaservice.QnaDelete(IDX); 
-            return RedirectToAction("Index", param);
+            string M_ID = _user_profile.M_ID;
+            QNA_SEARCH param = new QNA_SEARCH();
+            _qnaservice.QnaDelete(IDX, M_ID); 
+            return RedirectToAction("", param);
         }
 
         public ActionResult QnaWrite(int IDX , string mode)
         {
-
+            string M_ID = _user_profile.M_ID;
+          
             SP_TB_QNA_VIEW_Result view = new SP_TB_QNA_VIEW_Result();
-            if (IDX > 0) { 
-                view =_qnaservice.QnaView(IDX);
+            if (IDX > 0) {
+                view = _qnaservice.QnaView(IDX, M_ID);
             }
             QNA_INDEX M = new QNA_INDEX();
             M.mode = mode;
@@ -62,10 +65,8 @@ namespace AboutMe.Web.Front.Controllers.Mypage
          [HttpPost]
         public ActionResult QnaAction(TB_QNA itemQna, QNA_SEARCH param, string mode)
          {
-             if (itemQna.M_ID == null)
-             {
-                 itemQna.M_ID = "test_b1s";    //임시
-             } 
+             itemQna.M_ID = _user_profile.M_ID;
+          
              if (mode.Equals("NEW"))
              {
                  _qnaservice.QnaInsert(itemQna);
@@ -75,7 +76,7 @@ namespace AboutMe.Web.Front.Controllers.Mypage
                  _qnaservice.QnaUpdate(itemQna); 
              }
              
-             return RedirectToAction("Index", param);
+             return RedirectToAction("", param);
          } 
 
     }

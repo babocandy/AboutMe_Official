@@ -1,8 +1,17 @@
-﻿@model AboutMe.Domain.Entity.Recallbbs.RECALL_INDEX
+﻿@model AboutMe.Domain.Entity.Recallbbs.RECALL_VIEW
 @{
+    
+    if (Model.Bbsview == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
     ViewBag.Title = "교환/반품신청 상세 - ABOUT ME";
     ViewBag.TopClass = "mypage";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    
+    
 }
 @section Scripts {
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
@@ -63,19 +72,24 @@
                     <tr>
                         <th>신청내용</th>
                         <td colspan="3" class="pd30">
-                           @Model.Bbsview.CONTENTS
+                          @Html.Raw(Model.Bbsview.CONTENTS.Replace("\n", "<br />"))
                         </td>
                     </tr> 
                     <tr class="last">
                         <th>처리내용</th>
-                        <td colspan="3" class="pd30">@Model.Bbsview.CONFIRM_CONTENTS</td>
+                        <td colspan="3" class="pd30">
+                            @Html.Raw(HttpUtility.HtmlDecode(Model.Bbsview.CONFIRM_CONTENTS))
+                        </td>
                     </tr> 
                     
                 </table>
             </div>
             <div class="btngroup mt20">
-                <a href="/Mypage/Recall/RecallWrite?IDX=@Model.Bbsview.IDX&order_code=@Model.Bbsview.ORDER_CODE&order_detail_idx=@Model.Bbsview.ORDER_DETAIL_IDX&mode=EDIT"  class="btn_brown_w96h38">수정</a>
-                <a href="javascript:" onclick="history.back();" class="btn_brown_w96h38">목록</a>
+                @if (Model.Bbsview.STATUS == 1)
+                { 
+                    <a href="/Mypage/Recall/RecallEdit?IDX=@Model.Bbsview.IDX&dateType=@Model.SearchParam.dateType&start_date=@Model.SearchParam.start_date&end_date=@Model.SearchParam.end_date&page=@Model.SearchParam.page" class="btn_brown_w96h38">수정</a>
+                }
+                <a href="/Mypage/Recall/?dateType=@Model.SearchParam.dateType&start_date=@Model.SearchParam.start_date&end_date=@Model.SearchParam.end_date&page=@Model.SearchParam.page"  class="btn_brown_w96h38">목록</a>
             </div>
         </div>
         <!--//writerarea-->

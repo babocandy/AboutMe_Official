@@ -62,10 +62,10 @@
                             <td>@item.IDX</td>  
                             @switch (item.CATEGORY){
                                 case "1": <td> 상품문의</td> break;
-                                case "2": <td> 배송관련</td> break;
-                                case "3": <td> 구매관련</td> break;
-                                case "4": <td> 반품관련</td> break;
-                                case "5": <td> 기타</td> break;
+                                case "2": <td> 배송문의</td> break;
+                                case "3": <td> 구매문의</td> break;
+                                case "4": <td> 반품문의</td> break;
+                                case "5": <td> 기타문의</td> break;
                             }  
                             <td class="subj"><a href="#">@item.TITLE</a></td>
                             <td>@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</td>
@@ -77,7 +77,7 @@
                                 <div class="qna_area">
                                     @if (item.STATUS =="1"){
                                         <div class="q_area"> 
-                                            @item.QUESTION
+                                            @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
                                             <div class="btngroup">
                                                 <a href="/Mypage/Qna/QnaWrite?IDX=@item.IDX&mode=EDIT" class="btn_gray_w96h38">수정</a>
                                                 <a href="javascript:" onclick="deleteQna(@item.IDX);" class="btn_white_w96h38 typeb">삭제</a>
@@ -85,11 +85,11 @@
                                         </div>
                                     }else {
                                         <div class="q_area">
-                                           @item.QUESTION
+                                            @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
                                         </div>
                                         <div class="a_area">
                                             <a href="#" class="btn_qnaclose"><img src="/aboutCom/images/mypage/btn_qnaclose.gif" alt="" /></a>
-                                            @item.ANSWER
+                                            @Html.Raw( HttpUtility.HtmlDecode(item.ANSWER))
                                             <span class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</span>
                                         </div>
                                     }
