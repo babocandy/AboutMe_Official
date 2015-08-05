@@ -190,6 +190,23 @@ namespace AboutMe.Web.Admin.Controllers
             int is_success = 1;
 
             @TempData["jsMessage"] = "11";
+
+            //마스터 정보 가져오기 
+            /**
+            DateTime OrgDateFrom, OrgDateTo;
+
+            List<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result> PmoTotalInfolist = new List<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result>();
+            PmoTotalInfolist = _AdminPromotionService.GetAdminPromotionByTotalDetail(CdPromotionTotal);
+
+
+            if(PmoTotalInfolist.Count > 0 )
+            {
+                OrgDateFrom = Convert.ToDateTime(PmoTotalInfolist[0].PMO_TOTAL_DATE_FROM);
+                OrgDateTo = Convert.ToDateTime(PmoTotalInfolist[0].PMO_TOTAL_DATE_TO); 
+            }
+             * **/
+
+
             if (ModelState.IsValid)
             {
                 string StrDateFrom = "", StrDateTo = "";
@@ -200,6 +217,8 @@ namespace AboutMe.Web.Admin.Controllers
                 DateTo = tb_promotion_by_total.PMO_TOTAL_DATE_TO.Value;
                 PmoTotalCategory = tb_promotion_by_total.PMO_TOTAL_CATEGORY.ToString();
 
+
+                
                 if (DateTime.Compare(DateFrom, DateTo) < 0) //시작날짜가 끝날짜보다 먼저이면
                 {
                     // 동일 날짜대에 같은 종류의 프로모션이 없거나, 지금 등록하려는 프로모션이 비활성화상태의 프로모션이면
@@ -552,7 +571,7 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult PrdPricingCreate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT_PRICE", Include = "P_CODE,PMO_PRICE,PMO_ONE_ONE_P_CODE,PMO_ONE_ONE_PRICE,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
+        public ActionResult PrdPricingCreate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT_PRICE", Include = "P_CODE,PMO_PRICE,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
         {
 
           
@@ -569,19 +588,30 @@ namespace AboutMe.Web.Admin.Controllers
             //프로모션 종료시간 가져오기
             Nullable<DateTime> PmoProductDateTo = null;
 
+            String PmoProductCategory = ""; //프로모션 코드 01 ='세트상품' , 02 = 1+1 , 03 = 타임세일, 04=일반할인 , 05=아웃렛 
+
+
             List<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> TotalLst = _AdminPromotionService.GetAdminPromotionByProductDetail(CdPromotionProduct).ToList();
             if (TotalLst.Count > 0)
             {
                 PmoProductDateFrom = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_FROM);
                 PmoProductDateTo = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_TO);
+                PmoProductCategory = TotalLst[0].PMO_PRODUCT_CATEGORY.ToString();
+
             }
 
-            ViewData["PMO_PRODUCT_CATEGORY"] = TotalLst[0].PMO_PRODUCT_CATEGORY; 
+            ViewData["PMO_PRODUCT_CATEGORY"] = PmoProductCategory;
             ViewData["PromotionStartTime"] = PmoProductDateFrom;
             ViewData["PromotionEndTime"] = PmoProductDateTo;
             ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
             //==============================================================================================
 
+
+            if (PmoProductCategory == "02") //  1+1 프로모션이면
+            {
+                tb_promotion_by_product_price.PMO_ONE_ONE_P_CODE = tb_promotion_by_product_price.P_CODE;
+                tb_promotion_by_product_price.PMO_ONE_ONE_PRICE = 0;
+            }
             
 
             int is_success = 0;
@@ -602,7 +632,7 @@ namespace AboutMe.Web.Admin.Controllers
                     // 동일시간대 활성화된 프로모션에 소속된 상품들중, 중복상품이 없음 OR  지금 입력한 가격정책의 UsableYN = 'N'이면 
                     if (PcodeDupCnt == 0 || tb_promotion_by_product_price.USABLE_YN == "N")
                     {
-
+                        //상품가격 등록 실행 !!!!!!!!!!!
                         is_success = _AdminPromotionService.InsAdminPromotionByProductPricing(tb_promotion_by_product_price, CdPromotionProduct, CheckCdPromotionTotal);
                         if (is_success == 1) // INSERT가 성공했으면 
                         {

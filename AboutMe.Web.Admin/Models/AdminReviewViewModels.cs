@@ -29,6 +29,6 @@ namespace AboutMe.Web.Admin.Models
 
     public class AdminReviewThemaInputViewModel
     {
-        public List<SP_REVIEW_CATE_THEMA_SEL_Result> Thema { get; set; }
+        public List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> Thema { get; set; }
     }
 }

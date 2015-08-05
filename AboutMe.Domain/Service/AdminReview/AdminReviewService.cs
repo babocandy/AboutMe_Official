@@ -102,13 +102,13 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 테마 조회
          */
-        public List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList()
+        public List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> ThemaList()
         {
-            List<SP_REVIEW_CATE_THEMA_SEL_Result> list = new List<SP_REVIEW_CATE_THEMA_SEL_Result>();
+            List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> list = new List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result>();
  
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                list = context.SP_REVIEW_CATE_THEMA_SEL().ToList();
+                list = context.SP_ADMIN_REVIEW_CATE_THEMA_SEL().ToList();
             }
 
             return list;
@@ -121,7 +121,7 @@ namespace AboutMe.Domain.Service.AdminReview
         {
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                context.SP_REVIEW_CATE_THEMA_UPD(p.IDX, p.TITLE, p.IS_DISPLAY, p.TAG);
+                context.SP_ADMIN_REVIEW_CATE_THEMA_UPD(p.IDX, p.TITLE, p.IS_DISPLAY, p.TAG);
             }
         }
     }

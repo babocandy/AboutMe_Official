@@ -224,23 +224,34 @@
 
                                                 </tr>
 
-                                                <!--
+                                              
                                                  <tr>
                                                     <th>정률/정액 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_RATE_OR_MONEY)</font></td>
+                                                    <td>
+                                                        @if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_RATE_OR_MONEY == "R")
+                                                        {
+                                                            @:정률할인 (%)
+                                                        }
+                                                        @if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_RATE_OR_MONEY == "M")
+                                                        {
+                                                            @:정액할인
+                                                        }
+                                                    
+                                                    
+                                                    </td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>할인율 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_RATE)</td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_RATE, new { cssClass = "input-sm text-left" , Readonly ="true"})  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_RATE)</td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>할인액 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_MONEY)</td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_MONEY, new { cssClass = "input-sm text-left", Readonly = "true" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_MONEY)</td>
 
                                                 </tr>
-                                                 -->
+                                                
 
                                                 <tr>
                                                     <th>세트상품 할인적용 기준 종류수 </th>

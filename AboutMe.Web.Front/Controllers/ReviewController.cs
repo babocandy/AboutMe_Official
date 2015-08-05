@@ -37,8 +37,10 @@ namespace AboutMe.Web.Front.Controllers
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
             model.CategoryBeauty = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.BEAUTY, "");
-            model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
             model.CategoryCodeHealth = CategoryCode.HEALTH_DEFAULT;
+            model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
+            model.CategoryThema = _ReviewService.ThemaList();
+            
 
             var tp = _ReviewService.GetReviewProductList(null, CategoryCode.BEAUTY_DEFAULT, ReviewProductListViewModel.SORT_PHOTO);
             model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);

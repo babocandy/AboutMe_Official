@@ -38,7 +38,7 @@
 
     @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
     {
-        @TempData["jsMessage"];
+        @Html.Raw(TempData["jsMessage"]);
     }
     
     <script language="javascript">
@@ -214,7 +214,7 @@
                                                         {
                                                             @:정률할인 (%)
                                                         }
-                                                        @if (Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_CATEGORY == "M")
+                                                        @if (Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_RATE_OR_MONEY == "M")
                                                         {
                                                             @:정액할인
                                                         }
@@ -246,7 +246,7 @@
                                               
                                                 <tr>
                                                     <th>프로모션시작일시 (YYYY-MM-DD) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM)</td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00"  })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM)</td>
 
                                                 </tr>
                                                 <tr>
@@ -335,6 +335,11 @@
               f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.readOnly = true;
               //f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.onClick("alert('프로모션이 시작 되어서 수정불가합니다.')")
               f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_MONEY.readOnly = true;
+              
+              //시작일시
+              f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_FROM.readOnly = true;
+              //종료일시
+              f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_TO.readOnly = true;
               </text>
 
 

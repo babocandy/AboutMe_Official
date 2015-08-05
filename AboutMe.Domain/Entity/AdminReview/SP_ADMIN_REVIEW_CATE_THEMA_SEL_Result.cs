@@ -11,7 +11,7 @@ namespace AboutMe.Domain.Entity.AdminReview
 {
     using System;
     
-    public partial class SP_REVIEW_CATE_THEMA_SEL_Result
+    public partial class SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result
     {
         public string IDX { get; set; }
         public string TITLE { get; set; }

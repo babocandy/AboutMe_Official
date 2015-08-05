@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AboutMeModel6.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_REVIEW_CATE_THEMA_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_ADMIN_REVIEW_CATE_THEMA_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="TAG" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_REVIEW_PRODUCT_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
@@ -31,13 +38,6 @@
           <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
           <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="SP_REVIEW_CATE_THEMA_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="SP_REVIEW_CATE_THEMA_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IDX" Type="int" Mode="In" />
-          <Parameter Name="TITLE" Type="varchar" Mode="In" />
-          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
-          <Parameter Name="TAG" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="AboutMeModel6StoreContainer" />
       </Schema></edmx:StorageModels>
@@ -72,8 +72,8 @@
             <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
             <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_REVIEW_CATE_THEMA_SEL" ReturnType="Collection(AboutMeModel6.SP_REVIEW_CATE_THEMA_SEL_Result)" />
-          <FunctionImport Name="SP_REVIEW_CATE_THEMA_UPD">
+          <FunctionImport Name="SP_ADMIN_REVIEW_CATE_THEMA_SEL" ReturnType="Collection(AboutMeModel6.SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result)" />
+          <FunctionImport Name="SP_ADMIN_REVIEW_CATE_THEMA_UPD">
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="TITLE" Mode="In" Type="String" />
             <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
@@ -120,7 +120,7 @@
           <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
         </ComplexType>
-        <ComplexType Name="SP_REVIEW_CATE_THEMA_SEL_Result">
+        <ComplexType Name="SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result">
           <Property Type="String" Name="IDX" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="TITLE" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
@@ -181,9 +181,9 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_PRODUCT_UPDATE" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_PRODUCT_UPDATE" />
-          <FunctionImportMapping FunctionImportName="SP_REVIEW_CATE_THEMA_SEL" FunctionName="AboutMeModel6.Store.SP_REVIEW_CATE_THEMA_SEL">
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_CATE_THEMA_SEL" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_CATE_THEMA_SEL">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="AboutMeModel6.SP_REVIEW_CATE_THEMA_SEL_Result">
+              <ComplexTypeMapping TypeName="AboutMeModel6.SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result">
                 <ScalarProperty Name="IDX" ColumnName="IDX" />
                 <ScalarProperty Name="TITLE" ColumnName="TITLE" />
                 <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
@@ -191,7 +191,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_REVIEW_CATE_THEMA_UPD" FunctionName="AboutMeModel6.Store.SP_REVIEW_CATE_THEMA_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_CATE_THEMA_UPD" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_CATE_THEMA_UPD" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
