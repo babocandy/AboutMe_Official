@@ -4,6 +4,12 @@
     ViewBag.TopClass = "mypage";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 
+    if (Model.QnaView == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+
 }
 @section Scripts {
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />

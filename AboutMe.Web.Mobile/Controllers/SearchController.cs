@@ -29,7 +29,7 @@ namespace AboutMe.Web.Mobile.Controllers
             this._ProductService = _productService;
         }
 
-        #region 상품검색
+        #region 상품검색[모바일]
         public ActionResult Index(Product_front_search_entity product_front_search_entity)
         {
             #region 초기화작업
@@ -44,7 +44,7 @@ namespace AboutMe.Web.Mobile.Controllers
 
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
-            return View(_ProductService.GetProductSearchList(product_front_search_entity).ToList());
+            return View(_ProductService.GetProductMobileSearchList(product_front_search_entity).ToList());
         }
         #endregion
     }

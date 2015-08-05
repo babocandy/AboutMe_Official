@@ -39,5 +39,7 @@ namespace AboutMe.Domain.Entity.Product
         public Nullable<int> P_VIEW_COUNT { get; set; }
         public string WITH_PRODUCT_LIST { get; set; }
         public string P_OUTLET_YN { get; set; }
+        public string PMO_PRODUCT_CATEGORY { get; set; }
+        public string COUPON_CODE { get; set; }
     }
 }

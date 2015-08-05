@@ -55,22 +55,30 @@ namespace AboutMe.Domain.Entity.Qna
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_QNA_SEL_Result>("SP_TB_QNA_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter);
         }
     
-        public virtual int SP_TB_QNA_DEL(Nullable<int> iDX, ObjectParameter eRR_CODE)
+        public virtual int SP_TB_QNA_DEL(Nullable<int> iDX, string m_ID)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
                 new ObjectParameter("IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_QNA_DEL", iDXParameter, eRR_CODE);
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_QNA_DEL", iDXParameter, m_IDParameter);
         }
     
-        public virtual ObjectResult<SP_TB_QNA_VIEW_Result> SP_TB_QNA_VIEW(Nullable<int> iDX)
+        public virtual ObjectResult<SP_TB_QNA_VIEW_Result> SP_TB_QNA_VIEW(Nullable<int> iDX, string m_ID)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
                 new ObjectParameter("IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_QNA_VIEW_Result>("SP_TB_QNA_VIEW", iDXParameter);
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_QNA_VIEW_Result>("SP_TB_QNA_VIEW", iDXParameter, m_IDParameter);
         }
     
         public virtual int SP_TB_QNA_INS(string cATEGORY, string tITLE, string qUESTION, string sTATUS, string m_ID, ObjectParameter nEW_IDX)
@@ -121,6 +129,78 @@ namespace AboutMe.Domain.Entity.Qna
                 new ObjectParameter("M_ID", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TB_QNA_UPD", iDXParameter, cATEGORYParameter, tITLEParameter, qUESTIONParameter, m_IDParameter, eRR_CODE);
+        }
+    
+        public virtual int SP_ADMIN_QNA_ANSWER_UPD(Nullable<int> iDX, string aNSWER)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var aNSWERParameter = aNSWER != null ?
+                new ObjectParameter("ANSWER", aNSWER) :
+                new ObjectParameter("ANSWER", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_QNA_ANSWER_UPD", iDXParameter, aNSWERParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_QNA_CNT_Result> SP_ADMIN_QNA_CNT(string sEARCH_COL, string sEARCH_KEYWORD, string sTATUS_YN)
+        {
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var sTATUS_YNParameter = sTATUS_YN != null ?
+                new ObjectParameter("STATUS_YN", sTATUS_YN) :
+                new ObjectParameter("STATUS_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_QNA_CNT_Result>("SP_ADMIN_QNA_CNT", sEARCH_COLParameter, sEARCH_KEYWORDParameter, sTATUS_YNParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_QNA_SEL_Result> SP_ADMIN_QNA_SEL(string sEARCH_COL, string sEARCH_KEYWORD, string sTATUS_YN, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var sTATUS_YNParameter = sTATUS_YN != null ?
+                new ObjectParameter("STATUS_YN", sTATUS_YN) :
+                new ObjectParameter("STATUS_YN", typeof(string));
+    
+            var sORT_COLParameter = sORT_COL != null ?
+                new ObjectParameter("SORT_COL", sORT_COL) :
+                new ObjectParameter("SORT_COL", typeof(string));
+    
+            var sORT_DIRParameter = sORT_DIR != null ?
+                new ObjectParameter("SORT_DIR", sORT_DIR) :
+                new ObjectParameter("SORT_DIR", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_QNA_SEL_Result>("SP_ADMIN_QNA_SEL", sEARCH_COLParameter, sEARCH_KEYWORDParameter, sTATUS_YNParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_QNA_VIEW_Result> SP_ADMIN_QNA_VIEW(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_QNA_VIEW_Result>("SP_ADMIN_QNA_VIEW", iDXParameter);
         }
     }
 }

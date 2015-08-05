@@ -1,0 +1,184 @@
+﻿@model AboutMe.Domain.Entity.Recallbbs.RECALL_ADMIN_EDIT
+
+@{
+    ViewBag.Title = "주문 취소/반품/교환 요청";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string pagesize = Convert.ToString(Model.SearchParam.PageSize);
+    string page = Convert.ToString(Model.SearchParam.Page);
+}
+
+@section Scripts{
+
+    <script type="text/javascript">
+    function onListClick() {
+        location.href = '@Html.Raw(Url.Action("", new { SearchCol = @Model.SearchParam.SearchCol, SearchKeyword = @Model.SearchParam.SearchKeyword, StatusYn = @Model.SearchParam.StatusYn, Page = @Model.SearchParam.Page, PageSize = @Model.SearchParam.PageSize }))';
+    }
+
+    function frmCheck() {
+        if ($("#CONFIRM_CONTENTS").val().trim() == "") {
+            alert("답변을 입력해주세요.");
+            return false;
+        }
+
+        if (confirm('답변을 저장하시겠습니까?')) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+
+
+@using (Html.BeginForm("RecallAction", "Recall", FormMethod.Post, new { id = "recallform", name = "recallform", onsubmit = "return frmCheck();" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("IDX", Model.RecallInfo.IDX.ToString())
+    @Html.Hidden("StautsYn", (String)Model.SearchParam.StatusYn)
+    @Html.Hidden("SearchCol", (String)Model.SearchParam.SearchCol)
+    @Html.Hidden("SearchKeyword", (String)Model.SearchParam.SearchKeyword)
+    @Html.Hidden("PageSize", @pagesize)
+    @Html.Hidden("Page", @page)
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="/Order/">주문 관리</a> &gt; <strong>주문 취소/반품/교환 요청</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">주문 취소/반품/교환 요청</h3>
+        </div>
+
+        <div class="form-horizontal">
+            <table class="table table_row">
+                <colgroup><col width="250px" /><col width="*" /></colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="vam"><label for="Idx">ID</label></th>
+                        <td class="condition_seacth">
+
+                            @Html.Raw(Model.RecallInfo.IDX.ToString())
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="TITLE">제목</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.RecallInfo.TITLE.ToString())
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="M_ID">요청자</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.RecallInfo.M_NAME.ToString()) 
+                            @if (!string.IsNullOrEmpty(Model.RecallInfo.REG_ID))
+                            {
+                                 @Html.Raw("("+Model.RecallInfo.REG_ID.ToString()+")" )
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="GUBUN_NM">구분</label></th>
+                        <td class="condition_seacth">
+
+                            @Html.Raw(Model.RecallInfo.GUBUN_NM.ToString())
+                        </td>
+                    </tr> 
+                    <tr>
+                        <th scope="row" class="vam"><label for="STATUS_NM">상태</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.RecallInfo.STATUS_NM.ToString())
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="vam"><label for="REG_DATE">등록일</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.RecallInfo.REG_DATE.ToString())
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="vam"><label for="CONFIRM_DATE">처리일</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.RecallInfo.CONFIRM_DATE.ToString()) 
+                            @if (!string.IsNullOrEmpty(Model.RecallInfo.ADM_ID))
+                            {
+                                @Html.Raw("(" + Model.RecallInfo.ADM_ID.ToString() + ")")
+                            }
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="ORDER_CODE">주문번호</label></th>
+                        <td class="condition_seacth">                            
+                            @Html.Raw(Model.RecallInfo.ORDER_CODE.ToString())
+                            @Html.ActionLink("주문정보", "Detail", "Order", new { ORDER_IDX = Model.RecallInfo.ORDER_IDX.ToString() }, new { target = "_blank", @class = "btn btn-success small" })
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="CONFIRM_DATE">상품정보</label></th>
+                        <td class="condition_seacth">
+                            상품명 : @Html.Raw(Model.RecallInfo.P_NAME.ToString())  
+                            <br />상품코드 : @Html.Raw(Model.RecallInfo.P_CODE.ToString())
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="CONTENTS">신청내용</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.RecallInfo.CONTENTS.Replace("\n", "<br />"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="CONFIRM_CONTENTS">처리내용</label></th>
+                        <td class="condition_seacth">
+                            @(Html.Kendo().Editor()
+                                .Name("CONFIRM_CONTENTS")
+                                .HtmlAttributes(new { @style = "width:800px; height:150px" })
+                                .Value(HttpUtility.HtmlDecode(Model.RecallInfo.CONFIRM_CONTENTS))
+                            )
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-0 col-md-10">
+                    @(Html.Kendo().Button()
+                    .Name("submitBtn")
+                    .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                    .Content("답변저장"))
+
+                    @(Html.Kendo().Button()
+                    .Name("list")
+                    .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+                    .Content("목록")
+                    .Events(ev => ev.Click("onListClick"))
+                    )
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+

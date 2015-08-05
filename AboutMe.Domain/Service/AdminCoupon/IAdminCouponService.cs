@@ -16,7 +16,7 @@ namespace AboutMe.Domain.Service.AdminCoupon
         List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponList(string SearchCol, string SearchKeyword, int Page, int PageSize);
         int GetAdminCouponListCnt(string SearchCol, string SearchKeyword);
         int InsAdminCouponMaster(TB_COUPON_MASTER Tb, string[] CheckMemGrade);
-        List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponList(string CdCoupon);
+        List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponDetail(string CdCoupon);
 
         //쿠폰적용된 상품정보
         int GetAdminCouponProductListCnt(string SearchCol, string SearchKeyword, string CdCoupon);
@@ -37,8 +37,13 @@ namespace AboutMe.Domain.Service.AdminCoupon
         int GetAdminCouponProductUsableCnt(string CdCoupon);
         
         #region 쿠폰발행
+        
         //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/일괄발행 INSERT(admin)
         int InsAdminCouponIssue_WithNoNumcheck_ManualEntire(string CdCoupon, string AdminId);
+
+        //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/개별발행 INSERT(admin) 
+        int InsAdminCouponIssue_WithNoNumcheck_Manual_Single(string CdCoupon, int CouponMoney, int CouponDiscountRate, string M_id, string AdminId, string IssuedMemo);
+        
         #endregion
 
     }

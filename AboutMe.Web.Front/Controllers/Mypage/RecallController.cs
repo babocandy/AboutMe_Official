@@ -6,11 +6,13 @@ using System.Web.Mvc;
 
 using AboutMe.Domain.Service.Recallbbs;
 using AboutMe.Domain.Entity.Recallbbs;
+using AboutMe.Web.Front.Common.Filters;
 
 namespace AboutMe.Web.Front.Controllers.Mypage
 {
     [RoutePrefix("MyPage/Recall")]
     [Route("{action=index}")]
+    [NoMemberAuthorize]
     public class RecallController : BaseFrontController
     {
          private IRecallbbsService _recallservice;
@@ -23,40 +25,22 @@ namespace AboutMe.Web.Front.Controllers.Mypage
         // GET: Recall
          public ActionResult Index(RECALLBBS_SEARCH param)
         {
+            if (_user_profile.IS_LOGIN)
+            {
+                param.order_code = "";
+                param.reg_id = _user_profile.M_ID;
+            }
+            else
+            {
+                param.order_code = _user_profile.NOMEMBER_ORDER_CODE;
+                param.reg_id = "";
+            }
+
             param.pagesize = 10;
             List<SP_TB_RECALL_BBS_SEL_Result> lst = new List<SP_TB_RECALL_BBS_SEL_Result>();
             if (_user_profile.IS_LOGIN == true)
             {
-                param.reg_id = _user_profile.M_ID;
-            } 
-            if (param.dateType.Equals("1")){
-                if (param.start_date == "" && param.end_date == ""){
-                    param.start_date = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
-                    param.end_date = DateTime.Now.ToString("yyyy-MM-dd");
-                }
-            }
-            else if (param.dateType.Equals("2")){
-                if (param.start_date == "" && param.end_date == "")
-                {
-                    param.start_date = DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd");
-                    param.end_date = DateTime.Now.ToString("yyyy-MM-dd");
-                }
-            }
-            else if (param.dateType.Equals("3"))
-            {
-                if (param.start_date == "" && param.end_date == "")
-                {
-                    param.start_date = DateTime.Now.AddMonths(-4).ToString("yyyy-MM-dd");
-                    param.end_date = DateTime.Now.ToString("yyyy-MM-dd");
-                }
-            }
-            else if (param.dateType.Equals("4"))
-            {
-                if (param.start_date == "" && param.end_date == "")
-                {
-                    param.start_date = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd");
-                    param.end_date = DateTime.Now.ToString("yyyy-MM-dd");
-                }
+                
             } 
             
             lst = _recallservice.RecallList(param);
@@ -70,47 +54,116 @@ namespace AboutMe.Web.Front.Controllers.Mypage
         }
 
          // GET: RecallView
-         public ActionResult RecallView(int IDX)
+         public ActionResult RecallView(int IDX, RECALLBBS_SEARCH param)
          {
-             SP_TB_RECALL_BBS_VIEW_Result recallView = _recallservice.RecallView(IDX); 
-             RECALL_INDEX M = new RECALL_INDEX(); 
-             M.Bbsview = recallView;
+
+             string ORDER_CODE = _user_profile.NOMEMBER_ORDER_CODE;
+             string M_ID = _user_profile.M_ID;
+
+             if (_user_profile.IS_LOGIN)
+             {
+                 ORDER_CODE = "";
+             }
+             else
+             {
+                 M_ID = "";
+             }
+
+             SP_TB_RECALL_BBS_VIEW_Result recallView = _recallservice.RecallView(IDX, M_ID, ORDER_CODE);
+             RECALL_VIEW M = new RECALL_VIEW {
+                 SearchParam = param,
+                 Bbsview = recallView,
+                 Mode = ""
+             }; 
+             
             return View(M);
         }
 
-         // GET: RecallWrite
-         public ActionResult RecallWrite(TB_RECALL_BBS itemRecall, string mode)
+         // 수정
+         public ActionResult RecallEdit(int IDX, RECALLBBS_SEARCH param)
          {
-             SP_TB_RECALL_BBS_VIEW_Result recallView = null; 
-             if (itemRecall.IDX > 0)
-             {
-                 recallView = _recallservice.RecallView(itemRecall.IDX);
-                 itemRecall.GUBUN = recallView.GUBUN;
-                 itemRecall.ORDER_CODE = recallView.ORDER_CODE;
-                 itemRecall.ORDER_DETAIL_IDX = recallView.ORDER_DETAIL_IDX;
-                 itemRecall.TITLE = recallView.TITLE;
-                 itemRecall.CONTENTS = recallView.CONTENTS;
-                 itemRecall.CONFIRM_CONTENTS = recallView.CONFIRM_CONTENTS;
-                 if (_user_profile.IS_LOGIN == true)
-                 {
-                     itemRecall.ADM_ID = _user_profile.M_ID;
-                 }
+             string ORDER_CODE = _user_profile.NOMEMBER_ORDER_CODE;
+             string M_ID = _user_profile.M_ID;
 
+             if (_user_profile.IS_LOGIN)
+             {
+                 ORDER_CODE = "";
+             }
+             else
+             {
+                 M_ID = "";
              }
 
-             RECALL_INDEX M = new RECALL_INDEX();
-             M.model = itemRecall;
-             M.mode = mode;
-             return View(M);
+             SP_TB_RECALL_BBS_VIEW_Result recallView = _recallservice.RecallView(IDX, M_ID, ORDER_CODE);
+
+
+             RECALL_VIEW M = new RECALL_VIEW
+             {
+                 SearchParam = param,
+                 Bbsview = recallView,
+                 Mode = "EDIT"
+             };
+             return View("RecallWrite", M);
+         }
+
+         // 작성
+         public ActionResult RecallWrite(string order_code, string order_detail_idx, RECALLBBS_SEARCH param)
+         {
+             string ORDER_CODE = _user_profile.NOMEMBER_ORDER_CODE;
+             string M_ID = _user_profile.M_ID;
+
+             if (_user_profile.IS_LOGIN)
+             {
+                 ORDER_CODE = "";
+             }
+             else
+             {
+                 M_ID = "";
+             }
+
+             SP_TB_RECALL_BBS_VIEW_Result recallView = new SP_TB_RECALL_BBS_VIEW_Result();
+             if (!string.IsNullOrEmpty(ORDER_CODE))
+             {
+                 recallView.ORDER_CODE = ORDER_CODE;
+             }
+             else
+             {
+                 recallView.ORDER_CODE = order_code;
+             }
+             recallView.REG_ID = M_ID;
+             recallView.ORDER_DETAIL_IDX = Convert.ToInt32(order_detail_idx);
+
+             RECALL_VIEW M = new RECALL_VIEW
+             {
+                 SearchParam = param,
+                 Bbsview = recallView,
+                 Mode = "NEW"
+             };
+             return View("RecallWrite", M);
          }
 
          [HttpPost] 
          public ActionResult RecallAction(TB_RECALL_BBS itemRecall, RECALLBBS_SEARCH param , string mode)
          {
-             if (itemRecall.REG_ID == null)
+             string ORDER_CODE = _user_profile.NOMEMBER_ORDER_CODE;
+             string M_ID = _user_profile.M_ID;
+
+             if (_user_profile.IS_LOGIN)
              {
-                 itemRecall.REG_ID = "test_b1s";    //임시
-             } 
+                 ORDER_CODE = "";
+             }
+             else
+             {
+                 M_ID = "";
+             }
+
+             itemRecall.REG_ID = M_ID;
+
+             if (!string.IsNullOrEmpty(ORDER_CODE))
+             {
+                 itemRecall.ORDER_CODE = ORDER_CODE;
+             }
+             
              if (mode.Equals("NEW"))
              {
                  _recallservice.RecallBbsInsert(itemRecall); 

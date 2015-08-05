@@ -36,5 +36,7 @@ namespace AboutMe.Domain.Entity.Product
         public string P_CATE_CODE { get; set; }
         public int P_VIEW_COUNT { get; set; }
         public string P_SUB_TITLE { get; set; }
+        public string PMO_PRODUCT_CATEGORY { get; set; }
+        public string COUPON_CODE { get; set; }
     }
 }

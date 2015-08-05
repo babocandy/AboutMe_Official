@@ -107,6 +107,15 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="ADMIN_ID" Type="varchar" Mode="In" />
           <Parameter Name="EXCUTE_RESULT" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
+          <Parameter Name="COUPON_MONEY" Type="int" Mode="In" />
+          <Parameter Name="COUPON_DISCOUNT_RATE_V" Type="int" Mode="In" />
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ADMIN_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ISSUED_MEMO" Type="varchar" Mode="In" />
+          <Parameter Name="EXCUTE_RESULT" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_ADMIN_COUPON_ISSUED_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
@@ -154,6 +163,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
           <Parameter Name="COUPON_DISCOUNT_MONEY" Type="int" Mode="In" />
           <Parameter Name="COUPON_DISCOUNT_RATE" Type="int" Mode="In" />
+          <Parameter Name="CREATED_CD_COUPON" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_COUPON_MASTER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
@@ -161,12 +171,20 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_COUPON_MEM_GRADE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
+          <Parameter Name="M_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="M_GRADE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_COUPON_MEMBER_GRADE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_COUPON_PRODUCT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_COUPON_PRODUCT_CREATE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -313,32 +331,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <FunctionImport Name="SP_ADMIN_COUPON_MASTER_DETAIL_SEL" ReturnType="Collection(AboutMeModel3.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result)">
           <Parameter Name="CD_COUPON" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_COUPON_MASTER_INS">
-            <Parameter Name="COUPON_NAME" Mode="In" Type="String" />
-            <Parameter Name="COUPON_AD_MSG" Mode="In" Type="String" />
-            <Parameter Name="COUPON_USE_DESCRIPTION" Mode="In" Type="String" />
-            <Parameter Name="COUPON_GBN" Mode="In" Type="String" />
-            <Parameter Name="COUPON_GBN_M" Mode="In" Type="String" />
-            <Parameter Name="RATE_OR_MONEY" Mode="In" Type="String" />
-            <Parameter Name="SERVICE_LIFE_GBN" Mode="In" Type="String" />
-            <Parameter Name="FIXED_PERIOD_FROM" Mode="In" Type="DateTime" />
-            <Parameter Name="FIXED_PERIOD_TO" Mode="In" Type="DateTime" />
-            <Parameter Name="EXRIRED_DAY_FROM_ISSUE_DT" Mode="In" Type="Int32" />
-            <Parameter Name="DOWNLOAD_DATE_FROM" Mode="In" Type="DateTime" />
-            <Parameter Name="DOWNLOAD_DATE_TO" Mode="In" Type="DateTime" />
-            <Parameter Name="USABLE_DEVICE_GBN" Mode="In" Type="String" />
-            <Parameter Name="PRODUCT_APP_SCOPE_GBN" Mode="In" Type="String" />
-            <Parameter Name="MEMBER_APP_SCOPE_GBN" Mode="In" Type="String" />
-            <Parameter Name="ISSUE_METHOD_GBN" Mode="In" Type="String" />
-            <Parameter Name="ISSUE_METHOD_WITH_AUTO" Mode="In" Type="String" />
-            <Parameter Name="COUPON_NUM_CHECK_TF" Mode="In" Type="String" />
-            <Parameter Name="ISSUE_MAX_LIMIT" Mode="In" Type="Int32" />
-            <Parameter Name="MASTER_FROM_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="MASTER_TO_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
-            <Parameter Name="COUPON_DISCOUNT_MONEY" Mode="In" Type="Int32" />
-            <Parameter Name="COUPON_DISCOUNT_RATE" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_COUPON_MASTER_SEL" ReturnType="Collection(AboutMeModel3.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result)">
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
             <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
@@ -453,6 +445,50 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <FunctionImport Name="SP_COUPON_MASTER_INFO_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_MASTER_INFO_SEL_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="IDX_COUPON_SERIAL" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_COUPON_MASTER_INS">
+            <Parameter Name="COUPON_NAME" Mode="In" Type="String" />
+            <Parameter Name="COUPON_AD_MSG" Mode="In" Type="String" />
+            <Parameter Name="COUPON_USE_DESCRIPTION" Mode="In" Type="String" />
+            <Parameter Name="COUPON_GBN" Mode="In" Type="String" />
+            <Parameter Name="COUPON_GBN_M" Mode="In" Type="String" />
+            <Parameter Name="RATE_OR_MONEY" Mode="In" Type="String" />
+            <Parameter Name="SERVICE_LIFE_GBN" Mode="In" Type="String" />
+            <Parameter Name="FIXED_PERIOD_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="FIXED_PERIOD_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="EXRIRED_DAY_FROM_ISSUE_DT" Mode="In" Type="Int32" />
+            <Parameter Name="DOWNLOAD_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="DOWNLOAD_DATE_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="USABLE_DEVICE_GBN" Mode="In" Type="String" />
+            <Parameter Name="PRODUCT_APP_SCOPE_GBN" Mode="In" Type="String" />
+            <Parameter Name="MEMBER_APP_SCOPE_GBN" Mode="In" Type="String" />
+            <Parameter Name="ISSUE_METHOD_GBN" Mode="In" Type="String" />
+            <Parameter Name="ISSUE_METHOD_WITH_AUTO" Mode="In" Type="String" />
+            <Parameter Name="COUPON_NUM_CHECK_TF" Mode="In" Type="String" />
+            <Parameter Name="ISSUE_MAX_LIMIT" Mode="In" Type="Int32" />
+            <Parameter Name="MASTER_FROM_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="MASTER_TO_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
+            <Parameter Name="COUPON_DISCOUNT_MONEY" Mode="In" Type="Int32" />
+            <Parameter Name="COUPON_DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="CREATED_CD_COUPON" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_COUPON_MEM_GRADE_INS">
+            <Parameter Name="CD_COUPON" Mode="In" Type="String" />
+            <Parameter Name="M_GBN" Mode="In" Type="String" />
+            <Parameter Name="M_GRADE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS">
+          <Parameter Name="CD_COUPON" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS">
+            <Parameter Name="CD_COUPON" Mode="In" Type="String" />
+            <Parameter Name="COUPON_MONEY" Mode="In" Type="Int32" />
+            <Parameter Name="COUPON_DISCOUNT_RATE_V" Mode="In" Type="Int32" />
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="ADMIN_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUED_MEMO" Mode="In" Type="String" />
+            <Parameter Name="EXCUTE_RESULT" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_COUPON_COMMON_CNT_Result">
@@ -797,7 +833,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MASTER_INS" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MASTER_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MASTER_SEL" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MASTER_SEL" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel3.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result">
@@ -1188,6 +1223,10 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MASTER_INS" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MASTER_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MEM_GRADE_INS" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MEM_GRADE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

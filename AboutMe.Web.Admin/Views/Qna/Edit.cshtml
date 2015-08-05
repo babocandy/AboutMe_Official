@@ -1,0 +1,160 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_ADMIN_EDIT
+
+@{
+    ViewBag.Title = "1:1 문의";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string pagesize = Convert.ToString(Model.SearchParam.PageSize);
+    string page = Convert.ToString(Model.SearchParam.Page);
+}
+
+@section Scripts{
+
+<script type="text/javascript">
+    function onListClick() {
+        location.href = '@Html.Raw(Url.Action("", new { SearchCol = @Model.SearchParam.SearchCol, SearchKeyword = @Model.SearchParam.SearchKeyword, StatusYn = @Model.SearchParam.StatusYn, Page = @Model.SearchParam.Page, PageSize = @Model.SearchParam.PageSize }))';
+    }
+
+    function frmCheck() {
+        if ($("#ANSWER").val().trim() == "") {
+            alert("답변을 입력해주세요.");
+            return false;
+        }
+
+        if (confirm('답변을 저장하시겠습니까?')) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+
+
+@using (Html.BeginForm("QnaAction", "Qna", FormMethod.Post, new { id = "qnaform", name = "qnaform", onsubmit = "return frmCheck();" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("IDX", Model.QnaInfo.IDX.ToString())
+    @Html.Hidden("StautsYn", (String)Model.SearchParam.StatusYn)
+    @Html.Hidden("SearchCol", (String)Model.SearchParam.SearchCol)
+    @Html.Hidden("SearchKeyword", (String)Model.SearchParam.SearchKeyword)
+    @Html.Hidden("PageSize", @pagesize)
+    @Html.Hidden("Page", @page)
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">C/S관리</a> &gt; <strong>1:1 문의</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">1:1문의</h3>
+        </div>
+
+        <div class="form-horizontal">
+            <table class="table table_row">
+                <colgroup><col width="250px" /><col width="*" /></colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="vam"><label for="Idx">ID</label></th>
+                        <td class="condition_seacth">
+
+                            @Html.Label(Model.QnaInfo.IDX.ToString())
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="TITLE">제목</label></th>
+                        <td class="condition_seacth">
+                            @Html.Label(Model.QnaInfo.TITLE.ToString())
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="M_ID">질문자</label></th>
+                        <td class="condition_seacth">
+                            @Html.Label(Model.QnaInfo.M_NAME.ToString()) ( @Html.Label(Model.QnaInfo.M_ID.ToString()) )
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="CATEGORY_NM">구분</label></th>
+                        <td class="condition_seacth">
+                            
+                            @Html.Label(Model.QnaInfo.CATEGORY_NM.ToString())
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="STATUS_NM">상태</label></th>
+                        <td class="condition_seacth">
+                            @Html.Label(Model.QnaInfo.STATUS_NM.ToString())
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="vam"><label for="REG_DATE">등록일</label></th>
+                        <td class="condition_seacth">
+                            @Html.Label(Model.QnaInfo.REG_DATE.ToString())
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="vam"><label for="REG_DATE">답변일</label></th>
+                        <td class="condition_seacth">
+                            @Html.Label(Model.QnaInfo.ANS_DATE.ToString())
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="QUESTION">질문</label></th>
+                        <td class="condition_seacth">
+                            @Html.Raw(Model.QnaInfo.QUESTION.Replace("\n", "<br />"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="vam"><label for="ANSWER">답변</label></th>
+                        <td class="condition_seacth">
+                            @(Html.Kendo().Editor()
+                                    .Name("ANSWER")
+                                    .HtmlAttributes(new { @style = "width:800px; height:150px" })
+                                    .Value(HttpUtility.HtmlDecode(Model.QnaInfo.ANSWER))
+                            )
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-0 col-md-10">
+                    @(Html.Kendo().Button()
+                    .Name("submitBtn")
+                    .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                    .Content("답변저장"))
+
+                    @(Html.Kendo().Button()
+                    .Name("list")
+                    .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+                    .Content("목록")
+                    .Events(ev => ev.Click("onListClick"))
+                    )
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+

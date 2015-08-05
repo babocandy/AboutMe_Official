@@ -116,7 +116,7 @@
                         <th scope="col">발행가능기간(To)</th>
                         <th scope="col">작성일자</th>
                         <th scope="col">활성화</th>
-                        <th scope="col">쿠폰적용 상품</th>
+                        <th scope="col">쿠폰상품 적용</th>
                         <th scope="col">발행</th>
                     </tr>
                 </thead>
@@ -149,7 +149,7 @@
                             <td>
                                 @if(item.USABLE_YN == "Y" )
                                  {
-                                    @Html.ActionLink("Edit", "IssuedCouponList", new { CdCoupon = item.CD_COUPON  });
+                                    @Html.ActionLink("발행", "IssuedCouponList", new { CdCoupon = item.CD_COUPON  });
                                  }
                                  else
                                  {

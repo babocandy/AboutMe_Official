@@ -43,23 +43,22 @@ namespace AboutMe.Domain.Service.Qna
         #endregion
 
         #region Delete
-        public void QnaDelete(int IDX)
+        public void QnaDelete(int IDX, string M_ID)
         {
-            ObjectParameter ErrCode = new ObjectParameter("ERR_CODE", typeof(string));
             using (QnaEntities EfContext = new QnaEntities())
             {
-                EfContext.SP_TB_QNA_DEL(IDX, ErrCode);
+                EfContext.SP_TB_QNA_DEL(IDX, M_ID);
             }
         }
         #endregion
 
         #region View
-        public SP_TB_QNA_VIEW_Result QnaView(int IDX)
+        public SP_TB_QNA_VIEW_Result QnaView(int IDX, string M_ID)
         {
             SP_TB_QNA_VIEW_Result view;
             using (QnaEntities EfContext = new QnaEntities())
             {
-                view = EfContext.SP_TB_QNA_VIEW(IDX).FirstOrDefault();
+                view = EfContext.SP_TB_QNA_VIEW(IDX, M_ID).FirstOrDefault();
             }
             return view;
         }
@@ -86,6 +85,59 @@ namespace AboutMe.Domain.Service.Qna
             {
                 EfContext.SP_TB_QNA_UPD(itemQna.IDX, itemQna.CATEGORY, itemQna.TITLE, itemQna.QUESTION, itemQna.M_ID, ErrCode);
             }
+        }
+        #endregion
+
+        #region Admin List
+        public List<SP_ADMIN_QNA_SEL_Result> QnaAdminList(QNA_ADMIN_SEARCH param)
+        {
+            if (!param.Page.HasValue || param.Page == 0)
+                param.Page = 1;
+            if (!param.PageSize.HasValue || param.PageSize == 0)
+                param.PageSize = 10;
+
+            List<SP_ADMIN_QNA_SEL_Result> lst = new List<SP_ADMIN_QNA_SEL_Result>();
+            using (QnaEntities EfContext = new QnaEntities())
+            {
+                lst = EfContext.SP_ADMIN_QNA_SEL(param.SearchCol, param.SearchKeyword, param.StatusYn, "IDX", "DESC", param.Page, param.PageSize).ToList();
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region Admin Count
+        public int QnaAdminCount(QNA_ADMIN_SEARCH param)
+        {
+            SP_ADMIN_QNA_CNT_Result result = new SP_ADMIN_QNA_CNT_Result();
+            using (QnaEntities EfContext = new QnaEntities())
+            {
+                result = EfContext.SP_ADMIN_QNA_CNT(param.SearchCol, param.SearchKeyword, param.StatusYn).FirstOrDefault();
+            }
+            return result.COUNT;
+        }
+        #endregion
+
+        #region Admin Update
+        public void QnaAdminUpdate(int Idx, string Answer)
+        {
+            using (QnaEntities EfContext = new QnaEntities())
+            {
+                EfContext.SP_ADMIN_QNA_ANSWER_UPD(Idx, Answer);
+            }
+        }
+        #endregion
+
+        #region View
+        public SP_ADMIN_QNA_VIEW_Result QnaAdminView(int Idx)
+        {
+            SP_ADMIN_QNA_VIEW_Result view = new SP_ADMIN_QNA_VIEW_Result();
+            using (QnaEntities EfContext = new QnaEntities())
+            {
+                view = EfContext.SP_ADMIN_QNA_VIEW(Idx).FirstOrDefault();
+            }
+            return view;
         }
         #endregion
     }

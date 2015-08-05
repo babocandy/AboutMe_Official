@@ -25,9 +25,12 @@
 
     string CouponName = "", CouponGbn = "", CouponGbnM = "";
     DateTime MasterFromDate, MasterToDate;
+    string ServiceLifeGbn = "";
+    DateTime FixedPeriodFrom, FixedPeriodTo;
     string UsableDeviceGbn = "", UsableYN = "", CouponDiscountMoney = "", CouponDiscountRate = "";
     string IssueMethodGbn = "", IssueMethodWithAuto = "";
     string RateOrMoney = "";
+    string PRODUCT_APP_SCOPE_GBN = "";
 
     List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result
         = ViewData["SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result"] as List<AboutMe.Domain.Entity.AdminCoupon.SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>;
@@ -37,6 +40,9 @@
     CouponGbnM = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN_M;
     MasterFromDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value;
     MasterToDate = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value;
+    ServiceLifeGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].SERVICE_LIFE_GBN;
+    //FixedPeriodFrom = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value  ;
+    //FixedPeriodTo = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value;
     UsableDeviceGbn = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_DEVICE_GBN;
     UsableYN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].USABLE_YN;
     CouponDiscountMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_DISCOUNT_MONEY.ToString();
@@ -45,6 +51,8 @@
     IssueMethodWithAuto = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].ISSUE_METHOD_WITH_AUTO;
 
     RateOrMoney = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].RATE_OR_MONEY;
+
+    PRODUCT_APP_SCOPE_GBN = SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].PRODUCT_APP_SCOPE_GBN;
 
 }
 
@@ -70,7 +78,18 @@
         <!--//path-->
 
         <div class="tar mb10">
-            <a class="btn btn-default middium" href="/AdminCoupon/CouponProductCreate?CdCoupon=@Request["CdCoupon"]">상품 등록</a>
+            @{
+                if (CouponGbn == "M")
+                {
+                     if(PRODUCT_APP_SCOPE_GBN == "B")
+                        {<text><font color="red">이 쿠폰은 모든상품을 대상으로 발행되는 쿠폰입니다</font></text>}
+                        else
+                        {<a class="btn btn-default middium" href="/AdminCoupon/CouponProductCreate?CdCoupon=@Request["CdCoupon"]">상품 등록</a>}
+                   
+                }
+            }
+
+            
            <!-- <a class="btn btn-default middium" href="#">EXEL 다운로드</a> -->
         </div>
 
@@ -86,6 +105,17 @@
                          else
                          {<text>배송쿠폰</text>}}
                     </li>
+@{ 
+    if (CouponGbn == "M") 
+    { 
+                    <li>
+                         @if(PRODUCT_APP_SCOPE_GBN == "B")
+                         {<text><font color="red">. 이 쿠폰은 모든상품을 대상으로 발행되는 쿠폰입니다</font></text>}
+                         else
+                         {<text><font color="red">. 이 쿠폰은 특정상품을 선택하여 발행되는 쿠폰입니다</font></text>}
+                    </li>
+   }
+}
                     <li>
                         · 쿠폰용도상세구분 : @{ if (CouponGbnM == "R")
                          {<text>회원가입</text>}
@@ -96,6 +126,8 @@
                         }
                     </li>
                     <li>. 발행가능기간 : @MasterFromDate.ToString() ~ @MasterToDate.ToString() </li>
+
+
                     <li>
                         . 사용가능매체 : @{ if (CouponGbn == "P")
                          {<text>PC,모바일</text>}

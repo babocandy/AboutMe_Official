@@ -41,8 +41,17 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
         #endregion
-        
 
+        #region MYPAGE의 나의 스킨타입 리스트
+        [ChildActionOnly]
+        public ActionResult MypageSkinTypeList()
+        {
+            string cate_code = MemberInfo.GetMemberSkinTroubleCD();
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //상품이미지디렉토리경로
+            return View(_ProductService.GetProductMypageSkinTypeList(cate_code).ToList());
+        }
+        #endregion
+        
         
     }
 }
