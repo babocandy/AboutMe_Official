@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AboutMe.Domain.Entity.Product.SP_PRODUCT_SEARCH_SEL_Result>
+﻿@model IEnumerable<AboutMe.Domain.Entity.Product.SP_PRODUCT_MOBILE_SEARCH_SEL_Result>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
@@ -96,9 +96,10 @@
         <ul class="product_list">
             @foreach (var item in Model)
             {
+                string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
                 <li>
                     <a href="/shopping/detail?pcode=@item.P_CODE&SORT_GBN=@ViewBag.SORT_GBN&PAGE=@ViewBag.PAGE&SEARCH_KEYWORD=@ViewBag.SEARCH_KEYWORD">
-                        <span class="photo"><img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" alt="" /></span>
+                        <span class="photo"><img src="@imgUrl1" alt="" /></span>
 
                         <span class="detail">
                             @if (!string.IsNullOrEmpty(item.ICON_YN))
@@ -127,63 +128,6 @@
                     <a href="javascript:Cart_Product_Input('@item.P_CODE','1');" class="btn_cart"></a>
                 </li>
             }
-            @*<li>
-                <a href="#">
-                    <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
-                    <span class="detail">
-                        <!--
-                        .ico_best
-                        .ico_coupon
-                        .ico_time
-                        .ico_soldout
-                        .ico_set
-                        -->
-                        <span class="ico_best">BEST</span>
-                        <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
-                        <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
-                        <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
-                    </span>
-                </a>
-                <a href="#" class="btn_cart"></a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
-                    <span class="detail">
-                        <!--
-                        .ico_best
-                        .ico_coupon
-                        .ico_time
-                        .ico_soldout
-                        .ico_set
-                        -->
-                        <span class="ico_best">BEST</span>
-                        <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
-                        <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
-                        <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
-                    </span>
-                </a>
-                <a href="#" class="btn_cart"></a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
-                    <span class="detail">
-                        <!--
-                        .ico_best
-                        .ico_coupon
-                        .ico_time
-                        .ico_soldout
-                        .ico_set
-                        -->
-                        <span class="ico_best">BEST</span>
-                        <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
-                        <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
-                        <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
-                    </span>
-                </a>
-                <a href="#" class="btn_cart"></a>
-            </li>*@
         </ul>
         <!--//상세리스트-->
         <!--페이징-->

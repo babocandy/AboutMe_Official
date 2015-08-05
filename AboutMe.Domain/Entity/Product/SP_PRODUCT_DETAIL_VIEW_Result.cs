@@ -35,11 +35,11 @@ namespace AboutMe.Domain.Entity.Product
         public string OTHER_IMG1 { get; set; }
         public string OTHER_IMG2 { get; set; }
         public string OTHER_IMG3 { get; set; }
-        public string OTHER_IMG4 { get; set; }
-        public string OTHER_IMG5 { get; set; }
         public Nullable<int> RE_SORT { get; set; }
         public string DISPLAY_YN { get; set; }
         public string ICON_YN { get; set; }
         public string WITH_PRODUCT_LIST { get; set; }
+        public string PMO_PRODUCT_CATEGORY { get; set; }
+        public string COUPON_CODE { get; set; }
     }
 }

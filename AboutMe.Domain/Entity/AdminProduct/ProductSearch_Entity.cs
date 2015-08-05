@@ -22,7 +22,7 @@ namespace AboutMe.Domain.Entity.AdminProduct
             this.iconYn = "";
             this.BatchIconYn = "";
             this.searchStatus = "N"; //검색상태 초기화는 N
-            this.searchDisplayY = "Y"; //초기값은 전시상품만
+            this.searchDisplayY = ""; //초기값은 전시상품만
             this.cateCode = "";
             
         }
