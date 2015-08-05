@@ -179,7 +179,7 @@ namespace AboutMe.Domain.Service.Coupon
 
         #region PC버전 상품상세페이지 ================================================
 
-        //상품별, 회원별 사용가능 혹은 다운로드 가능한 쿠폰 TOP 1    - pc/모바일 공통 
+        //상품별, 회원별 사용가능 혹은 다운로드 가능한 쿠폰 TOP 1    - pc/모바일 공통 .. 
         public List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> GetCouponTop1_ByMem_ByPrd(string UsableDeviceGbn, string PCode, string M_Id)
         {
 
