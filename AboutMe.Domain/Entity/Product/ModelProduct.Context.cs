@@ -130,15 +130,6 @@ namespace AboutMe.Domain.Entity.Product
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCH_SEL_Result>("SP_PRODUCT_SEARCH_SEL", pAGEParameter, pAGESIZEParameter, sORT_GBNParameter, sEARCH_KEYWORDParameter);
         }
     
-        public virtual ObjectResult<SP_PRODUCT_MAIN_SEL_Result> SP_PRODUCT_MAIN_SEL(string cATE_CODE)
-        {
-            var cATE_CODEParameter = cATE_CODE != null ?
-                new ObjectParameter("CATE_CODE", cATE_CODE) :
-                new ObjectParameter("CATE_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MAIN_SEL_Result>("SP_PRODUCT_MAIN_SEL", cATE_CODEParameter);
-        }
-    
         public virtual ObjectResult<SP_PRODUCT_SEL_Result> SP_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN, string p_CATE_CODE_3DEPTH)
         {
             var pAGEParameter = pAGE.HasValue ?
@@ -176,6 +167,15 @@ namespace AboutMe.Domain.Entity.Product
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEL_Result>("SP_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter, p_CATE_CODE_3DEPTHParameter);
         }
     
+        public virtual ObjectResult<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result> SP_PRODUCT_MYPAGE_SKIKTYPE_SEL(string cATE_CODE)
+        {
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result>("SP_PRODUCT_MYPAGE_SKIKTYPE_SEL", cATE_CODEParameter);
+        }
+    
         public virtual ObjectResult<SP_PRODUCT_DETAIL_VIEW_Result> SP_PRODUCT_DETAIL_VIEW(string p_CODE)
         {
             var p_CODEParameter = p_CODE != null ?
@@ -183,6 +183,82 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("P_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MAIN_SEL_Result> SP_PRODUCT_MAIN_SEL(string cATE_CODE)
+        {
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MAIN_SEL_Result>("SP_PRODUCT_MAIN_SEL", cATE_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MOBILE_DETAIL_VIEW_Result> SP_PRODUCT_MOBILE_DETAIL_VIEW(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_DETAIL_VIEW_Result>("SP_PRODUCT_MOBILE_DETAIL_VIEW", p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MOBILE_SEARCH_SEL_Result> SP_PRODUCT_MOBILE_SEARCH_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sORT_GBN, string sEARCH_KEYWORD)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sORT_GBNParameter = sORT_GBN != null ?
+                new ObjectParameter("SORT_GBN", sORT_GBN) :
+                new ObjectParameter("SORT_GBN", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_SEARCH_SEL_Result>("SP_PRODUCT_MOBILE_SEARCH_SEL", pAGEParameter, pAGESIZEParameter, sORT_GBNParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MOBILE_SEL_Result> SP_PRODUCT_MOBILE_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string sORT_GBN, string p_OUTLET_YN, string p_CATE_CODE_3DEPTH)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var p_CATE_CODEParameter = p_CATE_CODE != null ?
+                new ObjectParameter("P_CATE_CODE", p_CATE_CODE) :
+                new ObjectParameter("P_CATE_CODE", typeof(string));
+    
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            var l_CATE_CODEParameter = l_CATE_CODE != null ?
+                new ObjectParameter("L_CATE_CODE", l_CATE_CODE) :
+                new ObjectParameter("L_CATE_CODE", typeof(string));
+    
+            var sORT_GBNParameter = sORT_GBN != null ?
+                new ObjectParameter("SORT_GBN", sORT_GBN) :
+                new ObjectParameter("SORT_GBN", typeof(string));
+    
+            var p_OUTLET_YNParameter = p_OUTLET_YN != null ?
+                new ObjectParameter("P_OUTLET_YN", p_OUTLET_YN) :
+                new ObjectParameter("P_OUTLET_YN", typeof(string));
+    
+            var p_CATE_CODE_3DEPTHParameter = p_CATE_CODE_3DEPTH != null ?
+                new ObjectParameter("P_CATE_CODE_3DEPTH", p_CATE_CODE_3DEPTH) :
+                new ObjectParameter("P_CATE_CODE_3DEPTH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_SEL_Result>("SP_PRODUCT_MOBILE_SEL", pAGEParameter, pAGESIZEParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter, p_CATE_CODE_3DEPTHParameter);
         }
     }
 }

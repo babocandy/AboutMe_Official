@@ -74,9 +74,14 @@
     var strAction = arrPATH[2];
     var controllerNm = arrPATH[1];
 
-    if (strControl == "Faq" || strControl == "Notice")
+    if (strControl == "Faq" || strControl == "Notice" || strControl == "Qna")
     {
-        strControl = "Contents";
+        strControl = "C/S";
+    }
+
+    if (strControl == "Recall")
+    {
+        strControl = "Order";
     }
     
     switch (strControl)
@@ -123,8 +128,8 @@
                 </ul>
             break;
             
-       case "Contents" :  //컨텐츠관리
-                <h2>컨텐츠관리</h2>
+       case "C/S" :  //CS관리
+                <h2>C/S관리</h2>
                 <ul class="nav nav-sidebar depth1">
                     <li @fLeftMenuCSSOn("Index,New,Edit", "Faq")>
                         <a href="/Faq/" class="menu ">Faq</a>
@@ -132,20 +137,31 @@
                     <li @fLeftMenuCSSOn("Index,New,Edit", "Notice")>
                         <a href="/Notice/" class="menu ">공지사항</a>
                     </li>
+                    <li @fLeftMenuCSSOn("Index,New,Edit", "Qna")>
+                        <a href="/Qna/" class="menu ">1:1문의</a>
+                    </li>
+                    <li @fLeftMenuCSSOn("Index,New,Edit", "Winner")>
+                        <a href="/Winner/" class="menu ">당첨자발표</a>
+                    </li>
                 </ul>
             break;
-       case "Order":  //주문
+       case "Contents":  //Contents관리
+                <h2>컨텐츠관리</h2>
+                <ul class="nav nav-sidebar depth1">
+                </ul>
+            break;
+       case "Order":  //주문, 취소반품요청
                 <h2>주문/매출</h2>
                 <ul class="nav nav-sidebar depth1">
                     <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
-                    <li @fLeftMenuCSSOn("Index,Detail")>
+                    <li @fLeftMenuCSSOn("Index,Detail", "Order")>
                         <a href="/Order/" class="menu ">주문관리</a>
                     </li>
-                    <li @fLeftMenuCSSOn("StaffRequestIndex,StaffRequestEdit")>
+                    <li @fLeftMenuCSSOn("Delivery", "Order")>
                         <a href="/Order/Delivery" class="menu ">송장등록</a>
                     </li>
-                    <li @fLeftMenuCSSOn("StaffBaseIndex,StaffBaseInsert,StaffBaseEdit")>
-                        <a href="/Order/" class="menu ">취소/교환/반품관리</a>
+                    <li @fLeftMenuCSSOn("Index,Edit", "Recall")>
+                        <a href="/Recall" class="menu ">취소/반품/교환 요청</a>
                     </li>
                 </ul>
             break;
@@ -241,6 +257,20 @@
         </li>
 
     </ul>
+            break;
+      case "AdminDisplay":  //쿠폰 관리
+                <h2>전시관리</h2>
+                <ul class="nav nav-sidebar depth1">
+                    <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("Index")><a href="/AdminDisplay/Index" class="menu ">웹메인메인</a></li>
+                    <li @fLeftMenuCSSOn("MobileMain")><a href="/AdminDisplay/MobileMain" class="menu ">모바일메인관리</a></li>
+                    <li @fLeftMenuCSSOn("Cart")><a href="/AdminDisplay/Cart" class="menu ">장바구니전시관리</a></li>
+                    <li @fLeftMenuCSSOn("GBNBanner")><a href="/AdminDisplay/GBNBanner" class="menu ">GNB배너관리</a></li>
+                    <li @fLeftMenuCSSOn("ProductDetailBanner")><a href="/AdminDisplay/ProductDetailBanner" class="menu ">상품상세 배너관리</a></li>
+                    <li><a href="#" class="menu ">이용안내설정관리</a></li>
+                    <li @fLeftMenuCSSOn("Popup")><a href="/AdminDisplay/Popup" class="menu ">팝업관리</a></li>
+
+                </ul>
             break;
 
     } //switch

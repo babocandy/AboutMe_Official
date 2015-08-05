@@ -634,13 +634,14 @@
                                                 <textarea id="P_COMPONENT_INFO" name="P_COMPONENT_INFO" style="padding:5px;width:600px;height:80px;border:1px solid #d8d7d5;">@Model.ProductDetailView.P_COMPONENT_INFO</textarea>
                                             </td>
                                         </tr>
+                                        @{ string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");}
                                         <tr>
                                             <th>상품대표이미지</th>
                                             <td colspan="3">
                                                 <input type="file" id="MAIN_IMG" name="MAIN_IMG" maxlength="100" value="" />
-                                                @if (@Model.ProductDetailView.MAIN_IMG != "")
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.MAIN_IMG))
                                                 {
-                                                <span id="SPAN_MAIN_IMG"><img src="@ViewBag.PRODUCT_PATH@Model.ProductDetailView.MAIN_IMG" width="100" height="100" /><a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a></span>
+                                                <span id="SPAN_MAIN_IMG"><img src="@Product_path@Model.ProductDetailView.MAIN_IMG" width="100" height="100" /><a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
@@ -648,9 +649,9 @@
                                             <th>상품추가이미지1</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG1" name="OTHER_IMG1" maxlength="100" value="" />
-                                                @if (@Model.ProductDetailView.OTHER_IMG1 != "")
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.OTHER_IMG1))
                                                 {
-                                                    <span id="SPAN_OTHER_IMG1"><img src="@ViewBag.PRODUCT_PATH@Model.ProductDetailView.OTHER_IMG1" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG1');">[삭제]</a></span>
+                                                    <span id="SPAN_OTHER_IMG1"><img src="@Product_path@Model.ProductDetailView.OTHER_IMG1" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG1');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
@@ -658,9 +659,9 @@
                                             <th>상품추가이미지2</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG2" name="OTHER_IMG2" maxlength="100" value="" />
-                                                @if (@Model.ProductDetailView.OTHER_IMG2 != "")
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.OTHER_IMG2))
                                                 {
-                                                <span id="SPAN_OTHER_IMG2"><img src="@ViewBag.PRODUCT_PATH@Model.ProductDetailView.OTHER_IMG2" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG2');">[삭제]</a></span>
+                                                <span id="SPAN_OTHER_IMG2"><img src="@Product_path@Model.ProductDetailView.OTHER_IMG2" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG2');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
@@ -668,9 +669,9 @@
                                             <th>상품추가이미지3</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG3" name="OTHER_IMG3" maxlength="100" value="" />
-                                                @if (@Model.ProductDetailView.OTHER_IMG3 != "")
-                                                {
-                                                <span id="SPAN_OTHER_IMG3"><img src="@ViewBag.PRODUCT_PATH@Model.ProductDetailView.OTHER_IMG3" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG3');">[삭제]</a></span>
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.OTHER_IMG3))
+                                               {
+                                                <span id="SPAN_OTHER_IMG3"><img src="@Product_path@Model.ProductDetailView.OTHER_IMG3" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG3');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>

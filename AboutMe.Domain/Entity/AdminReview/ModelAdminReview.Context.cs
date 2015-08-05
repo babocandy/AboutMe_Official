@@ -132,5 +132,43 @@ namespace AboutMe.Domain.Entity.AdminReview
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_CATE_THEMA_UPD", iDXParameter, tITLEParameter, iS_DISPLAYParameter, tAGParameter);
         }
+    
+        public virtual int SP_ADMIN_REVIEW_EXP_MASTER_INS(string p_CODE, string fROM_DATE, string tO_DATE, string iS_AUTH, ObjectParameter mASTER_IDX)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var fROM_DATEParameter = fROM_DATE != null ?
+                new ObjectParameter("FROM_DATE", fROM_DATE) :
+                new ObjectParameter("FROM_DATE", typeof(string));
+    
+            var tO_DATEParameter = tO_DATE != null ?
+                new ObjectParameter("TO_DATE", tO_DATE) :
+                new ObjectParameter("TO_DATE", typeof(string));
+    
+            var iS_AUTHParameter = iS_AUTH != null ?
+                new ObjectParameter("IS_AUTH", iS_AUTH) :
+                new ObjectParameter("IS_AUTH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MASTER_INS", p_CODEParameter, fROM_DATEParameter, tO_DATEParameter, iS_AUTHParameter, mASTER_IDX);
+        }
+    
+        public virtual int SP_ADMIN_REVIEW_EXP_MEMBER_INS(Nullable<int> eXP_MASTER_ID, string m_ID, string m_NAME)
+        {
+            var eXP_MASTER_IDParameter = eXP_MASTER_ID.HasValue ?
+                new ObjectParameter("EXP_MASTER_ID", eXP_MASTER_ID) :
+                new ObjectParameter("EXP_MASTER_ID", typeof(int));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var m_NAMEParameter = m_NAME != null ?
+                new ObjectParameter("M_NAME", m_NAME) :
+                new ObjectParameter("M_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_INS", eXP_MASTER_IDParameter, m_IDParameter, m_NAMEParameter);
+        }
     }
 }

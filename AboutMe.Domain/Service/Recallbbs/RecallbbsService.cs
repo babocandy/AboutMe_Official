@@ -27,7 +27,7 @@ namespace AboutMe.Domain.Service.Recallbbs
             return lst;
         }
         #endregion
-        
+ 
         #region Count
         public int RecallCount(RECALLBBS_SEARCH param) 
         {
@@ -41,43 +41,91 @@ namespace AboutMe.Domain.Service.Recallbbs
         #endregion
 
         #region View
-        public SP_TB_RECALL_BBS_VIEW_Result RecallView(int IDX)
+        public SP_TB_RECALL_BBS_VIEW_Result RecallView(int IDX, string M_ID, string ORDER_CODE)
         {
             SP_TB_RECALL_BBS_VIEW_Result result;
 
             using (RecallbbsEntities EfContext = new RecallbbsEntities())
             {
-                result = EfContext.SP_TB_RECALL_BBS_VIEW(IDX).FirstOrDefault();
+                result = EfContext.SP_TB_RECALL_BBS_VIEW(IDX, M_ID, ORDER_CODE).FirstOrDefault();
             }
             return result;
         }
         #endregion
 
         #region Insert
-        public int RecallBbsInsert(TB_RECALL_BBS itemRecall)
+        public void RecallBbsInsert(TB_RECALL_BBS itemRecall)
         {
-            ObjectParameter new_idx = new ObjectParameter("NEW_IDX", typeof(int));
-
             using (RecallbbsEntities EfContext = new RecallbbsEntities())
             {
-                EfContext.SP_TB_RECALL_BBS_INS(itemRecall.ORDER_CODE,itemRecall.ORDER_DETAIL_IDX,itemRecall.GUBUN,itemRecall.TITLE,itemRecall.CONTENTS,itemRecall.STATUS,itemRecall.REG_ID,new_idx);
+                EfContext.SP_TB_RECALL_BBS_INS(itemRecall.ORDER_CODE,itemRecall.ORDER_DETAIL_IDX,itemRecall.GUBUN,itemRecall.TITLE,itemRecall.CONTENTS,itemRecall.REG_ID);
             }
-            return Convert.ToInt16(new_idx.Value);
         }
         #endregion
 
-         #region Update
+        #region Update
         public void RecallBbsUpdate(TB_RECALL_BBS itemRecall)
         {
-            ObjectParameter ErrCode = new ObjectParameter("ERR_CODE", typeof(string));
             using (RecallbbsEntities EfContext = new RecallbbsEntities())
             {
-                EfContext.SP_TB_RECALL_BBS_UPD(itemRecall.IDX, itemRecall.GUBUN, itemRecall.TITLE, itemRecall.CONTENTS, itemRecall.CONFIRM_CONTENTS, itemRecall.STATUS, itemRecall.ADM_ID, ErrCode);
+                EfContext.SP_TB_RECALL_BBS_UPD(itemRecall.IDX, itemRecall.GUBUN, itemRecall.TITLE, itemRecall.CONTENTS, itemRecall.REG_ID, itemRecall.ORDER_CODE);
             } 
         }
         #endregion
 
- 
+
+        #region Admin List
+        public List<SP_ADMIN_RECALL_BBS_SEL_Result> RecallAdminList(RECALL_ADMIN_SEARCH param)
+        {
+            if (!param.Page.HasValue || param.Page == 0)
+                param.Page = 1;
+            if (!param.PageSize.HasValue || param.PageSize == 0)
+                param.PageSize = 10;
+
+            List<SP_ADMIN_RECALL_BBS_SEL_Result> lst = new List<SP_ADMIN_RECALL_BBS_SEL_Result>();
+            using (RecallbbsEntities EfContext = new RecallbbsEntities())
+            {
+                lst = EfContext.SP_ADMIN_RECALL_BBS_SEL(param.SearchCol, param.SearchKeyword, param.StatusYn, "IDX", "DESC", param.Page, param.PageSize).ToList();
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region Admin Count
+        public int RecallAdminCount(RECALL_ADMIN_SEARCH param)
+        {
+            SP_ADMIN_RECALL_BBS_CNT_Result result = new SP_ADMIN_RECALL_BBS_CNT_Result();
+            using (RecallbbsEntities EfContext = new RecallbbsEntities())
+            {
+                result = EfContext.SP_ADMIN_RECALL_BBS_CNT(param.SearchCol, param.SearchKeyword, param.StatusYn).FirstOrDefault();
+            }
+            return result.COUNT;
+        }
+        #endregion
+
+        #region Admin Update
+        public void RecallAdminUpdate(int Idx, string ADM_ID, string CONFIRM_CONTENTS)
+        {
+            using (RecallbbsEntities EfContext = new RecallbbsEntities())
+            {
+                EfContext.SP_ADMIN_RECALL_ANSWER_UPD(Idx, ADM_ID, CONFIRM_CONTENTS);
+            }
+        }
+        #endregion
+
+        #region View
+        public SP_ADMIN_RECALL_BBS_VIEW_Result QnaAdminView(int Idx)
+        {
+            SP_ADMIN_RECALL_BBS_VIEW_Result view = new SP_ADMIN_RECALL_BBS_VIEW_Result();
+            using (RecallbbsEntities EfContext = new RecallbbsEntities())
+            {
+                view = EfContext.SP_ADMIN_RECALL_BBS_VIEW(Idx).FirstOrDefault();
+            }
+            return view;
+        }
+        #endregion
     }
 }
 

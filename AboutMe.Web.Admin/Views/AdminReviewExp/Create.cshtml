@@ -1,0 +1,147 @@
+﻿@model AboutMe.Web.Admin.Models.AdminReviewExpCreateViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+}
+
+@section Scripts{
+
+    <script>
+
+        function search_date_change(v) {
+            //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
+
+            var from_date, to_date;
+
+            if (v == "1") //-7 ~오늘
+            {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (v == "2") //-15~오늘
+            {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (v == "3") // -한달~오늘
+            {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $('#SEL_DATE_FROM').val(from_date);
+            $('#SEL_DATE_TO').val(to_date);
+        }
+
+
+        //DatePicker
+        $(document).ready(function () {
+            // create DatePicker from input HTML element
+            $("#FROM_DATE").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+
+            $("#TO_DATE").kendoDatePicker({
+                format: "yyyy-MM-dd"
+            });
+        });
+
+        function searching() {
+
+            document.frmSearch.submit();
+
+        }
+
+        function saving() {
+            document.frmSave.submit();
+        }
+
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        }
+    </script>
+
+}
+
+
+
+
+@section Body{
+					<!--content-->
+<div class="content">
+
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>체험단리뷰관리</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3>체험단리뷰권한설정</h3>
+    </div>
+@using (Html.BeginForm("Create", "AdminReviewExp", FormMethod.Post, new { name = "frmSave", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+    
+    <div class="panel">
+
+        <table class="table table_row">
+            <colgroup><col width="15%" /><col width="*" /></colgroup>
+            <tr>
+                <th>회원지정</th>
+                <td><input type="file" name="EXCEL_FILE" class="inline" /> 엑셀 업로드 해주세요 ID / 이름</td>
+            </tr>
+            <tr>
+                <th>상품지정 @Html.ValidationMessageFor(model => model.P_CODE)</th>
+                <td><input type="text" name="P_CODE" class="input-sm" style="width:30%"> <a href="#" onclick="window.open('@Url.Action("SelProduct", "AdminReviewExp")', 'window', 'width=800,height=550');" class="btn btn-default small">검색</a> 검색 버튼을 클릭하여 먼저 찾아주세요</td>
+            </tr>
+            <tr>
+                <th> 기간</th>
+                <td>
+                    @Html.ValidationMessageFor(model => model.FROM_DATE) 시작일<input type="text" id="FROM_DATE" name="FROM_DATE" class="input-sm" style="width:120px">
+                    ~
+                    @Html.ValidationMessageFor(model => model.TO_DATE) 종료일<input type="text" id="TO_DATE" name="TO_DATE" class="input-sm" style="width:120px">
+                </td>
+            </tr>
+            <tr>
+                <th>권한유지 @Html.ValidationMessageFor(model => model.IS_AUTH)</th>
+                <td>
+
+                    <label for="sort1"><input type="radio" id="sort1" name="IS_AUTH" value="Y" @(Model.IS_AUTH =="Y"? "checked" : "" ) ><span class="txt mr5">권한</span></label>
+                    <label for="sort2"><input type="radio" id="sort2" name="IS_AUTH" value="N" @(Model.IS_AUTH == "N" ? "checked" : "")><span class="txt mr5">비권한</span></label>
+                </td>
+            </tr>
+        </table>
+       
+    </div>
+
+    <div class="panel tac">
+        <a style="width:100px" class="btn btn-default middium" href="#" onclick="saving(); return; false;">설정</a>
+        <a style="width:100px" class="btn btn-primary  middium" href="#">취소</a>
+    </div>
+}
+</div>
+<!--//content-->
+    
+}

@@ -44,19 +44,6 @@ namespace AboutMe.Domain.Service.AdminReview
 
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                
-            Debug.WriteLine(p.PAGE);
-            Debug.WriteLine(p.SEARCH_KEY);
-                Debug.WriteLine(p.SEARCH_KEY);
-                Debug.WriteLine(p.SEARCH_VALUE);
-                Debug.WriteLine(p.MEDIA_GBN_W);
-                Debug.WriteLine(p.MEDIA_GBN_M);
-                Debug.WriteLine(p.IS_PHOTO_Y);
-                Debug.WriteLine(p.IS_DISPLAY_N);
-                Debug.WriteLine("IS_DISPLAY_Y"+p.IS_DISPLAY_Y);
-                Debug.WriteLine("IS_DISPLAY_N"+p.IS_DISPLAY_N);
-
-
                 list = context.SP_ADMIN_REVIEW_PRODUCT_SEL(p.PAGE, 10, p.SEARCH_KEY, p.SEARCH_VALUE, p.MEDIA_GBN_W,p.MEDIA_GBN_M, start_dt, end_dt, p.IS_PHOTO_Y, p.IS_PHOTO_N, p.IS_DISPLAY_Y, p.IS_DISPLAY_N, total).ToList();
             }
 
@@ -124,5 +111,68 @@ namespace AboutMe.Domain.Service.AdminReview
                 context.SP_ADMIN_REVIEW_CATE_THEMA_UPD(p.IDX, p.TITLE, p.IS_DISPLAY, p.TAG);
             }
         }
+
+        /**
+         * 체험단 리뷰 조회
+         */
+        public Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> ReviewExpList(AdminReviewRouteParam p)
+        {
+            List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> list = new List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>();
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            DateTime? start_dt = null;
+            DateTime? end_dt = null;
+
+            if (!String.IsNullOrEmpty(p.SEL_DATE_FROM))
+            {
+                start_dt = DateTime.ParseExact(p.SEL_DATE_FROM, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
+            if (!String.IsNullOrEmpty(p.SEL_DATE_TO))
+            {
+                end_dt = DateTime.ParseExact(p.SEL_DATE_TO, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                list = context.SP_ADMIN_REVIEW_PRODUCT_SEL(p.PAGE, 10, p.SEARCH_KEY, p.SEARCH_VALUE, p.MEDIA_GBN_W, p.MEDIA_GBN_M, start_dt, end_dt, p.IS_PHOTO_Y, p.IS_PHOTO_N, p.IS_DISPLAY_Y, p.IS_DISPLAY_N, total).ToList();
+            }
+
+            Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
+
+            return tp;
+
+        }
+
+        /**
+         * 체험단리뷰 마스터 저장
+         */
+        public int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p)
+        {
+            ObjectParameter midx = new ObjectParameter("MASTER_IDX", typeof(int));
+
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                context.SP_ADMIN_REVIEW_EXP_MASTER_INS(p.P_CODE, p.FROM_DATE, p.TO_DATE, p.IS_AUTH, midx);
+            }
+
+            return Convert.ToInt32(midx.Value);
+
+        }
+
+        /**
+         * 체험단리뷰 회원 저장
+         */
+        public void ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p)
+        {
+
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                context.SP_ADMIN_REVIEW_EXP_MEMBER_INS(p.MASTER_IDX,p.M_ID, p.M_NAME);
+            }
+
+
+        }
+
     }
 }

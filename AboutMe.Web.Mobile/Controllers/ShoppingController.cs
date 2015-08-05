@@ -25,14 +25,15 @@ namespace AboutMe.Web.Mobile.Controllers
 {
     public class ShoppingController : BaseMobileController
     {
-        // GET: AdminProduct
+        #region 인터페이스
         private IProductService _ProductService;
         public ShoppingController(IProductService _productService)
         {
             this._ProductService = _productService;
         }
+        #endregion
 
-        #region 상품리스트
+        #region 상품리스트[모바일]
         public ActionResult Index(Product_front_search_entity product_front_search_entity)
         {
 
@@ -70,12 +71,12 @@ namespace AboutMe.Web.Mobile.Controllers
                 ViewData["3DEPTH"] = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", product_front_search_entity.P_CATE_CODE.Substring(0, 3), product_front_search_entity.P_CATE_CODE.Substring(3, 3)).ToList(); //뷰티 3depth
             }
 
-            return View(_ProductService.GetProductList(product_front_search_entity).ToList());
+            return View(_ProductService.GetProductMobileList(product_front_search_entity).ToList());
             //return View();
         }
         #endregion
 
-        #region 상품상세보기
+        #region 상품상세보기[모바일]
         public ActionResult Detail(string pcode, Product_front_search_entity product_front_search_entity)
         {
             //상품코드
@@ -88,7 +89,7 @@ namespace AboutMe.Web.Mobile.Controllers
             this.ViewBag.DEPTH_NAME3 = product_front_search_entity.DEPTH_NAME3;                 //뷰티3DEPTH NAME
 
 
-            SP_PRODUCT_DETAIL_VIEW_Result productView = _ProductService.ViewProduct(pcode);
+            SP_PRODUCT_MOBILE_DETAIL_VIEW_Result productView = _ProductService.ViewProductMobile(pcode);
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F

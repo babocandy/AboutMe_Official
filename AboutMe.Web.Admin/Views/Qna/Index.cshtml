@@ -1,0 +1,161 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_ADMIN_SEARCH
+
+@{
+    ViewBag.Title = "1:1문의";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string pagesize = Convert.ToString(Model.PageSize);
+    int pagesizeint = ((Model.PageSize==null) ? 1 : Convert.ToInt16(Model.PageSize));
+}
+@section Scripts{
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">C/S관리</a> &gt; <strong>1:1 문의</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3 class="sub-header">1:1 문의</h3>
+        </div>
+        <div class="panel">
+
+            @using (Html.BeginForm("Index", "Qna", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+            {
+                @Html.Hidden("PageSize", @pagesize)
+                @Html.Hidden("Page", "1")
+
+                <table class="table table_row">
+                    <colgroup><col width="250px" /><col width="*" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="vam"><label for="search_keyword">검색조건</label></th>
+                            <td class="condition_seacth">
+                                @(Html.Kendo().DropDownList()
+                                    .Name("SearchCol")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    //  .Events(e => e.Change("change"))
+                                    .BindTo(new List<SelectListItem>() {
+                                        new SelectListItem() {
+                                            Text = "제목",
+                                            Value = "TITLE"
+                                        },
+                                        new SelectListItem() {
+                                            Text = "질문",
+                                            Value = "QUESTION"
+                                        },
+                                        new SelectListItem() {
+                                            Text = "답변",
+                                            Value = "ANSWER"
+                                        }
+                                    })
+                                    .Value(@Model.SearchCol)
+                                )
+                                @(Html.Kendo().TextBox()
+                                    .Name("SearchKeyword")
+                                    .Value(Model.SearchKeyword)
+                                    .HtmlAttributes(new { @style = "width:250px" })
+                                )
+                                @Html.RadioButtonFor(model => model.StatusYn, "A") 전체  
+                                @Html.RadioButtonFor(model => model.StatusYn, "1") 접수  
+                                @Html.RadioButtonFor(model => model.StatusYn, "2") 완료
+
+                                @(Html.Kendo().Button()
+                                    .Name("submitBtn")
+                                    .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                                    .Content("검색"))
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+        <div class="panel" style="height : 600px">
+            @(Html.Kendo().Grid<AboutMe.Domain.Entity.Qna.SP_ADMIN_QNA_VIEW_Result>()
+            .Name("qnagrid")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.IDX).Title("IDX").Filterable(false).Width(100);
+                columns.Bound(p => p.CATEGORY_NM).Title("구분").Width(100);
+                columns.Bound(p => p.TITLE)
+                    .Title("제목")
+                     .ClientTemplate("#= toggleLink(data) #");
+
+                //.Template(p => Html.ActionLink("Faq", "Edit", new { IDX = p.IDX }))
+                // .ClientTemplate("<a href=\"/Faq/Edit?IDX=#=IDX#&Page=#=datasource.page# \" >#=TITLE#</a>");
+                columns.Bound(p => p.STATUS_NM).Title("상태").Width(100);
+                columns.Bound(p => p.REG_DATE).Title("등록일").Format("{0:yyyy/MM/dd}").Width(100);
+                columns.Bound(p => p.ANS_DATE).Title("답변일").Format("{0:yyyy/MM/dd}").Width(100);
+                columns.Bound(p => p.M_NAME).Title("등록자명").Width(100);
+                columns.Bound(p => p.M_ID).Title("등록자ID").Width(100);
+            })
+            .AutoBind(false)
+            .Pageable(x => x.PageSizes(new int[] { 10, 20, 30, 50 }).Refresh(true))
+            .Scrollable()
+            .HtmlAttributes(new { style = "height:100%;" })
+            .Selectable(selectable => selectable
+                    .Mode(GridSelectionMode.Single)
+            )
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(@pagesizeint)
+                .ServerOperation(true)
+                .Read(read => read.Action("QnaGridList", "Qna", new { Model.SearchCol, Model.SearchKeyword, Model.StatusYn }))
+             )
+
+            )
+        </div>
+
+
+<script language="javascript">
+    $(function () {
+        var grid = $("#qnagrid").data("kendoGrid");
+        grid.dataSource._page = @Model.Page;
+        grid.dataSource._pageSize = @Model.PageSize;
+        grid.dataSource.read();
+
+    });
+
+    function toggleLink(data) {
+        var action = '@Url.Action("Edit", "Qna")';
+
+        var grid = $("#qnagrid").data("kendoGrid");
+        var page = grid.dataSource._page;
+        var pagesize = grid.dataSource._pageSize;
+        var searchcol = '@Model.SearchCol';
+
+        var searchkeyword = '@Model.SearchKeyword';
+        var StatusYn = '@Model.StatusYn';
+
+        var html = kendo.format("<a href='{1}?IDX={2}&Page={3}&PageSize={4}&SearchCol={5}&SearchKeyword={6}&StatusYn={7}'>{0}</a>",
+            data.TITLE,
+            action,
+            data.IDX,
+            page,
+            pagesize,
+            searchcol,
+            searchkeyword,
+            StatusYn
+        );
+        return html;
+    }
+
+    function frmCheck() {
+        var grid = $("#qnagrid").data("kendoGrid");
+        var pagesize = grid.dataSource._pageSize;
+        var pagesizebox =  $( "input[name$='PageSize']" );
+        pagesizebox.val( pagesize );
+        return true;
+    }
+
+</script>
+    </div>
+}

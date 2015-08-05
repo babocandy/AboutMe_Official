@@ -127,7 +127,6 @@
                     @dash
                     <span class="ipttypedate"><input type="text" id="end_date" name="end_date" class="" value="@Model.SearchParam.end_date" style="width:120px"></span>
                     <a href="javascript:" onclick="goSearch();"  class="btn_brown_w96h38">조회</a>
-                    <a href="/Mypage/Recall/RecallWrite?order_code=20150723-100053&order_detail_idx=1&mode=NEW" class="btn_brown_w96h38">작성</a>
                 }
                 <script type="text/javascript">
 						$(function() {
@@ -185,7 +184,7 @@
                             <tr>
                                 <td>@item.IDX</td>
                                 <td>@item.ORDER_CODE</td>
-                                <td class="subj"><a href="/Mypage/Recall/RecallView?IDX=@item.IDX">@item.TITLE</a></td>
+                                <td class="subj"><a href="/Mypage/Recall/RecallView?IDX=@item.IDX&dateType=@Model.SearchParam.dateType&start_date=@Model.SearchParam.start_date&end_date=@Model.SearchParam.end_date&page=@Model.SearchParam.page">@item.TITLE</a></td>
                                 <td>@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</td>
                                 @if (item.STATUS == 2)
                                 { 
