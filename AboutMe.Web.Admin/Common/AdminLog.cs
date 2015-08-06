@@ -27,7 +27,8 @@ namespace AboutMe.Web.Admin.Common
                 adminid = "";
             }
             if (memo.Length > 8000) { 
-                memo = memo.Substring(0, 7990);
+                memo = memo.Substring(0, 7890);
+                var test = memo.Length;
             }
             if (comment.Length > 100)
             {
