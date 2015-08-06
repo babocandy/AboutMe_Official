@@ -40,6 +40,12 @@ namespace AboutMe.Domain.Entity.Product
         public string ICON_YN { get; set; }
         public string WITH_PRODUCT_LIST { get; set; }
         public string PMO_PRODUCT_CATEGORY { get; set; }
+        public string CD_PROMOTION_PRODUCT { get; set; }
         public string COUPON_CODE { get; set; }
+        public string CATE_CODE { get; set; }
+        public string DEPTH_FLAG { get; set; }
+        public string DEPTH1_NAME { get; set; }
+        public string DEPTH2_NAME { get; set; }
+        public string DEPTH3_NAME { get; set; }
     }
 }

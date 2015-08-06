@@ -359,6 +359,7 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품
         
         #region 상품 리스트
+        [ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
             #region 초기화작업
@@ -367,6 +368,12 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.cateCode1 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(0, 3);
             this.ViewBag.cateCode2 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(3, 3);
             this.ViewBag.cateCode3 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(6, 3);
+            
+            //상품코드 다중검색일때 스페이스를 ,로 변환한다.
+            if ((!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword)) && (productSearch_Entity.SearchKey == "P_CODE"))
+            {
+                productSearch_Entity.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
+            }
             #endregion
 
             PRODUCT_INDEX_MODEL m = new PRODUCT_INDEX_MODEL();
@@ -378,6 +385,7 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 상품 할인정책 리스트
+        [ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         public ActionResult ProductPriceIndex(ProductSearch_Entity productSearch_Entity)
         {
             #region 초기화작업
@@ -386,6 +394,12 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.cateCode2 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(3, 3);
             this.ViewBag.cateCode3 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(6, 3);
             #endregion
+
+            //상품코드 다중검색일때 스페이스를 ,로 변환한다.
+            if ((!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword)) && (productSearch_Entity.SearchKey == "P_CODE"))
+            {
+                productSearch_Entity.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
+            }
 
             PRODUCT_INDEX_MODEL m = new PRODUCT_INDEX_MODEL();
             m.productSearch_Entity = productSearch_Entity;
@@ -734,6 +748,7 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 상품 엑셀 다운로드
+        [ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         public ActionResult ProductExcel(ProductSearch_Entity productSearch_Entity)
         {
 
@@ -797,6 +812,7 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 팝업 상품 리스트
+        [ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         public ActionResult PopProductIndex(ProductSearch_Entity productSearch_Entity)
         {
             #region 초기화작업
@@ -806,6 +822,12 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.cateCode2 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(3, 3);
             this.ViewBag.cateCode3 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(6, 3);
             #endregion
+
+            //상품코드 다중검색일때 스페이스를 ,로 변환한다.
+            if ((!string.IsNullOrEmpty(productSearch_Entity.SearchKeyword)) && (productSearch_Entity.SearchKey == "P_CODE"))
+            {
+                productSearch_Entity.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
+            }
 
             PRODUCT_INDEX_MODEL m = new PRODUCT_INDEX_MODEL();
             m.productSearch_Entity = productSearch_Entity;

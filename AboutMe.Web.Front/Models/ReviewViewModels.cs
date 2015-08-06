@@ -38,13 +38,13 @@ namespace AboutMe.Web.Front.Models
         [Required(ErrorMessage = "*")]
         public string COMMENT { get; set; }
 
-        public ReviewProductInfo ReviewPdtInfo { get; set; }
+        public SP_REVIEW_PRODUCT_INFO_Result ReviewPdtInfo { get; set; }
     }
 
     public class MyReviewCompleteViewModel
     {
 
-        public List<ReviewProductInfo> Reviews { get; set; }
+        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> Reviews { get; set; }
 
         public int PageNo { get; set; }
         public int PageSize { get { return 10; } }
@@ -55,10 +55,20 @@ namespace AboutMe.Web.Front.Models
 
 
 
-    public class ReviewProductListViewModel : MyReviewCompleteViewModel
+    public class ReviewProductListViewModel 
     {
         public static string SORT_PHOTO = "0";
         public static string SORT_LASTEST = "1";
+
+
+        public List<SP_REVIEW_PRODUCT_SEL_Result> Reviews { get; set; }
+
+        public int PageNo { get; set; }
+        public int PageSize { get { return 10; } }
+        public int Total { get; set; }
+        public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
+        public string Pcode { get; set; }
+
 
         public List<SP_CATEGORY_DEPTH_SEL_Result> CategoryBeauty { get; set; }        
         public string CategoryCodeHealth { get; set; }

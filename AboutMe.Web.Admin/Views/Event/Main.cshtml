@@ -1,0 +1,275 @@
+﻿@model AboutMe.Domain.Entity.Event.EVENT_ADMIN_INDEX
+
+@{
+    ViewBag.Title = "이벤트메인관리";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+@section Scripts{
+
+
+    <script language="javascript">
+        //<![CDATA[
+        $(function () {
+            $("#edisplayls").sortable();
+            $("#edisplayls").disableSelection();
+        });
+        //]]>
+
+    </script>
+
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+    <!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>이벤트메인관리</strong>
+    </div>
+    <!--//path-->
+    <div class="panel">
+        <h3>이벤트 메인 관리</h3>
+    </div>
+    <div class="panel">
+        <h4>메인 배너 -862*400</h4>
+        <table class="table table_row">
+            <colgroup><col width="20%" /><col width="*" /><col width="15%" /></colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt="" /><br /><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;" />
+                        URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt="" /><br /><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;" />
+                        URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt="" /><br /><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;" />
+                        URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt="" /><br /><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;" />
+                        URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt="" /><br /><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;" />
+                        URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script type="text/javascript">
+            $(function () {
+                $(".btn_add_table").click(function () {
+                    var addTableLast = $(".main_bnr_table tr").last();
+                    $(".main_bnr_table tr:eq(0)").clone().insertAfter(addTableLast);
+                });
+            });
+        </script>
+    </div>
+
+    <div class="panel">
+        <h4>우측 배너 -208*400</h4>
+        <table class="table table_row">
+            <colgroup><col width="20%" /><col width="*" /><col width="15%" /></colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row" class="vam">
+                        <img src="" alt="" /><br /><p class="tac"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p>
+                    </th>
+                    <td>
+                        <input type="file" style="width:80%; margin-left:35px;" />
+                        URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large">저장</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel ofh" style="width:1200px;">
+        <div style="float:left; width:800px">
+            <h4 style="margin-bottom:13px;">중단 배너- 208*208</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup><col width="33.333%"><col width="33.333%"><col width="33.333%"></colgroup>
+                <tbody>
+                    <tr>
+                        <td class="brnone">
+                            <img src="" alt="" /><br /><p class="tac mt5"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p><br /><br />
+                            <input type="file" style="width:80%; margin-left:38px;" />
+                            URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                            <a href="#" class="btn btn-default small mt10">저장</a>
+                        </td>
+                        <td>
+                            <img src="" alt="" /><br /><p class="tac mt5"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p><br /><br />
+                            <input type="file" style="width:80%; margin-left:38px;" />
+                            URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                            <a href="#" class="btn btn-default small mt10">저장</a>
+                        </td>
+                        <td>
+                            <img src="" alt="" /><br /><p class="tac mt5"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p><br /><br />
+                            <input type="file" style="width:80%; margin-left:38px;" />
+                            URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                            <a href="#" class="btn btn-default small mt10">저장</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="float:left; width:400px">
+            <h4>중단 배너- 426*284<br />(타임세일 배너가 걸리는 경우 비전시 처리)</h4>
+            <table class="table table_col">
+                <tbody>
+                    <tr>
+                        <td class="brnone">
+                            <img src="" alt="" /><br /><p class="tac mt5"> teeeee.jpg <a href="#" class="btn btn-info small">삭제</a></p><br /><br />
+                            <input type="file" style="width:80%; margin-left:38px;" />
+                            URL : <input type="text" class="input-sm mt5" style="width:80%" />
+                            <a href="#" class="btn btn-default small mt10">저장</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel edisplaycont">
+        <ul id="edisplayls" class="edisplayls">
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0183/20140620_ev199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER PICK FOR SUMMER PICK FOR SUMMER 가나다라마바사</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0180/20140609_sale199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0177/20130829_mobile199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0173/open199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0170/20140626_tee199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0150/130722_arrival199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0148/20140417_sale199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/plan_goods_img/P0145/20140404_beau199.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/eloq/144/TS/B144MTS164W/B144MTS164W_0.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+            <li class="ui-state-default">
+                <span class="edbox">
+                    <span class="edpic"><img src="http://www.gncostyle.com/upload/eloq/144/TS/B144MTS164W/B144MTS164W_0.jpg" alt="" /></span>
+                    <span class="edtxtdate">2014.07.07~2014.07.31</span>
+                    <span class="edtxtsti">PICK FOR SUMMER</span>
+                    <span class="edbtn"><a href="#" class="btn btn-default small">수정</a></span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+
+
+</div>
+<!--//content-->
+
+}

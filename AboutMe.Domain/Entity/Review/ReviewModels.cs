@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AboutMe.Domain.Entity.Review
 {
-
+    /*
     public class ReviewProductInfo
     {
         public int? IDX { get; set; }
@@ -33,6 +33,7 @@ namespace AboutMe.Domain.Entity.Review
         public bool IS_BEAUTY { get; set; }
         public bool IS_BEST { get; set; }
     }
+    */
 
     // public class ReviewProductListViewModel
     public class ReviewProductListParam

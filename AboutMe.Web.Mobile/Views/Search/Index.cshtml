@@ -131,11 +131,15 @@
         </ul>
         <!--//상세리스트-->
         <!--페이징-->
-        <div class="paging">
-            <a href="#" class="prev"></a>
-            1 / 50
-            <a href="#" class="next"></a>
-        </div>
+        <!--페이징-->
+        @{
+            //paging 파라메터
+            string PagingParam = "";
+            PagingParam = PagingParam + "&SORT_GBN=" + ViewBag.SORT_GBN;
+            PagingParam = PagingParam + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
+        }
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = PagingParam });}
+        <!--//페이징-->
         <!--//페이징-->
     </div>
 		<!--//container-->

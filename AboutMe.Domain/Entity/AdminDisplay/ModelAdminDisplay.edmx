@@ -207,6 +207,8 @@
           <Property Type="String" Name="MOBILE_IMG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MOBILE_LINK" Nullable="true" MaxLength="300" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MEDIA_GBN_LBL" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="IS_DISPLAY_LBL" Nullable="true" MaxLength="3" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_POPUP_INFO_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -264,6 +266,8 @@
                 <ScalarProperty Name="MOBILE_IMG" ColumnName="MOBILE_IMG" />
                 <ScalarProperty Name="MOBILE_LINK" ColumnName="MOBILE_LINK" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="MEDIA_GBN_LBL" ColumnName="MEDIA_GBN_LBL" />
+                <ScalarProperty Name="IS_DISPLAY_LBL" ColumnName="IS_DISPLAY_LBL" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -58,11 +58,6 @@
                     @Html.AntiForgeryToken()
                     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
 
-                    <!--
-                    <input type="hidden" name="M_ID" value="@(@Model.ReviewPdtInfo.M_ID)" />
-                    <input type="hidden" name="ORDER_DETAIL_IDX" value="@(@Model.ReviewPdtInfo.ORDER_DETAIL_IDX)" />
-                    <input type="hidden" name="P_CODE" value="@(@Model.ReviewPdtInfo.P_CODE)" />
--->
                     <fieldset>
                         <legend>상품 리뷰 등록 폼</legend>
                         <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
@@ -99,7 +94,7 @@
                                     {
                                         <th class="skintype">피부타입</th>
                                         <td class="skintype">
-                                            @Model.ReviewPdtInfo.SKIN_TYPE
+                                            @Model.ReviewPdtInfo.SKIN_TYPE_LBL
                                         </td>
                                     }
 

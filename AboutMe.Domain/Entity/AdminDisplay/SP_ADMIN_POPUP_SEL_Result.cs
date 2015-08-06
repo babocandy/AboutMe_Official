@@ -24,5 +24,7 @@ namespace AboutMe.Domain.Entity.AdminDisplay
         public string MOBILE_IMG { get; set; }
         public string MOBILE_LINK { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public string MEDIA_GBN_LBL { get; set; }
+        public string IS_DISPLAY_LBL { get; set; }
     }
 }

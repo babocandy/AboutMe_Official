@@ -31,5 +31,7 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string P_MAIN_IMG { get; set; }
         public string IS_DISPLAY { get; set; }
         public string SKIN_TYPE { get; set; }
+        public string MEDIA_GBN_LBL { get; set; }
+        public string SKIN_TYPE_LBL { get; set; }
     }
 }

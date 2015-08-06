@@ -13,13 +13,13 @@ namespace AboutMe.Domain.Service.Product
     {
         #region 상품
 
-        //상품 모바일 메인 리스트
+        //상품 메인 리스트 [모바일]
         List<SP_PRODUCT_MAIN_SEL_Result> GetProductMainList(string cate);
 
         //상품 리스트
         List<SP_PRODUCT_SEL_Result> GetProductList(Product_front_search_entity product_front_search_entity);
 
-        //상품 모바일 리스트
+        //상품 리스트 [모바일]
         List<SP_PRODUCT_MOBILE_SEL_Result> GetProductMobileList(Product_front_search_entity product_front_search_entity);
 
         //상품 카운트
@@ -28,13 +28,13 @@ namespace AboutMe.Domain.Service.Product
         //상품 보기
         SP_PRODUCT_DETAIL_VIEW_Result ViewProduct(string PCODE);
 
-        //상품 모바일 보기
+        //상품 보기 [모바일]
         SP_PRODUCT_MOBILE_DETAIL_VIEW_Result ViewProductMobile(string PCODE);
 
         //상품 검색 리스트
         List<SP_PRODUCT_SEARCH_SEL_Result> GetProductSearchList(Product_front_search_entity product_front_search_entity);
 
-        //상품 모바일 검색 리스트
+        //상품 검색 리스트 [모바일]
         List<SP_PRODUCT_MOBILE_SEARCH_SEL_Result> GetProductMobileSearchList(Product_front_search_entity product_front_search_entity);
 
         //상품 검색 카운트
@@ -45,6 +45,12 @@ namespace AboutMe.Domain.Service.Product
 
         //상품 mypage skin type 리스트
         List<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result> GetProductMypageSkinTypeList(string cate);
+
+        //연관 상품 리스트
+        List<SP_PRODUCT_WITH_SEL_Result> GetProductWithList(string _with_product_list);
+
+        //연관 상품 리스트[모바일]
+        List<SP_PRODUCT_MOBILE_WITH_SEL_Result> GetProductMobileWithList(string _with_product_list);
 
         #endregion
     }

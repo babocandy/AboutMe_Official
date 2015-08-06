@@ -57,6 +57,7 @@ namespace AboutMe.Web.Mobile.Controllers
             TotalRecord = _ProductService.GetProductCnt(product_front_search_entity);
             this.ViewBag.TotalRecord = TotalRecord;                                             //총카운트
             this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            this.ViewBag.PAGESIZE = product_front_search_entity.PAGESIZE;                       //페이지사이즈
             this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
             this.ViewBag.P_CATE_CODE = product_front_search_entity.P_CATE_CODE;                 //P_CATE_CODE
             this.ViewBag.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;   //P_CATE_CODE_3DEPTH
@@ -79,10 +80,12 @@ namespace AboutMe.Web.Mobile.Controllers
         #region 상품상세보기[모바일]
         public ActionResult Detail(string pcode, Product_front_search_entity product_front_search_entity)
         {
+            #region 상품상세정보 [모바일]
             //상품코드
             this.ViewBag.P_CODE = pcode;
 
             this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            this.ViewBag.PAGESIZE = product_front_search_entity.PAGESIZE;                       //페이지사이즈
             this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
             this.ViewBag.P_CATE_CODE = product_front_search_entity.P_CATE_CODE;                 //P_CATE_CODE
             this.ViewBag.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;   //P_CATE_CODE_3DEPTH
@@ -94,6 +97,23 @@ namespace AboutMe.Web.Mobile.Controllers
 
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
+            #endregion 
+
+            #region 연관상품 가져오기
+            ViewData["WITH_PRODUCT_LIST"] = "";
+            this.ViewBag.withCnt = 0;
+            string _with_product_list = productView.WITH_PRODUCT_LIST;
+            if (!string.IsNullOrEmpty(_with_product_list))
+            {
+                ViewData["WITH_PRODUCT_LIST"] = _ProductService.GetProductMobileWithList(_with_product_list).ToList(); //연관상품 리스트
+                this.ViewBag.withCnt = -1;
+            }
+            #endregion 
+
+            #region 로그
+            UserLog userlog = new UserLog();
+            userlog.UserLogSave("P_CODE:" + pcode, "상품상세정보[모바일]");
+            #endregion
 
             return View(productView);
         }

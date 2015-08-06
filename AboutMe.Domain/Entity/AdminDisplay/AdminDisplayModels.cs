@@ -72,22 +72,4 @@ namespace AboutMe.Domain.Entity.AdminDisplay
 
     }
 
-    public class PopupInfo
-    {
-
-        private string _media;
-
-        public int IDX { get; set; }
-        public string MEDIA_GBN { get; set; }
-        public string TITLE { get; set; }
-        public Boolean IS_DISPLAY { get; set; }
-        public string DISPLAY_START { get; set; }
-        public string DISPLAY_END { get; set; }
-        public string WEB_IMG { get; set; }
-        public string WEB_LINK { get; set; }
-        public string MOBILE_IMG { get; set; }
-        public string MOBILE_LINK { get; set; }
-        public string INS_DATE { get; set; }
-    }
-
 }

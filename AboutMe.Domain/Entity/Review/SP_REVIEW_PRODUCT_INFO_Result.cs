@@ -32,5 +32,6 @@ namespace AboutMe.Domain.Entity.Review
         public string SKIN_TYPE { get; set; }
         public System.DateTime INS_DATE { get; set; }
         public string P_SUB_TITLE { get; set; }
+        public string SKIN_TYPE_LBL { get; set; }
     }
 }

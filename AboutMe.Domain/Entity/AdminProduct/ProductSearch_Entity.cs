@@ -132,7 +132,8 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 //{
                 //    this._SearchKeyword  = this._SearchKeyword.Replace(" ", ",");
                 //}
-                return this._SearchKeyword == null ? "" : this._SearchKeyword.Replace(" ", ",");
+                //return this._SearchKeyword == null ? "" : this._SearchKeyword.Replace(" ", ",");
+                return this._SearchKeyword ?? "";
             }
             set
             {
