@@ -58,7 +58,16 @@ namespace AboutMe.Web.Admin.Models
 
     public class AdminReviewExpFindProductViewModel
     {
-        public List<SP_ADMIN_PRODUCT_LIST_Result> List { get; set; }
+        public List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result> List { get; set; }
         public int? Total { get; set; }
+        public AdminReviewExpFindProductRouteParam RouteParam { get; set; }
+    }
+
+    public class AdminReviewExpMasterDetailViewModel
+    {
+        public int? IDX { get; set; }
+        //
+        public SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result Detail { get; set; }
+        public IList<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> Members { get; set; }
     }
 }

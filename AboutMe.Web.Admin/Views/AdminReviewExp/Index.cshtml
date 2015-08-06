@@ -109,7 +109,7 @@
                                     @{
                     List<SelectListItem> items = new List<SelectListItem>();
 
-                    items.Add(new SelectListItem { Text = "상품품번", Value = "P_CODE" });
+                    items.Add(new SelectListItem { Text = "상품코드", Value = "P_CODE" });
 
                     foreach (var xx in items)
                     {
@@ -140,8 +140,8 @@
                             <tr>
                                 <th>권한여부</th>
                                 <td colspan="3">
-                                    <label for="sort8"><input type="checkbox" id="sort8" name="IS_AUTH_Y" value="@YNCode.YES" @(Model.RouteParam.IS_AUTH_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">전시</span></label>
-                                    <label for="sort9"><input type="checkbox" id="sort9" name="IS_AUTH_N" value="@YNCode.NO" @(Model.RouteParam.IS_AUTH_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비전시</span></label>
+                                    <label for="sort8"><input type="checkbox" id="sort8" name="IS_AUTH_Y" value="@YNCode.YES" @(Model.RouteParam.IS_AUTH_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">권한</span></label>
+                                    <label for="sort9"><input type="checkbox" id="sort9" name="IS_AUTH_N" value="@YNCode.NO" @(Model.RouteParam.IS_AUTH_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비권한</span></label>
                                 </td>
                             </tr>
                         </tbody>
@@ -158,9 +158,10 @@
                     <tr>
                         <th>No</th>
                         <th>상품명</th>
+                        <th>상품코드</th>
                         <th>기간▼</th>
                         <th>진행상태</th>
-                        <th>전시여부</th>
+                        <th>권한여부</th>
                         <th>설정일▼</th>
                         <th>관리</th>
                     </tr>
@@ -171,56 +172,19 @@
                         <tr>
                             <td>@item.IDX</td>
                             <td class="tal">@item.P_NAME</td>
+                            <td class="tal">@item.P_CODE</td>
                             <td>@item.FROM_DATE.Value.ToString("yyyy.MM.dd") ~ @item.TO_DATE.Value.ToString("yyyy.MM.dd")</td>
                             <td>@item.IS_STATE_LBL</td>
                             <td>@item.IS_AUTH_LBL</td>
                             <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
                             <td>
-                                <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
+                                <a href="@Url.Action(string.Format("Detail/{0}", item.IDX), "AdminReviewExp")" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
                                 <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
                             </td>
                         </tr>
                     }
 
 
-                    <!--
-                    <tr>
-                        <td>3</td>
-                        <td class="tal">스킨 톤업 마사지 크림150ml </td>
-                        <td>2015.10.01 ~ 2015.10.14</td>
-                        <td>예약</td>
-                        <td>비전시</td>
-                        <td>2015-08-05</td>
-                        <td>
-                            <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
-                            <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td class="tal">스킨 톤업 마사지 크림150ml </td>
-                        <td>2015.10.01 ~ 2015.10.14</td>
-                        <td>예약</td>
-                        <td>비전시</td>
-                        <td>2015-08-05</td>
-                        <td>
-                            <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
-                            <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td class="tal">스킨 톤업 마사지 크림150ml </td>
-                        <td>2015.10.01 ~ 2015.10.14</td>
-                        <td>예약</td>
-                        <td>비전시</td>
-                        <td>2015-08-05</td>
-                        <td>
-                            <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
-                            <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
-                        </td>
-                    </tr>
-                        -->
                 </tbody>
             </table>
 
@@ -231,7 +195,7 @@
             }
 
             @{
-                //Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });
+                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });
             }
 
 

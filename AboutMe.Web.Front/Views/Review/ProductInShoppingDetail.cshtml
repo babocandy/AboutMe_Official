@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Front.Models.MyReviewCompleteViewModel
+﻿@model AboutMe.Web.Front.Models.MyReviewInProductDetailViewModel
 @using AboutMe.Web.Front.Controllers
 @{
     Layout = null;
@@ -22,7 +22,7 @@
         </ul>
         <div id="review1" class="tab_content" style="display:block">
             <div class="btn_riviewenroll">
-                <a href="#" class="btn_white_w120h38">상품리뷰 등록</a>
+                <a href="@Url.Action("Ready", "MyReview")" class="btn_white_w120h38">상품리뷰 등록</a>
             </div>
             <!--리뷰 슬라이드-->
             <div class="pur_review accordion">
@@ -51,28 +51,30 @@
                     <div class="cont accordcont @cssClassName @selectContent">
 
                         <div class="subj accordsubject">
+
                             <div class="writer">
-                                <span class="date">@item.INS_DATE</span>
-                                @if (item.IS_PHOTO )
-                                {
-                         <!--사진이 등록된 리뷰일 때 사용-->
-                                    <span class="ico_photo">포토리뷰</span>
-                         <!--//사진이 등록된 리뷰일 때 사용-->
-                                }
-
-
-                                <span class="userage">@item.M_BIRTHDAY, @item.M_SEX<em class="skin @item.SKIN_TYPE"></em></span>
+                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                <span class="id">@item.M_ID_LBL</span>
                             </div>
+
+
                             <p class="txtdotdot" style="">
                                 @Html.Raw(item.COMMENT);
                             </p>
+
+                            @if (item.IS_PHOTO == "Y")
+                            {
+                                <span class="ico_photo">포토리뷰</span>
+                            }
                         </div>
                         <div class="contxt accordtxt">
                             <div class="writer">
-                                <span class="userage">@item.M_BIRTHDAY, @item.M_SEX<em class="skin @item.SKIN_TYPE"></em></span>
+                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                <span class="id">@item.M_ID_LBL</span>
                             </div>
-                            @Html.Raw(item.COMMENT);
-                            @if (item.IS_PHOTO)
+
+                            @Html.Raw(item.COMMENT.Replace("\r\n","<br/>"));
+                            @if (item.IS_PHOTO == "Y")
                             {
                                 <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
                             }

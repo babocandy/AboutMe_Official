@@ -136,9 +136,9 @@ namespace AboutMe.Domain.Service.Review
         /**
          * 상품코드별 상품리뷰 조회
          */
-        public Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10)
+        public Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10)
         {
-            List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
+            List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result> lst = new List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>();
 
             ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
 
@@ -147,7 +147,7 @@ namespace AboutMe.Domain.Service.Review
                 lst = context.SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL(pcode, pageNo, pageSize, total).ToList();
             }
 
-            Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int>(lst, Convert.ToInt32(total.Value));
+            Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int>(lst, Convert.ToInt32(total.Value));
 
             return tp;
         }
