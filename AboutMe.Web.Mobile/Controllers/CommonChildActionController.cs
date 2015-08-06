@@ -54,5 +54,12 @@ namespace AboutMe.Web.Mobile.Controllers
         }
 
 
+        [ChildActionOnly]
+        public ActionResult Paging(int TotalRecord, int RecordPerPage, int PagePerBlock, int CurrentPage, string QueryStr)
+        {
+            PagingProps p_value = new PagingProps(TotalRecord, RecordPerPage, PagePerBlock, CurrentPage, QueryStr);
+            return PartialView(p_value);
+        }
+
     }
 }
