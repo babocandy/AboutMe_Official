@@ -176,15 +176,6 @@ namespace AboutMe.Domain.Entity.Product
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result>("SP_PRODUCT_MYPAGE_SKIKTYPE_SEL", cATE_CODEParameter);
         }
     
-        public virtual ObjectResult<SP_PRODUCT_DETAIL_VIEW_Result> SP_PRODUCT_DETAIL_VIEW(string p_CODE)
-        {
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
-        }
-    
         public virtual ObjectResult<SP_PRODUCT_MAIN_SEL_Result> SP_PRODUCT_MAIN_SEL(string cATE_CODE)
         {
             var cATE_CODEParameter = cATE_CODE != null ?
@@ -192,15 +183,6 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("CATE_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MAIN_SEL_Result>("SP_PRODUCT_MAIN_SEL", cATE_CODEParameter);
-        }
-    
-        public virtual ObjectResult<SP_PRODUCT_MOBILE_DETAIL_VIEW_Result> SP_PRODUCT_MOBILE_DETAIL_VIEW(string p_CODE)
-        {
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_DETAIL_VIEW_Result>("SP_PRODUCT_MOBILE_DETAIL_VIEW", p_CODEParameter);
         }
     
         public virtual ObjectResult<SP_PRODUCT_MOBILE_SEARCH_SEL_Result> SP_PRODUCT_MOBILE_SEARCH_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sORT_GBN, string sEARCH_KEYWORD)
@@ -259,6 +241,42 @@ namespace AboutMe.Domain.Entity.Product
                 new ObjectParameter("P_CATE_CODE_3DEPTH", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_SEL_Result>("SP_PRODUCT_MOBILE_SEL", pAGEParameter, pAGESIZEParameter, p_CATE_CODEParameter, c_CATE_CODEParameter, l_CATE_CODEParameter, sORT_GBNParameter, p_OUTLET_YNParameter, p_CATE_CODE_3DEPTHParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_DETAIL_VIEW_Result> SP_PRODUCT_DETAIL_VIEW(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_DETAIL_VIEW_Result>("SP_PRODUCT_DETAIL_VIEW", p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MOBILE_DETAIL_VIEW_Result> SP_PRODUCT_MOBILE_DETAIL_VIEW(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_DETAIL_VIEW_Result>("SP_PRODUCT_MOBILE_DETAIL_VIEW", p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MOBILE_WITH_SEL_Result> SP_PRODUCT_MOBILE_WITH_SEL(string p_CODE_LIST)
+        {
+            var p_CODE_LISTParameter = p_CODE_LIST != null ?
+                new ObjectParameter("P_CODE_LIST", p_CODE_LIST) :
+                new ObjectParameter("P_CODE_LIST", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MOBILE_WITH_SEL_Result>("SP_PRODUCT_MOBILE_WITH_SEL", p_CODE_LISTParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_WITH_SEL_Result> SP_PRODUCT_WITH_SEL(string p_CODE_LIST)
+        {
+            var p_CODE_LISTParameter = p_CODE_LIST != null ?
+                new ObjectParameter("P_CODE_LIST", p_CODE_LIST) :
+                new ObjectParameter("P_CODE_LIST", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_WITH_SEL_Result>("SP_PRODUCT_WITH_SEL", p_CODE_LISTParameter);
         }
     }
 }

@@ -55,6 +55,9 @@
           <Parameter Name="P_OUTLET_YN" Type="varchar" Mode="In" />
           <Parameter Name="P_CATE_CODE_3DEPTH" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_PRODUCT_MOBILE_WITH_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE_LIST" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_PRODUCT_MYPAGE_SKIKTYPE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CATE_CODE" Type="varchar" Mode="In" />
         </Function>
@@ -76,6 +79,9 @@
           <Parameter Name="SORT_GBN" Type="varchar" Mode="In" />
           <Parameter Name="P_OUTLET_YN" Type="varchar" Mode="In" />
           <Parameter Name="P_CATE_CODE_3DEPTH" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_PRODUCT_WITH_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE_LIST" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_USER_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
@@ -135,14 +141,8 @@
           <FunctionImport Name="SP_PRODUCT_MYPAGE_SKIKTYPE_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result)">
           <Parameter Name="CATE_CODE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_PRODUCT_DETAIL_VIEW" ReturnType="Collection(ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result)">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_MAIN_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_MAIN_SEL_Result)">
-            <Parameter Name="CATE_CODE" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_PRODUCT_MOBILE_DETAIL_VIEW" ReturnType="Collection(ModelProduct.SP_PRODUCT_MOBILE_DETAIL_VIEW_Result)">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          <Parameter Name="CATE_CODE" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_MOBILE_SEARCH_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_MOBILE_SEARCH_SEL_Result)">
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
@@ -159,6 +159,18 @@
             <Parameter Name="SORT_GBN" Mode="In" Type="String" />
             <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
             <Parameter Name="P_CATE_CODE_3DEPTH" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCT_DETAIL_VIEW" ReturnType="Collection(ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result)">
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCT_MOBILE_DETAIL_VIEW" ReturnType="Collection(ModelProduct.SP_PRODUCT_MOBILE_DETAIL_VIEW_Result)">
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCT_MOBILE_WITH_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_MOBILE_WITH_SEL_Result)">
+            <Parameter Name="P_CODE_LIST" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PRODUCT_WITH_SEL" ReturnType="Collection(ModelProduct.SP_PRODUCT_WITH_SEL_Result)">
+            <Parameter Name="P_CODE_LIST" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_LOG_USER">
@@ -278,36 +290,6 @@
           <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="COUPON_CODE" Nullable="true" MaxLength="10" />
         </ComplexType>
-        <ComplexType Name="SP_PRODUCT_DETAIL_VIEW_Result">
-          <Property Type="Int32" Name="IDX" Nullable="false" />
-          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
-          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
-          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" />
-          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
-          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
-          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
-          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
-          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
-          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="300" />
-          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="COUPON_CODE" Nullable="true" MaxLength="10" />
-        </ComplexType>
         <ComplexType Name="SP_PRODUCT_MAIN_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
           <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" />
@@ -335,36 +317,6 @@
           <Property Type="Int32" Name="P_VIEW_COUNT" Nullable="true" />
           <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="300" />
           <Property Type="String" Name="P_OUTLET_YN" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="COUPON_CODE" Nullable="true" MaxLength="10" />
-        </ComplexType>
-        <ComplexType Name="SP_PRODUCT_MOBILE_DETAIL_VIEW_Result">
-          <Property Type="Int32" Name="IDX" Nullable="false" />
-          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
-          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
-          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" />
-          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
-          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
-          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
-          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
-          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
-          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="300" />
           <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="COUPON_CODE" Nullable="true" MaxLength="10" />
         </ComplexType>
@@ -396,6 +348,132 @@
           <Property Type="String" Name="COUPON_CODE" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_PRODUCT_MOBILE_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" ConcurrencyMode="None" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="REGDATE" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="Int32" Name="P_VIEW_COUNT" Nullable="false" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="false" />
+          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" />
+          <Property Type="String" Name="COUPON_CODE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCT_DETAIL_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="CD_PROMOTION_PRODUCT" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="COUPON_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="DEPTH_FLAG" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="DEPTH1_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH2_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH3_NAME" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCT_MOBILE_DETAIL_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="P_INFO_DETAIL_WEB" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="P_INFO_DETAIL_MOBILE" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_COMPONENT_INFO" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG3" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="CD_PROMOTION_PRODUCT" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="COUPON_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="DEPTH_FLAG" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="DEPTH1_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH2_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH3_NAME" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCT_MOBILE_WITH_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="String" Name="SOLDOUT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="RESULT_PRICE" Nullable="true" ConcurrencyMode="None" />
+          <Property Type="String" Name="MV_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_TAG" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="OTHER_IMG1" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="ICON_YN" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="WITH_PRODUCT_LIST" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="REGDATE" Nullable="false" />
+          <Property Type="String" Name="P_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="Int32" Name="P_VIEW_COUNT" Nullable="false" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="false" />
+          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" />
+          <Property Type="String" Name="COUPON_CODE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_PRODUCT_WITH_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
           <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
           <Property Type="String" Name="L_CATE_CODE" Nullable="true" MaxLength="9" />
@@ -567,40 +645,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_PRODUCT_DETAIL_VIEW" FunctionName="ModelProduct.Store.SP_PRODUCT_DETAIL_VIEW">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result">
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
-                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
-                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
-                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
-                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
-                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
-                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
-                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
-                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
-                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
-                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
-                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
-                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
-                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
-                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
-                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
-                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
-                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
-                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
-                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
-                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
-                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
-                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
-                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_MAIN_SEL" FunctionName="ModelProduct.Store.SP_PRODUCT_MAIN_SEL">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_MAIN_SEL_Result">
@@ -630,40 +674,6 @@
                 <ScalarProperty Name="P_VIEW_COUNT" ColumnName="P_VIEW_COUNT" />
                 <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
                 <ScalarProperty Name="P_OUTLET_YN" ColumnName="P_OUTLET_YN" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
-                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_PRODUCT_MOBILE_DETAIL_VIEW" FunctionName="ModelProduct.Store.SP_PRODUCT_MOBILE_DETAIL_VIEW">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_MOBILE_DETAIL_VIEW_Result">
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
-                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
-                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
-                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
-                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
-                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
-                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
-                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
-                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
-                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
-                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
-                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
-                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
-                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
-                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
-                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
-                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
-                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
-                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
-                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
-                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
-                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
-                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
-                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
-                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
                 <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
                 <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
               </ComplexTypeMapping>
@@ -703,6 +713,148 @@
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_MOBILE_SEL" FunctionName="ModelProduct.Store.SP_PRODUCT_MOBILE_SEL" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_MOBILE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="P_VIEW_COUNT" ColumnName="P_VIEW_COUNT" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_DETAIL_VIEW" FunctionName="ModelProduct.Store.SP_PRODUCT_DETAIL_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_DETAIL_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
+                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
+                <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
+                <ScalarProperty Name="DEPTH_FLAG" ColumnName="DEPTH_FLAG" />
+                <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
+                <ScalarProperty Name="DEPTH2_NAME" ColumnName="DEPTH2_NAME" />
+                <ScalarProperty Name="DEPTH3_NAME" ColumnName="DEPTH3_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_MOBILE_DETAIL_VIEW" FunctionName="ModelProduct.Store.SP_PRODUCT_MOBILE_DETAIL_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_MOBILE_DETAIL_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="P_INFO_DETAIL_WEB" ColumnName="P_INFO_DETAIL_WEB" />
+                <ScalarProperty Name="P_INFO_DETAIL_MOBILE" ColumnName="P_INFO_DETAIL_MOBILE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_COMPONENT_INFO" ColumnName="P_COMPONENT_INFO" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="OTHER_IMG2" ColumnName="OTHER_IMG2" />
+                <ScalarProperty Name="OTHER_IMG3" ColumnName="OTHER_IMG3" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
+                <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
+                <ScalarProperty Name="DEPTH_FLAG" ColumnName="DEPTH_FLAG" />
+                <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
+                <ScalarProperty Name="DEPTH2_NAME" ColumnName="DEPTH2_NAME" />
+                <ScalarProperty Name="DEPTH3_NAME" ColumnName="DEPTH3_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_MOBILE_WITH_SEL" FunctionName="ModelProduct.Store.SP_PRODUCT_MOBILE_WITH_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_MOBILE_WITH_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_RATE" ColumnName="DISCOUNT_RATE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="SOLDOUT_YN" ColumnName="SOLDOUT_YN" />
+                <ScalarProperty Name="RESULT_PRICE" ColumnName="RESULT_PRICE" />
+                <ScalarProperty Name="MV_URL" ColumnName="MV_URL" />
+                <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+                <ScalarProperty Name="MAIN_IMG" ColumnName="MAIN_IMG" />
+                <ScalarProperty Name="OTHER_IMG1" ColumnName="OTHER_IMG1" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="ICON_YN" ColumnName="ICON_YN" />
+                <ScalarProperty Name="WITH_PRODUCT_LIST" ColumnName="WITH_PRODUCT_LIST" />
+                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+                <ScalarProperty Name="P_CATE_CODE" ColumnName="P_CATE_CODE" />
+                <ScalarProperty Name="P_VIEW_COUNT" ColumnName="P_VIEW_COUNT" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="COUPON_CODE" ColumnName="COUPON_CODE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PRODUCT_WITH_SEL" FunctionName="ModelProduct.Store.SP_PRODUCT_WITH_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelProduct.SP_PRODUCT_WITH_SEL_Result">
                 <ScalarProperty Name="IDX" ColumnName="IDX" />
                 <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
                 <ScalarProperty Name="L_CATE_CODE" ColumnName="L_CATE_CODE" />

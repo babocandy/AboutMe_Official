@@ -417,6 +417,53 @@
                     <div class="right_area">
                         @{Html.RenderAction("ShoppingDetailRightPromotion", "CommonChildAction", new { P_CODE = @ViewBag.P_CODE });}
                         @{Html.RenderAction("ShoppingDetailRightSetGoods", "CommonChildAction", new { P_CODE = @ViewBag.P_CODE });}
+
+                        @if (this.ViewBag.withCnt != 0) //관련상품 리스트
+                        { 
+                           <div class="setgoods">
+                            <img src="/aboutCom/images/shopping/tit_relgoods.gif" alt="관련 상품" />
+                            <ul>
+                                @foreach (var item in ViewData["WITH_PRODUCT_LIST"] as List<AboutMe.Domain.Entity.Product.SP_PRODUCT_WITH_SEL_Result>)
+                                 {
+                                        string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                                    <li>
+                                        <a href="/shopping/detail?pcode=@item.P_CODE">
+                                            <img src="@imgUrl1" alt="" />
+                                            <span class="tag">
+                                                @if (!string.IsNullOrEmpty(item.ICON_YN))
+                                                {
+                                                    if (item.ICON_YN.IndexOf('B') != -1)
+                                                    { <text> <span class="ico ico_best">BEST</span></text> }
+                                                    if (item.ICON_YN.IndexOf('S') != -1)
+                                                    { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                                    if (item.ICON_YN.IndexOf('N') != -1)
+                                                    { <text> <span class="ico ico_new">NEW</span></text> }
+                                                    if (item.ICON_YN.IndexOf('C') != -1)
+                                                    { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                                                {
+                                                    if (item.PMO_PRODUCT_CATEGORY == "01")
+                                                    { <text> <span class="ico ico_set">SET</span></text> }
+                                                    if (item.PMO_PRODUCT_CATEGORY == "02")
+                                                    { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                                    if (item.PMO_PRODUCT_CATEGORY == "03")
+                                                    { <text> <span class="ico ico_time">TIME</span></text> }
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                                                {
+                                                    <text> <span class="ico ico_coupon">COUPON</span></text>
+                                                }
+                                            </span>
+                                            <strong class="gti">@(new HtmlString(item.P_NAME))</strong>
+                                            <span class="desc">@(new HtmlString(item.P_SUB_TITLE))</span>
+                                            <span class="price"><strong>@string.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span>
+                                        </a>
+                                    </li>
+                                    }
+                            </ul>
+                        </div>
+                        }
                     </div>
                     <!--오른쪽영역 : //사용자 보유 정보-->
                 </div>
@@ -425,7 +472,7 @@
             </div>
         </div>
     </div>
-}
+    }
 <!--//container-->
 <!--footer-->
 @section Footer{
