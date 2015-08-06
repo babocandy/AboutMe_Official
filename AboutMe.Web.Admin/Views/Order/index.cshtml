@@ -117,9 +117,10 @@
 
         function changePageSize()
         {
-            $("#sform")[0].reset();
             var f = document.sform;
             f.PAGE.value = 1;
+            f.ORDER_IDX = "";
+            f.TOBE_STATUS = "";
             f.action = "/Order";
             f.submit();
         }
@@ -127,6 +128,126 @@
         function chkAll(c)
         {
             $(".chkclass").prop("checked", c.checked);
+        }
+
+        function checkcount() {
+            var chkcnt = 0;
+            $(".chkclass").each(function (idx) {
+                if ($(this).val() != -1 && $(this).prop("checked")) {
+                    chkcnt++;
+                }
+            });
+            return chkcnt;
+        }
+
+        //상태 1개 변경
+        function MasterStatusChange(order_idx)
+        {
+            var tobe_status = $("#ORDER_STATUS_" + order_idx).val();
+            if (tobe_status == "99")
+            {
+                alert("기타 상태로는 변경 불가합니다.");
+                return false;
+            }
+
+            if (confirm("상태변경시 상품별상세상태도 일괄변경됩니다. 상태를 변경하시겠습니까?")) {
+                $("#sform")[0].reset();
+                var f = document.sform;
+                f.PAGE.value = 1;
+                f.ORDER_IDX.value = order_idx;
+                f.TOBE_STATUS.value = tobe_status;
+                f.action = "/Order/OrderMasterStatusUpdate";
+                f.submit();
+            }
+        }
+        //상태 일괄변경
+        function MutiStatusChange()
+        {
+            var chkcnt = checkcount();
+            var tobe = $("#MUTI_ORDER_TOBE_STATUS").val();
+            var tobe_nm = $("#MUTI_ORDER_TOBE_STATUS").data("kendoDropDownList").text();
+
+            if (tobe == "" || tobe == "undefined")
+            {
+                alert("일괄변경할 상태를 선택해주세요.");
+                return false;
+            }
+
+            if (chkcnt == 0)
+            {
+                alert("일괄변경할 주문을 체크해 주세요.");
+                return false;
+            }
+
+            if (confirm("선택한 "+chkcnt+"개의 주문을 "+tobe_nm+"(으)로 일괄 변경하시겠습니까?"))
+            {
+                var arrP = new Array;
+                $(".chkclass").each(function (idx) {
+                    if ($(this).val() != -1 && $(this).prop("checked")) {
+                        arrP.push(parseInt($(this).val()));
+                    }
+                });
+
+                var jobj = encodeURIComponent(JSON.stringify(arrP));
+
+                var src_url = "/Order/MutiStatusUpdate";
+                var param = "tobe_status=" + tobe + "&data=" + jobj;
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: src_url,
+                    data: param,
+                    success: function (data) {
+                        if (data.result == "true") {
+                            alert('일괄변경하였습니다.');
+                            $("#sform")[0].reset();
+                            var f = document.sform;
+                            f.PAGE.value = 1;
+                            f.ORDER_IDX = "";
+                            f.TOBE_STATUS = "";
+                            f.action = "/Order";
+                            f.submit();
+                        }
+                        else {
+                            if (data.msg != "") {
+                                alert(data.msg);
+                            }
+                        }
+                    },
+                    complete: function (jqXHR, textStatus) {
+                    }
+                });
+            }
+        }
+
+        //송장다운로드
+        function DeliveryExcelDownload()
+        {
+            var chkcnt = checkcount();
+
+            if (chkcnt == 0) {
+                alert("송장다운로드할 주문을 체크해 주세요.");
+                return false;
+            }
+
+            var orderidxstr = "";
+            $(".chkclass").each(function (idx) {
+                if ($(this).val() != -1 && $(this).prop("checked")) {
+                    if (orderidxstr != "")
+                    {
+                        orderidxstr += ",";
+                    }
+                    orderidxstr += $(this).val();
+                }
+            });
+            
+            //var jobj = encodeURIComponent(orderidxstr);
+            var f = document.excelForm;
+            f.OrderIdxStr.value = orderidxstr;
+            f.action = "/Order/DeliveryExcelDownload";
+            f.target = "download_iframe";
+            f.submit();
+
         }
     </script>
 }
@@ -139,10 +260,17 @@
 @section Body{
 <!--content-->
 <div class="content">
+    <iframe src="" width="0" height="0" id="download_iframe"></iframe>
+    <form id="excelForm" name="excelForm" method="post" action="/Order/DeliveryExcelDownload">
+        <input type="hidden" name="OrderIdxStr" id="OrderIdxStr" value="" />
+    </form>
 @using (Html.BeginForm("Index", "Order", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
 {
 
        @Html.Hidden("PAGE", "1")
+        @Html.Hidden("ORDER_IDX", "")
+        @Html.Hidden("TOBE_STATUS", "")
+
 		<!--path-->
 		<div class="path">
 		<a href="/">HOME</a> &gt; <a href="/Order/">주문/매출</a> &gt; <strong>주문관리</strong>
@@ -414,6 +542,12 @@
                         })
                         .Value(Model.SearchOption.PAGESIZE.ToString())
             )
+        <span class="ml30">
+            <span>
+                <a href="#none" class="btn btn-default middium" onclick="DeliveryExcelDownload();">송장양식 Excel Download</a>
+                <a href="#" class="btn btn-default middium">데이터 Excel Download</a>
+            </span>
+        </span>
     </div>
     <!--//end form-->
 }
@@ -434,6 +568,7 @@
             <li>반품:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_80)</span>건</li>
 			<li>기타:<span>@Html.Raw(Model.OrderStatusCnt.ORDER_STATUS_99)</span>건</li>
 		</ul>
+       
 		<table class="table table_col" style="min-width:1220px;">
 		<colgroup></colgroup>
 			<thead>
@@ -469,7 +604,7 @@
             }
             //query string만들기 order_idx를 맨처음으로 End
 				<tr>
-					<td><input type="checkbox" class="chkclass" /></td>
+					<td><input type="checkbox" class="chkclass" value="@item.ORDER_IDX" /></td>
 					<td>@item.ORDER_DATE</td>
 					<td>@Html.ActionLink(@item.ORDER_CODE, "Detail", param)</td>
 					<td>WEB</td>
@@ -532,30 +667,66 @@
 					<td>@item.P_COUNT.ToString("#,#0.")개</td>
 					<td>@item.TOTAL_PAY_PRICE.ToString("#,#0.")원</td>
 					<td>@item.ACCML_POINT.ToString("#,#0.")P</td>
-					<td><a href="#" class="btn btn-default small">저장</a></td>
+					<td><a href="#none" class="btn btn-default small" onclick="MasterStatusChange('@item.ORDER_IDX');">저장</a></td>
 				</tr>
         }
 			</tbody>
 		</table>
-		<div class="tar mt10">
-			<span class="fs11">
-				선택 주문 상태 변경 : 
-				<select style="width:120px;">
-					<option selected="selected">선택완료</option>
-					<option>선택완료</option>
-					<option>선택완료</option>
-				</select>
-			</span>
-			<a href="#" class="btn btn-default middium">송장양식 Excel Download</a>
-			<a href="#" class="btn btn-default middium">데이터 Excel Download</a>
-		</div>
+        <div class="mt10">
+            <span class="fs11">
+                선택 주문 상태만 일괄변경 :
+                    @(Html.Kendo().DropDownList()
+                        .Name("MUTI_ORDER_TOBE_STATUS")
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .HtmlAttributes(new { style = "width:200px" })
+                        .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                                Text = "변경할상태를 선택해주세요.",
+                                Value = ""
+                            },
+                            new SelectListItem() {
+                                Text = "결제완료",
+                                Value = "20"
+                            },
+                            new SelectListItem() {
+                                Text = "상품준비중",
+                                Value = "30"
+                            },
+                            new SelectListItem() {
+                                Text = "배송중",
+                                Value = "40"
+                            },
+                            new SelectListItem() {
+                                Text = "배송완료",
+                                Value = "50"
+                            },
+                            new SelectListItem() {
+                                Text = "구매확정",
+                                Value = "60"
+                            },
+                            new SelectListItem() {
+                                Text = "교환",
+                                Value = "70"
+                            },
+                            new SelectListItem() {
+                                Text = "반품",
+                                Value = "80"
+                            },
+                            new SelectListItem() {
+                                Text = "취소",
+                                Value = "90"
+                            }
+                        })
+                    )
+
+                <a href="#none" class="btn btn-default middium" onclick="MutiStatusChange();">선택일괄상태변경</a>
+            </span>
+        </div>
 	</div>
-
     @{Html.RenderAction("OrderPaging", "Order", new { TotalRecord = Model.TotalCount, RecordPerPage = Model.SearchOption.PAGESIZE, PagePerBlock = 10, CurrentPage = Model.SearchOption.PAGE, QueryStr = "" });}
-
-
     
 </div>
 <!--//content-->
-        }
 }
+

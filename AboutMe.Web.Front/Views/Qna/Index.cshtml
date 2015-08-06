@@ -1,0 +1,113 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_INDEX
+@{
+    ViewBag.Title = "1:1문의 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+     
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script src="/aboutCom/js/lib/jquery-ui.js"></script>
+    <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
+    <script>
+        function deleteQna(IDX) {
+            if (confirm("삭제 하시겠습니까?") == true)
+                location.href = "/Mypage/Qna/QnaDelete?IDX=" + IDX;
+        }
+    </script>
+}
+ 
+<div id="container" class="myquestion">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>1:1 문의<i></i></h2>                
+                <!--mypage_menu-->
+                @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                <!--//mypage_menu-->
+            </div>
+            <!--//h2_area-->
+            <!--꼭 읽어주세요-->
+            <div class="userread">
+                <p class="tit">꼭 읽어주세요</p>
+                <ul class="ps_list">
+                    <li>주문하신 상품에 대한 교환/반품신청 신청은 “교환/반품 신청” 메뉴를 이용하여 주시기 바랍니다.</li>
+                    <li>고객 문의가 많아 답변이 지연될 수 있는 점은 양해 바라며, 빠른 처리를 위해 노력하겠습니다.</li>
+                    <li>“고객센터 >FAQ” 메뉴를 통해 더 많은 정보를 확인 하실 수 있습니다.</li>
+                </ul>
+            </div>
+            <!--//꼭 읽어주세요-->
+        </div>
+        <!--//mypage_top-->   
+        <!--나의문의리스트-->
+        <div class="tabletypeb myquestion_list">
+            <a href="/Mypage/Qna/QnaWrite?IDX=0&mode=NEW" class="btn_question btn_brown_w96h38">문의하기</a>
+            <table>
+                <colgroup><col width="100" /><col width="129" /><col width="*" /><col width="160" /><col width="129" /></colgroup>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>구분</th>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>진행상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.QnaList)
+                    {
+                        <tr class="qna_subj">
+                            <td>@item.IDX</td>  
+                            @switch (item.CATEGORY){
+                                case "1": <td> 상품문의</td> break;
+                                case "2": <td> 배송문의</td> break;
+                                case "3": <td> 구매문의</td> break;
+                                case "4": <td> 반품문의</td> break;
+                                case "5": <td> 기타문의</td> break;
+                            }  
+                            <td class="subj"><a href="#">@item.TITLE</a></td>
+                            <td>@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</td>
+                            @if (item.STATUS =="1"){<td>접수</td>}
+                            else{<td class="fcblue">완료</td>} 
+                        </tr>
+                        <tr class="qna_detail">
+                            <td colspan="5">
+                                <div class="qna_area">
+                                    @if (item.STATUS =="1"){
+                                        <div class="q_area"> 
+                                            @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
+                                            <div class="btngroup">
+                                                <a href="/Mypage/Qna/QnaWrite?IDX=@item.IDX&mode=EDIT" class="btn_gray_w96h38">수정</a>
+                                                <a href="javascript:" onclick="deleteQna(@item.IDX);" class="btn_white_w96h38 typeb">삭제</a>
+                                            </div> 
+                                        </div>
+                                    }else {
+                                        <div class="q_area">
+                                            @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
+                                        </div>
+                                        <div class="a_area">
+                                            <a href="#" class="btn_qnaclose"><img src="/aboutCom/images/mypage/btn_qnaclose.gif" alt="" /></a>
+                                            @Html.Raw( HttpUtility.HtmlDecode(item.ANSWER))
+                                            <span class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</span>
+                                        </div>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }  
+                </tbody>
+            </table>
+        </div>
+        <!--나의문의리스트-->
+        <!--페이징-->
+        @{ 
+          Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.QnaCount, RecordPerPage = Model.SearchParam.pagesize, PagePerBlock = 10, CurrentPage = Model.SearchParam.page, QueryStr = "" });
+        }
+        <!--//페이징-->
+
+
+    </div>
+</div>
+<!--//container-->

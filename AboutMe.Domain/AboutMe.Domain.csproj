@@ -159,7 +159,13 @@
     <Compile Include="Entity\AdminCoupon\SP_COUPON_MASTER_INFO_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminCoupon\SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\TB_COUPON_ISSUED_DETAIL.cs">
@@ -194,6 +200,12 @@
       <DependentUpon>ModelAdminDisplay.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminDisplay\SP_ADMIN_DISPLAY_SEL_Result.cs">
+      <DependentUpon>ModelAdminDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminDisplay\SP_ADMIN_POPUP_INFO_Result.cs">
+      <DependentUpon>ModelAdminDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminDisplay\SP_ADMIN_POPUP_SEL_Result.cs">
       <DependentUpon>ModelAdminDisplay.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminEtc\AdminEtc_EntityPartial.cs" />
@@ -307,7 +319,16 @@
     <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_LIST_Result.cs">
       <DependentUpon>ModelAdminOrder.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_STATUS_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result.cs">
       <DependentUpon>ModelAdminOrder.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminPoint\ModelAdminPoint.Context.cs">
@@ -446,6 +467,9 @@
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminPromotion\TB_PROMOTION_BY_PRODUCT.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
@@ -466,6 +490,31 @@
     </Compile>
     <Compile Include="Entity\AdminPromotion\TB_PROMOTION_PRODUCT_VS_TOTAL.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\AdminReviewModels.cs" />
+    <Compile Include="Entity\AdminReview\ModelAdminReview.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminReview.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\ModelAdminReview.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\ModelAdminReview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_PRODUCT_INFO_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Cart\CartUserModel.cs" />
     <Compile Include="Entity\Cart\ModelCart.Context.cs">
@@ -670,6 +719,21 @@
     <Compile Include="Entity\Product\SP_PRODUCT_DETAIL_VIEW_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MAIN_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MOBILE_DETAIL_VIEW_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MOBILE_SEARCH_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MOBILE_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Product\SP_PRODUCT_SEARCH_CNT_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
@@ -681,6 +745,43 @@
     </Compile>
     <Compile Include="Entity\Product\TB_LOG_USER.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QnaModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\QnaUserModel.cs" />
+    <Compile Include="Entity\Qna\SP_ADMIN_QNA_CNT_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_ADMIN_QNA_SEL_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_ADMIN_QNA_VIEW_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_TB_QNA_CNT_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_TB_QNA_SEL_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\SP_TB_QNA_VIEW_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Qna\TB_QNA.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Recallbbs\RecallUserModel.cs" />
     <Compile Include="Entity\Recallbbs\ModelRecallbbs.Context.cs">
@@ -697,6 +798,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelRecallbbs.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\SP_ADMIN_RECALL_BBS_CNT_Result.cs">
+      <DependentUpon>ModelRecallbbs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\SP_ADMIN_RECALL_BBS_SEL_Result.cs">
+      <DependentUpon>ModelRecallbbs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Recallbbs\SP_ADMIN_RECALL_BBS_VIEW_Result.cs">
+      <DependentUpon>ModelRecallbbs.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Recallbbs\SP_TB_RECALL_BBS_CNT_Result.cs">
       <DependentUpon>ModelRecallbbs.tt</DependentUpon>
@@ -726,10 +836,16 @@
       <DependentUpon>ModelReview.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Review\ReviewModels.cs" />
+    <Compile Include="Entity\Review\SP_REVIEW_CATE_THEMA_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_GET_PRODUCT_INFO_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_COMPLETE_SEL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_INFO_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_READY_SEL_Result.cs">
@@ -754,6 +870,8 @@
     <Compile Include="Service\AdminPromotion\IAdminPromotionService.cs" />
     <Compile Include="Service\AdminOrder\AdminOrderService.cs" />
     <Compile Include="Service\AdminOrder\IAdminOrderService.cs" />
+    <Compile Include="Service\AdminReview\IAdminReviewService.cs" />
+    <Compile Include="Service\AdminReview\AdminReviewService.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Coupon\CouponService.cs" />
@@ -771,6 +889,8 @@
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\Promotion\PromotionService.cs" />
     <Compile Include="Service\Promotion\IPromotionService.cs" />
+    <Compile Include="Service\Qna\IQnaService.cs" />
+    <Compile Include="Service\Qna\QnaService.cs" />
     <Compile Include="Service\Recallbbs\RecallbbsService.cs" />
     <Compile Include="Service\Recallbbs\IRecallbssService.cs" />
     <Compile Include="Service\Review\IReviewService.cs" />
@@ -926,6 +1046,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ModelAdminPromotion1.cs</LastGenOutput>
     </None>
+    <EntityDeploy Include="Entity\AdminReview\ModelAdminReview.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelAdminReview.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\AdminReview\ModelAdminReview.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminReview.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\AdminReview\ModelAdminReview.edmx.diagram">
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\AdminReview\ModelAdminReview.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelAdminReview.edmx</DependentUpon>
+      <LastGenOutput>ModelAdminReview.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Cart\ModelCart.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelCart.edmx</DependentUpon>
@@ -1028,6 +1165,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelRecallbbs.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Qna\QnaModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QnaModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Qna\QnaModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+      <LastGenOutput>QnaModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Qna\QnaModel.edmx.diagram">
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Qna\QnaModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QnaModel.edmx</DependentUpon>
+      <LastGenOutput>QnaModel.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Recallbbs\ModelRecallbbs.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelRecallbbs.edmx</DependentUpon>

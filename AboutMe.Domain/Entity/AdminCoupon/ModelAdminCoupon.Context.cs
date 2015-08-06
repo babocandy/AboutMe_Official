@@ -60,107 +60,6 @@ namespace AboutMe.Domain.Entity.AdminCoupon
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result>("SP_ADMIN_COUPON_MASTER_DETAIL_SEL", cD_COUPONParameter);
         }
     
-        public virtual int SP_ADMIN_COUPON_MASTER_INS(string cOUPON_NAME, string cOUPON_AD_MSG, string cOUPON_USE_DESCRIPTION, string cOUPON_GBN, string cOUPON_GBN_M, string rATE_OR_MONEY, string sERVICE_LIFE_GBN, Nullable<System.DateTime> fIXED_PERIOD_FROM, Nullable<System.DateTime> fIXED_PERIOD_TO, Nullable<int> eXRIRED_DAY_FROM_ISSUE_DT, Nullable<System.DateTime> dOWNLOAD_DATE_FROM, Nullable<System.DateTime> dOWNLOAD_DATE_TO, string uSABLE_DEVICE_GBN, string pRODUCT_APP_SCOPE_GBN, string mEMBER_APP_SCOPE_GBN, string iSSUE_METHOD_GBN, string iSSUE_METHOD_WITH_AUTO, string cOUPON_NUM_CHECK_TF, Nullable<int> iSSUE_MAX_LIMIT, Nullable<System.DateTime> mASTER_FROM_DATE, Nullable<System.DateTime> mASTER_TO_DATE, string uSABLE_YN, Nullable<int> cOUPON_DISCOUNT_MONEY, Nullable<int> cOUPON_DISCOUNT_RATE)
-        {
-            var cOUPON_NAMEParameter = cOUPON_NAME != null ?
-                new ObjectParameter("COUPON_NAME", cOUPON_NAME) :
-                new ObjectParameter("COUPON_NAME", typeof(string));
-    
-            var cOUPON_AD_MSGParameter = cOUPON_AD_MSG != null ?
-                new ObjectParameter("COUPON_AD_MSG", cOUPON_AD_MSG) :
-                new ObjectParameter("COUPON_AD_MSG", typeof(string));
-    
-            var cOUPON_USE_DESCRIPTIONParameter = cOUPON_USE_DESCRIPTION != null ?
-                new ObjectParameter("COUPON_USE_DESCRIPTION", cOUPON_USE_DESCRIPTION) :
-                new ObjectParameter("COUPON_USE_DESCRIPTION", typeof(string));
-    
-            var cOUPON_GBNParameter = cOUPON_GBN != null ?
-                new ObjectParameter("COUPON_GBN", cOUPON_GBN) :
-                new ObjectParameter("COUPON_GBN", typeof(string));
-    
-            var cOUPON_GBN_MParameter = cOUPON_GBN_M != null ?
-                new ObjectParameter("COUPON_GBN_M", cOUPON_GBN_M) :
-                new ObjectParameter("COUPON_GBN_M", typeof(string));
-    
-            var rATE_OR_MONEYParameter = rATE_OR_MONEY != null ?
-                new ObjectParameter("RATE_OR_MONEY", rATE_OR_MONEY) :
-                new ObjectParameter("RATE_OR_MONEY", typeof(string));
-    
-            var sERVICE_LIFE_GBNParameter = sERVICE_LIFE_GBN != null ?
-                new ObjectParameter("SERVICE_LIFE_GBN", sERVICE_LIFE_GBN) :
-                new ObjectParameter("SERVICE_LIFE_GBN", typeof(string));
-    
-            var fIXED_PERIOD_FROMParameter = fIXED_PERIOD_FROM.HasValue ?
-                new ObjectParameter("FIXED_PERIOD_FROM", fIXED_PERIOD_FROM) :
-                new ObjectParameter("FIXED_PERIOD_FROM", typeof(System.DateTime));
-    
-            var fIXED_PERIOD_TOParameter = fIXED_PERIOD_TO.HasValue ?
-                new ObjectParameter("FIXED_PERIOD_TO", fIXED_PERIOD_TO) :
-                new ObjectParameter("FIXED_PERIOD_TO", typeof(System.DateTime));
-    
-            var eXRIRED_DAY_FROM_ISSUE_DTParameter = eXRIRED_DAY_FROM_ISSUE_DT.HasValue ?
-                new ObjectParameter("EXRIRED_DAY_FROM_ISSUE_DT", eXRIRED_DAY_FROM_ISSUE_DT) :
-                new ObjectParameter("EXRIRED_DAY_FROM_ISSUE_DT", typeof(int));
-    
-            var dOWNLOAD_DATE_FROMParameter = dOWNLOAD_DATE_FROM.HasValue ?
-                new ObjectParameter("DOWNLOAD_DATE_FROM", dOWNLOAD_DATE_FROM) :
-                new ObjectParameter("DOWNLOAD_DATE_FROM", typeof(System.DateTime));
-    
-            var dOWNLOAD_DATE_TOParameter = dOWNLOAD_DATE_TO.HasValue ?
-                new ObjectParameter("DOWNLOAD_DATE_TO", dOWNLOAD_DATE_TO) :
-                new ObjectParameter("DOWNLOAD_DATE_TO", typeof(System.DateTime));
-    
-            var uSABLE_DEVICE_GBNParameter = uSABLE_DEVICE_GBN != null ?
-                new ObjectParameter("USABLE_DEVICE_GBN", uSABLE_DEVICE_GBN) :
-                new ObjectParameter("USABLE_DEVICE_GBN", typeof(string));
-    
-            var pRODUCT_APP_SCOPE_GBNParameter = pRODUCT_APP_SCOPE_GBN != null ?
-                new ObjectParameter("PRODUCT_APP_SCOPE_GBN", pRODUCT_APP_SCOPE_GBN) :
-                new ObjectParameter("PRODUCT_APP_SCOPE_GBN", typeof(string));
-    
-            var mEMBER_APP_SCOPE_GBNParameter = mEMBER_APP_SCOPE_GBN != null ?
-                new ObjectParameter("MEMBER_APP_SCOPE_GBN", mEMBER_APP_SCOPE_GBN) :
-                new ObjectParameter("MEMBER_APP_SCOPE_GBN", typeof(string));
-    
-            var iSSUE_METHOD_GBNParameter = iSSUE_METHOD_GBN != null ?
-                new ObjectParameter("ISSUE_METHOD_GBN", iSSUE_METHOD_GBN) :
-                new ObjectParameter("ISSUE_METHOD_GBN", typeof(string));
-    
-            var iSSUE_METHOD_WITH_AUTOParameter = iSSUE_METHOD_WITH_AUTO != null ?
-                new ObjectParameter("ISSUE_METHOD_WITH_AUTO", iSSUE_METHOD_WITH_AUTO) :
-                new ObjectParameter("ISSUE_METHOD_WITH_AUTO", typeof(string));
-    
-            var cOUPON_NUM_CHECK_TFParameter = cOUPON_NUM_CHECK_TF != null ?
-                new ObjectParameter("COUPON_NUM_CHECK_TF", cOUPON_NUM_CHECK_TF) :
-                new ObjectParameter("COUPON_NUM_CHECK_TF", typeof(string));
-    
-            var iSSUE_MAX_LIMITParameter = iSSUE_MAX_LIMIT.HasValue ?
-                new ObjectParameter("ISSUE_MAX_LIMIT", iSSUE_MAX_LIMIT) :
-                new ObjectParameter("ISSUE_MAX_LIMIT", typeof(int));
-    
-            var mASTER_FROM_DATEParameter = mASTER_FROM_DATE.HasValue ?
-                new ObjectParameter("MASTER_FROM_DATE", mASTER_FROM_DATE) :
-                new ObjectParameter("MASTER_FROM_DATE", typeof(System.DateTime));
-    
-            var mASTER_TO_DATEParameter = mASTER_TO_DATE.HasValue ?
-                new ObjectParameter("MASTER_TO_DATE", mASTER_TO_DATE) :
-                new ObjectParameter("MASTER_TO_DATE", typeof(System.DateTime));
-    
-            var uSABLE_YNParameter = uSABLE_YN != null ?
-                new ObjectParameter("USABLE_YN", uSABLE_YN) :
-                new ObjectParameter("USABLE_YN", typeof(string));
-    
-            var cOUPON_DISCOUNT_MONEYParameter = cOUPON_DISCOUNT_MONEY.HasValue ?
-                new ObjectParameter("COUPON_DISCOUNT_MONEY", cOUPON_DISCOUNT_MONEY) :
-                new ObjectParameter("COUPON_DISCOUNT_MONEY", typeof(int));
-    
-            var cOUPON_DISCOUNT_RATEParameter = cOUPON_DISCOUNT_RATE.HasValue ?
-                new ObjectParameter("COUPON_DISCOUNT_RATE", cOUPON_DISCOUNT_RATE) :
-                new ObjectParameter("COUPON_DISCOUNT_RATE", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MASTER_INS", cOUPON_NAMEParameter, cOUPON_AD_MSGParameter, cOUPON_USE_DESCRIPTIONParameter, cOUPON_GBNParameter, cOUPON_GBN_MParameter, rATE_OR_MONEYParameter, sERVICE_LIFE_GBNParameter, fIXED_PERIOD_FROMParameter, fIXED_PERIOD_TOParameter, eXRIRED_DAY_FROM_ISSUE_DTParameter, dOWNLOAD_DATE_FROMParameter, dOWNLOAD_DATE_TOParameter, uSABLE_DEVICE_GBNParameter, pRODUCT_APP_SCOPE_GBNParameter, mEMBER_APP_SCOPE_GBNParameter, iSSUE_METHOD_GBNParameter, iSSUE_METHOD_WITH_AUTOParameter, cOUPON_NUM_CHECK_TFParameter, iSSUE_MAX_LIMITParameter, mASTER_FROM_DATEParameter, mASTER_TO_DATEParameter, uSABLE_YNParameter, cOUPON_DISCOUNT_MONEYParameter, cOUPON_DISCOUNT_RATEParameter);
-        }
-    
         public virtual ObjectResult<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> SP_ADMIN_COUPON_MASTER_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
         {
             var pAGEParameter = pAGE.HasValue ?
@@ -539,6 +438,179 @@ namespace AboutMe.Domain.Entity.AdminCoupon
                 new ObjectParameter("IDX_COUPON_SERIAL", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_MASTER_INFO_SEL_Result>("SP_COUPON_MASTER_INFO_SEL", m_IDParameter, iDX_COUPON_SERIALParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_MASTER_INS(string cOUPON_NAME, string cOUPON_AD_MSG, string cOUPON_USE_DESCRIPTION, string cOUPON_GBN, string cOUPON_GBN_M, string rATE_OR_MONEY, string sERVICE_LIFE_GBN, Nullable<System.DateTime> fIXED_PERIOD_FROM, Nullable<System.DateTime> fIXED_PERIOD_TO, Nullable<int> eXRIRED_DAY_FROM_ISSUE_DT, Nullable<System.DateTime> dOWNLOAD_DATE_FROM, Nullable<System.DateTime> dOWNLOAD_DATE_TO, string uSABLE_DEVICE_GBN, string pRODUCT_APP_SCOPE_GBN, string mEMBER_APP_SCOPE_GBN, string iSSUE_METHOD_GBN, string iSSUE_METHOD_WITH_AUTO, string cOUPON_NUM_CHECK_TF, Nullable<int> iSSUE_MAX_LIMIT, Nullable<System.DateTime> mASTER_FROM_DATE, Nullable<System.DateTime> mASTER_TO_DATE, string uSABLE_YN, Nullable<int> cOUPON_DISCOUNT_MONEY, Nullable<int> cOUPON_DISCOUNT_RATE, ObjectParameter cREATED_CD_COUPON)
+        {
+            var cOUPON_NAMEParameter = cOUPON_NAME != null ?
+                new ObjectParameter("COUPON_NAME", cOUPON_NAME) :
+                new ObjectParameter("COUPON_NAME", typeof(string));
+    
+            var cOUPON_AD_MSGParameter = cOUPON_AD_MSG != null ?
+                new ObjectParameter("COUPON_AD_MSG", cOUPON_AD_MSG) :
+                new ObjectParameter("COUPON_AD_MSG", typeof(string));
+    
+            var cOUPON_USE_DESCRIPTIONParameter = cOUPON_USE_DESCRIPTION != null ?
+                new ObjectParameter("COUPON_USE_DESCRIPTION", cOUPON_USE_DESCRIPTION) :
+                new ObjectParameter("COUPON_USE_DESCRIPTION", typeof(string));
+    
+            var cOUPON_GBNParameter = cOUPON_GBN != null ?
+                new ObjectParameter("COUPON_GBN", cOUPON_GBN) :
+                new ObjectParameter("COUPON_GBN", typeof(string));
+    
+            var cOUPON_GBN_MParameter = cOUPON_GBN_M != null ?
+                new ObjectParameter("COUPON_GBN_M", cOUPON_GBN_M) :
+                new ObjectParameter("COUPON_GBN_M", typeof(string));
+    
+            var rATE_OR_MONEYParameter = rATE_OR_MONEY != null ?
+                new ObjectParameter("RATE_OR_MONEY", rATE_OR_MONEY) :
+                new ObjectParameter("RATE_OR_MONEY", typeof(string));
+    
+            var sERVICE_LIFE_GBNParameter = sERVICE_LIFE_GBN != null ?
+                new ObjectParameter("SERVICE_LIFE_GBN", sERVICE_LIFE_GBN) :
+                new ObjectParameter("SERVICE_LIFE_GBN", typeof(string));
+    
+            var fIXED_PERIOD_FROMParameter = fIXED_PERIOD_FROM.HasValue ?
+                new ObjectParameter("FIXED_PERIOD_FROM", fIXED_PERIOD_FROM) :
+                new ObjectParameter("FIXED_PERIOD_FROM", typeof(System.DateTime));
+    
+            var fIXED_PERIOD_TOParameter = fIXED_PERIOD_TO.HasValue ?
+                new ObjectParameter("FIXED_PERIOD_TO", fIXED_PERIOD_TO) :
+                new ObjectParameter("FIXED_PERIOD_TO", typeof(System.DateTime));
+    
+            var eXRIRED_DAY_FROM_ISSUE_DTParameter = eXRIRED_DAY_FROM_ISSUE_DT.HasValue ?
+                new ObjectParameter("EXRIRED_DAY_FROM_ISSUE_DT", eXRIRED_DAY_FROM_ISSUE_DT) :
+                new ObjectParameter("EXRIRED_DAY_FROM_ISSUE_DT", typeof(int));
+    
+            var dOWNLOAD_DATE_FROMParameter = dOWNLOAD_DATE_FROM.HasValue ?
+                new ObjectParameter("DOWNLOAD_DATE_FROM", dOWNLOAD_DATE_FROM) :
+                new ObjectParameter("DOWNLOAD_DATE_FROM", typeof(System.DateTime));
+    
+            var dOWNLOAD_DATE_TOParameter = dOWNLOAD_DATE_TO.HasValue ?
+                new ObjectParameter("DOWNLOAD_DATE_TO", dOWNLOAD_DATE_TO) :
+                new ObjectParameter("DOWNLOAD_DATE_TO", typeof(System.DateTime));
+    
+            var uSABLE_DEVICE_GBNParameter = uSABLE_DEVICE_GBN != null ?
+                new ObjectParameter("USABLE_DEVICE_GBN", uSABLE_DEVICE_GBN) :
+                new ObjectParameter("USABLE_DEVICE_GBN", typeof(string));
+    
+            var pRODUCT_APP_SCOPE_GBNParameter = pRODUCT_APP_SCOPE_GBN != null ?
+                new ObjectParameter("PRODUCT_APP_SCOPE_GBN", pRODUCT_APP_SCOPE_GBN) :
+                new ObjectParameter("PRODUCT_APP_SCOPE_GBN", typeof(string));
+    
+            var mEMBER_APP_SCOPE_GBNParameter = mEMBER_APP_SCOPE_GBN != null ?
+                new ObjectParameter("MEMBER_APP_SCOPE_GBN", mEMBER_APP_SCOPE_GBN) :
+                new ObjectParameter("MEMBER_APP_SCOPE_GBN", typeof(string));
+    
+            var iSSUE_METHOD_GBNParameter = iSSUE_METHOD_GBN != null ?
+                new ObjectParameter("ISSUE_METHOD_GBN", iSSUE_METHOD_GBN) :
+                new ObjectParameter("ISSUE_METHOD_GBN", typeof(string));
+    
+            var iSSUE_METHOD_WITH_AUTOParameter = iSSUE_METHOD_WITH_AUTO != null ?
+                new ObjectParameter("ISSUE_METHOD_WITH_AUTO", iSSUE_METHOD_WITH_AUTO) :
+                new ObjectParameter("ISSUE_METHOD_WITH_AUTO", typeof(string));
+    
+            var cOUPON_NUM_CHECK_TFParameter = cOUPON_NUM_CHECK_TF != null ?
+                new ObjectParameter("COUPON_NUM_CHECK_TF", cOUPON_NUM_CHECK_TF) :
+                new ObjectParameter("COUPON_NUM_CHECK_TF", typeof(string));
+    
+            var iSSUE_MAX_LIMITParameter = iSSUE_MAX_LIMIT.HasValue ?
+                new ObjectParameter("ISSUE_MAX_LIMIT", iSSUE_MAX_LIMIT) :
+                new ObjectParameter("ISSUE_MAX_LIMIT", typeof(int));
+    
+            var mASTER_FROM_DATEParameter = mASTER_FROM_DATE.HasValue ?
+                new ObjectParameter("MASTER_FROM_DATE", mASTER_FROM_DATE) :
+                new ObjectParameter("MASTER_FROM_DATE", typeof(System.DateTime));
+    
+            var mASTER_TO_DATEParameter = mASTER_TO_DATE.HasValue ?
+                new ObjectParameter("MASTER_TO_DATE", mASTER_TO_DATE) :
+                new ObjectParameter("MASTER_TO_DATE", typeof(System.DateTime));
+    
+            var uSABLE_YNParameter = uSABLE_YN != null ?
+                new ObjectParameter("USABLE_YN", uSABLE_YN) :
+                new ObjectParameter("USABLE_YN", typeof(string));
+    
+            var cOUPON_DISCOUNT_MONEYParameter = cOUPON_DISCOUNT_MONEY.HasValue ?
+                new ObjectParameter("COUPON_DISCOUNT_MONEY", cOUPON_DISCOUNT_MONEY) :
+                new ObjectParameter("COUPON_DISCOUNT_MONEY", typeof(int));
+    
+            var cOUPON_DISCOUNT_RATEParameter = cOUPON_DISCOUNT_RATE.HasValue ?
+                new ObjectParameter("COUPON_DISCOUNT_RATE", cOUPON_DISCOUNT_RATE) :
+                new ObjectParameter("COUPON_DISCOUNT_RATE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MASTER_INS", cOUPON_NAMEParameter, cOUPON_AD_MSGParameter, cOUPON_USE_DESCRIPTIONParameter, cOUPON_GBNParameter, cOUPON_GBN_MParameter, rATE_OR_MONEYParameter, sERVICE_LIFE_GBNParameter, fIXED_PERIOD_FROMParameter, fIXED_PERIOD_TOParameter, eXRIRED_DAY_FROM_ISSUE_DTParameter, dOWNLOAD_DATE_FROMParameter, dOWNLOAD_DATE_TOParameter, uSABLE_DEVICE_GBNParameter, pRODUCT_APP_SCOPE_GBNParameter, mEMBER_APP_SCOPE_GBNParameter, iSSUE_METHOD_GBNParameter, iSSUE_METHOD_WITH_AUTOParameter, cOUPON_NUM_CHECK_TFParameter, iSSUE_MAX_LIMITParameter, mASTER_FROM_DATEParameter, mASTER_TO_DATEParameter, uSABLE_YNParameter, cOUPON_DISCOUNT_MONEYParameter, cOUPON_DISCOUNT_RATEParameter, cREATED_CD_COUPON);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_MEM_GRADE_INS(string cD_COUPON, string m_GBN, string m_GRADE)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            var m_GBNParameter = m_GBN != null ?
+                new ObjectParameter("M_GBN", m_GBN) :
+                new ObjectParameter("M_GBN", typeof(string));
+    
+            var m_GRADEParameter = m_GRADE != null ?
+                new ObjectParameter("M_GRADE", m_GRADE) :
+                new ObjectParameter("M_GRADE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MEM_GRADE_INS", cD_COUPONParameter, m_GBNParameter, m_GRADEParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS", cD_COUPONParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS(string cD_COUPON, Nullable<int> cOUPON_MONEY, Nullable<int> cOUPON_DISCOUNT_RATE_V, string m_ID, string aDMIN_ID, string iSSUED_MEMO, ObjectParameter eXCUTE_RESULT)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            var cOUPON_MONEYParameter = cOUPON_MONEY.HasValue ?
+                new ObjectParameter("COUPON_MONEY", cOUPON_MONEY) :
+                new ObjectParameter("COUPON_MONEY", typeof(int));
+    
+            var cOUPON_DISCOUNT_RATE_VParameter = cOUPON_DISCOUNT_RATE_V.HasValue ?
+                new ObjectParameter("COUPON_DISCOUNT_RATE_V", cOUPON_DISCOUNT_RATE_V) :
+                new ObjectParameter("COUPON_DISCOUNT_RATE_V", typeof(int));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var aDMIN_IDParameter = aDMIN_ID != null ?
+                new ObjectParameter("ADMIN_ID", aDMIN_ID) :
+                new ObjectParameter("ADMIN_ID", typeof(string));
+    
+            var iSSUED_MEMOParameter = iSSUED_MEMO != null ?
+                new ObjectParameter("ISSUED_MEMO", iSSUED_MEMO) :
+                new ObjectParameter("ISSUED_MEMO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS", cD_COUPONParameter, cOUPON_MONEYParameter, cOUPON_DISCOUNT_RATE_VParameter, m_IDParameter, aDMIN_IDParameter, iSSUED_MEMOParameter, eXCUTE_RESULT);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL(string uSABLE_DEVICE_GBN, string p_CODE, string m_ID)
+        {
+            var uSABLE_DEVICE_GBNParameter = uSABLE_DEVICE_GBN != null ?
+                new ObjectParameter("USABLE_DEVICE_GBN", uSABLE_DEVICE_GBN) :
+                new ObjectParameter("USABLE_DEVICE_GBN", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result>("SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL", uSABLE_DEVICE_GBNParameter, p_CODEParameter, m_IDParameter);
         }
     }
 }

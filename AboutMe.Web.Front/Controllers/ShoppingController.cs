@@ -22,7 +22,7 @@ namespace AboutMe.Web.Front.Controllers
 {
     public class ShoppingController : BaseFrontController
     {
-        // GET: AdminProduct
+        
         private IProductService _ProductService;
         public ShoppingController(IProductService _productService)
         {
@@ -30,7 +30,6 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-        // GET: Shopping
         #region 상품리스트
         public ActionResult Index(IEnumerable<string> P_CATE_CODE_3DEPTH, Product_front_search_entity product_front_search_entity)
         {
@@ -64,6 +63,7 @@ namespace AboutMe.Web.Front.Controllers
             TotalRecord = _ProductService.GetProductCnt(product_front_search_entity);
             this.ViewBag.TotalRecord = TotalRecord;                                             //총카운트
             this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            this.ViewBag.PAGESIZE = product_front_search_entity.PAGESIZE;                       //페이지 사이즈
             this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
             this.ViewBag.P_CATE_CODE = product_front_search_entity.P_CATE_CODE;                 //P_CATE_CODE
             this.ViewBag.C_CATE_CODE = product_front_search_entity.C_CATE_CODE;                 //C_CATE_CODE
@@ -90,27 +90,34 @@ namespace AboutMe.Web.Front.Controllers
         #endregion
 
         #region 상품상세보기
-        public ActionResult Detail(string pcode)
+        public ActionResult Detail(string pcode, Product_front_search_entity product_front_search_entity)
         {
-
             //상품코드
             this.ViewBag.P_CODE = pcode;
 
             SP_PRODUCT_DETAIL_VIEW_Result productView = _ProductService.ViewProduct(pcode);
             ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
+            this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            this.ViewBag.PAGESIZE = product_front_search_entity.PAGESIZE;                       //페이지 사이즈
+            this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
+            this.ViewBag.P_CATE_CODE = product_front_search_entity.P_CATE_CODE;                 //P_CATE_CODE
+            this.ViewBag.C_CATE_CODE = product_front_search_entity.C_CATE_CODE;                 //C_CATE_CODE
+            this.ViewBag.L_CATE_CODE = product_front_search_entity.L_CATE_CODE;                 //L_CATE_CODE
+            this.ViewBag.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;   //P_CATE_CODE_3DEPTH
+            this.ViewBag.DEPTH_NAME3 = product_front_search_entity.DEPTH_NAME3;                 //뷰티3DEPTH NAME
+
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
 
 
-            //#region 로그 
-            //UserLog userlog = new UserLog();
-            //userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
-            //#endregion
+            #region 로그 
+            UserLog userlog = new UserLog();
+            userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
+            #endregion
 
 
             return View(productView);
-            //return View();
         }
         #endregion
     }

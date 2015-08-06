@@ -25,16 +25,16 @@ namespace AboutMe.Web.Admin.Controllers
     [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
     public class AdminProductController : BaseAdminController
     {
-
-        // GET: AdminProduct
+        #region 인터페이스
         private IAdminProductService _AdminProductService;
         public AdminProductController(IAdminProductService _adminProductService)
         {
             this._AdminProductService = _adminProductService;
         }
+        #endregion
 
         #region 카테고리
-        
+
         #region 카테고리 리스트
         public ActionResult Index(string cate_gbn, string depth1_code, string depth2_code)
         {
@@ -353,7 +353,6 @@ namespace AboutMe.Web.Admin.Controllers
             return Json(new { success = true, msg = CateCodeData });
         }
         #endregion
-      
 
         #endregion
 
@@ -362,141 +361,38 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 리스트
         public ActionResult ProductIndex(ProductSearch_Entity productSearch_Entity)
         {
- 
-            this.ViewBag.BatchIconYn = Request.Form["BatchIconYn"];
-            this.ViewBag.iconYn = Request.Form["iconYn"];
+            #region 초기화작업
+            productSearch_Entity.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
+            productSearch_Entity.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"];
+            this.ViewBag.cateCode1 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(0, 3);
+            this.ViewBag.cateCode2 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(3, 3);
+            this.ViewBag.cateCode3 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(6, 3);
+            #endregion
 
-            this.ViewBag.PageSize = productSearch_Entity.PageSize;
-            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            if (!string.IsNullOrEmpty(this.ViewBag.SearchKeyword))
-            {
-                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
-                productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
-            }
-            this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
-
-            productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
-            this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
-            this.ViewBag.cateCode1 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(0,3);
-            this.ViewBag.cateCode2 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(3,3);
-            this.ViewBag.cateCode3 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(6,3);
-            if (string.IsNullOrEmpty(this.ViewBag.iconYn))
-            {
-                this.ViewBag.iconYn = "";
-            }
-            if (string.IsNullOrEmpty(this.ViewBag.BatchIconYn))
-            {
-                this.ViewBag.BatchIconYn = "";
-            }
-            
-            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
-            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
-            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
-            {
-                this.ViewBag.searchDisplayY = "";
-                productSearch_Entity.searchDisplayY = "";
-            }
-            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
-            {
-                this.ViewBag.searchDisplayN = "";
-                productSearch_Entity.searchDisplayN = "";
-            }
-            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
-            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-            this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
-            if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
-            {
-                this.ViewBag.FROM_DATE = "";
-                productSearch_Entity.FROM_DATE = "";
-            }
-            this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
-            if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
-            {
-                this.ViewBag.TO_DATE = "";
-                productSearch_Entity.TO_DATE = "";
-            }
-            
-            int TotalRecord = 0;
-            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
-
-            this.ViewBag.TotalRecord = TotalRecord;
-            this.ViewBag.Page = productSearch_Entity.Page;
-
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
-
-            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
-            
+            PRODUCT_INDEX_MODEL m = new PRODUCT_INDEX_MODEL();
+            m.productSearch_Entity = productSearch_Entity;
+            m.TotalCount = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
+            m.ProductList = _AdminProductService.GetAdminProductList(productSearch_Entity).ToList();
+            return View(m);
         }
         #endregion
 
         #region 상품 할인정책 리스트
         public ActionResult ProductPriceIndex(ProductSearch_Entity productSearch_Entity)
         {
+            #region 초기화작업
+            productSearch_Entity.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
+            this.ViewBag.cateCode1 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(0, 3);
+            this.ViewBag.cateCode2 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(3, 3);
+            this.ViewBag.cateCode3 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(6, 3);
+            #endregion
 
-            this.ViewBag.iconYn = Request.Form["iconYn"];
+            PRODUCT_INDEX_MODEL m = new PRODUCT_INDEX_MODEL();
+            m.productSearch_Entity = productSearch_Entity;
+            m.TotalCount = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
+            m.ProductList = _AdminProductService.GetAdminProductList(productSearch_Entity).ToList();
+            return View(m);
 
-            this.ViewBag.PageSize = productSearch_Entity.PageSize;
-            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            if (!string.IsNullOrEmpty(this.ViewBag.SearchKeyword))
-            {
-                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
-                productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
-            }
-            this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
-
-            productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
-            this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
-            this.ViewBag.cateCode1 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(0, 3);
-            this.ViewBag.cateCode2 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(3, 3);
-            this.ViewBag.cateCode3 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(6, 3);
-            if (string.IsNullOrEmpty(this.ViewBag.iconYn))
-            {
-                this.ViewBag.iconYn = "";
-            }
-            if (string.IsNullOrEmpty(this.ViewBag.BatchIconYn))
-            {
-                this.ViewBag.BatchIconYn = "";
-            }
-
-            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
-            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
-            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
-            {
-                this.ViewBag.searchDisplayY = "";
-                productSearch_Entity.searchDisplayY = "";
-            }
-            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
-            {
-                this.ViewBag.searchDisplayN = "";
-                productSearch_Entity.searchDisplayN = "";
-            }
-            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
-            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-            this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
-            if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
-            {
-                this.ViewBag.FROM_DATE = "";
-                productSearch_Entity.FROM_DATE = "";
-            }
-            this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
-            if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
-            {
-                this.ViewBag.TO_DATE = "";
-                productSearch_Entity.TO_DATE = "";
-            }
-
-            int TotalRecord = 0;
-            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
-
-            this.ViewBag.TotalRecord = TotalRecord;
-            this.ViewBag.Page = productSearch_Entity.Page;
-
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
-            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
         }
         #endregion
 
@@ -636,17 +532,18 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
         
         #region 상품 수정
-        public ActionResult ProductUpdate(string pcode)
+        public ActionResult ProductUpdate(string pcode, ProductSearch_Entity Param)
         {
-            SP_ADMIN_PRODUCT_DETAIL_VIEW_Result productView = _AdminProductService.ViewAdminProduct(pcode);
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
-            return View(productView);
+            PRODUCT_DETAIL_MODEL m = new PRODUCT_DETAIL_MODEL();
+            m.pcode = pcode;
+            m.productSearch_Entity = Param;
+            m.ProductDetailView = _AdminProductService.ViewAdminProduct(pcode);
+            return View(m);
         }
 
-        // POST
         [HttpPost, ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         [ValidateAntiForgeryToken]
-        public ActionResult ProductUpdate(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
+        public ActionResult ProductUpdate(ProductSearch_Entity Param, TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
         {
             
             if (ModelState.IsValid)
@@ -739,7 +636,8 @@ namespace AboutMe.Web.Admin.Controllers
                 adminlog.AdminLogSave(serialised, "관리자상품수정");
                 #endregion
 
-                return RedirectToAction("ProductIndex");
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("ProductIndex", param);
             }
             else
             {
@@ -749,21 +647,8 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 상품 가격 일괄 수정
-        public ActionResult ProductPriceUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity productSearch_Entity)
+        public ActionResult ProductPriceUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity Param)
         {
-            this.ViewBag.PageSize = productSearch_Entity.PageSize;
-            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.iconYn = productSearch_Entity.iconYn;
-            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
-            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
-            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
-            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-
-
-            try
-            {
                 foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
                 {
                     if (!string.IsNullOrEmpty(tb_product.P_CODE))
@@ -772,71 +657,43 @@ namespace AboutMe.Web.Admin.Controllers
 
                         #region 상품가격 일괄 수정 로그 생성
                         var serialised = JsonConvert.SerializeObject(tb_product);
-                        serialised += JsonConvert.SerializeObject(productSearch_Entity);
+                        serialised += JsonConvert.SerializeObject(Param);
                         AdminLog adminlog = new AdminLog();
                         adminlog.AdminLogSave(serialised, "관리자상품가격일괄수정");
                         #endregion
                     }
                 }
-
-                return RedirectToAction("ProductPriceIndex");
-            }
-            catch
-            {
-                return RedirectToAction("ProductPriceIndex");
-            }
-
-            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("ProductPriceIndex", Param);
         }
         #endregion
 
         #region 상품 정보 일괄 수정
-        public ActionResult ProductBatchUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity productSearch_Entity)
+        public ActionResult ProductBatchUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity Param)
         {
-            this.ViewBag.PageSize = productSearch_Entity.PageSize;
-            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.iconYn = productSearch_Entity.iconYn;
-            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
-            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
-            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
-            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-
-            
-            this.ViewBag.BatchIconYn    = Request.Form["BatchIconYn"];
-            this.ViewBag.IconBatchChk   = Request.Form["IconBatchChk"];
-            this.ViewBag.BatchIconYn    = string.IsNullOrEmpty(this.ViewBag.BatchIconYn) ? "" : this.ViewBag.BatchIconYn.Replace(",", "");
-            this.ViewBag.IconBatchChk = string.IsNullOrEmpty(this.ViewBag.IconBatchChk) ? "" : this.ViewBag.IconBatchChk;
-
-            try
-            {
+            Param.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
+            Param.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"].Replace(",", "");
+            this.ViewBag.IconBatchChk = string.IsNullOrEmpty(Request.Form["IconBatchChk"]) ? "" : Request.Form["IconBatchChk"];
                 foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
                 {
                     if (!string.IsNullOrEmpty(tb_product.P_CODE))
                     {
-                        tb_product.ICON_YN          = this.ViewBag.BatchIconYn;
+                        tb_product.ICON_YN = Param.BatchIconYn;
                         tb_product.ICON_BATCH_CHK   = this.ViewBag.IconBatchChk; 
 
                         _AdminProductService.UpdateAdminProductBatch(tb_product);
 
                         #region 상품가격 일괄 수정 로그 생성
                         var serialised = JsonConvert.SerializeObject(tb_product);
-                        serialised += JsonConvert.SerializeObject(productSearch_Entity);
+                        serialised += JsonConvert.SerializeObject(Param);
                         AdminLog adminlog = new AdminLog();
                         adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
                         #endregion
                     }
                 }
 
-                return RedirectToAction("ProductIndex");
-            }
-            catch
-            {
-                return RedirectToAction("ProductIndex");
-            }
-
-            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("ProductIndex", Param);
         }
         #endregion
 
@@ -879,6 +736,9 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 엑셀 다운로드
         public ActionResult ProductExcel(ProductSearch_Entity productSearch_Entity)
         {
+
+            productSearch_Entity.Page = 1;
+            productSearch_Entity.PageSize = 10000;
             
             var products = new System.Data.DataTable("Product");
             //헤더 구성
@@ -939,70 +799,79 @@ namespace AboutMe.Web.Admin.Controllers
         #region 팝업 상품 리스트
         public ActionResult PopProductIndex(ProductSearch_Entity productSearch_Entity)
         {
+            #region 초기화작업
+            productSearch_Entity.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
+            productSearch_Entity.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"];
+            this.ViewBag.cateCode1 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(0, 3);
+            this.ViewBag.cateCode2 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(3, 3);
+            this.ViewBag.cateCode3 = productSearch_Entity.cateCode.Length < 3 ? "" : productSearch_Entity.cateCode.Substring(6, 3);
+            #endregion
 
-            this.ViewBag.iconYn = Request.Form["iconYn"];
-
-            this.ViewBag.PageSize = productSearch_Entity.PageSize;
-            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            if (!string.IsNullOrEmpty(this.ViewBag.SearchKeyword))
-            {
-                this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword.Replace(" ", ",");
-                productSearch_Entity.SearchKeyword = this.ViewBag.SearchKeyword;
-            }
-            this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
-
-            productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
-            this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
-            this.ViewBag.cateCode1 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(0, 3);
-            this.ViewBag.cateCode2 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(3, 3);
-            this.ViewBag.cateCode3 = this.ViewBag.cateCode.Length < 3 ? "" : this.ViewBag.cateCode.Substring(6, 3);
-            if (string.IsNullOrEmpty(this.ViewBag.iconYn))
-            {
-                this.ViewBag.iconYn = "";
-            }
-            
-            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
-            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
-            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
-            {
-                this.ViewBag.searchDisplayY = "";
-                productSearch_Entity.searchDisplayY = "";
-            }
-            if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
-            {
-                this.ViewBag.searchDisplayN = "";
-                productSearch_Entity.searchDisplayN = "";
-            }
-            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
-            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
-            this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
-            if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
-            {
-                this.ViewBag.FROM_DATE = "";
-                productSearch_Entity.FROM_DATE = "";
-            }
-            this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
-            if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
-            {
-                this.ViewBag.TO_DATE = "";
-                productSearch_Entity.TO_DATE = "";
-            }
-
-            int TotalRecord = 0;
-            TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
-
-            this.ViewBag.TotalRecord = TotalRecord;
-            this.ViewBag.Page = productSearch_Entity.Page;
-
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
-
-            return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
-
+            PRODUCT_INDEX_MODEL m = new PRODUCT_INDEX_MODEL();
+            m.productSearch_Entity = productSearch_Entity;
+            m.TotalCount = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
+            m.ProductList = _AdminProductService.GetAdminProductList(productSearch_Entity).ToList();
+            return View(m);
         }
         #endregion
 
+        #region 지워도 됨 기존소스
+        //this.ViewBag.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"];
+        //productSearch_Entity.cateCode = string.IsNullOrEmpty(productSearch_Entity.cateCode) ? "" : productSearch_Entity.cateCode;
+        //productSearch_Entity.SearchKeyword = string.IsNullOrEmpty(productSearch_Entity.SearchKeyword) ? "" : productSearch_Entity.SearchKeyword.Replace(" ", ",");
+        //this.ViewBag.BatchIconYn = Request.Form["BatchIconYn"];
+        //this.ViewBag.iconYn = Request.Form["iconYn"];
+        //this.ViewBag.PageSize = productSearch_Entity.PageSize;
+        //this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
+        //this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
+        //this.ViewBag.searchStatus = productSearch_Entity.searchStatus;
+        //this.ViewBag.cateCode = productSearch_Entity.cateCode;
+        //this.ViewBag.cateCode = string.IsNullOrEmpty(this.ViewBag.cateCode) ? "" : this.ViewBag.cateCode;
+        //if (string.IsNullOrEmpty(this.ViewBag.iconYn))
+        //{
+        //    this.ViewBag.iconYn = "";
+        //}
+        //if (string.IsNullOrEmpty(this.ViewBag.BatchIconYn))
+        //{
+        //    this.ViewBag.BatchIconYn = "";
+        //}
+
+        //this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
+        //this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
+        //if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayY))
+        //{
+        //    this.ViewBag.searchDisplayY = "";
+        //    productSearch_Entity.searchDisplayY = "";
+        //}
+        //if (string.IsNullOrEmpty(productSearch_Entity.searchDisplayN))
+        //{
+        //    this.ViewBag.searchDisplayN = "";
+        //    productSearch_Entity.searchDisplayN = "";
+        //}
+        //this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
+        //this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+        //this.ViewBag.FROM_DATE = productSearch_Entity.FROM_DATE;
+        //if (string.IsNullOrEmpty(productSearch_Entity.FROM_DATE))
+        //{
+        //    this.ViewBag.FROM_DATE = "";
+        //    productSearch_Entity.FROM_DATE = "";
+        //}
+        //this.ViewBag.TO_DATE = productSearch_Entity.TO_DATE;
+        //if (string.IsNullOrEmpty(productSearch_Entity.TO_DATE))
+        //{
+        //    this.ViewBag.TO_DATE = "";
+        //    productSearch_Entity.TO_DATE = "";
+        //}
+
+        //int TotalRecord = 0;
+        //TotalRecord = _AdminProductService.GetAdminProductCnt(productSearch_Entity);
+
+        //this.ViewBag.TotalRecord = TotalRecord;
+        //this.ViewBag.Page = productSearch_Entity.Page;
+
+        //ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+        //return View(_AdminProductService.GetAdminProductList(productSearch_Entity).ToList());
+        #endregion
 
         #endregion
 
@@ -1032,8 +901,8 @@ namespace AboutMe.Web.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
+        
                 #region 파일 업로드
                 if (GIFT_IMG != null)
                 {
@@ -1108,8 +977,7 @@ namespace AboutMe.Web.Admin.Controllers
                 }
                 #endregion
                 _AdminProductService.UpdateAdminGift(admin_gift_model);
-                
-
+         
                 #region 사은품 수정 로그 생성
                 var serialised = JsonConvert.SerializeObject(admin_gift_model);
                 serialised += JsonConvert.SerializeObject(Param);
@@ -1128,7 +996,5 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #endregion
-
-
     }
 }

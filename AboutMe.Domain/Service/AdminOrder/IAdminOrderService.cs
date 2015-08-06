@@ -24,6 +24,11 @@ namespace AboutMe.Domain.Service.AdminOrder
         void AdminMemoUpdate(int ORDER_IDX, string MANAGER_MEMO);
         void OrderDetailDeliveryUpdate(int ORDER_DETAIL_IDX, string DELIVERY_NUM, string REG_ID);
         void OrderDetailStatusUpdate(int ORDER_DETAIL_IDX, string TOBE_STATUS, string REG_ID);
+        void OrderMasterStatusUpdate(int ORDER_IDX, string TOBE_STATUS, string REG_ID);
+        List<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result> OrderPartCancelList(int ORDER_IDX);
+        SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result OrderPartCancelTopSelect(int ORDER_IDX);
+        void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP);
+        List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result> OrderDeliveryExcelList(string OrderIdxStr);
     }
 
 

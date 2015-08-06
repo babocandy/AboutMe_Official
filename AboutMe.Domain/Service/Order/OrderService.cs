@@ -75,9 +75,24 @@ namespace AboutMe.Domain.Service.Order
         public SP_ORDER_STEP2_RECENTADDR_INFO_Result OrderStep1RecentAddrInfo(string M_ID)
         {
             SP_ORDER_STEP2_RECENTADDR_INFO_Result info;
+            SP_ORDER_STEP2_RECENTADDR_INFO_Result defaultinfo = new SP_ORDER_STEP2_RECENTADDR_INFO_Result
+            {
+                RECEIVER_NAME = "",
+                RECEIVER_ADDR1 = "",
+                RECEIVER_ADDR2 = "",
+                RECEIVER_HP1 = "",
+                RECEIVER_HP2 = "",
+                RECEIVER_HP3 = "",
+                RECEIVER_POST1 = "",
+                RECEIVER_POST2 = "",
+                RECEIVER_TEL1 = "",
+                RECEIVER_TEL2= "",
+                RECEIVER_TEL3 =""
+            };
+            
             using (OrderEntities EfContext = new OrderEntities())
             {
-                info = EfContext.SP_ORDER_STEP2_RECENTADDR_INFO(M_ID).FirstOrDefault();
+                info = EfContext.SP_ORDER_STEP2_RECENTADDR_INFO(M_ID).DefaultIfEmpty(defaultinfo).FirstOrDefault();
             }
             return info;
         }
@@ -167,7 +182,7 @@ namespace AboutMe.Domain.Service.Order
             SP_ORDER_PAY_Result result = new SP_ORDER_PAY_Result();
             using (OrderEntities EfContext = new OrderEntities())
             {
-               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN).FirstOrDefault(); ;
+               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN, Param.VACT_Num, Param.VACT_BankCode, Param.VACT_Name, Param.VACT_InputName, Param.VACT_Date, Param.VACT_Time).FirstOrDefault(); 
             }
             return result.ORDER_CODE;
         }
@@ -275,6 +290,16 @@ namespace AboutMe.Domain.Service.Order
             using (OrderEntities EfContext = new OrderEntities())
             {
                 EfContext.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE(OrderDetailIdx, TobeStatus, Mid);
+            }
+        }
+        #endregion
+
+        #region 부분취소 입력 (전체취소시 이니시스 로그 남김)
+        public void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_PART_CANCEL_INSERT(ORDER_IDX, PAT_TID, OLD_PAT_TID, CANCEL_PRICE, REMAINS_PRICE, EMAIL, PRTC_REMAINS, PRTC_TYPE, PRTC_PRICE, PRTC_CNT, REG_ID, REG_IP);
             }
         }
         #endregion

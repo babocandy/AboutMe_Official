@@ -1,0 +1,119 @@
+﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupSaveViewModel
+
+@{
+    Layout = null;
+}
+
+<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">전시관리</a> &gt; <strong>팝업관리</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3 class="sub-header">@ViewBag.SubTitle</h3>
+    </div>
+
+    <div class="panel">
+
+        @{
+            string ss = ViewBag.Title;
+        }
+
+        @using (Html.BeginForm(ss, "AdminDisplay", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+            <input type="hidden" name="IDX" value="@Model.IDX"/>
+            <table class="table table_row">
+                <colgroup><col width="20%" /><col width="30%" /><col width="20%" /><col width="*" /></colgroup>
+                <tr>
+                    <th><span>@Html.ValidationMessageFor(model => model.MEDIA_GBN)</span>매체구분</th>
+                    <td colspan="3">
+                        @{
+                            var media_10 = Model.MEDIA_GBN == "10" ? "checked" : null;
+                            var media_20 = Model.MEDIA_GBN == "20" ? "checked" : null;
+                            var media_30 = Model.MEDIA_GBN == "30" ? "checked" : null;
+                        }
+                        <label for="rdi1" class="mr15"><input type="radio" id="rdi1" name="MEDIA_GBN" value="10" @media_10 /><span class="txt">전체</span></label>
+                        <label for="rdi2" class="mr15"><input type="radio" id="rdi2" name="MEDIA_GBN" value="20" @media_20 /><span class="txt">WEB</span></label>
+                        <label for="rdi3"><input type="radio" id="rdi3" media_gbn="rdio" name="MEDIA_GBN" value="30" @media_30 /><span class="txt">MOBILE</span></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span>@Html.ValidationMessageFor(model => model.TITLE)</span>제목</th>
+                    <td colspan="3"><input type="text" class="input-sm wper100" name="TITLE" value="@Model.TITLE" /></td>
+                </tr>
+                <tr>
+                    <th><span>@Html.ValidationMessageFor(model => model.IS_DISPLAY)</span> 전시여부</th>
+                    <td colspan="3">
+                        @{
+            var isdisplay_10 = Model.IS_DISPLAY == "Y" ? "checked" : null;
+            var isdisplay_20 = Model.IS_DISPLAY == "N" ? "checked" : null;
+                        }
+                        <label for="rdi5" class="mr15"><input type="radio" id="rdi5" name="IS_DISPLAY" value="Y" @isdisplay_10 /><span class="txt">전시</span></label>
+                        <label for="rdi6" class="mr15"><input type="radio" id="rdi6" name="IS_DISPLAY" value="N" @isdisplay_20 /><span class="txt">비전시</span></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span>@Html.ValidationMessageFor(model => model.DISPLAY_START)</span> 전시시작일(YYYY-MM-DD HH:MM) </th>
+                    <td colspan="3">
+                        <input type="text" name="DISPLAY_START" value="@Html.DisplayFor(x => Model.DISPLAY_START)" />
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <th> <span>@Html.ValidationMessageFor(model => model.DISPLAY_END)</span> 전시만료일(YYYY-MM-DD HH:MM) </th>
+                    <td colspan="3">
+                        <input type="text" name="DISPLAY_END" value="@Html.DisplayFor(x => Model.DISPLAY_END)" />
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>웹팝업이미지<br />(gif, jpg)</th>
+                    <td colspan="3">@Model.MOBILE_IMG_NAME<input type="file" class="wper100" name="WEB_IMG_FILE" /></td>
+                </tr>
+                <tr>
+                    <th>위치</th>
+                    <td>
+                        TOP <input type="text" class="input-sm" style="width:80px" name="POS_TOP" value="@Model.POS_TOP" />
+                        LEFT <input type="text" class="input-sm" style="width:80px" name="POS_LEFT" value="@Model.POS_LEFT" />
+                    </td>
+                    <th>팝업크기</th>
+                    <td>
+                        Width <input type="text" class="input-sm" style="width:80px" name="SIZE_WIDTH" value="@Model.SIZE_WIDTH" />
+                        Height <input type="text" class="input-sm" style="width:80px" name="SIZE_HEIGHT" value="@Model.SIZE_HEIGHT" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>WEB 링크(LINK)</th>
+                    <td colspan="3">
+                        <input type="text" class="input-sm mr10" style="width:50%" />
+                        @{
+            var target_10 = Model.WEB_TARGET == "10" ? "checked" : null;
+            var target_20 = Model.WEB_TARGET == "20" ? "checked" : null;
+                        }
+                        <label for="rdi3" class="mr15"><input type="radio" id="rdi3" name="WEB_TARGET" value="10" @target_10 /><span class="txt">현재창</span></label>
+                        <label for="rdi4" class="mr15"><input type="radio" id="rdi4" name="WEB_TARGET" value="20" @target_20 /><span class="txt">새창</span></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>MOBILE 이미지<br />(gif, jpg)</th>
+                    <td colspan="3">@Model.MOBILE_IMG_NAME<input type="file" class="wper100" name="MOBILE_IMG_FILE" /></td>
+                </tr>
+                <tr>
+                    <th>MOBILE 링크(LINK)</th>
+                    <td colspan="3"><input type="text" class="input-sm wper100" name="MOBILE_LINK" value="@Model.MOBILE_LINK" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <div class="tac mt20">
+        <a href="#" class="btn btn-default small" onclick="document.frm.submit(); return false;">@ViewBag.ButtonName</a>
+        <a href="@Url.Action("Popup", "AdminDisplay", @Model.SearchParam)" class="btn btn-success small">취소</a>
+    </div>

@@ -47,5 +47,10 @@ namespace AboutMe.Domain.Entity.Order
         public int ACCML_POINT { get; set; }
         public string NOMEMBER_PASS { get; set; }
         public string PAY_GBN { get; set; }
+        public string VACT_Num { get; set; }
+        public string VACT_BankCode { get; set; }
+        public string VACT_BankName { get; set; }
+        public string VACT_Name { get; set; }
+        public string VACT_Date { get; set; }
     }
 }

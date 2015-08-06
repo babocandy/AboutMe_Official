@@ -13,18 +13,18 @@ namespace AboutMe.Domain.Service.Recallbbs
     {
         //List
         List<SP_TB_RECALL_BBS_SEL_Result> RecallList(RECALLBBS_SEARCH param);
-
         //Count
         int RecallCount(RECALLBBS_SEARCH param);
-        
         //View
-        SP_TB_RECALL_BBS_VIEW_Result RecallView(int IDX);
-
+        SP_TB_RECALL_BBS_VIEW_Result RecallView(int IDX, string M_ID, string ORDER_CODE);
         //insert
-        int RecallBbsInsert(TB_RECALL_BBS itemRecall);
-
+        void RecallBbsInsert(TB_RECALL_BBS itemRecall);
         //update
         void RecallBbsUpdate(TB_RECALL_BBS itemRecall);
 
+        List<SP_ADMIN_RECALL_BBS_SEL_Result> RecallAdminList(RECALL_ADMIN_SEARCH param);
+        int RecallAdminCount(RECALL_ADMIN_SEARCH param);
+        void RecallAdminUpdate(int Idx, string ADM_ID, string CONFIRM_CONTENTS);
+        SP_ADMIN_RECALL_BBS_VIEW_Result QnaAdminView(int Idx);
     }
 }

@@ -1,0 +1,150 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.Product.SP_PRODUCT_MOBILE_SEARCH_SEL_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/search.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+    <script language="javascript">
+
+          $(function () {
+              //ajaxSelectCateCodeJavascriptInit();
+          });
+
+          function bsearch() {
+              var f = document.bform;
+              //alert('ok');
+              //alert(f.P_CATE_CODE_3DEPTH[0].checked);
+              if (f.SEARCH_KEWWORD.value == '')
+              {
+                  alert('검색어를 입력해 주세요')
+                  f.SEARCH_KEWWORD.focus();
+                  return false;
+              }
+              f.target = "";
+              f.PAGE.value = 1;
+              f.submit();
+          }
+
+
+          function sortGbn(code) {
+              var f = document.bform;
+              f.SORT_GBN.value = code;
+              bsearch();
+          }
+
+          function rePageSize() {
+              var f = document.bform;
+
+              f.target = "";
+              f.page.value = 1;
+              f.submit();
+          }
+
+
+
+    </script>
+
+}
+
+<!--container-->
+@section Body{
+
+    <div class="wrap display">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { id = "bform", name = "bform" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                            <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
+
+        <!--container-->
+    <div class="container search">
+        <div class="h2_area">
+            <h2>검색결과</h2>
+        </div>
+
+        <!--검색영역-->
+        <div class="searcharea">
+            <span class="ipt_search"><input type="text" id="SEARCH_KEWWORD" name="SEARCH_KEYWORD" value="@ViewBag.SEARCH_KEYWORD" /><a href="javascript:bsearch();" class="btn_search"></a></span>
+        </div>
+        <!--검색영역-->
+        <!--상세리스트-->
+        <div class="product_sort">
+            <p class="totalnum_txt">검색결과 총 <strong>@ViewBag.TotalRecord</strong>개 상품이 있습니다.</p>
+            <span class="sort">
+                <span class="selbox select_a">
+                    <select name="SORT_GBN" title="상품정렬 선택" onchange="javascript:bsearch();">
+                        <option value="NEW" @if (ViewBag.SORT_GBN == "NEW") { <text> selected </text>         }>신상품순</option>
+                        <option value="LIKE" @if (ViewBag.SORT_GBN == "LIKE") { <text> selected </text>          }>인기순</option>
+                        <option value="UP" @if (ViewBag.SORT_GBN == "UP") { <text> selected </text>          }>최고가순</option>
+                        <option value="DOWN" @if (ViewBag.SORT_GBN == "DOWN") { <text> selected </text>          }>최저가순</option>
+                    </select>
+                </span>
+            </span>
+        </div>
+        <ul class="product_list">
+            @foreach (var item in Model)
+            {
+                string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                <li>
+                    <a href="/shopping/detail?pcode=@item.P_CODE&SORT_GBN=@ViewBag.SORT_GBN&PAGE=@ViewBag.PAGE&SEARCH_KEYWORD=@ViewBag.SEARCH_KEYWORD">
+                        <span class="photo"><img src="@imgUrl1" alt="" /></span>
+
+                        <span class="detail">
+                            @if (!string.IsNullOrEmpty(item.ICON_YN))
+                            {
+                                if (item.ICON_YN.IndexOf('B') != -1)
+                                { <text> <span class="ico_best">BEST</span></text> }
+                                if (item.ICON_YN.IndexOf('S') != -1)
+                                { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                if (item.ICON_YN.IndexOf('N') != -1)
+                                { <text> <span class="ico_new">NEW</span></text> }
+                                if (item.ICON_YN.IndexOf('C') != -1)
+                                { <text> <span class="ico_custom ">CUSTOM</span></text> }
+                            }
+                            <!--
+            .ico_best
+            .ico_coupon
+            .ico_time
+            .ico_soldout
+            .ico_set
+            -->
+                            <span class="tit">@(new HtmlString(item.P_NAME))</span>
+                            <span class="stit">@(new HtmlString(item.P_SUB_TITLE))</span>
+                            <span class="price"><del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span>
+                        </span>
+                    </a>
+                    <a href="javascript:Cart_Product_Input('@item.P_CODE','1');" class="btn_cart"></a>
+                </li>
+            }
+        </ul>
+        <!--//상세리스트-->
+        <!--페이징-->
+        <div class="paging">
+            <a href="#" class="prev"></a>
+            1 / 50
+            <a href="#" class="next"></a>
+        </div>
+        <!--//페이징-->
+    </div>
+		<!--//container-->
+        }
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    </div>
+}
+<!--footer-->
+@section Footer{
+
+}
+<!--//footer-->

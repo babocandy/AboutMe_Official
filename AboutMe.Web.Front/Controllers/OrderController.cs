@@ -728,6 +728,12 @@ namespace AboutMe.Web.Front.Controllers
                 Param.PAT_GUBUN = "Web";
                 Param.SVR_DOMAIN = HttpContext.Request.Url.Host;
 
+                Param.VACT_Num = PayResult.VACT_Num;
+                Param.VACT_BankCode = PayResult.VACT_BankCode;
+                Param.VACT_Name = PayResult.VACT_Name;
+                Param.VACT_Date = PayResult.VACT_Date;
+                Param.VACT_Time = PayResult.VACT_Time;
+
                 try
                 {
                     //DB 저장

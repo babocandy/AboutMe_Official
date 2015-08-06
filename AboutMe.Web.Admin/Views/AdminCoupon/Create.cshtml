@@ -8,6 +8,10 @@
 
 @section Scripts{
 
+    @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+    {
+        @Html.Raw(TempData["jsMessage"]);
+    }
     
     <script language="javascript">
 
@@ -18,7 +22,7 @@
 
       
             //용도구분값이 지불쿠폰 일때 
-            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN'));
+            
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
             {
                 if (getRadioVal(f, 'inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN') == '') {
@@ -34,6 +38,7 @@
                     return false;
                 }
             }
+         
               
        
            //발행방법이 자동발행일때
@@ -48,7 +53,7 @@
          
        
 
-            /**
+           
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
 
                 //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
@@ -58,7 +63,7 @@
                     return false;
                 }
             }
-            **/
+           
 
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
 
@@ -98,24 +103,47 @@
 
 
        
-            if (f.CheckMemGrade.checked == false) {
+            var is_mem_checked = false;
+           // alert(f.CheckMemGrade.length);
+
+            for (var k = 0 ; f.CheckMemGrade.length > k ; k++)
+            {
+                if (f.CheckMemGrade[k].checked == true) {
+                    is_mem_checked = true;
+                    //alert(k);
+                    break;
+                }
+            }
+
+            if (is_mem_checked == false) {
               
                  alert("적용회원등급을 선택하세요");
-                 f.CheckMemGrade.focus();
+                 f.CheckMemGrade[0].focus();
                  return false;
                 
             }
 
-           
+            if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value != '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value != '') {
 
-
-            /**
-            if (f.SEL_PMO_TOTAL_CATEGORY.value == '') {
-                alert("프로모션 종류를 선택하세요.");
-                f.SEL_PMO_TOTAL_CATEGORY.focus();
-                return false;
+                if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value > f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value) {
+                    alert("[고정기간 일자]의 시작일이 종료일보다 먼저여야 합니다.");
+                    f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
+                    return false;
+                }
             }
-            **/
+
+
+            if (f.inst_TB_COUPON_MASTER_MASTER_FROM_DATE.value != '' || f.inst_TB_COUPON_MASTER_MASTER_TO_DATE.value != '') {
+
+                if (f.inst_TB_COUPON_MASTER_MASTER_FROM_DATE.value > f.inst_TB_COUPON_MASTER_MASTER_TO_DATE.value) {
+                    alert("[발행가능기간]의 시작일이 종료일보다 먼저여야 합니다.");
+                    f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
+                    return false;
+                }
+            }
+
+
+           
             
             return true;
 
@@ -226,7 +254,7 @@
                                             <tbody>
 
                                                 <tr>
-                                                    <th>프로모션명 </th>
+                                                    <th>쿠폰명 </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME , new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
 
                                                 </tr>
@@ -263,23 +291,23 @@
                                                              
                                                 <tr>
                                                     <th>사용기간기준 구분 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "A") 고정기간기준 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "B") 발행일기준 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN)</font></td>
+                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "A") 고정기간 기준 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN, "B") 실제 발행일기준 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.SERVICE_LIFE_GBN)</font></td>
 
                                                 </tr>
-                                                <!--
+                                                
                                                  <tr>
                                                     <th>고정기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)</td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)</font></td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>고정기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)</td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)</font></td>
                                                 </tr>
-                                                   -->
+                                                  
                                                 <tr>
                                                     <th>발행일 기준 유효기간(DAY) </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT)</font></td
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.EXRIRED_DAY_FROM_ISSUE_DT)</font></td>
                                                 </tr>
 
 
@@ -288,22 +316,22 @@
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN, "P") PC  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN, "M") 모바일 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.USABLE_DEVICE_GBN)</font></td>
 
                                                 </tr>
-                                                <!---
+                                                
                                                 <tr>
                                                     <th>상품적용범위 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN, "A") 특정상품  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN, "B") 전체상품 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.PRODUCT_APP_SCOPE_GBN)</font></td>
 
                                                 </tr>
-                                             
+                                               <!---
                                                 <tr>
                                                     <th>회원적용범위 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "A") 전체회원  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "B") 등급회원전체 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN, "C") 특정회원 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MEMBER_APP_SCOPE_GBN)</font></td>
 
                                                 </tr>
-                                                  -->
+                                                -->
                                                 <tr>
                                                     <th>발행방법 </th>
-                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN, "A") 자동발행  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN, "B") 수동발행  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN)</font></td>
+                                                    <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN, "A") 자동발행(예를들면 회원가입시 자동발행)  @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN, "B") 수동발행  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.ISSUE_METHOD_GBN)</font></td>
 
                                                 </tr>
                                                 <tr>
@@ -314,7 +342,7 @@
 
 
                                                 
-                                                
+                                                <!--
                                                 <tr>
                                                     <th>다운로드가능기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_FROM)</font></td>
@@ -325,6 +353,7 @@
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red"> @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.DOWNLOAD_DATE_TO)</font></td>
 
                                                 </tr>
+                                                    -->
                                                 <tr>
                                                     <th>발행가능기간(정책유효기간) 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>

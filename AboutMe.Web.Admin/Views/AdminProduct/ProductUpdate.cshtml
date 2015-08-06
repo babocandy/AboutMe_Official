@@ -1,5 +1,5 @@
-﻿@model AboutMe.Domain.Entity.AdminProduct.SP_ADMIN_PRODUCT_DETAIL_VIEW_Result
-
+﻿@model AboutMe.Domain.Entity.AdminProduct.PRODUCT_DETAIL_MODEL
+@using System.Reflection;
 @{
     ViewBag.Title = "ProductUpdate";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
@@ -14,7 +14,7 @@
         //var c = setTimeout(function () { ajaxSelectCateCodeJavascriptProductType2() }, 3500); //카테고리 활성화
         //var d = setTimeout(function () { ajaxSelectCateCodeJavascriptSkinType2() }, 3500); //카테고리 활성화
         //var e = setTimeout(function () { ajaxSelectCateCodeJavascriptLineType2() }, 5000); //카테고리 활성화
-        
+
     });
 
 
@@ -214,7 +214,7 @@
                 result += "<option value=''>=선택=</option>";
                 $('#ajaxPCateCode1').html('');
                 $.each(data.msg, function (id, category) {
-                    if ((category.CATE_CODE).substring(0, 3) == "@Html.DisplayFor(model => model.P_CATE_CODE).ToString().Substring(0,3)") {
+                    if ((category.CATE_CODE).substring(0, 3) == "@Model.ProductDetailView.P_CATE_CODE.ToString().Substring(0,3)") {
                         result += '<option value=' + category.CATE_CODE + ' selected >' + category.DEPTH1_NAME + '</option>';
                     } else {
                         result += '<option value=' + category.CATE_CODE + ' >' + category.DEPTH1_NAME + '</option>';
@@ -266,7 +266,7 @@
                 result += "<option value=''>=선택=</option>";
                 $('#ajaxPCateCode2').html('');
                 $.each(data.msg, function (id, category) {
-                    if ((category.CATE_CODE).substring(0, 6) == "@Html.DisplayFor(model => model.P_CATE_CODE).ToString().Substring(0,6)") {
+                    if ((category.CATE_CODE).substring(0, 6) == "@Model.ProductDetailView.P_CATE_CODE.ToString().Substring(0,6)") {
                         result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH2_NAME + '</option>';
                     } else {
                         result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
@@ -283,7 +283,7 @@
                 } else {
                     $("#ajaxPCateCode3").hide(); //ProductType 3
                 }
-                
+
 
             },
             error: function (errorData) {
@@ -314,7 +314,7 @@
                     result += "<option value=''>=선택=</option>";
                     $('#ajaxPCateCode3').html('');
                     $.each(data.msg, function (id, category) {
-                        if (category.CATE_CODE == "@Html.DisplayFor(model => model.P_CATE_CODE)") {
+                        if (category.CATE_CODE == "@Model.ProductDetailView.P_CATE_CODE") {
                             result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH3_NAME + '</option>';
                         } else {
                             result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH3_NAME + '</option>';
@@ -352,7 +352,7 @@
                 result += "<option value=''>=선택=</option>";
                 $('#ajaxCCateCode').html('');
                 $.each(data.msg, function (id, category) {
-                    if (category.CATE_CODE == "@Html.DisplayFor(model => model.C_CATE_CODE)") {
+                    if (category.CATE_CODE == "@Model.ProductDetailView.C_CATE_CODE") {
                         result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH2_NAME + '</option>';
                     } else {
                         result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
@@ -386,7 +386,7 @@
                 result += "<option value=''>=선택=</option>";
                 $('#ajaxLCateCode').html('');
                 $.each(data.msg, function (id, category) {
-                    if (category.CATE_CODE == "@Html.DisplayFor(model => model.L_CATE_CODE)") {
+                    if (category.CATE_CODE == "@Model.ProductDetailView.L_CATE_CODE") {
                         result += '<option value=' + category.CATE_CODE + ' selected>' + category.DEPTH2_NAME + '</option>';
                     } else {
                         result += '<option value=' + category.CATE_CODE + '>' + category.DEPTH2_NAME + '</option>';
@@ -472,8 +472,8 @@
                 url: '/AdminProduct/AjaxImageDel',
                 type: 'POST',
                 data: {
-                    P_CODE: "@Html.DisplayFor(model => model.P_CODE)",
-                    imgColumName:imgColumName
+                    P_CODE: "@Model.ProductDetailView.P_CODE",
+                    imgColumName: imgColumName
                 },
                 success: function (data) {
                     if (data.success) { //삭제 성공시 old 이미지컬럼value 값을 "" 처리, 이미지 display hidden 처리한다.
@@ -495,7 +495,7 @@
 
 
 
-    </script>
+</script>
 
 
 }
@@ -522,12 +522,22 @@
     {
         @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
     <input type="hidden" name="P_CATE_CODE" value="">
-    <input type="hidden" name="IDX" value="@Html.DisplayFor(model => model.IDX)">
-    <input type="hidden" name="OLD_MAIN_IMG" value="@Html.DisplayFor(model => model.MAIN_IMG)">
-    <input type="hidden" name="OLD_OTHER_IMG1" value="@Html.DisplayFor(model => model.OTHER_IMG1)">
-    <input type="hidden" name="OLD_OTHER_IMG2" value="@Html.DisplayFor(model => model.OTHER_IMG2)">
-    <input type="hidden" name="OLD_OTHER_IMG3" value="@Html.DisplayFor(model => model.OTHER_IMG3)">
-    
+    <input type="hidden" name="IDX" value="@Model.ProductDetailView.IDX">
+    <input type="hidden" name="OLD_MAIN_IMG" value="@Model.ProductDetailView.MAIN_IMG">
+    <input type="hidden" name="OLD_OTHER_IMG1" value="@Model.ProductDetailView.OTHER_IMG1">
+    <input type="hidden" name="OLD_OTHER_IMG2" value="@Model.ProductDetailView.OTHER_IMG2">
+    <input type="hidden" name="OLD_OTHER_IMG3" value="@Model.ProductDetailView.OTHER_IMG3">
+        {
+            //Model.SearchOption을 Hidden box로 생성
+            Type type = Model.productSearch_Entity.GetType();
+            PropertyInfo[] properties = type.GetProperties();
+
+            foreach (PropertyInfo property in properties)
+            {
+                @Html.Hidden(property.Name, property.GetValue(Model.productSearch_Entity))
+            }
+        }
+
 
                                <div class="panel">
                                 <h3 class="sub-header">상품관리</h3>
@@ -561,25 +571,25 @@
                                         <tr>
                                             <th>상품코드</th>
                                             <td colspan="3">
-                                               @Html.DisplayFor(model => model.P_CODE)
+                                               @Model.ProductDetailView.P_CODE
                                                 <span id="pcodeMsgSpan"></span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품명</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:550px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="50" value="@Html.DisplayFor(model => model.P_NAME)" />
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="P_NAME" name="P_NAME" maxlength="50" value="@Model.ProductDetailView.P_NAME" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품설명</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:550px;" class="input-sm text-left" id="P_SUB_TITLE" name="P_SUB_TITLE" maxlength="100" value="@Html.DisplayFor(model => model.P_SUB_TITLE)" />
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="P_SUB_TITLE" name="P_SUB_TITLE" maxlength="100" value="@Model.ProductDetailView.P_SUB_TITLE" />
                                             </td>
                                         </tr>
                                         @{
                                             string ICONYN = "";
-                                            ICONYN = string.IsNullOrEmpty(Model.ICON_YN) ? "" : Model.ICON_YN;
+                                            ICONYN = string.IsNullOrEmpty(Model.ProductDetailView.ICON_YN) ? "" : Model.ProductDetailView.ICON_YN;
                                         }
                                         <tr>
                                             <th>아이콘</th>
@@ -597,40 +607,41 @@
                                         <tr>
                                             <th>검색태그(","로 구분)</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:200px;" class="input-sm text-left" id="P_TAG" name="P_TAG" maxlength="300" value="@Html.DisplayFor(model => model.P_TAG)" />
+                                                <input type="text" style="width:200px;" class="input-sm text-left" id="P_TAG" name="P_TAG" maxlength="300" value="@Model.ProductDetailView.P_TAG" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품판매가</th>
-                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="SELLING_PRICE" name="SELLING_PRICE" maxlength="8" value="@Html.DisplayFor(model => model.SELLING_PRICE)" /></td>
+                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="SELLING_PRICE" name="SELLING_PRICE" maxlength="8" value="@Model.ProductDetailView.SELLING_PRICE" /></td>
                                             <th>상품할인가</th>
-                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="DISCOUNT_PRICE" name="DISCOUNT_PRICE" onkeyup="getUpdateDiscountRate();" maxlength="8" value="@Html.DisplayFor(model => model.DISCOUNT_PRICE)" /></td>
+                                            <td><input type="text" style="width:70px;" class="input-sm text-left" id="DISCOUNT_PRICE" name="DISCOUNT_PRICE" onkeyup="getUpdateDiscountRate();" maxlength="8" value="@Model.ProductDetailView.DISCOUNT_PRICE" /></td>
                                         </tr>
                                         <tr>
                                             <th>상품할인율(%)</th>
-                                            <td><input type="text" style="width:30px;" class="input-sm text-left" id="DISCOUNT_RATE" name="DISCOUNT_RATE" onkeyup="getUpdateDiscountPrice();" maxlength="3" value="@Html.DisplayFor(model => model.DISCOUNT_RATE)" />%</td>
+                                            <td><input type="text" style="width:30px;" class="input-sm text-left" id="DISCOUNT_RATE" name="DISCOUNT_RATE" onkeyup="getUpdateDiscountPrice();" maxlength="3" value="@Model.ProductDetailView.DISCOUNT_RATE" />%</td>
                                             <th>재고수량</th>
-                                            <td><input type="text" style="width:30px;" class="input-sm text-left" id="P_COUNT" name="P_COUNT" maxlength="8" value="@Html.DisplayFor(model => model.P_COUNT)" /></td>
+                                            <td><input type="text" style="width:30px;" class="input-sm text-left" id="P_COUNT" name="P_COUNT" maxlength="8" value="@Model.ProductDetailView.P_COUNT" /></td>
                                         </tr>
                                         <tr>
                                             <th>영상url</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:550px;" class="input-sm text-left" id="MV_URL" name="MV_URL" maxlength="200" value="@Html.DisplayFor(model => model.MV_URL)" />
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="MV_URL" name="MV_URL" maxlength="200" value="@Model.ProductDetailView.MV_URL" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>전성분</th>
                                             <td colspan="3">
-                                                <textarea id="P_COMPONENT_INFO" name="P_COMPONENT_INFO" style="padding:5px;width:600px;height:80px;border:1px solid #d8d7d5;">@Html.DisplayFor(model => model.P_COMPONENT_INFO)</textarea>
+                                                <textarea id="P_COMPONENT_INFO" name="P_COMPONENT_INFO" style="padding:5px;width:600px;height:80px;border:1px solid #d8d7d5;">@Model.ProductDetailView.P_COMPONENT_INFO</textarea>
                                             </td>
                                         </tr>
+                                        @{ string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");}
                                         <tr>
                                             <th>상품대표이미지</th>
                                             <td colspan="3">
                                                 <input type="file" id="MAIN_IMG" name="MAIN_IMG" maxlength="100" value="" />
-                                                @if (@Html.DisplayFor(model => model.MAIN_IMG).ToString() != "")
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.MAIN_IMG))
                                                 {
-                                                <span id="SPAN_MAIN_IMG"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.MAIN_IMG)" width="100" height="100" /><a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a></span>
+                                                <span id="SPAN_MAIN_IMG"><img src="@Product_path@Model.ProductDetailView.MAIN_IMG" width="100" height="100" /><a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
@@ -638,9 +649,9 @@
                                             <th>상품추가이미지1</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG1" name="OTHER_IMG1" maxlength="100" value="" />
-                                                @if (@Html.DisplayFor(model => model.OTHER_IMG1).ToString() != "")
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.OTHER_IMG1))
                                                 {
-                                                    <span id="SPAN_OTHER_IMG1"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG1)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG1');">[삭제]</a></span>
+                                                    <span id="SPAN_OTHER_IMG1"><img src="@Product_path@Model.ProductDetailView.OTHER_IMG1" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG1');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
@@ -648,9 +659,9 @@
                                             <th>상품추가이미지2</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG2" name="OTHER_IMG2" maxlength="100" value="" />
-                                                @if (@Html.DisplayFor(model => model.OTHER_IMG2).ToString() != "")
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.OTHER_IMG2))
                                                 {
-                                                <span id="SPAN_OTHER_IMG2"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG2)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG2');">[삭제]</a></span>
+                                                <span id="SPAN_OTHER_IMG2"><img src="@Product_path@Model.ProductDetailView.OTHER_IMG2" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG2');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
@@ -658,28 +669,28 @@
                                             <th>상품추가이미지3</th>
                                             <td colspan="3">
                                                 <input type="file" id="OTHER_IMG3" name="OTHER_IMG3" maxlength="100" value="" />
-                                                @if (@Html.DisplayFor(model => model.OTHER_IMG3).ToString() != "")
-                                                {
-                                                <span id="SPAN_OTHER_IMG3"><img src="@ViewBag.PRODUCT_PATH@Html.DisplayFor(model => model.OTHER_IMG3)" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG3');">[삭제]</a></span>
+                                                @if (!string.IsNullOrEmpty(@Model.ProductDetailView.OTHER_IMG3))
+                                               {
+                                                <span id="SPAN_OTHER_IMG3"><img src="@Product_path@Model.ProductDetailView.OTHER_IMG3" width="100" height="100" /><a href="#none" onclick="imgDelChk('OTHER_IMG3');">[삭제]</a></span>
                                                 }
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품정보(web)</th>
                                             <td colspan="3">
-                                                <textarea name="P_INFO_DETAIL_WEB" id="P_INFO_DETAIL_WEB" class="form-control" rows="10" title="내용">@Html.DisplayFor(model => model.P_INFO_DETAIL_WEB)</textarea>
+                                                <textarea name="P_INFO_DETAIL_WEB" id="P_INFO_DETAIL_WEB" class="form-control" rows="10" title="내용">@Model.ProductDetailView.P_INFO_DETAIL_WEB</textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>상품정보(mobile)</th>
                                             <td colspan="3">
-                                                <textarea name="P_INFO_DETAIL_MOBILE" id="P_INFO_DETAIL_MOBILE" class="form-control" rows="10" title="내용">@Html.DisplayFor(model => model.P_INFO_DETAIL_MOBILE)</textarea>
+                                                <textarea name="P_INFO_DETAIL_MOBILE" id="P_INFO_DETAIL_MOBILE" class="form-control" rows="10" title="내용">@Model.ProductDetailView.P_INFO_DETAIL_MOBILE</textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>함께하면 좋은상품<br />(","로 구분)</th>
                                             <td colspan="3">
-                                                <input type="text" style="width:550px;" class="input-sm text-left" id="WITH_PRODUCT_LIST" name="WITH_PRODUCT_LIST" maxlength="300" value="@Html.DisplayFor(model => model.WITH_PRODUCT_LIST)" />
+                                                <input type="text" style="width:550px;" class="input-sm text-left" id="WITH_PRODUCT_LIST" name="WITH_PRODUCT_LIST" maxlength="300" value="@Model.ProductDetailView.WITH_PRODUCT_LIST" />
                                                 <a href="/AdminProduct/PopProductIndex" class="btn btn-primary small" target="_blank" onclick="openScrollYes(this.href, this.target, '1300', '600');return false;">상품검색</a>
                                             </td>
                                         </tr>
@@ -689,7 +700,7 @@
 
                             <div class="btn_area">
                                 <a class="btn btn-default small" href="#" onclick="formChk();">수정</a>
-                                <a class="btn btn-primary small" href="/AdminProduct/ProductIndex">목록</a>
+                                @Html.ActionLink("목록", "ProductIndex", @Model.productSearch_Entity, new { @class = "btn btn-primary small" })
                             </div>
     }
     <script type="text/javascript" src="/cmsManager/aboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>

@@ -15,6 +15,20 @@
           <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="OLD_PAT_TID" Type="varchar" Mode="In" />
+          <Parameter Name="CANCEL_PRICE" Type="bigint" Mode="In" />
+          <Parameter Name="REMAINS_PRICE" Type="bigint" Mode="In" />
+          <Parameter Name="EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="PRTC_Remains" Type="bigint" Mode="In" />
+          <Parameter Name="PRTC_Type" Type="char" Mode="In" />
+          <Parameter Name="PRTC_Price" Type="bigint" Mode="In" />
+          <Parameter Name="PRTC_Cnt" Type="int" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REG_IP" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_MYPAGE_ORDERLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
@@ -61,6 +75,12 @@
           <Parameter Name="HTTP_USER_AGENT" Type="varchar" Mode="In" />
           <Parameter Name="PAT_GUBUN" Type="varchar" Mode="In" />
           <Parameter Name="SVR_DOMAIN" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Num" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_BankCode" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Name" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_InputName" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Date" Type="varchar" Mode="In" />
+          <Parameter Name="VACT_Time" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ORDER_RESULT_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
@@ -176,6 +196,12 @@
             <Parameter Name="HTTP_USER_AGENT" Mode="In" Type="String" />
             <Parameter Name="PAT_GUBUN" Mode="In" Type="String" />
             <Parameter Name="SVR_DOMAIN" Mode="In" Type="String" />
+            <Parameter Name="VACT_Num" Mode="In" Type="String" />
+            <Parameter Name="VACT_BankCode" Mode="In" Type="String" />
+            <Parameter Name="VACT_Name" Mode="In" Type="String" />
+            <Parameter Name="VACT_InputName" Mode="In" Type="String" />
+            <Parameter Name="VACT_Date" Mode="In" Type="String" />
+            <Parameter Name="VACT_Time" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_STEP1" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />
@@ -311,6 +337,20 @@
             <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
             <Parameter Name="REG_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="OLD_PAT_TID" Mode="In" Type="String" />
+            <Parameter Name="CANCEL_PRICE" Mode="In" Type="Int64" />
+            <Parameter Name="REMAINS_PRICE" Mode="In" Type="Int64" />
+            <Parameter Name="EMAIL" Mode="In" Type="String" />
+            <Parameter Name="PRTC_Remains" Mode="In" Type="Int64" />
+            <Parameter Name="PRTC_Type" Mode="In" Type="String" />
+            <Parameter Name="PRTC_Price" Mode="In" Type="Int64" />
+            <Parameter Name="PRTC_Cnt" Mode="In" Type="Int32" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+            <Parameter Name="REG_IP" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
@@ -439,6 +479,12 @@
           <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
           <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
           <Property Type="String" Name="NOMEMBER_PASS" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_Num" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_BankCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
         </ComplexType>
         <ComplexType Name="SP_ORDER_RESULT_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -501,7 +547,12 @@
           <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="false" />
           <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
           <Property Type="String" Name="NOMEMBER_PASS" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="PAY_GBN" Nullable="false" />
+          <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="VACT_Num" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_BankCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -723,6 +774,12 @@
                 <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
                 <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
                 <ScalarProperty Name="NOMEMBER_PASS" ColumnName="NOMEMBER_PASS" />
+                <ScalarProperty Name="VACT_Num" ColumnName="VACT_Num" />
+                <ScalarProperty Name="VACT_BankCode" ColumnName="VACT_BankCode" />
+                <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
+                <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -822,6 +879,12 @@
                 <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
                 <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
                 <ScalarProperty Name="NOMEMBER_PASS" ColumnName="NOMEMBER_PASS" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="VACT_Num" ColumnName="VACT_Num" />
+                <ScalarProperty Name="VACT_BankCode" ColumnName="VACT_BankCode" />
+                <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
+                <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
+                <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -858,6 +921,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_PART_CANCEL_INSERT" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_PART_CANCEL_INSERT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

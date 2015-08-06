@@ -274,7 +274,13 @@ namespace AboutMe.Domain.Entity.Order
         public string CASHRECEIPT_RESULT_CODE { get; set; } // 현금영수증발급여부구분
         public string HTTP_USER_AGENT { get; set; } // 사용자브라우저
         public string PAT_GUBUN { get; set; } 	// 결제방법구분 (Mobile :모바일, Web : 웹페이지)
-        public string SVR_DOMAIN  { get; set; } // 도메인
+        public string SVR_DOMAIN { get; set; } // 도메인
+        public string VACT_Num { get; set; } // 가상계좌결제관련 - 입금계좌번호
+        public string VACT_BankCode { get; set; } // 가상계좌결제관련 - 입금은행코드
+        public string VACT_Name { get; set; } // 가상계좌결제관련 - 예금주명
+        public string VACT_InputName { get; set; } // 가상계좌결제관련 - 송금자명
+        public string VACT_Date { get; set; } // 가상계좌결제관련 - 송금일자
+        public string VACT_Time { get; set; } // 가상계좌결제관련 - 송금시각
     }
 
     //주문결과 페이지 모델

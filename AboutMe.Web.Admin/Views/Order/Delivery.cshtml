@@ -1,0 +1,150 @@
+﻿@model  List<AboutMe.Domain.Entity.AdminOrder.DELIVERTY_EXCEL_RESULT>
+@using System.Reflection;
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+@section Scripts{
+    <script language="javascript">
+
+        function frmCheck()
+        {
+            var num = $(".k-filename").length;
+            if (num == 0) {
+                alert("업로드할 파일을 선택해 주세요");
+                return false;
+            }
+
+            if (num > 1) {
+                alert("업로드할 파일을 하나만 선택해 주세요");
+                return false;
+            }
+            if (confirm("선택한 파일을 송장업로드하시겠습니까?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+            
+        }
+
+    </script>
+
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+<!--content-->
+<div class="content">
+    @using (Html.BeginForm("DeliveryExcelUpdate", "Order", FormMethod.Post, new { id = "fileform", name = "fileform", onsubmit = "return frmCheck();" }))
+    {
+        @Html.Hidden("PAGE", "1")
+		<!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="/Order/">주문/매출</a> &gt; <strong>송장등록</strong>
+        </div>
+		<!--//path-->
+        <div class="panel">
+            <h3 class="sub-header">송장등록</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 다운로드한 송장엑셀파일에 송장번호를 입력후 엑셀 업로드를 진행해 주세요.</li>
+                    <li>· 송장등록시 송장번호가 등록되고 상품준비중에서 배송중으로 자동 상태 변경됩니다.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel">
+            <h3 class="sub-header">송장엑셀파일 업로드</h3>
+            <div class="">
+
+                <table class="table table_row">
+                    <colgroup></colgroup>
+                    <tbody>
+                        <tr>
+                            <th width="100px">엑셀업로드</th>
+                            <td colspan="3" width="500px">
+                                @(Html.Kendo().Upload()
+                                    .Name("ExcelUploadFile")
+                                )
+                                
+                                
+                                @(Html.Kendo().Button()
+                                .Name("submitbtn")
+                                .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                                .Content("송장등록"))
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    <!--//end form-->
+    }
+
+    <div class="panel ">
+        <h3 class="sub-header">엑셀업로드 결과</h3>
+
+        <table class="table table_col" style="min-width:1220px;">
+            <colgroup></colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">ORDER IDX</th>
+                    <th scope="col">ORDER DETAIL IDX</th>
+                    <th scope="col">주문번호</th>
+                    <th scope="col">주문일자</th>
+                    <th scope="col">주문자명</th>
+                    <th scope="col">임직원여부</th>
+                    <th scope="col">상품코드</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">개수</th>
+                    <th scope="col">결제구분</th>
+                    <th scope="col">결제액</th>
+                    <th scope="col">상태</th>
+                    <th scope="col">프로모션종류</th>
+                    <th scope="col">프로모션명</th>
+                    <th scope="col">사은품명</th>
+                    <th scope="col">송장번호</th>
+                </tr>
+            </thead>
+            <tbody>
+
+@if (@Model != null)
+{ 
+    foreach (var item in @Model)
+    {
+        <tr>
+            <td>@item.ORDER_IDX</td>
+            <td>@item.ORDER_DETAIL_IDX</td>
+            <td>@item.ORDER_CODE</td>
+            <td>@item.ORDER_DATE</td>
+            <td>@item.ORDER_NAME</td>
+            <td>@item.EMP_YN</td>
+            <td>@item.P_CODE</td>
+            <td>@item.P_NAME</td>
+            <td>@item.P_COUNT</td>
+            <td>@item.PAY_NM</td>
+            <td>@item.REAL_PAY_PRICE</td>
+            <td>@item.ORDER_STATUS_NM</td>
+            <td>@item.PROMOTION_NM</td>
+            <td>@item.PMO_PRODUCT_NAME</td>
+            <td>@item.FREEGIFT_NAME</td>
+            <td>@item.DELIVERY_NUM</td>
+        </tr>
+    }
+}
+            </tbody>
+        </table>
+       
+    </div>
+    
+
+</div>
+<!--//content-->
+}

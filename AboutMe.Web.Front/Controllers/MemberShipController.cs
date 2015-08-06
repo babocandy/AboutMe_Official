@@ -219,7 +219,7 @@ namespace AboutMe.Web.Front.Controllers
 
                     //https ->  http 로 변경 적용시
                     //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
-                    return Redirect(uh.Action("InsertOrderStep1", "Order", null, "http")); // 주문페이지로이동
+                    return Redirect(uh.Action("InsertOrderStep1", "Order", new { OrderList = OrderList }, "http")); // 주문페이지로이동
                 }
                 else
                 {

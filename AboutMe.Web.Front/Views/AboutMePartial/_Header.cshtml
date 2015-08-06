@@ -1,4 +1,6 @@
-﻿<!-- SkipNav -->
+﻿@using AboutMe.Web.Front.Common;
+
+<!-- SkipNav -->
 <div id="skipnavi">
     <a href="#container" title="본문 바로가기">본문 바로가기</a>
 </div>
@@ -79,7 +81,10 @@
         @{Html.RenderAction("ChildRightTopMenu_Util", "CommonChildAction");}
         <!--//util-->
 
-
+        <div class="h_search">
+            <span class="ipt_hearch"><input type="text" id="h_search_keyword" name="h_search_keyword" value="입력하세요" onclick="this.value=''" /><a href="javascript:goSearch();" class="btn_hsearch"><img src="/aboutCom/images/common/btn_search2.gif" alt="" /></a></span>
+        </div>
+        
         <!--쇼핑백-->
         <div class="cart">
             <a href="#" class="viewcart" onclick="FlyCartLoad(1);">
@@ -94,10 +99,17 @@
             <!--//쇼핑백레이어-->
         </div>
         <!--//쇼핑백-->
+        <form name="nowOrderform" method="post">
+            <input type="hidden" name="OrderList" value="">
+        </form>
     </div>
 </div>
 
 <script language="javascript">
+    function goSearch() {
+        var param = document.getElementById("h_search_keyword").value
+        location.href = "/Search/Index?SEARCH_KEWWORD=" + param;
+    }
 
     function FlyCartLoad(page) {
         if (page < 0)
@@ -213,7 +225,26 @@
     //바로구매 하기 (ToDo)
     function NowOrderInput(p_code, p_count) {
         if (confirm('바로구매하시겠습니까?')) {
-            alert('구매페이지 이동!!');
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = p_code;
+            obj.p_count = p_count;
+            arrP.push(obj);
+
+            var jobj = JSON.stringify(arrP);
+            var f = document.nowOrderform;
+            f.OrderList.value = jobj;
+            var islogin = '@MemberInfo.IsMemberLogin()';
+
+            if (islogin == 'True')
+            {
+                f.action = '/Order/InsertOrderStep1';
+            }
+            else
+            {
+                f.action = '/MemberShip/Login';
+            }
+            f.submit();
         }
     }
 

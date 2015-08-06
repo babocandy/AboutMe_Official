@@ -48,13 +48,14 @@ namespace AboutMe.Domain.Service.Review
         /**
          * 마이리뷰 상품. 작성완료  
          */
-        public Tuple<string, string>  InsertMyReview(string mid, int? orderDetailIdx, string pCode, string skinType, string comment, string addImage  ){
+        public Tuple<string, string>  InsertMyReview(MyReviewPdtParamOnSaveToDb p )
+        {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                context.SP_REVIEW_PRODUCT_INS(mid, orderDetailIdx, pCode, skinType, comment, addImage, retNum, retMsg);
+                context.SP_REVIEW_PRODUCT_INS(p.M_ID, p.ORDER_DETAIL_IDX, p.P_CODE, p.SKIN_TYPE, p.COMMENT, p.ADD_IMAGE, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
@@ -62,6 +63,22 @@ namespace AboutMe.Domain.Service.Review
             Debug.WriteLine("UpdateMemberPointSave retMsg:  " + retMsg.Value);
 
             return tp;
+        }
+
+        /**
+         * 마이리뷰  수정
+         */
+        public Tuple<string, string> UpdateMyReview(MyReviewPdtParamOnSaveToDb p)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                context.SP_REVIEW_PRODUCT_UPD(p.IDX, p.COMMENT, retNum, retMsg);
+            }
+
+            return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
         }
 
         /**
@@ -134,5 +151,40 @@ namespace AboutMe.Domain.Service.Review
 
             return tp;
         }
+
+        /**
+         * 
+         * 상품리뷰 정보 
+         */
+        public SP_REVIEW_PRODUCT_INFO_Result ReviewProductInfo(int? idx)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            SP_REVIEW_PRODUCT_INFO_Result info = new SP_REVIEW_PRODUCT_INFO_Result();
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                info = context.SP_REVIEW_PRODUCT_INFO(idx, retNum, retMsg).SingleOrDefault();
+            }
+            return info;
+        }
+
+
+        public List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList()
+        {
+            List<SP_REVIEW_CATE_THEMA_SEL_Result> lst = new List<SP_REVIEW_CATE_THEMA_SEL_Result>();
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_CATE_THEMA_SEL().ToList();
+            }
+
+            return lst;
+        }
+
+
+
+
     }
 }

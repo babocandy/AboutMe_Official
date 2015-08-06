@@ -1,15 +1,23 @@
-﻿<!--mypage_menu-->
+﻿@using AboutMe.Web.Front.Common;
+@{
+    
+    string NoMemOrderCode = MemberInfo.GetNomemberOrderCode(); //비회원 조회
+}
+<!--mypage_menu-->
 <div class="mypage_menu">
     <ul>
         <li><a href="/MyPage/MyOrder">배송/주문조회</a></li>
         <li><a href="/MyPage/Recall">교환/반품 신청</a></li>
-        <li><a href="#">내 포인트</a></li>
-        <li><a href="#">내 쿠폰북</a></li>
-        <li><a href="#">1:1문의</a></li>
-        <li><a href="/MyPage/MyWish">찜목록</a></li>
-        <li><a href="/MyPage/StaffRequest">임직원인증->미정</a></li>
-        <li><a href="/MyPage/MyModify">회원정보수정</a></li>
-        <li><a href="/MyPage/Retire">회원탈퇴</a></li>
+        @if (string.IsNullOrEmpty(NoMemOrderCode))
+        {
+            <li><a href="#">내 포인트</a></li>
+            <li><a href="#">내 쿠폰북</a></li>
+            <li><a href="/MyPage/Qna">1:1문의</a></li>
+            <li><a href="/MyPage/MyWish">찜목록</a></li>
+            <li><a href="/MyPage/StaffRequest">임직원인증->미정</a></li>
+            <li><a href="/MyPage/MyModify">회원정보수정</a></li>
+            <li><a href="/MyPage/Retire">회원탈퇴</a></li>
+        }
     </ul>
 </div>
 <!--//mypage_menu-->

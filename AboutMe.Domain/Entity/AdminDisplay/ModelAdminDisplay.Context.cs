@@ -103,5 +103,191 @@ namespace AboutMe.Domain.Entity.AdminDisplay
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_DISPLAY_IMAGE_REMOVE", iDXParameter);
         }
+    
+        public virtual int SP_ADMIN_POPUP_ADD(string mEDIA_GBN, string tITLE, string iS_DISPLAY, Nullable<System.DateTime> dISPLAY_START, Nullable<System.DateTime> dISPLAY_END, Nullable<int> pOS_TOP, Nullable<int> pOS_LEFT, Nullable<int> sIZE_WIDTH, Nullable<int> sIZE_HEIGHT, string wEB_IMG, string wEB_LINK, string wEB_TARGET, string mOBILE_IMG, string mOBILE_LINK, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var mEDIA_GBNParameter = mEDIA_GBN != null ?
+                new ObjectParameter("MEDIA_GBN", mEDIA_GBN) :
+                new ObjectParameter("MEDIA_GBN", typeof(string));
+    
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            var dISPLAY_STARTParameter = dISPLAY_START.HasValue ?
+                new ObjectParameter("DISPLAY_START", dISPLAY_START) :
+                new ObjectParameter("DISPLAY_START", typeof(System.DateTime));
+    
+            var dISPLAY_ENDParameter = dISPLAY_END.HasValue ?
+                new ObjectParameter("DISPLAY_END", dISPLAY_END) :
+                new ObjectParameter("DISPLAY_END", typeof(System.DateTime));
+    
+            var pOS_TOPParameter = pOS_TOP.HasValue ?
+                new ObjectParameter("POS_TOP", pOS_TOP) :
+                new ObjectParameter("POS_TOP", typeof(int));
+    
+            var pOS_LEFTParameter = pOS_LEFT.HasValue ?
+                new ObjectParameter("POS_LEFT", pOS_LEFT) :
+                new ObjectParameter("POS_LEFT", typeof(int));
+    
+            var sIZE_WIDTHParameter = sIZE_WIDTH.HasValue ?
+                new ObjectParameter("SIZE_WIDTH", sIZE_WIDTH) :
+                new ObjectParameter("SIZE_WIDTH", typeof(int));
+    
+            var sIZE_HEIGHTParameter = sIZE_HEIGHT.HasValue ?
+                new ObjectParameter("SIZE_HEIGHT", sIZE_HEIGHT) :
+                new ObjectParameter("SIZE_HEIGHT", typeof(int));
+    
+            var wEB_IMGParameter = wEB_IMG != null ?
+                new ObjectParameter("WEB_IMG", wEB_IMG) :
+                new ObjectParameter("WEB_IMG", typeof(string));
+    
+            var wEB_LINKParameter = wEB_LINK != null ?
+                new ObjectParameter("WEB_LINK", wEB_LINK) :
+                new ObjectParameter("WEB_LINK", typeof(string));
+    
+            var wEB_TARGETParameter = wEB_TARGET != null ?
+                new ObjectParameter("WEB_TARGET", wEB_TARGET) :
+                new ObjectParameter("WEB_TARGET", typeof(string));
+    
+            var mOBILE_IMGParameter = mOBILE_IMG != null ?
+                new ObjectParameter("MOBILE_IMG", mOBILE_IMG) :
+                new ObjectParameter("MOBILE_IMG", typeof(string));
+    
+            var mOBILE_LINKParameter = mOBILE_LINK != null ?
+                new ObjectParameter("MOBILE_LINK", mOBILE_LINK) :
+                new ObjectParameter("MOBILE_LINK", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POPUP_ADD", mEDIA_GBNParameter, tITLEParameter, iS_DISPLAYParameter, dISPLAY_STARTParameter, dISPLAY_ENDParameter, pOS_TOPParameter, pOS_LEFTParameter, sIZE_WIDTHParameter, sIZE_HEIGHTParameter, wEB_IMGParameter, wEB_LINKParameter, wEB_TARGETParameter, mOBILE_IMGParameter, mOBILE_LINKParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_POPUP_SEL_Result> SP_ADMIN_POPUP_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, string iS_DISPLAY, string iS_EXPIRE, ObjectParameter tOTAL)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_VALUEParameter = sEARCH_VALUE != null ?
+                new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
+                new ObjectParameter("SEARCH_VALUE", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            var iS_EXPIREParameter = iS_EXPIRE != null ?
+                new ObjectParameter("IS_EXPIRE", iS_EXPIRE) :
+                new ObjectParameter("IS_EXPIRE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_POPUP_SEL_Result>("SP_ADMIN_POPUP_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, iS_DISPLAYParameter, iS_EXPIREParameter, tOTAL);
+        }
+    
+        public virtual int SP_ADMIN_POPUP_UPDATE_DISPLAY(Nullable<int> iDX, string iS_DISPLAY, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POPUP_UPDATE_DISPLAY", iDXParameter, iS_DISPLAYParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_ADMIN_POPUP_REMOVE(Nullable<int> iDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POPUP_REMOVE", iDXParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_ADMIN_POPUP_UPDATE(Nullable<int> iDX, string mEDIA_GBN, string tITLE, string iS_DISPLAY, Nullable<System.DateTime> dISPLAY_START, Nullable<System.DateTime> dISPLAY_END, Nullable<int> pOS_TOP, Nullable<int> pOS_LEFT, Nullable<int> sIZE_WIDTH, Nullable<int> sIZE_HEIGHT, string wEB_IMG, string wEB_LINK, string wEB_TARGET, string mOBILE_IMG, string mOBILE_LINK, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var mEDIA_GBNParameter = mEDIA_GBN != null ?
+                new ObjectParameter("MEDIA_GBN", mEDIA_GBN) :
+                new ObjectParameter("MEDIA_GBN", typeof(string));
+    
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            var dISPLAY_STARTParameter = dISPLAY_START.HasValue ?
+                new ObjectParameter("DISPLAY_START", dISPLAY_START) :
+                new ObjectParameter("DISPLAY_START", typeof(System.DateTime));
+    
+            var dISPLAY_ENDParameter = dISPLAY_END.HasValue ?
+                new ObjectParameter("DISPLAY_END", dISPLAY_END) :
+                new ObjectParameter("DISPLAY_END", typeof(System.DateTime));
+    
+            var pOS_TOPParameter = pOS_TOP.HasValue ?
+                new ObjectParameter("POS_TOP", pOS_TOP) :
+                new ObjectParameter("POS_TOP", typeof(int));
+    
+            var pOS_LEFTParameter = pOS_LEFT.HasValue ?
+                new ObjectParameter("POS_LEFT", pOS_LEFT) :
+                new ObjectParameter("POS_LEFT", typeof(int));
+    
+            var sIZE_WIDTHParameter = sIZE_WIDTH.HasValue ?
+                new ObjectParameter("SIZE_WIDTH", sIZE_WIDTH) :
+                new ObjectParameter("SIZE_WIDTH", typeof(int));
+    
+            var sIZE_HEIGHTParameter = sIZE_HEIGHT.HasValue ?
+                new ObjectParameter("SIZE_HEIGHT", sIZE_HEIGHT) :
+                new ObjectParameter("SIZE_HEIGHT", typeof(int));
+    
+            var wEB_IMGParameter = wEB_IMG != null ?
+                new ObjectParameter("WEB_IMG", wEB_IMG) :
+                new ObjectParameter("WEB_IMG", typeof(string));
+    
+            var wEB_LINKParameter = wEB_LINK != null ?
+                new ObjectParameter("WEB_LINK", wEB_LINK) :
+                new ObjectParameter("WEB_LINK", typeof(string));
+    
+            var wEB_TARGETParameter = wEB_TARGET != null ?
+                new ObjectParameter("WEB_TARGET", wEB_TARGET) :
+                new ObjectParameter("WEB_TARGET", typeof(string));
+    
+            var mOBILE_IMGParameter = mOBILE_IMG != null ?
+                new ObjectParameter("MOBILE_IMG", mOBILE_IMG) :
+                new ObjectParameter("MOBILE_IMG", typeof(string));
+    
+            var mOBILE_LINKParameter = mOBILE_LINK != null ?
+                new ObjectParameter("MOBILE_LINK", mOBILE_LINK) :
+                new ObjectParameter("MOBILE_LINK", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_POPUP_UPDATE", iDXParameter, mEDIA_GBNParameter, tITLEParameter, iS_DISPLAYParameter, dISPLAY_STARTParameter, dISPLAY_ENDParameter, pOS_TOPParameter, pOS_LEFTParameter, sIZE_WIDTHParameter, sIZE_HEIGHTParameter, wEB_IMGParameter, wEB_LINKParameter, wEB_TARGETParameter, mOBILE_IMGParameter, mOBILE_LINKParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_POPUP_INFO_Result> SP_ADMIN_POPUP_INFO(Nullable<int> iDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_POPUP_INFO_Result>("SP_ADMIN_POPUP_INFO", iDXParameter, rET_NUM, rET_MESSAGE);
+        }
     }
 }

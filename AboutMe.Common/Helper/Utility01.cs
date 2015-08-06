@@ -15,7 +15,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 
-
+using System.Web;
+using System.Collections.Specialized;
 
 
 namespace AboutMe.Common.Helper
@@ -112,6 +113,35 @@ namespace AboutMe.Common.Helper
             }
              */
         }
+
+        /**
+         * 객체를 uri 쿼리 형태로 변환
+         */
+        public static string ConvertObject2UriQuery(object o)
+        {
+
+            Type t = o.GetType();
+            NameValueCollection nvc = new NameValueCollection();
+            foreach (var p in t.GetProperties())
+            {
+                var name = p.Name;
+                var tmp = p.GetValue(o, null);
+                var value = tmp != null ? tmp.ToString() : "";
+                nvc.Add(name, value);
+            }
+
+            var result = ConstructQueryString(nvc);
+            return result;
+        }
+
+        private static string ConstructQueryString(NameValueCollection Params)
+        {
+            List<string> items = new List<string>();
+            foreach (string name in Params)
+                items.Add(String.Concat(name, "=", HttpUtility.UrlEncode(Params[name])));
+            return string.Join("&", items.ToArray());
+        }
+
 
     } //class
 }//namespace

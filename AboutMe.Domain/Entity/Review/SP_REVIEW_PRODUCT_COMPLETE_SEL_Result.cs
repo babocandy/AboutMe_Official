@@ -23,9 +23,6 @@ namespace AboutMe.Domain.Entity.Review
         public string P_NAME { get; set; }
         public string P_SUB_TITLE { get; set; }
         public string P_MAIN_IMG { get; set; }
-        public string P_INFO_DETAIL_WEB { get; set; }
-        public string P_INFO_DETAIL_MOBILE { get; set; }
-        public string PRIZE_GRADE { get; set; }
         public string CATE_GBN { get; set; }
         public string SKIN_TYPE { get; set; }
         public string COMMENT { get; set; }
@@ -33,5 +30,6 @@ namespace AboutMe.Domain.Entity.Review
         public string IS_PHOTO { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
         public string C_CATE_CODE { get; set; }
+        public string IS_BEST { get; set; }
     }
 }

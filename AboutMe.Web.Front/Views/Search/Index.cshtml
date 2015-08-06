@@ -27,6 +27,11 @@
             var f = document.bform;
             //alert('ok');
             //alert(f.P_CATE_CODE_3DEPTH[0].checked);
+            if (f.SEARCH_KEWWORD.value == '') {
+                alert('검색어를 입력해 주세요')
+                f.SEARCH_KEWWORD.focus();
+                return false;
+            }
             f.target = "";
             f.PAGE.value = 1;
             f.submit();
@@ -94,16 +99,41 @@
                     <ul class="product_list">
                         @foreach (var item in Model)
                         {
+                            string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                            string imgUrl2 = ViewBag.PRODUCT_PATH + "R270_" + item.OTHER_IMG1;
                             <li>
                                 <a href="/shopping/detail?pcode=@item.P_CODE" class="list">
                                     <span class="photo">
-                                        <img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" data-pic="@ViewBag.PRODUCT_PATH@item.OTHER_IMG1" class="item" alt="" />
+                                        <img src="@imgUrl1" data-pic="@imgUrl2" class="item" alt="" />
                                     </span>
                                     <span class="info">
-                                        <span class="ico ico_new">NEW</span>
+                                        @if (!string.IsNullOrEmpty(item.ICON_YN))
+                                        {
+                                            if (item.ICON_YN.IndexOf('B') != -1)
+                                            { <text> <span class="ico ico_best">BEST</span></text> }
+                                            if (item.ICON_YN.IndexOf('S') != -1)
+                                            { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                            if (item.ICON_YN.IndexOf('N') != -1)
+                                            { <text> <span class="ico ico_new">NEW</span></text> }
+                                            if (item.ICON_YN.IndexOf('C') != -1)
+                                            { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                                        {
+                                            if (item.PMO_PRODUCT_CATEGORY == "01")
+                                            { <text> <span class="ico ico_set">SET</span></text> }
+                                            if (item.PMO_PRODUCT_CATEGORY == "02")
+                                            { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                            if (item.PMO_PRODUCT_CATEGORY == "03")
+                                            { <text> <span class="ico ico_time">TIME</span></text> }
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                                        {
+                                            <text> <span class="ico ico_coupon">COUPON</span></text>
+                                        }
                                         <span class="title">
-                                            <em class="product_tit">@item.P_SUB_TITLE</em>
-                                            <em class="product_name">@item.P_NAME</em>
+                                            <em class="product_tit">@(new HtmlString(item.P_SUB_TITLE))</em>
+                                            <em class="product_name">@(new HtmlString(item.P_NAME))</em>
                                         </span>
                                         <em class="price">
                                             <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
@@ -127,148 +157,18 @@
                         </div>
                         <!--//검색결과없음-->
                         </text>}
-
-                        @*<li>
-                            <a href="/shopping/detail.asp" class="list">
-                                <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
-                                </span>
-                                <span class="info">
-                                    <span class="ico ico_new">NEW</span>
-                                    <span class="title">
-                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                        <em class="product_name">에센셜 석류 마스크 시트</em>
-                                    </span>
-                                    <em class="price">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </em>
-                                </span>
-                            </a>
-                            <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
-                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
-                        </li>
-                        <li>
-                            <a href="/shopping/detail.asp" class="list">
-                                <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
-                                </span>
-                                <span class="info">
-                                    <span class="ico ico_new">NEW</span>
-                                    <span class="title">
-                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                        <em class="product_name">에센셜 석류 마스크 시트</em>
-                                    </span>
-                                    <em class="price">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </em>
-                                </span>
-                            </a>
-                            <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
-                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
-                        </li>
-                        <li>
-                            <a href="/shopping/detail.asp" class="list">
-                                <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
-                                </span>
-                                <span class="info">
-                                    <span class="ico ico_new">NEW</span>
-                                    <span class="title">
-                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                        <em class="product_name">에센셜 석류 마스크 시트</em>
-                                    </span>
-                                    <em class="price">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </em>
-                                </span>
-                            </a>
-                            <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
-                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
-                        </li>
-                        <li>
-                            <a href="/shopping/detail.asp" class="list">
-                                <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
-                                </span>
-                                <span class="info">
-                                    <span class="ico ico_new">NEW</span>
-                                    <span class="title">
-                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                        <em class="product_name">에센셜 석류 마스크 시트</em>
-                                    </span>
-                                    <em class="price">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </em>
-                                </span>
-                            </a>
-                            <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
-                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
-                        </li>
-                        <li>
-                            <a href="/shopping/detail.asp" class="list">
-                                <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
-                                </span>
-                                <span class="info">
-                                    <span class="ico ico_new">NEW</span>
-                                    <span class="title">
-                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                        <em class="product_name">에센셜 석류 마스크 시트</em>
-                                    </span>
-                                    <em class="price">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </em>
-                                </span>
-                            </a>
-                            <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
-                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
-                        </li>
-                        <li>
-                            <a href="/shopping/detail.asp" class="list">
-                                <span class="photo">
-                                    <img src="/aboutCom/images/sample/thumb240240_f.jpg" data-pic="/aboutCom/images/sample/thumb240240_b.jpg" class="item" alt="" />
-                                </span>
-                                <span class="info">
-                                    <span class="ico ico_new">NEW</span>
-                                    <span class="title">
-                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                        <em class="product_name">에센셜 석류 마스크 시트</em>
-                                    </span>
-                                    <em class="price">
-                                        <del>32,000원</del>
-                                        <strong>25,000</strong>원
-                                    </em>
-                                </span>
-                            </a>
-                            <a href="#" class="cart"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
-                            <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
-                        </li>*@
                     </ul>
                     <!--//상품리스트-->
                 </div>
                 <!--//상품리스트-->
                 <!--페이징-->
-                <div class="paging">
-                    <a href="#" class="prev">이전</a>
-                    <!--현재 페이지-->
-                    <strong>1</strong>
-                    <!--//현재 페이지-->
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">7</a>
-                    <a href="#">8</a>
-                    <a href="#">9</a>
-                    <a href="#">10</a>
-                    <a href="#" class="next">다음</a>
-                </div>
+                @{
+                        //paging 파라메터
+                        string PagingParam = "";
+                        PagingParam = PagingParam + "&SORT_GBN=" + ViewBag.SORT_GBN;
+                        PagingParam = PagingParam + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
+                }
+                @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = PagingParam });}
                 <!--//페이징-->
             </div>
         </div>

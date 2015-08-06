@@ -57,7 +57,7 @@
                                 var bx_pcount = bx.attr("data-pcount");
                                 var bx_price = bx.attr("data-price");
                                 var bx_total = bx_price * bx_pcount;
-                                bx.val('');
+                                var bx_sale = "0";
                                 var soptionObj = $("#COUPON_" + bx_pcode + " option:selected");
                                 var optionObj = $("#COUPON_" + bx_pcode + " option[value='']");
                                
@@ -66,7 +66,11 @@
                                 bx.next("div").children('a').html(bx.children("option:eq(" + bx[0].selectedIndex + ")").text());
                                 $("#COUPON_PRICE_" + bx_pcode).html(formatnumber(bx_total));
                                 $("#COUPON_PRICE_" + bx_pcode).attr("data-couponprice", bx_total);
-                                CalSumPrice();
+
+                                $("#COUPON_AMT_" + bx_pcode).html(formatnumber(bx_sale));
+                                $("#COUPON_AMT_" + bx_pcode).attr("data-couponamt", bx_sale);
+
+                                //CalSumPrice();
                             }
                             else {
                                 $(selectbox).val('');
@@ -87,7 +91,7 @@
 
             var saleprice = 0;
             var product_price = P_Price;
-
+            
             if (RATE_OR_MONEY == "R") {
                 //단가 쿠폰적용하여 수량을 곱해줌
                 if (P_Price > 0 && COUPON_DISCOUNT_RATE > 0) {
@@ -105,10 +109,16 @@
             if (saleprice > 0) {
                 totalPrice = totalPrice - saleprice;
             }
-
+            if (saleprice == "")
+            {
+                saleprice = "0";
+            }
             $("#COUPON_PRICE_" + pcode).html(formatnumber(totalPrice));
             $("#COUPON_PRICE_" + pcode).attr("data-couponprice", totalPrice);
-            CalSumPrice();
+            $("#COUPON_AMT_" + pcode).html(formatnumber(saleprice));
+            $("#COUPON_AMT_" + pcode).attr("data-couponamt", saleprice);
+
+            //CalSumPrice();
         }
 
         function setCoupon()
@@ -163,47 +173,49 @@
             <div class="coupon_used">
                 <!-- 상품 쿠폰 -->
                 <div class="product_coupon">
-                    <div class="saleapply">
-                        <ul>
-                            <li class="pprice">
-                                <dl>
-                                    <dt>총 상품금액</dt>
-                                    <dd><strong id="total_order_price">0</strong>원</dd>
-                                </dl>
-                            </li>
-                            <li class="sprice">
-                                <dl>
-                                    <dt>총 할인 금액</dt>
-                                    <dd><strong id="total_sale_price">0</strong>원</dd>
-                                </dl>
-                            </li>
-                            <li class="tprice">
-                                <dl>
-                                    <dt>총 할인적용금액</dt>
-                                    <dd><strong id="total_price">0</strong>원</dd>
-                                </dl>
-                            </li>
-                        </ul>
-                    </div>
+                    
                     <div class="prolist">
                         <ul>
                             @foreach (var item in @Model.OrderList)
-                            { 
-                            <li class="pro_info" data-pcode="@item.P_CODE"><a href="#none" name="@item.P_CODE"></a>
-                                <!-- 이미지사이즈 96x96 -->
-                                <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></div>
-                                <div class="detail">
-                                    <p class="tit">@item.P_NAME</p>
-                                    <p class="stit">피부 노화를 집중적이고 총체적으로 해결해주는 2중 기능성 발효공법 에멀전</p>
-                                </div>
-                                <div class="couponsel" >
-                                    <select class="selectstyleb" title="" name="COUPON_@item.P_CODE" id="COUPON_@item.P_CODE" data-pcode="@item.P_CODE" data-pcount="@item.P_COUNT" data-price="@item.EMP_DISCOUNT_PRICE" data-detail-idx="@item.ORDER_DETAIL_IDX" onchange="couponSelect(this,'@item.P_CODE')">
-                                        @SelectOption(@item.P_CODE, @item.IDX_COUPON_NUMBER)
-                                    </select>
-                                    <p class="saleprice">주문금액 <strong id="ORDER_PRICE_@item.P_CODE" data-orderprice="@item.ORDER_PRICE">@item.ORDER_PRICE.ToString("#,#0.")</strong>원</p>
-                                    <p class="saleprice">할인금액 <strong id="COUPON_PRICE_@item.P_CODE" data-couponprice="@item.COUPON_DISCOUNT_PRICE">@item.COUPON_DISCOUNT_PRICE.ToString("#,#0.")</strong>원</p>
-                                </div>
-                            </li>
+                            {
+                                <li class="coupon_item" data-pcode="@item.P_CODE"><a href="#none" name="@item.P_CODE"></a>
+                                    <div class="pro_info">
+                                        <!-- 이미지사이즈 96x96 -->
+                                        <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">@item.P_NAME</p>
+                                            <p class="stit">피부 노화를 집중적이고 총체적으로<br />해결해주는 2중 기능성 발효공법 에멀전</p>
+                                        </div>
+                                        <div class="couponsel">
+                                            <select class="selectstyleb" title="" name="COUPON_@item.P_CODE" id="COUPON_@item.P_CODE" data-pcode="@item.P_CODE" data-pcount="@item.P_COUNT" data-price="@item.EMP_DISCOUNT_PRICE" data-detail-idx="@item.ORDER_DETAIL_IDX" onchange="couponSelect(this,'@item.P_CODE')">
+                                                @SelectOption(@item.P_CODE, @item.IDX_COUPON_NUMBER)
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="saleapply">
+                                        <ul>
+                                            <li class="pprice">
+                                                <dl>
+                                                    <dt>상품금액</dt>
+                                                    <dd><strong id="ORDER_PRICE_@item.P_CODE" data-orderprice="@item.ORDER_PRICE">@item.ORDER_PRICE.ToString("#,#0.")</strong>원</dd>
+                                                </dl>
+                                            </li>
+                                            <li class="sprice">
+                                                <dl>
+                                                    <dt>쿠폰할인</dt>
+                                                    <dd><strong id="COUPON_AMT_@item.P_CODE" data-couponamt="@item.COUPON_DISCOUNT_AMT">@item.COUPON_DISCOUNT_AMT.ToString("#,#0.")</strong>원</dd>
+                                                </dl>
+                                            </li>
+                                            <li class="tprice">
+                                                <dl>
+                                                    <dt>할인적용금액</dt>
+                                                    <dd><strong id="COUPON_PRICE_@item.P_CODE" data-couponprice="@item.COUPON_DISCOUNT_PRICE">@item.COUPON_DISCOUNT_PRICE.ToString("#,#0.")</strong>원</dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
                             }
                         </ul>
                     </div>
@@ -220,7 +232,7 @@
     <!-- //할인 쿠폰 사용 팝업-->
     <script language="javascript">
         $(document).ready(function () {
-            CalSumPrice();
+          //  CalSumPrice();
         });
     </script>
 </body>

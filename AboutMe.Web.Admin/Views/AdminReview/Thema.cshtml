@@ -1,0 +1,91 @@
+﻿@model AboutMe.Web.Admin.Models.AdminReviewThemaInputViewModel
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
+}
+
+
+@section Scripts{
+    <script>
+
+
+        function closePopup() {
+            if (window.opener) {
+                window.opener.location.reload(true);
+            }
+            self.close();
+
+        }
+
+        function update(frm) {
+            
+            if (confirm("수정하시겠습니까?")) {
+                frm.submit();
+            }
+        }
+
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+            //closePopup();
+            alert("수정되었습니다.");
+        }
+
+    </script>
+}
+
+
+@section Body{
+    <!--content-->
+    <div class="content">
+        @{
+            var cnt = 1;
+        }
+        @foreach (var item in Model.Thema)
+        {
+            using (Html.BeginForm("SaveThema", "AdminReview", FormMethod.Post, new { }))
+            {
+                @Html.AntiForgeryToken()
+            
+                <input type="hidden" name="IDX" value="@item.IDX" />
+            <table class="table table_row mb10" style="min-width:500px;">
+                <colgroup><col width="15%" /><col width="" /></colgroup>
+
+                <tr>
+                    <th>테마명 @cnt</th>
+                    <td><input type="text" style="width:50%" class="input-sm" name="TITLE" value="@item.TITLE"></td>
+                </tr>
+                <tr>
+                    <th>테그 @cnt</th>
+                    <td><input type="text" style="width:50%" class="input-sm" name="TAG" value="@item.TAG"> ,로 중복 지정 가능</td>
+                </tr>
+                <tr>
+                    <th>사용여부</th>
+                    <td>
+                        <input type="hidden" name="IDX" value="@item.IDX" />
+
+                        <label for="sort1"><input type="radio" name="IS_DISPLAY" value="Y" id="sort1" @(item.IS_DISPLAY == "Y" ? "checked" : "")><span class="txt mr5">전시</span></label>
+                        <label for="sort2"><input type="radio" name="IS_DISPLAY" value="N" id="sort2" @(item.IS_DISPLAY == "N" ? "checked" : "")><span class="txt mr5">비전시</span></label>
+                    </td>
+                </tr>
+            </table>
+
+    <div class="tar mt0 mb10">
+        <a class="btn btn-default small" href="#" onclick="update(this.parentElement.parentElement);return false;">저장</a>
+    </div>
+
+            }
+
+            ++cnt;
+
+        }
+
+        <div class="tac mt0 mb10">
+            <a class="btn btn-default small" href="#" onclick="self.close();return false;">닫기</a>
+        </div>
+    </div>
+    <!--//content-->
+}

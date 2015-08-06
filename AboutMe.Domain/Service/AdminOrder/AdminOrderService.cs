@@ -122,7 +122,7 @@ namespace AboutMe.Domain.Service.AdminOrder
             }
         }
         #endregion
-        
+
         #region 주문상세상태변경
         public void OrderDetailStatusUpdate(int ORDER_DETAIL_IDX, string TOBE_STATUS, string REG_ID)
         {
@@ -133,6 +133,61 @@ namespace AboutMe.Domain.Service.AdminOrder
         }
         #endregion
 
-        
+        #region 주문Master상태변경
+        public void OrderMasterStatusUpdate(int ORDER_IDX, string TOBE_STATUS, string REG_ID)
+        {
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE(ORDER_IDX, TOBE_STATUS, REG_ID);
+            }
+        }
+        #endregion
+
+        #region 부분취소 목록
+        public List<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result> OrderPartCancelList(int ORDER_IDX)
+        {
+            List<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result> lst = new List<SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result>();
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                lst = EfContext.SP_ADMIN_ORDER_PART_CANCEL_SELECT(ORDER_IDX).ToList();
+            }
+            return lst;
+        }
+        #endregion
+
+        #region 부분취소 select top 1
+        public SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result OrderPartCancelTopSelect(int ORDER_IDX)
+        {
+            SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result result = new SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result();
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                result = EfContext.SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT(ORDER_IDX).FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+        #region 부분취소 입력
+        public void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP)
+        {
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_PART_CANCEL_INSERT(ORDER_IDX, PAT_TID, OLD_PAT_TID, CANCEL_PRICE, REMAINS_PRICE, EMAIL, PRTC_REMAINS, PRTC_TYPE, PRTC_PRICE, PRTC_CNT, REG_ID, REG_IP);
+            }
+        }
+        #endregion
+
+
+        #region 송장엑셀다운로드
+        public List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result> OrderDeliveryExcelList(string OrderIdxStr)
+        {
+            List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result> lst = new List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result>();
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                lst = EfContext.SP_ADMIN_ORDER_TO_DELIVERYEXCEL(OrderIdxStr).ToList();
+            }
+            return lst;
+        }
+        #endregion
     }
 }

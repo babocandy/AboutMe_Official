@@ -1,12 +1,17 @@
 ﻿@model AboutMe.Web.Front.Models.MyReviewCompleteViewModel
-
+@using AboutMe.Web.Front.Controllers
+@using AboutMe.Domain.Entity.Review
 @{
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+
+    var myController = ViewContext.Controller as MyReviewController;
 }
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/mypage.css" rel="stylesheet">
 }
+
+
 
 @section Body{
     <div class="wrap mypage">
@@ -35,60 +40,62 @@
                             <div class="pur_review accordion">
 
     @{
-                                    var i = 0;
-                                    var count = Model.Reviews.Count;
-
+        var i = 0;
+        var count = Model.Reviews.Count;
     }
     @foreach (var item in Model.Reviews)
     {
 
-        var cssClassName = "";
-        var selectContent = "";
+                        var cssClassName = "";
+                        var selectContent = "";
         
-        if (i == 0)
-        {
-            cssClassName = "first";
-            selectContent = "cnt";
-        }
-        else if (i >= count - 1)
-        {
-            cssClassName = "last";
+                        if (i == 0)
+                        {
+                            cssClassName = "first";
+                            selectContent = "cnt";
+                        }
+                        else if (i >= count - 1)
+                        {
+                            cssClassName = "last";
             
-        }
+                        }
 
-         <div class="cont accordcont @cssClassName @selectContent">
+                         <div class="cont accordcont @cssClassName @selectContent">
 
-             <div class="subj accordsubject">
-                 <div class="writer">
-                     <span class="date">@item.INS_DATE</span>
-                     @if (item.IS_PHOTO)
-                     {
-                         <!--사진이 등록된 리뷰일 때 사용-->
-                         <span class="ico_photo">포토리뷰</span>
-                         <!--//사진이 등록된 리뷰일 때 사용-->
-                     }
-                    
+                             <div class="subj accordsubject">
 
-                     <span class="userage">@item.M_BIRTHDAY, @item.M_SEX<em class="skin @item.SKIN_TYPE"></em></span>
-                 </div>
-                 <p class="txtdotdot" style="">
-                   @Html.Raw(item.COMMENT);
-                 </p>
-             </div>
-             <div class="contxt accordtxt">
-                 <div class="writer">
-                     <span class="userage">@item.M_BIRTHDAY, @item.M_SEX<em class="skin @item.SKIN_TYPE"></em></span>
-                 </div>
-                @Html.Raw(item.COMMENT);
-                 @if (item.IS_PHOTO )
-                 {
-                    <img src="@ViewBag.img_path_review@item.ADD_IMAGE" alt="" />
-                 }                
-             </div>
+                                 <div class="writer">
+                                     <span class="userage"><em class="skin @(item.SKIN_TYPE)"></em><em class="age">@item.M_BIRTHDAY, @item.M_SEX</em></span>
+                                     <span class="date">@item.INS_DATE</span>
+                                 </div>
+                                 <p class="txtdotdot">
+                                     @Html.Raw(item.COMMENT)
+                                 </p>
+                                    @if (item.IS_PHOTO)
+                                    {
+                                        <!--사진이 등록된 리뷰일 때 사용-->
+                                        <span class="ico_photo">포토리뷰</span>
+                                        <!--//사진이 등록된 리뷰일 때 사용-->
+                                    }
 
-        </div>
+                             </div>
+                             <div class="contxt accordtxt">
 
-        i++;
+                                 <div class="writer">
+                                     <span class="userage"><em class="skin @(item.SKIN_TYPE)"></em><em class="age">@item.M_BIRTHDAY, @item.M_SEX</em></span>
+                                 </div>
+                                 @Html.Raw(item.COMMENT.Replace("\r\n", "<br />"))
+                                 @if (item.IS_PHOTO)
+                                 {
+                                     <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
+                                 } 
+
+                                 <a href="#none" class="btn_modify btn_gray_w96h38" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")', '', 780, 600); return false;">수정</a>             
+                             </div>
+
+                        </div>
+
+                        i++;
                     }
 
 
@@ -98,7 +105,7 @@
                 <!--페이징-->
                 @{
 
-                                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = Model.PageSize, CurrentPage = Model.PageNo, QueryStr = "" });
+                    Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = Model.PageSize, CurrentPage = Model.PageNo, QueryStr = "" });
                 }
                 <!--//페이징-->
             </div>

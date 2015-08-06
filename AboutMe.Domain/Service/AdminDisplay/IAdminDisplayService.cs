@@ -11,11 +11,18 @@ namespace AboutMe.Domain.Service.AdminDisplay
 
     public interface IAdminDisplayService
     {
-        void SaveImageTypeDisplayer(int? idx, string kind, string subKind = null, string url = null, string img = null, int? seq = null);
-        Tuple<string, string> SaveProductTypeDisplayer(int? idx, string kind, string subKind = null, string pcode = null, int? seq = null);
-        Tuple<string, string> SaveLinkTypeDisplayer(int? idx, string kind, string subKind = null, int? seq = null, string title1 = null, string title2 = null, string url = null);
+        void SaveImageTypeDisplayer(DisplayerParam param);
+        Tuple<string, string> SaveProductTypeDisplayer(DisplayerParam param);
+        Tuple<string, string> SaveLinkTypeDisplayer(DisplayerParam param);
         void RemoveDisplayer(int? idx);
         void RemoveOnlyImageInDisplayer(int? idx);
-        List<SP_ADMIN_DISPLAY_SEL_Result> GetDisplayerList(string kind, string subKind = null, int? seq = null);
+        List<SP_ADMIN_DISPLAY_SEL_Result> GetDisplayerList(DisplayerParam param);
+
+        Tuple<string, string> PopupAdd(PopupParam param);
+        Tuple<List<SP_ADMIN_POPUP_SEL_Result>, int> PopupSel(PopupSearchParam param);
+        Tuple<string, string> PopupUpdateDisplay(PopupParam param);
+        Tuple<string, string> PopupRemove(PopupParam param);
+        Tuple<SP_ADMIN_POPUP_INFO_Result, string, string> PopupInfo(int? idx);
+        Tuple<string, string> PopupUpdate(PopupParam param);
     }
 }

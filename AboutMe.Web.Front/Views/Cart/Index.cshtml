@@ -167,8 +167,8 @@
     }
 
     function jjim_chkinsert(b) {
-
-        @if (Model.UserProfile.IS_LOGIN)
+        if ($(b).hasClass("on")) {
+            @if (Model.UserProfile.IS_LOGIN)
             {
                     @Html.Raw(new HtmlString("CheckAllWishInsert(b); "));
             }
@@ -176,7 +176,7 @@
             {
                     @Html.Raw(new HtmlString("isJJimLogin();"));
             }
-
+        }
     }
 
     //선택전체 찜
@@ -427,6 +427,7 @@
             <form name="frm" action="">
                 <fieldset>
                     <legend>쇼핑백 상품 및 가격 폼</legend>
+                   
                     <div class="row1 tabletypeb">
                         <table summary="상품/옵션정보, 상품금액, 수량, 예상적립 포인트, 주문금액">
                             <caption>쇼핑백 상품 확인</caption>

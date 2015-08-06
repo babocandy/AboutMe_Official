@@ -14,6 +14,20 @@ namespace AboutMe.Domain.Service.Product
 
         #region 상품
 
+        #region 상품 메인 리스트
+        public List<SP_PRODUCT_MAIN_SEL_Result> GetProductMainList(string cate)
+        {
+
+            List<SP_PRODUCT_MAIN_SEL_Result> lst = new List<SP_PRODUCT_MAIN_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_PRODUCT_MAIN_SEL(cate).ToList();
+            }
+
+            return lst;
+        }
+        #endregion
+
         #region 상품 리스트
         public List<SP_PRODUCT_SEL_Result> GetProductList(Product_front_search_entity product_front_search_entity)
         {
@@ -27,6 +41,26 @@ namespace AboutMe.Domain.Service.Product
                  //{
                  //      ProductContext.Dispose();
                  //}
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region 상품 모바일 리스트
+        public List<SP_PRODUCT_MOBILE_SEL_Result> GetProductMobileList(Product_front_search_entity product_front_search_entity)
+        {
+
+            List<SP_PRODUCT_MOBILE_SEL_Result> lst = new List<SP_PRODUCT_MOBILE_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                //try {
+                lst = ProductContext.SP_PRODUCT_MOBILE_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.P_CATE_CODE, product_front_search_entity.C_CATE_CODE, product_front_search_entity.L_CATE_CODE, product_front_search_entity.SORT_GBN, product_front_search_entity.P_OUTLET_YN, product_front_search_entity.P_CATE_CODE_3DEPTH).ToList();
+                //}catch
+                //{
+                //      ProductContext.Dispose();
+                //}
             }
 
             return lst;
@@ -73,6 +107,19 @@ namespace AboutMe.Domain.Service.Product
 
         #endregion
 
+        #region 상품 모바일 VIEW
+        public SP_PRODUCT_MOBILE_DETAIL_VIEW_Result ViewProductMobile(string PCODE)
+        {
+
+            SP_PRODUCT_MOBILE_DETAIL_VIEW_Result productView;
+
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                productView = ProductContext.SP_PRODUCT_MOBILE_DETAIL_VIEW(PCODE).FirstOrDefault();
+            }
+            return productView;
+        }
+        #endregion
 
         #region 상품 검색 리스트
         public List<SP_PRODUCT_SEARCH_SEL_Result> GetProductSearchList(Product_front_search_entity product_front_search_entity)
@@ -83,6 +130,26 @@ namespace AboutMe.Domain.Service.Product
             {
                 //try {
                 lst = ProductContext.SP_PRODUCT_SEARCH_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.SORT_GBN, product_front_search_entity.SEARCH_KEYWORD).ToList();
+                //}catch
+                //{
+                //      ProductContext.Dispose();
+                //}
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region 상품 모바일 검색 리스트
+        public List<SP_PRODUCT_MOBILE_SEARCH_SEL_Result> GetProductMobileSearchList(Product_front_search_entity product_front_search_entity)
+        {
+
+            List<SP_PRODUCT_MOBILE_SEARCH_SEL_Result> lst = new List<SP_PRODUCT_MOBILE_SEARCH_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                //try {
+                lst = ProductContext.SP_PRODUCT_MOBILE_SEARCH_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, product_front_search_entity.SORT_GBN, product_front_search_entity.SEARCH_KEYWORD).ToList();
                 //}catch
                 //{
                 //      ProductContext.Dispose();
@@ -117,6 +184,17 @@ namespace AboutMe.Domain.Service.Product
         }
         #endregion
 
+        #region 상품 mypage skin type 리스트
+        public List<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result> GetProductMypageSkinTypeList(string cate)
+        {
+            List<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result> lst = new List<SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_PRODUCT_MYPAGE_SKIKTYPE_SEL(cate).ToList();
+            }
+            return lst;
+        }
+        #endregion
 
         #endregion
 
