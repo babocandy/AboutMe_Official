@@ -219,5 +219,70 @@ namespace AboutMe.Domain.Entity.AdminReview
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>("SP_ADMIN_REVIEW_EXP_MASTER_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, fROM_DATEParameter, tO_DATEParameter, iS_STATE_10Parameter, iS_STATE_20Parameter, iS_STATE_30Parameter, iS_AUTH_YParameter, iS_AUTH_NParameter, tOTAL);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result> SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, ObjectParameter tOTAL)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_VALUEParameter = sEARCH_VALUE != null ?
+                new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
+                new ObjectParameter("SEARCH_VALUE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>("SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, tOTAL);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result> SP_ADMIN_REVIEW_EXP_MASTER_DETAIL(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result>("SP_ADMIN_REVIEW_EXP_MASTER_DETAIL", iDXParameter);
+        }
+    
+        public virtual int SP_ADMIN_REVIEW_EXP_MEMBER_DEL(string m_ID, Nullable<int> eXP_MASTER_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var eXP_MASTER_IDParameter = eXP_MASTER_ID.HasValue ?
+                new ObjectParameter("EXP_MASTER_ID", eXP_MASTER_ID) :
+                new ObjectParameter("EXP_MASTER_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_DEL", m_IDParameter, eXP_MASTER_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> SP_ADMIN_REVIEW_EXP_MEMBER_SEL(Nullable<int> eXP_MASTER_ID)
+        {
+            var eXP_MASTER_IDParameter = eXP_MASTER_ID.HasValue ?
+                new ObjectParameter("EXP_MASTER_ID", eXP_MASTER_ID) :
+                new ObjectParameter("EXP_MASTER_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result>("SP_ADMIN_REVIEW_EXP_MEMBER_SEL", eXP_MASTER_IDParameter);
+        }
+    
+        public virtual int SP_ADMIN_REVIEW_EXP_MASTER_UDATE(Nullable<int> iDX, string iS_AUTH)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var iS_AUTHParameter = iS_AUTH != null ?
+                new ObjectParameter("IS_AUTH", iS_AUTH) :
+                new ObjectParameter("IS_AUTH", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MASTER_UDATE", iDXParameter, iS_AUTHParameter);
+        }
     }
 }

@@ -12,6 +12,16 @@
           <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
           <Parameter Name="TAG" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_VALUE" Type="varchar" Mode="In" />
+          <Parameter Name="TOTAL" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_REVIEW_EXP_MASTER_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_REVIEW_EXP_MASTER_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
           <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
@@ -33,10 +43,21 @@
           <Parameter Name="IS_AUTH_N" Type="varchar" Mode="In" />
           <Parameter Name="TOTAL" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="SP_ADMIN_REVIEW_EXP_MASTER_UDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="IS_AUTH" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_REVIEW_EXP_MEMBER_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="EXP_MASTER_ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_REVIEW_EXP_MEMBER_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EXP_MASTER_ID" Type="int" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="M_NAME" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_REVIEW_EXP_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EXP_MASTER_ID" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_REVIEW_PRODUCT_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
@@ -131,6 +152,27 @@
             <Parameter Name="IS_AUTH_N" Mode="In" Type="String" />
             <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL" ReturnType="Collection(AboutMeModel6.SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_VALUE" Mode="In" Type="String" />
+            <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_EXP_MASTER_DETAIL" ReturnType="Collection(AboutMeModel6.SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_EXP_MEMBER_DEL">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="EXP_MASTER_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_EXP_MEMBER_SEL" ReturnType="Collection(AboutMeModel6.SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result)">
+          <Parameter Name="EXP_MASTER_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_EXP_MASTER_UDATE">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="IS_AUTH" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_REVIEW_PRODUCT_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="true" />
@@ -198,6 +240,25 @@
           <Property Type="String" Name="IS_STATE" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="IS_AUTH_LBL" Nullable="true" MaxLength="3" />
           <Property Type="String" Name="IS_STATE_LBL" Nullable="true" MaxLength="3" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="true" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result">
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="FROM_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TO_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IS_AUTH" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -292,6 +353,39 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel6.SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_EXP_MASTER_DETAIL" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_EXP_MASTER_DETAIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel6.SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result">
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
+                <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
+                <ScalarProperty Name="IS_AUTH" ColumnName="IS_AUTH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_EXP_MEMBER_DEL" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_EXP_MEMBER_DEL" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_EXP_MEMBER_SEL" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_EXP_MEMBER_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel6.SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_EXP_MASTER_UDATE" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_EXP_MASTER_UDATE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

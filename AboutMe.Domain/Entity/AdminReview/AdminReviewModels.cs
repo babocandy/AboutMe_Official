@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
 namespace AboutMe.Domain.Entity.AdminReview
 {
     public class AdminReviewRouteParam
@@ -104,5 +104,20 @@ namespace AboutMe.Domain.Entity.AdminReview
 
         public string IS_AUTH_Y { get; set; }
         public string IS_AUTH_N { get; set; }
+    }
+    
+    public class AdminReviewExpFindProductRouteParam
+    {
+        public AdminReviewExpFindProductRouteParam()
+        {
+            PAGE = 1;
+            PAGE_SIZE = 10;
+        }
+
+        public int PAGE { get; set; }
+        public int PAGE_SIZE { get; set; }
+
+        public string SEARCH_KEY { get; set; }
+        public string SEARCH_VALUE { get; set; }
     }
 }

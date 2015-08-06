@@ -23,8 +23,8 @@ using AboutMe.Common.Data;
 using AboutMe.Domain.Service.AdminReview;
 using AboutMe.Domain.Entity.AdminReview;
 
-using AboutMe.Domain.Entity.AdminProduct;
-using AboutMe.Domain.Service.AdminProduct;
+//using AboutMe.Domain.Entity.AdminProduct;
+//using AboutMe.Domain.Service.AdminProduct;
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -32,12 +32,12 @@ namespace AboutMe.Web.Admin.Controllers
     {
 
         private IAdminReviewService _service;
-        private IAdminProductService _service_p;
+       // private IAdminProductService _service_p;
 
-        public AdminReviewExpController(IAdminReviewService s, IAdminProductService p )
+        public AdminReviewExpController(IAdminReviewService s )
         {
             this._service = s;
-            this._service_p = p;
+            //this._service_p = p;
         }
 
         // GET: AdminReviewExp
@@ -186,15 +186,96 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize]
-        public ActionResult SelProduct(ProductSearch_Entity p)
+        public ActionResult Detail(int? id)
+        {
+            AdminReviewExpMasterDetailViewModel model = new AdminReviewExpMasterDetailViewModel();
+
+            if (id != null)
+            {
+                model.IDX = id;
+                model.Detail = _service.ReviewExpMasterDetail(id);
+                model.Members = _service.ReviewExpMemberList(id);
+            }
+           
+            return View(model);
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult Update()
+        {
+            int? idx = Convert.ToInt32( Request.Form["IDX"] );
+            var isauth = Request.Form["IS_AUTH"];
+
+            if (idx !=null && isauth != null)
+            {
+                _service.ReviewExpMasterUpdate(idx, isauth);
+                TempData["ResultNum"] = "0";
+            }
+
+            return Redirect( Request.UrlReferrer.ToString() );
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult AddIds()
+        {
+            int? masterIdx = Convert.ToInt32(Request.Form["IDX"]);
+            string ids = Request.Form["IDS"];
+
+            if (masterIdx != null && ids != null)
+            {
+                string[] arr = ids.Split(',');
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    string memberId = arr[i].Trim();
+
+                    AdminReviewExpMemberParamToInputDB p = new AdminReviewExpMemberParamToInputDB();
+                    p.MASTER_IDX = masterIdx;
+                    p.M_ID = memberId;
+                    _service.ReviewExpMemberInsert(p);
+                }
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult DelIds()
+        {
+            int? masterIdx = Convert.ToInt32(Request.Form["IDX"]);
+            string ids = Request.Form["IDS"];
+            Debug.WriteLine("ids: " + ids);
+            if ( masterIdx != null && ids != null)
+            {
+                string[] arr = ids.Split(',');
+                Debug.WriteLine("arr: " + arr);
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    string memberId =  arr[i].Trim();
+
+                    Debug.WriteLine(memberId);
+
+
+                    _service.ReviewExpMemberDelete(memberId, masterIdx);
+                }
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+
+        [CustomAuthorize]
+        public ActionResult SelProduct(AdminReviewExpFindProductRouteParam p)
         {
             AdminReviewExpFindProductViewModel model = new AdminReviewExpFindProductViewModel();
-            //p.Page = 1;
-            //p.PageSize = 10;
-            p.searchDisplayY = "Y";
 
-            model.List = _service_p.GetAdminProductList(p);
-            model.Total = _service_p.GetAdminProductCnt(p);
+            var tp = _service.ReviewExpFindProductList(p);
+
+            model.List = tp.Item1;
+            model.Total = tp.Item2;
+            model.RouteParam = p;
 
             return View(model);
         }
