@@ -118,7 +118,7 @@
 
                 var html = "<div class='grid'>";
 
-                if (d.IS_BEST) {
+                if (d.IS_BEST == "Y") {
                     html += "<span class='best_choice'><img src='/aboutCom/images/review/ico_best.png' alt='best'></span>";
                 }
 
@@ -134,15 +134,15 @@
 
                 html += "<div class='comments'>";
                 html += "<div class='writer'>";
-                html += "<span class='id'>" + d.M_ID + "</span>";
-                html += "<span class='userage'>" + d.M_BIRTHDAY + " " +d.M_SEX + "</span>";
-                html += "<span class='skin " + d.SKIN_TYPE + "' ></span>";
+                html += "<span class='id'>" + d.M_ID_LBL + "</span>";
+                html += "<span class='userage'>" + d.M_BIRTHDAY_LBL + "대, " +d.M_SEX_LBL + "</span>";
+                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' ></span>";
                 html += "</div>";
 
 
                 html += "<div class='reviewtxt'>";
 
-                if (d.IS_PHOTO ) {
+                if (d.IS_PHOTO == "Y" ) {
                     html += "<img src='" + img_path_review + d.ADD_IMAGE + "' alt=''>";
                 }
 
@@ -260,7 +260,7 @@
                             <!--
                                 best 선정시 class="best_choice" 추가됩니다.
                             -->
-                            @if ( item.IS_BEST  )
+                            @if ( item.IS_BEST == "Y" )
                             {
                                 <span class="best_choice"><img src="/aboutCom/images/review/ico_best.png" alt="best"></span>
                             }
@@ -278,12 +278,12 @@
                             <!--리뷰-->
                             <div class="comments">
                                 <div class="writer">
-                                    <span class="id">@item.M_ID</span>
-                                    <span class="userage"> @item.M_BIRTHDAY,  @item.M_SEX</span>
-                                    <span class="skin @item.SKIN_TYPE"></span>
+                                    <span class="id">@item.M_ID_LBL</span>
+                                    <span class="userage"> @item.M_BIRTHDAY_LBL 대,  @item.M_SEX_LBL</span>
+                                    <span class="skin @item.SKIN_TYPE_CSS"></span>
                                 </div>
                                 <div class="reviewtxt">
-                                    @if (@item.IS_PHOTO )
+                                    @if (@item.IS_PHOTO == "Y" )
                                     {
                                         <img src="@myController._img_path_review@item.ADD_IMAGE" alt="">
                                     }

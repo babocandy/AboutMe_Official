@@ -23,31 +23,35 @@ using AboutMe.Common.Data;
 using AboutMe.Domain.Service.AdminReview;
 using AboutMe.Domain.Entity.AdminReview;
 
+using AboutMe.Domain.Entity.AdminProduct;
+using AboutMe.Domain.Service.AdminProduct;
+
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminReviewExpController : BaseAdminController
     {
 
         private IAdminReviewService _service;
+        private IAdminProductService _service_p;
 
-        public AdminReviewExpController(IAdminReviewService s)
+        public AdminReviewExpController(IAdminReviewService s, IAdminProductService p )
         {
             this._service = s;
+            this._service_p = p;
         }
 
         // GET: AdminReviewExp
         [CustomAuthorize]
-        public ActionResult Index(AdminReviewRouteParam p)
+        public ActionResult Index(AdminReviewExpMasterListRouteParam p)
         {
-            AdminReviewExpListViewModel model = new AdminReviewExpListViewModel();
+            AdminReviewExpMasterListViewModel model = new AdminReviewExpMasterListViewModel();
+
+            var tp = _service.ReviewExpMasterList(p);
 
             model.RouteParam = p;
-            /*
-            var tp = _service.ReviewPdtList(p);
-            model.List = ReviewHelper.GetDataForAdminUser(tp.Item1);
+            model.List = tp.Item1;//ReviewHelper.ExpMasterForAmdinUser(tp.Item1);
             model.Total = tp.Item2;
-            model.RouteParam = p;
-            */
+
             return View(model);
         }
 
@@ -182,9 +186,17 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize]
-        public ActionResult SelProduct(AdminReviewRouteParam p)
+        public ActionResult SelProduct(ProductSearch_Entity p)
         {
-            return View();
+            AdminReviewExpFindProductViewModel model = new AdminReviewExpFindProductViewModel();
+            //p.Page = 1;
+            //p.PageSize = 10;
+            p.searchDisplayY = "Y";
+
+            model.List = _service_p.GetAdminProductList(p);
+            model.Total = _service_p.GetAdminProductCnt(p);
+
+            return View(model);
         }
     }
 }

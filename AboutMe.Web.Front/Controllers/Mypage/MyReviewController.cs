@@ -36,26 +36,15 @@ namespace AboutMe.Web.Front.Controllers
         [CustomAuthorize]
         public ActionResult Ready()
         {
-            ViewBag.img_path_product = _img_path_product; //이미지디렉토리경로
             return View(_ReviewService.GetMyReviewReadyList(_user_profile.M_ID));
         }
 
-        [HttpGet]
-        [CustomAuthorize]
-        public ActionResult Complete(int page = 1)
-        {
-            
-            MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
-           // ViewBag.img_path_review = _img_path_review; //이미지디렉토리경로
-            model.PageNo = page;
 
-
-            model.Reviews = ReviewHelper.GetDataForUser(_ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page));
-            model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
-
-            return View(model);
-        }
-
+        /**
+         * 
+         * 마이리뷰 작성
+         *
+         */
         [HttpGet]
         [CustomAuthorize]
         //public ActionResult Write(int? ORDER_DETAIL_IDX, string P_CODE = null)
@@ -131,6 +120,7 @@ namespace AboutMe.Web.Front.Controllers
            }
 
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
+
             /*
             if (model.ORDER_DETAIL_IDX == null )
             {
@@ -150,6 +140,27 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
+        /**
+         * 작성완료한 마이리뷰
+         */
+        [HttpGet]
+        [CustomAuthorize]
+        public ActionResult Complete(int page = 1)
+        {
+            MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
+
+            model.PageNo = page;
+            model.Reviews = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);
+            model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
+
+            return View(model);
+        }
+
+        /**
+         * 
+         * 나의리뷰 수정
+         * 
+         */
         [HttpGet]
         [CustomAuthorize]
         [Route("Update/{id:int}")]
@@ -157,8 +168,12 @@ namespace AboutMe.Web.Front.Controllers
         {
             MyReviewUpdateViewModel model = new MyReviewUpdateViewModel();
 
-            model.ReviewPdtInfo = ReviewHelper.GetDataForUserOnUpdate( _ReviewService.ReviewProductInfo(id) );
-            TempData["MyReveiwUpdateData"] = model.ReviewPdtInfo;
+            //model.Reviews = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);
+            //model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
+
+            model.ReviewPdtInfo = _ReviewService.ReviewProductInfo(id);
+            TempData["MyReviewPdtInfo"] = model.ReviewPdtInfo;
+            
             return View(model);
         }
 
@@ -170,8 +185,8 @@ namespace AboutMe.Web.Front.Controllers
         {
             Debug.WriteLine("Update");
 
-            model.ReviewPdtInfo = TempData["MyReveiwUpdateData"] as ReviewProductInfo;
-            TempData["MyReveiwUpdateData"] = model.ReviewPdtInfo;
+            model.ReviewPdtInfo = TempData["MyReviewPdtInfo"] as SP_REVIEW_PRODUCT_INFO_Result;
+           TempData["MyReveiwUpdateData"] = model.ReviewPdtInfo;
 
             if (ModelState.IsValid)
             {

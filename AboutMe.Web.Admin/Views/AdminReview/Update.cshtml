@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewDetailViewModel
+﻿@model AboutMe.Web.Admin.Models.AdminReviewUpdateViewModel
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
 }
@@ -63,9 +63,9 @@
         </tr>
         <tr>
             <th>등록구분</th>
-            <td>@Model.Review.MEDIA_GBN</td>
+            <td>@Model.Review.MEDIA_GBN_LBL</td>
             <th>등록일</th>
-            <td>@Model.Review.INS_DATE</td>
+            <td>@Model.Review.INS_DATE.ToShortDateString()</td>
         </tr>
         <tr>
             <th>회원ID/성명</th>
@@ -74,8 +74,6 @@
             <td>@Model.Review.VIEW_CNT</td>
         </tr>
         <tr>
-            <th>IP</th>
-            <td></td>
             <th>전시여부</th>
             <td>
                 @{
@@ -88,7 +86,7 @@
         </tr>
         <tr>
             <th>피부타입</th>
-            <td>@Model.Review.SKIN_TYPE</td>
+            <td>@Model.Review.SKIN_TYPE_LBL</td>
             <th>포토이미지</th>
             <td><img src="@Model.Review.ADD_IMAGE" alt="" /></td>
         </tr>

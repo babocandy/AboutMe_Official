@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewExpListViewModel
+﻿@model AboutMe.Web.Admin.Models.AdminReviewExpMasterListViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
 @{
@@ -95,9 +95,9 @@
                             <tr>
                                 <th>등록일</th>
                                 <td colspan="3">
-                                    <input type="text" id="SEL_DATE_FROM" name="SEL_DATE_FROM" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.SEL_DATE_FROM">
+                                    <input type="text" id="SEL_DATE_FROM" name="FROM_DATE" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.FROM_DATE">
                                     ~
-                                    <input type="text" id="SEL_DATE_TO" name="SEL_DATE_TO" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.SEL_DATE_TO">
+                                    <input type="text" id="SEL_DATE_TO" name="TO_DATE" class="input-sm" style="width:120px" maxlength="10" value="@Model.RouteParam.TO_DATE">
                                     <a href="#" class="btn btn-primary small" onclick="search_date_change('1'); return false;">7일전</a>
                                     <a href="#" class="btn btn-primary small" onclick="search_date_change('2'); return false;">15일전</a>
                                     <a href="#" class="btn btn-primary small" onclick="search_date_change('3'); return false;">한달전</a>
@@ -132,17 +132,16 @@
                             <tr>
                                 <th>진행상태</th>
                                 <td>
-                                    <!--<label for="sort4"><input type="radio" id="sort4" name="IS_PHOTO" value="" @(Model.RouteParam.IS_PHOTO == null? "checked" : "") /><span class="txt mr5">전체</span></label>-->
-                                    <label for="sort5"><input type="checkbox" id="sort5" name="IS_PHOTO_Y" value="@YNCode.YES" @(Model.RouteParam.IS_PHOTO_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">포토</span></label>
-                                    <label for="sort6"><input type="checkbox" id="sort6" name="IS_PHOTO_N" value="@YNCode.NO" @(Model.RouteParam.IS_PHOTO_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">텍스트</span></label>
+                                    <label for="sort4"><input type="checkbox" id="sort4" name="IS_STATE_10" value="10" @(Model.RouteParam.IS_STATE_10 == "10" ? "checked" : "") /><span class="txt mr5">예약</span></label>
+                                    <label for="sort5"><input type="checkbox" id="sort5" name="IS_STATE_20" value="20" @(Model.RouteParam.IS_STATE_20 == "20" ? "checked" : "") /><span class="txt mr5">진행</span></label>
+                                    <label for="sort6"><input type="checkbox" id="sort6" name="IS_STATE_30" value="30" @(Model.RouteParam.IS_STATE_30 == "30" ? "checked" : "") /><span class="txt mr5">종료</span></label>
                                 </td>
                             </tr>
                             <tr>
-                                <th>전시여부</th>
+                                <th>권한여부</th>
                                 <td colspan="3">
-                                    <!--<label for="sort7"><input type="checkbox" id="sort7" name="IS_DISPLAY" value="" @(Model.RouteParam.IS_DISPLAY == null ? "checked" : "") /><span class="txt mr5">전체</span></label>-->
-                                    <label for="sort8"><input type="checkbox" id="sort8" name="IS_DISPLAY_Y" value="@YNCode.YES" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">전시</span></label>
-                                    <label for="sort9"><input type="checkbox" id="sort9" name="IS_DISPLAY_N" value="@YNCode.NO" @(Model.RouteParam.IS_DISPLAY_Y == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비전시</span></label>
+                                    <label for="sort8"><input type="checkbox" id="sort8" name="IS_AUTH_Y" value="@YNCode.YES" @(Model.RouteParam.IS_AUTH_Y == @YNCode.YES ? "checked" : "") /><span class="txt mr5">전시</span></label>
+                                    <label for="sort9"><input type="checkbox" id="sort9" name="IS_AUTH_N" value="@YNCode.NO" @(Model.RouteParam.IS_AUTH_N == @YNCode.NO ? "checked" : "") /><span class="txt mr5">비전시</span></label>
                                 </td>
                             </tr>
                         </tbody>
@@ -167,6 +166,24 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>@item.IDX</td>
+                            <td class="tal">@item.P_NAME</td>
+                            <td>@item.FROM_DATE.Value.ToString("yyyy.MM.dd") ~ @item.TO_DATE.Value.ToString("yyyy.MM.dd")</td>
+                            <td>@item.IS_STATE_LBL</td>
+                            <td>@item.IS_AUTH_LBL</td>
+                            <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
+                            <td>
+                                <a href="/cmsManager/contents/ex_enroll_view.html" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
+                                <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
+                            </td>
+                        </tr>
+                    }
+
+
+                    <!--
                     <tr>
                         <td>3</td>
                         <td class="tal">스킨 톤업 마사지 크림150ml </td>
@@ -203,6 +220,7 @@
                             <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
                         </td>
                     </tr>
+                        -->
                 </tbody>
             </table>
 

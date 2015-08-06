@@ -120,21 +120,21 @@
                 {
                     <tr>
                         <td>@item.IDX</td>
-                        <td>@item.MEDIA_GBN</td>
+                        <td>@item.MEDIA_GBN_LBL</td>
                         <td><img src="@item.WEB_IMG" alt="" /></td>
                         <td><img src="@item.MOBILE_IMG" alt="" /></td>
                         <td>@item.TITLE</td>
                         <td>@item.WEB_LINK</td>
                         <td>@item.MOBILE_LINK</td>
-                        <td>@item.DISPLAY_START~@item.DISPLAY_END</td>
+                        <td>@item.DISPLAY_START.Value.ToShortDateString() ~ @item.DISPLAY_END.Value.ToShortDateString()</td>
                         <td>
-                          @item.INS_DATE
+                          @item.INS_DATE.Value.ToShortDateString()
                         </td>
                         <td>
                            
 @using (Html.BeginForm("PopupUpdateDisplay", "AdminDisplay", FormMethod.Post, new {  }))
 {
-                            if (item.IS_DISPLAY)
+                            if (item.IS_DISPLAY == "Y")
                             {
                                 <span>전시</span><br />
                                 <span class="btn btn-info small mt5" onclick="this.parentElement.submit(); return false;">비전시</span>
@@ -167,12 +167,7 @@
         </table>
 
         @{
-            /*
-            string search = "SEARCH_KEY=" + Model.SearchParam.SEARCH_KEY;
-            search += "&SEARCH_VALUE=" + Model.SearchParam.SEARCH_VALUE;
-            search += "&IS_DISPLAY=" + Model.SearchParam.IS_DISPLAY;
-            search += "&IS_EXPIRE=" + Model.SearchParam.IS_EXPIRE;
-             * */
+
             string search = Utility01.ConvertObject2UriQuery(Model.SearchParam);
             
         }

@@ -84,7 +84,7 @@ namespace AboutMe.Domain.Service.Review
         /**
          * 마이리뷰 상품. 작성완료 목록 조회
          */
-        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetMyReviewCompleteList(string mid, int? pageNo=1, int? pageSize=10)
+        public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetMyReviewCompleteList(string mid, int? pageNo=1)
         {
             List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
 
@@ -93,7 +93,7 @@ namespace AboutMe.Domain.Service.Review
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                lst = context.SP_REVIEW_PRODUCT_COMPLETE_SEL(mid, pageNo, pageSize, retNum, retMsg).ToList();
+                lst = context.SP_REVIEW_PRODUCT_COMPLETE_SEL(mid, pageNo, 10, retNum, retMsg).ToList();
             }
 
             return lst;
@@ -117,9 +117,9 @@ namespace AboutMe.Domain.Service.Review
         /*
          * 상품 리뷰 목록 조회
          */
-        public Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort)
+        public Tuple<List<SP_REVIEW_PRODUCT_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort)
         {
-            List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>();
+            List<SP_REVIEW_PRODUCT_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_SEL_Result>();
 
             ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
 
@@ -128,7 +128,7 @@ namespace AboutMe.Domain.Service.Review
                 lst = context.SP_REVIEW_PRODUCT_SEL(tailIdx, categoryCode, sort, total).ToList();
             }
 
-            Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result>, int>(lst,   Convert.ToInt32(total.Value) );
+            Tuple<List<SP_REVIEW_PRODUCT_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_SEL_Result>, int>(lst, Convert.ToInt32(total.Value));
 
             return tp;
         }
