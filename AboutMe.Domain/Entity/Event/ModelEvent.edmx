@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel7.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_EVENT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="char" Mode="In" />
+          <Parameter Name="TO_DATE" Type="char" Mode="In" />
+          <Parameter Name="ING_GBN" Type="char" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EVENT_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="FROM_DATE" Type="char" Mode="In" />
+          <Parameter Name="FROM_TIME" Type="char" Mode="In" />
+          <Parameter Name="TO_DATE" Type="char" Mode="In" />
+          <Parameter Name="TO_TIME" Type="char" Mode="In" />
+          <Parameter Name="EVENT_GBN" Type="char" Mode="In" />
+          <Parameter Name="WEB_CONTENTS" Type="text" Mode="In" />
+          <Parameter Name="MOBILE_FILE" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_BANNER" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_BANNER" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_URL" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_URL" Type="varchar" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_MAIN_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BANNER_GBN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_MAIN_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BANNER_GBN" Type="char" Mode="In" />
+          <Parameter Name="IMG" Type="varchar" Mode="In" />
+          <Parameter Name="URL" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="char" Mode="In" />
+          <Parameter Name="TO_DATE" Type="char" Mode="In" />
+          <Parameter Name="ING_GBN" Type="char" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="EVENT_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="FROM_DATE" Type="char" Mode="In" />
+          <Parameter Name="FROM_TIME" Type="char" Mode="In" />
+          <Parameter Name="TO_DATE" Type="char" Mode="In" />
+          <Parameter Name="TO_TIME" Type="char" Mode="In" />
+          <Parameter Name="EVENT_GBN" Type="char" Mode="In" />
+          <Parameter Name="WEB_CONTENTS" Type="text" Mode="In" />
+          <Parameter Name="MOBILE_FILE" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_BANNER" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_BANNER" Type="varchar" Mode="In" />
+          <Parameter Name="WEB_URL" Type="varchar" Mode="In" />
+          <Parameter Name="MOBILE_URL" Type="varchar" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="AboutMeModel7StoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AboutMeModel7" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EventEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_EVENT_CNT" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_CNT_Result)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="ING_GBN" Mode="In" Type="String" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_INS">
+            <Parameter Name="EVENT_NAME" Mode="In" Type="String" />
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="FROM_TIME" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_TIME" Mode="In" Type="String" />
+            <Parameter Name="EVENT_GBN" Mode="In" Type="String" />
+            <Parameter Name="WEB_CONTENTS" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_FILE" Mode="In" Type="String" />
+            <Parameter Name="WEB_BANNER" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_BANNER" Mode="In" Type="String" />
+            <Parameter Name="WEB_URL" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_URL" Mode="In" Type="String" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_MAIN_DEL">
+            <Parameter Name="BANNER_GBN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_MAIN_UPD">
+            <Parameter Name="BANNER_GBN" Mode="In" Type="String" />
+            <Parameter Name="IMG" Mode="In" Type="String" />
+            <Parameter Name="URL" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_SEL" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_SEL_Result)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="ING_GBN" Mode="In" Type="String" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="EVENT_NAME" Mode="In" Type="String" />
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="FROM_TIME" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_TIME" Mode="In" Type="String" />
+            <Parameter Name="EVENT_GBN" Mode="In" Type="String" />
+            <Parameter Name="WEB_CONTENTS" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_FILE" Mode="In" Type="String" />
+            <Parameter Name="WEB_BANNER" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_BANNER" Mode="In" Type="String" />
+            <Parameter Name="WEB_URL" Mode="In" Type="String" />
+            <Parameter Name="MOBILE_URL" Mode="In" Type="String" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_VIEW" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_VIEW_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_ADMIN_EVENT_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="EVENT_NAME" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="FROM_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="FROM_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="TO_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="TO_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="EVENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="WEB_CONTENTS" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_EVENT_CNT_Result" >
+          <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_EVENT_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="EVENT_NAME" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="FROM_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="FROM_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="TO_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="TO_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="EVENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="WEB_CONTENTS" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel7StoreContainer" CdmEntityContainer="EventEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_CNT" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel7.SP_ADMIN_EVENT_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_INS" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_MAIN_DEL" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_MAIN_DEL" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_MAIN_UPD" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_MAIN_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_SEL" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel7.SP_ADMIN_EVENT_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
+                <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
+                <ScalarProperty Name="FROM_TIME" ColumnName="FROM_TIME" />
+                <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
+                <ScalarProperty Name="TO_TIME" ColumnName="TO_TIME" />
+                <ScalarProperty Name="EVENT_GBN" ColumnName="EVENT_GBN" />
+                <ScalarProperty Name="WEB_CONTENTS" ColumnName="WEB_CONTENTS" />
+                <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
+                <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
+                <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
+                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
+                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_UPD" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_VIEW" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel7.SP_ADMIN_EVENT_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
+                <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
+                <ScalarProperty Name="FROM_TIME" ColumnName="FROM_TIME" />
+                <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
+                <ScalarProperty Name="TO_TIME" ColumnName="TO_TIME" />
+                <ScalarProperty Name="EVENT_GBN" ColumnName="EVENT_GBN" />
+                <ScalarProperty Name="WEB_CONTENTS" ColumnName="WEB_CONTENTS" />
+                <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
+                <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
+                <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
+                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
+                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
