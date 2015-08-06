@@ -159,13 +159,13 @@
     <Compile Include="Entity\AdminCoupon\SP_COUPON_MASTER_INFO_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_TOP1_BY_PRD_SEL_NO_LOGIN_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminCoupon\SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result.cs">
-      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminCoupon\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\TB_COUPON_ISSUED_DETAIL.cs">
@@ -464,7 +464,13 @@
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
@@ -872,6 +878,8 @@
     <Compile Include="Service\AdminOrder\IAdminOrderService.cs" />
     <Compile Include="Service\AdminReview\IAdminReviewService.cs" />
     <Compile Include="Service\AdminReview\AdminReviewService.cs" />
+    <Compile Include="Service\BizPromotion\BizPromotion.cs" />
+    <Compile Include="Service\BizPromotion\IBizPromotion.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Coupon\CouponService.cs" />

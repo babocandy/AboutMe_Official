@@ -621,5 +621,31 @@ namespace AboutMe.Domain.Entity.AdminPromotion
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result>("SP_PROMOTION_TOTAL_BY_PRODUCT_SEL", p_CODEParameter, mEM_GBNParameter, mEM_GRADEParameter);
         }
+    
+        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result> SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL(string cD_PROMOTION_PRODUCT, string p_CODE)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result>("SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL", cD_PROMOTION_PRODUCTParameter, p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result> SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL(string m_GBN, string m_GRADE)
+        {
+            var m_GBNParameter = m_GBN != null ?
+                new ObjectParameter("M_GBN", m_GBN) :
+                new ObjectParameter("M_GBN", typeof(string));
+    
+            var m_GRADEParameter = m_GRADE != null ?
+                new ObjectParameter("M_GRADE", m_GRADE) :
+                new ObjectParameter("M_GRADE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result>("SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL", m_GBNParameter, m_GRADEParameter);
+        }
     }
 }
