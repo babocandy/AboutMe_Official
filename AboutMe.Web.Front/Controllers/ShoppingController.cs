@@ -22,7 +22,7 @@ namespace AboutMe.Web.Front.Controllers
 {
     public class ShoppingController : BaseFrontController
     {
-        // GET: AdminProduct
+        
         private IProductService _ProductService;
         public ShoppingController(IProductService _productService)
         {
@@ -30,7 +30,6 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-        // GET: Shopping
         #region 상품리스트
         public ActionResult Index(IEnumerable<string> P_CATE_CODE_3DEPTH, Product_front_search_entity product_front_search_entity)
         {
@@ -93,7 +92,6 @@ namespace AboutMe.Web.Front.Controllers
         #region 상품상세보기
         public ActionResult Detail(string pcode, Product_front_search_entity product_front_search_entity)
         {
-
             //상품코드
             this.ViewBag.P_CODE = pcode;
 
@@ -113,14 +111,13 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
 
 
-            //#region 로그 
-            //UserLog userlog = new UserLog();
-            //userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
-            //#endregion
+            #region 로그 
+            UserLog userlog = new UserLog();
+            userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
+            #endregion
 
 
             return View(productView);
-            //return View();
         }
         #endregion
     }

@@ -25,7 +25,7 @@
 
         function isJJimLogin() {
             if (confirm('로그인 후 찜을 저장할 수 있습니다.\n로그인페이지로 이동하시겠습니까?')) {
-                location.href = '/MemberShip/Login?RedirectUrl=/Shopping/Detail?pcode=1111118';
+                location.href = '/MemberShip/Login?RedirectUrl=/Shopping/Detail?pcode=@ViewBag.P_CODE&page=@ViewBag.PAGE&pagesize=@ViewBag.PAGESIZE&SORT_GBN=@ViewBag.SORT_GBN&P_CATE_CODE=@ViewBag.P_CATE_CODE&C_CATE_CODE=@ViewBag.C_CATE_CODE&L_CATE_CODE=@ViewBag.L_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3';
                 return;
             }
         }
@@ -55,13 +55,29 @@
                             <!--
                             작은 이미지 클릭 시 큰 이미지가 보여집니다. 작은 썸네일의 기본크기는 64X64입니다.
                         -->
+                            @{
+                                string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
+                                string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+                                string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
+                                string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
+                                string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
+                                string big_img3 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG2;
+                                string thumb_img4 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG3;
+                                string big_img4 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG3;                                                                
+                            }
                             <ul>
-                                <li class="cnt"><img src="/aboutCom/images/shopping/thumb_detail1.jpg" data-pic="/aboutCom/images/shopping/thumb_detail1_big.jpg" alt="" /><i></i></li>
-                                <li><img src="/aboutCom/images/shopping/thumb_detail2.jpg" data-pic="/aboutCom/images/shopping/thumb_detail2_big.jpg" alt="" /><i></i></li>
-                                <li><img src="/aboutCom/images/shopping/thumb_detail3.jpg" data-pic="/aboutCom/images/shopping/thumb_detail3_big.jpg" alt="" /><i></i></li>
-                                <li><img src="/aboutCom/images/shopping/thumb_detail4.jpg" data-pic="/aboutCom/images/shopping/thumb_detail4_big.jpg" alt="" /><i></i></li>
+                                @if (!string.IsNullOrEmpty(Model.MAIN_IMG))
+                                { <li class="cnt"><img src="@thumb_img1" data-pic="@big_img1" alt="" width="64" height="64"/><i></i></li>}
+                                @if (!string.IsNullOrEmpty(Model.OTHER_IMG1))
+                                { <li><img src="@thumb_img2" data-pic="@big_img2" alt="" width="64" height="64" /><i></i></li>}
+                                @if (!string.IsNullOrEmpty(Model.OTHER_IMG2))
+                                { <li><img src="@thumb_img3" data-pic="@big_img3" alt="" width="64" height="64" /><i></i></li> }
+                                @if (!string.IsNullOrEmpty(Model.OTHER_IMG3))
+                                {<li><img src="@thumb_img4" data-pic="@big_img4" alt="" width="64" height="64" /><i></i></li> }
                             </ul>
                             <!--동영상 업로드가 있을 시 사용-->
+                            @if (!string.IsNullOrEmpty(Model.MV_URL))
+                            { 
                             <div class="movie_thumb">
                                 <img src="/aboutCom/images/shopping/thumb_move.jpg" class="viewmv" alt="" /><i></i>
                                 <!--해당영상-->
@@ -69,16 +85,17 @@
                                 <div class="lymv">
                                     <a href="#" class="mv_close">닫기</a>
                                     <div class="mv">
-                                        <iframe width="640" height="390" src="https://www.youtube.com/embed/bhFjdi-J57Q?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+                                        <iframe width="640" height="390" src="@Model.MV_URL" frameborder="0" allowfullscreen></iframe>
                                     </div>
                                 </div>
                                 <!--//해당영상-->
                             </div>
+                            }    
                             <!--//동영상 업로드가 있을 시 사용-->
                         </div>
                         <div class="large_area">
                             <!--500 x 500 이미지 사용-->
-                            <img src="/aboutCom/images/shopping/thumb_detail1_big.jpg" alt="" />
+                            @if (!string.IsNullOrEmpty(Model.MAIN_IMG)){ <img src="@big_img1" alt="" />}
                         </div>
                     </div>
                     <!--//상품사진-->
@@ -92,15 +109,29 @@
                             @if (!string.IsNullOrEmpty(Model.ICON_YN))
                             {
                                 if (Model.ICON_YN.IndexOf('B') != -1)
-                                { <text> <span class="ico_best">BEST</span></text> }
+                                { <text> <span class="ico ico_best">BEST</span></text> }
                                 if (Model.ICON_YN.IndexOf('S') != -1)
-                                { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
                                 if (Model.ICON_YN.IndexOf('N') != -1)
-                                { <text> <span class="ico_new">NEW</span></text> }
+                                { <text> <span class="ico ico_new">NEW</span></text> }
                                 if (Model.ICON_YN.IndexOf('C') != -1)
-                                { <text> <span class="ico_custom ">CUSTOM</span></text> }
+                                { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                            }
+                            @if (!string.IsNullOrEmpty(Model.PMO_PRODUCT_CATEGORY))
+                            {
+                                if (Model.PMO_PRODUCT_CATEGORY == "01")
+                                { <text> <span class="ico ico_set">SET</span></text> }
+                                if (Model.PMO_PRODUCT_CATEGORY == "02")
+                                { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                if (Model.PMO_PRODUCT_CATEGORY == "03")
+                                { <text> <span class="ico ico_time">TIME</span></text> }
+                            }
+                            @if (!string.IsNullOrEmpty(Model.COUPON_CODE))
+                            {
+                                <text> <span class="ico ico_coupon">COUPON</span></text>
                             }
                             
+
                             <!---<span class="ico_time">TIME</span>
                              각 종류별 아이콘
                         <span class="ico_new">NEW</span>
@@ -130,18 +161,22 @@
                                     <span class="staff_price">22,400원</span>
                                 </li>
                                 <li>
+                                    <strong>VIP 할인가</strong>
+                                    <span class="staff_price">22,400원</span>
+                                </li>
+                                <li>
                                     <strong>즉시할인</strong>
                                     <span class="discount_num">10</span>% 할인쿠폰
                                     <a href="#" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="" /></a>
                                 </li>
                                 <li>
-                                    <strong>용량 및 중량</strong>
-                                    <span class="vol_num">140</span>ml
+                                    <strong>포인트</strong>
+                                    ⓟ<span class="discount_num"> 298</span>
                                 </li>
                                 <li>
                                     <strong>구입개수</strong>
                                     <div class="counttypeb">
-                                        <input type='text' name='count' value='1' size='3' />
+                                        <input type='text' name='count' id='product_num_count' value='1' size='3' readonly />
                                         <span class="btn_updown">
                                             <a href="javascript:fncAdd(1);" class="up"><i>up</i></a>
                                             <a href="javascript:fncAdd(-1);" class="down"><i>down</i></a>
@@ -150,8 +185,8 @@
                                 </li>
                             </ul>
                             <div class="btn_group">
-                                <a href="#" class="btn_brown_w170h60" onclick="javascript:NowOrderInput('@Model.P_CODE','1');">바로 구매</a>
-                                <a href="#" class="btn_white_w148h60" onclick="javascript:Cart_Product_Input('@Model.P_CODE','1');"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
+                                <a href="#" class="btn_brown_w170h60" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로 구매</a>
+                                <a href="#" class="btn_white_w148h60" onclick="javascript:Cart_Product_Input('@Model.P_CODE',$('#product_num_count').val());"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
                                 @{
                                    bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
                                  }
@@ -223,7 +258,8 @@
                             <!--//관련상품-->
 
                             <div class="pro_content">
-                                <!--사용자가 올리는 이미지-->
+                                @(new HtmlString(Model.P_INFO_DETAIL_WEB))
+                                @*<!--사용자가 올리는 이미지-->
                                 <div class="admin_img">
                                     <img src="/aboutCom/images/sample/sample_detailadmin2.jpg" alt="" />
                                 </div>
@@ -274,7 +310,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <!--//성분표시-->
+                                <!--//성분표시-->*@
                             </div>
                             <!--//상세정보-->
                             <!--리뷰-->

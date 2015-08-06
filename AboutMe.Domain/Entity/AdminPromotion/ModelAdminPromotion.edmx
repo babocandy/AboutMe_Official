@@ -283,6 +283,11 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
         <Function Name="SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PMO_PRODUCT_CATEGORY" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_PROMOTION_TOTAL_BY_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="MEM_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="MEM_GRADE" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelAdminPromotionStoreContainer">
           <EntitySet Name="TB_PROMOTION_BY_TOTAL" EntityType="Self.TB_PROMOTION_BY_TOTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_PROMOTION_BY_PRODUCT" EntityType="Self.TB_PROMOTION_BY_PRODUCT" store:Type="Tables" store:Schema="dbo">
@@ -549,6 +554,11 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
             <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_PROMOTION_TOTAL_BY_PRODUCT_SEL" ReturnType="Collection(ModelAdminPromotion.SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="MEM_GBN" Mode="In" Type="String" />
+            <Parameter Name="MEM_GRADE" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_PROMOTION_BY_TOTAL_CATEGORY">
           <Key>
@@ -739,6 +749,15 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Property Type="Byte" Name="PMO_SET_DISCOUNT_CNT" Nullable="true" />
           <Property Type="DateTime" Name="PMO_PRODUCT_DATE_FROM" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="PMO_PRODUCT_DATE_TO" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result">
+          <Property Type="String" Name="PMO_TOTAL_CATEGORY" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="PMO_TOTAL_RATE_OR_MONEY" Nullable="true" MaxLength="1" />
+          <Property Type="Byte" Name="PMO_TOTAL_DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="PMO_TOTAL_DISCOUNT_MONEY" Nullable="true" />
+          <Property Type="String" Name="M_GBN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_GRADE_DESC" Nullable="true" MaxLength="6" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1104,6 +1123,19 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result">
                 <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PROMOTION_TOTAL_BY_PRODUCT_SEL" FunctionName="ModelAdminPromotion.Store.SP_PROMOTION_TOTAL_BY_PRODUCT_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result">
+                <ScalarProperty Name="PMO_TOTAL_CATEGORY" ColumnName="PMO_TOTAL_CATEGORY" />
+                <ScalarProperty Name="PMO_TOTAL_RATE_OR_MONEY" ColumnName="PMO_TOTAL_RATE_OR_MONEY" />
+                <ScalarProperty Name="PMO_TOTAL_DISCOUNT_RATE" ColumnName="PMO_TOTAL_DISCOUNT_RATE" />
+                <ScalarProperty Name="PMO_TOTAL_DISCOUNT_MONEY" ColumnName="PMO_TOTAL_DISCOUNT_MONEY" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_GRADE_DESC" ColumnName="M_GRADE_DESC" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

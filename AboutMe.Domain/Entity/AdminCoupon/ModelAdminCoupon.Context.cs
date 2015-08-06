@@ -595,5 +595,22 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_ISSUE_WITH_NO_NUMCHECK_MANUAL_SINGLE_INS", cD_COUPONParameter, cOUPON_MONEYParameter, cOUPON_DISCOUNT_RATE_VParameter, m_IDParameter, aDMIN_IDParameter, iSSUED_MEMOParameter, eXCUTE_RESULT);
         }
+    
+        public virtual ObjectResult<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL(string uSABLE_DEVICE_GBN, string p_CODE, string m_ID)
+        {
+            var uSABLE_DEVICE_GBNParameter = uSABLE_DEVICE_GBN != null ?
+                new ObjectParameter("USABLE_DEVICE_GBN", uSABLE_DEVICE_GBN) :
+                new ObjectParameter("USABLE_DEVICE_GBN", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result>("SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL", uSABLE_DEVICE_GBNParameter, p_CODEParameter, m_IDParameter);
+        }
     }
 }
