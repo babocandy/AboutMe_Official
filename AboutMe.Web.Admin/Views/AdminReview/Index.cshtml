@@ -184,14 +184,14 @@
                 {
                     <tr>
                         <td>@item.IDX</td>
-                        <td>@item.IS_BEST</td>
+                        <td>@(item.IS_BEST=="Y" ? "O":"")</td>
                         <td>@item.MEDIA_GBN</td>
                         <td><img src="@item.ADD_IMAGE" alt="" /></td>
                         <td>@item.P_NAME</td>
                         <td>@item.M_ID</td>
-                        <td>@item.M_GRADE</td>
+                        <td>@item.M_GRADE_LBL</td>
                         <td>
-                            @item.CATE_GBN
+                            @item.CATE_GBN_LBL
                         </td>
                         <td><img src="@item.P_MAIN_IMG" alt="" /></td>
                         <td>@item.P_CODE</td>
@@ -199,10 +199,10 @@
                             @item.VIEW_CNT
                         </td>
                         <td>
-                            @item.IS_DISPLAY
+                            @item.IS_DISPLAY_LBL
                         </td>
                         <td>
-                            @item.INS_DATE
+                            @item.INS_DATE.Value.ToString("yyyy-MM-dd")
                         </td>
                         <td>
                             <a class="btn btn-success small" href="#" onclick="window.open('@Url.Action(string.Format("Update/{0}", item.IDX), "AdminReview", Model.RouteParam)', 'window', 'width=800,height=400');">수정</a>

@@ -31,5 +31,10 @@ namespace AboutMe.Domain.Entity.Review
         public Nullable<System.DateTime> INS_DATE { get; set; }
         public string C_CATE_CODE { get; set; }
         public string IS_BEST { get; set; }
+        public string M_ID_LBL { get; set; }
+        public string M_SEX_LBL { get; set; }
+        public string M_BIRTHDAY_LBL { get; set; }
+        public string SKIN_TYPE_LBL { get; set; }
+        public string SKIN_TYPE_CSS { get; set; }
     }
 }

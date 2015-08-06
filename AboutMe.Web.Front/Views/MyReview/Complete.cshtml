@@ -65,13 +65,13 @@
                              <div class="subj accordsubject">
 
                                  <div class="writer">
-                                     <span class="userage"><em class="skin @(item.SKIN_TYPE)"></em><em class="age">@item.M_BIRTHDAY, @item.M_SEX</em></span>
-                                     <span class="date">@item.INS_DATE</span>
+                                     <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                     <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
                                  </div>
                                  <p class="txtdotdot">
                                      @Html.Raw(item.COMMENT)
                                  </p>
-                                    @if (item.IS_PHOTO)
+                                    @if (item.IS_PHOTO == "Y")
                                     {
                                         <!--사진이 등록된 리뷰일 때 사용-->
                                         <span class="ico_photo">포토리뷰</span>
@@ -82,10 +82,10 @@
                              <div class="contxt accordtxt">
 
                                  <div class="writer">
-                                     <span class="userage"><em class="skin @(item.SKIN_TYPE)"></em><em class="age">@item.M_BIRTHDAY, @item.M_SEX</em></span>
+                                     <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                  </div>
                                  @Html.Raw(item.COMMENT.Replace("\r\n", "<br />"))
-                                 @if (item.IS_PHOTO)
+                                 @if (item.IS_PHOTO == "Y")
                                  {
                                      <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
                                  } 

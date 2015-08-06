@@ -251,7 +251,7 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult Popup(PopupSearchParam parma)
         {
             AdminDisplayPopupListViewModel model = new AdminDisplayPopupListViewModel();
-            model.PopupList = PopupHelper.GetDataForDisplay(_Service.PopupSel(parma).Item1);
+            model.PopupList = _Service.PopupSel(parma).Item1;//PopupHelper.GetDataForDisplay(_Service.PopupSel(parma).Item1);
             model.Total = _Service.PopupSel(parma).Item2;
             model.SearchParam = parma;
             return View(model);

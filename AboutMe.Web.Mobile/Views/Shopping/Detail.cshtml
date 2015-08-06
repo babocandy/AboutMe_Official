@@ -22,7 +22,7 @@
 
             function isJJimLogin() {
                 if (confirm('로그인 후 찜을 저장할 수 있습니다.\n로그인페이지로 이동하시겠습니까?')) {
-                    //location.href = '/MemberShip/Login?RedirectUrl=/Shopping/Detail?pcode=1111118';
+                    location.href = '/MemberShip/Login?RedirectUrl=/Shopping/Detail?pcode=@ViewBag.P_CODE&page=@ViewBag.PAGE&pagesize=@ViewBag.PAGESIZE&SORT_GBN=@ViewBag.SORT_GBN&P_CATE_CODE=@ViewBag.P_CATE_CODE&C_CATE_CODE=@ViewBag.C_CATE_CODE&L_CATE_CODE=@ViewBag.L_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3';
                     return;
                 }
             }
@@ -36,646 +36,641 @@
     <div class="wrap detail">
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
     <!--container-->
-    <div class="container">
-        <div class="h2_area">
-            <a href="/Shopping/Index?SORT_GBN=@ViewBag.SORT_GBN&PAGE=@ViewBag.PAGE&P_CATE_CODE=@ViewBag.P_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
-            <h2>상품상세</h2>
-        </div>
+        <div class="container">
+            <div class="h2_area">
+                <a href="/Shopping/Index?SORT_GBN=@ViewBag.SORT_GBN&PAGE=@ViewBag.PAGE&P_CATE_CODE=@ViewBag.P_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>상품상세</h2>
+            </div>
 
-        <!--sns-->
-        <div class="sns_area">
-            <p><strong>564명</strong> 고객님이 쇼핑백에 담았습니다.</p>
-            <ul class="sns_list">
-                <li class="facebook"><a href="#"><img src="/aboutCom/images/shopping/sns_facebook.gif" alt="페이스북" /></a></li>
-                <li class="kastory"><a href="#"><img src="/aboutCom/images/shopping/sns_ks.gif" alt="카카오스토리" /></a></li>
-                <li class="katalk"><a href="#"><img src="/aboutCom/images/shopping/sns_kt.gif" alt="카카오톡" /></a></li>
-            </ul>
-        </div>
-        <!--//sns-->
-        <!--상품정보-->
-        <div class="product_info">
-            <div class="protxt">
-                @if (!string.IsNullOrEmpty(Model.ICON_YN))
-                {
-                    if (Model.ICON_YN.IndexOf('B') != -1)
-                    { <text> <span class="ico ico_best">BEST</span></text> }
-                    if (Model.ICON_YN.IndexOf('S') != -1)
-                    { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
-                    if (Model.ICON_YN.IndexOf('N') != -1)
-                    { <text> <span class="ico ico_new">NEW</span></text> }
-                    if (Model.ICON_YN.IndexOf('C') != -1)
-                    { <text> <span class="ico ico_custom ">CUSTOM</span></text> }
-                }
-                <!--
+            <!--sns-->
+            <div class="sns_area">
+                <p><strong>564명</strong> 고객님이 쇼핑백에 담았습니다.</p>
+                <ul class="sns_list">
+                    <li class="facebook"><a href="#"><img src="/aboutCom/images/shopping/sns_facebook.gif" alt="페이스북" /></a></li>
+                    <li class="kastory"><a href="#"><img src="/aboutCom/images/shopping/sns_ks.gif" alt="카카오스토리" /></a></li>
+                    <li class="katalk"><a href="#"><img src="/aboutCom/images/shopping/sns_kt.gif" alt="카카오톡" /></a></li>
+                </ul>
+            </div>
+            <!--//sns-->
+            <!--상품정보-->
+            <div class="product_info">
+                <div class="protxt">
+                    @if (!string.IsNullOrEmpty(Model.ICON_YN))
+                    {
+                        if (Model.ICON_YN.IndexOf('B') != -1)
+                        { <text> <span class="ico ico_best">BEST</span></text> }
+                        if (Model.ICON_YN.IndexOf('S') != -1)
+                        { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                        if (Model.ICON_YN.IndexOf('N') != -1)
+                        { <text> <span class="ico ico_new">NEW</span></text> }
+                        if (Model.ICON_YN.IndexOf('C') != -1)
+                        { <text> <span class="ico ico_custom ">CUSTOM</span></text> }
+                    }
+                    <!--
                 .ico_best
                 .ico_coupon
                 .ico_time
                 .ico_soldout
                 .ico_set
-                
-                <span class="ico ico_best">BEST</span>-->
-                <span class="tit">@(new HtmlString(Model.P_NAME))</span>
-                <span class="tittxt">@(new HtmlString(Model.P_SUB_TITLE))</span>
-            </div>
-            <!--제품사진슬라이드-->
-            <div class="produt_photo">
-                <div class="nav">
-                    <ul></ul>
-                </div>
-                <div class="slider">
-                    <ul>
-                        <li><img src="@ViewBag.PRODUCT_PATH@Model.MAIN_IMG" alt="" /></li>
-                        <li><img src="@ViewBag.PRODUCT_PATH@Model.OTHER_IMG1" alt="" /></li>
-                        <li><img src="@ViewBag.PRODUCT_PATH@Model.OTHER_IMG2" alt="" /></li>
-                        <li><img src="@ViewBag.PRODUCT_PATH@Model.OTHER_IMG3" alt="" /></li>
-                    </ul>
-                </div>
-            </div>
-            <!--//제품사진슬라이드-->
-        </div>
-        <!--//상품정보-->
-        <!--판매정보-->
-        <div class="sale_info">
-            <ul class="price_list">
-                <li>
-                    <span class="tit">판매가</span>
-                    <span class="pos_right fcblue"><del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</strong>원</span>
-                </li>
-                <li>
-                    <span class="tit">임직원가</span>
-                    <span class="pos_right"><strong>23,000</strong>원</span>
-                </li>
-                <li>
-                    <span class="tit">VIP할인가</span>
-                    <span class="pos_right"><strong>23,000</strong>원</span>
-                </li>
-            </ul>
-            <ul class="price_list v2">
-                <li>
-                    <span class="tit">즉시할인</span>
-                    <span class="pos_right coupon">
-                        <strong>10%</strong>쿠폰
-                        <a href="#" class="btn btn_gray_h25 cupondown2 ml10">쿠폰 다운로드</a>
-                    </span>
-                </li>
-                <li>
-                    <span class="tit">포인트</span>
-                    <span class="pos_right"><strong>ⓟ 298</strong></span>
-                </li>
-                <li class="bbnone">
-                    <span class="tit">구매수량</span>
-                    <div class="pos_right count">
-                        <div class="counttypeb">
-                            <input type='text' name='count' value='1' size='3' />
-                            <p class="btn_updown">
-                                <a href="javascript:fncAdd(-1);" class="down"></a>
-                                <a href="javascript:fncAdd(1);" class="up"></a>
-                            </p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <div class="btn_area">
-                <a href="#" class="btn btn_brown_h40" style="width:94px;" onclick="javascript:NowOrderInput('@Model.P_CODE','1');">바로구매</a>
-                <a href="#" class="btn btn_white_h40 cart" onclick="javascript:Cart_Product_Input('@Model.P_CODE','1');">쇼핑백</a>
-                @{
-                    bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
-                }
-                @if (bLogin)  //로그인 상황
-                {
-                    <a href="#" class="btn btn_white_h40 wish" onclick="javascript:Wish_Product_Input('@Model.P_CODE');">찜하기</a>
-                }
-                else
-                {
-                    <a href="#" class="btn btn_white_h40 wish" onclick="javascript:isJJimLogin();">찜하기</a>
-                }
-            </div>
-        </div>
-        <!--//판매정보-->
-        <!--상품정보, 리뷰, 보증/배송 탭-->
-        <div class="pro_detail">
-            <ul class="tabs tabtyped">
-                <li class="cnt"><a href="#proInfo">상품정보</a></li>
-                <li><a href="#Review">리뷰</a></li>
-                <li><a href="#Delivery">보증/배송</a></li>
-            </ul>
 
-            <!--상품정보-->
-            <div id="proInfo" class="tab_content" style="display:block">
-                <!--사용자가 관리자에서 올리는 상세이미지-->
-                <div><img src="/aboutCom/images/sample/sample_detail1.jpg" style="width:100%;" alt="" /></div>
-                <!--//사용자가 관리자에서 올리는 상세이미지-->
-                <!--용법 용량-->
-                <div class="product_capacity">
-                    <ul>
-                        <li>
-                            <dl>
-                                <dt>용량</dt>
-                                <dd>150ML</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>제조국</dt>
-                                <dd>한국</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>피부타입</dt>
-                                <dd>모든 피부타입</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>제조자 및 제조판매자</dt>
-                                <dd>-</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>사용기간</dt>
-                                <dd>개봉전 30개월/개봉 후 12개월</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>식품의약안정청 심사유무</dt>
-                                <dd>무</dd>
-                            </dl>
-                        </li>
-                        <li class="component">
-                            <dl>
-                                <dt>주요성분</dt>
-                                <dd>
-                                    모링가추출물, 레몬, 호박 등의 성분이 노폐물과 각질 케어에 도움을 주며 대나무 수와 로얄제리 성분의 함유로 피부에 필요한 수분과 영양을 공급해 줍니다
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="component">
-                            <dl>
-                                <dt>전성분</dt>
-                                <dd>
-                                    정제수,미네랄오일,옥틸도데칸올,글리세린,부틸렌글라이콜,폴리소르베이트60,세틸알코올,느릅나무뿌리추출물,
-                                    줄맨드라미씨추출물,카바잎/뿌리/줄기추출물,드럼스틱나무씨추출물,레몬추출물,로얄젤리추출물,호박추출물,마치현추출물,칡뿌리추출물,감초추출물,작약추출물,천궁추출물,양송이버섯추출물,키위추출물,레몬껍질오일,대나무수,수용성콜라겐,알로에베라잎즙,하이드로제네이티드레시틴,소듐하이알루로네이트,글리세릴스테아레이트,피이지-100스테아레이트,1,2-헥산디올,디메치콘, 프룩토올리고사카라이드,소듐폴리아크릴레이트,소르비탄스테아레이트,암모늄아크릴로일디메칠타우레이트/브이피코폴리머,소르비탄세스퀴올리에이트,하이드록시에칠아크릴레이트/소듐아크릴로일디메칠타우레이트코폴리머,스쿠알란,에칠헥실글리세린,티타늄디옥사이드,토코페릴아세테이트,만니톨,디소듐이디티에이,아크릴레이트/암모늄메타크릴레이트코폴리머,바이오플라보노이드,잔탄검,페녹시에탄올,황색산화철
-                                </dd>
-                            </dl>
-                        </li>
-                    </ul>
+                <span class="ico ico_best">BEST</span>-->
+                    <span class="tit">@(new HtmlString(Model.P_NAME))</span>
+                    <span class="tittxt">@(new HtmlString(Model.P_SUB_TITLE))</span>
                 </div>
-                <!--//용법 용량-->
-                <!--함께하면 좋은 제품추천-->
-                <div class="relative_recom">
-                    <p class="tit"><img src="/aboutCom/images/shopping/txt_relative.gif" alt="함께 사용하면 더 좋은 어바웃미, 이렇게 시작해보세요" /></p>
-                    <div class="boxtyped">
-                        <p class="title">디톡스 마사지 케어  Skin tone up + 멀티비타 에센스 3step</p>
-                        <p class="txt">레몬의 비타민C,플라보노이드 성분으로  피부정화마사지+ 여신의 물 셀릭워터를 담은 멀티비타 에센스로 피부 tone-up</p>
+                <!--제품사진슬라이드-->
+                <div class="produt_photo">
+                    <div class="nav">
+                        <ul></ul>
+                    </div>
+                    <div class="slider">
+                        @{
+                            string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
+                            string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+                            string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
+                            string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
+                            string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
+                            string big_img3 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG2;
+                            string thumb_img4 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG3;
+                            string big_img4 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG3;
+                        }
+                        <ul>
+                            @if (!string.IsNullOrEmpty(Model.MAIN_IMG))
+                            {
+                                <li><img src="@big_img1" alt="" /></li>}
+                            @if (!string.IsNullOrEmpty(Model.OTHER_IMG1))
+                            {
+                                <li><img src="@big_img2" alt="" /></li>}
+                            @if (!string.IsNullOrEmpty(Model.OTHER_IMG2))
+                            {
+                                <li><img src="@big_img3" alt="" /></li> }
+                            @if (!string.IsNullOrEmpty(Model.OTHER_IMG3))
+                            {
+                                <li><img src="@big_img4" alt="" /><i></i></li> }
+                        </ul>
                     </div>
                 </div>
-                <!--//함께하면 좋은 제품추천-->
-                <!--관리자에서 사용자가 올리는 이미지-->
-                <div class="relative_recom_admin">
-                    <img src="/aboutCom/images/sample/sample_detail2.jpg" alt="" />
-                </div>
-                <!--//관리자에서 사용자가 올리는 이미지-->
+                <!--//제품사진슬라이드-->
             </div>
             <!--//상품정보-->
-            <!--리뷰-->
-            <div id="Review" class="tab_content">
-                <div class="review_tab">
-                    <ul class="tabs tabtypeb">
-                        <li class="cnt"><a href="#proReview">상품리뷰</a></li>
-                        <li><a href="#expReview">체험단리뷰</a></li>
-                    </ul>
-                </div>
-                <!--제품리뷰-->
-                <div style="display:block" class="tab_content" id="proReview">
-                    <div class="brnwrap">
-                        <a href="#" class="bnr">
-                            <span class="txt">리뷰등록하면 <strong>500P</strong>,<br />포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
-                        </a>
-                    </div>
-                    <ul class="review_list">
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                <div class="morebox">
-                                    <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                    <span class="photo_review"><i></i>포토리뷰</span>
-                                    <a href="#none" class="btn_more"><i></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                <div class="morebox">
-                                    <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                    <span class="photo_review"><i></i>포토리뷰</span>
-                                    <a href="#none" class="btn_more"><i></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                <div class="morebox">
-                                    <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                    <span class="photo_review"><i></i>포토리뷰</span>
-                                    <a href="#none" class="btn_more"><i></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type dry"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                <div class="morebox">
-                                    <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                    <span class="photo_review"><i></i>포토리뷰</span>
-                                    <a href="#none" class="btn_more"><i></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top"><span class="type"></span><span class="winfo"><strong>KKON***</strong><em>40대, 여</em></span></div>
-                            <div class="rinfo_con">
-                                <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                <div class="morebox">
-                                    <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                    <span class="photo_review"><i></i>포토리뷰</span>
-                                    <a href="#none" class="btn_more"><i></i></a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <!--페이징-->
-                    <div class="paging">
-                        <a href="#" class="prev"></a>
-                        <strong>1</strong> / 50
-                        <a href="#" class="next"></a>
-                    </div>
-                    <!--//페이징-->
-                </div>
-                <!--//제품리뷰-->
-                <!--체험단리뷰-->
-                <div class="tab_content" id="expReview">
-                    <div class="brnwrap">
-                        <a href="#" class="bnr">
-                            <span class="txt">어바웃미 <strong>1기 체험단</strong> 모집<br />2015.06.01-2015.06.30</span>
-                        </a>
-                    </div>
-                    <ul class="review_list exp">
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <!-- 해시태그 -->
-                                <ul class="hash">
-                                    <li>#각질제거</li>
-                                    <li>#미백</li>
-                                    <li>#스페셜케어</li>
-                                </ul>
-                                <!-- //해시태그 -->
-                                <div class="review_view">
-                                    <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                    <div class="detail">
-                                        <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                        <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <!-- 해시태그 -->
-                                <ul class="hash">
-                                    <li>#각질제거</li>
-                                    <li>#미백</li>
-                                    <li>#스페셜케어</li>
-                                </ul>
-                                <!-- //해시태그 -->
-                                <div class="review_view">
-                                    <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                    <div class="detail">
-                                        <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                        <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type dry"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <!-- 해시태그 -->
-                                <ul class="hash">
-                                    <li>#각질제거</li>
-                                    <li>#미백</li>
-                                    <li>#스페셜케어</li>
-                                </ul>
-                                <!-- //해시태그 -->
-                                <div class="review_view">
-                                    <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                    <div class="detail">
-                                        <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                        <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <!-- 해시태그 -->
-                                <ul class="hash">
-                                    <li>#각질제거</li>
-                                    <li>#미백</li>
-                                    <li>#스페셜케어</li>
-                                </ul>
-                                <!-- //해시태그 -->
-                                <div class="review_view">
-                                    <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                    <div class="detail">
-                                        <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                        <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                        </li>
-                        <li class="review_info">
-                            <div class="rinfo_top">
-                                <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <!-- 해시태그 -->
-                                <ul class="hash">
-                                    <li>#각질제거</li>
-                                    <li>#미백</li>
-                                    <li>#스페셜케어</li>
-                                </ul>
-                                <!-- //해시태그 -->
-                                <div class="review_view">
-                                    <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                    <div class="detail">
-                                        <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                        <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                        </li>
-                    </ul>
-                    <!--//리뷰팝업-->
-                    <!--페이징-->
-                    <div class="paging">
-                        <a href="#" class="prev"></a>
-                        <strong>1</strong> / 50
-                        <a href="#" class="next"></a>
-                    </div>
-                    <!--//페이징-->
-                </div>
-                <!--//체험단리뷰-->
-            </div>
-            <!--//리뷰-->
-            <!--보증/배송-->
-            <div id="Delivery" class="tab_content">
-                <div class="deli_con">
-                    <p class="tit">품질 보증 기준</p>
-                    <p class="txt">
-                        본 제품은 구입 시 유통기한이 경과 되었거나 유통 과정 중 변질, 변패 또는 파손된 제품일 경우에는 소비자기본법에 따른 소비자분쟁해결기준에 의거 교환 또는 보상을 받을 수 있습니다.
-                    </p>
-                    <p class="tit">소비자 상담 연락처</p>
-                    <p class="txt">
-                        080-740-7983
-                    </p>
-                    <p class="tit">사용시 주의 사항</p>
-                    <ol>
-                        <li>
-                            1. 화장품을 사용하여 다음과 같은 이상이 있는 경우에는 사용을 중지하여야 하며, 계속 사용하면 증상이 악화되므로 피부과 전문의 등에게 상담할 것
-                            <ul>
-                                <li>가) 사용 중 붉은 반점, 부어오름, 가려움증, 자극 등의 이상이 있는 경우 </li>
-                                <li>나) 적용부위가 직사광선에 의하여 위와 같은 이상이 있는 경우 </li>
-                            </ul>
-                        </li>
-                        <li>
-                            2. 상처가 있는 부위, 습진 및 피부염 등의 이상이 있는 부위에는 사용을 하지 말 것
-                        </li>
-                        <li>3. (스크럽 제품의 경우) 사용시 입자가 눈에 들어가지 아니하도록 할 것 </li>
-                        <li>
-                            4. 보관 및 취급 시의 주의사항
-                            <ul>
-                                <li>가) 사용후에는 반드시 마개를 닫아둘 것 </li>
-                                <li>나) 유아,소아의 손이 닿지 않는 곳에 보관할 것 </li>
-                                <li>다) 고온 또는 저온의 장소 및 직사광선이 닿는 곳에는 보관하지 말 것 </li>
-                            </ul>
-                        </li>
-                        <li>5. (자외선 차단 기능이 포함된 제품의 경우) 이 제품의 자외선차단 지수 및 자외선 A 차단등급은 식품의약품안전청고시 자외선 차단 효과 측정방법 및 기준에 따라 측정하였음</li>
-                        <li>6. (버블워시의 경우) 살리실릭애씨드 및 그 염류를 함유하고 있으므로 만3세 이하 어린이에게는 사용하지 말 것</li>
-                    </ol>
-                </div>
-                <div class="deli_con">
-                    <p class="tit">배송안내</p>
-                    <div class="txt mb0">
-                        <p>배송사 : 00택배(0000-0000)</p>
-                        <p>배송비 : 2500원(단, 제주도 및 도서산간지역은 추가 운임료 발생)</p>
-                        <p>
-                            배송기간 : 입금완료 확인 후 2-5일 이내에 배송됩니다.<br />
-                            (단, 제주도 및 도서산간지역은 추가기간 발생)<br />
-                            고객님의 연락두절 및 부재 등으로 인하여 반송된 경우에는 왕복 택배비가 부과 됩니다. 연락처 및 주소를 정확히 기입해 주시기 바랍니다.
-                        </p>
-                        <p>배송전 취소 및 변경 : 게시판 또는 웹상에서 접수하신 경우 처리가 지연.(누락)될 수 있사오니, 신속한 처리를 위하여 고객센터로 문의 부탁드립니다. </p>
-                    </div>
-                </div>
-                <div class="deli_con">
-                    <p class="tit">배송안내</p>
-                    <p class="txt">
-                        교환 및 반품은 물품 수령 후 7일 이내에 접수(전화 및 게시판)후 당사에 입고된 상품에 한하여 처리됩니다.<br />
-                        시일이 지난 상품에 대해서는 처리가 되지 않습니다.(물품훼손/ 빈 포장폐기 및 물품가치를 상실할 경우에는 불가합니다.) <br />
-                        교환 및 반품 신청 시에는 해당구매 사이트를 통하여 해주시길 바랍니다. 신청하지 않고 임의 발송하신 경우 처리가 지연될 수 있습니다.<br />
-                        (상품을 보내실 때 발송 시 동봉되었던 교환/반품 요청서를 작성하여 함께 보내주시면 신속하고 원활한 처리가 이루어집니다.)
-                    </p>
-                    <p class="stit">불량 및 오배송 등으로 인한 교환</p>
-                    <p class="txt">
-                        맞교환은 불가하며 교환 상품이 물류센터에 도착하여 상품 확인 후 처리가 가능합니다.<br />
-                        왕복운송료는 모두 ㈜삼양제넥스에서 부담합니다. <br />
-                        단, 동일상품이 아닌 다른 칼라나 사이즈 등으로 교환 원하시는 경우에는 고객 변심으로 처리됩니다.(교환택배 구매자 부담)
-                    </p>
-                    <p class="stit">교환 및 반품이 불가한 상품</p>
-                    <p class="txt">
-                        0000000
-                        00000
-                    </p>
-                    <p class="stit">교환 및 반품 배송비 결제시</p>
-                    <p class="txt">
-                        무료배송 상품, 단순교환일 경우 5000원(동봉 또는 계좌)을 지불하셔야 합니다.<br />
-                        선결제, 착불, 단순 반품 및 교환일 경우 모두 5000원을 지불하셔야 하며, 선결제 배송비는 상품금액+배송료 모두 함께 환불됩니다.
-                    </p>
-                    <p class="stit">교환 및 반품 배송비 계좌</p>
-                    <p class="txt mb0">
-                        교환 및 반품 배송비는 아래 계좌로 입금해 주십시오.<br />
-                        은행명 : 00은행 / 계좌번호 000-000-00000 예금주 00000 (동봉시 분실 및 분쟁의 소지가 있사오니 가급적 계좌로 입금 부탁 드립니다.)
-                    </p>
-                </div>
-            </div>
-            <!--//보증/배송-->
-        </div>
-        <!--//상품정보, 리뷰, 보증/배송 탭-->
-        <!--배너-->
-        <div class="bnr_area">
-            <div class="bnr"><img src="/aboutCom/images/sample/event_ban4.jpg" alt="여름휴가에 지친 모공 리프트 업 세트구매시 30%할인" /></div>
-            <div class="bnr"><img src="/aboutCom/images/sample/event_ban3.jpg" alt="씨스타 뷰티아이템" /></div>
-        </div>
-        <!--//배너-->
-        <!--같이구매하면 좋은 상품 (최소 두개의 리스트제공)-->
-        <div class="relative_product">
-            <p class="tit">관련 상품</p>
-            <div class="btnarea">
-                <a class="prev off" href="javascript:"></a>
-                <a class="next" href="javascript:"></a>
-            </div>
-            <div class="relative_list_wrap">
-                <ul class="list">
+            <!--판매정보-->
+            <div class="sale_info">
+                <ul class="price_list">
                     <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]1</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
-                        </div>
+                        <span class="tit">판매가</span>
+                        <span class="pos_right fcblue"><del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</strong>원</span>
                     </li>
                     <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]2</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
-                        </div>
+                        <span class="tit">임직원가</span>
+                        <span class="pos_right"><strong>23,000</strong>원</span>
                     </li>
                     <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]3</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
-                        </div>
+                        <span class="tit">VIP할인가</span>
+                        <span class="pos_right"><strong>23,000</strong>원</span>
+                    </li>
+                </ul>
+                <ul class="price_list v2">
+                    <li>
+                        <span class="tit">즉시할인</span>
+                        <span class="pos_right coupon">
+                            <strong>10%</strong>쿠폰
+                            <a href="#" class="btn btn_gray_h25 cupondown2 ml10">쿠폰 다운로드</a>
+                        </span>
                     </li>
                     <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라4</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
-                        </div>
+                        <span class="tit">포인트</span>
+                        <span class="pos_right"><strong>ⓟ 298</strong></span>
                     </li>
-                    <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]5</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
+                    <li class="bbnone">
+                        <span class="tit">구매수량</span>
+                        <div class="pos_right count">
+                            <div class="counttypeb">
+                                <input type='text' name='count' id='product_num_count' value='1' size='3' readonly />
+                                <p class="btn_updown">
+                                    <a href="javascript:fncAdd(-1);" class="down"></a>
+                                    <a href="javascript:fncAdd(1);" class="up"></a>
+                                </p>
+                            </div>
                         </div>
                     </li>
                 </ul>
+                <div class="btn_area">
+                    <a href="#" class="btn btn_brown_h40" style="width:94px;" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로구매</a>
+                    <a href="#" class="btn btn_white_h40 cart" onclick="javascript:Cart_Product_Input('@Model.P_CODE',$('#product_num_count').val());">쇼핑백</a>
+                    @{
+                        bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
+                    }
+                    @if (bLogin)  //로그인 상황
+                    {
+                        <a href="#" class="btn btn_white_h40 wish" onclick="javascript:Wish_Product_Input('@Model.P_CODE');">찜하기</a>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn_white_h40 wish" onclick="javascript:isJJimLogin();">찜하기</a>
+                    }
+                </div>
             </div>
+            <!--//판매정보-->
+            <!--상품정보, 리뷰, 보증/배송 탭-->
+            <div class="pro_detail">
+                <ul class="tabs tabtyped">
+                    <li class="cnt"><a href="#proInfo">상품정보</a></li>
+                    <li><a href="#Review">리뷰</a></li>
+                    <li><a href="#Delivery">보증/배송</a></li>
+                </ul>
+
+                <!--상품정보-->
+                <div id="proInfo" class="tab_content" style="display:block">
+                    @(new HtmlString(Model.P_INFO_DETAIL_WEB))
+                    @*<!--사용자가 관리자에서 올리는 상세이미지-->
+                    <div><img src="/aboutCom/images/sample/sample_detail1.jpg" style="width:100%;" alt="" /></div>
+                    <!--//사용자가 관리자에서 올리는 상세이미지-->
+                    <!--용법 용량-->
+                    <div class="product_capacity">
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>용량</dt>
+                                    <dd>150ML</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>제조국</dt>
+                                    <dd>한국</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>피부타입</dt>
+                                    <dd>모든 피부타입</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>제조자 및 제조판매자</dt>
+                                    <dd>-</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>사용기간</dt>
+                                    <dd>개봉전 30개월/개봉 후 12개월</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>식품의약안정청 심사유무</dt>
+                                    <dd>무</dd>
+                                </dl>
+                            </li>
+                            <li class="component">
+                                <dl>
+                                    <dt>주요성분</dt>
+                                    <dd>
+                                        모링가추출물, 레몬, 호박 등의 성분이 노폐물과 각질 케어에 도움을 주며 대나무 수와 로얄제리 성분의 함유로 피부에 필요한 수분과 영양을 공급해 줍니다
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li class="component">
+                                <dl>
+                                    <dt>전성분</dt>
+                                    <dd>
+                                        정제수,미네랄오일,옥틸도데칸올,글리세린,부틸렌글라이콜,폴리소르베이트60,세틸알코올,느릅나무뿌리추출물,
+                                        줄맨드라미씨추출물,카바잎/뿌리/줄기추출물,드럼스틱나무씨추출물,레몬추출물,로얄젤리추출물,호박추출물,마치현추출물,칡뿌리추출물,감초추출물,작약추출물,천궁추출물,양송이버섯추출물,키위추출물,레몬껍질오일,대나무수,수용성콜라겐,알로에베라잎즙,하이드로제네이티드레시틴,소듐하이알루로네이트,글리세릴스테아레이트,피이지-100스테아레이트,1,2-헥산디올,디메치콘, 프룩토올리고사카라이드,소듐폴리아크릴레이트,소르비탄스테아레이트,암모늄아크릴로일디메칠타우레이트/브이피코폴리머,소르비탄세스퀴올리에이트,하이드록시에칠아크릴레이트/소듐아크릴로일디메칠타우레이트코폴리머,스쿠알란,에칠헥실글리세린,티타늄디옥사이드,토코페릴아세테이트,만니톨,디소듐이디티에이,아크릴레이트/암모늄메타크릴레이트코폴리머,바이오플라보노이드,잔탄검,페녹시에탄올,황색산화철
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>*@
+                    <!--//용법 용량-->
+                    <!--함께하면 좋은 제품추천-->
+                    <div class="relative_recom">
+                        <p class="tit"><img src="/aboutCom/images/shopping/txt_relative.gif" alt="함께 사용하면 더 좋은 어바웃미, 이렇게 시작해보세요" /></p>
+                        <div class="boxtyped">
+                            <p class="title">디톡스 마사지 케어  Skin tone up + 멀티비타 에센스 3step</p>
+                            <p class="txt">레몬의 비타민C,플라보노이드 성분으로  피부정화마사지+ 여신의 물 셀릭워터를 담은 멀티비타 에센스로 피부 tone-up</p>
+                        </div>
+                    </div>
+                    <!--//함께하면 좋은 제품추천-->
+                    <!--관리자에서 사용자가 올리는 이미지-->
+                    <div class="relative_recom_admin">
+                        <img src="/aboutCom/images/sample/sample_detail2.jpg" alt="" />
+                    </div>
+                    <!--//관리자에서 사용자가 올리는 이미지-->
+                </div>
+                <!--//상품정보-->
+                <!--리뷰-->
+                <div id="Review" class="tab_content">
+                    <div class="review_tab">
+                        <ul class="tabs tabtypeb">
+                            <li class="cnt"><a href="#proReview">상품리뷰</a></li>
+                            <li><a href="#expReview">체험단리뷰</a></li>
+                        </ul>
+                    </div>
+                    <!--제품리뷰-->
+                    <div style="display:block" class="tab_content" id="proReview">
+                        <div class="brnwrap">
+                            <a href="#" class="bnr">
+                                <span class="txt">리뷰등록하면 <strong>500P</strong>,<br />포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
+                            </a>
+                        </div>
+                        <ul class="review_list">
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
+                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
+                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
+                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
+                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
+                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
+                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type dry"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
+                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
+                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top"><span class="type"></span><span class="winfo"><strong>KKON***</strong><em>40대, 여</em></span></div>
+                                <div class="rinfo_con">
+                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
+                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
+                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!--페이징-->
+                        <div class="paging">
+                            <a href="#" class="prev"></a>
+                            <strong>1</strong> / 50
+                            <a href="#" class="next"></a>
+                        </div>
+                        <!--//페이징-->
+                    </div>
+                    <!--//제품리뷰-->
+                    <!--체험단리뷰-->
+                    <div class="tab_content" id="expReview">
+                        <div class="brnwrap">
+                            <a href="#" class="bnr">
+                                <span class="txt">어바웃미 <strong>1기 체험단</strong> 모집<br />2015.06.01-2015.06.30</span>
+                            </a>
+                        </div>
+                        <ul class="review_list exp">
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <!-- 해시태그 -->
+                                    <ul class="hash">
+                                        <li>#각질제거</li>
+                                        <li>#미백</li>
+                                        <li>#스페셜케어</li>
+                                    </ul>
+                                    <!-- //해시태그 -->
+                                    <div class="review_view">
+                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
+                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <!-- 해시태그 -->
+                                    <ul class="hash">
+                                        <li>#각질제거</li>
+                                        <li>#미백</li>
+                                        <li>#스페셜케어</li>
+                                    </ul>
+                                    <!-- //해시태그 -->
+                                    <div class="review_view">
+                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
+                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type dry"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <!-- 해시태그 -->
+                                    <ul class="hash">
+                                        <li>#각질제거</li>
+                                        <li>#미백</li>
+                                        <li>#스페셜케어</li>
+                                    </ul>
+                                    <!-- //해시태그 -->
+                                    <div class="review_view">
+                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
+                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <!-- 해시태그 -->
+                                    <ul class="hash">
+                                        <li>#각질제거</li>
+                                        <li>#미백</li>
+                                        <li>#스페셜케어</li>
+                                    </ul>
+                                    <!-- //해시태그 -->
+                                    <div class="review_view">
+                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
+                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            </li>
+                            <li class="review_info">
+                                <div class="rinfo_top">
+                                    <!--
+                                    type class
+                                    건성 : dry
+                                    중성 : normal
+                                    지성 : oily
+                                -->
+                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <!-- 해시태그 -->
+                                    <ul class="hash">
+                                        <li>#각질제거</li>
+                                        <li>#미백</li>
+                                        <li>#스페셜케어</li>
+                                    </ul>
+                                    <!-- //해시태그 -->
+                                    <div class="review_view">
+                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
+                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            </li>
+                        </ul>
+                        <!--//리뷰팝업-->
+                        <!--페이징-->
+                        <div class="paging">
+                            <a href="#" class="prev"></a>
+                            <strong>1</strong> / 50
+                            <a href="#" class="next"></a>
+                        </div>
+                        <!--//페이징-->
+                    </div>
+                    <!--//체험단리뷰-->
+                </div>
+                <!--//리뷰-->
+                <!--보증/배송-->
+                <div id="Delivery" class="tab_content">
+                    <div class="deli_con">
+                        <p class="tit">품질 보증 기준</p>
+                        <p class="txt">
+                            본 제품은 구입 시 유통기한이 경과 되었거나 유통 과정 중 변질, 변패 또는 파손된 제품일 경우에는 소비자기본법에 따른 소비자분쟁해결기준에 의거 교환 또는 보상을 받을 수 있습니다.
+                        </p>
+                        <p class="tit">소비자 상담 연락처</p>
+                        <p class="txt">
+                            080-740-7983
+                        </p>
+                        <p class="tit">사용시 주의 사항</p>
+                        <ol>
+                            <li>
+                                1. 화장품을 사용하여 다음과 같은 이상이 있는 경우에는 사용을 중지하여야 하며, 계속 사용하면 증상이 악화되므로 피부과 전문의 등에게 상담할 것
+                                <ul>
+                                    <li>가) 사용 중 붉은 반점, 부어오름, 가려움증, 자극 등의 이상이 있는 경우 </li>
+                                    <li>나) 적용부위가 직사광선에 의하여 위와 같은 이상이 있는 경우 </li>
+                                </ul>
+                            </li>
+                            <li>
+                                2. 상처가 있는 부위, 습진 및 피부염 등의 이상이 있는 부위에는 사용을 하지 말 것
+                            </li>
+                            <li>3. (스크럽 제품의 경우) 사용시 입자가 눈에 들어가지 아니하도록 할 것 </li>
+                            <li>
+                                4. 보관 및 취급 시의 주의사항
+                                <ul>
+                                    <li>가) 사용후에는 반드시 마개를 닫아둘 것 </li>
+                                    <li>나) 유아,소아의 손이 닿지 않는 곳에 보관할 것 </li>
+                                    <li>다) 고온 또는 저온의 장소 및 직사광선이 닿는 곳에는 보관하지 말 것 </li>
+                                </ul>
+                            </li>
+                            <li>5. (자외선 차단 기능이 포함된 제품의 경우) 이 제품의 자외선차단 지수 및 자외선 A 차단등급은 식품의약품안전청고시 자외선 차단 효과 측정방법 및 기준에 따라 측정하였음</li>
+                            <li>6. (버블워시의 경우) 살리실릭애씨드 및 그 염류를 함유하고 있으므로 만3세 이하 어린이에게는 사용하지 말 것</li>
+                        </ol>
+                    </div>
+                    <div class="deli_con">
+                        <p class="tit">배송안내</p>
+                        <div class="txt mb0">
+                            <p>배송사 : 00택배(0000-0000)</p>
+                            <p>배송비 : 2500원(단, 제주도 및 도서산간지역은 추가 운임료 발생)</p>
+                            <p>
+                                배송기간 : 입금완료 확인 후 2-5일 이내에 배송됩니다.<br />
+                                (단, 제주도 및 도서산간지역은 추가기간 발생)<br />
+                                고객님의 연락두절 및 부재 등으로 인하여 반송된 경우에는 왕복 택배비가 부과 됩니다. 연락처 및 주소를 정확히 기입해 주시기 바랍니다.
+                            </p>
+                            <p>배송전 취소 및 변경 : 게시판 또는 웹상에서 접수하신 경우 처리가 지연.(누락)될 수 있사오니, 신속한 처리를 위하여 고객센터로 문의 부탁드립니다. </p>
+                        </div>
+                    </div>
+                    <div class="deli_con">
+                        <p class="tit">배송안내</p>
+                        <p class="txt">
+                            교환 및 반품은 물품 수령 후 7일 이내에 접수(전화 및 게시판)후 당사에 입고된 상품에 한하여 처리됩니다.<br />
+                            시일이 지난 상품에 대해서는 처리가 되지 않습니다.(물품훼손/ 빈 포장폐기 및 물품가치를 상실할 경우에는 불가합니다.) <br />
+                            교환 및 반품 신청 시에는 해당구매 사이트를 통하여 해주시길 바랍니다. 신청하지 않고 임의 발송하신 경우 처리가 지연될 수 있습니다.<br />
+                            (상품을 보내실 때 발송 시 동봉되었던 교환/반품 요청서를 작성하여 함께 보내주시면 신속하고 원활한 처리가 이루어집니다.)
+                        </p>
+                        <p class="stit">불량 및 오배송 등으로 인한 교환</p>
+                        <p class="txt">
+                            맞교환은 불가하며 교환 상품이 물류센터에 도착하여 상품 확인 후 처리가 가능합니다.<br />
+                            왕복운송료는 모두 ㈜삼양제넥스에서 부담합니다. <br />
+                            단, 동일상품이 아닌 다른 칼라나 사이즈 등으로 교환 원하시는 경우에는 고객 변심으로 처리됩니다.(교환택배 구매자 부담)
+                        </p>
+                        <p class="stit">교환 및 반품이 불가한 상품</p>
+                        <p class="txt">
+                            0000000
+                            00000
+                        </p>
+                        <p class="stit">교환 및 반품 배송비 결제시</p>
+                        <p class="txt">
+                            무료배송 상품, 단순교환일 경우 5000원(동봉 또는 계좌)을 지불하셔야 합니다.<br />
+                            선결제, 착불, 단순 반품 및 교환일 경우 모두 5000원을 지불하셔야 하며, 선결제 배송비는 상품금액+배송료 모두 함께 환불됩니다.
+                        </p>
+                        <p class="stit">교환 및 반품 배송비 계좌</p>
+                        <p class="txt mb0">
+                            교환 및 반품 배송비는 아래 계좌로 입금해 주십시오.<br />
+                            은행명 : 00은행 / 계좌번호 000-000-00000 예금주 00000 (동봉시 분실 및 분쟁의 소지가 있사오니 가급적 계좌로 입금 부탁 드립니다.)
+                        </p>
+                    </div>
+                </div>
+                <!--//보증/배송-->
+            </div>
+            <!--//상품정보, 리뷰, 보증/배송 탭-->
+            <!--배너-->
+            <div class="bnr_area">
+                <div class="bnr"><img src="/aboutCom/images/sample/event_ban4.jpg" alt="여름휴가에 지친 모공 리프트 업 세트구매시 30%할인" /></div>
+                <div class="bnr"><img src="/aboutCom/images/sample/event_ban3.jpg" alt="씨스타 뷰티아이템" /></div>
+            </div>
+            <!--//배너-->
+            <!--같이구매하면 좋은 상품 (최소 두개의 리스트제공)-->
+            @if (this.ViewBag.withCnt != 0) //관련상품 리스트
+            {
+                <div class="relative_product">
+                    <p class="tit">관련 상품</p>
+                    <div class="btnarea">
+                        <a class="prev off" href="javascript:"></a>
+                        <a class="next" href="javascript:"></a>
+                    </div>
+                    <div class="relative_list_wrap">
+                        <ul class="list">
+                            @foreach (var item in ViewData["WITH_PRODUCT_LIST"] as List<AboutMe.Domain.Entity.Product.SP_PRODUCT_MOBILE_WITH_SEL_Result>)
+                            {
+                                string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                                <li>
+                                    <div class="photo"><img src="@imgUrl1" alt="" /></div>
+                                    <div class="detail">
+                                        <span class="ptit">@(new HtmlString(item.P_NAME))</span>
+                                        <span class="price"><del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span>
+                                        <a href="javascript:Cart_Product_Input('@item.P_CODE','1');" class="btn_cart">쇼핑백</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+          
+            <!--//같이 구매하면 좋은 상품-->
+            <!--세트상품 보러가기-->
+            <div class="btn_group">
+                <a href="#" class="btn_setprd">세트상품 보러가기</a>
+            </div>
+            <!--//세트상품 보러가기-->
+
+
+
         </div>
-        <!--//같이 구매하면 좋은 상품-->
-        <!--세트상품 보러가기-->
-        <div class="btn_group">
-            <a href="#" class="btn_setprd">세트상품 보러가기</a>
-        </div>
-        <!--//세트상품 보러가기-->
-
-
-
-    </div>
     <!--//container-->
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
     <!--footer-->

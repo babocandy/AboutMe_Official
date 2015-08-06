@@ -170,5 +170,54 @@ namespace AboutMe.Domain.Entity.AdminReview
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_INS", eXP_MASTER_IDParameter, m_IDParameter, m_NAMEParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result> SP_ADMIN_REVIEW_EXP_MASTER_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, string fROM_DATE, string tO_DATE, string iS_STATE_10, string iS_STATE_20, string iS_STATE_30, string iS_AUTH_Y, string iS_AUTH_N, ObjectParameter tOTAL)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_VALUEParameter = sEARCH_VALUE != null ?
+                new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
+                new ObjectParameter("SEARCH_VALUE", typeof(string));
+    
+            var fROM_DATEParameter = fROM_DATE != null ?
+                new ObjectParameter("FROM_DATE", fROM_DATE) :
+                new ObjectParameter("FROM_DATE", typeof(string));
+    
+            var tO_DATEParameter = tO_DATE != null ?
+                new ObjectParameter("TO_DATE", tO_DATE) :
+                new ObjectParameter("TO_DATE", typeof(string));
+    
+            var iS_STATE_10Parameter = iS_STATE_10 != null ?
+                new ObjectParameter("IS_STATE_10", iS_STATE_10) :
+                new ObjectParameter("IS_STATE_10", typeof(string));
+    
+            var iS_STATE_20Parameter = iS_STATE_20 != null ?
+                new ObjectParameter("IS_STATE_20", iS_STATE_20) :
+                new ObjectParameter("IS_STATE_20", typeof(string));
+    
+            var iS_STATE_30Parameter = iS_STATE_30 != null ?
+                new ObjectParameter("IS_STATE_30", iS_STATE_30) :
+                new ObjectParameter("IS_STATE_30", typeof(string));
+    
+            var iS_AUTH_YParameter = iS_AUTH_Y != null ?
+                new ObjectParameter("IS_AUTH_Y", iS_AUTH_Y) :
+                new ObjectParameter("IS_AUTH_Y", typeof(string));
+    
+            var iS_AUTH_NParameter = iS_AUTH_N != null ?
+                new ObjectParameter("IS_AUTH_N", iS_AUTH_N) :
+                new ObjectParameter("IS_AUTH_N", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>("SP_ADMIN_REVIEW_EXP_MASTER_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, fROM_DATEParameter, tO_DATEParameter, iS_STATE_10Parameter, iS_STATE_20Parameter, iS_STATE_30Parameter, iS_AUTH_YParameter, iS_AUTH_NParameter, tOTAL);
+        }
     }
 }

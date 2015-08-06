@@ -56,18 +56,18 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 상품리뷰 정보
          */
-        public Tuple<List<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>, string, string> ReviewPdtInfo(int? idx)
+        public Tuple<SP_ADMIN_REVIEW_PRODUCT_INFO_Result, string, string> ReviewPdtInfo(int? idx)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
-            List<SP_ADMIN_REVIEW_PRODUCT_INFO_Result> info = new List<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>();
+            SP_ADMIN_REVIEW_PRODUCT_INFO_Result info = new SP_ADMIN_REVIEW_PRODUCT_INFO_Result();
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                info = context.SP_ADMIN_REVIEW_PRODUCT_INFO(idx, retNum, retMsg).ToList();
+                info = context.SP_ADMIN_REVIEW_PRODUCT_INFO(idx, retNum, retMsg).SingleOrDefault();
             }
 
-            return new Tuple<List<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>, string, string>(info, retNum.Value.ToString(), retMsg.Value.ToString());
+            return new Tuple<SP_ADMIN_REVIEW_PRODUCT_INFO_Result, string, string>(info, retNum.Value.ToString(), retMsg.Value.ToString());
         }
 
         /**
@@ -113,32 +113,22 @@ namespace AboutMe.Domain.Service.AdminReview
         }
 
         /**
-         * 체험단 리뷰 조회
+         * 체험단 리뷰 마스터 조회
          */
-        public Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> ReviewExpList(AdminReviewRouteParam p)
+        public Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int> ReviewExpMasterList(AdminReviewExpMasterListRouteParam p)
         {
-            List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> list = new List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>();
+            List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result> list = new List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>();
+
             ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
 
-            DateTime? start_dt = null;
-            DateTime? end_dt = null;
-
-            if (!String.IsNullOrEmpty(p.SEL_DATE_FROM))
-            {
-                start_dt = DateTime.ParseExact(p.SEL_DATE_FROM, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            }
-
-            if (!String.IsNullOrEmpty(p.SEL_DATE_TO))
-            {
-                end_dt = DateTime.ParseExact(p.SEL_DATE_TO, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            }
 
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                list = context.SP_ADMIN_REVIEW_PRODUCT_SEL(p.PAGE, 10, p.SEARCH_KEY, p.SEARCH_VALUE, p.MEDIA_GBN_W, p.MEDIA_GBN_M, start_dt, end_dt, p.IS_PHOTO_Y, p.IS_PHOTO_N, p.IS_DISPLAY_Y, p.IS_DISPLAY_N, total).ToList();
+                list = context.SP_ADMIN_REVIEW_EXP_MASTER_SEL(p.PAGE,10, p.SEARCH_KEY, p.SEARCH_VALUE,p.FROM_DATE, p.TO_DATE, 
+                    p.IS_STATE_10,p.IS_STATE_20, p.IS_STATE_30,p.IS_AUTH_Y,p.IS_AUTH_N ,total).ToList();
             }
 
-            Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
+            Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
 
             return tp;
 

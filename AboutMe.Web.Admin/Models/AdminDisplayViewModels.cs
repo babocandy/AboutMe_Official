@@ -69,7 +69,7 @@ namespace AboutMe.Web.Admin.Models
 
     public class AdminDisplayPopupListViewModel
     {
-        public  List<PopupInfo> PopupList { get; set; }
+        public List<SP_ADMIN_POPUP_SEL_Result> PopupList { get; set; }
         public int Total { get; set; }
         public PopupSearchParam SearchParam { get; set; }
     }

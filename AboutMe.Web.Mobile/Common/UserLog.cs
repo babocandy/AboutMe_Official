@@ -28,7 +28,7 @@ namespace AboutMe.Web.Mobile.Common
             }
             if (memo.Length > 8000)
             {
-                memo = memo.Substring(0, 7990);
+                memo = memo.Substring(0, 7890);
             }
             if (comment.Length > 100)
             {

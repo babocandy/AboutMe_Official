@@ -39,6 +39,7 @@ namespace AboutMe.Web.Mobile.Controllers
             TotalRecord = _ProductService.GetProductSearchCnt(product_front_search_entity);
             this.ViewBag.TotalRecord = TotalRecord;                                             //총카운트
             this.ViewBag.PAGE = product_front_search_entity.PAGE;                               //페이지
+            this.ViewBag.PAGESIZE = product_front_search_entity.PAGESIZE;                       //페이지사이즈
             this.ViewBag.SORT_GBN = product_front_search_entity.SORT_GBN;                       //정렬순서
             this.ViewBag.SEARCH_KEYWORD = product_front_search_entity.SEARCH_KEYWORD;           //검색어
 

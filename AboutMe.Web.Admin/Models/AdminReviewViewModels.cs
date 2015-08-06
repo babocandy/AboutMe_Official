@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 using AboutMe.Domain.Entity.AdminReview;
+using AboutMe.Domain.Entity.AdminProduct;
 
 namespace AboutMe.Web.Admin.Models
 {
@@ -12,10 +13,11 @@ namespace AboutMe.Web.Admin.Models
 
         public AdminReviewRouteParam RouteParam { get; set; }
         public int? Total { get; set; }
-        public IList<AdminReviewUserModel> List { get; set; }
+        //public IList<AdminReviewUserModel> List { get; set; }
+        public IList<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> List { get; set; }
     }
 
-    public class AdminReviewDetailViewModel
+    public class AdminReviewUpdateViewModel
     {
 
         public int? IDX { get; set; }
@@ -23,7 +25,7 @@ namespace AboutMe.Web.Admin.Models
         public string IS_DISPLAY{get;set;}
         public string IS_BEST{get;set;}
 
-        public AdminReviewUserModel Review { get; set; }
+        public SP_ADMIN_REVIEW_PRODUCT_INFO_Result Review { get; set; }
     }
 
     public class AdminReviewThemaInputViewModel
@@ -31,11 +33,11 @@ namespace AboutMe.Web.Admin.Models
         public List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> Thema { get; set; }
     }
 
-    public class AdminReviewExpListViewModel
+    public class AdminReviewExpMasterListViewModel
     {
-        public AdminReviewRouteParam RouteParam { get; set; }
+        public AdminReviewExpMasterListRouteParam RouteParam { get; set; }
         public int? Total { get; set; }
-        public IList<AdminReviewExpUserModel> List { get; set; }
+        public IList<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result> List { get; set; }
     }
 
     public class AdminReviewExpCreateViewModel
@@ -52,5 +54,11 @@ namespace AboutMe.Web.Admin.Models
 
         [Required(ErrorMessage = "*")]
         public string IS_AUTH { get; set; }
+    }
+
+    public class AdminReviewExpFindProductViewModel
+    {
+        public List<SP_ADMIN_PRODUCT_LIST_Result> List { get; set; }
+        public int? Total { get; set; }
     }
 }

@@ -1,0 +1,32 @@
+﻿@model AboutMe.Common.Data.PagingProps
+
+<div class="paging">
+
+    @if (Model.HasPreviousBlock)
+    {
+        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.GoPageOfPrevBlock + "&" + Model.QStr))" class="prev"></a>
+    }
+    else
+    {
+        <a href="#" class="prev"></a>
+    }
+
+    @for (var i = Model.StartPage; i <= Model.EndPage; i++)
+    {
+        if (i == Model.CurrentPage)
+        {
+            <strong>@Model.CurrentPage</strong> @(Html.Raw("/")) @Model.TotalNumOfPage
+        }
+    }
+
+    @if (Model.HasNextBlock)
+    {
+        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.GoPageOfNextBlock + "&" + Model.QStr))" class="next"></a>
+    }
+    else
+    {
+        <a href="#" class="next"></a>
+    }
+</div>
+
+

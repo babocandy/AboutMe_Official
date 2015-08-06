@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewThemaInputViewModel
+﻿@model AboutMe.Web.Admin.Models.AdminReviewExpFindProductViewModel
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
 }
@@ -65,6 +65,22 @@
             </tr>
         </thead>
         <tbody>
+            @foreach (var item in Model.List)
+            {
+                <tr>
+                    <td><input type="checkbox" /></td>
+                    <td>@item.IDX</td>
+                    <td>@item.P_CODE</td>
+                    <td>@item.P_NAME</td>
+                    <td>@item.SELLING_PRICE</td>
+                    <td>@item.DISCOUNT_PRICE</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+
+
+            <!--
             <tr>
                 <td><input type="checkbox" /></td>
                 <td>60</td>
@@ -95,6 +111,7 @@
                 <td>Y</td>
                 <td>Y</td>
             </tr>
+                -->
         </tbody>
     </table>
 
