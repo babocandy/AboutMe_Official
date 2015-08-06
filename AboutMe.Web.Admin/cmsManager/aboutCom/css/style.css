@@ -43,16 +43,22 @@ html, body {height:100%}
 .minW2318 {min-width:2318px !important; overflow-x:auto;}
 .wper100 {width:100%;}
 .wper50 {width:50%;}
+
+/*ofh*/
+.ofh  {overflow:hidden;}
+
 /*por*/
 .condition_seacth {position:relative;}
-.condition_seacth .btn_search {position:absolute; left:197px; top:6px; display:table-cell; vertical-align:middle;}
-
+.condition_seacth .btn_search {position:absolute; left:197px; top:6px; display:table-cell; vertical-align:middle; }
+/**/
+.inline {display:inline !important;}
+.btn-default {color:#fff !important;}
 /*float*/
 .fl {float:left !important;}
 .fr {float:right !important;}
 .ofh {overflow:hidden;}
 /*font-color*/
-.fcred {color:#b11116 !important;}
+.fcred {color:red !important;}
 .fcblack {color:#000 !important;}
 .fc666 {color:#666 !important;}
 /*text-align*/
@@ -147,17 +153,20 @@ html, body {height:100%}
 .path strong {color:#000;}
 .container {min-width:1200px; width:100%; margin-left:0; padding:0 0 0 210px; box-sizing:border-box;}
 .container  h3 {padding-left:26px; margin-bottom:8px;  font-size:16px; font-weight:700; color:#000; line-height:20px; background:url("/cmsManager/aboutCom/images/ico_bul1.gif") 0 0 no-repeat;}
-.container  h4 {padding-left:18px; padding-bottom:6px;font-size:12px; font-weight:700; background:url("/cmsManager/aboutCom/images/ico_bul2.gif") 0 0 no-repeat; }
+.container  h4 {padding-top:2px;padding-left:18px; padding-bottom:6px;font-size:12px; font-weight:700; background:url("/cmsManager/aboutCom/images/ico_bul2.gif") 0 0 no-repeat; }
 .content {padding:18px 20px;}
 .table {font-size:12px; width:100%;}
 .table thead th {background:#f5f5f5; border:1px solid #dcdcdc; border-bottom:1px solid #dcdcdc; font-weight:normal; }
 .table tbody th {background:#f5f5f5; border:1px solid #dcdcdc; font-weight:normal;}
 .table tfoot th {background:#f5f5f5; border:1px solid #dcdcdc;}
 .table.table_row td {border:1px solid #dcdcdc; font-weight:normal;}
+.table.table_row td .btn_search {width:100%; box-sizing:border-box;}
 .table_row.v2 {border-top:1px solid #dcdcdc;}
 .table.table_col th {text-align:center; vertical-align:middle;}
 .table.table_col td {border:1px solid #dcdcdc; background:#fff; font-weight:normal; text-align:center;}
 .table.table_col .brnone {border-left:none; border-right:none;}
+.table.table_row.pd16 td {padding:16px;}
+.bdr {border:1px solid #dcdcdc !important}
 
 /*nav*/
 .navbar-nav > li > a { font-size:16px; color:#737373; }
@@ -212,7 +221,9 @@ html, body {height:100%}
 .paging a {display:inline-block; color:#737373; font-weight:bold; text-align:center; padding:0 9px 0 10px; }
 
 /**/
-.panel {position:relative;}
+.panel {position:relative; font-size:12px;}
+.panel .top {position:relative;}
+.por {position:absolute; right:0; top:0;}
 .alert.alert-info span {color:#33b08a}
 .sub-header span {font-size:12px; font-weight:normal;}
 .abr_position {position:absolute; right:0; top:0;}
@@ -252,3 +263,74 @@ html, body {height:100%}
 .popcontainer h1 {padding-left:26px; margin-bottom:8px;  font-size:16px; font-weight:700; color:#000; line-height:20px; background:url("/cmsManager/aboutCom/images/ico_bul1.gif") 0 0 no-repeat;}
 .popcontainer h2 {padding-left:18px; padding-bottom:6px;font-size:12px; font-weight:700; background:url("/cmsManager/aboutCom/images/ico_bul2.gif") 0 0 no-repeat; }
 .popcontainer table {min-width:100%;}
+
+
+/**/
+.edisplaycont {
+    margin-top: 10px;
+}
+.edisplaycont::after {
+    clear: both;
+    content: " ";
+    display: block;
+}
+.edisplaycont .edisplayls {
+}
+.edisplaycont .edisplayls li {
+    float: left;
+    margin-bottom: 10px;
+    width: 25%;
+}
+.edisplaycont .edisplayls li .edbox {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: all-scroll;
+    display: block;
+    height: 245px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+.edisplaycont .edisplayls li .edpic {
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+}
+.edisplaycont .edisplayls li .edpic img {
+    height: 150px;
+    width: 120px;
+}
+.edisplaycont .edisplayls li .edtxtdate {
+    color: #888;
+    display: block;
+    font-size: 11px;
+    margin: 0;
+    text-align: center;
+}
+.edisplaycont .edisplayls li .edtxtsti {
+    color: #000;
+    display: block;
+    height: 28px;
+    line-height: 14px;
+    margin: 0 5px;
+    overflow: hidden;
+    text-align: center;
+}
+.edisplaycont .edisplayls li .edbtn {
+    bottom: 10px;
+    display: block;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.edisplaycont .edisplayls li .edbtn a {
+    display: block;
+    margin: 0 10px;
+}
+
+.ybox {overflow-y:auto;}
+
+dl.dltype1 {display:inline-block; overflow:hidden; vertical-align:middle}
+dl.dltype1 dt {float:left; border:1px solid #dcdcdc; padding:5px 10px}
+dl.dltype1 dd {float:left; border:1px solid #dcdcdc; border-left:none;padding:5px 10px}

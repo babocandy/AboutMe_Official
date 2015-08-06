@@ -92,6 +92,7 @@ namespace AboutMe.Web.Front.Controllers
         #region 상품상세보기
         public ActionResult Detail(string pcode, Product_front_search_entity product_front_search_entity)
         {
+            #region 상품상세정보
             //상품코드
             this.ViewBag.P_CODE = pcode;
 
@@ -109,13 +110,23 @@ namespace AboutMe.Web.Front.Controllers
 
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
+            #endregion 
 
+            #region 연관상품 가져오기
+            ViewData["WITH_PRODUCT_LIST"] = "";
+            this.ViewBag.withCnt = 0;
+            string _with_product_list = productView.WITH_PRODUCT_LIST;
+            if (!string.IsNullOrEmpty(_with_product_list))
+            {
+                ViewData["WITH_PRODUCT_LIST"] = _ProductService.GetProductWithList(_with_product_list).ToList(); //연관상품 리스트
+                this.ViewBag.withCnt = -1;
+            }
+            #endregion 
 
-            #region 로그 
+            #region 로그
             UserLog userlog = new UserLog();
             userlog.UserLogSave("P_CODE:"+pcode, "상품상세정보");
             #endregion
-
 
             return View(productView);
         }

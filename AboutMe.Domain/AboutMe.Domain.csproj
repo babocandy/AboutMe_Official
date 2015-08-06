@@ -159,13 +159,13 @@
     <Compile Include="Entity\AdminCoupon\SP_COUPON_MASTER_INFO_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminCoupon\SP_COUPON_TOP1_BY_PRD_SEL_NO_LOGIN_SEL_Result.cs">
+      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminCoupon\SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result.cs">
-      <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\AdminCoupon\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelAdminCoupon.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminCoupon\TB_COUPON_ISSUED_DETAIL.cs">
@@ -464,7 +464,13 @@
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
@@ -563,6 +569,31 @@
       <DependentUpon>ModelCart.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Common\ReturnDic.cs" />
+    <Compile Include="Entity\Event\ModelEvent.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEvent.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\ModelEvent.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\ModelEvent.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEvent.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\EventUserModel.cs" />
+    <Compile Include="Entity\Event\SP_ADMIN_EVENT_CNT_Result.cs">
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\SP_ADMIN_EVENT_SEL_Result.cs">
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\SP_ADMIN_EVENT_VIEW_Result.cs">
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Faq\ModelFaq_EntityPartial.cs" />
     <Compile Include="Entity\Faq\ModelFaq_Metadata.cs" />
     <Compile Include="Entity\Faq\ModelFaq.Context.cs">
@@ -743,6 +774,9 @@
     <Compile Include="Entity\Product\SP_PRODUCT_MOBILE_SEL_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_MOBILE_WITH_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Product\SP_PRODUCT_MYPAGE_SKIKTYPE_SEL_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
@@ -753,6 +787,9 @@
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Product\SP_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelProduct.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product\SP_PRODUCT_WITH_SEL_Result.cs">
       <DependentUpon>ModelProduct.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Product\TB_LOG_USER.cs">
@@ -890,10 +927,14 @@
     <Compile Include="Service\AdminOrder\IAdminOrderService.cs" />
     <Compile Include="Service\AdminReview\IAdminReviewService.cs" />
     <Compile Include="Service\AdminReview\AdminReviewService.cs" />
+    <Compile Include="Service\BizPromotion\BizPromotion.cs" />
+    <Compile Include="Service\BizPromotion\IBizPromotion.cs" />
     <Compile Include="Service\Cart\CartService.cs" />
     <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Coupon\CouponService.cs" />
     <Compile Include="Service\Coupon\ICouponService.cs" />
+    <Compile Include="Service\Event\IEventService.cs" />
+    <Compile Include="Service\Event\EventService.cs" />
     <Compile Include="Service\Member\IMemberService.cs" />
     <Compile Include="Service\Member\MemberService.cs" />
     <Compile Include="Service\Notice\NoticeService.cs" />
@@ -1093,6 +1134,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelCart.edmx</DependentUpon>
       <LastGenOutput>ModelCart.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Event\ModelEvent.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelEvent.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Event\ModelEvent.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelEvent.edmx</DependentUpon>
+      <LastGenOutput>ModelEvent.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Event\ModelEvent.edmx.diagram">
+      <DependentUpon>ModelEvent.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Event\ModelEvent.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelEvent.edmx</DependentUpon>
+      <LastGenOutput>ModelEvent.cs</LastGenOutput>
     </None>
     <None Include="Entity\Faq\ModelFaq.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

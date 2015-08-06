@@ -11,14 +11,14 @@ namespace AboutMe.Domain.Entity.AdminCoupon
 {
     using System;
     
-    public partial class SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result
+    public partial class SP_COUPON_TOP1_BY_PRD_SEL_NO_LOGIN_SEL_Result
     {
-        public string PMO_TOTAL_CATEGORY { get; set; }
-        public string PMO_TOTAL_RATE_OR_MONEY { get; set; }
-        public Nullable<byte> PMO_TOTAL_DISCOUNT_RATE { get; set; }
-        public Nullable<int> PMO_TOTAL_DISCOUNT_MONEY { get; set; }
-        public string M_GBN { get; set; }
-        public string M_GRADE { get; set; }
-        public string M_GRADE_DESC { get; set; }
+        public string P_CODE { get; set; }
+        public string CD_COUPON { get; set; }
+        public string USABLE_DEVICE_GBN { get; set; }
+        public string COUPON_NAME { get; set; }
+        public string RATE_OR_MONEY { get; set; }
+        public int COUPON_DISCOUNT_MONEY { get; set; }
+        public int COUPON_DISCOUNT_RATE { get; set; }
     }
 }

@@ -196,6 +196,34 @@ namespace AboutMe.Domain.Service.Product
         }
         #endregion
 
+        #region 연관상품 리스트
+        public List<SP_PRODUCT_WITH_SEL_Result> GetProductWithList(string _with_product_list)
+        {
+
+            List<SP_PRODUCT_WITH_SEL_Result> lst = new List<SP_PRODUCT_WITH_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_PRODUCT_WITH_SEL(_with_product_list).ToList();
+            }
+
+            return lst;
+        }
+        #endregion
+
+        #region 연관상품 리스트 [모바일]
+        public List<SP_PRODUCT_MOBILE_WITH_SEL_Result> GetProductMobileWithList(string _with_product_list)
+        {
+
+            List<SP_PRODUCT_MOBILE_WITH_SEL_Result> lst = new List<SP_PRODUCT_MOBILE_WITH_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_PRODUCT_MOBILE_WITH_SEL(_with_product_list).ToList();
+            }
+
+            return lst;
+        }
+        #endregion
+
         #endregion
 
         #region 카테고리

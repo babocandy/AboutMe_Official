@@ -84,6 +84,11 @@
         strControl = "Order";
     }
     
+    if (strControl == "Event" || strControl == "Plan")
+    {
+        strControl = "AdminPromotion";
+    }
+    
     switch (strControl)
     {
         case "AdminUser":  //관리자 관리
@@ -221,7 +226,17 @@
                         -->
                 </ul>
             </li>
-          
+
+            <li @fLeftMenuCSSOn("Index,Edit,New", "Event") @fLeftMenuCSSOn("Index,Edit,New", "Plan")>
+                <a href="#" class="menu ">이벤트/기획전관리</a>
+                <ul class="depth2">
+                    <li @fLeftMenuCSSOn("Main", "Event")><a href="/Event/Main">이벤트메인관리</a></li>
+                    <li @fLeftMenuCSSOn("Index,Edit,New", "Event")><a href="/Event/">이벤트관리</a></li>
+                    <li @fLeftMenuCSSOn("Index,Edit,New", "Plan")><a href="/Plan/">기획전관리</a></li>
+                    <li><a href="/cmsManager/promotion/testerapply.html">샘플/체험단 신청</a></li>
+                </ul>
+            </li>
+
         </ul>
             break;
 

@@ -19,6 +19,9 @@ namespace AboutMe.Domain.Entity.AdminCoupon
         public string USABLE_DEVICE_GBN { get; set; }
         public string ISSUE_METHOD_GBN { get; set; }
         public string COUPON_NUM_CHECK_TF { get; set; }
+        public string RATE_OR_MONEY { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_RATE { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_MONEY { get; set; }
         public int IDX_COUPON_NUMBER { get; set; }
         public string M_ID { get; set; }
         public string USE_STATUS { get; set; }
