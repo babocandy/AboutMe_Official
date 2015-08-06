@@ -21,6 +21,7 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public string PMO_PRODUCT_MAIN_TITLE { get; set; }
         public string PMO_PRODUCT_SUB_TITLE { get; set; }
         public string PMO_PRODUCT_SHOPPING_TIP { get; set; }
+        public string PMO_PRODUCT_MAIN_IMG { get; set; }
         public string PMO_PRODUCT_RATE_OR_MONEY { get; set; }
         public Nullable<byte> PMO_PRODUCT_DISCOUNT_RATE { get; set; }
         public Nullable<int> PMO_PRODUCT_DISCOUNT_MONEY { get; set; }

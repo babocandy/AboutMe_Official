@@ -357,7 +357,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
                     using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
                     {
                         ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
-                        AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_INS(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_CATEGORY,Tb.PMO_PRODUCT_MAIN_TITLE,Tb.PMO_PRODUCT_SUB_TITLE,Tb.PMO_PRODUCT_SHOPPING_TIP ,Tb.PMO_PRODUCT_RATE_OR_MONEY, Tb.PMO_PRODUCT_DISCOUNT_RATE, Tb.PMO_PRODUCT_DISCOUNT_MONEY,
+                        AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_INS(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_CATEGORY,Tb.PMO_PRODUCT_MAIN_TITLE,Tb.PMO_PRODUCT_SUB_TITLE,Tb.PMO_PRODUCT_SHOPPING_TIP ,Tb.PMO_PRODUCT_MAIN_IMG,Tb.PMO_PRODUCT_RATE_OR_MONEY, Tb.PMO_PRODUCT_DISCOUNT_RATE, Tb.PMO_PRODUCT_DISCOUNT_MONEY,
                             Tb.PMO_SET_DISCOUNT_CNT,Tb.PMO_ONEONE_MULTIPLE_CNT,
                             Tb.PMO_PRODUCT_DATE_FROM, Tb.PMO_PRODUCT_DATE_TO, Tb.USABLE_YN, objOutParam);
 
@@ -423,7 +423,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
                     {
                         //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
                         
-                        AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_MAIN_TITLE, Tb.PMO_PRODUCT_SUB_TITLE, Tb.PMO_PRODUCT_SHOPPING_TIP, Tb.PMO_PRODUCT_RATE_OR_MONEY, Tb.PMO_PRODUCT_DISCOUNT_RATE, Tb.PMO_PRODUCT_DISCOUNT_MONEY,
+                        AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_MAIN_TITLE, Tb.PMO_PRODUCT_SUB_TITLE, Tb.PMO_PRODUCT_SHOPPING_TIP,Tb.PMO_PRODUCT_MAIN_IMG, Tb.PMO_PRODUCT_RATE_OR_MONEY, Tb.PMO_PRODUCT_DISCOUNT_RATE, Tb.PMO_PRODUCT_DISCOUNT_MONEY,
                             Tb.PMO_SET_DISCOUNT_CNT, Tb.PMO_ONEONE_MULTIPLE_CNT,
                             Tb.PMO_PRODUCT_DATE_FROM, Tb.PMO_PRODUCT_DATE_TO, Tb.USABLE_YN, CdPromotionProduct);
 

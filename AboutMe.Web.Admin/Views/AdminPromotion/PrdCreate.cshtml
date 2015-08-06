@@ -107,7 +107,7 @@
         <div class="panel">
             <h3 class="sub-header">상품별 할인 프로모션 등록</h3>
 
-            @using (Html.BeginForm("PrdCreate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("PrdCreate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -154,6 +154,16 @@
                                                     <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left" })</td>
 
                                                 </tr>
+                                                
+                                                <tr>
+                                                    <th>프로모션 대표 이미지 </th>
+                                                    <td>
+                                                    @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MAIN_IMG)
+                                                    <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" /></td>
+                                                </tr>
+                                                
+                                               
+                                                <!--
                                                 <tr>
                                                     <th>정률/정액 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_RATE_OR_MONEY)</font>
@@ -171,6 +181,7 @@
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_DISCOUNT_MONEY)</td>
 
                                                 </tr>
+                                                 -->
                                                 <tr>
                                                     <th>세트상품 할인적용 기준 종류수 </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_SET_DISCOUNT_CNT, new { cssClass = "input-sm text-left" }) 종류 구매시 할인  </td>
@@ -178,7 +189,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>1+1 추가증정 배수  </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_ONEONE_MULTIPLE_CNT, new { cssClass = "input-sm text-left" }) ( <font color="red">ex:</font> ) (*)1+1의 경우 기본적으로 '2' 를 입력합니다  </td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_ONEONE_MULTIPLE_CNT, new { cssClass = "input-sm text-left" , Value="2"}) ( <font color="red">ex:</font> ) (*)1+1의 경우 기본적으로 '2' 를 입력합니다  </td>
 
                                                 </tr>
 
