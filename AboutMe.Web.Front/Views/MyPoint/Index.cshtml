@@ -1,0 +1,161 @@
+﻿@using AboutMe.Web.Front.Controllers.Mypage
+@{
+    ViewBag.Title = "내포인트 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+    
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    var myController = ViewContext.Controller as MyPointController;
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+}
+
+
+<!--container-->
+<div id="container" class="point">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>내 포인트<i></i></h2>
+                <!--mypage_menu-->
+                @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                <!--//mypage_menu-->
+            </div>
+            <!--//h2_area-->
+            <!--꼭 읽어주세요-->
+            <div class="userread">
+                <p class="tit">꼭 읽어주세요</p>
+                <ul class="ps_list">
+                    <li>5,000원 이상 보유 시 10원 단위로 결제 시 사용 가능합니다.</li>
+                    <li>상품 구매 시 적립금 정책에 의하여 적립됩니다.</li>
+                    <li>구매확정 후 적립 됩니다.</li>
+                </ul>
+            </div>
+            <!--//꼭 읽어주세요-->
+        </div>
+        <!--//mypage_top-->
+        <!--현재적립금액-->
+        <div class="boxtypee savepoint_txt">
+            <div class="top"></div>
+            <div class="middle">
+                <p><img src="/aboutCom/images/mypage/ico_savepoint.gif" alt="" />홍길동님 현재 포인트 <span>123,500 </span>원</p>
+            </div>
+            <div class="bottom"></div>
+        </div>
+        <!--//현재적립금액-->
+        <!--포인트리스트-->
+        <div class="tabletypeb savepoint_table">
+            <table>
+                <colgroup><col width="160" /><col width="*" /><col width="135" /><col width="145" /><col width="132" /></colgroup>
+                <thead>
+                    <tr>
+                        <th>주문일자</th>
+                        <th>주문 상품 정보</th>
+                        <th>포인트 내역</th>
+                        <th>비고</th>
+                        <th>잔여 포인트</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="pluspoint">500</span></td>
+                        <td class="fcblue">적립</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="pluspoint">500</span></td>
+                        <td class="fcblue">적립</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>사용</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="pluspoint">500</span></td>
+                        <td class="fcblue">적립</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>사용</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>소멸</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>차감</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>차감</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>사용</td>
+                        <td>123,500</td>
+                    </tr>
+                    <tr>
+                        <td>2015 .10 .26</td>
+                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
+                        <td><span class="minuspoint">300</span></td>
+                        <td>소멸</td>
+                        <td>123,500</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--//포인트리스트-->
+        <!--페이징-->
+        <div class="paging mt30">
+            <a href="#" class="prev">이전</a>
+            <!--현재 페이지-->
+            <strong>1</strong>
+            <!--//현재 페이지-->
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">7</a>
+            <a href="#">8</a>
+            <a href="#">9</a>
+            <a href="#">10</a>
+            <a href="#" class="next">다음</a>
+        </div>
+        <!--//페이징-->
+
+
+    </div>
+</div>
+<!--//container-->
+
+

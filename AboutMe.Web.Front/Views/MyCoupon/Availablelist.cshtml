@@ -272,11 +272,18 @@
                     </div>
                     <!--//쿠폰리스트-->
                     <!--페이징-->
+                  
+                    @{
+
+                        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = 10, PagePerBlock = ViewBag.PageSize, CurrentPage = ViewBag.Page, QueryStr = "" });
+                    }
+                   
+                    <!---
                     <div class="paging mt30">
                         <a href="#" class="prev">이전</a>
-                        <!--현재 페이지-->
+                       
                         <strong>1</strong>
-                        <!--//현재 페이지-->
+                      
                         <a href="#">2</a>
                         <a href="#">3</a>
                         <a href="#">4</a>
@@ -288,6 +295,7 @@
                         <a href="#">10</a>
                         <a href="#" class="next">다음</a>
                     </div>
+                        -->
                     <!--//페이징-->
 
                 </div>

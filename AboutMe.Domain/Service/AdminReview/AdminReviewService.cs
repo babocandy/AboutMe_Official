@@ -150,6 +150,65 @@ namespace AboutMe.Domain.Service.AdminReview
 
         }
 
+
+
+        /**
+         * 체험단에서 상품 찾기
+         */
+        public Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int> ReviewExpFindProductList(AdminReviewExpFindProductRouteParam p)
+        {
+            List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result> list = new List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>();
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                list = context.SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL(p.PAGE, p.PAGE_SIZE, p.SEARCH_KEY, p.SEARCH_VALUE, total).ToList();
+            }
+
+            Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
+
+            return tp;
+        }
+
+
+        /**
+         * 마스터 상세
+         */
+        public SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result ReviewExpMasterDetail(int? idx)
+        {
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                return context.SP_ADMIN_REVIEW_EXP_MASTER_DETAIL(idx).SingleOrDefault();
+            }
+
+        }
+
+        /**
+         * 마스터 수정
+         */
+        public void ReviewExpMasterUpdate(int? idx, string isAuth)
+        {
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                context.SP_ADMIN_REVIEW_EXP_MASTER_UDATE(idx, isAuth);
+            }
+
+        }
+
+        /**
+         * 마스터 관련 회원 조회
+         */
+        public List<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> ReviewExpMemberList(int? midx)
+        {
+            List<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> list = new List<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result>();
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                list = context.SP_ADMIN_REVIEW_EXP_MEMBER_SEL(midx).ToList();
+            }
+
+            return list;
+        }
+
         /**
          * 체험단리뷰 회원 저장
          */
@@ -158,10 +217,20 @@ namespace AboutMe.Domain.Service.AdminReview
 
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                context.SP_ADMIN_REVIEW_EXP_MEMBER_INS(p.MASTER_IDX,p.M_ID, p.M_NAME);
+                context.SP_ADMIN_REVIEW_EXP_MEMBER_INS(p.MASTER_IDX, p.M_ID, p.M_NAME);
             }
+        }
 
+        /**
+         * 체험단리뷰 회원 삭제
+         */
+        public void ReviewExpMemberDelete(string memId, int? masterIdx)
+        {
 
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                context.SP_ADMIN_REVIEW_EXP_MEMBER_DEL(memId, masterIdx);
+            }
         }
 
     }

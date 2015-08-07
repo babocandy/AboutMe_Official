@@ -44,6 +44,10 @@ namespace AboutMe.Domain.Service.Coupon
         //상품별, 회원별 사용가능 혹은 다운로드 가능한 쿠폰 TOP 1    - pc/모바일 공통 
         List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> GetCouponTop1_ByMem_ByPrd(string UsableDeviceGbn, string PCode, string M_Id);
 
+
+        //상품별 유효 쿠폰 정책이 있는지 (일반/브론즈 회원 사용 가능한) TOP 1    - pc/모바일 공통 .. 
+        List<SP_COUPON_TOP1_BY_PRD_SEL_NO_LOGIN_SEL_Result> GetCouponTop1_ByNoLogin_ByPrd(string UsableDeviceGbn, string PCode);
+
         #endregion 
     }
 }

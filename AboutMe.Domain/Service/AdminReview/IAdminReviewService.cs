@@ -23,5 +23,13 @@ namespace AboutMe.Domain.Service.AdminReview
         Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int> ReviewExpMasterList(AdminReviewExpMasterListRouteParam p);
         int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p);
         void ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p);
+
+        Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int> ReviewExpFindProductList(AdminReviewExpFindProductRouteParam p);
+
+        SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result ReviewExpMasterDetail(int? idx);
+
+        void ReviewExpMemberDelete(string memId, int? masterIdx);
+        List<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> ReviewExpMemberList(int? midx);
+        void ReviewExpMasterUpdate(int? idx, string isAuth);
     }
 }

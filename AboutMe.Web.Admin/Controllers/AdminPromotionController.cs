@@ -5,10 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 
 using AboutMe.Common.Helper;
+using AboutMe.Common.Data;
 using AboutMe.Domain.Service.AdminPromotion;
 using AboutMe.Domain.Entity.AdminPromotion;
 
 using AboutMe.Web.Admin.Common.Filters;
+
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -303,7 +305,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_PRODUCT  , string[] CheckMemGrade)
-        public ActionResult PrdCreate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
+        public ActionResult PrdCreate(HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE, [Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
         {
 
 
@@ -326,6 +328,29 @@ namespace AboutMe.Web.Admin.Controllers
                     if (_AdminPromotionService.GetAdminPromotionByProductDupSel(PmoProductCategory, DateFrom, DateTo) == 0 || tb_promotion_by_product.USABLE_YN == "N")
                     {
 
+                        string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");
+
+                        #region 파일 업로드
+                        if (PMO_PRODUCT_MAIN_IMG_FILE != null)
+                        {
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = 458, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MAIN_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = "";
+                            }
+                        }
+                        #endregion
                         is_success = _AdminPromotionService.InsAdminPromotionByProduct(tb_promotion_by_product);
 
                         if (is_success == 1)
@@ -380,7 +405,7 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult PrdUpdate([Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
+        public ActionResult PrdUpdate(String OLD_PRODUCT_MAIN_IMG, HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE,   [Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
         {
             
             /**
@@ -436,6 +461,30 @@ namespace AboutMe.Web.Admin.Controllers
 
                                 if(FromToCheck == true)
                                 {
+                                    #region 파일 업로드
+
+                                    string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");
+                                    
+                                    if (PMO_PRODUCT_MAIN_IMG_FILE != null)
+                                    {
+                                        ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MAIN_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = OLD_PRODUCT_MAIN_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = OLD_PRODUCT_MAIN_IMG;
+                                    }
+
+                                    #endregion
+
                                     //프로모션 정보 업데이트 실행
                                     is_success = _AdminPromotionService.UpdateAdminPromotionByProduct(tb_promotion_by_product,CdPromotionProduct);
 

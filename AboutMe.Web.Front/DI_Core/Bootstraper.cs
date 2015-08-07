@@ -44,6 +44,14 @@ namespace AboutMe.Web.Front.DI_Core
             **/
             container.RegisterType<AboutMe.Domain.Service.Recallbbs.IRecallbbsService, AboutMe.Domain.Service.Recallbbs.RecallbbsService>(); //취소/반품게시판
 
+            container.RegisterType<AboutMe.Domain.Service.BizPromotion.IBizPromotion, AboutMe.Domain.Service.BizPromotion.BizPromotion>(); //비즈니스로직..쿠폰,프로모션을 같이 이용하는... 
+
+            container.RegisterType<AboutMe.Domain.Service.Point.IPointService, AboutMe.Domain.Service.Point.PointService>(); //포인트
+            container.RegisterType<AboutMe.Domain.Service.Display.IDisplayService, AboutMe.Domain.Service.Display.DisplayService>(); //전시,배너,팝업
+
+            //-------------------------------------------------------------------------------------------------------
+
+
             container.RegisterType<AboutMe.Web.Front.Controllers.AccountController>(new InjectionConstructor());
 
             return container;

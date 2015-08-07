@@ -2,122 +2,138 @@
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Front.Controllers
 @{
-    ViewBag.Title = "Ready";
-    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+    ViewBag.Title = "나의 리뷰 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
     var myController = ViewContext.Controller as MyReviewController;
 }
-@section Head{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
-    <link href="/aboutCom/css/mypage.css" rel="stylesheet">
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
 }
 
-@section Body{
-    <div class="wrap mypage">
-        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
 
 
-        <!--container-->
-        <div id="container" class="review">
-            <div class="container1080">
-                @{ Html.RenderPartial("~/Views/MyReview/_Top.cshtml");}
-
-                <!--리뷰영역-->
-                <div class="contypeb">
-                    <div class="reviewwrap">
-                        <!--리뷰 탭-->
-                        <div class="reviewtab">
-                            <ul class="">
-                                <li class="cnt" ><a href="#" onclick="return false;">작성 가능한 리뷰</a></li>
-                                <li ><a href="/MyPage/MyReview/Complete">작성한 리뷰</a></li>
-                            </ul>
-                        </div>
-                        <!--//리뷰 탭-->
-                        <!--리뷰 컨텐츠-->
-                        <div id="tabCon1" class="writable tab_content tabletypeb" style="display:block">
-                            <!--작성 가능한 리뷰 목록-->
-                            <table summary="주문 상품 정보, 수량, 결제금액, 비고">
-                                <caption>작성 가능한 리뷰 목록</caption>
-                                <colgroup>
-                                    <col width="170" />
-                                    <col width="*" />
-                                    <col width="105" />
-                                    <col width="148" />
-                                    <col width="231" />
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">주문 상품 정보</th>
-                                        <th>수량</th>
-                                        <th>결제금액</th>
-                                        <th>비고</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model.Count() > 0) //목록
-                                    {
-                                        foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td class="proimg">
-                                                    <a href="#"><img src="@(myController._img_path_product)@(item.P_IMG1_S)" alt="상품 이미지" /></a>
-                                                </td>
-                                                <td class="product">
-                                                    <dl>
-                                                        <dt>
-                                                            <a href="#">
-                                                                <!--<span class="tag"><span class="ico_1_1">1+1</span></span>-->
-                                                                @item.P_NAME
-                                                            </a>
-                                                        </dt>
-                                                        <dd>@Html.Raw(item.P_SUB_TITLE)</dd>
-                                                    </dl>
-                                                </td>
-                                                <td class="count">
-                                                    <div class="relbox">@item.P_COUNT</div>
-                                                </td>
-                                                <td class="proprice"><strong>@string.Format("{0:#,##0}", @item.REAL_PAY_PRICE)</strong>원</td>
-
-                                                @{
-                                                    MyReviewPdtInputParam p = new MyReviewPdtInputParam();
-                                                    p.ORDER_DETAIL_IDX = item.ORDER_DETAIL_IDX;
-                                                    p.P_CODE = item.P_CODE;
-                                                }
-                                                <td><a href="#" class="btn_goreview" onclick="PopupCenter('@Url.Action("Write", "MyReview", p)', '', 780, 600); return false;">리뷰쓰기</a></td>
-                                            </tr>
-                                        }
-                                    }
-                                    else //목록 없음
-                                    {
-                                        <tr>
-                                            <td class="none" colspan="5" style="height:645px;">
-                                                <img src="/aboutCom/images/mypage/ico_warning.gif" alt="">
-                                                <p>
-                                                    구매내역이 없거나 리뷰 작성 가능한 내역이 없습니다.<br />
-                                                    구매확정 후 리뷰 작성이 가능합니다.
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    }
-
-
-                                </tbody>
-                            </table>
-                            <!--//작성 가능한 리뷰 목록-->                       
-                        </div>
-                        <!--//리뷰 컨텐츠-->
-                    </div>
-                    <!--//wrap review-->
-                </div>
-                <!--//리뷰영역-->
-
+   <!--container-->
+<div id="container" class="review">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>나의 리뷰<i></i></h2>
+                <!--mypage_menu-->
+                @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                <!--//mypage_menu-->
             </div>
-            <!--//container1080-->
+            <!--//h2_area-->
+            <!--꼭 읽어주세요-->
+            <div class="userread">
+                <p class="tit">꼭 읽어주세요</p>
+                <ul class="ps_list">
+                    <li>베스트 리뷰로 선정되면 2,000포인트 추가 지급 됩니다.</li>
+                    <li>포토리뷰 작성 시 1,000 포인트가 적립됩니다.</li>
+                    <li>텍스트 리뷰 작성 시 500 포인트가 적립니다.</li>
+                    <li>텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
+                    <li>구매확정 후 작성 가능합니다.</li>
+                    <li>리뷰 작성 시 개인정보는 가급적 노출하지 마시기 바랍니다. (본 쇼핑몰에서는 책임지지 않습니다.)</li>
+                </ul>
+            </div>
+            <!--//꼭 읽어주세요-->
         </div>
-        <!--//container-->       
-    
-        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+        <!--//mypage_top-->
+
+        <!--리뷰영역-->
+        <div class="contypeb">
+            <div class="reviewwrap">
+                <!--리뷰 탭-->
+                <div class="reviewtab">
+                    <ul class="">
+                        <li class="cnt"><a href="#" onclick="return false;">작성 가능한 리뷰</a></li>
+                        <li><a href="/MyPage/MyReview/Complete">작성한 리뷰</a></li>
+                    </ul>
+                </div>
+                <!--//리뷰 탭-->
+                <!--리뷰 컨텐츠-->
+                <div id="tabCon1" class="writable tab_content tabletypeb" style="display:block">
+                    <!--작성 가능한 리뷰 목록-->
+                    <table summary="주문 상품 정보, 수량, 결제금액, 비고">
+                        <caption>작성 가능한 리뷰 목록</caption>
+                        <colgroup>
+                            <col width="170" />
+                            <col width="*" />
+                            <col width="105" />
+                            <col width="148" />
+                            <col width="231" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2">주문 상품 정보</th>
+                                <th>수량</th>
+                                <th>결제금액</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() > 0) //목록
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="proimg">
+                                            <a href="#"><img src="@(myController._img_path_product)@(item.P_IMG1_S)" alt="상품 이미지" /></a>
+                                        </td>
+                                        <td class="product">
+                                            <dl>
+                                                <dt>
+                                                    <a href="#">
+                                                        <!--<span class="tag"><span class="ico_1_1">1+1</span></span>-->
+                                                        @item.P_NAME
+                                                    </a>
+                                                </dt>
+                                                <dd>@Html.Raw(item.P_SUB_TITLE)</dd>
+                                            </dl>
+                                        </td>
+                                        <td class="count">
+                                            <div class="relbox">@item.P_COUNT</div>
+                                        </td>
+                                        <td class="proprice"><strong>@string.Format("{0:#,##0}", @item.REAL_PAY_PRICE)</strong>원</td>
+
+                                        @{
+                                    MyReviewPdtInputParam p = new MyReviewPdtInputParam();
+                                    p.ORDER_DETAIL_IDX = item.ORDER_DETAIL_IDX;
+                                    p.P_CODE = item.P_CODE;
+                                        }
+                                        <td><a href="#" class="btn_goreview" onclick="PopupCenter('@Url.Action("Write", "MyReview", p)', '', 780, 600); return false;">리뷰쓰기</a></td>
+                                    </tr>
+                                }
+                            }
+                            else //목록 없음
+                            {
+                                <tr>
+                                    <td class="none" colspan="5" style="height:645px;">
+                                        <img src="/aboutCom/images/mypage/ico_warning.gif" alt="">
+                                        <p>
+                                            구매내역이 없거나 리뷰 작성 가능한 내역이 없습니다.<br />
+                                            구매확정 후 리뷰 작성이 가능합니다.
+                                        </p>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                    <!--//작성 가능한 리뷰 목록-->
+                </div>
+                <!--//리뷰 컨텐츠-->
+            </div>
+            <!--//wrap review-->
+        </div>
+        <!--//리뷰영역-->
 
     </div>
-    <!--//wrap-->
-}
-
+    <!--//container1080-->
+</div>
+<!--//container-->

@@ -1,27 +1,46 @@
 ﻿@model AboutMe.Web.Front.Models.MyReviewCompleteViewModel
-@using AboutMe.Web.Front.Controllers
 @using AboutMe.Domain.Entity.Review
+@using AboutMe.Web.Front.Controllers
 @{
-    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+    ViewBag.Title = "나의 리뷰 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 
     var myController = ViewContext.Controller as MyReviewController;
 }
-@section Head{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
-    <link href="/aboutCom/css/mypage.css" rel="stylesheet">
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
 }
-
-
-
-@section Body{
-    <div class="wrap mypage">
-        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
-
 
         <!--container-->
         <div id="container" class="review">
             <div class="container1080">
-                @{ Html.RenderPartial("~/Views/MyReview/_Top.cshtml");}
+                <!--mypage_top-->
+                <div class="mypage_top">
+                    <!--h2_area-->
+                    <div class="h2_area">
+                        <h2>나의 리뷰<i></i></h2>
+                        <!--mypage_menu-->
+                        @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                        <!--//mypage_menu-->
+                    </div>
+                    <!--//h2_area-->
+                    <!--꼭 읽어주세요-->
+                    <div class="userread">
+                        <p class="tit">꼭 읽어주세요</p>
+                        <ul class="ps_list">
+                            <li>베스트 리뷰로 선정되면 2,000포인트 추가 지급 됩니다.</li>
+                            <li>포토리뷰 작성 시 1,000 포인트가 적립됩니다.</li>
+                            <li>텍스트 리뷰 작성 시 500 포인트가 적립니다.</li>
+                            <li>텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
+                            <li>구매확정 후 작성 가능합니다.</li>
+                            <li>리뷰 작성 시 개인정보는 가급적 노출하지 마시기 바랍니다. (본 쇼핑몰에서는 책임지지 않습니다.)</li>
+                        </ul>
+                    </div>
+                    <!--//꼭 읽어주세요-->
+                </div>
+                <!--//mypage_top-->
 
                 <!--리뷰영역-->
                 <div class="contypeb">
@@ -119,9 +138,3 @@
             <!--//container1080-->
         </div>
         <!--//container-->
-        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
-
-    </div>
-    <!--//wrap-->
-}
-

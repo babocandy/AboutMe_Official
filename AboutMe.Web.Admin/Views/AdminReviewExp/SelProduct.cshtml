@@ -1,4 +1,5 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminReviewExpFindProductViewModel
+@using AboutMe.Common.Helper
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
 }
@@ -6,34 +7,14 @@
 
 @section Scripts{
     <script>
-
-
-        function closePopup() {
-            if (window.opener) {
-                window.opener.location.reload(true);
-            }
-            self.close();
-
+        function setup() {
+            // window.opener.window.getElementById();
+           
+            var data = document.querySelector('input[name="SEL_ITEM"]:checked').value;
+          //  alert(data);
+            window.opener.setProductCode(data)
+            window.close();
         }
-
-        function update(frm) {
-
-            if (confirm("수정하시겠습니까?")) {
-                frm.submit();
-            }
-        }
-
-
-        var rNum = "@TempData["ResultNum"]";
-        var rMsg = "@TempData["ResultMessage"]";
-
-        if (rNum != "0" && rNum != "") {
-            alert(rMsg);
-        } else if (rNum == "0") {
-            //closePopup();
-            alert("수정되었습니다.");
-        }
-
     </script>
 }
 
@@ -42,83 +23,71 @@
 
 					<!--content-->
 <div class="content">
+
+
     <div class="panel">
-        <select>
-            <option>선택</option>
-            <option>상품코드</option>
-            <option>상품명</option>
-        </select>
-        <input type="text" class="input-sm" style="width:30%"> <a href="#" class="btn btn-default small">검색</a>
+@using (Html.BeginForm("SelProduct", "AdminReviewExp", FormMethod.Get, new { id = "frmSearch", name = "frmSearch" }))
+{
+       
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem { Text = "상품코드", Value = "P_CODE" });
+            items.Add(new SelectListItem { Text = "상품명", Value = "P_NAME" });
+
+            foreach (var xx in items)
+            {
+                if (xx.Value == Model.RouteParam.SEARCH_KEY)
+                {
+                    xx.Selected = true;
+                    break;
+                }
+            }
+        
+        @Html.DropDownList("SEARCH_KEY", items, "선택", new { style = "width:100px;" })
+
+
+    <input type="text" class="input-sm" style="width:30%" name="SEARCH_VALUE" value="@Model.RouteParam.SEARCH_VALUE">
+        <a href="#" class="btn btn-default small" onclick="document.frmSearch.submit(); return false;">검색</a>
+}
     </div>
+
     <table class="table table_col" style="min-width:500px">
         <colgroup><col width="8%" /><col width="8%" /><col width="10%" /><col width="*" /><col width="10%" /><col width="10%" /><col width="8%" /><col width="8%" /></colgroup>
         <thead>
             <tr>
-                <th><input type="checkbox" /></th>
+                <th>선택</th>
                 <th>No</th>
                 <th>상품코드</th>
                 <th>상품명</th>
                 <th>판매가</th>
                 <th>할인가</th>
-                <th>프로모션<br />유무</th>
-                <th>쿠폰 유무</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.List)
             {
                 <tr>
-                    <td><input type="checkbox" /></td>
+                    <td><input type="radio" name="SEL_ITEM" value="@item.P_CODE" /></td>
                     <td>@item.IDX</td>
                     <td>@item.P_CODE</td>
                     <td>@item.P_NAME</td>
-                    <td>@item.SELLING_PRICE</td>
-                    <td>@item.DISCOUNT_PRICE</td>
-                    <td></td>
-                    <td></td>
+                    <td>@string.Format("{0:#,##0}", item.SELLING_PRICE)</td>
+                    <td>@string.Format("{0:#,##0}", item.DISCOUNT_PRICE)</td>
                 </tr>
             }
-
-
-            <!--
-            <tr>
-                <td><input type="checkbox" /></td>
-                <td>60</td>
-                <td></td>
-                <td></td>
-                <td>63,800</td>
-                <td>62,800</td>
-                <td>Y</td>
-                <td>Y</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" /></td>
-                <td>60</td>
-                <td></td>
-                <td></td>
-                <td>63,800</td>
-                <td>62,800</td>
-                <td>Y</td>
-                <td>Y</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" /></td>
-                <td>60</td>
-                <td></td>
-                <td></td>
-                <td>63,800</td>
-                <td>62,800</td>
-                <td>Y</td>
-                <td>Y</td>
-            </tr>
-                -->
         </tbody>
     </table>
 
     <div class="tac mt20">
-        <a class="btn btn-default small" href="#">설정</a>
-        <a class="btn btn-success small" href="#">취소</a>
+        <a class="btn btn-default small" href="#" onclick="setup(); return; false;">설정</a>
+        <a class="btn btn-success small" href="#" onclick="self.close(); return false;">취소</a>
     </div>
+
+    @{
+        string search = Utility01.ConvertObject2UriQuery(Model.RouteParam);
+        
+        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });
+    }
 </div>
 <!--//content-->
 }
