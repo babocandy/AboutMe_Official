@@ -1,0 +1,561 @@
+﻿@using AboutMe.Common.Data
+@model AboutMe.Domain.Entity.Exhibit.EXHIBIT_PRODUCT_EDIT
+@{
+    ViewBag.Title = "기획전관리";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+@section Scripts{
+    <script language="javascript">
+        
+    function productChange(t) {
+        $("#product_panel").show();
+        $("#regbtn").show();
+        var tab_name = $(t).parent().parent().find("input[name='TAB_NAME']").val();
+        $("#select_tab_nm").text(tab_name);
+        $("#TAB_IDX").val($(t).attr("data-tabidx"));
+    }
+
+    function tabchkAll(c) {
+        if (c.checked) {
+            $(".tabchk").prop("checked", "checked");
+        }
+        else {
+            $(".tabchk").prop("checked", "");
+        }
+    }
+
+    function cntChkTab() {
+        var result = 0;
+        $(".tabchk").each(function () {
+            if (this.checked) {
+                result++;
+            }
+        });
+        return result;
+    }
+    function ProductCheckAll(c) {
+        if (c.checked) {
+            $(".pcodeChk").prop("checked", "checked");
+        }
+        else {
+            $(".pcodeChk").prop("checked", "");
+        }
+    }
+
+    function cntProductChk(c) {
+        var result = 0;
+        $(".pcodeChk").each(function () {
+            if (this.checked) {
+                result++;
+            }
+        });
+        return result;
+    }
+    function chkTabDelete() {
+        var cnt = cntChkTab();
+        if (cnt == 0) {
+            alert("삭제할 분류를 선택해주세요.");
+            return;
+        }
+
+        if (confirm("선택한 " + cnt + "개의 분류를 삭제하시겠습니까?")) {
+            var arrP = new Array;
+            $(".tabchk").each(function () {
+                if (this.checked) {
+                    arrP.push(parseInt($(this).val()));
+                }
+            });
+
+
+            var jobj = encodeURIComponent(JSON.stringify(arrP));
+
+            var src_url = "/Exhibit/ChkTabDelete";
+            var param = "IDX=@Model.IDX&data=" + jobj;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data: param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        location.reload();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
+    }
+
+    function TabModify(t)
+    {
+        var tab_name = $(t).parent().parent().find("input[name='TAB_NAME']").val().trim();
+        var tab_order = $(t).parent().parent().find("input[name='DISPLAY_ORDER']").val().trim();
+        var tabidx = $(t).attr("data-tabidx");
+
+        if (tab_name == "") {
+            alert("분류명을 입력해주세요.");
+            return;
+        }
+
+        if (tab_order == "") {
+            alert("전시순서값이 정수형이 아니거나 빈값입니다.");
+            return;
+        }
+
+        if (confirm("분류를 수정 하시겠습니까?")) {
+            var src_url = "/Exhibit/ChkTabUpdate";
+            var param = "IDX=" + tabidx + "&TAB_NAME=" + tab_name + "&DISPLAY_ORDER=" + tab_order;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data: param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        location.reload();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
+    }
+
+    function chkTabOrderUpdate()
+    {
+        var cnt = $(".tab-order-edit").length;
+        if (cnt == 0)
+        {
+            alert("수정할 분류가 존재하지 않습니다.");
+            return;
+        }
+
+        $(".tab-order-edit").each (function() {
+            var order = $(this).val().trim();
+            if (order == "")
+            {
+                alert("전시순서값이 정수형이 아니거나 빈값인것이 있습니다. 다시 확인해주세요.");
+                return;
+            }
+        });
+
+
+        if (confirm("전시순서를 일괄 변경 하시겠습니까?")) {
+            var arrP = new Array;
+            $(".tab-order-edit").each(function () {
+                var order = $(this).val().trim();
+                var obj = new Object();
+                obj.TAB_IDX = $(this).attr("data-tabidx");
+                obj.DISPLAY_ORDER = order;
+                arrP.push(obj);
+            });
+
+            var jobj = encodeURIComponent(JSON.stringify(arrP));
+
+            var src_url = "/Exhibit/MultiTabOrderUpdate";
+            var param = "data=" + jobj;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data: param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        location.reload();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
+    }
+
+    function TabInsert(t) {
+        var tab_name = $(t).parent().parent().find("input[name='TAB_NAME']").val().trim();
+        var tab_order = $(t).parent().parent().find("input[name='DISPLAY_ORDER']").val().trim();
+
+        if (tab_name == "") {
+            alert("분류명을 입력해주세요.");
+            return;
+        }
+
+        if (tab_order == "") {
+            alert("전시순서값이 정수형이 아니거나 빈값입니다.");
+            return;
+        }
+        if (confirm("분류를 추가하시겠습니까?")) {
+            var src_url = "/Exhibit/ChkTabInsert";
+            var param = "IDX=@Model.IDX&TAB_NAME=" + tab_name + "&DISPLAY_ORDER=" + tab_order;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data: param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        location.reload();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+        }
+    }
+
+    function refreshProduct()
+    {
+        var tabidx = $("#TAB_IDX").val().trim();
+        if (tabidx == "")
+        {
+            alert("분류(탭)을 먼저 선택해주세요.");
+            return;
+        }
+    }
+
+    function productSearchClick()
+    {
+        var search_col = $("#search_col").val();
+        var search_keyword = $("#search_keyword").val();
+
+        var src_url = "/Exhibit/ProductSearch";
+        var param = "SEARCH_COL=" + search_col + "&SEARCH_KEYWORD=" + search_keyword;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                $("#ProductListArea").empty().html(data);
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    function moveRightProduct()
+    {
+        var cnt = cntProductChk();
+        if (cnt == 0)
+        {
+            alert("상품을 선택해주세요.");
+            return;
+        }
+    }
+    </script>
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>기획전 상품전시 관리</strong>
+    </div>
+    <!--//path-->
+    <div class="panel">
+        <h3>기획전 상품전시 관리</h3>
+    </div>
+
+    <div class="panel">
+        <table class="table table_row">
+            <colgroup><col width="" /><col width="" /><col width="" /><col width="" /><col width="" /><col width="" /></colgroup>
+            <tr>
+                <th>기획전명</th>
+                <td>
+                    @Model.ExhibitInfo.EXHIBIT_NAME
+                    <a href="#none" class="btn btn-success small">미리보기(웹)</a>
+                    <a href="#none" class="btn btn-primary small">미리보기(모바일)</a>
+                </td>
+                <th>기획전 기간</th>
+                <td>@Model.ExhibitInfo.FROM_DATE ~ @Model.ExhibitInfo.TO_DATE</td>
+                <th>수정</th>
+                <td>
+                    <a href="/Exhibit/Edit?IDX=@Model.IDX" class="btn btn-success small">커버 수정 페이지</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="panel">
+        <h4>탭(분류)설정</h4>
+        <div class="tar mb10">
+            <a style="width:100px" class="btn btn-default small btn_del_table" onclick="chkTabDelete();">분류 삭제</a>
+            <a style="width:100px" class="btn btn-default small" onclick="chkTabOrderUpdate();">전시 순서 저장</a>
+        </div>
+        <table class="table table_col main_bnr_table">
+            <colgroup><col width="5%" /><col width="8%" /><col width="*" /><col width="10%" /><col width="15%" /><col width="15%" /></colgroup>
+            <tr>
+                <th><input type="checkbox" onclick="tabchkAll(this);" /></th>
+                <th>No.</th>
+                <th>분류명</th>
+                <th>전시 순서</th>
+                <th>상품수</th>
+                <th>편집</th>
+            </tr>
+    @{
+        int num = 1;           
+    }
+    @foreach (var item in Model.TabList)
+    {     
+            <tr>
+                <td><input type="checkbox" class="tabchk" value="@item.IDX" /></td>
+                <td class="num">@num</td>
+                <td class="tal"><input type="text" name="TAB_NAME" class="input-sm" style="width:100%;" value="@item.TAB_NAME" /></td>
+                <td><input type="number" name="DISPLAY_ORDER" class="input-sm tab-order-edit" data-tabidx="@item.IDX" style="width:50px;" value="@item.DISPLAY_ORDER" /></td>
+                <td>0 <a class="btn btn-warning small" style="margin-left:30px" href="#none" data-tabidx="@item.IDX" onclick="productChange(this);">상품변경</a></td>
+                <td><a class="btn btn-success small" data-tabidx="@item.IDX" onclick="TabModify(this);">분류 수정</a></td>
+            </tr>
+        
+        {
+        num++; 
+        }
+    }
+            <tr>
+                <td colspan="2">추가</td>
+                <td class="tal"><input type="text" name="TAB_NAME" class="input-sm" style="width:100%;" /></td>
+                <td><input type="number" name="DISPLAY_ORDER" class="input-sm" style="width:50px;" /></td>
+                <td><a class="btn btn-danger small" onclick="TabInsert(this);">분류 추가</a></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ofh" style="width:1200px;display:none" id="product_panel">
+        <div class="panel fl" style="width:550px;">
+            <!--상품업로드-->
+            <div class="prd_upload">
+                <div class="top" style="margin-bottom:20px">
+                    <h3 id="select_tab_nm"></h3>
+                    <div class="por">
+                        <input type="text" name="TAB_IDX" id="TAB_IDX" value="">
+                    </div>
+                </div>
+                <div class="top" style="margin-bottom:20px">
+                    <h4>상품찾기 </h4>
+                    <div class="por">
+                        @(Html.Kendo().DropDownList()
+                            .Name("search_col")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .HtmlAttributes(new { style = "width:100px" })
+                            .BindTo(new List<SelectListItem>() {
+                                new SelectListItem() {
+                                    Text = "상품명",
+                                    Value = "P_NAME"
+                                },
+                                new SelectListItem() {
+                                    Text = "상품코드",
+                                    Value = "P_CODE"
+                                }
+                            })
+                        )
+                        <input type="text" name="search_keyword" id="search_keyword" class="input-sm" style="width:200px;" />
+                        <a class="btn btn-default small" onclick="productSearchClick();">검색</a>
+                    </div>
+                </div>
+
+                <div class="ybox" style="height:250px;">
+                    <table class="table table_col mt10">
+                        <colgroup> <col width="8%" /><col width="*" /> <col width="15%" /> <col width="15%" /> <col width="12%" /> <col width="12%" /> </colgroup>
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" onclick="ProductCheckAll(this)"/></th>
+                                <th>상품<br />코드</th>
+                                <th>상품명</th>
+                                <th>판매가</th>
+                                <th>할인가</th>
+                                <th>프로모션<br />유무</th>
+                                <th>쿠폰 유무</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ProductListArea">
+                            <tr>
+                                <td colspan="7">상품 검색해주세요.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--상품업로드-->
+
+        </div>
+        <div class="panel fl " style="width:80px;">
+            <div class="text-center" style="margin-top:100px">
+                <a href="#none" class="center-block" onclick="moveRightProduct();"><img src="/cmsManager/aboutCom/images/bul_arro_right.png" /></a>
+            </div>
+        </div>
+        <div class="panel fr" style="width:550px;">
+            <div class="top">
+                <h4>상품전시</h4>
+                <span class="fcred">(전시상품수량 : 20개)</span>
+                <div class="por">
+                    <a class="btn btn-success small">선택삭제</a>
+                    <a class="btn btn-success small" onclick="refreshProduct();">새로고침</a>
+                    <a class="btn btn-success small">엑셀양식 다운로드</a>
+                </div>
+            </div>
+            <div class="top" style="margin-top:10px;margin-bottom:10px">
+                <span><b>엑셀업로드 : </b></span>
+                <div class="por">
+                    <input type="file" class="inline" style="width:380px" />
+                    <a class="btn btn-default small">상품업로드</a>
+                </div>
+            </div>
+            <div class="ybox" style="height:250px;">
+                <table class="table table_col mt10">
+                    <colgroup><col width="5%" /> <col width="12%" /> <col width="12%" /> <col width="*" /> <col width="15%" /> <col width="12%" /> <col width="12%" /> <col width="12%" /> </colgroup>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" /></th>
+                            <th>전시순위</th>
+                            <th>상품코드</th>
+                            <th>상품명</th>
+                            <th>판매가</th>
+                            <th>할인가</th>
+                            <th>프로모션 유무</th>
+                            <th>쿠폰 유무</th>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel tac">
+        <a style="width:100px;display:none" id="regbtn" class="btn btn-default middium" href="#">등록</a>
+        
+        @Html.ActionLink("취소", "", @Model.SearchOption, new { @class = "btn btn-primary  middium", style = "width:100px" })
+    </div>
+</div>
+<!--//content-->
+
+}

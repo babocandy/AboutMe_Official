@@ -28,7 +28,63 @@ namespace AboutMe.Web.Admin.Controllers
 
         public ActionResult Main()
         {
-            return View();
+            int? page = 1;
+            int? pagesize = 30;
+            EVENT_ADMIN_MAIN_INDEX M = new EVENT_ADMIN_MAIN_INDEX
+            {
+                MainInfo = _eventservice.EventAdminMainView(),
+                ListInfo = _eventservice.EventAdminMainIngList(page, pagesize)
+            };
+            return View(M);
+        }
+
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
+        public ActionResult MainUpdate(EVENT_MAIN_SAVE_PARAM saveParam)
+        {
+            //BANNER_GBN  배너위치구분 (메인배너1~5 : M1~M5 / 우측배너1 : R1 / 중간배너1~4 : B1~B4 [BOTTOM] )
+            string ADM_ID = AdminUserInfo.GetAdmId();
+            string IMG = "";
+            string basepath = _eventUploadPath + "/Main/";
+
+            if (!Directory.Exists(Server.MapPath(basepath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(basepath));
+            }
+
+            //이미지 파일 업로드
+            if (saveParam.IMAGE_FILE != null)
+            {
+                ImageUpload imageUpload = new ImageUpload { UploadPath = basepath, addMobileImage = false };
+                ImageResult imageResult = imageUpload.RenameUploadFile(saveParam.IMAGE_FILE);
+
+                if (imageResult.Success)
+                {
+                    IMG = basepath + imageResult.ImageName;
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(saveParam.OLD_IMAGE_FILE))
+                {
+                    IMG = saveParam.OLD_IMAGE_FILE;
+                }
+            }
+
+            _eventservice.EventAdminMainImageUpdate(saveParam.BANNER_GBN, IMG, saveParam.URL, ADM_ID);
+            
+            return RedirectToAction("Main");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MainDelete(string BANNER_GBN)
+        {
+            //BANNER_GBN  배너위치구분 (메인배너1~5 : M1~M5 / 우측배너1 : R1 / 중간배너1~4 : B1~B4 [BOTTOM] )
+            string ADM_ID = AdminUserInfo.GetAdmId();
+            _eventservice.EventAdminMainImageDelete(BANNER_GBN, ADM_ID);
+
+            return RedirectToAction("Main");
         }
 
         public ActionResult Index(EVENT_ADMIN_SEARCH SearchParam)

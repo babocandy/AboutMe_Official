@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using AboutMe.Domain.Entity.Common;
 
-namespace AboutMe.Domain.Entity.Event
+namespace AboutMe.Domain.Entity.Exhibit
 {
-    public class EVENT_ADMIN_SEARCH
+    public class EXHIBIT_ADMIN_SEARCH
     {
         private string fromdate;
         private string todate;
@@ -119,31 +119,30 @@ namespace AboutMe.Domain.Entity.Event
         }
     }
 
-    public class EVENT_ADMIN_EDIT
+    public class EXHIBIT_ADMIN_EDIT
     {
         public int IDX { get; set; }
         public string Mode { get; set; }
-        public EVENT_ADMIN_SEARCH SearchOption { get; set; }
-        public SP_ADMIN_EVENT_VIEW_Result EventInfo { get; set; }
+        public EXHIBIT_ADMIN_SEARCH SearchOption { get; set; }
+        public SP_ADMIN_EXHIBIT_VIEW_Result ExhibitInfo { get; set; }
     }
-    
-    public class EVENT_ADMIN_INDEX
+
+    public class EXHIBIT_ADMIN_INDEX
     {
         public int ListCnt { get; set; }
-        public EVENT_ADMIN_SEARCH SearchOption { get; set; }
-        public List<SP_ADMIN_EVENT_SEL_Result> ListInfo { get; set; }
+        public EXHIBIT_ADMIN_SEARCH SearchOption { get; set; }
+        public List<SP_ADMIN_EXHIBIT_SEL_Result> ListInfo { get; set; }
     }
 
-    public class EVENT_SAVE_PARAM
+    public class EXHIBIT_SAVE_PARAM
     {
-
         public int IDX { get; set; }
-        public string EVENT_NAME { get; set; }
+        public string EXHIBIT_NAME { get; set; }
         public string FROM_DATE { get; set; }
         public string FROM_TIME { get; set; }
         public string TO_DATE { get; set; }
         public string TO_TIME { get; set; }
-        public string EVENT_GBN { get; set; }
+        public string EXHIBIT_GBN { get; set; }
         public string WEB_CONTENTS { get; set; }
         public HttpPostedFileBase MOBILE_FILE { get; set; }
         public HttpPostedFileBase WEB_BANNER { get; set; }
@@ -158,20 +157,19 @@ namespace AboutMe.Domain.Entity.Event
         public string MOBILE_URL { get; set; }
         public string USE_YN { get; set; }
         public string ADM_ID { get; set; }
-
     }
 
-    public class EVENT_ADMIN_MAIN_INDEX
+    public class EXHIBIT_PRODUCT_EDIT
     {
-        public SP_ADMIN_EVENT_MAIN_VIEW_Result MainInfo { get; set; }
-        public List<SP_EVENT_ING_LIST_Result> ListInfo { get; set; }
+        public int IDX { get; set; }
+        public EXHIBIT_ADMIN_SEARCH SearchOption { get; set; }
+        public SP_ADMIN_EXHIBIT_VIEW_Result ExhibitInfo { get; set; }
+        public List<SP_ADMIN_EXHIBIT_TAB_SEL_Result> TabList { get; set; }
     }
 
-    public class EVENT_MAIN_SAVE_PARAM
-    {
-        public string BANNER_GBN { get; set; } //-- 배너위치구분 (메인배너1~5 : M1~M5 / 우측배너1 : R1 / 중간배너1~4 : B1~B4 [BOTTOM] )
-        public string URL { get; set; }
-        public HttpPostedFileBase IMAGE_FILE { get; set; }
-        public string OLD_IMAGE_FILE { get; set; }
+    public class TAB_ORDER_UPDATE
+    { 
+        public int TAB_IDX { get; set; }
+        public int DISPLAY_ORDER { get; set; }
     }
 }

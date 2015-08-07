@@ -76,5 +76,49 @@ namespace AboutMe.Domain.Service.Event
         }
         #endregion
 
+        #region Admin Main View
+        public SP_ADMIN_EVENT_MAIN_VIEW_Result EventAdminMainView()
+        {
+            SP_ADMIN_EVENT_MAIN_VIEW_Result result = new SP_ADMIN_EVENT_MAIN_VIEW_Result();
+            using (EventEntities EfContext = new EventEntities())
+            {
+                result = EfContext.SP_ADMIN_EVENT_MAIN_VIEW().FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+        #region Admin Main 진행중인 이벤트 목록
+        public List<SP_EVENT_ING_LIST_Result> EventAdminMainIngList(int? Page, int? PageSize)
+        {
+            List<SP_EVENT_ING_LIST_Result> lst = new List<SP_EVENT_ING_LIST_Result>();
+            using (EventEntities EfContext = new EventEntities())
+            {
+                lst = EfContext.SP_EVENT_ING_LIST(Page, PageSize).ToList();
+            }
+            return lst;
+        }
+        #endregion
+
+        #region Admin Main 이미지/URL 업데이트
+        public void EventAdminMainImageUpdate(string BANNER_GBN, string IMG, string URL, string ADM_ID)
+        {
+            using (EventEntities EfContext = new EventEntities())
+            {
+                EfContext.SP_ADMIN_EVENT_MAIN_UPD(BANNER_GBN, IMG, URL, ADM_ID);
+            }
+        }
+        #endregion
+
+        #region Admin Main 이미지 Delete
+        public void EventAdminMainImageDelete(string BANNER_GBN, string ADM_ID)
+        {
+            using (EventEntities EfContext = new EventEntities())
+            {
+                EfContext.SP_ADMIN_EVENT_MAIN_DEL(BANNER_GBN, ADM_ID);
+            }
+        }
+        #endregion
+
     }
 }

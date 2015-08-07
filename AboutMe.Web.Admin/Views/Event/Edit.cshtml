@@ -45,6 +45,23 @@
             return false;
         }
 
+        if (f.MODE.value == "NEW") {
+
+            if (f.MOBILE_FILE.value == "") {
+                alert("이벤트 모바일 이미지파일을 선택해주세요.");
+                return false;
+            }
+
+            if (f.WEB_BANNER.value == "") {
+                alert("웹배너 이미지파일을 선택해주세요.");
+                return false;
+            }
+            if (f.MOBILE_BANNER.value == "") {
+                alert("모바일배너 이미지파일을 선택해주세요.");
+                return false;
+            }
+        }
+
         if (confirm("이벤트를 @modeDesc 하시겠습니까?"))
         {
             f.submit();
