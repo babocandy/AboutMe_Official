@@ -8,7 +8,7 @@ namespace AboutMe.Web.Front.Controllers.Mypage
 {
     [RoutePrefix("MyPage/MyPoint")]
     [Route("{action=Index}")]
-    public class MyPointController : Controller
+    public class MyPointController : BaseFrontController
     {
         // GET: MyPoint
         public ActionResult Index()
