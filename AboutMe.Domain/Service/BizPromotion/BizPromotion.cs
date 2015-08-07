@@ -114,25 +114,29 @@ namespace AboutMe.Domain.Service.BizPromotion
                           select WD;
 
 
-                if (qry.Count() > 0) //임직원 전용할인 이 있으면 최종가를 그렇게 적용
+                if (qry.Count() > 0) //등급 할인 이 있으면 최종가를 그렇게 적용
                 {
                     var itm = qry.FirstOrDefault();
 
-                    if (itm.PMO_TOTAL_CATEGORY == "03") //등급할인 이 있으면 최종가를 그렇게 적용
+                    if (itm.M_GRADE == "V") //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!일단은 VIP대상 등급할인만 보여주기로함 !!!!!!!!!!!!!!!!!!!!!!!!!
                     {
-                        dict["Login_Promotion_03"] = itm.M_GRADE;
 
-                        if (itm.PMO_TOTAL_RATE_OR_MONEY == "R")
+                        if (itm.PMO_TOTAL_CATEGORY == "03") //등급할인 이 있으면 최종가를 그렇게 적용
                         {
-                            MinusPrice = (int)Math.Ceiling((double)((ResultPrice * itm.PMO_TOTAL_DISCOUNT_RATE) / 100));
-                            ResultPrice = ResultPrice - MinusPrice;
-                        }
+                            dict["Login_Promotion_03"] = itm.M_GRADE;
 
-                        if (itm.PMO_TOTAL_RATE_OR_MONEY == "M")
-                        {
-                            ResultPrice = ResultPrice - itm.PMO_TOTAL_DISCOUNT_MONEY.Value;
+                            if (itm.PMO_TOTAL_RATE_OR_MONEY == "R")
+                            {
+                                MinusPrice = (int)Math.Ceiling((double)((ResultPrice * itm.PMO_TOTAL_DISCOUNT_RATE) / 100));
+                                ResultPrice = ResultPrice - MinusPrice;
+                            }
+
+                            if (itm.PMO_TOTAL_RATE_OR_MONEY == "M")
+                            {
+                                ResultPrice = ResultPrice - itm.PMO_TOTAL_DISCOUNT_MONEY.Value;
+                            }
+                            dict["Login_Promotion_03_result_price"] = ResultPrice.ToString();
                         }
-                        dict["Login_Promotion_03_result_price"] = ResultPrice.ToString();
                     }
                 }
 
