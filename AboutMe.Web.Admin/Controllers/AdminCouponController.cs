@@ -8,18 +8,24 @@ using AboutMe.Common.Helper;
 using AboutMe.Domain.Service.AdminCoupon;
 using AboutMe.Domain.Entity.AdminCoupon;
 
+
+using AboutMe.Domain.Service.BizPromotion;
+
+
 using AboutMe.Web.Admin.Common.Filters;
 
 namespace AboutMe.Web.Admin.Controllers
 {
     public class AdminCouponController : BaseAdminController
     {
-        
+
+        private IBizPromotion _BizPromotionService;
         private IAdminCouponService _AdminCouponService;
 
-        public AdminCouponController(IAdminCouponService _adminCouponService)
+        public AdminCouponController(IAdminCouponService _adminCouponService, IBizPromotion _bizPromotionService)
         {
             this._AdminCouponService = _adminCouponService;
+            this._BizPromotionService = _bizPromotionService;
         }
 
         protected override void HandleUnknownAction(string actionName)
@@ -79,6 +85,11 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.SortCol = SortCol;
             this.ViewBag.SortDir = SortDir;
 
+            //프론트 상품상세페이지 영역 테스트 =================================================================================
+            Dictionary<string, string> dic =
+               _BizPromotionService.GetPromotionInfoForDetialPage("P", "S", "V", "test_v100s", "RAA00009", 40000);
+            //==================================================================================================================
+           
             //AdminMemberService srv =  new AdminMemberService();
             int TotalRecord = 0;
             TotalRecord = _AdminCouponService.GetAdminCouponListCnt(SearchCol, SearchKeyword);

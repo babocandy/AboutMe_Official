@@ -45,6 +45,10 @@ namespace AboutMe.Web.Admin.DI_Core
             container.RegisterType<AboutMe.Domain.Service.AdminDisplay.IAdminDisplayService, AboutMe.Domain.Service.AdminDisplay.AdminDisplayService>(); //Display관리
             container.RegisterType<AboutMe.Domain.Service.AdminReview.IAdminReviewService, AboutMe.Domain.Service.AdminReview.AdminReviewService>(); //리뷰 관리
 
+          
+            container.RegisterType<AboutMe.Domain.Service.BizPromotion.IBizPromotion, AboutMe.Domain.Service.BizPromotion.BizPromotion>(); //비즈니스로직..쿠폰,프로모션을 같이 이용하는... 
+
+
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
             container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());

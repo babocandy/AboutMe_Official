@@ -165,7 +165,7 @@
         <div class="panel">
             <h3 class="sub-header">상품별 할인 프로모션 수정</h3>
 
-            @using (Html.BeginForm("PrdUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("PrdUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", enctype = "multipart/form-data", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -173,16 +173,51 @@
             <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"]" />
             <input type="hidden" name="orgin_date_from" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM" />
             <input type="hidden" name="orgin_date_to" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO" />
-
+            <input type="hidden" name="OLD_PRODUCT_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG">
                                         <table class="table table_row">
                                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
                                             <tbody>
 
                                                 <tr>
                                                     <th>프로모션명 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME)</font></td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME)</font>
+                                                    
+                                                    </td>
 
                                                 </tr>
+                                                @{
+                                                    string front_url = "";
+                                                    string mobile_front_url = "";
+                                                }
+                                                @if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "01") //세트상품
+                                                {
+                                                    front_url = "http://aboutme-dev.cstone.co.kr/Event/SetPromotion";
+                                                    mobile_front_url = "";
+                                                }
+                                                else if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "03") //타임세일
+                                                {
+                                                    front_url = "http://aboutme-dev.cstone.co.kr/Event/TimeSale";
+                                                    mobile_front_url = "";
+                                                }
+                                                else if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "05") //아웃렛
+                                                {
+                                                    front_url = "http://aboutme-dev.cstone.co.kr";
+                                                    mobile_front_url = "";
+                                                }
+                                                
+                                                @if (front_url != "")
+                                                {
+
+                                                    <tr>
+                                                        <th>FRONT URL  </th>
+                                                        <td>
+                                                            PC :      <text> @front_url</text> <br />
+                                                            MOBILE :  <text> @mobile_front_url</text>
+
+</td>
+
+                                                    </tr>
+                                                }
                                                 <tr>
                                                     <th>프로모션 종류 </th>
                                                     <td>
@@ -224,7 +259,19 @@
 
                                                 </tr>
 
-                                              
+                                                @{ string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");}
+                                                <tr>
+                                                    <th>프로모션 대표이미지</th>
+                                                    <td >
+                                                        <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG))
+                                                        {
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG" width="100" height="100" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+
+                                                <!--
                                                  <tr>
                                                     <th>정률/정액 </th>
                                                     <td>
@@ -251,7 +298,7 @@
                                                     <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_MONEY, new { cssClass = "input-sm text-left", Readonly = "true" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DISCOUNT_MONEY)</td>
 
                                                 </tr>
-                                                
+                                                -->
 
                                                 <tr>
                                                     <th>세트상품 할인적용 기준 종류수 </th>
