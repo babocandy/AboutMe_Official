@@ -1,0 +1,154 @@
+﻿@model AboutMe.Web.Admin.Models.AdminReviewExpMasterDetailViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+}
+
+@section Scripts{
+
+    <script>
+
+
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+            alert("수정되었습니다.");
+        }
+
+
+        function update() {
+            if (confirm("수정하시겠습니까?")) {
+
+                document.frmUpdate.submit();
+            }
+        }
+
+        function add() {
+            if (confirm("추가 하시겠습니까?")) {
+
+                document.frmAddIds.submit();
+            }
+        }
+
+        function del() {
+            if (confirm("삭제 하시겠습니까?")) {
+                console.log(document.frmUpdate);
+                document.frmDelIds.submit();
+            }
+        }
+    </script>
+
+}
+
+
+
+
+@section Body{
+<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>체험단리뷰관리</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3>체험단리뷰권한설정보기</h3>
+    </div>
+
+    <div class="panel">
+        <table class="table table_row">
+            <colgroup><col width="15%" /><col width="*" /></colgroup>
+            <tr>
+                <th>회원지정</th>
+                <td>
+@using (Html.BeginForm("AddIds", "AdminReviewExp", FormMethod.Post, new { name = "frmAddIds" }))
+{
+    
+    <span> ID 추가( 공백없이 구분자 콤마 , )</span><br />
+    <input type="hidden" name="IDX" value="@Model.IDX" />
+    <input type="text" class="input-sm" style="width:30%" name="IDS"> 
+    <a href="#" onclick="add(); return false;" class="btn btn-default small">추가</a> <br /><br />
+}
+
+@using (Html.BeginForm("DelIds", "AdminReviewExp", FormMethod.Post, new { name = "frmDelIds" }))
+{    
+    <span>ID 삭제( 공백없이 구분자 콤마 , )</span><br />
+    <input type="hidden" name="IDX" value="@Model.IDX" />
+    <input type="text" class="input-sm" style="width:30%" name="IDS">    
+    <a href="#" onclick="del(); return false;"  class="btn btn-default small" >삭제</a> <br />
+}
+                    <table class="table table_col mt10" style="min-width:260px; width:260px">
+                        <colgroup><col width="20%" /><col width="*" /></colgroup>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>이름</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.Members)
+                            {
+                                <tr>
+                                    <td>@item.M_ID</td>
+                                    <td>@item.M_NAME</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th>상품지정</th>
+                <td>
+                    <dl class="dltype1">
+                        <dt>@Model.Detail.P_CODE</dt>
+                        <dd>@Model.Detail.P_NAME</dd>
+                    </dl>
+                    <span class="vam ml5">수정 불가능 합니다.</span>
+                </td>
+            </tr>
+            <tr>
+                <th>기간</th>
+                <td>@Model.Detail.FROM_DATE.Value.ToString("yyyy.MM.dd") ~ @Model.Detail.TO_DATE.Value.ToString("yyyy.MM.dd") </td>
+            </tr>
+
+            <tr>
+                <th>권한유지</th>
+                <td>
+@using (Html.BeginForm("Update", "AdminReviewExp", FormMethod.Post, new { name = "frmUpdate" }))
+{
+                    <input type="hidden" name="IDX" value="@Model.IDX" />
+                    <label for="sort1"><input type="radio" id="sort1" name="IS_AUTH" value="Y" @(Model.Detail.IS_AUTH == "Y" ? "checked" : "" ) ><span class="txt mr5">활성</span></label>
+                    <label for="sort2"><input type="radio" id="sort2" name="IS_AUTH" value="N" @(Model.Detail.IS_AUTH == "N" ? "checked" : "")><span class="txt mr5">비활성</span></label>
+}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="panel tac">
+        <a style="width:100px" class="btn btn-default middium" href="#" onclick="update(); return false;">설정</a>
+        <a style="width:100px" class="btn btn-primary  middium" href="@Url.Action("Index", "AdminReviewExp")" >취소</a>
+    </div>
+
+</div>
+<!--//content-->
+}

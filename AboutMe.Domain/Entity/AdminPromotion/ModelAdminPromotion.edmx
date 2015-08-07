@@ -19,6 +19,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_BY_PRODUCT' does not have
           <Property Name="PMO_PRODUCT_MAIN_TITLE" Type="varchar" MaxLength="50" />
           <Property Name="PMO_PRODUCT_SUB_TITLE" Type="varchar" MaxLength="50" />
           <Property Name="PMO_PRODUCT_SHOPPING_TIP" Type="varchar" MaxLength="50" />
+          <Property Name="PMO_PRODUCT_MAIN_IMG" Type="varchar" MaxLength="128" />
           <Property Name="PMO_PRODUCT_RATE_OR_MONEY" Type="varchar" MaxLength="1" />
           <Property Name="PMO_PRODUCT_DISCOUNT_RATE" Type="tinyint" />
           <Property Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="int" />
@@ -150,6 +151,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_SUB_TITLE" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_MAIN_IMG" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Type="tinyint" Mode="In" />
           <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="int" Mode="In" />
@@ -180,6 +182,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_SUB_TITLE" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Type="varchar" Mode="In" />
+          <Parameter Name="PMO_PRODUCT_MAIN_IMG" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Type="varchar" Mode="In" />
           <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Type="tinyint" Mode="In" />
           <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="int" Mode="In" />
@@ -308,6 +311,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
     [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_MAIN_TITLE] AS [PMO_PRODUCT_MAIN_TITLE], 
     [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_SUB_TITLE] AS [PMO_PRODUCT_SUB_TITLE], 
     [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_SHOPPING_TIP] AS [PMO_PRODUCT_SHOPPING_TIP], 
+    [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_MAIN_IMG] AS [PMO_PRODUCT_MAIN_IMG], 
     [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_RATE_OR_MONEY] AS [PMO_PRODUCT_RATE_OR_MONEY], 
     [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_DISCOUNT_RATE] AS [PMO_PRODUCT_DISCOUNT_RATE], 
     [TB_PROMOTION_BY_PRODUCT].[PMO_PRODUCT_DISCOUNT_MONEY] AS [PMO_PRODUCT_DISCOUNT_MONEY], 
@@ -446,45 +450,18 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <FunctionImport Name="SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_DEL">
           <Parameter Name="CD_PROMOTION_TOTAL" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="TB_PROMOTION_BY_PRODUCT_PRICE" EntityType="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT_PRICE" />
           <EntitySet Name="TB_PROMOTION_PRODUCT_CATEGORY" EntityType="ModelAdminPromotion.TB_PROMOTION_PRODUCT_CATEGORY" />
           <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_CNT" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
             <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
             <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="TB_PROMOTION_BY_PRODUCT" EntityType="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT" />
           <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_DUP_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
             <Parameter Name="PMO_PRODUCT_CATETORY" Mode="In" Type="String" />
             <Parameter Name="PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
             <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result)">
-            <Parameter Name="PAGE" Mode="In" Type="Int32" />
-            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
-            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
-            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result)">
-          <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result)">
           <Parameter Name="CD_PROMOTION_TOTAL" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_INS">
-            <Parameter Name="PMO_PRODUCT_NAME" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_CATEGORY" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_SUB_TITLE" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Mode="In" Type="Byte" />
-            <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Mode="In" Type="Int32" />
-            <Parameter Name="PMO_SET_DISCOUNT_CNT" Mode="In" Type="Byte" />
-            <Parameter Name="PMO_ONEONE_MULTIPLE_CNT" Mode="In" Type="Byte" />
-            <Parameter Name="PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
-            <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
-            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
-            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="InOut" Type="String" />
           </FunctionImport>
           <EntitySet Name="TB_PROMOTION_PRODUCT_VS_TOTAL" EntityType="ModelAdminPromotion.TB_PROMOTION_PRODUCT_VS_TOTAL" />
           <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)">
@@ -518,21 +495,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PROMOTION_PRODUCT_CODE_CHECK_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
           <Parameter Name="P_CODE" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE">
-            <Parameter Name="PMO_PRODUCT_NAME" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_SUB_TITLE" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Mode="In" Type="String" />
-            <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Mode="In" Type="Byte" />
-            <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Mode="In" Type="Int32" />
-            <Parameter Name="PMO_SET_DISCOUNT_CNT" Mode="In" Type="Byte" />
-            <Parameter Name="PMO_ONEONE_MULTIPLE_CNT" Mode="In" Type="Byte" />
-            <Parameter Name="PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
-            <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
-            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
-            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
             <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
@@ -575,6 +537,50 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <Parameter Name="M_GBN" Mode="In" Type="String" />
             <Parameter Name="M_GRADE" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result)">
+          <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_INS">
+            <Parameter Name="PMO_PRODUCT_NAME" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_CATEGORY" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_MAIN_IMG" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Mode="In" Type="Int32" />
+            <Parameter Name="PMO_SET_DISCOUNT_CNT" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_ONEONE_MULTIPLE_CNT" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE">
+            <Parameter Name="PMO_PRODUCT_NAME" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_MAIN_TITLE" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_SHOPPING_TIP" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_MAIN_IMG" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_RATE_OR_MONEY" Mode="In" Type="String" />
+            <Parameter Name="PMO_PRODUCT_DISCOUNT_RATE" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_PRODUCT_DISCOUNT_MONEY" Mode="In" Type="Int32" />
+            <Parameter Name="PMO_SET_DISCOUNT_CNT" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_ONEONE_MULTIPLE_CNT" Mode="In" Type="Byte" />
+            <Parameter Name="PMO_PRODUCT_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
+            <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TB_PROMOTION_BY_PRODUCT" EntityType="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT" />
+          <EntitySet Name="TB_PROMOTION_BY_PRODUCT_PRICE" EntityType="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT_PRICE" />
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_PROMOTION_BY_TOTAL_CATEGORY">
           <Key>
@@ -613,23 +619,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Property Type="String" Name="USABLE_YN" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
         </ComplexType>
-        <EntityType Name="TB_PROMOTION_BY_PRODUCT_PRICE">
-          <Key>
-            <PropertyRef Name="IDX" />
-          </Key>
-          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CD_PROMOTION_PRODUCT" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="P_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="P_DISCOUNT_PRICE" Type="Int32" />
-          <Property Name="PMO_PRODUCT_RATE_OR_MONEY" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_DISCOUNT_RATE" Type="Byte" />
-          <Property Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="Int32" />
-          <Property Name="PMO_PRICE" Type="Int32" />
-          <Property Name="PMO_ONE_ONE_P_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_ONE_ONE_PRICE" Type="Int32" />
-          <Property Name="USABLE_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="TB_PROMOTION_PRODUCT_CATEGORY">
           <Key>
             <PropertyRef Name="IDX" />
@@ -639,47 +628,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Property Name="PMO_PRODUCT_CATEGORY_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="INS_DATE" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="TB_PROMOTION_BY_PRODUCT">
-          <Key>
-            <PropertyRef Name="IDX" />
-          </Key>
-          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CD_PROMOTION_PRODUCT" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_CATEGORY" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_CATEGORY_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_MAIN_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_SUB_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_SHOPPING_TIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_RATE_OR_MONEY" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="PMO_PRODUCT_DISCOUNT_RATE" Type="Byte" />
-          <Property Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="Int32" />
-          <Property Name="PMO_ONEONE_MULTIPLE_CNT" Type="Byte" />
-          <Property Name="PMO_SET_DISCOUNT_CNT" Type="Byte" />
-          <Property Name="PMO_PRODUCT_DATE_FROM" Type="DateTime" Precision="3" />
-          <Property Name="PMO_PRODUCT_DATE_TO" Type="DateTime" Precision="3" />
-          <Property Name="USABLE_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
-        </EntityType>
-        <ComplexType Name="SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result">
-          <Property Type="Int32" Name="IDX" Nullable="false" />
-          <Property Type="String" Name="CD_PROMOTION_PRODUCT" Nullable="true" MaxLength="7" />
-          <Property Type="String" Name="PMO_PRODUCT_NAME" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="PMO_PRODUCT_CATEGORY_NAME" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="PMO_PRODUCT_MAIN_TITLE" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PMO_PRODUCT_SUB_TITLE" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PMO_PRODUCT_SHOPPING_TIP" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PMO_PRODUCT_RATE_OR_MONEY" Nullable="true" MaxLength="1" />
-          <Property Type="Byte" Name="PMO_PRODUCT_DISCOUNT_RATE" Nullable="true" />
-          <Property Type="Int32" Name="PMO_PRODUCT_DISCOUNT_MONEY" Nullable="true" />
-          <Property Type="Byte" Name="PMO_ONEONE_MULTIPLE_CNT" Nullable="true" />
-          <Property Type="Byte" Name="PMO_SET_DISCOUNT_CNT" Nullable="true" />
-          <Property Type="DateTime" Name="PMO_PRODUCT_DATE_FROM" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="PMO_PRODUCT_DATE_TO" Nullable="true" Precision="23" />
-          <Property Type="String" Name="USABLE_YN" Nullable="true" MaxLength="1" />
-          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
-        </ComplexType>
         <ComplexType Name="SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
           <Property Type="String" Name="CD_PROMOTION_TOTAL" Nullable="false" MaxLength="7" />
@@ -813,6 +761,66 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
         <ComplexType Name="SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result">
           <Property Type="Int32" Name="SAVE_RATE" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="CD_PROMOTION_PRODUCT" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="PMO_PRODUCT_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PMO_PRODUCT_CATEGORY" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="PMO_PRODUCT_CATEGORY_NAME" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PMO_PRODUCT_MAIN_TITLE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PMO_PRODUCT_SUB_TITLE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PMO_PRODUCT_SHOPPING_TIP" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PMO_PRODUCT_MAIN_IMG" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="PMO_PRODUCT_RATE_OR_MONEY" Nullable="true" MaxLength="1" />
+          <Property Type="Byte" Name="PMO_PRODUCT_DISCOUNT_RATE" Nullable="true" />
+          <Property Type="Int32" Name="PMO_PRODUCT_DISCOUNT_MONEY" Nullable="true" />
+          <Property Type="Byte" Name="PMO_ONEONE_MULTIPLE_CNT" Nullable="true" />
+          <Property Type="Byte" Name="PMO_SET_DISCOUNT_CNT" Nullable="true" />
+          <Property Type="DateTime" Name="PMO_PRODUCT_DATE_FROM" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="PMO_PRODUCT_DATE_TO" Nullable="true" Precision="23" />
+          <Property Type="String" Name="USABLE_YN" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="TB_PROMOTION_BY_PRODUCT">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CD_PROMOTION_PRODUCT" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_CATEGORY" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_CATEGORY_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_MAIN_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_SUB_TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_SHOPPING_TIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_MAIN_IMG" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_RATE_OR_MONEY" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_DISCOUNT_RATE" Type="Byte" />
+          <Property Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="Int32" />
+          <Property Name="PMO_ONEONE_MULTIPLE_CNT" Type="Byte" />
+          <Property Name="PMO_SET_DISCOUNT_CNT" Type="Byte" />
+          <Property Name="PMO_PRODUCT_DATE_FROM" Type="DateTime" Precision="3" />
+          <Property Name="PMO_PRODUCT_DATE_TO" Type="DateTime" Precision="3" />
+          <Property Name="USABLE_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TB_PROMOTION_BY_PRODUCT_PRICE">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CD_PROMOTION_PRODUCT" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="P_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="P_DISCOUNT_PRICE" Type="Int32" />
+          <Property Name="PMO_PRODUCT_RATE_OR_MONEY" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_PRODUCT_DISCOUNT_RATE" Type="Byte" />
+          <Property Name="PMO_PRODUCT_DISCOUNT_MONEY" Type="Int32" />
+          <Property Name="PMO_PRICE" Type="Int32" />
+          <Property Name="PMO_ONE_ONE_P_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PMO_ONE_ONE_PRICE" Type="Int32" />
+          <Property Name="USABLE_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -921,24 +929,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_DEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_TOTAL_MEM_GRADE_DEL" />
-          <EntitySetMapping Name="TB_PROMOTION_BY_PRODUCT_PRICE">
-            <EntityTypeMapping TypeName="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT_PRICE">
-              <MappingFragment StoreEntitySet="TB_PROMOTION_BY_PRODUCT_PRICE">
-                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
-                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
-                <ScalarProperty Name="PMO_ONE_ONE_PRICE" ColumnName="PMO_ONE_ONE_PRICE" />
-                <ScalarProperty Name="PMO_ONE_ONE_P_CODE" ColumnName="PMO_ONE_ONE_P_CODE" />
-                <ScalarProperty Name="PMO_PRICE" ColumnName="PMO_PRICE" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
-                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
-                <ScalarProperty Name="P_DISCOUNT_PRICE" ColumnName="P_DISCOUNT_PRICE" />
-                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
-                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TB_PROMOTION_PRODUCT_CATEGORY">
             <EntityTypeMapping TypeName="ModelAdminPromotion.TB_PROMOTION_PRODUCT_CATEGORY">
               <MappingFragment StoreEntitySet="TB_PROMOTION_PRODUCT_CATEGORY">
@@ -956,79 +946,10 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="TB_PROMOTION_BY_PRODUCT">
-            <EntityTypeMapping TypeName="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT">
-              <MappingFragment StoreEntitySet="TB_PROMOTION_BY_PRODUCT">
-                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
-                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
-                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
-                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
-                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
-                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
-                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
-                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
-                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
-                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY_NAME" ColumnName="PMO_PRODUCT_CATEGORY_NAME" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
-                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
-                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_DUP_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_DUP_SEL" >
           <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result">
                 <ScalarProperty Name="CNT" ColumnName="CNT" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result">
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
-                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY_NAME" ColumnName="PMO_PRODUCT_CATEGORY_NAME" />
-                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
-                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
-                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
-                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
-                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
-                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
-                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
-                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
-                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
-                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result">
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
-                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
-                <ScalarProperty Name="PMO_PRODUCT_CATEGORY_NAME" ColumnName="PMO_PRODUCT_CATEGORY_NAME" />
-                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
-                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
-                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
-                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
-                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
-                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
-                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
-                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
-                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
-                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
-                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1050,7 +971,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_INS" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_INS" />
           <EntitySetMapping Name="TB_PROMOTION_PRODUCT_VS_TOTAL">
             <EntityTypeMapping TypeName="ModelAdminPromotion.TB_PROMOTION_PRODUCT_VS_TOTAL">
               <MappingFragment StoreEntitySet="TB_PROMOTION_PRODUCT_VS_TOTAL">
@@ -1130,7 +1050,6 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_UPDATE_ALL_PRODUCT_PRICE_DUP_SEL" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result">
@@ -1236,6 +1155,98 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result">
                 <ScalarProperty Name="SAVE_RATE" ColumnName="SAVE_RATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY_NAME" ColumnName="PMO_PRODUCT_CATEGORY_NAME" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_IMG" ColumnName="PMO_PRODUCT_MAIN_IMG" />
+                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
+                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
+                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
+                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_INS" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" />
+          <EntitySetMapping Name="TB_PROMOTION_BY_PRODUCT">
+            <EntityTypeMapping TypeName="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT">
+              <MappingFragment StoreEntitySet="TB_PROMOTION_BY_PRODUCT">
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
+                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
+                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
+                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_IMG" ColumnName="PMO_PRODUCT_MAIN_IMG" />
+                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
+                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY_NAME" ColumnName="PMO_PRODUCT_CATEGORY_NAME" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PROMOTION_BY_PRODUCT_PRICE">
+            <EntityTypeMapping TypeName="ModelAdminPromotion.TB_PROMOTION_BY_PRODUCT_PRICE">
+              <MappingFragment StoreEntitySet="TB_PROMOTION_BY_PRODUCT_PRICE">
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
+                <ScalarProperty Name="PMO_ONE_ONE_PRICE" ColumnName="PMO_ONE_ONE_PRICE" />
+                <ScalarProperty Name="PMO_ONE_ONE_P_CODE" ColumnName="PMO_ONE_ONE_P_CODE" />
+                <ScalarProperty Name="PMO_PRICE" ColumnName="PMO_PRICE" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
+                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
+                <ScalarProperty Name="P_DISCOUNT_PRICE" ColumnName="P_DISCOUNT_PRICE" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_SEL" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CD_PROMOTION_PRODUCT" ColumnName="CD_PROMOTION_PRODUCT" />
+                <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY" ColumnName="PMO_PRODUCT_CATEGORY" />
+                <ScalarProperty Name="PMO_PRODUCT_CATEGORY_NAME" ColumnName="PMO_PRODUCT_CATEGORY_NAME" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_TITLE" ColumnName="PMO_PRODUCT_MAIN_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_SUB_TITLE" ColumnName="PMO_PRODUCT_SUB_TITLE" />
+                <ScalarProperty Name="PMO_PRODUCT_SHOPPING_TIP" ColumnName="PMO_PRODUCT_SHOPPING_TIP" />
+                <ScalarProperty Name="PMO_PRODUCT_MAIN_IMG" ColumnName="PMO_PRODUCT_MAIN_IMG" />
+                <ScalarProperty Name="PMO_PRODUCT_RATE_OR_MONEY" ColumnName="PMO_PRODUCT_RATE_OR_MONEY" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_RATE" ColumnName="PMO_PRODUCT_DISCOUNT_RATE" />
+                <ScalarProperty Name="PMO_PRODUCT_DISCOUNT_MONEY" ColumnName="PMO_PRODUCT_DISCOUNT_MONEY" />
+                <ScalarProperty Name="PMO_ONEONE_MULTIPLE_CNT" ColumnName="PMO_ONEONE_MULTIPLE_CNT" />
+                <ScalarProperty Name="PMO_SET_DISCOUNT_CNT" ColumnName="PMO_SET_DISCOUNT_CNT" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_FROM" ColumnName="PMO_PRODUCT_DATE_FROM" />
+                <ScalarProperty Name="PMO_PRODUCT_DATE_TO" ColumnName="PMO_PRODUCT_DATE_TO" />
+                <ScalarProperty Name="USABLE_YN" ColumnName="USABLE_YN" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

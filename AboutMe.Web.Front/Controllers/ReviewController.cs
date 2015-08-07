@@ -72,10 +72,10 @@ namespace AboutMe.Web.Front.Controllers
         [ChildActionOnly]
         public ActionResult ProductInShoppingDetail(string P_CODE)
         {
-            MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
+            MyReviewInProductDetailViewModel model = new MyReviewInProductDetailViewModel();
             
             var tp = _ReviewService.GetReviewProductListByProductCode(P_CODE);
-            //model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
+            model.Reviews = tp.Item1;
             model.Total = tp.Item2;
             model.PageNo = 1;
             model.Pcode = P_CODE;
@@ -87,14 +87,15 @@ namespace AboutMe.Web.Front.Controllers
         [HttpPost]
         public JsonResult GetReviewProductListInShopping(ReviewProductListParamInShopping param)
         {
-            MyReviewCompleteViewModel model = new MyReviewCompleteViewModel();
+           // MyReviewInProductDetailViewModel model = new MyReviewInProductDetailViewModel();
 
             var tp = _ReviewService.GetReviewProductListByProductCode(param.P_CODE, param.PAGE_NO);
             //model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
-            model.Total = tp.Item2;
-            model.Pcode = param.P_CODE;
+           // model.Reviews = tp.Item1;
+            //model.Total = tp.Item2;
+           // model.Pcode = param.P_CODE;
 
-            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { PAGE_NO = param.PAGE_NO, P_CODE = param.P_CODE} };
+            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = new { PAGE_NO = param.PAGE_NO, P_CODE = param.P_CODE } };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 

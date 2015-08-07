@@ -8,6 +8,11 @@
 
 @section Scripts{
 
+
+    @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+    {
+        @Html.Raw(TempData["jsMessage"]);
+    }
  
     
     <script language="javascript">
@@ -146,29 +151,29 @@
                                             </tr>
                                             <tr>
                                                 <th>할인율 </th>
-                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE)</td>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE)</font></td>
 
                                             </tr>
                                             <tr>
                                                 <th>할인액 </th>
-                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY)</td>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" }) <font color="red"> @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY)</font></td>
 
                                             </tr>
  
                                         
                                             <tr>
                                                 <th>프로모션시작일시 (YYYY-MM-DD) </th>
-                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_FROM)</td>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_FROM)</font></td>
 
                                             </tr>
                                             <tr>
                                                 <th>프로모션종료일시 (YYYY-MM-DD) </th>
-                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_TO, new { cssClass = "input-sm text-left" , value = "2015-09-20 23:59:59"  })  @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_TO)</td>
+                                                <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_TO, new { cssClass = "input-sm text-left" , value = "2015-09-20 23:59:59"  }) <font color="red"> @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DATE_TO)</font></td>
 
                                             </tr>
                                             <tr>
                                                 <th>활성화/비활성화 </th>
-                                                <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN)</td>
+                                                <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN, "N") 비활성화 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.USABLE_YN)</font></td>
 
                                             </tr>
                     

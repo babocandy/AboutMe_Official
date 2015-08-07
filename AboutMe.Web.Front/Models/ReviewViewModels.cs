@@ -41,6 +41,18 @@ namespace AboutMe.Web.Front.Models
         public SP_REVIEW_PRODUCT_INFO_Result ReviewPdtInfo { get; set; }
     }
 
+    public class MyReviewInProductDetailViewModel
+    {
+
+        public List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result> Reviews { get; set; }
+
+        public int PageNo { get; set; }
+        public int PageSize { get { return 10; } }
+        public int Total { get; set; }
+        public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
+        public string Pcode { get; set; }
+    }
+
     public class MyReviewCompleteViewModel
     {
 

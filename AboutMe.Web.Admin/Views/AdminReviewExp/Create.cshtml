@@ -72,6 +72,11 @@
             document.frmSave.submit();
         }
 
+        function setProductCode(pcode) {
+            var p = document.getElementById("P_CODE");
+            p.value = pcode;
+        }
+
 
         var rNum = "@TempData["ResultNum"]";
         var rMsg = "@TempData["ResultMessage"]";
@@ -114,7 +119,7 @@
             </tr>
             <tr>
                 <th>상품지정 @Html.ValidationMessageFor(model => model.P_CODE)</th>
-                <td><input type="text" name="P_CODE" class="input-sm" style="width:30%"> <a href="#" onclick="window.open('@Url.Action("SelProduct", "AdminReviewExp")', 'window', 'width=800,height=550');" class="btn btn-default small">검색</a> 검색 버튼을 클릭하여 먼저 찾아주세요</td>
+                <td><input type="text" id="P_CODE" name="P_CODE" class="input-sm" style="width:30%"> <a href="#" onclick="window.open('@Url.Action("SelProduct", "AdminReviewExp")', 'window', 'width=800,height=550');" class="btn btn-default small">검색</a> 검색 버튼을 클릭하여 먼저 찾아주세요</td>
             </tr>
             <tr>
                 <th> 기간</th>
@@ -128,8 +133,8 @@
                 <th>권한유지 @Html.ValidationMessageFor(model => model.IS_AUTH)</th>
                 <td>
 
-                    <label for="sort1"><input type="radio" id="sort1" name="IS_AUTH" value="Y" @(Model.IS_AUTH =="Y"? "checked" : "" ) ><span class="txt mr5">권한</span></label>
-                    <label for="sort2"><input type="radio" id="sort2" name="IS_AUTH" value="N" @(Model.IS_AUTH == "N" ? "checked" : "")><span class="txt mr5">비권한</span></label>
+                    <label for="sort1"><input type="radio" id="sort1" name="IS_AUTH" value="Y" @(Model.IS_AUTH =="Y"? "checked" : "" ) ><span class="txt mr5">활성</span></label>
+                    <label for="sort2"><input type="radio" id="sort2" name="IS_AUTH" value="N" @(Model.IS_AUTH == "N" ? "checked" : "")><span class="txt mr5">비활성</span></label>
                 </td>
             </tr>
         </table>
@@ -137,7 +142,7 @@
     </div>
 
     <div class="panel tac">
-        <a style="width:100px" class="btn btn-default middium" href="#" onclick="saving(); return; false;">설정</a>
+        <a style="width:100px" class="btn btn-default middium" href="#" onclick="saving(); return false;">설정</a>
         <a style="width:100px" class="btn btn-primary  middium" href="@Url.Action("Index", "AdminReviewExp")" >취소</a>
     </div>
 }

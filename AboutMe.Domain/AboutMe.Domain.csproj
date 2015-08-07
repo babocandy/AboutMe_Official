@@ -522,7 +522,16 @@
     <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result.cs">
       <DependentUpon>ModelAdminReview.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result.cs">
+      <DependentUpon>ModelAdminReview.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result.cs">
       <DependentUpon>ModelAdminReview.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminReview\SP_ADMIN_REVIEW_PRODUCT_INFO_Result.cs">
@@ -566,6 +575,21 @@
       <DependentUpon>ModelCart.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Common\ReturnDic.cs" />
+    <Compile Include="Entity\Display\ModelDisplay.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelDisplay.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Display\ModelDisplay.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Display\ModelDisplay.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelDisplay.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Event\ModelEvent.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -734,6 +758,21 @@
     <Compile Include="Entity\Order\SP_ORDER_STEP2_Result.cs">
       <DependentUpon>ModelOrder.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Point\ModelPoint.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelPoint.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Point\ModelPoint.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelPoint.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Point\ModelPoint.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelPoint.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Product\ModelProduct.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -894,6 +933,9 @@
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_INFO_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result.cs">
+      <DependentUpon>ModelReview.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_READY_SEL_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
@@ -927,6 +969,8 @@
     <Compile Include="Service\Cart\ICartService.cs" />
     <Compile Include="Service\Coupon\CouponService.cs" />
     <Compile Include="Service\Coupon\ICouponService.cs" />
+    <Compile Include="Service\Display\IDisplayService.cs" />
+    <Compile Include="Service\Display\DisplayService.cs" />
     <Compile Include="Service\Event\IEventService.cs" />
     <Compile Include="Service\Event\EventService.cs" />
     <Compile Include="Service\Member\IMemberService.cs" />
@@ -938,6 +982,8 @@
     <Compile Include="Entity\Common\USER_PROFILE.cs" />
     <Compile Include="Service\Order\OrderService.cs" />
     <Compile Include="Service\Order\IOrderService.cs" />
+    <Compile Include="Service\Point\IPointService.cs" />
+    <Compile Include="Service\Point\PointService.cs" />
     <Compile Include="Service\Product\IProductService.cs" />
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\Promotion\PromotionService.cs" />
@@ -1133,6 +1179,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelEvent.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Display\ModelDisplay.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelDisplay.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Display\ModelDisplay.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelDisplay.edmx</DependentUpon>
+      <LastGenOutput>ModelDisplay.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Display\ModelDisplay.edmx.diagram">
+      <DependentUpon>ModelDisplay.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Display\ModelDisplay.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelDisplay.edmx</DependentUpon>
+      <LastGenOutput>ModelDisplay.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Event\ModelEvent.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelEvent.edmx</DependentUpon>
@@ -1213,6 +1276,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelOrder.edmx</DependentUpon>
       <LastGenOutput>ModelOrder.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Point\ModelPoint.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelPoint.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Point\ModelPoint.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelPoint.edmx</DependentUpon>
+      <LastGenOutput>ModelPoint.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Point\ModelPoint.edmx.diagram">
+      <DependentUpon>ModelPoint.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Point\ModelPoint.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelPoint.edmx</DependentUpon>
+      <LastGenOutput>ModelPoint.cs</LastGenOutput>
     </None>
     <None Include="Entity\Product\ModelProduct.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
