@@ -384,7 +384,244 @@ namespace AboutMe.Domain.Service.AdminFrontMember
             return lst;
         }
  
+        //----------------------------------------------------------------------------------------------------------
+        //관리자 - 임직원기준DB -목록
+        public List<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result> GetAdminMemberStaffBaseList(string dATE_FROM="", string dATE_TO="", string sEARCH_COL="", string sEARCH_KEYWORD="", string sORT_COL="IDX", string sORT_DIR="DESC", int pAGE=1, int pAGESIZE=10)
+        {
 
+            List<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result> lst = new List<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_SEL(dATE_FROM, dATE_TO, sEARCH_COL, sEARCH_KEYWORD,  sORT_COL, sORT_DIR, pAGE, pAGESIZE).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //관리자-임직원기준DB  목록 COUNT
+        public int GetAdminMemberStaffBaseCount(string dATE_FROM = "", string dATE_TO = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "")
+        {
+
+            List<SP_ADMIN_FRONT_COMMON_CNT_Result> lst = new List<SP_ADMIN_FRONT_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_CNT(dATE_FROM, dATE_TO, sEARCH_COL, sEARCH_KEYWORD).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+        }
+
+        //관리자 -임직원기준DB -INSERT 1건
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminMemberStaffBaseInsert(string sTAFF_COMPANY="", string sTAFF_ID="", string sTAFF_NAME="", string wORK_TEMP_ID="")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_INS(sTAFF_COMPANY, sTAFF_ID, sTAFF_NAME, wORK_TEMP_ID, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+        //관리자 -임직원기준DB -삭제1건 
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminMemberStaffBaseDel(int iDX = -1)
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_DEL(iDX, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+        //관리자 -임직원기준DB -사번 중복체크
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminMemberStaffBaseDupCheck(string sTAFF_ID="")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK(sTAFF_ID, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+        
+        //----------------------------------------------------------------------------------------------------------
+        //관리자 - 임직원기준DB TEMP-목록
+        public List<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result> GetAdminMemberStaffBaseTempList(string wORK_TEMP_ID = "")
+        {
+
+            List<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result> lst = new List<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST(wORK_TEMP_ID).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //관리자-임직원기준DB TEMP-목록 COUNT
+        public int GetAdminMemberStaffBaseTempCount(string wORK_TEMP_ID = "", string aPP_RESULT="")
+        {
+
+            List<SP_ADMIN_FRONT_COMMON_CNT_Result> lst = new List<SP_ADMIN_FRONT_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT(wORK_TEMP_ID, aPP_RESULT).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+        }
+
+        //관리자 -임직원기준DB TEMP -INSERT 1건
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminMemberStaffBaseTempInsert(string sTAFF_COMPANY = "", string sTAFF_ID = "", string sTAFF_NAME = "", string wORK_TEMP_ID = "", string aDM_ID="", string iP="")
+        {
+
+            int ERR_CODE = 999; //일단 SP호출 에러 있음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS(sTAFF_COMPANY, sTAFF_ID, sTAFF_NAME, wORK_TEMP_ID, aDM_ID,iP, objOutParam);
+                ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+        //관리자 -임직원기준DB TEMP -처리결과 수정 1건
+        //리턴:ERR_CODE : 0:에러없음
+        public int SetAdminMemberStaffBaseTempUpdate(int iDX=-1, string aPP_RESULT= "")
+        {
+
+            int ERR_CODE = 0; //일단 SP호출 에러 없음
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                //ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int sp_ret = AdminFrontMemberContext.SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD(iDX, aPP_RESULT);
+                //ERR_CODE = (int)objOutParam.Value;
+
+                //if (sp_ret==1)
+                //     ERR_CODE = (int)objOutParam.Value;
+                //else
+                //    ERR_CODE = (int)sp_ret;
+
+
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return ERR_CODE;
+
+        }
+
+
+        //####################################################################################################################################
         //데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요
         public List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL()
         {

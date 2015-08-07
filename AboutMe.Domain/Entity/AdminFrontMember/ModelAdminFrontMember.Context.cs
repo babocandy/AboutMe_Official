@@ -445,5 +445,175 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD", m_IDParameter, m_PWD_SHA256Parameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_FRONT_COMMON_CNT_Result> SP_ADMIN_MEMBER_STAFF_BASE_CNT(string dATE_FROM, string dATE_TO, string sEARCH_COL, string sEARCH_KEYWORD)
+        {
+            var dATE_FROMParameter = dATE_FROM != null ?
+                new ObjectParameter("DATE_FROM", dATE_FROM) :
+                new ObjectParameter("DATE_FROM", typeof(string));
+    
+            var dATE_TOParameter = dATE_TO != null ?
+                new ObjectParameter("DATE_TO", dATE_TO) :
+                new ObjectParameter("DATE_TO", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_MEMBER_STAFF_BASE_CNT", dATE_FROMParameter, dATE_TOParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual int SP_ADMIN_MEMBER_STAFF_BASE_DEL(Nullable<int> iDX, ObjectParameter eRR_CODE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_MEMBER_STAFF_BASE_DEL", iDXParameter, eRR_CODE);
+        }
+    
+        public virtual int SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK(string sTAFF_ID, ObjectParameter eRR_CODE)
+        {
+            var sTAFF_IDParameter = sTAFF_ID != null ?
+                new ObjectParameter("STAFF_ID", sTAFF_ID) :
+                new ObjectParameter("STAFF_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK", sTAFF_IDParameter, eRR_CODE);
+        }
+    
+        public virtual int SP_ADMIN_MEMBER_STAFF_BASE_INS(string sTAFF_COMPANY, string sTAFF_ID, string sTAFF_NAME, string wORK_TEMP_ID, ObjectParameter eRR_CODE)
+        {
+            var sTAFF_COMPANYParameter = sTAFF_COMPANY != null ?
+                new ObjectParameter("STAFF_COMPANY", sTAFF_COMPANY) :
+                new ObjectParameter("STAFF_COMPANY", typeof(string));
+    
+            var sTAFF_IDParameter = sTAFF_ID != null ?
+                new ObjectParameter("STAFF_ID", sTAFF_ID) :
+                new ObjectParameter("STAFF_ID", typeof(string));
+    
+            var sTAFF_NAMEParameter = sTAFF_NAME != null ?
+                new ObjectParameter("STAFF_NAME", sTAFF_NAME) :
+                new ObjectParameter("STAFF_NAME", typeof(string));
+    
+            var wORK_TEMP_IDParameter = wORK_TEMP_ID != null ?
+                new ObjectParameter("WORK_TEMP_ID", wORK_TEMP_ID) :
+                new ObjectParameter("WORK_TEMP_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_MEMBER_STAFF_BASE_INS", sTAFF_COMPANYParameter, sTAFF_IDParameter, sTAFF_NAMEParameter, wORK_TEMP_IDParameter, eRR_CODE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result> SP_ADMIN_MEMBER_STAFF_BASE_SEL(string dATE_FROM, string dATE_TO, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var dATE_FROMParameter = dATE_FROM != null ?
+                new ObjectParameter("DATE_FROM", dATE_FROM) :
+                new ObjectParameter("DATE_FROM", typeof(string));
+    
+            var dATE_TOParameter = dATE_TO != null ?
+                new ObjectParameter("DATE_TO", dATE_TO) :
+                new ObjectParameter("DATE_TO", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var sORT_COLParameter = sORT_COL != null ?
+                new ObjectParameter("SORT_COL", sORT_COL) :
+                new ObjectParameter("SORT_COL", typeof(string));
+    
+            var sORT_DIRParameter = sORT_DIR != null ?
+                new ObjectParameter("SORT_DIR", sORT_DIR) :
+                new ObjectParameter("SORT_DIR", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result>("SP_ADMIN_MEMBER_STAFF_BASE_SEL", dATE_FROMParameter, dATE_TOParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual int SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS(string sTAFF_COMPANY, string sTAFF_ID, string sTAFF_NAME, string wORK_TEMP_ID, string aDM_ID, string iP, ObjectParameter eRR_CODE)
+        {
+            var sTAFF_COMPANYParameter = sTAFF_COMPANY != null ?
+                new ObjectParameter("STAFF_COMPANY", sTAFF_COMPANY) :
+                new ObjectParameter("STAFF_COMPANY", typeof(string));
+    
+            var sTAFF_IDParameter = sTAFF_ID != null ?
+                new ObjectParameter("STAFF_ID", sTAFF_ID) :
+                new ObjectParameter("STAFF_ID", typeof(string));
+    
+            var sTAFF_NAMEParameter = sTAFF_NAME != null ?
+                new ObjectParameter("STAFF_NAME", sTAFF_NAME) :
+                new ObjectParameter("STAFF_NAME", typeof(string));
+    
+            var wORK_TEMP_IDParameter = wORK_TEMP_ID != null ?
+                new ObjectParameter("WORK_TEMP_ID", wORK_TEMP_ID) :
+                new ObjectParameter("WORK_TEMP_ID", typeof(string));
+    
+            var aDM_IDParameter = aDM_ID != null ?
+                new ObjectParameter("ADM_ID", aDM_ID) :
+                new ObjectParameter("ADM_ID", typeof(string));
+    
+            var iPParameter = iP != null ?
+                new ObjectParameter("IP", iP) :
+                new ObjectParameter("IP", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS", sTAFF_COMPANYParameter, sTAFF_IDParameter, sTAFF_NAMEParameter, wORK_TEMP_IDParameter, aDM_IDParameter, iPParameter, eRR_CODE);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result> SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST(string wORK_TEMP_ID)
+        {
+            var wORK_TEMP_IDParameter = wORK_TEMP_ID != null ?
+                new ObjectParameter("WORK_TEMP_ID", wORK_TEMP_ID) :
+                new ObjectParameter("WORK_TEMP_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result>("SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST", wORK_TEMP_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result> SP_ADMIN_MEMBER_STAFF_BASE_VIEW(string sTAFF_ID)
+        {
+            var sTAFF_IDParameter = sTAFF_ID != null ?
+                new ObjectParameter("STAFF_ID", sTAFF_ID) :
+                new ObjectParameter("STAFF_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result>("SP_ADMIN_MEMBER_STAFF_BASE_VIEW", sTAFF_IDParameter);
+        }
+    
+        public virtual int SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD(Nullable<int> iDX, string aPP_RESULT)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var aPP_RESULTParameter = aPP_RESULT != null ?
+                new ObjectParameter("APP_RESULT", aPP_RESULT) :
+                new ObjectParameter("APP_RESULT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD", iDXParameter, aPP_RESULTParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_FRONT_COMMON_CNT_Result> SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT(string wORK_TEMP_ID, string aPP_RESULT)
+        {
+            var wORK_TEMP_IDParameter = wORK_TEMP_ID != null ?
+                new ObjectParameter("WORK_TEMP_ID", wORK_TEMP_ID) :
+                new ObjectParameter("WORK_TEMP_ID", typeof(string));
+    
+            var aPP_RESULTParameter = aPP_RESULT != null ?
+                new ObjectParameter("APP_RESULT", aPP_RESULT) :
+                new ObjectParameter("APP_RESULT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT", wORK_TEMP_IDParameter, aPP_RESULTParameter);
+        }
     }
 }

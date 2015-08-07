@@ -82,6 +82,60 @@
         <Function Name="SP_ADMIN_FRONT_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
+          <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_COMPANY" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="WORK_TEMP_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
+          <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WORK_TEMP_ID" Type="varchar" Mode="In" />
+          <Parameter Name="APP_RESULT" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_COMPANY" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="STAFF_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="WORK_TEMP_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IP" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WORK_TEMP_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="APP_RESULT" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STAFF_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_MEMBER_STAFF_REQUST_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
           <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
@@ -254,6 +308,60 @@
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="M_PWD_SHA256" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_DEL">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK">
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_INS">
+            <Parameter Name="STAFF_COMPANY" Mode="In" Type="String" />
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="STAFF_NAME" Mode="In" Type="String" />
+            <Parameter Name="WORK_TEMP_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_SEL" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result)">
+            <Parameter Name="DATE_FROM" Mode="In" Type="String" />
+            <Parameter Name="DATE_TO" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS">
+            <Parameter Name="STAFF_COMPANY" Mode="In" Type="String" />
+            <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="STAFF_NAME" Mode="In" Type="String" />
+            <Parameter Name="WORK_TEMP_ID" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="IP" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result)">
+          <Parameter Name="WORK_TEMP_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_VIEW" ReturnType="Collection(AboutMeModel.SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result)">
+          <Parameter Name="STAFF_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="APP_RESULT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
+            <Parameter Name="WORK_TEMP_ID" Mode="In" Type="String" />
+            <Parameter Name="APP_RESULT" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -343,6 +451,25 @@
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
           <Property Type="String" Name="M_PWD" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="ZZ_OLD_PWD_MD5" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="STAFF_COMPANY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="WORK_TEMP_ID" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="APP_RESULT" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ADM_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="IP" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="STAFF_COMPANY" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_ID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="STAFF_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="WORK_TEMP_ID" Nullable="true" MaxLength="30" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -540,6 +667,64 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD" FunctionName="AboutMeModel.Store.SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_DEL" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_DEL" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_DUP_CHECK" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_INS" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_SEL" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="WORK_TEMP_ID" ColumnName="WORK_TEMP_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_TMP_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="WORK_TEMP_ID" ColumnName="WORK_TEMP_ID" />
+                <ScalarProperty Name="APP_RESULT" ColumnName="APP_RESULT" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_VIEW" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="STAFF_COMPANY" ColumnName="STAFF_COMPANY" />
+                <ScalarProperty Name="STAFF_ID" ColumnName="STAFF_ID" />
+                <ScalarProperty Name="STAFF_NAME" ColumnName="STAFF_NAME" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="WORK_TEMP_ID" ColumnName="WORK_TEMP_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_TMP_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

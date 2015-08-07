@@ -34,6 +34,20 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_MEMBER_Result> GetAdminMemberStaffRequest_REF_MEMBER(string sTAFF_ID); //임직원 신청 연관정보 : 회원TBL
         List<SP_ADMIN_MEMBER_STAFF_REQUST_REF_REQUEST_Result> GetAdminMemberStaffRequest_REF_REQUEST(string sTAFF_ID); //임직원 신청 연관정보 : 임직원신청이력
 
+        //관리자 > 임직원 기준DB-----------------------------
+        List<SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result> GetAdminMemberStaffBaseList(string dATE_FROM = "", string dATE_TO = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "", string sORT_COL = "IDX", string sORT_DIR = "DESC", int pAGE = 1, int pAGESIZE = 10); //관리자 - 임직원기준DB -목록
+        int GetAdminMemberStaffBaseCount(string dATE_FROM = "", string dATE_TO = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "");//관리자-임직원기준DB  목록 COUNT
+        int SetAdminMemberStaffBaseInsert(string sTAFF_COMPANY = "", string sTAFF_ID = "", string sTAFF_NAME = "", string wORK_TEMP_ID = "");//관리자 -임직원기준DB -INSERT 1건
+        int SetAdminMemberStaffBaseDel(int iDX = -1); //관리자 -임직원기준DB -삭제1건 
+        int SetAdminMemberStaffBaseDupCheck(string sTAFF_ID = "");//관리자 -임직원기준DB -사번 중복체크
+
+
+        List<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result> GetAdminMemberStaffBaseTempList(string wORK_TEMP_ID = "");//관리자 - 임직원기준DB TEMP-목록
+        int GetAdminMemberStaffBaseTempCount(string wORK_TEMP_ID = "", string aPP_RESULT = ""); //관리자-임직원기준DB TEMP-목록 COUNT
+        int SetAdminMemberStaffBaseTempInsert(string sTAFF_COMPANY = "", string sTAFF_ID = "", string sTAFF_NAME = "", string wORK_TEMP_ID = "", string aDM_ID = "", string iP = "");//관리자 -임직원기준DB TEMP -INSERT 1건
+        int SetAdminMemberStaffBaseTempUpdate(int iDX = -1, string aPP_RESULT = "");//관리자 -임직원기준DB TEMP -처리결과 수정 1건
+
+
         //데이타 이행 :회원암호--오픈전 마이그레이션시 1회 필요 -----------------------------------------
         List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL(); //데이타 이행 :회원암호 -list 
         void SetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(string m_ID = "", string m_PWD_SHA256 = ""); //데이타 이행 :회원암호 -수정저장
