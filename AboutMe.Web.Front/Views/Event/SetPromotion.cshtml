@@ -145,10 +145,22 @@
         }
 
 
-        document.getElementById("div_total_price").innerHTML = total_price;
-        document.getElementById("div_dc_price").innerHTML = minus_price;
-        document.getElementById("div_result_price").innerHTML = total_result_price;
+        document.getElementById("total_price").innerHTML = AddComma(total_price);
+        document.getElementById("dc_price").innerHTML = AddComma(minus_price);
+        document.getElementById("result_price").innerHTML = AddComma(total_result_price);
 
+    }
+
+    function AddComma(data_value) {
+        //data_value.toLocaleString();
+        //Number(data_value).toLocaleString('en').split(".")[0] ===> 소숫점이 붙을 경우에는 이렇게 처리
+        var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+        data_value += '';                          // 숫자를 문자열로 변환
+
+        while (reg.test(data_value))
+            data_value = data_value.replace(reg, '$1' + ',' + '$2');
+
+        return data_value;
     }
 
 
@@ -301,16 +313,16 @@
                                     <ul class="priceview">
                                         <li>
                                             <span class="tit">총 구매 금액</span>
-                                            <div id="div_total_price">0</div>원
+                                            <span  class="price"><strong id="total_price">0</strong>원</span>
                                         </li>
                                         <li>
 
                                             <span class="tit">할인 금액</span>
-                                            <div id="div_dc_price">0</div>원
+                                            <span  class="price"><strong id="dc_price">0</strong>원</span>
                                         </li>
                                         <li class="total">
                                             <span class="tit">총 결제 금액</span>
-                                            <div id="div_result_price">0</div>원
+                                            <span  class="price"><strong id="result_price">0</strong>원</span>
                                         </li>
                                     </ul>
                                 </div>
