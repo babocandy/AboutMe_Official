@@ -510,6 +510,195 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
 
+        //-임직원 기준DB  =============================================================================================================================
+        //관리자 - 임직원 기준DB - 목록
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult StaffBaseIndex(string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "IDX", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
+        {
+            //return View();
+
+            this.ViewBag.SEL_DATE_FROM = SEL_DATE_FROM;
+            this.ViewBag.SEL_DATE_TO = SEL_DATE_TO;
+
+            this.ViewBag.SEARCH_COL = SEARCH_COL;
+            this.ViewBag.SEARCH_KEYWORD = SEARCH_KEYWORD;
+            this.ViewBag.SORT_COL = SORT_COL;
+            this.ViewBag.SORT_DIR = SORT_DIR;
+            this.ViewBag.PAGE = PAGE;
+            this.ViewBag.PAGESIZE = PAGESIZE;
+
+            int TotalRecord = 0;
+            //TotalRecord = 999;
+            TotalRecord = _AdminFrontMemberService.GetAdminMemberStaffBaseCount(SEL_DATE_FROM, SEL_DATE_TO, SEARCH_COL, SEARCH_KEYWORD);
+
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+
+            return View(_AdminFrontMemberService.GetAdminMemberStaffBaseList(SEL_DATE_FROM, SEL_DATE_TO, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, PAGE, PAGESIZE).ToList());
+        }
+
+        //관리자 - 임직원 기준DB - 삭제 :ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult AjaxStaffBaseDeleteProc(int IDX=-1)
+        {
+            //return View();
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+
+            //string PROC_ADM_ID = AdminUserInfo.GetAdmId();  //처리자 계정 (관리자 로그인계정)
+
+            //return View();
+            if (IDX < 1)
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "문서번호가 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+
+            //DB저장: 임직원 기준DB - 삭제 -----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminMemberStaffBaseDel(IDX);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 문서를 찾을수 없습니다..";
+            }
+
+            //로그 기록
+            string memo = "관리자-임직원기준DB - 삭제";
+            string comment = "관리자-임직원기준DB - 삭제";
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|IDX:" + IDX.ToString();
+
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+        }
+
+
+        //관리자 - 임직원 기준DB - 등록 폼
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult StaffBaseInsert()
+        {
+            return View();
+        }
+
+        //관리자 - 임직원 기준DB - 등록(개별1건) :ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult AjaxStaffBaseInsertProc(string STAFF_ID = "", string STAFF_NAME = "", string STAFF_COMPANY = "")
+        {
+            //return View();
+            int nERR_CODE = 0;
+            int nERR_CODE_SP = 0;
+            string strERR_MSG = "";
+
+            //string PROC_ADM_ID = AdminUserInfo.GetAdmId();  //처리자 계정 (관리자 로그인계정)
+
+            //return View();
+            if (STAFF_ID=="")
+            {
+                //return Content("<script language='javascript' type='text/javascript'>alert('문서번호가 전달되지 않았습니다.');history.go(-1);</script>");
+                nERR_CODE = 1;
+                strERR_MSG = "사번이 전달되지 않았습니다.";
+                return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+            }
+
+            string strNOW_TIME = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string strWORK_TEMP_ID = "E"+strNOW_TIME + "_" + Utility01.GetRandomAlphanumeric(4);
+            //DB저장: 임직원 기준DB - 등록(개별1건) -----------------------
+            nERR_CODE_SP = _AdminFrontMemberService.SetAdminMemberStaffBaseInsert(STAFF_COMPANY, STAFF_ID, STAFF_NAME,strWORK_TEMP_ID);
+            if (nERR_CODE_SP != 0)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\nDB에서 문서를 찾을수 없습니다..";
+            }
+            if (nERR_CODE_SP == 10)
+            {
+                nERR_CODE = nERR_CODE_SP;
+                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = strERR_MSG + "\\n 사번:" + STAFF_ID;
+                if (nERR_CODE_SP == 10)
+                    strERR_MSG = strERR_MSG + "\\n 이미 존재하는 사번입니다.";
+            }
+            //로그 기록
+            string memo = "관리자-임직원기준DB - 개별등록";
+            string comment = "관리자-임직원기준DB - 개별등록";
+            memo = memo + "|nERR_CODE:" + nERR_CODE.ToString();
+            memo = memo + "|strERR_MSG:" + strERR_MSG;
+            memo = memo + "|STAFF_ID:" + STAFF_ID;
+            memo = memo + "|STAFF_NAME:" + STAFF_NAME;
+            memo = memo + "|STAFF_COMPANY:" + STAFF_COMPANY;
+            memo = memo + "|strWORK_TEMP_ID:" + strWORK_TEMP_ID;
+
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+            return Json(new { ERR_CODE = nERR_CODE.ToString(), ERR_MSG = strERR_MSG });
+        }
+
+
+        //관리자 - 임직원 기준DB - Excel등록(파일 업로드 & DB저장) :ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult AjaxStaffBaseExcelUplodBatch(IEnumerable<HttpPostedFileBase> files)
+        {
+            // The Name of the Upload component is "files"
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    // Some browsers send file names with full path.
+                    // We are only interested in the file name.
+                    var fileName = Path.GetFileName(file.FileName);
+                    var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+
+                    // The files are not actually saved in this demo
+                    // file.SaveAs(physicalPath);
+                }
+            }
+
+            // Return an empty string to signify success
+            return Content("");
+        }
+
+        //관리자 - 임직원 기준DB - Excel파일 삭제 :ajax > JSON리턴
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult AjaxStaffBaseExcelUplodDeleteFile(string[] fileNames)
+        {
+            // The parameter of the Remove action must be called "fileNames"
+
+            if (fileNames != null)
+            {
+                foreach (var fullName in fileNames)
+                {
+                    var fileName = Path.GetFileName(fullName);
+                    var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+
+                    // TODO: Verify user permissions
+
+                    if (System.IO.File.Exists(physicalPath))
+                    {
+                        // The files are not actually removed in this demo
+                        // System.IO.File.Delete(physicalPath);
+                    }
+                }
+            }
+
+            // Return an empty string to signify success
+            //return Content("<script>alert('Upload 성공...')</script>");
+            //return Json(new {ERR_CODE="0",ERR_MSG="업로드성공!", status = "OK" }, "text/plain");
+            return Json(new { ERR_CODE = "0", ERR_MSG = "업로드성공!", status = "OK" });
+        }
+
 
         //#####################################################################################################################################
         //-//데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요 =============================================================================================================================
