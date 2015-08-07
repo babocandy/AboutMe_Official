@@ -204,8 +204,8 @@
                 <div class="detail_bottom">
                     <!--왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
                     <div class="left_area">
-                        <!--event_banner : 이벤트 상세페이지로 이동 [타임세일]-->
-                        @{Html.RenderAction("ProductDetailTimeSale", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE });}
+                        <!--event_banner : 이벤트 상세페이지로 이동 dykim-->
+                        @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}
                         <!--//event_banner : 이벤트 상세페이지로 이동-->
                         <!--상세정보, 리뷰, 품질보증/배송관련 tab-->
                         <div class="product_tab">
@@ -298,7 +298,7 @@
                                 <!--//성분표시-->*@
                             </div>
                             <!--//상세정보-->
-                            <!--리뷰-->
+                            <!--리뷰 dykim-->
                             @{Html.RenderAction("ProductInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
                             <!--//리뷰-->
                             <!--품질보증-->
@@ -400,9 +400,9 @@
                     <!--//왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
                     <!--오른쪽영역 : 사용자 보유 정보-->
                     <div class="right_area">
-                        <!--배너-->
+                        <!--배너 지젠 기획전-->
                         @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}
-                        <!--세트상품-->
+                        <!--세트상품 ssw-->
                         @{Html.RenderAction("ProductDetailSetList", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE });}
 
                         @if (this.ViewBag.withCnt != 0) //관련상품 리스트
