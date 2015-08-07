@@ -22,13 +22,11 @@ namespace AboutMe.Web.Front.Controllers
 {
     public class ShoppingController : BaseFrontController
     {
-        
         private IProductService _ProductService;
         public ShoppingController(IProductService _productService)
         {
             this._ProductService = _productService;
         }
-
 
         #region 상품리스트
         public ActionResult Index(IEnumerable<string> P_CATE_CODE_3DEPTH, Product_front_search_entity product_front_search_entity)
@@ -110,7 +108,23 @@ namespace AboutMe.Web.Front.Controllers
 
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
+            this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();  //회원 등급
+            this.ViewBag.M_GBN = MemberInfo.GetMemberGBN();  //회원 종류
+            string _pcode = productView.P_CODE; //상품코드
+            int _resultprice = productView.RESULT_PRICE.Value; //상품최종가
+            
             #endregion 
+
+            //#region 메서드 파라메터 설명
+            //    //string UsableDeviceGbn => 디바이스구분 P = PC , M = Mobile
+            //    //string MGbn  => 회원종류 
+            //    //string MGrade => 회원등급
+            //    //string M_id  => 회원아이디
+            //    //string PCode  => 상품코드
+            //    //int ResultPrice  => 최종상품가
+            //#endregion
+            //Dictionary<string, string> dic = _BizPromotionService.GetPromotionInfoForDetialPage("P", this.ViewBag.M_GB, this.ViewBag.M_GRADE, this.ViewBag.M_ID, _pcode, _resultprice);
+            
 
             #region 연관상품 가져오기
             ViewData["WITH_PRODUCT_LIST"] = "";

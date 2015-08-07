@@ -156,23 +156,8 @@
                                     <strong>판매가</strong>
                                     <del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del><span class="curprice"><em>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</em>원</span>
                                 </li>
-                                <li>
-                                    <strong>임직원가</strong>
-                                    <span class="staff_price">22,400원</span>
-                                </li>
-                                <li>
-                                    <strong>VIP 할인가</strong>
-                                    <span class="staff_price">22,400원</span>
-                                </li>
-                                <li>
-                                    <strong>즉시할인</strong>
-                                    <span class="discount_num">10</span>% 할인쿠폰
-                                    <a href="#" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="" /></a>
-                                </li>
-                                <li>
-                                    <strong>포인트</strong>
-                                    ⓟ<span class="discount_num"> 298</span>
-                                </li>
+                                <!--쿠폰, 임직원가, 포인트 -->
+                                @{Html.RenderAction("ProductDetailSalePrice", "ChildActionPromotion", new { UsableDeviceGbn = "P", P_CODE = @ViewBag.P_CODE, ResultPrice = @Model.RESULT_PRICE });}
                                 <li>
                                     <strong>구입개수</strong>
                                     <div class="counttypeb">
@@ -219,8 +204,8 @@
                 <div class="detail_bottom">
                     <!--왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
                     <div class="left_area">
-                        <!--event_banner : 이벤트 상세페이지로 이동-->
-                        @{Html.RenderAction("ShoppingDetailLeftEvent", "CommonChildAction", new { P_CODE = @ViewBag.P_CODE });}
+                        <!--event_banner : 이벤트 상세페이지로 이동 [타임세일]-->
+                        @{Html.RenderAction("ProductDetailTimeSale", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE });}
                         <!--//event_banner : 이벤트 상세페이지로 이동-->
                         <!--상세정보, 리뷰, 품질보증/배송관련 tab-->
                         <div class="product_tab">
@@ -415,8 +400,10 @@
                     <!--//왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
                     <!--오른쪽영역 : 사용자 보유 정보-->
                     <div class="right_area">
-                        @{Html.RenderAction("ShoppingDetailRightPromotion", "CommonChildAction", new { P_CODE = @ViewBag.P_CODE });}
-                        @{Html.RenderAction("ShoppingDetailRightSetGoods", "CommonChildAction", new { P_CODE = @ViewBag.P_CODE });}
+                        <!--배너-->
+                        @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}
+                        <!--세트상품-->
+                        @{Html.RenderAction("ProductDetailSetList", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE });}
 
                         @if (this.ViewBag.withCnt != 0) //관련상품 리스트
                         { 
