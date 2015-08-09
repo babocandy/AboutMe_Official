@@ -10,6 +10,7 @@ using AboutMe.Common.Data;
 
 using AboutMe.Domain.Service.Product;
 using AboutMe.Domain.Entity.Product;
+using AboutMe.Domain.Entity.Display;
 
 namespace AboutMe.Web.Front.Controllers
 {
@@ -54,6 +55,16 @@ namespace AboutMe.Web.Front.Controllers
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
             model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10);
+
+            List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
+
+            foreach (var item in model.List)
+            {
+                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+            }
+
+            model.PdtList = plist;
+
             return View(model);
         }
 
@@ -62,6 +73,15 @@ namespace AboutMe.Web.Front.Controllers
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
             model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10);
+
+            List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
+            foreach (var item in model.List)
+            {
+                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+            }
+
+            model.PdtList = plist;
+
             return View(model);
         }
 
@@ -107,5 +127,10 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
+        [ChildActionOnly]
+        private SP_DISPLAY_SEL_Result GetOneDisplayResult(List<SP_DISPLAY_SEL_Result> list)
+        {
+            return list.Count > 0 ? list[0] : new SP_DISPLAY_SEL_Result();
+        }
     }
 }
