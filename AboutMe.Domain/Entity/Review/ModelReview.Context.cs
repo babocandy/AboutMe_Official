@@ -161,5 +161,14 @@ namespace AboutMe.Domain.Entity.Review
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_CATE_THEMA_SEL_Result>("SP_REVIEW_CATE_THEMA_SEL");
         }
+    
+        public virtual ObjectResult<Nullable<int>> SP_REVIEW_PRODUCT_READY_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_REVIEW_PRODUCT_READY_CNT", m_IDParameter);
+        }
     }
 }

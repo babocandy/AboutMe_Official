@@ -1,4 +1,6 @@
-﻿@using AboutMe.Web.Front.Controllers.Mypage
+﻿@model AboutMe.Web.Front.Models.MyPointListViewModel
+@using AboutMe.Web.Front.Controllers.Mypage
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "내포인트 - ABOUT ME";
     ViewBag.TopClass = "mypage";
@@ -41,7 +43,7 @@
         <div class="boxtypee savepoint_txt">
             <div class="top"></div>
             <div class="middle">
-                <p><img src="/aboutCom/images/mypage/ico_savepoint.gif" alt="" />홍길동님 현재 포인트 <span>123,500 </span>원</p>
+                <p><img src="/aboutCom/images/mypage/ico_savepoint.gif" alt="" />@(Model.MyName)님 현재 포인트 <span>@string.Format("{0:#,##0}", Model.MyTotalPoint) </span>원</p>
             </div>
             <div class="bottom"></div>
         </div>
@@ -60,97 +62,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="pluspoint">500</span></td>
-                        <td class="fcblue">적립</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="pluspoint">500</span></td>
-                        <td class="fcblue">적립</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>사용</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="pluspoint">500</span></td>
-                        <td class="fcblue">적립</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>사용</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>소멸</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>차감</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>차감</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>사용</td>
-                        <td>123,500</td>
-                    </tr>
-                    <tr>
-                        <td>2015 .10 .26</td>
-                        <td class="subject"><a href="#">결제사용(주문번호 : 1100000000)</a></td>
-                        <td><span class="minuspoint">300</span></td>
-                        <td>소멸</td>
-                        <td>123,500</td>
-                    </tr>
+
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
+                            <td class="subject"><a href="#">@item.DETAIL</a></td>
+                            @{
+                                var pt = item.POINT.Value ;
+                            }
+                            <td><span class="@(pt > 0 ? "pluspoint" : "minuspoint")">@string.Format("{0:#,##0}", Math.Abs( pt ))</span></td>
+                            <td class="fcblue">@item.KIND</td>
+                            <td>@string.Format("{0:#,##0}", item.SUM_POINT)</td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>
         <!--//포인트리스트-->
         <!--페이징-->
-        <div class="paging mt30">
-            <a href="#" class="prev">이전</a>
-            <!--현재 페이지-->
-            <strong>1</strong>
-            <!--//현재 페이지-->
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">7</a>
-            <a href="#">8</a>
-            <a href="#">9</a>
-            <a href="#">10</a>
-            <a href="#" class="next">다음</a>
-        </div>
+        @{
+            string search = Utility01.ConvertObject2UriQuery(Model.Route);
+
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.Route.PAGE, QueryStr = search });
+        }
         <!--//페이징-->
 
 
