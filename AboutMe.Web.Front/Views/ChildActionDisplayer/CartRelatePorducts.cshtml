@@ -1,0 +1,61 @@
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+
+
+<div class="recommend mt40">
+    <h3><img src="/aboutCom/images/cart/h3_recommend.png" alt="같이 구매하면 좋은 상품" /></h3>
+    <div class="prolist mt20">
+        <ul>
+            @foreach (var item in Model.PdtList)
+            {
+                <li>
+                    <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})">
+                        <img src="@(myController._img_path_product)@(item.MAIN_IMG)" alt="상품 이미지" />
+                        <span class="tag">
+             
+                            @if (!string.IsNullOrEmpty(item.ICON_YN))
+                            {
+                                if (item.ICON_YN.IndexOf('B') != -1)
+                                { <text> <span class="ico ico_best">BEST</span></text> }
+                                if (item.ICON_YN.IndexOf('S') != -1)
+                                { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                if (item.ICON_YN.IndexOf('N') != -1)
+                                { <text> <span class="ico ico_new">NEW</span></text> }
+                                if (item.ICON_YN.IndexOf('C') != -1)
+                                { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                            }
+                            @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                            {
+                                if (item.PMO_PRODUCT_CATEGORY == "01")
+                                { <text> <span class="ico ico_set">SET</span></text> }
+                                if (item.PMO_PRODUCT_CATEGORY == "02")
+                                { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                if (item.PMO_PRODUCT_CATEGORY == "03")
+                                { <text> <span class="ico ico_time">TIME</span></text> }
+                            }
+                            @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                            {
+                                <text> <span class="ico ico_coupon">COUPON</span></text>
+                            }
+
+
+
+
+                        </span>
+                        <span class="ptit">@item.P_NAME</span>
+                    </a>
+                    <p class="pdesc">@item.P_SUB_TITLE</p>
+                    <p class="pprice">
+                        <strong>@string.Format("{0:#,##0}", @item.SELLING_PRICE)</strong>
+                    </p>
+                </li>
+            }
+
+        </ul>
+    </div>
+</div>

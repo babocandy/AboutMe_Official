@@ -1,0 +1,30 @@
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+<div class="bnr_subj">
+    <span class="ico"><img src="@(myController._img_path_display)@(Model.List[0].IMG)" alt="" /></span>
+    <a href="@(Model.List[0].URL)" class="btn_more">더보기<i></i></a>
+</div>
+<div class="bnr_list">
+    <ul>
+
+        @for (int i = 1; i <= 3; i++)
+        {
+            var item = Model.List[i];
+            <li>
+                <a href="@item.URL">
+                    <!--200x200사이즈로 들어갑니다.-->
+                    <span class="photo"><img src="@(myController._img_path_display)@item.P_MAIN_IMG" alt="" /></span>
+                    <span class="tit">@item.P_NAME</span>
+                    <span class="stit">@item.P_SUB_TITLE</span>
+                    <span class="price"><em>@string.Format("{0:#,##0}", item.SELLING_PRICE)</em>원</span>
+                </a>
+            </li>
+        }
+
+    </ul>
+</div>

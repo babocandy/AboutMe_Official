@@ -5,4 +5,9 @@
 
     var myController = ViewContext.Controller as ChildActionDisplayerController;
 }
-<a href="@Model.List[0].URL"><img src="@(myController._img_path_display)@(Model.List[0].IMG)" alt="" /></a>
+<ul class="slide moveslidercon">
+    @foreach (var item in Model.List)
+    {
+        <li><img src="@(myController._img_path_display)@(item.IMG)" alt="" /></li>
+    }
+</ul>

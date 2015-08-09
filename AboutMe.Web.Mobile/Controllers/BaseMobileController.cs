@@ -36,10 +36,11 @@ namespace AboutMe.Web.Mobile.Controllers
         };
 
 
+
         /**
-          * 상품 이미지 폴더
-          */
-        protected string _img_path_product
+         * 상품 이미지 폴더
+         */
+        public string _img_path_product
         {
             get
             {
@@ -50,11 +51,22 @@ namespace AboutMe.Web.Mobile.Controllers
         /**
          * 리뷰 이미지 폴더
          */
-        protected string _img_path_review
+        public string _img_path_review
         {
             get
             {
                 return AboutMe.Common.Helper.Config.GetConfigValue("ReviewPhotoPath");
+            }
+        }
+
+        /**
+         * 전시 이미지 폴더
+         */
+        public string _img_path_display
+        {
+            get
+            {
+                return AboutMe.Common.Helper.Config.GetConfigValue("DisplayPath");
             }
         }
 

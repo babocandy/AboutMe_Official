@@ -38,16 +38,8 @@
                         <div class="slide_banner">
                             <!--슬라이드배너 260*228-->
                             <div class="gnb_banner moveslider">
-                                <ul class="slide moveslidercon">
-                                    <li><img src="/aboutCom/images/common/temp_gnbbanner1_260228.jpg" alt="" /></li>
-                                    <li><img src="/aboutCom/images/common/temp_gnbbanner1_260228_2.jpg" alt="" /></li>
-                                    <li><img src="/aboutCom/images/common/temp_gnbbanner1_260228_3.jpg" alt="" /></li>
-                                </ul>
-                                <ul class="nav moveslidernav">
-                                    <li class="cnt"><a href="javascript:"><img src="/aboutCom/images/common/nav_banner.gif" alt="" /></a></li>
-                                    <li><a href="javascript:"><img src="/aboutCom/images/common/nav_banner.gif" alt="" /></a></li>
-                                    <li><a href="javascript:"><img src="/aboutCom/images/common/nav_banner.gif" alt="" /></a></li>
-                                </ul>
+                                @{Html.RenderAction("GbnBanner", "ChildActionDisplayer");}
+                                <ul class="nav moveslidernav"></ul>
                             </div>
                         </div>
                         <!--//banner-->
