@@ -262,5 +262,36 @@ namespace AboutMe.Domain.Entity.Event
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EVENT_VIEW_Result>("SP_ADMIN_EVENT_VIEW", iDXParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_EVENT_MAIN_VIEW_Result> SP_ADMIN_EVENT_MAIN_VIEW()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EVENT_MAIN_VIEW_Result>("SP_ADMIN_EVENT_MAIN_VIEW");
+        }
+    
+        public virtual ObjectResult<SP_EVENT_END_LIST_Result> SP_EVENT_END_LIST(Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_END_LIST_Result>("SP_EVENT_END_LIST", pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual ObjectResult<SP_EVENT_ING_LIST_Result> SP_EVENT_ING_LIST(Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_ING_LIST_Result>("SP_EVENT_ING_LIST", pAGEParameter, pAGESIZEParameter);
+        }
     }
 }

@@ -120,10 +120,10 @@
                     <tr>
                         <th>진행상태</th>
                         <td>
-                            <label for="IngGbn0">@Html.RadioButton("IngGbn", "A", Model == null ? false : (Model.SearchOption.IngGbn == "0" ? true : false), new { id = "IngGbn0" }) <span class="txt mr5">전체</span></label>
-                            <label for="IngGbn1">@Html.RadioButton("IngGbn", "1", Model == null ? false : (Model.SearchOption.IngGbn == "1" ? true : false), new { id = "IngGbn1" })<span class="txt mr5">진행</span></label>
-                            <label for="IngGbn2">@Html.RadioButton("IngGbn", "2", Model == null ? false : (Model.SearchOption.IngGbn == "2" ? true : false), new { id = "IngGbn2" })<span class="txt mr5">종료</span></label>
-                            <label for="IngGbn3">@Html.RadioButton("IngGbn", "3", Model == null ? false : (Model.SearchOption.IngGbn == "3" ? true : false), new { id = "IngGbn3" }) <span class="txt mr5">예약</span></label>
+                            <label for="IngGbn0">@Html.RadioButton("IngGbn", "0", Model == null ? false : (Model.SearchOption.IngGbn == "0" ? true : false), new { id = "IngGbn0" }) <span class="txt mr5">전체</span></label>
+                            <label for="IngGbn1">@Html.RadioButton("IngGbn", "1", Model == null ? false : (Model.SearchOption.IngGbn == "1" ? true : false), new { id = "IngGbn1" }) <span class="txt mr5">예약</span></label>
+                            <label for="IngGbn2">@Html.RadioButton("IngGbn", "2", Model == null ? false : (Model.SearchOption.IngGbn == "2" ? true : false), new { id = "IngGbn2" })<span class="txt mr5">진행</span></label>
+                            <label for="IngGbn3">@Html.RadioButton("IngGbn", "3", Model == null ? false : (Model.SearchOption.IngGbn == "3" ? true : false), new { id = "IngGbn3" })<span class="txt mr5">종료</span></label>
                         </td>
                         <th>전시여부</th>
                         <td>
@@ -183,20 +183,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach(var item in Model.ListInfo)
-                { 
+                @if (Model.ListCnt == 0)
+                {
                     <tr>
-                        <td>@item.IDX</td>
-                        <td><a href="/Event/Edit?IDX=@item.IDX&@PagingParam">@item.EVENT_NAME</a></td>
-                        <td>@item.FROM_DATE~@item.TO_DATE</td>
-                        <td>
-                            <a href="http://@item.WEB_URL" target="_blank">@item.WEB_URL</a><br />
-                            <a href="http://@item.MOBILE_URL" target="_blank">@item.MOBILE_URL</a>
-                        </td>
-                        <td>진행</td>
-                        <td>@item.USE_YN</td>
-                        <td>@item.REG_DATE</td>
+                        <td colspan="8">등록된 이벤트이 없습니다.</td>
                     </tr>
+                }
+                else
+                {
+                    foreach(var item in Model.ListInfo)
+                    { 
+                        <tr>
+                            <td>@item.IDX</td>
+                            <td><a href="/Event/Edit?IDX=@item.IDX&@PagingParam">@item.EVENT_NAME</a></td>
+                            <td>@item.FROM_DATE~@item.TO_DATE</td>
+                            <td>
+                                <a href="http://@item.WEB_URL" target="_blank">@item.WEB_URL</a><br />
+                                <a href="http://@item.MOBILE_URL" target="_blank">@item.MOBILE_URL</a>
+                            </td>
+                            <td>진행</td>
+                            <td>@item.USE_YN</td>
+                            <td>@item.REG_DATE</td>
+                        </tr>
+                    }
                 }
                 </tbody>
             </table>

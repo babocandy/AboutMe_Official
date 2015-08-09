@@ -609,11 +609,54 @@
     <Compile Include="Entity\Event\SP_ADMIN_EVENT_CNT_Result.cs">
       <DependentUpon>ModelEvent.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Event\SP_ADMIN_EVENT_MAIN_VIEW_Result.cs">
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Event\SP_ADMIN_EVENT_SEL_Result.cs">
       <DependentUpon>ModelEvent.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Event\SP_ADMIN_EVENT_VIEW_Result.cs">
       <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\SP_EVENT_END_LIST_Result.cs">
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Event\SP_EVENT_ING_LIST_Result.cs">
+      <DependentUpon>ModelEvent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\ExhibitUserModel.cs" />
+    <Compile Include="Entity\Exhibit\ModelExhibit.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelExhibit.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\ModelExhibit.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\ModelExhibit.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelExhibit.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_CNT_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_SEL_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_TAB_PRODUCT_LIST_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_TAB_PRODUCT_SEARCH_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_TAB_SEL_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_VIEW_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Faq\ModelFaq_EntityPartial.cs" />
     <Compile Include="Entity\Faq\ModelFaq_Metadata.cs" />
@@ -977,6 +1020,8 @@
     <Compile Include="Service\Display\DisplayService.cs" />
     <Compile Include="Service\Event\IEventService.cs" />
     <Compile Include="Service\Event\EventService.cs" />
+    <Compile Include="Service\Exhibit\ExhibitService.cs" />
+    <Compile Include="Service\Exhibit\IExhibitService.cs" />
     <Compile Include="Service\Member\IMemberService.cs" />
     <Compile Include="Service\Member\MemberService.cs" />
     <Compile Include="Service\Notice\NoticeService.cs" />
@@ -1212,6 +1257,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelEvent.edmx</DependentUpon>
       <LastGenOutput>ModelEvent.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Exhibit\ModelExhibit.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelExhibit.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Exhibit\ModelExhibit.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelExhibit.edmx</DependentUpon>
+      <LastGenOutput>ModelExhibit.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Exhibit\ModelExhibit.edmx.diagram">
+      <DependentUpon>ModelExhibit.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Exhibit\ModelExhibit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelExhibit.edmx</DependentUpon>
+      <LastGenOutput>ModelExhibit.cs</LastGenOutput>
     </None>
     <None Include="Entity\Faq\ModelFaq.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
