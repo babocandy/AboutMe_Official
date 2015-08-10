@@ -161,7 +161,7 @@
 {
     @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
-        <input type="text" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
+        <input type="hidden" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
         <input type="hidden" name="M_AGREE" value="" />
         <input type="hidden" name="M_AGREE2" value="" />
 

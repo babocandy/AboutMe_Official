@@ -69,12 +69,17 @@ namespace AboutMe.Web.Mobile.Controllers
 
             this.ViewBag.RedirectUrl = RedirectUrl;
 
-            this.ViewBag.M_ID = MemberInfo.GetMemberId();
-            this.ViewBag.M_NAME = MemberInfo.GetMemberName();
-            this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();
-            this.ViewBag.M_EMAIL = MemberInfo.GetMemberEmail();
 
-
+            this.ViewBag.REMEMBER_M_ID = "";
+            this.ViewBag.REMEMBER_PW = "";
+            //--- 모바일 아이디 저장, 로그인상태유지 
+            CookieSessionStore cookiesession = new CookieSessionStore();
+            string MOBILE_SAVE_ID = cookiesession.GetSecretCookie("MOBILE_SAVE_ID");
+            string MOBILE_SAVE_PW = cookiesession.GetSecretCookie("MOBILE_SAVE_PW");
+            if (MOBILE_SAVE_ID == "Y")
+                this.ViewBag.REMEMBER_M_ID = cookiesession.GetSecretCookie("REMEMBER_M_ID"); ;
+            if (MOBILE_SAVE_PW == "Y")
+                this.ViewBag.REMEMBER_PW = cookiesession.GetSecretCookie("REMEMBER_PW"); ;
 
 
             //test ---------
@@ -90,7 +95,7 @@ namespace AboutMe.Web.Mobile.Controllers
         //모바일 사용자 로그인
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "")
+        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "", string MOBILE_SAVE_ID = "N", string MOBILE_SAVE_PW = "N")
         {
             //string HTTP_DOMAIN = Config.GetConfigValue("HTTP_DOMAIN");
             string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
@@ -175,8 +180,20 @@ namespace AboutMe.Web.Mobile.Controllers
                 cookiesession.SetSecretSession("M_GBN", result.M_GBN);  //로그인 세션 세팅
 
                 cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅
-
                 cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅 -평문
+
+                //--- 모바일 아이디 저장, 로그인상태유지 정보저장 :30일간 유지------------------
+                cookiesession.SetSecretCookie("MOBILE_SAVE_ID", MOBILE_SAVE_ID,30);
+                cookiesession.SetSecretCookie("MOBILE_SAVE_PW", MOBILE_SAVE_PW,30);
+                if (MOBILE_SAVE_ID == "Y")
+                    cookiesession.SetSecretCookie("REMEMBER_M_ID", result.M_ID,30);  
+                else
+                    cookiesession.SetSecretCookie("REMEMBER_M_ID", "",30);
+                if (MOBILE_SAVE_PW == "Y")
+                    cookiesession.SetSecretCookie("REMEMBER_PW", PW,30);
+                else
+                    cookiesession.SetSecretCookie("REMEMBER_PW", "",30);  
+
 
 
                 _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "N");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청 :  HttpContext.Session.SessionID???
@@ -187,6 +204,8 @@ namespace AboutMe.Web.Mobile.Controllers
                 memo = memo + "|ID:" + ID;
                 memo = memo + "|PW:" + PW;
                 memo = memo + "|RedirectUrl:" + RedirectUrl;
+                memo = memo + "|MOBILE_SAVE_ID:" + MOBILE_SAVE_ID;
+                memo = memo + "|MOBILE_SAVE_PW:" + MOBILE_SAVE_PW;
                 UserLog userlog = new UserLog();
                 userlog.UserLogSave(memo, comment);
 

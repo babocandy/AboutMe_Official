@@ -117,8 +117,8 @@
             @using (Html.BeginForm("JoinStep3", "MemberShip", FormMethod.Post, new { id = "frmJOIN_AGREE", name = "frmJOIN_AGREE" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
-                              
-                <input type="text" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
+
+                <input type="hidden" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
                 <input type="hidden" name="M_AGREE" value="" />
                 <input type="hidden" name="M_AGREE2" value="" />
 
@@ -722,7 +722,7 @@
                 <div class="btngroup">
                     <a href="javascript:fGoNextStep();" class="btn_brown_w185h60 mr10">확인</a><a href="javascript:fGoCancel();" class="btn_white_w185h60">취소</a>
                 </div>
-               }
+            }
 
  
         </div>
