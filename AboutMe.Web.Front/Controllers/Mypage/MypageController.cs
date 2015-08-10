@@ -287,6 +287,8 @@ namespace AboutMe.Web.Front.Controllers
 
 
             //DB저장 후 
+            string strERR_CODE = retDic.ERR_CODE;
+            string strERR_MSG = "";
             //return Json(new { ERR_CODE = retDic.ERR_CODE, ERR_MSG = retDic.ERR_MSG });
             if (retDic.ERR_CODE == "0") //성공
             {
@@ -294,7 +296,12 @@ namespace AboutMe.Web.Front.Controllers
             }
             else //에러
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('회원정보 수정 처리 실패. ERR_CODE:" + retDic.ERR_CODE + "'); history.go(-1);</script>");
+                if (retDic.ERR_CODE == "10")
+                    strERR_MSG = "회원정보를 찾을수 없습니다.";
+                if (retDic.ERR_CODE == "11")
+                    strERR_MSG = "이미 사용중인 EMAIL입니다.";
+
+                return Content("<script language='javascript' type='text/javascript'>alert('회원정보 수정 처리 실패. ERR_CODE:" + retDic.ERR_CODE +". "+ strERR_MSG + "'); history.go(-1);</script>");
             }
 
 

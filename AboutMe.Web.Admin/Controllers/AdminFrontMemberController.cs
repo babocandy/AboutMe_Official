@@ -118,9 +118,11 @@ namespace AboutMe.Web.Admin.Controllers
             {
                 nERR_CODE = nERR_CODE_SP;
                 strERR_MSG = "==DB저장중 오류발생!==";
-                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + nERR_CODE_SP.ToString();
+                strERR_MSG = strERR_MSG + "\n ERR_CODE:" + nERR_CODE_SP.ToString();
                 if (nERR_CODE_SP == 10)
-                    strERR_MSG = strERR_MSG + "\\nDB에서 회원정보를 찾을수 없습니다..";
+                    strERR_MSG = strERR_MSG + "\nDB에서 회원정보를 찾을수 없습니다.";
+                if (nERR_CODE_SP == 11)
+                    strERR_MSG = strERR_MSG + "\nEMAIL이 중복됩니다.";
             }
 
 
@@ -674,6 +676,7 @@ namespace AboutMe.Web.Admin.Controllers
   
             //string fileLocation = Server.MapPath("~/Upload/Staff/") + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);
             //string fileLocation = Config.GetConfigValue("StaffBaseDB") +System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유
+            //string fileLocation = Server.MapPath("~"+Config.GetConfigValue("StaffBaseDB")) + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유
             string fileLocation = Server.MapPath("~/App_Data/Staff/") + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);
             
             if (System.IO.File.Exists(fileLocation))
