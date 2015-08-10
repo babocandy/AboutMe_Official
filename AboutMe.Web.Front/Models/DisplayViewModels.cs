@@ -24,4 +24,14 @@ namespace AboutMe.Web.Front.Models
         public SP_PRODUCT_DETAIL_VIEW_Result Product_3 { get; set; }
     }
 
+
+    public class PopupMgrViewModel
+    {
+        public List<SP_POPUP_WEB_SEL_Result> List { get; set; }
+    }
+
+    public class PopupWindowViewModel
+    {
+        public SP_POPUP_DETAIL_Result Detail { get; set; }
+    }
 }

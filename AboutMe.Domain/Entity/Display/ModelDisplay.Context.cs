@@ -44,5 +44,24 @@ namespace AboutMe.Domain.Entity.Display
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_DISPLAY_SEL_Result>("SP_DISPLAY_SEL", kINDParameter, sUB_KINDParameter, sEQParameter);
         }
+    
+        public virtual ObjectResult<SP_POPUP_MOBILE_SEL_Result> SP_POPUP_MOBILE_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POPUP_MOBILE_SEL_Result>("SP_POPUP_MOBILE_SEL");
+        }
+    
+        public virtual ObjectResult<SP_POPUP_WEB_SEL_Result> SP_POPUP_WEB_SEL()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POPUP_WEB_SEL_Result>("SP_POPUP_WEB_SEL");
+        }
+    
+        public virtual ObjectResult<SP_POPUP_DETAIL_Result> SP_POPUP_DETAIL(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POPUP_DETAIL_Result>("SP_POPUP_DETAIL", iDXParameter);
+        }
     }
 }

@@ -173,7 +173,16 @@ namespace AboutMe.Web.Front.Controllers
         [ChildActionOnly]
         public ActionResult PopupMgr()
         {
-            return PartialView();
+            PopupMgrViewModel model = new PopupMgrViewModel();
+            model.List = _service.GetListPopupWeb();
+            return PartialView(model);
+        }
+
+        public ActionResult PopupWindow(int? idx)
+        {
+            PopupWindowViewModel model = new PopupWindowViewModel();
+            model.Detail = _service.GePopupDetail(idx);
+            return View(model);
         }
     }
 }
