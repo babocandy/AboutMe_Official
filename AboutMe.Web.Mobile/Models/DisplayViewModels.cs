@@ -13,6 +13,7 @@ namespace AboutMe.Web.Mobile.Models
     {
         public IList<SP_DISPLAY_SEL_Result> List { get; set; }
         public List<SP_PRODUCT_DETAIL_VIEW_Result> PdtList { get; set; }
+        public SP_DISPLAY_SEL_Result One { get; set; }
     }
 
 }

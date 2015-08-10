@@ -257,8 +257,8 @@
                         <p class="num">1,980</p>
                         <p class="txt">최다<strong>리뷰</strong> 상품은?</p>
                     </div>
-                    <img class="lazyload bg_img" data-original="" alt=""  src=""/>
-                   
+                    
+                    @Html.Action("TalkBannerInMain", "ChildActionDisplayer");
                 </div>
                 <div class="review">
                     <div class="proarea">
@@ -298,7 +298,7 @@
                         <p class="num">1,980</p>
                         <p class="txt">최다<strong>판매</strong> 상품은?</p>
                     </div>
-                    <img class="lazyload bg_img" data-original="/aboutCom/images/common/bg_review2.jpg" alt="" />
+                    @Html.Action("BestBannerInMain", "ChildActionDisplayer");
                 </div>
                 <div class="review">
                     <div class="proarea">
