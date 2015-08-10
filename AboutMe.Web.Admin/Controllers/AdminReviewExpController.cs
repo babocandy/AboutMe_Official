@@ -188,6 +188,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize]
+        [Route("Detail/{id:int}")]
         public ActionResult Detail(int? id)
         {
             AdminReviewExpMasterDetailViewModel model = new AdminReviewExpMasterDetailViewModel();
