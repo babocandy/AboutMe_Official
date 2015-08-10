@@ -11,6 +11,8 @@
         @section Header{
             @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
             <script src="/aboutCom/js/main.js" type="text/javascript"></script>
+
+            @Html.Action("PopupMgr", "ChildActionDisplayer")
         }
         <!--//header-->
         <!--container-->
@@ -37,7 +39,7 @@
                 <div class="mainvisual_banner">
                     <span class="mainvisual_frame"><img src="/aboutCom/images/common/bg_mainvisual.png" alt="" /></span>    
                     <!--mainbanner-->              
-                        @(Html.Action("MainBannerInWebMain", "ChildActionDisplayer"))
+                        @(Html.Action("MainBannerInMain", "ChildActionDisplayer"))
                     <!--/mainbanner-->                   
                     <ul class="nav">
                         <!--슬라이드갯수만큼 자동생성-->
@@ -98,7 +100,7 @@
             <div class="top_bnr">
                 <!--기획배너-->
                 <div class="pl_banner">
-                    @(Html.Action("MiddleBannerInWebMain", "ChildActionDisplayer"))
+                    @(Html.Action("MiddleBannerInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//기획배너-->
                 <!--날씨-->
@@ -126,12 +128,12 @@
             <div class="middle_bnr">
                 <!--뷰티배너-->
                 <div class="beauty_banner">
-                  @(Html.Action("DisplayProductBeautyInWebMain", "ChildActionDisplayer"))
+                  @(Html.Action("DisplayProductBeautyInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//뷰티배너-->
                 <!--건강배너-->
                 <div class="health_banner">
-                    @(Html.Action("DisplayProductHealthInWebMain", "ChildActionDisplayer"))
+                    @(Html.Action("DisplayProductHealthInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//건강배너-->
             </div>

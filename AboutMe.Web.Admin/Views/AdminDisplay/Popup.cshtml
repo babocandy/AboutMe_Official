@@ -1,9 +1,11 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupListViewModel
 @using AboutMe.Common.Data
 @using AboutMe.Common.Helper
+@using AboutMe.Web.Admin.Controllers
 @{
-    ViewBag.Title = "Point";
+    ViewBag.Title = "팝업관리";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myContrl = ViewContext.Controller  as BaseAdminController;
 }
 @section Left {
 
@@ -121,8 +123,8 @@
                     <tr>
                         <td>@item.IDX</td>
                         <td>@item.MEDIA_GBN_LBL</td>
-                        <td><img src="@item.WEB_IMG" alt="" /></td>
-                        <td><img src="@item.MOBILE_IMG" alt="" /></td>
+                        <td><img src="@string.Format("{0}{1}", myContrl._img_path_display, item.WEB_IMG)" alt="" style="height:80px"/></td>
+                        <td><img src="@string.Format("{0}{1}", myContrl._img_path_display, item.MOBILE_IMG)" style="height:80px"  alt="" /></td>
                         <td>@item.TITLE</td>
                         <td>@item.WEB_LINK</td>
                         <td>@item.MOBILE_LINK</td>

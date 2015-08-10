@@ -182,4 +182,11 @@ namespace AboutMe.Common.Data
         public static string SUB_KIND_10 = "10";
         public static string SUB_KIND_20 = "20";
     }
+
+    public class PopupCode
+    {
+        public static string TARGET_SELF = "10";
+        public static string TARGET_BLANK = "20";
+        
+    }
 }

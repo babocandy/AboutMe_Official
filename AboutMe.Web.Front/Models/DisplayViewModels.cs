@@ -13,6 +13,15 @@ namespace AboutMe.Web.Front.Models
     {
         public IList<SP_DISPLAY_SEL_Result> List { get; set; }
         public List<SP_PRODUCT_DETAIL_VIEW_Result> PdtList { get; set; }
+        public SP_DISPLAY_SEL_Result One { get; set; }
+    }
+
+    public class ProductDisplayMainViewModel
+    {
+        public SP_DISPLAY_SEL_Result Header { get; set; }
+        public SP_PRODUCT_DETAIL_VIEW_Result Product_1 { get; set; }
+        public SP_PRODUCT_DETAIL_VIEW_Result Product_2 { get; set; }
+        public SP_PRODUCT_DETAIL_VIEW_Result Product_3 { get; set; }
     }
 
 }

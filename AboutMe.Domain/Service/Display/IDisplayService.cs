@@ -13,6 +13,6 @@ namespace AboutMe.Domain.Service.Display
 {
     public interface IDisplayService
     {
-        IList<SP_DISPLAY_SEL_Result> GetListDisplay(string kind, string subKind = null, int? seq = null);
+        List<SP_DISPLAY_SEL_Result> GetListDisplay(string kind, string subKind = null, int? seq = null);
     }
 }

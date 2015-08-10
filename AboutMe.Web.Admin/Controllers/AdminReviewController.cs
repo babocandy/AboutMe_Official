@@ -17,6 +17,8 @@ using AboutMe.Domain.Entity.AdminReview;
 
 namespace AboutMe.Web.Admin.Controllers
 {
+    [RoutePrefix("AdminContents/Review")]
+    [Route("{action=Index}")]
     public class AdminReviewController : BaseAdminController
     {
 

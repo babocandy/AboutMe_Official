@@ -1,7 +1,9 @@
 ﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupSaveViewModel
-
+           @using AboutMe.Web.Admin.Controllers
+@using AboutMe.Common.Data
 @{
     Layout = null;
+    var myContrl = ViewContext.Controller as BaseAdminController;
 }
 
 <!--content-->
@@ -32,14 +34,9 @@
                 <tr>
                     <th><span>@Html.ValidationMessageFor(model => model.MEDIA_GBN)</span>매체구분</th>
                     <td colspan="3">
-                        @{
-                            var media_10 = Model.MEDIA_GBN == "10" ? "checked" : null;
-                            var media_20 = Model.MEDIA_GBN == "20" ? "checked" : null;
-                            var media_30 = Model.MEDIA_GBN == "30" ? "checked" : null;
-                        }
-                        <label for="rdi1" class="mr15"><input type="radio" id="rdi1" name="MEDIA_GBN" value="10" @media_10 /><span class="txt">전체</span></label>
-                        <label for="rdi2" class="mr15"><input type="radio" id="rdi2" name="MEDIA_GBN" value="20" @media_20 /><span class="txt">WEB</span></label>
-                        <label for="rdi3"><input type="radio" id="rdi3" media_gbn="rdio" name="MEDIA_GBN" value="30" @media_30 /><span class="txt">MOBILE</span></label>
+                        <label for="rdi1" class="mr15"><input type="radio" id="rdi1" name="MEDIA_GBN" value="@MediaCode.BOTH" @(Model.MEDIA_GBN == MediaCode.BOTH ? "checked" : "") /><span class="txt">전체</span></label>
+                        <label for="rdi2" class="mr15"><input type="radio" id="rdi2" name="MEDIA_GBN" value="@MediaCode.WEB" @(Model.MEDIA_GBN == MediaCode.WEB ? "checked" : "") /><span class="txt">WEB</span></label>
+                        <label for="rdi3"><input type="radio" id="rdi3" media_gbn="rdio" name="MEDIA_GBN" value="@MediaCode.MOBILE" @(Model.MEDIA_GBN == MediaCode.MOBILE ? "checked" : "") /><span class="txt">MOBILE</span></label>
                     </td>
                 </tr>
                 <tr>
@@ -75,7 +72,13 @@
                 </tr>
                 <tr>
                     <th>웹팝업이미지<br />(gif, jpg)</th>
-                    <td colspan="3">@Model.MOBILE_IMG_NAME<input type="file" class="wper100" name="WEB_IMG_FILE" /></td>
+                    <td colspan="3">
+                    @if (!String.IsNullOrEmpty(Model.WEB_IMG_NAME))
+                    {
+                        <img src="@string.Format("{0}{1}", myContrl._img_path_display, Model.WEB_IMG_NAME)" alt="" style="height:90px" />
+                    }
+                        <input type="hidden" class="wper100" name="WEB_IMG_NAME" value="@Model.WEB_IMG_NAME" />
+                    <input type="file" class="wper100" name="WEB_IMG_FILE" /></td>
                 </tr>
                 <tr>
                     <th>위치</th>
@@ -92,18 +95,21 @@
                 <tr>
                     <th>WEB 링크(LINK)</th>
                     <td colspan="3">
-                        <input type="text" class="input-sm mr10" style="width:50%" />
-                        @{
-            var target_10 = Model.WEB_TARGET == "10" ? "checked" : null;
-            var target_20 = Model.WEB_TARGET == "20" ? "checked" : null;
-                        }
-                        <label for="rdi3" class="mr15"><input type="radio" id="rdi3" name="WEB_TARGET" value="10" @target_10 /><span class="txt">현재창</span></label>
-                        <label for="rdi4" class="mr15"><input type="radio" id="rdi4" name="WEB_TARGET" value="20" @target_20 /><span class="txt">새창</span></label>
+                        <input type="text" class="input-sm mr10" style="width:50%" name="WEB_LINK" value="@Model.WEB_LINK" />
+                        <label for="rdi3" class="mr15"><input type="radio" id="rdi3" name="WEB_TARGET" value="@PopupCode.TARGET_SELF" @(Model.WEB_TARGET == PopupCode.TARGET_SELF ? "checked" : "") /><span class="txt">현재창</span></label>
+                        <label for="rdi4" class="mr15"><input type="radio" id="rdi4" name="WEB_TARGET" value="@PopupCode.TARGET_BLANK" @(Model.WEB_TARGET == PopupCode.TARGET_BLANK ? "checked" : "") /><span class="txt">새창</span></label>
                     </td>
                 </tr>
                 <tr>
                     <th>MOBILE 이미지<br />(gif, jpg)</th>
-                    <td colspan="3">@Model.MOBILE_IMG_NAME<input type="file" class="wper100" name="MOBILE_IMG_FILE" /></td>
+                    <td colspan="3">
+                        @if (!String.IsNullOrEmpty(Model.MOBILE_IMG_NAME))
+                        {
+                            <img src="@string.Format("{0}{1}", myContrl._img_path_display, Model.MOBILE_IMG_NAME)" alt="" style="height:90px" />
+                        }
+                        <input type="hidden" class="wper100" name="MOBILE_IMG_NAME" value="@Model.MOBILE_IMG_NAME" />
+              
+                        <input type="file" class="wper100" name="MOBILE_IMG_FILE" /></td>
                 </tr>
                 <tr>
                     <th>MOBILE 링크(LINK)</th>
