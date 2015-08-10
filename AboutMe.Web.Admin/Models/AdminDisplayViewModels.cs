@@ -105,12 +105,12 @@ namespace AboutMe.Web.Admin.Models
 
         [Required(ErrorMessage = "*")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
-        [RegularExpression("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}$", ErrorMessage = "[형식 에러]")]
+        [RegularExpression("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$", ErrorMessage = "* [형식 에러]")]
         public string DISPLAY_START { get; set; }
 
         [Required(ErrorMessage = "*")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
-        [RegularExpression("^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}$", ErrorMessage = "[형식 에러]")]
+        [RegularExpression("^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$", ErrorMessage = "* [형식 에러]")]
         public string DISPLAY_END { get; set; }
 
         public PopupSearchParam SearchParam { get; set; }

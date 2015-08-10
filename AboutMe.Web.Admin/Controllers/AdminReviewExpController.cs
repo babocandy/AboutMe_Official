@@ -28,6 +28,8 @@ using AboutMe.Domain.Entity.AdminReview;
 
 namespace AboutMe.Web.Admin.Controllers
 {
+    [RoutePrefix("AdminContents/ReviewExp")]
+    [Route("{action=Index}")]
     public class AdminReviewExpController : BaseAdminController
     {
 

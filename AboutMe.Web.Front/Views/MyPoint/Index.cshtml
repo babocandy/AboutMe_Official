@@ -67,7 +67,7 @@
                     {
                         <tr>
                             <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
-                            <td class="subject"><a href="#">@item.DETAIL</a></td>
+                            <td class="subject"><a href="#">@(item.DETAIL)@(item.ADDITION_REASON != null ? string.Format("- {0}", item.ADDITION_REASON) : "")</a></td>
                             @{
                                 var pt = item.POINT.Value ;
                             }

@@ -33,8 +33,11 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
+        /**
+         * 메인배너 
+         */
         [ChildActionOnly]
-        public ActionResult MainBannerInWebMain()
+        public ActionResult MainBannerInMain()
         {
             
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
@@ -42,8 +45,11 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
+        /*
+         * 중간배너
+         */
         [ChildActionOnly]
-        public ActionResult MiddleBannerInWebMain()
+        public ActionResult MiddleBannerInMain()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
             model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_MIDDLE_BANNER);
@@ -51,36 +57,57 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult DisplayProductBeautyInWebMain()
+        public ActionResult DisplayProductBeautyInMain()
         {
-            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10);
+            ProductDisplayMainViewModel model = new ProductDisplayMainViewModel();
+            model.Header = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10, 1));
 
-            List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
-
-            foreach (var item in model.List)
+            var p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10, 2);
+            if (p.Count > 0)
             {
-                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                model.Product_1 = _service_pdt.ViewProduct(p[0].P_CODE);
             }
 
-            model.PdtList = plist;
+            p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10, 3);
+            if (p.Count > 0)
+            {
+                model.Product_2 = _service_pdt.ViewProduct(p[0].P_CODE);
+            }
 
+            p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10, 4);
+            if (p.Count > 0)
+            {
+                model.Product_3 = _service_pdt.ViewProduct(p[0].P_CODE);
+            }
+            
+            
             return View(model);
         }
 
         [ChildActionOnly]
-        public ActionResult DisplayProductHealthInWebMain()
+        public ActionResult DisplayProductHealthInMain()
         {
-            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10);
+            ProductDisplayMainViewModel model = new ProductDisplayMainViewModel();
+            model.Header = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10, 1));
 
-            List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
-            foreach (var item in model.List)
+            var p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_20, 2);
+            if (p.Count > 0)
             {
-                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                model.Product_1 = _service_pdt.ViewProduct(p[0].P_CODE);
             }
 
-            model.PdtList = plist;
+            p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_20, 3);
+            if (p.Count > 0)
+            {
+                model.Product_2 = _service_pdt.ViewProduct(p[0].P_CODE);
+            }
+
+            p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_20, 4);
+            if (p.Count > 0)
+            {
+                model.Product_3 = _service_pdt.ViewProduct(p[0].P_CODE);
+            }
+
 
             return View(model);
         }
@@ -95,10 +122,18 @@ namespace AboutMe.Web.Front.Controllers
 
 
         [ChildActionOnly]
-        public ActionResult GbnLink()
+        public ActionResult GbnLink1()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.GBN_LINK);
+            model.One = GetOneDisplayResult( _service.GetListDisplay(DisplayerCode.GBN_LINK, DisplayerCode.SUB_KIND_10, 1) );
+            return View(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult GbnLink2()
+        {
+            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.GBN_LINK, DisplayerCode.SUB_KIND_10, 2));
             return View(model);
         }
 
@@ -106,7 +141,7 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult CartBanner()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.CART_WEB);
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.CART_WEB));
             return View(model);
         }
 
@@ -127,10 +162,18 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
+
         [ChildActionOnly]
         private SP_DISPLAY_SEL_Result GetOneDisplayResult(List<SP_DISPLAY_SEL_Result> list)
         {
             return list.Count > 0 ? list[0] : new SP_DISPLAY_SEL_Result();
+        }
+
+
+        [ChildActionOnly]
+        public ActionResult PopupMgr()
+        {
+            return PartialView();
         }
     }
 }

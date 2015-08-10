@@ -14,7 +14,7 @@ namespace AboutMe.Domain.Service.Display
 {
     public class DisplayService : IDisplayService
     {
-        public IList<SP_DISPLAY_SEL_Result> GetListDisplay(string kind, string subKind = null, int? seq = null)
+        public List<SP_DISPLAY_SEL_Result> GetListDisplay(string kind, string subKind = null, int? seq = null)
         {
             using(DisplayEntities context = new DisplayEntities()){
                 return context.SP_DISPLAY_SEL(kind, subKind, seq).ToList();
