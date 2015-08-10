@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using System.Drawing;
+
 using AboutMe.Common.Helper;
 using AboutMe.Common.Data;
 using AboutMe.Domain.Service.AdminPromotion;
@@ -88,6 +90,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         //[Bind(Exclude="Id")]Product productToCreate
         //public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+       [CustomAuthorize]
         public ActionResult Create()
         {
            
@@ -186,12 +189,12 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult Update([Bind(Prefix = "inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0]", Include = "PMO_TOTAL_NAME,PMO_TOTAL_CATEGORY,PMO_TOTAL_DISCOUNT_RATE,PMO_TOTAL_DISCOUNT_MONEY,PMO_TOTAL_DATE_FROM,PMO_TOTAL_DATE_TO,USABLE_YN", Exclude = "PMO_TOTAL_RATE_OR_MONEY")]  TB_PROMOTION_BY_TOTAL tb_promotion_by_total, string[] CheckMemGrade, string CdPromotionTotal)
+        public ActionResult Update([Bind(Prefix = "inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0]", Exclude = "PMO_TOTAL_RATE_OR_MONEY,CD_PROMOTION_TOTAL")]  TB_PROMOTION_BY_TOTAL tb_promotion_by_total, string[] CheckMemGrade, string CdPromotionTotal)
         {
 
             int is_success = 1;
 
-            @TempData["jsMessage"] = "11";
+        
 
             //마스터 정보 가져오기 
             /**
@@ -333,9 +336,18 @@ namespace AboutMe.Web.Admin.Controllers
                         #region 파일 업로드
                         if (PMO_PRODUCT_MAIN_IMG_FILE != null)
                         {
+                           
+                            int imgWidth = 0 ;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_MAIN_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+                            
                             //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
                             //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
-                            ImageUpload imageUpload = new ImageUpload { Width = 458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
 
                             // rename, resize, and upload
                             //return object that contains {bool Success,string ErrorMessage,string ImageName}
@@ -389,6 +401,8 @@ namespace AboutMe.Web.Admin.Controllers
             var mMyMultiModelForCreateProduct = new MyMultiModelForCreateProduct
             {
                 inst_TB_PROMOTION_BY_PRODUCT = new TB_PROMOTION_BY_PRODUCT()
+                ,
+                inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result = new List<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>()
                
             };
 
@@ -405,7 +419,12 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult PrdUpdate(String OLD_PRODUCT_MAIN_IMG, HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE,   [Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
+      //  public ActionResult PrdUpdate(String OLD_PRODUCT_MAIN_IMG, HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE, [Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
+        public ActionResult PrdUpdate(
+            [Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Exclude = "IDX,CD_PROMOTION_PRODUCT,PMO_CATEGORY,INS_DATE")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product
+            , String OLD_PRODUCT_MAIN_IMG
+            , HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE
+            , string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
         {
             
             /**
@@ -462,12 +481,25 @@ namespace AboutMe.Web.Admin.Controllers
                                 if(FromToCheck == true)
                                 {
                                     #region 파일 업로드
-
+                                    
                                     string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");
                                     
                                     if (PMO_PRODUCT_MAIN_IMG_FILE != null)
                                     {
-                                        ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_MAIN_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
                                         ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MAIN_IMG_FILE);
                                         if (imageResult.Success)
                                         {
@@ -482,7 +514,7 @@ namespace AboutMe.Web.Admin.Controllers
                                     {
                                         tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = OLD_PRODUCT_MAIN_IMG;
                                     }
-
+                                    
                                     #endregion
 
                                     //프로모션 정보 업데이트 실행

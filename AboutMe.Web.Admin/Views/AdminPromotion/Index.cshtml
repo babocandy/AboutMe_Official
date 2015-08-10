@@ -33,7 +33,7 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">프로모션 관리</a> &gt; <strong>전체할인 프로모션 리스트</strong>
+            <a href="/">HOME</a> &gt; <a href="#">프로모션 관리</a> &gt; <strong>전체할인 프로모션 리스트</strong>
         </div>
         <!--//path-->
 
@@ -56,7 +56,7 @@
             <h4>전체할인 프로모션 리스트</h4>
 
             @{ var selected_str = "selected";}
-            @using (Html.BeginForm("Index", "AdminMember", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("Index", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -71,8 +71,7 @@
                                                         <option>-선택하세요-</option>
                                                         <option value="PMO_TOTAL_NAME" @if (ViewBag.SearchCol == "PMO_TOTAL_NAME") { @selected_str    ; }>프로모션명</option>
                                                     </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
-                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
-                                                    <input type="submit" value=" Search >> ">
+                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a> 
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -112,6 +112,9 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.M_GBN = MemberInfo.GetMemberGBN();  //회원 종류
             string _pcode = productView.P_CODE; //상품코드
             int _resultprice = productView.RESULT_PRICE.Value; //상품최종가
+
+            //송선우 추가
+            this.ViewBag.CD_PROMOTION_PRODUCT =  productView.CD_PROMOTION_PRODUCT; //이 상품과 연관된 프로모션코드 
             
             #endregion 
 

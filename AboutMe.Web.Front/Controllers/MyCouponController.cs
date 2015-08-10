@@ -30,7 +30,7 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-        // GET: MyCoupon
+        // 다운로드가능한 쿠폰리스트가져오기 
         [CustomAuthorize]
         public ActionResult Downloadable()
         {
@@ -42,7 +42,7 @@ namespace AboutMe.Web.Front.Controllers
             //M_Id = "aszx0505";
             M_Id = _user_profile.M_ID.ToString();
 
-            //세트상품 프로모션 정보중 유효한 TOP 1 가져오기 
+            //다운로드 가능한 쿠폰리스트
             List<SP_COUPON_DOWNLOADABLE_LIST_Result> lst = _CouponService.GetDownloadableCouponList(M_Id).ToList();
 
             return View(lst);
@@ -51,7 +51,7 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-
+        //쿠폰 다운로드 버튼을 클릭했을 때 다운로드 처리 // PC버전, 번호인증 필요없는 쿠폰 
         [CustomAuthorize(CustomRedirection="/MyPage/MyCoupon/Downloadable")]
         public ActionResult UpdateToUsable(int IdxCouponNumber = 0 , string UpdateMethod = "")
         {
@@ -76,7 +76,53 @@ namespace AboutMe.Web.Front.Controllers
             //return View(lst);
         }
 
-        [CustomAuthorize()]
+        //상품상세페이지 등에서 쿠폰다운로드 버튼을 클릭했을때 , 해당쿠폰을 다운로드 처리 // PC버전, 번호인증 필요없는 쿠폰 
+        [CustomAuthorize]
+        [HttpPost]
+        public JsonResult UpdateToUsableWithAjax(int IdxCouponNumber = 0, string UpdateMethod = "")
+        {
+            int _ResultCode = 1;
+            string _Msg = "";
+
+            string M_Id = ""; //회원아이디
+            //M_Id = "aszx0505";
+            M_Id = _user_profile.M_ID.ToString();
+
+            _ResultCode = _CouponService.UpdateCouponDownload_Pc_Ver_And_NoNumberChk_Ver(M_Id, IdxCouponNumber, UpdateMethod);
+
+
+            switch (_ResultCode)
+            {
+                case 1 :
+                      _Msg = "다운로드 되었습니다.";
+                      break;
+                case -1 :
+                      _Msg = "실행과정에서 오류가 발행하였습니다.";
+                      break;
+                case -2 :
+                      _Msg = "번호인증이 필요한 쿠폰이라 다운로드 받을 수 없습니다";
+                      break;
+                case -3 :
+                      _Msg = "존재하지 않는 쿠폰입니다";
+                      break;
+                default :
+                      _Msg = "시스템 오류";
+                      break;
+            }
+
+
+
+
+            var jsonData = new { ResultCode = _ResultCode, Msg = _Msg};
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+            //var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } 
+
+            //return View(lst);
+        }
+
+
+        [CustomAuthorize]
         public ActionResult Availablelist(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
 

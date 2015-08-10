@@ -35,7 +35,8 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Cart.ICartService, AboutMe.Domain.Service.Cart.CartService>(); //Cart
             container.RegisterType<AboutMe.Domain.Service.Order.IOrderService, AboutMe.Domain.Service.Order.OrderService>(); //Order
 
-            container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //Cart
+            container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //프로모션
+            container.RegisterType<AboutMe.Domain.Service.Coupon.ICouponService, AboutMe.Domain.Service.Coupon.CouponService>(); //쿠폰
             container.RegisterType<AboutMe.Domain.Service.Review.IReviewService, AboutMe.Domain.Service.Review.ReviewService>(); //Review
             container.RegisterType<AboutMe.Domain.Service.Qna.IQnaService, AboutMe.Domain.Service.Qna.QnaService>(); //1:1문의
             /**

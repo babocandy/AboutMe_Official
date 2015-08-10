@@ -47,44 +47,32 @@
     {
         if (TempData["jsMessage"] == "-1")
         {
-            <text>
-                <script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>
-            </text>
+            Html.Raw("<script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>");
         }
 
         if (TempData["jsMessage"] == "-2")
         {
-            <text>
-                <script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
-            </text>
+            Html.Raw("<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>");
         }
 
         if (TempData["jsMessage"] == "-3")
         {
-            <text>
-                <script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
-            </text>
+            Html.Raw("<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>");
         }
 
-        
+
         if (TempData["jsMessage"] == "-5")
         {
-            <text>
-                <script language='javascript'>alert('시작일시를 현재보다 이전으로 변경할 수 없습니다.')</script>
-            </text>
+            Html.Raw("<script language='javascript'>alert('시작일시를 현재보다 이전으로 변경할 수 없습니다.')</script>");
         }
         if (TempData["jsMessage"] == "-6")
         {
-            <text>
-                <script language='javascript'>alert('종료일시를 현재보다 이전으로 변경할 수 없습니다.')</script>
-            </text>
+            Html.Raw("<script language='javascript'>alert('종료일시를 현재보다 이전으로 변경할 수 없습니다.')</script>");
         }
 
         if (TempData["jsMessage"] == "-7")
         {
-            <text>
-                <script language='javascript'>alert('변경하고자 하는 시간대의 다른 프로모션들에 중복된 상품이 있습니다.')</script>
-            </text>
+            Html.Raw("<script language='javascript'>alert('변경하고자 하는 시간대의 다른 프로모션들에 중복된 상품이 있습니다.')</script>");
         }
     }
 
@@ -158,36 +146,37 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/">HOME</a> &gt;  <a href="#">프로모션 관리</a> &gt; <strong>상품별 할인 프로모션 수정</strong>
         </div>
         <!--//path-->
 
         <div class="panel">
             <h3 class="sub-header">상품별 할인 프로모션 수정</h3>
 
-            @using (Html.BeginForm("PrdUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", enctype = "multipart/form-data", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("PrdUpdate", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
 
-            <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"]" />
-            <input type="hidden" name="orgin_date_from" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM" />
-            <input type="hidden" name="orgin_date_to" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO" />
-            <input type="hidden" name="OLD_PRODUCT_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG">
+                                        <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"]" />
+                                        <input type="hidden" name="orgin_date_from" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM" />
+                                        <input type="hidden" name="orgin_date_to" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO" />
+                                        <input type="hidden" name="OLD_PRODUCT_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG">
                                         <table class="table table_row">
                                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
                                             <tbody>
 
                                                 <tr>
                                                     <th>프로모션명 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME)</font>
-                                                    
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_NAME)</font>
+
                                                     </td>
 
                                                 </tr>
                                                 @{
-                                                    string front_url = "";
-                                                    string mobile_front_url = "";
+                string front_url = "";
+                string mobile_front_url = "";
                                                 }
                                                 @if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "01") //세트상품
                                                 {
@@ -204,7 +193,7 @@
                                                     front_url = "http://aboutme-dev.cstone.co.kr";
                                                     mobile_front_url = "";
                                                 }
-                                                
+
                                                 @if (front_url != "")
                                                 {
 
@@ -214,7 +203,7 @@
                                                             PC :      <text> @front_url</text> <br />
                                                             MOBILE :  <text> @mobile_front_url</text>
 
-</td>
+                                                        </td>
 
                                                     </tr>
                                                 }
@@ -224,28 +213,28 @@
                                                         @Html.HiddenFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY)  <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY)</font>
 
                                                         @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY_NAME;
-                                                        @* 상품프로모션 기간시작이전/이후 모두 프로모션 카테고리는 변경불가 
-                                                        @if (IsOverStartTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)) != true)
-                                                        {
-                                                            <text>
-                                                                <select name="SEL_PMO_PRODUCT_CATEGORY" style="width:270px;" onchange="setProductCategory(this,this.selectedIndex);">
-                                                                    <option value="">==선택==</option>
-                                                                    <option value="01">세트상품</option>
-                                                                    <option value="02">1+1 프로모션</option>
-                                                                    <option value="03">일반 품별할인(타임세일포함)</option>
-                                                                </select>
-                                                            </text>
-                                                        }
-                                                        else
-                                                        {
-                                                            @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY_NAME;
-                                                        }*@
+                                                        @* 상품프로모션 기간시작이전/이후 모두 프로모션 카테고리는 변경불가
+                                                            @if (IsOverStartTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)) != true)
+                                                            {
+                                                                <text>
+                                                                    <select name="SEL_PMO_PRODUCT_CATEGORY" style="width:270px;" onchange="setProductCategory(this,this.selectedIndex);">
+                                                                        <option value="">==선택==</option>
+                                                                        <option value="01">세트상품</option>
+                                                                        <option value="02">1+1 프로모션</option>
+                                                                        <option value="03">일반 품별할인(타임세일포함)</option>
+                                                                    </select>
+                                                                </text>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY_NAME;
+                                                            }*@
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>프로모션 Main Title </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" }) </td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE)</font></td>
 
                                                 </tr>
                                                 <tr>
@@ -257,18 +246,6 @@
                                                     <th>프로모션 쇼핑팁 </th>
                                                     <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left" })</td>
 
-                                                </tr>
-
-                                                @{ string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");}
-                                                <tr>
-                                                    <th>프로모션 대표이미지</th>
-                                                    <td >
-                                                        <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG))
-                                                        {
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG" width="100" height="100" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
                                                 </tr>
 
                                                 <!--
@@ -283,8 +260,8 @@
                                                         {
                                                             @:정액할인
                                                         }
-                                                    
-                                                    
+
+
                                                     </td>
 
                                                 </tr>
@@ -336,12 +313,12 @@
                                                     <td>
 
                                                         @if (IsOverStartTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)) != true)
-                                                        {  
+                                                        {
                                                             @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
                                                         }
                                                         else
                                                         {  //이미 시작한 프로모션이면 수정불가능 => Readonly
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left",ReadOnly =true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left", ReadOnly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
 
                                                         }
                                                     </td>
@@ -356,7 +333,7 @@
                                                         }
                                                         else
                                                         { //Readonly
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left",Readonly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO) <text><font color="red"><b>수정불가</b></font></text>
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left", Readonly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO) <text><font color="red"><b>수정불가</b></font></text>
                                                         }
 
                                                     </td>
@@ -366,6 +343,18 @@
                                                     <th>활성화/비활성화 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].USABLE_YN)</td>
 
+                                                </tr>
+                                                @{ string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");}
+                                                <tr>
+                                                    <th>프로모션 대표이미지</th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG))
+                                                        {  
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
                                                 </tr>
 
 
