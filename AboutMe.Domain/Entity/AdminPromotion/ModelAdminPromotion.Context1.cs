@@ -405,24 +405,6 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_FOR_UPDATE_DUP_SEL", pMO_PRODUCT_CATETORYParameter, tARGET_PMO_PRODUCT_DATE_FROMParameter, tARGET_PMO_PRODUCT_DATE_TOParameter, cD_PROMOTION_PRODUCTParameter);
         }
     
-        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL(string cD_PROMOTION_PRODUCT)
-        {
-            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
-                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
-                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result>("SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL", cD_PROMOTION_PRODUCTParameter);
-        }
-    
-        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL(string pMO_PRODUCT_CATEGORY)
-        {
-            var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
-                new ObjectParameter("PMO_PRODUCT_CATEGORY", pMO_PRODUCT_CATEGORY) :
-                new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>("SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL", pMO_PRODUCT_CATEGORYParameter);
-        }
-    
         public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_UPDATE(string cD_PROMOTION_PRODUCT, string uSABLE_YN, string p_CODE, Nullable<int> iDX)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
@@ -476,19 +458,6 @@ namespace AboutMe.Domain.Entity.AdminPromotion
                 new ObjectParameter("MEM_GRADE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result>("SP_PROMOTION_TOTAL_BY_PRODUCT_SEL", p_CODEParameter, mEM_GBNParameter, mEM_GRADEParameter);
-        }
-    
-        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result> SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL(string cD_PROMOTION_PRODUCT, string p_CODE)
-        {
-            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
-                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
-                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-    
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result>("SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL", cD_PROMOTION_PRODUCTParameter, p_CODEParameter);
         }
     
         public virtual ObjectResult<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result> SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL(string m_GBN, string m_GRADE)
@@ -654,6 +623,71 @@ namespace AboutMe.Domain.Entity.AdminPromotion
                 new ObjectParameter("SEARCH_KEYWORD", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> SP_PROMOTION_TOTAL_BY_PRODUCT_ALL_SEL(string p_CODE, string mEM_GBN, string mEM_GRADE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var mEM_GBNParameter = mEM_GBN != null ?
+                new ObjectParameter("MEM_GBN", mEM_GBN) :
+                new ObjectParameter("MEM_GBN", typeof(string));
+    
+            var mEM_GRADEParameter = mEM_GRADE != null ?
+                new ObjectParameter("MEM_GRADE", mEM_GRADE) :
+                new ObjectParameter("MEM_GRADE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result>("SP_PROMOTION_TOTAL_BY_PRODUCT_ALL_SEL", p_CODEParameter, mEM_GBNParameter, mEM_GRADEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL(string p_CODE, string mEM_GBN, string mEM_GRADE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var mEM_GBNParameter = mEM_GBN != null ?
+                new ObjectParameter("MEM_GBN", mEM_GBN) :
+                new ObjectParameter("MEM_GBN", typeof(string));
+    
+            var mEM_GRADEParameter = mEM_GRADE != null ?
+                new ObjectParameter("MEM_GRADE", mEM_GRADE) :
+                new ObjectParameter("MEM_GRADE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result>("SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL", p_CODEParameter, mEM_GBNParameter, mEM_GRADEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL(string cD_PROMOTION_PRODUCT)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result>("SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL", cD_PROMOTION_PRODUCTParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result> SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL(string cD_PROMOTION_PRODUCT, string p_CODE)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result>("SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL", cD_PROMOTION_PRODUCTParameter, p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL(string pMO_PRODUCT_CATEGORY)
+        {
+            var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
+                new ObjectParameter("PMO_PRODUCT_CATEGORY", pMO_PRODUCT_CATEGORY) :
+                new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>("SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL", pMO_PRODUCT_CATEGORYParameter);
         }
     }
 }

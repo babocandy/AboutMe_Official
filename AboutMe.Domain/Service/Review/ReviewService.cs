@@ -183,7 +183,13 @@ namespace AboutMe.Domain.Service.Review
             return lst;
         }
 
-
+        public int ReadyTotal(string mid)
+        {
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                return context.SP_REVIEW_PRODUCT_READY_CNT(mid).SingleOrDefault() ?? 0;
+            }
+        }
 
 
     }

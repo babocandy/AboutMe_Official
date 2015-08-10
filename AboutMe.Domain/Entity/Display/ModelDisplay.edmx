@@ -4,20 +4,159 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AboutMeModel8.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AboutMeModel8.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_DISPLAY_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KIND" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_KIND" Type="varchar" Mode="In" />
+          <Parameter Name="SEQ" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_POPUP_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_POPUP_MOBILE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_POPUP_WEB_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AboutMeModel8StoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AboutMeModel8" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="DisplayEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="DisplayEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_DISPLAY_SEL" ReturnType="Collection(AboutMeModel8.SP_DISPLAY_SEL_Result)">
+            <Parameter Name="KIND" Mode="In" Type="String" />
+            <Parameter Name="SUB_KIND" Mode="In" Type="String" />
+            <Parameter Name="SEQ" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_POPUP_MOBILE_SEL" ReturnType="Collection(AboutMeModel8.SP_POPUP_MOBILE_SEL_Result)" />
+          <FunctionImport Name="SP_POPUP_WEB_SEL" ReturnType="Collection(AboutMeModel8.SP_POPUP_WEB_SEL_Result)" />
+          <FunctionImport Name="SP_POPUP_DETAIL" ReturnType="Collection(AboutMeModel8.SP_POPUP_DETAIL_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_DISPLAY_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="true" />
+          <Property Type="String" Name="URL" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="IMG" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TITLE1" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TITLE2" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="SEQ" Nullable="true" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_POPUP_MOBILE_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="MEDIA_GBN" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="DISPLAY_START" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DISPLAY_END" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="POS_TOP" Nullable="true" />
+          <Property Type="Int32" Name="POS_LEFT" Nullable="true" />
+          <Property Type="Int32" Name="SIZE_WIDTH" Nullable="true" />
+          <Property Type="Int32" Name="SIZE_HEIGHT" Nullable="true" />
+          <Property Type="String" Name="MOBILE_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MOBILE_LINK" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="SP_POPUP_WEB_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="MEDIA_GBN" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="DISPLAY_START" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DISPLAY_END" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="POS_TOP" Nullable="true" />
+          <Property Type="Int32" Name="POS_LEFT" Nullable="true" />
+          <Property Type="Int32" Name="SIZE_WIDTH" Nullable="true" />
+          <Property Type="Int32" Name="SIZE_HEIGHT" Nullable="true" />
+          <Property Type="String" Name="WEB_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="WEB_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="WEB_TARGET" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="SP_POPUP_DETAIL_Result">
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="WEB_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="WEB_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="WEB_TARGET" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="MOBILE_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MOBILE_LINK" Nullable="true" MaxLength="300" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AboutMeModel8StoreContainer" CdmEntityContainer="DisplayEntities" />
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel8StoreContainer" CdmEntityContainer="DisplayEntities" >
+          <FunctionImportMapping FunctionImportName="SP_DISPLAY_SEL" FunctionName="AboutMeModel8.Store.SP_DISPLAY_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel8.SP_DISPLAY_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="IMG" ColumnName="IMG" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="TITLE1" ColumnName="TITLE1" />
+                <ScalarProperty Name="TITLE2" ColumnName="TITLE2" />
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_POPUP_MOBILE_SEL" FunctionName="AboutMeModel8.Store.SP_POPUP_MOBILE_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel8.SP_POPUP_MOBILE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="MEDIA_GBN" ColumnName="MEDIA_GBN" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
+                <ScalarProperty Name="DISPLAY_START" ColumnName="DISPLAY_START" />
+                <ScalarProperty Name="DISPLAY_END" ColumnName="DISPLAY_END" />
+                <ScalarProperty Name="POS_TOP" ColumnName="POS_TOP" />
+                <ScalarProperty Name="POS_LEFT" ColumnName="POS_LEFT" />
+                <ScalarProperty Name="SIZE_WIDTH" ColumnName="SIZE_WIDTH" />
+                <ScalarProperty Name="SIZE_HEIGHT" ColumnName="SIZE_HEIGHT" />
+                <ScalarProperty Name="MOBILE_IMG" ColumnName="MOBILE_IMG" />
+                <ScalarProperty Name="MOBILE_LINK" ColumnName="MOBILE_LINK" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_POPUP_WEB_SEL" FunctionName="AboutMeModel8.Store.SP_POPUP_WEB_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel8.SP_POPUP_WEB_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="MEDIA_GBN" ColumnName="MEDIA_GBN" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
+                <ScalarProperty Name="DISPLAY_START" ColumnName="DISPLAY_START" />
+                <ScalarProperty Name="DISPLAY_END" ColumnName="DISPLAY_END" />
+                <ScalarProperty Name="POS_TOP" ColumnName="POS_TOP" />
+                <ScalarProperty Name="POS_LEFT" ColumnName="POS_LEFT" />
+                <ScalarProperty Name="SIZE_WIDTH" ColumnName="SIZE_WIDTH" />
+                <ScalarProperty Name="SIZE_HEIGHT" ColumnName="SIZE_HEIGHT" />
+                <ScalarProperty Name="WEB_IMG" ColumnName="WEB_IMG" />
+                <ScalarProperty Name="WEB_LINK" ColumnName="WEB_LINK" />
+                <ScalarProperty Name="WEB_TARGET" ColumnName="WEB_TARGET" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_POPUP_DETAIL" FunctionName="AboutMeModel8.Store.SP_POPUP_DETAIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel8.SP_POPUP_DETAIL_Result">
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="WEB_IMG" ColumnName="WEB_IMG" />
+                <ScalarProperty Name="WEB_LINK" ColumnName="WEB_LINK" />
+                <ScalarProperty Name="WEB_TARGET" ColumnName="WEB_TARGET" />
+                <ScalarProperty Name="MOBILE_IMG" ColumnName="MOBILE_IMG" />
+                <ScalarProperty Name="MOBILE_LINK" ColumnName="MOBILE_LINK" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

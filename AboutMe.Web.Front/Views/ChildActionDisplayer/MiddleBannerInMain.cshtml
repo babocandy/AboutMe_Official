@@ -1,0 +1,8 @@
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+<a href="@Model.List[0].URL"><img src="@(myController._img_path_display)@(Model.List[0].IMG)" alt="" /></a>

@@ -150,9 +150,24 @@
                     </li>
                 </ul>
             break;
-       case "Contents":  //Contents관리
+       case "AdminContents":  //Contents관리
+
                 <h2>컨텐츠관리</h2>
                 <ul class="nav nav-sidebar depth1">
+                    <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("Review")>
+                        <a href="@Url.Action("Index", "AdminReview")" class="menu">상품리뷰관리</a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu ">샘플신청</a>
+                        <ul class="depth2">
+                            <li><a href="#">신청 등록</a></li>
+                            <li><a href="#">신청자 리스트</a></li>
+                        </ul>
+                    </li>
+                    <li @fLeftMenuCSSOn("ReviewExp")>
+                        <a href="@Url.Action("Index", "AdminReviewExp")" class="menu ">체험리뷰관리</a>
+                    </li>
                 </ul>
             break;
        case "Order":  //주문, 취소반품요청
@@ -282,7 +297,7 @@
                     <li @fLeftMenuCSSOn("Cart")><a href="/AdminDisplay/Cart" class="menu ">장바구니전시관리</a></li>
                     <li @fLeftMenuCSSOn("GBNBanner")><a href="/AdminDisplay/GBNBanner" class="menu ">GNB배너관리</a></li>
                     <li @fLeftMenuCSSOn("ProductDetailBanner")><a href="/AdminDisplay/ProductDetailBanner" class="menu ">상품상세 배너관리</a></li>
-                    <li><a href="#" class="menu ">이용안내설정관리</a></li>
+                    <!--<li><a href="#" class="menu ">이용안내설정관리</a></li>-->
                     <li @fLeftMenuCSSOn("Popup")><a href="/AdminDisplay/Popup" class="menu ">팝업관리</a></li>
 
                 </ul>

@@ -12,6 +12,8 @@ namespace AboutMe.Domain.Entity.Point
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class PointEntities : DbContext
     {
@@ -25,5 +27,40 @@ namespace AboutMe.Domain.Entity.Point
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual ObjectResult<Nullable<int>> SP_POINT_MY_HISTORY_CNT(string m_ID, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_POINT_MY_HISTORY_CNT", m_IDParameter, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual ObjectResult<SP_POINT_MY_HISTORY_SEL_Result> SP_POINT_MY_HISTORY_SEL(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE, ObjectParameter tOTAL_POINT, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_POINT_MY_HISTORY_SEL_Result>("SP_POINT_MY_HISTORY_SEL", m_IDParameter, pAGEParameter, pAGESIZEParameter, tOTAL_POINT, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_POINT_SAVE_TOTAL(string m_ID, ObjectParameter gET_TOTAL_SAVE_POINT)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_POINT_SAVE_TOTAL", m_IDParameter, gET_TOTAL_SAVE_POINT);
+        }
     }
 }

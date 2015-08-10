@@ -62,7 +62,7 @@
       
           <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/">HOME</a> &gt; <a href="#">쿠폰 관리</a> &gt; <strong>발행된 쿠폰 리스트</strong>
         </div>
 
         <div class="tar mb10">
@@ -85,7 +85,7 @@
                                               }  
                     </li>
                     <li>. 발행가능기간 : @MasterFromDate.ToString() ~ @MasterToDate.ToString() </li>
-                    <li>. 사용가능매체 : @{ if (CouponGbn == "P")
+                    <li>. 사용가능매체 : @{ if (IssueMethodGbn == "P")
                      {<text>PC,모바일</text>}
                      else
                      {<text>모바일전용</text>}}
@@ -112,7 +112,7 @@
 
         <div class="panel">
             <h4>발행된 쿠폰 리스트</h4>
-            @using (Html.BeginForm("Index", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01" }))
+            @using (Html.BeginForm("IssuedCouponList", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 

@@ -19,11 +19,14 @@ namespace AboutMe.Domain.Service.BizPromotion
             //string[] return_info = null ;
 
             Dictionary<string, string> dict = new Dictionary<string, string>();
+            
+            //[로그인 안했을때]
             dict.Add("NoLogin_Coupon_RateOrMoney", ""); // 로긴 안했을때 - 쿠폰 할인방법 - 정률:R / 정액 :M
             dict.Add("NoLogin_Coupon_Discount_Rate", "0");// 로긴 안했을때 - 쿠폰 할인율(정률할인시)
             dict.Add("NoLogin_Coupon_Discount_Money", "0");// 로긴 안했을때 - 쿠폰 할인액(정액할인시)
             dict.Add("NoLogin_Point", "0");// 로긴 안했을때 - 포인트 적립액
 
+            //로그인 했을때
             dict.Add("Login_Promotion_00", ""); //로긴시 - 임직원할인 유무 -- 있으면 '00'
             dict.Add("Login_Promotion_03", "");  //로긴시 - 등급할인 유무 -- 있으면 등급 B=브론즈,S=실버,G=골드,V=VIP , 없으면 공백
             dict.Add("Login_Promotion_00_result_price", "0"); //로긴시 - 임직원할인가 적용가 
@@ -36,7 +39,9 @@ namespace AboutMe.Domain.Service.BizPromotion
             dict.Add("Login_Coupon_Discount_Money", "0"); // 로긴시 - 쿠폰 할인액(정액할인시)
             dict.Add("Login_Coupon_Idx_Coupon_Number", "0");// 로긴시 - 쿠폰 번호
             dict.Add("Login_Coupon_Name",""); //로긴시 = 쿠폰명 
-         
+ 
+            dict.Add("Login_Coupon_USE_STATUS", "0");// 사용상태 1=발행(다운로드가능) , 5=다운로드완료(사용가능) , 10=사용완료
+            dict.Add("Login_Coupon_COUPON_NUM_CHECK_TF", ""); //번호인증해야하는 쿠폰이면 = Y ,아니면 =N
 
             CouponService CpnService  = new CouponService();
             PromotionService PmoService = new PromotionService();
@@ -79,7 +84,7 @@ namespace AboutMe.Domain.Service.BizPromotion
             if (M_id != "") //===========================================================================================로긴 했으면
             {
                 //[1] 임직원가 , VIP 할인가 
-                List<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result> lst1 = PmoService.GetPromotionTotalInfo_ByProduct(PCode, MGbn, MGrade);
+                List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> lst1 = PmoService.GetPromotionTotalInfo_ByProduct(PCode, MGbn, MGrade);
 
 
                 //임직원 전용할인 존재 여부 활인
@@ -165,6 +170,8 @@ namespace AboutMe.Domain.Service.BizPromotion
                     dict["Login_Coupon_Discount_Rate"] = lst3[0].COUPON_DISCOUNT_RATE.ToString();
                     dict["Login_Coupon_Discount_Money"] = lst3[0].COUPON_DISCOUNT_MONEY.ToString();
                     dict["Login_Coupon_Idx_Coupon_Number"] = lst3[0].IDX_COUPON_NUMBER.ToString();
+                    dict["Login_Coupon_USE_STATUS"] = lst3[0].USE_STATUS.ToString();
+                    dict["Login_Coupon_COUPON_NUM_CHECK_TF"] = lst3[0].COUPON_NUM_CHECK_TF.ToString(); //Y=번호인증필요한 쿠폰
 
                 }
              

@@ -105,20 +105,7 @@
             <div class="mainbnr">
                 <h2>메인배너</h2>
                 <div class="nav"><ul></ul></div>
-                <ul class="slider">
-                    <li>
-                        <!--타임세일 배너-->
-                        <div class="timesale">
-                            <img src="/aboutCom/images/sample/mainbnr1.jpg" class="wper100" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" />
-                            <div class="timearea">
-                                <p id="timesale" class="main_time"></p>
-                            </div>
-                        </div>
-                        <!--//타임세일 배너-->
-                    </li>
-                    <li><img src="/aboutCom/images/sample/mainbnr1.jpg" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></li>
-                    <li><img src="/aboutCom/images/sample/mainbnr1.jpg" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></li>
-                </ul>
+                @(Html.Action("MainBannerInMain", "ChildActionDisplayer"))
             </div>
             <!--//메인롤링배너-->
             <!--mainevent-->
@@ -270,7 +257,8 @@
                         <p class="num">1,980</p>
                         <p class="txt">최다<strong>리뷰</strong> 상품은?</p>
                     </div>
-                    <img class="lazyload bg_img" data-original="/aboutCom/images/common/bg_review1.jpg" alt="" />
+                    
+                    @Html.Action("TalkBannerInMain", "ChildActionDisplayer");
                 </div>
                 <div class="review">
                     <div class="proarea">
@@ -310,7 +298,7 @@
                         <p class="num">1,980</p>
                         <p class="txt">최다<strong>판매</strong> 상품은?</p>
                     </div>
-                    <img class="lazyload bg_img" data-original="/aboutCom/images/common/bg_review2.jpg" alt="" />
+                    @Html.Action("BestBannerInMain", "ChildActionDisplayer");
                 </div>
                 <div class="review">
                     <div class="proarea">

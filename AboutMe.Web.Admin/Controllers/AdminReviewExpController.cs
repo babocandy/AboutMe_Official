@@ -28,6 +28,8 @@ using AboutMe.Domain.Entity.AdminReview;
 
 namespace AboutMe.Web.Admin.Controllers
 {
+    [RoutePrefix("AdminContents/ReviewExp")]
+    [Route("{action=Index}")]
     public class AdminReviewExpController : BaseAdminController
     {
 
@@ -118,10 +120,10 @@ namespace AboutMe.Web.Admin.Controllers
 
                             //connection String for xls file format.
 
-                            excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
-                              fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                           // excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
+                           //   fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
 
-                            /*
+                            /** */
                             if (fileExtension == ".xls")
                             {
                                 excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
@@ -133,7 +135,7 @@ namespace AboutMe.Web.Admin.Controllers
                                 excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
                                 fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
                             }
-                             * */
+                             
 
                             DataSet ds = new DataSet();
 
@@ -186,6 +188,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize]
+        [Route("Detail/{id:int}")]
         public ActionResult Detail(int? id)
         {
             AdminReviewExpMasterDetailViewModel model = new AdminReviewExpMasterDetailViewModel();

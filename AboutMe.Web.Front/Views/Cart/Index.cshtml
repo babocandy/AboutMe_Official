@@ -318,11 +318,8 @@
 }
 
 @helper MemberBanner(string banner_url)
-{
-    <div class="banner mt40">
-        <h3>배너 이미지</h3>
-        <a href="#"><img src="@banner_url" alt="" /></a>
-    </div>
+{    
+    @(Html.Action("CartBanner", "ChildActionDisplayer"))
 }
 
 @helper NoMemberBanner()
@@ -341,57 +338,7 @@
 @*같이구매하면 좋은 상품*@
 @helper BuyAsGoods()
 {
-    <div class="recommend mt40">
-        <h3><img src="/aboutCom/images/cart/h3_recommend.png" alt="같이 구매하면 좋은 상품" /></h3>
-        <div class="prolist mt20">
-            <ul>
-                <li>
-                    <a href="#">
-                        <img src="/aboutCom/images/sample/thum_recommend1.jpg" alt="상품 이미지" />
-                        <span class="tag"><span class="ico_new">NEW</span></span>
-                        <span class="ptit">리얼 프레쉬 팩 [카렌듈라]</span>
-                    </a>
-                    <p class="pdesc">매끈한 피부결을 위한 100%천연유래</p>
-                    <p class="pprice">
-                        <strong>4,000원</strong>
-                    </p>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/aboutCom/images/sample/thum_recommend2.jpg" alt="상품 이미지" />
-                        <span class="tag"><span class="ico_new">NEW</span></span>
-                        <span class="ptit">어바웃미 화장솜</span>
-                    </a>
-                    <p class="pdesc">이중압축</p>
-                    <p class="pprice">
-                        <strong>950원</strong>
-                    </p>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/aboutCom/images/sample/thum_recommend3.jpg" alt="상품 이미지" />
-                        <span class="tag"><span class="ico_new">NEW</span></span>
-                        <span class="ptit">에너지리커버 2g*15정</span>
-                    </a>
-                    <p class="pdesc">포도당92%로의 에너지충전 캔디</p>
-                    <p class="pprice">
-                        <strong>2,000원</strong>
-                    </p>
-                </li>
-                <li>
-                    <a href="#">
-                        <img src="/aboutCom/images/sample/thum_recommend4.jpg" alt="상품 이미지" />
-                        <span class="tag"><span class="ico_time">TIME</span><span class="ico_coupon">COUPON</span></span>
-                        <span class="ptit">화이버카페 [8gX14포]</span>
-                    </a>
-                    <p class="pdesc">마시는 건강한 식이섬유 한잔</p>
-                    <p class="pprice">
-                        <del>11,000원</del><strong>8,800원</strong>
-                    </p>
-                </li>
-            </ul>
-        </div>
-    </div>
+    @(Html.Action("CartRelatePorducts", "ChildActionDisplayer"))
 }
 
 <div id="container">

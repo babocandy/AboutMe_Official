@@ -47,7 +47,8 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult SetPromotion()
         {
 
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //상품 이미지디렉토리경로
+            ViewBag.PROMOTION_IMG_PATH = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //프로모션 이미지디렉토리경로
 
             var mMyMultiModelForPromotionProduct = new MyMultiModelForPromotionProduct
             {

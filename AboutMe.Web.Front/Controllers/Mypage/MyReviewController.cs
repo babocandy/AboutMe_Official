@@ -207,5 +207,24 @@ namespace AboutMe.Web.Front.Controllers
 
             return View(model);
         }
+
+        /**
+         * 작성준비 총수
+         */
+        [ChildActionOnly]
+        public string GetReadyToal()
+        {
+            return string.Format("{0:#,##0}", _ReviewService.ReadyTotal(_user_profile.M_ID).ToString());
+        }
+
+
+        /**
+         * 작성완료 총수
+         */
+        [ChildActionOnly]
+        public string GetCompleteToal()
+        {
+            return string.Format("{0:#,##0}", _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID).ToString());
+        }
     }
 }

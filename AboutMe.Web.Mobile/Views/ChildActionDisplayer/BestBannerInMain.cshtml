@@ -1,0 +1,9 @@
+﻿@model AboutMe.Web.Mobile.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Mobile.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+
+<img class="lazyload bg_img" data-original="" alt="" src="@string.Format("{0}{1}", myController._img_path_display, Model.One.IMG)" />

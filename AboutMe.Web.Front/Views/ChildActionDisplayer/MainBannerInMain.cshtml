@@ -1,0 +1,14 @@
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+<ul class="slider">
+    @foreach (var item in Model.List)
+    {
+        <li><a href="@item.URL"><img src="@(myController._img_path_display)@(item.IMG)" alt="" /></a></li>
+    }
+
+</ul>

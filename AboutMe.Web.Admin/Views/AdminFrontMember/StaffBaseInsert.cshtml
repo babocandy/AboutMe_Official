@@ -25,7 +25,7 @@
   
 
     //임직원DB 개별등록-------------------------------------------------
-    function fGoSaveOneRow(argSTAFF_ID,argSTAFF_NAME,argSTAFF_COMPANY) {
+    function fGoSaveOneRow() {
         var f = document.frmFORM_ONE;
 
         var strTOKEN = f.__RequestVerificationToken.value;
@@ -68,6 +68,20 @@
 
     } //function
 
+
+     //임직원DB 엑셀 일괄등록--------------------------------------------
+    function fGoSaveExcelProc()
+    {
+        var f = document.frmFORM_MULTI;
+        if(f.FILE1.value.length<2)
+        {
+            alert("준비한 엑셀파일을 선택하세요.");
+            return;
+        }
+        f.target = "ifrmRESULT_FRAME";
+        f.action = "/AdminFrontMember/StaffBaseExcelUplodBatch";
+        f.submit();
+    }
   
 
     </script>
@@ -99,12 +113,14 @@
             <h3 class="sub-header">임직원DB 등록</h3>
             <div class="alert alert-info">
                 <ul>
-                    <li>· 임직원DBfmf 등록 합니다.</li>
+                    <li>· 임직원DB를 등록 합니다.</li>
+                </ul<li>· 엑셀일괄등록시 첫번째 시트[sheet1]에  A열부터 회사명/사번(필수)/이름 을 준비합니다.(양식참조) .</li>
+                </ul<li>· 엑셀 등록 양이 많을 경우 파일을 나누어 등록합니다.(약 500 ~ 1000건 권장 )</li>
                 </ul>
             </div>
         </div>
 
-        @using (Html.BeginForm("AjaxStaffBaseInsertProc", "AdminFrontMember", FormMethod.Post, new { id = "frmFORM_ONE", name = "frmFORM_ONE", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("AjaxStaffBaseInsertProc", "AdminFrontMember", FormMethod.Post, new { id = "frmFORM_ONE", name = "frmFORM_ONE" }))
         {
             @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -130,22 +146,21 @@
                             </div>
         }
 
-        @using (Html.BeginForm("AjaxStaffBaseExcelUplodBatch", "AdminFrontMember", FormMethod.Post, new { id = "frmFORM_MULTI", name = "frmFORM_MULTI" }))
+        @using (Html.BeginForm("StaffBaseExcelUplodBatch", "AdminFrontMember", FormMethod.Post, new { id = "frmFORM_MULTI", name = "frmFORM_MULTI", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
-        }
                             <div class="panel">
                                 <h4 class="sub-header">2.임직원DB 일괄등록</h4>
 
                                 <table class="table table_row">
-                                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /><col style="width:12%" /><col style="width:21%" /></colgroup>
+                                    <colgroup><col style="width:12%" /><col style="width:21%" /><col style="width:66%" /></colgroup>
                                     <tbody>
                                         <tr>
                                             <th>File</th>
                                             <td><input type="FILE" name="FILE1" value="" /></td>
                                             <th>
-                                                <a class="btn btn-default small" href="javascript:fGoSaveTempRow();">DB등록</a>
-                                                <a class="btn btn-default small" href="#">양식 다운로드</a>
+                                                <a class="btn btn-default small" href="javascript:fGoSaveExcelProc();">DB등록</a>
+                                                <a class="btn btn-default small" href="/Content/FileTempleate/STAFF_SAMPLE.xlsx" target="_blank">양식 다운로드</a>
                                             </th>
                                         </tr>
 
@@ -153,65 +168,13 @@
                                 </table>
                             </div>
 
-        
-        <!--Kendo-->
-        <div style="width:45%">
-            <div class="demo-section">
+        }
 
+        <div class="panel">
+            <h4 class="sub-header">2.임직원DB 일괄등록 결과</h4>
 
-
-               
-                @( Html.Kendo().Upload()
-                .Name("files")
-                .Multiple(false)
-                .ShowFileList(false)
-                
-                .Async(async => async
-                    .Save("AjaxStaffBaseExcelUplodBatch", "AdminFrontMember")
-                    .Remove("AjaxStaffBaseExcelUplodDeleteFile", "AdminFrontMember")
-                    .AutoUpload(true)
-                    )
-                .Events(e => e
-                    //.Upload("onUpload")
-                    //.Success("onSuccess")
-                    .Complete("onComplete")
-
-                   
-                    )
-                )
-                     
-                
-
-                <input type="text" id="fileDescription" />
-
-                <script>
-                    function onUpload(e) {
-                        alert("onUpload -  ERR_CODE :" + e.ERR_CODE);
-                        console.log("------onUpload-------------------");
-                        console.log(e);
-                    }
-
-
-                    function onSuccess(e) {
-                        alert("onSuccess - ERR_CODE :" + e.ERR_CODE);
-                        console.log("------onSuccess-------------------");
-                        console.log(e);
-
-                    }
-
-
-                    function onComplete(e) {
-                        alert("onComplete - ERR_CODE :" + e.ERR_CODE);
-                        console.log("------onComplete-------------------");
-                        console.log(e);
-
-                    }
-
-                </script>
-
-
-            </div>
-        </div>
+            <iframe name="ifrmRESULT_FRAME" src="" style="border:1px;width:900px;height:500px;"></iframe>
+        </div>        
 
 
 

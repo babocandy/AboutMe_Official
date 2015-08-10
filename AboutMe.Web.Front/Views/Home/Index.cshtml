@@ -11,6 +11,8 @@
         @section Header{
             @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
             <script src="/aboutCom/js/main.js" type="text/javascript"></script>
+
+            @Html.Action("PopupMgr", "ChildActionDisplayer")
         }
         <!--//header-->
         <!--container-->
@@ -35,13 +37,10 @@
                 <!--//영상-->
                 <!--mainvisual_banner-->
                 <div class="mainvisual_banner">
-                    <span class="mainvisual_frame"><img src="/aboutCom/images/common/bg_mainvisual.png" alt="" /></span>
-                    <ul class="slider">
-                        <li><a href="#"><img src="/aboutCom/images/common/visual_1.jpg" alt="" /></a></li>
-                        <li><a href="#"><img src="/aboutCom/images/common/visual_2.jpg" alt="" /></a></li>
-                        <li><a href="#"><img src="/aboutCom/images/common/visual_3.jpg" alt="" /></a></li>
-                        <li><a href="#"><img src="/aboutCom/images/common/visual_4.jpg" alt="" /></a></li>
-                    </ul>
+                    <span class="mainvisual_frame"><img src="/aboutCom/images/common/bg_mainvisual.png" alt="" /></span>    
+                    <!--mainbanner-->              
+                        @(Html.Action("MainBannerInMain", "ChildActionDisplayer"))
+                    <!--/mainbanner-->                   
                     <ul class="nav">
                         <!--슬라이드갯수만큼 자동생성-->
                     </ul>
@@ -101,7 +100,7 @@
             <div class="top_bnr">
                 <!--기획배너-->
                 <div class="pl_banner">
-                    <a href="#"><img src="/aboutCom/images/common/pl_bnr.jpg" alt="" /></a>
+                    @(Html.Action("MiddleBannerInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//기획배너-->
                 <!--날씨-->
@@ -129,80 +128,12 @@
             <div class="middle_bnr">
                 <!--뷰티배너-->
                 <div class="beauty_banner">
-                    <div class="bnr_subj">
-                        <span class="ico"><img src="/aboutCom/images/common/ico_1p1.gif" alt="1+1" /></span>
-                        <a href="#" class="btn_more">더보기<i></i></a>
-                    </div>
-                    <div class="bnr_list">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <!--200x200사이즈로 들어갑니다.-->
-                                    <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
-                                    <span class="tit">스킨톤업마사지크림</span>
-                                    <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
-                                    <span class="price"><em>23,000</em>원</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <!--200x200사이즈로 들어갑니다.-->
-                                    <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
-                                    <span class="tit">스킨톤업마사지크림</span>
-                                    <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
-                                    <span class="price"><em>23,000</em>원</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <!--200x200사이즈로 들어갑니다.-->
-                                    <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
-                                    <span class="tit">스킨톤업마사지크림</span>
-                                    <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
-                                    <span class="price"><em>23,000</em>원</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                  @(Html.Action("DisplayProductBeautyInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//뷰티배너-->
                 <!--건강배너-->
                 <div class="health_banner">
-                    <div class="bnr_subj">
-                        <span class="ico"><img src="/aboutCom/images/common/ico_dc30per.gif" alt="30%" /></span>
-                        <a href="#" class="btn_more">더보기<i></i></a>
-                    </div>
-                    <div class="bnr_list">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <!--200x200사이즈로 들어갑니다.-->
-                                    <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
-                                    <span class="tit">스킨톤업마사지크림</span>
-                                    <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
-                                    <span class="price"><em>23,000</em>원</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <!--200x200사이즈로 들어갑니다.-->
-                                    <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
-                                    <span class="tit">스킨톤업마사지크림</span>
-                                    <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
-                                    <span class="price"><em>23,000</em>원</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <!--200x200사이즈로 들어갑니다.-->
-                                    <span class="photo"><img src="/aboutCom/images/common/thumb200200.jpg" alt="" /></span>
-                                    <span class="tit">스킨톤업마사지크림</span>
-                                    <span class="stit">노폐물을 눈으로 직접 확인하는<br />휘핑 크림 제형의 레몬 마사지 크림</span>
-                                    <span class="price"><em>23,000</em>원</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    @(Html.Action("DisplayProductHealthInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//건강배너-->
             </div>

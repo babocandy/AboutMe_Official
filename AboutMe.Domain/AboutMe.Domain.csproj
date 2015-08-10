@@ -479,6 +479,9 @@
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminPromotion\SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminPromotion\SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
@@ -501,6 +504,9 @@
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminPromotion\TB_PROMOTION_PRODUCT_VS_TOTAL.cs">
+      <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminPromotion\test.cs">
       <DependentUpon>ModelAdminPromotion.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminReview\AdminReviewModels.cs" />
@@ -575,6 +581,7 @@
       <DependentUpon>ModelCart.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Common\ReturnDic.cs" />
+    <Compile Include="Entity\Display\DisplayModels.cs" />
     <Compile Include="Entity\Display\ModelDisplay.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -589,6 +596,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelDisplay.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Display\SP_DISPLAY_SEL_Result.cs">
+      <DependentUpon>ModelDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Display\SP_POPUP_DETAIL_Result.cs">
+      <DependentUpon>ModelDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Display\SP_POPUP_MOBILE_SEL_Result.cs">
+      <DependentUpon>ModelDisplay.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Display\SP_POPUP_WEB_SEL_Result.cs">
+      <DependentUpon>ModelDisplay.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Event\ModelEvent.Context.cs">
       <AutoGen>True</AutoGen>
@@ -818,6 +837,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelPoint.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Point\PointModels.cs" />
+    <Compile Include="Entity\Point\SP_POINT_MY_HISTORY_SEL_Result.cs">
+      <DependentUpon>ModelPoint.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Product\ModelProduct.Context.cs">
       <AutoGen>True</AutoGen>

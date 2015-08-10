@@ -156,17 +156,17 @@
                         <ul>
                             <li class="downcoupon">
                                 <span class="ico"></span>
-                                <span class="num">123,456</span>
+                                <span class="num">@ViewBag.DownloadableCouponCnt</span>
                                 <span class="tit">다운로드 가능 쿠폰</span>
                             </li>
                             <li class="havecoupon">
                                 <span class="ico"></span>
-                                <span class="num">123,456</span>
+                                <span class="num">@ViewBag.AvailableCouponCnt</span>
                                 <span class="tit">보유 쿠폰</span>
                             </li>
                             <li class="downpoint">
                                 <span class="ico"></span>
-                                <span class="num">123,456</span>
+                                <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = @ViewBag.M_ID}))</span>
                                 <span class="tit">포인트</span>
                             </li>
                         </ul>
@@ -199,9 +199,9 @@
                     <h3><img src="/aboutCom/images/mypage/h3_review.gif" alt="나의 리뷰" /></h3>
                     <dl class="dltypea">
                         <dt>작성할 리뷰</dt>
-                        <dd><strong>13</strong>건</dd>
+                        <dd><strong>@(Html.Action("GetReadyToal", "MyReview", new { mid = @ViewBag.M_ID }))</strong>건</dd>
                         <dt>작성한 리뷰</dt>
-                        <dd><strong>3</strong>건</dd>
+                        <dd><strong>@(Html.Action("GetCompleteToal", "MyReview", new { mid = @ViewBag.M_ID }))</strong>건</dd>
                     </dl>
                 </div>
                 <!--//나의 리뷰-->

@@ -17,6 +17,8 @@ using AboutMe.Domain.Entity.AdminReview;
 
 namespace AboutMe.Web.Admin.Controllers
 {
+    [RoutePrefix("AdminContents/Review")]
+    [Route("{action=Index}")]
     public class AdminReviewController : BaseAdminController
     {
 
@@ -43,6 +45,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize]
+        [Route("Update/{id:int}")]
         public ActionResult Update(int? id , AdminReviewRouteParam p)
         {
             

@@ -11,6 +11,10 @@ using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
 using AboutMe.Domain.Entity.Common;
 
+
+using AboutMe.Domain.Service.Coupon;
+using AboutMe.Domain.Entity.AdminCoupon;
+
 using System.Text;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -26,10 +30,12 @@ namespace AboutMe.Web.Front.Controllers
     public class MypageController : BaseFrontController
     {
         private IMemberService _MemberService;
+        private ICouponService _CouponService;
 
-        public MypageController(IMemberService _memberService)
+        public MypageController(IMemberService _memberService,ICouponService _couponService)
         {
             this._MemberService = _memberService;
+            this._CouponService = _couponService;
         }
 
 
@@ -50,13 +56,27 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.HTTPS_DOMAIN = strHTTPS_DOMAIN;
             this.ViewBag.HTTP_DOMAIN = strHTTP_DOMAIN;
 
-
-
             this.ViewBag.M_ID = MemberInfo.GetMemberId();
             this.ViewBag.M_NAME = MemberInfo.GetMemberName();
             this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName();
             this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피부고민코드
+
+
+            #region 쿠폰 =========================================================================================================
+            //다운로드 가능한 쿠폰 수량 가져오기 
+            List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst =  _CouponService.GetDownloadableCouponCnt(MemberInfo.GetMemberId());
+            if (lst.Count > 0)
+                this.ViewBag.DownloadableCouponCnt = lst[0].CNT.ToString();
+            else
+                this.ViewBag.DownloadableCouponCnt = 0;
+
+            //사용가능한 쿠폰 수량 가져오기
+            this.ViewBag.AvailableCouponCnt = _CouponService.GettCouponAvailableListCnt(MemberInfo.GetMemberId(), "", "").ToString();
+           
+            #endregion 
+
+
 
 
             return View();

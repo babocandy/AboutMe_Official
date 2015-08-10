@@ -1,16 +1,18 @@
-﻿@{
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
     Layout = null;
-}
 
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
  <!--event_banner : 이벤트 상세페이지로 이동-->
 <div class="event_banner">
     <ul class="slide">
-        <li><a href="#"><img src="/aboutCom/images/sample/detailevent_ban_760152.jpg" alt="" /></a></li>
-        <li><a href="#"><img src="/aboutCom/images/sample/detailevent_ban_760152.jpg" alt="" /></a></li>
-        <li><a href="#"><img src="/aboutCom/images/sample/detailevent_ban_760152.jpg" alt="" /></a></li>
-        <!-- <li style="background:red">1</li>
-        <li style="background:blue">2</li>
-        <li style="background:#ccc">3</li> -->
+
+        @foreach (var item in Model.List)
+        {
+            <li><a href="@item.URL"><img src="@string.Format("{0}{1}",myController._img_path_display, item.IMG)" alt="" /></a></li>
+        }
 
     </ul>
     <ul class="nav"></ul>
