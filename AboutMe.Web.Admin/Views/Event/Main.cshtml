@@ -43,6 +43,51 @@
                 f.submit();
             }
         }
+
+
+        function onOrderBtnClick() {
+            if (confirm("순서를 저장 하시겠습니까?")) {
+                var arrP = new Array;
+                var order = 10;
+                $('.edbox').each(function () {
+                    var gbn = $(this).attr("data-gbn");
+                    var idx = $(this).attr("data-idx");
+                    var dataname = $(this).attr("data-name");
+                    
+                    var obj = new Object();
+                    obj.GBN = gbn;
+                    obj.IDX = idx;
+                    obj.ORDER = order;
+                    arrP.push(obj);
+                    
+                    order = parseInt(order) + 10;
+                });
+                
+                var jobj = encodeURIComponent(JSON.stringify(arrP));
+                var src_url = "/Event/MainOrderUpdate";
+                var param = "data=" + jobj;
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: src_url,
+                    data: param,
+                    success: function (data) {
+                        if (data.result == "true") {
+                            location.reload();
+                        }
+                        else {
+                            if (data.msg != "") {
+                                alert(data.msg);
+                            }
+                        }
+                    },
+                    complete: function (jqXHR, textStatus) {
+                    }
+                });
+
+            }
+        }
+
     </script>
 
 }
@@ -327,15 +372,27 @@
         @foreach (var item in Model.ListInfo)
         { 
             <li class="ui-state-default">
-                <span class="edbox">
+                <span class="edbox" data-gbn="@item.GBN" data-idx="@item.IDX" data-name="@item.NAME">
                     <span class="edpic"><img src="@item.WEB_BANNER" alt="" /></span>
                     <span class="edtxtdate">@item.FROM_DATE~@item.TO_DATE</span>
-                    <span class="edtxtsti">@item.EVENT_NAME</span>
-                    <span class="edbtn"><a href="/Event/Edit?IDX=@item.IDX" class="btn btn-default small">수정페이지</a></span>
+                    <span class="edtxtsti">@item.NAME</span>
+                    @if (item.GBN == "EVENT")
+                    { 
+                        <span class="edbtn"><a href="/Event/Edit?IDX=@item.IDX" class="btn btn-default small">이벤트수정</a></span>
+                    }
+                    else
+                    {
+                        <span class="edbtn"><a href="/Exhibit/Edit?IDX=@item.IDX" class="btn btn-default small">기획전수정</a></span>
+                    }
                 </span>
             </li>
         }
         </ul>
+    </div>
+
+    <div class="panel tac">
+        <a style="width:100px;" id="regbtn" class="btn btn-default middium" href="#none" onclick="onOrderBtnClick();">순서 저장</a>
+
     </div>
 
 

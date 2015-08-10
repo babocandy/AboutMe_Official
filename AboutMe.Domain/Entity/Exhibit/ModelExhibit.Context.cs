@@ -57,7 +57,7 @@ namespace AboutMe.Domain.Entity.Exhibit
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EXHIBIT_CNT_Result>("SP_ADMIN_EXHIBIT_CNT", fROM_DATEParameter, tO_DATEParameter, iNG_GBNParameter, uSE_YNParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
         }
     
-        public virtual int SP_ADMIN_EXHIBIT_INS(string eXHIBIT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eXHIBIT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string wEB_URL, string mOBILE_URL, string uSE_YN, string aDM_ID, ObjectParameter nEW_IDX)
+        public virtual int SP_ADMIN_EXHIBIT_INS(string eXHIBIT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eXHIBIT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string uSE_YN, string aDM_ID, ObjectParameter nEW_IDX)
         {
             var eXHIBIT_NAMEParameter = eXHIBIT_NAME != null ?
                 new ObjectParameter("EXHIBIT_NAME", eXHIBIT_NAME) :
@@ -99,14 +99,6 @@ namespace AboutMe.Domain.Entity.Exhibit
                 new ObjectParameter("MOBILE_BANNER", mOBILE_BANNER) :
                 new ObjectParameter("MOBILE_BANNER", typeof(string));
     
-            var wEB_URLParameter = wEB_URL != null ?
-                new ObjectParameter("WEB_URL", wEB_URL) :
-                new ObjectParameter("WEB_URL", typeof(string));
-    
-            var mOBILE_URLParameter = mOBILE_URL != null ?
-                new ObjectParameter("MOBILE_URL", mOBILE_URL) :
-                new ObjectParameter("MOBILE_URL", typeof(string));
-    
             var uSE_YNParameter = uSE_YN != null ?
                 new ObjectParameter("USE_YN", uSE_YN) :
                 new ObjectParameter("USE_YN", typeof(string));
@@ -115,7 +107,7 @@ namespace AboutMe.Domain.Entity.Exhibit
                 new ObjectParameter("ADM_ID", aDM_ID) :
                 new ObjectParameter("ADM_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_INS", eXHIBIT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eXHIBIT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, wEB_URLParameter, mOBILE_URLParameter, uSE_YNParameter, aDM_IDParameter, nEW_IDX);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_INS", eXHIBIT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eXHIBIT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, uSE_YNParameter, aDM_IDParameter, nEW_IDX);
         }
     
         public virtual ObjectResult<SP_ADMIN_EXHIBIT_SEL_Result> SP_ADMIN_EXHIBIT_SEL(string fROM_DATE, string tO_DATE, string iNG_GBN, string uSE_YN, string sEARCH_COL, string sEARCH_KEYWORD, Nullable<int> pAGE, Nullable<int> pAGESIZE)
@@ -155,7 +147,7 @@ namespace AboutMe.Domain.Entity.Exhibit
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EXHIBIT_SEL_Result>("SP_ADMIN_EXHIBIT_SEL", fROM_DATEParameter, tO_DATEParameter, iNG_GBNParameter, uSE_YNParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, pAGEParameter, pAGESIZEParameter);
         }
     
-        public virtual int SP_ADMIN_EXHIBIT_UPD(Nullable<int> iDX, string eXHIBIT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eXHIBIT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string wEB_URL, string mOBILE_URL, string uSE_YN, string aDM_ID)
+        public virtual int SP_ADMIN_EXHIBIT_UPD(Nullable<int> iDX, string eXHIBIT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eXHIBIT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string uSE_YN, string aDM_ID)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -201,14 +193,6 @@ namespace AboutMe.Domain.Entity.Exhibit
                 new ObjectParameter("MOBILE_BANNER", mOBILE_BANNER) :
                 new ObjectParameter("MOBILE_BANNER", typeof(string));
     
-            var wEB_URLParameter = wEB_URL != null ?
-                new ObjectParameter("WEB_URL", wEB_URL) :
-                new ObjectParameter("WEB_URL", typeof(string));
-    
-            var mOBILE_URLParameter = mOBILE_URL != null ?
-                new ObjectParameter("MOBILE_URL", mOBILE_URL) :
-                new ObjectParameter("MOBILE_URL", typeof(string));
-    
             var uSE_YNParameter = uSE_YN != null ?
                 new ObjectParameter("USE_YN", uSE_YN) :
                 new ObjectParameter("USE_YN", typeof(string));
@@ -217,7 +201,7 @@ namespace AboutMe.Domain.Entity.Exhibit
                 new ObjectParameter("ADM_ID", aDM_ID) :
                 new ObjectParameter("ADM_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_UPD", iDXParameter, eXHIBIT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eXHIBIT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, wEB_URLParameter, mOBILE_URLParameter, uSE_YNParameter, aDM_IDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_UPD", iDXParameter, eXHIBIT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eXHIBIT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, uSE_YNParameter, aDM_IDParameter);
         }
     
         public virtual ObjectResult<SP_ADMIN_EXHIBIT_VIEW_Result> SP_ADMIN_EXHIBIT_VIEW(Nullable<int> iDX)
@@ -373,6 +357,15 @@ namespace AboutMe.Domain.Entity.Exhibit
                 new ObjectParameter("ADM_ID", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_TAB_PRODUCT_UPD", iDXParameter, dISPLAY_ORDERParameter, aDM_IDParameter);
+        }
+    
+        public virtual int SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL(Nullable<int> tAB_IDX)
+        {
+            var tAB_IDXParameter = tAB_IDX.HasValue ?
+                new ObjectParameter("TAB_IDX", tAB_IDX) :
+                new ObjectParameter("TAB_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL", tAB_IDXParameter);
         }
     }
 }

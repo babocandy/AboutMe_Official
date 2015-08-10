@@ -24,8 +24,6 @@
           <Parameter Name="MOBILE_FILE" Type="varchar" Mode="In" />
           <Parameter Name="WEB_BANNER" Type="varchar" Mode="In" />
           <Parameter Name="MOBILE_BANNER" Type="varchar" Mode="In" />
-          <Parameter Name="WEB_URL" Type="varchar" Mode="In" />
-          <Parameter Name="MOBILE_URL" Type="varchar" Mode="In" />
           <Parameter Name="USE_YN" Type="char" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
           <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
@@ -33,6 +31,12 @@
         <Function Name="SP_ADMIN_EVENT_MAIN_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BANNER_GBN" Type="char" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EVENT_MAIN_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GBN" Type="varchar" Mode="In" />
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="ORDER" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_EVENT_MAIN_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BANNER_GBN" Type="char" Mode="In" />
@@ -63,8 +67,6 @@
           <Parameter Name="MOBILE_FILE" Type="varchar" Mode="In" />
           <Parameter Name="WEB_BANNER" Type="varchar" Mode="In" />
           <Parameter Name="MOBILE_BANNER" Type="varchar" Mode="In" />
-          <Parameter Name="WEB_URL" Type="varchar" Mode="In" />
-          <Parameter Name="MOBILE_URL" Type="varchar" Mode="In" />
           <Parameter Name="USE_YN" Type="char" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
@@ -104,8 +106,6 @@
             <Parameter Name="MOBILE_FILE" Mode="In" Type="String" />
             <Parameter Name="WEB_BANNER" Mode="In" Type="String" />
             <Parameter Name="MOBILE_BANNER" Mode="In" Type="String" />
-            <Parameter Name="WEB_URL" Mode="In" Type="String" />
-            <Parameter Name="MOBILE_URL" Mode="In" Type="String" />
             <Parameter Name="USE_YN" Mode="In" Type="String" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
             <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
@@ -142,8 +142,6 @@
             <Parameter Name="MOBILE_FILE" Mode="In" Type="String" />
             <Parameter Name="WEB_BANNER" Mode="In" Type="String" />
             <Parameter Name="MOBILE_BANNER" Mode="In" Type="String" />
-            <Parameter Name="WEB_URL" Mode="In" Type="String" />
-            <Parameter Name="MOBILE_URL" Mode="In" Type="String" />
             <Parameter Name="USE_YN" Mode="In" Type="String" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
@@ -159,6 +157,12 @@
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
             <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EVENT_MAIN_LIST" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_MAIN_LIST_Result)" />
+          <FunctionImport Name="SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD">
+            <Parameter Name="GBN" Mode="In" Type="String" />
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="ORDER" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_EVENT_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -172,8 +176,6 @@
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
@@ -193,8 +195,6 @@
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
@@ -236,8 +236,6 @@
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
@@ -254,11 +252,25 @@
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_EVENT_MAIN_LIST_Result">
+          <Property Type="String" Name="GBN" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="NAME" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="FROM_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="FROM_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="TO_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="TO_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="WEB_CONTENTS" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="IDX" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -290,8 +302,6 @@
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
-                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
                 <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
@@ -313,8 +323,6 @@
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
-                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
                 <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
@@ -364,8 +372,6 @@
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
-                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
                 <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
@@ -386,14 +392,33 @@
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
-                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
                 <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_MAIN_LIST" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_MAIN_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel7.SP_ADMIN_EVENT_MAIN_LIST_Result">
+                <ScalarProperty Name="GBN" ColumnName="GBN" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
+                <ScalarProperty Name="FROM_TIME" ColumnName="FROM_TIME" />
+                <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
+                <ScalarProperty Name="TO_TIME" ColumnName="TO_TIME" />
+                <ScalarProperty Name="WEB_CONTENTS" ColumnName="WEB_CONTENTS" />
+                <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
+                <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
+                <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

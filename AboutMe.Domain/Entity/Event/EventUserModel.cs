@@ -154,8 +154,6 @@ namespace AboutMe.Domain.Entity.Event
         public string OLD_MOBILE_FILE { get; set; }
         public string OLD_WEB_BANNER { get; set; }
         public string OLD_MOBILE_BANNER { get; set; }
-        public string WEB_URL { get; set; }
-        public string MOBILE_URL { get; set; }
         public string USE_YN { get; set; }
         public string ADM_ID { get; set; }
 
@@ -164,7 +162,7 @@ namespace AboutMe.Domain.Entity.Event
     public class EVENT_ADMIN_MAIN_INDEX
     {
         public SP_ADMIN_EVENT_MAIN_VIEW_Result MainInfo { get; set; }
-        public List<SP_EVENT_ING_LIST_Result> ListInfo { get; set; }
+        public List<SP_ADMIN_EVENT_MAIN_LIST_Result> ListInfo { get; set; }
     }
 
     public class EVENT_MAIN_SAVE_PARAM
@@ -173,5 +171,12 @@ namespace AboutMe.Domain.Entity.Event
         public string URL { get; set; }
         public HttpPostedFileBase IMAGE_FILE { get; set; }
         public string OLD_IMAGE_FILE { get; set; }
+    }
+
+    public class EVENT_MAIN_ORDER_PARAM
+    {
+        public string GBN { get; set; } //-- EVENT, EXHIBIT
+        public int IDX { get; set; }
+        public int ORDER { get; set; }
     }
 }

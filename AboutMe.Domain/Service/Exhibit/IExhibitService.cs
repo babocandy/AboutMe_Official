@@ -27,5 +27,6 @@ namespace AboutMe.Domain.Service.Exhibit
         int ExhibitAdminTabProductInsert(int TAB_IDX, string P_CODE, int DISPLAY_ORDER, string ADM_ID);
         void ExhibitAdminTabProductUpdate(int IDX, int DISPLAY_ORDER, string ADM_ID);
         void ExhibitAdminTabProductDelete(int IDX);
+        void ExhibitAdminTabProductAllDelete(int TAB_IDX);
     }
 }

@@ -18,7 +18,8 @@ namespace AboutMe.Domain.Service.Event
         int EventAdminInsert(SP_ADMIN_EVENT_VIEW_Result param);
         void EventAdminUpdate(int IDX, SP_ADMIN_EVENT_VIEW_Result param);
         SP_ADMIN_EVENT_MAIN_VIEW_Result EventAdminMainView();
-        List<SP_EVENT_ING_LIST_Result> EventAdminMainIngList(int? Page, int? PageSize);
+        List<SP_ADMIN_EVENT_MAIN_LIST_Result> EventAdminMainIngList();
+        void EventAdminMainListOrderUpdate(string GBN, int IDX, int ORDER);
         void EventAdminMainImageUpdate(string BANNER_GBN, string IMG, string URL, string ADM_ID);
         void EventAdminMainImageDelete(string BANNER_GBN, string ADM_ID);
     }

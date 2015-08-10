@@ -1,4 +1,5 @@
 ﻿@using AboutMe.Common.Data
+@using System.Reflection;
 @model AboutMe.Domain.Entity.Exhibit.EXHIBIT_PRODUCT_EDIT
 @{
     ViewBag.Title = "기획전관리";
@@ -7,13 +8,14 @@
 }
 @section Scripts{
     <script language="javascript">
-        
+
     function productChange(t) {
         $("#product_panel").show();
         $("#regbtn").show();
         var tab_name = $(t).parent().parent().find("input[name='TAB_NAME']").val();
         $("#select_tab_nm").text(tab_name);
         $("#TAB_IDX").val($(t).attr("data-tabidx"));
+        refreshProduct();
     }
 
     function tabchkAll(c) {
@@ -52,6 +54,27 @@
         });
         return result;
     }
+
+
+    function TabProductCheckAll(c) {
+        if (c.checked) {
+            $(".tabProductChk").prop("checked", "checked");
+        }
+        else {
+            $(".tabProductChk").prop("checked", "");
+        }
+    }
+
+    function cntTabProductChk(c) {
+        var result = 0;
+        $(".tabProductChk").each(function () {
+            if (this.checked) {
+                result++;
+            }
+        });
+        return result;
+    }
+
     function chkTabDelete() {
         var cnt = cntChkTab();
         if (cnt == 0) {
@@ -93,8 +116,7 @@
         }
     }
 
-    function TabModify(t)
-    {
+    function TabModify(t) {
         var tab_name = $(t).parent().parent().find("input[name='TAB_NAME']").val().trim();
         var tab_order = $(t).parent().parent().find("input[name='DISPLAY_ORDER']").val().trim();
         var tabidx = $(t).attr("data-tabidx");
@@ -133,19 +155,16 @@
         }
     }
 
-    function chkTabOrderUpdate()
-    {
+    function chkTabOrderUpdate() {
         var cnt = $(".tab-order-edit").length;
-        if (cnt == 0)
-        {
+        if (cnt == 0) {
             alert("수정할 분류가 존재하지 않습니다.");
             return;
         }
 
-        $(".tab-order-edit").each (function() {
+        $(".tab-order-edit").each(function () {
             var order = $(this).val().trim();
-            if (order == "")
-            {
+            if (order == "") {
                 alert("전시순서값이 정수형이 아니거나 빈값인것이 있습니다. 다시 확인해주세요.");
                 return;
             }
@@ -232,6 +251,26 @@
             alert("분류(탭)을 먼저 선택해주세요.");
             return;
         }
+
+        var src_url = "/Exhibit/TabProductList";
+        var param = "TAB_IDX=" + tabidx;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                
+                $("#TabProductListArea").empty().html(data);
+                var len = $('#TabProductListArea').find('.product-display-order').length
+                var TAB_IDX = $("#TAB_IDX").val().trim();
+                $("#ProductCnt").html(len);
+                $("#GridProductCnt_"+TAB_IDX).html(len);
+                
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
     }
 
     function productSearchClick()
@@ -254,13 +293,160 @@
         });
     }
 
+    function findPcode(pcode)
+    {
+        var result = false;
+        $('#TabProductListArea').find('.product-display-order').each(function () {
+            if ($(this).attr("data-pcode")) {
+                if ($(this).attr("data-pcode") == pcode) {
+                    result = true;
+                    return result;
+                }
+            }
+        });
+
+        return result;
+    }
+
     function moveRightProduct()
     {
         var cnt = cntProductChk();
         if (cnt == 0)
         {
-            alert("상품을 선택해주세요.");
+           alert("상품을 선택해주세요.");
             return;
+        }
+
+        var r = $('#TabProductListArea > tr').get(0);
+        if (r) {
+            if (r.cells) {
+                if (r.cells.length == 1) //전시상품이 없습니다.
+                {
+                    $("#TabProductListArea").empty();
+                }
+            }
+        }
+        $(".pcodeChk").each(function () {
+            if (this.checked) {
+                var addhtml = "<tr>\n";
+                var row = $(this).parent().parent().get(0);
+                for (var i = 0; i < row.cells.length; i++)
+                {
+                    var td = row.cells[i];
+                    var htmlOfTd = $(td).html();
+                }
+                var pcodetd = row.cells[1];
+                var pcode = $(pcodetd).html();
+                var pnametd = row.cells[2];
+                var pname = $(pnametd).html();
+                var sellingpricetd = row.cells[3];
+                var sellingprice = $(sellingpricetd).html();
+                var discountpricetd = row.cells[4];
+                var discountprice = $(discountpricetd).html();
+                var promotiontd = row.cells[5];
+                var promotion = $(promotiontd).html();
+                var coupontd = row.cells[6];
+                var coupon = $(coupontd).html();
+
+                var max_order = 0;
+                $('#TabProductListArea').find('.product-display-order').each(function () {
+                    if ($(this).val())
+                    {
+                        if ($(this).val() > max_order)
+                        {
+                            max_order = $(this).val();
+                        }
+                    }
+                });
+                max_order = parseInt(max_order) + 10;
+                if (findPcode(pcode) == false) //상품코드 중복여부검사
+                {
+                    addhtml += "  <td><input type='checkbox' class='tabProductChk' data-product-idx='' value='" + pcode + "' /></td>\n";
+                    addhtml += "  <td><input type='number' name='DISPLAY_ORDER' class='input-sm product-display-order' data-product-idx='' data-pcode='"+pcode+"' style='width:50px;' value='" + max_order + "'/></td>\n";
+                    addhtml += "  <td>" + pcode + "</td>\n";
+                    addhtml += "  <td>" + pname + "</td>\n";
+                    addhtml += "  <td>" + sellingprice + "</td>\n";
+                    addhtml += "  <td>" + discountprice + "</td>\n";
+                    addhtml += "  <td>" + promotion + "</td>\n";
+                    addhtml += "  <td>" + coupon + "</td>\n";
+                    addhtml += "</tr>\n";
+
+                    $('#TabProductListArea').append(addhtml);
+                }
+                
+            }
+        });
+
+    }
+
+    function onRegBtnClick()
+    {
+        if (confirm("저장 하시겠습니까?")) {
+            var arrP = new Array;
+
+            $('#TabProductListArea').find('.product-display-order').each(function () {
+                var display_order = $(this).val();
+                var pcode = $(this).attr("data-pcode");
+
+                var obj = new Object();
+                obj.DISPLAY_ORDER = display_order;
+                obj.P_CODE = pcode;
+                arrP.push(obj);
+            });
+            
+            var jobj = encodeURIComponent(JSON.stringify(arrP));
+            var TAB_IDX = $("#TAB_IDX").val().trim();
+            var src_url = "/Exhibit/MultiTabProductUpdate";
+            var param = "TAB_IDX=" + TAB_IDX + "&data=" + jobj;
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: src_url,
+                data: param,
+                success: function (data) {
+                    if (data.result == "true") {
+                        alert("저장하였습니다.");
+                        refreshProduct();
+                    }
+                    else {
+                        if (data.msg != "") {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                complete: function (jqXHR, textStatus) {
+                }
+            });
+
+        }
+    }
+
+    function ProductDeleteClick()
+    {
+        var cnt = cntTabProductChk();
+        if (cnt == 0) {
+            alert("삭제할 상품을 선택해주세요.");
+            return;
+        }
+
+        $(".tabProductChk").each(function () {
+            if (this.checked) {
+                var row = $(this).parent().parent().get(0);
+                row.remove();
+            }
+        });
+    }
+
+        
+    function frmCheck() {
+        var f = document.uform;
+        if (f.ExcelUploadFile.value == "")
+        {
+            alert("업로드할 파일을 선택하세요.");
+            return false;
+        }
+        if (confirm("엑셀업로드시 등록된 상품은 삭제된후 엑셀파일로 대체 됩니다. 업로드 하시겠습니까?")) {
+            f.submit();
         }
     }
     </script>
@@ -331,7 +517,7 @@
                 <td class="num">@num</td>
                 <td class="tal"><input type="text" name="TAB_NAME" class="input-sm" style="width:100%;" value="@item.TAB_NAME" /></td>
                 <td><input type="number" name="DISPLAY_ORDER" class="input-sm tab-order-edit" data-tabidx="@item.IDX" style="width:50px;" value="@item.DISPLAY_ORDER" /></td>
-                <td>0 <a class="btn btn-warning small" style="margin-left:30px" href="#none" data-tabidx="@item.IDX" onclick="productChange(this);">상품변경</a></td>
+                <td><span id="GridProductCnt_@item.IDX">@item.PRODUCT_COUNT</span> <a class="btn btn-warning small" style="margin-left:30px" href="#none" data-tabidx="@item.IDX" onclick="productChange(this);">상품변경</a></td>
                 <td><a class="btn btn-success small" data-tabidx="@item.IDX" onclick="TabModify(this);">분류 수정</a></td>
             </tr>
         
@@ -356,7 +542,7 @@
                 <div class="top" style="margin-bottom:20px">
                     <h3 id="select_tab_nm"></h3>
                     <div class="por">
-                        <input type="text" name="TAB_IDX" id="TAB_IDX" value="">
+                        
                     </div>
                 </div>
                 <div class="top" style="margin-bottom:20px">
@@ -416,26 +602,42 @@
         <div class="panel fr" style="width:550px;">
             <div class="top">
                 <h4>상품전시</h4>
-                <span class="fcred">(전시상품수량 : 20개)</span>
+                <span class="fcred">(전시상품수량 : <span id="ProductCnt">0</span>개)</span>
                 <div class="por">
-                    <a class="btn btn-success small">선택삭제</a>
+                    <a class="btn btn-success small" onclick="ProductDeleteClick();">선택삭제</a>
                     <a class="btn btn-success small" onclick="refreshProduct();">새로고침</a>
-                    <a class="btn btn-success small">엑셀양식 다운로드</a>
+                    <a class="btn btn-success small" href="~/Upload/Exhibit/templet/product_upload_templet.xls">엑셀양식 다운로드</a>
                 </div>
             </div>
             <div class="top" style="margin-top:10px;margin-bottom:10px">
+            @using (Html.BeginForm("TabProductExcelUpload", "Exhibit", FormMethod.Post, new { id = "uform", name = "uform", enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" name="TAB_IDX" id="TAB_IDX" value="">
+                <input type="hidden" name="EXHIBIT_IDX" value="@Model.IDX">
+                {
+                            //Model.SearchOption을 Hidden box로 생성
+                            Type type = Model.SearchOption.GetType();
+                            PropertyInfo[] properties = type.GetProperties();
+
+                            foreach (PropertyInfo property in properties)
+                            {
+                                @Html.Hidden(property.Name, property.GetValue(Model.SearchOption))
+                            }
+                }
+
                 <span><b>엑셀업로드 : </b></span>
                 <div class="por">
-                    <input type="file" class="inline" style="width:380px" />
-                    <a class="btn btn-default small">상품업로드</a>
+                    <input type="file" class="inline" name="ExcelUploadFile" style="width:380px" />
+                    <a class="btn btn-default small" onclick="frmCheck();">상품업로드</a>
                 </div>
+            }    
             </div>
             <div class="ybox" style="height:250px;">
                 <table class="table table_col mt10">
                     <colgroup><col width="5%" /> <col width="12%" /> <col width="12%" /> <col width="*" /> <col width="15%" /> <col width="12%" /> <col width="12%" /> <col width="12%" /> </colgroup>
                     <thead>
                         <tr>
-                            <th><input type="checkbox" /></th>
+                            <th><input type="checkbox" onclick="TabProductCheckAll(this)" /></th>
                             <th>전시순위</th>
                             <th>상품코드</th>
                             <th>상품명</th>
@@ -444,114 +646,19 @@
                             <th>프로모션 유무</th>
                             <th>쿠폰 유무</th>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /></td>
-                            <td><input type="text" class="input-sm" style="width:30px;" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
                     </thead>
+                    <tbody id="TabProductListArea">
+                        <tr>
+                            <td colspan="8">상품이 존재하지 않습니다.</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <div class="panel tac">
-        <a style="width:100px;display:none" id="regbtn" class="btn btn-default middium" href="#">등록</a>
+        <a style="width:100px;display:none" id="regbtn" class="btn btn-default middium" href="#none" onclick="onRegBtnClick();">저장</a>
         
         @Html.ActionLink("취소", "", @Model.SearchOption, new { @class = "btn btn-primary  middium", style = "width:100px" })
     </div>

@@ -24,8 +24,6 @@ namespace AboutMe.Domain.Entity.Exhibit
         public string MOBILE_FILE { get; set; }
         public string WEB_BANNER { get; set; }
         public string MOBILE_BANNER { get; set; }
-        public string WEB_URL { get; set; }
-        public string MOBILE_URL { get; set; }
         public string USE_YN { get; set; }
         public string ADM_ID { get; set; }
         public System.DateTime REG_DATE { get; set; }

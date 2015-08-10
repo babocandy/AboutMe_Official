@@ -60,7 +60,7 @@ namespace AboutMe.Domain.Service.Exhibit
             ObjectParameter new_idx = new ObjectParameter("NEW_IDX", typeof(int));
             using (ExhibitEntities EfContext = new ExhibitEntities())
             {
-                EfContext.SP_ADMIN_EXHIBIT_INS(param.EXHIBIT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EXHIBIT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.WEB_URL, param.MOBILE_URL, param.USE_YN, param.ADM_ID, new_idx);
+                EfContext.SP_ADMIN_EXHIBIT_INS(param.EXHIBIT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EXHIBIT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.USE_YN, param.ADM_ID, new_idx);
             }
             return Convert.ToInt16(new_idx.Value);
         }
@@ -71,7 +71,7 @@ namespace AboutMe.Domain.Service.Exhibit
         {
             using (ExhibitEntities EfContext = new ExhibitEntities())
             {
-                EfContext.SP_ADMIN_EXHIBIT_UPD(IDX, param.EXHIBIT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EXHIBIT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.WEB_URL, param.MOBILE_URL, param.USE_YN, param.ADM_ID);
+                EfContext.SP_ADMIN_EXHIBIT_UPD(IDX, param.EXHIBIT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EXHIBIT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.USE_YN, param.ADM_ID);
             }
         }
         #endregion
@@ -182,6 +182,16 @@ namespace AboutMe.Domain.Service.Exhibit
             using (ExhibitEntities EfContext = new ExhibitEntities())
             {
                 EfContext.SP_ADMIN_EXHIBIT_TAB_PRODUCT_DEL(IDX);
+            }
+        }
+        #endregion
+
+        #region Admin Tab > Product 전체 Delete
+        public void ExhibitAdminTabProductAllDelete(int TAB_IDX)
+        {
+            using (ExhibitEntities EfContext = new ExhibitEntities())
+            {
+                EfContext.SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL(TAB_IDX);
             }
         }
         #endregion

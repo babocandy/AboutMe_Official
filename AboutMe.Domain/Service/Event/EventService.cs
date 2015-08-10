@@ -60,7 +60,7 @@ namespace AboutMe.Domain.Service.Event
             ObjectParameter new_idx = new ObjectParameter("NEW_IDX", typeof(int));
             using (EventEntities EfContext = new EventEntities())
             {
-                EfContext.SP_ADMIN_EVENT_INS(param.EVENT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EVENT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.WEB_URL, param.MOBILE_URL, param.USE_YN, param.ADM_ID, new_idx);
+                EfContext.SP_ADMIN_EVENT_INS(param.EVENT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EVENT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.USE_YN, param.ADM_ID, new_idx);
             }
             return Convert.ToInt16(new_idx.Value);
         }
@@ -71,7 +71,7 @@ namespace AboutMe.Domain.Service.Event
         {
             using (EventEntities EfContext = new EventEntities())
             {
-                EfContext.SP_ADMIN_EVENT_UPD(IDX, param.EVENT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EVENT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.WEB_URL, param.MOBILE_URL, param.USE_YN, param.ADM_ID);
+                EfContext.SP_ADMIN_EVENT_UPD(IDX, param.EVENT_NAME, param.FROM_DATE, param.FROM_TIME, param.TO_DATE, param.TO_TIME, param.EVENT_GBN, param.WEB_CONTENTS, param.MOBILE_FILE, param.WEB_BANNER, param.MOBILE_BANNER, param.USE_YN, param.ADM_ID);
             }
         }
         #endregion
@@ -89,14 +89,24 @@ namespace AboutMe.Domain.Service.Event
         #endregion
 
         #region Admin Main 진행중인 이벤트 목록
-        public List<SP_EVENT_ING_LIST_Result> EventAdminMainIngList(int? Page, int? PageSize)
+        public List<SP_ADMIN_EVENT_MAIN_LIST_Result> EventAdminMainIngList()
         {
-            List<SP_EVENT_ING_LIST_Result> lst = new List<SP_EVENT_ING_LIST_Result>();
+            List<SP_ADMIN_EVENT_MAIN_LIST_Result> lst = new List<SP_ADMIN_EVENT_MAIN_LIST_Result>();
             using (EventEntities EfContext = new EventEntities())
             {
-                lst = EfContext.SP_EVENT_ING_LIST(Page, PageSize).ToList();
+                lst = EfContext.SP_ADMIN_EVENT_MAIN_LIST().ToList();
             }
             return lst;
+        }
+        #endregion
+
+        #region Admin Main 진행중인 이벤트 목록 순서변경
+        public void EventAdminMainListOrderUpdate(string GBN, int IDX, int ORDER)
+        {
+            using (EventEntities EfContext = new EventEntities())
+            {
+                EfContext.SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD(GBN, IDX, ORDER);
+            }
         }
         #endregion
 

@@ -12,6 +12,7 @@ using AboutMe.Domain.Entity.Event;
 using AboutMe.Web.Admin.Common.Filters;
 using AboutMe.Web.Admin.Common;
 using AboutMe.Common.Data;
+using Newtonsoft.Json;
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -28,12 +29,10 @@ namespace AboutMe.Web.Admin.Controllers
 
         public ActionResult Main()
         {
-            int? page = 1;
-            int? pagesize = 30;
             EVENT_ADMIN_MAIN_INDEX M = new EVENT_ADMIN_MAIN_INDEX
             {
                 MainInfo = _eventservice.EventAdminMainView(),
-                ListInfo = _eventservice.EventAdminMainIngList(page, pagesize)
+                ListInfo = _eventservice.EventAdminMainIngList()
             };
             return View(M);
         }
@@ -143,8 +142,6 @@ namespace AboutMe.Web.Admin.Controllers
             Param.TO_TIME = SaveParam.TO_TIME;
             Param.EVENT_GBN = "A"; //A:전체 , W(웹), M (모바일)
             Param.WEB_CONTENTS = SaveParam.WEB_CONTENTS;
-            Param.WEB_URL = SaveParam.WEB_URL;
-            Param.MOBILE_URL = SaveParam.MOBILE_URL;
             Param.USE_YN = SaveParam.USE_YN;
             Param.ADM_ID  = AdminUserInfo.GetAdmId();
             Param.MOBILE_FILE = "";
@@ -261,6 +258,21 @@ namespace AboutMe.Web.Admin.Controllers
             _eventservice.EventAdminUpdate(EventIdx, Param);
 
             return RedirectToAction("");
+        }
+
+        //메인 전시순서 일괄 변경
+        [HttpPost]
+        public ActionResult MainOrderUpdate(string data)
+        {
+            List<EVENT_MAIN_ORDER_PARAM> DataList = JsonConvert.DeserializeObject<List<EVENT_MAIN_ORDER_PARAM>>(data);
+
+            foreach (EVENT_MAIN_ORDER_PARAM item in DataList)
+            {
+                _eventservice.EventAdminMainListOrderUpdate(item.GBN, item.IDX, item.ORDER);
+            }
+
+            var jsonData = new { result = "true" };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
     }
