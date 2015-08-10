@@ -1,0 +1,96 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result>
+
+@{
+    ViewBag.Title = "StaffBaseExcelUploadResult_IFRAME";
+    Layout = null;
+
+}
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/cmsManager/aboutCom/css/bootstrap.css" rel="stylesheet">
+    <link href="/cmsManager/aboutCom/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="/cmsManager/aboutCom/css/style.css" rel="stylesheet">
+    <script src="/cmsManager/aboutCom/js/jquery-1.11.3.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/bootstrap.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/jquery-ui.js"></script>
+    <script src="/cmsManager/aboutCom/js/ui.datepicker-ko.js"></script>
+    <script src="/cmsManager/aboutCom/js/script.js"></script>
+    <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+    <link href="/Content/kendo/2015.1.318/kendo.common.min.css" rel="stylesheet" />
+    <link href="/Content/kendo/2015.1.318/kendo.Bootstrap.min.css" rel="stylesheet" />
+
+    <script src="/Scripts/kendo/2015.1.318/kendo.all.min.js"></script>
+    <script src="/Scripts/kendo/2015.1.318/kendo.aspnetmvc.min.js"></script>
+
+    <title>ABOUT ME</title>
+</head>
+
+<body>
+
+
+
+            <div class="content">
+
+
+                <div class="panel">
+                    <h4>임직원 기준DB  반영내역 [@ViewBag.WORK_TEMP_ID]</h4>
+                    <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+                    <table class="table table_col">
+                        <colgroup><col /><col /><col /><col /><col /></colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="brnone">No</th>
+                                <th scope="col">사번</th>
+                                <th scope="col">임직원 이름</th>
+                                <th scope="col">회사</th>
+                                <th scope="col">반영내역</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.Count() < 1)
+                                {
+                                    <tr>
+                                        <td colspan="5" class="brnone">No data...</td>
+                                    </tr>
+                                }
+                            }
+
+                            @{
+                                var count = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="brnone">@count.ToString("#,##0")</td>
+                                        <td>@item.STAFF_ID</td>
+                                        <td>@item.STAFF_NAME</td>
+                                        <td>@item.STAFF_COMPANY</td>
+                                        <td class="brnone">@item.APP_RESULT</td>
+                                    </tr>
+                                    count = count + 1;
+                                }
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+            </div>
+
+
+
+</body>
+</html>
