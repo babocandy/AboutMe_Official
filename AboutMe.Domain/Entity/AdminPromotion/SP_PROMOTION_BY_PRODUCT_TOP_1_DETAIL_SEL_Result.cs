@@ -21,5 +21,6 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public Nullable<byte> PMO_SET_DISCOUNT_CNT { get; set; }
         public Nullable<System.DateTime> PMO_PRODUCT_DATE_FROM { get; set; }
         public Nullable<System.DateTime> PMO_PRODUCT_DATE_TO { get; set; }
+        public string PMO_PRODUCT_MAIN_IMG { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace AboutMe.Domain.Service.Coupon
 
         #region 마이페이지 ============================================================
 
-        //다운로드 가능한 쿠폰 - pc버전 
+        //다운로드 가능한 쿠폰 - pc버전 , 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
         public List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponList(string M_Id)
         {
 
@@ -35,34 +35,70 @@ namespace AboutMe.Domain.Service.Coupon
 
         }
 
-
-        //다운로드 처리  - pc버전 , 번호 인증 필요없는 쿠폰
-        public int  UpdateCouponDownload_Pc_Ver_And_NoNumberChk_Ver(string M_Id,int IdxCouponNumber,string UpdateMethod)
+        //다운로드 가능한 쿠폰 수량 가져오기  - pc버전 , 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        public List<SP_ADMIN_COUPON_COMMON_CNT_Result> GetDownloadableCouponCnt(string M_Id)
         {
-            int IsSuccess = 1;
-       
-            using (TransactionScope scope = new TransactionScope())
-            {
-                try
-                {
-                    using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
-                    {
-                        //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
-                        AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
-                        //NewCdPromotionProduct = objOutParam.Value.ToString();
-                    }
 
-                    scope.Complete();
-                }
-                catch (Exception ex)
-                {
-                    Transaction.Current.Rollback();
-                    scope.Dispose();
-                    IsSuccess = -1;
-                }
+            List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst = new List<SP_ADMIN_COUPON_COMMON_CNT_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_DOWNLOADABLE_CNT(M_Id).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
             }
 
-            return IsSuccess;
+            return lst;
+
+        }
+
+
+
+        //다운로드 처리  - pc버전 , 쿠폰번호 인증이 필요없는 쿠폰
+        //M_id =회원아이디, IdxCouponNumber = 쿠폰일련번호 , UpdateMethod = 'S' : 하나만 업데이트 할때 , 'A' = 모든 쿠폰을 다운로드 할 때
+        public int  UpdateCouponDownload_Pc_Ver_And_NoNumberChk_Ver(string M_Id,int IdxCouponNumber,string UpdateMethod)
+        {
+            int ResulstCode = 1;
+
+            List<SP_COUPON_MASTER_INFO_SEL_Result> lst1 = GetCouponMasterInfo(M_Id, IdxCouponNumber);
+
+            if (lst1.Count > 0)
+            {
+                if (lst1[0].COUPON_NUM_CHECK_TF == "Y") //번호를 확인해야 하는 쿠폰이면 , 번호 인증후 다운로드 해야함
+                {
+                    ResulstCode = -2; 
+                }
+                else
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        try
+                        {
+                            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                            {
+                                //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                                AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
+                                //NewCdPromotionProduct = objOutParam.Value.ToString();
+                            }
+                            scope.Complete();
+                        }
+                        catch (Exception ex)
+                        {
+                            Transaction.Current.Rollback();
+                            scope.Dispose();
+                            ResulstCode = -1;
+                        }
+                    }
+                }  
+            }
+            else
+            {
+                ResulstCode = -3; //존재하지 않는 쿠폰  
+            }
+
+            return ResulstCode;
 
         }
 
@@ -84,7 +120,7 @@ namespace AboutMe.Domain.Service.Coupon
 
         }
 
-        //사용가능한 쿠폰리스트 COUNT 가져오기 
+        //사용가능한 쿠폰리스트 COUNT 가져오기-PC 버전
         public int GettCouponAvailableListCnt(string M_ID, string SearchCol, string SearchKeyword)
         {
 
@@ -178,8 +214,10 @@ namespace AboutMe.Domain.Service.Coupon
         #endregion
 
         #region 상품상세페이지 ================================================
-
-        //상품별, 회원별 사용가능 혹은 다운로드 가능한 쿠폰 TOP 1    - pc/모바일 공통 .. 
+        //상품별, 회원별 사용가능 혹은 다운로드 가능한 쿠폰 TOP 1        
+        //     ==> 사용가능한것 다운로드가능한것 모두 있을때는 사용가능한것 우선
+        //     ==> pc, 모바일버전은 파라미터에 따라 
+        //     ==> 번호인증 필요한 쿠폰까지    . 
         public List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> GetCouponTop1_ByMem_ByPrd(string UsableDeviceGbn, string PCode, string M_Id)
         {
 

@@ -1,7 +1,7 @@
 ﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_TOTAL*@
 
 @model AboutMe.Web.Front.Controllers.EventController.MyMultiModelForPromotionProduct
-
+@using AboutMe.Web.Front.Common;
 
 @{
     ViewBag.Title = "Index";
@@ -123,8 +123,8 @@
                 total_price = parseInt(total_price) + parseInt(cur_arr[1]) ;
                 //alert(total_price);
                 total_discount_price =  parseInt(total_discount_price) +  parseInt(cur_arr[2]);
-                
-                
+
+
                 minus_price = minus_price - ( parseInt(cur_arr[1]) - parseInt(cur_arr[2]));
                 pmo_set_selected_cnt++;
 
@@ -168,20 +168,20 @@
 
     //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
     function AddCartClick() {
-        
-                
+
+
         var arrP = new Array;
-    
+
 
         var frmobj = document.frm001 ;
-        var pcode = "" ; 
+        var pcode = "" ;
 
-    
+
         for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
         {
             if(frmobj.ChkCalPrice[i].checked == true)
             {
-                alert(frmobj.ChkCalPrice[i].checked );
+                //alert(frmobj.ChkCalPrice[i].checked );
 
                 var obj = new Object();
                 cur_arr= frmobj.ChkCalPrice[i].value.split('$');
@@ -199,9 +199,9 @@
 
             //alert(total_discount_price);
         }
-            
-            
-        
+
+
+
         if(arrP.length > 0)
         {
             Cart_Input(arrP);
@@ -211,12 +211,71 @@
             alert("쇼핑백에 담을 상품을 선택해주세요!");
         }
 
-        
-   
+    }
+
+    //여러개의 상품을 장바구니에 넣고, 바로구매 하기 (ToDo)
+    function NowOrderPluralInput() {
+        if (confirm('바로구매하시겠습니까?')) {
+            
+            var arrP = new Array;
+
+
+            var frmobj = document.frm001 ;
+            var pcode = "" ;
+
+
+            for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+            {
+                if(frmobj.ChkCalPrice[i].checked == true)
+                {
+                    //alert(frmobj.ChkCalPrice[i].checked );
+
+                    var obj = new Object();
+                    cur_arr= frmobj.ChkCalPrice[i].value.split('$');
+                    pcode = cur_arr[0] ;
+
+                    /**
+                    obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+                    obj.p_count = $(b).attr('data-pcount');
+                    **/
+
+                    obj.p_code = pcode;//f.opt_p_code.value//P_CODE
+                    obj.p_count = 1;
+                    arrP.push(obj);
+                }
+
+                //alert(total_discount_price);
+            }
+
+
+
+            if(arrP.length > 0)
+            {
+                //Cart_Input(arrP);
+                
+                var jobj = JSON.stringify(arrP);
+                var f = document.nowOrderform;
+                f.OrderList.value = jobj;
+                var islogin = '@MemberInfo.IsMemberLogin()';
+
+                if (islogin == 'True') {
+                    f.action = '/Order/InsertOrderStep1';
+                }
+                else {
+                    f.action = '/MemberShip/Login';
+                }
+                f.submit();
+            }
+            else
+            {
+                alert("구매할 상품을 선택해주세요!");
+            }
+
+        }
     }
 
 
-    //장바구니----아래 펑션을 변형해서 한번에 여러개를 넣으면 된다 
+    //장바구니----아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
     /**
     function AddCartClick(b) {
         var arrP = new Array;
@@ -250,6 +309,7 @@
             <div class="container100per">
                 <div class="inner">
                     @{
+                        
                         string FromYYYY = "", FromMM = "", FromDD = "";
                         string ToYYYY = "", ToMM = "", ToDD = "";
 
@@ -262,10 +322,10 @@
                         ToDD = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
                     }
                     <div class="txtbox">
-                        <span class="txt1"># <!--밤 9시 예뻐지는 시각-->@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE</span>
+                        <span class="txt1"># @Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE <!--밤 9시 예뻐지는 시각--></span>
                         <span class="txt2">
                            <!-- <img src="/aboutCom/images/sample/txt_setgoods.png" alt="3개 이상 같이 구매해서 30% 할인 받자!" /></p> -->
-                            <img src="/aboutCom/images/sample/txt_setgoods.png" alt=">@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE" /></p>
+                            <img src="@ViewBag.PROMOTION_IMG_PATH@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_IMG" alt="" </p>
                            <!--<span class="date"><em>2015. 09. 01</em> ~ <em>2015. 09. 02</em></span> -->
                             <span class="date"><em>@FromYYYY. @FromMM.  @FromDD</em> ~ <em>@ToYYYY. @ToMM.  @ToDD</em></span>
                     </div>
@@ -289,10 +349,34 @@
                                                     <img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" data-pic="@ViewBag.PRODUCT_PATH@item.OTHER_IMG1" class="item" alt="" />
                                                 </span>
                                                 <span class="info">
-                                                    <span class="tag"><span class="ico_new">NEW</span></span>
+                                                    <!--<span class="tag"><span class="ico_new">NEW</span></span>-->
+                                                    @if (!string.IsNullOrEmpty(item.ICON_YN))
+                                                    {
+                                                        if (item.ICON_YN.IndexOf('B') != -1)
+                                                        { <text> <span class="ico ico_best">BEST</span></text> }
+                                                        if (item.ICON_YN.IndexOf('S') != -1)
+                                                        { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                                        if (item.ICON_YN.IndexOf('N') != -1)
+                                                        { <text> <span class="ico ico_new">NEW</span></text> }
+                                                        if (item.ICON_YN.IndexOf('C') != -1)
+                                                        { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                                                    {
+                                                        if (item.PMO_PRODUCT_CATEGORY == "01")
+                                                        { <text> <span class="ico ico_set">SET</span></text> }
+                                                        if (item.PMO_PRODUCT_CATEGORY == "02")
+                                                        { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                                        if (item.PMO_PRODUCT_CATEGORY == "03")
+                                                        { <text> <span class="ico ico_time">TIME</span></text> }
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                                                    {
+                                                        <text> <span class="ico ico_coupon">COUPON</span></text>
+                                                    }
                                                     <span class="title">
-                                                        <em class="product_tit">석류 성분의 함유로<br />피부탱탱&amp;탄력 마스크</em>
-                                                        <em class="product_name">@item.P_NAME</em>
+                                                        <em class="product_tit">@(new HtmlString(item.P_SUB_TITLE))</em>
+                                                        <em class="product_name">@(new HtmlString(item.P_NAME))</em>
                                                     </span>
                                                     <em class="price">
                                                         <del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
@@ -347,9 +431,9 @@
                     </div>
                           -->
                             <div class="btn_link mt40">
-                                <a href="#" class="btn_brown_w185h60">
-                        바로 구매
-                                    </a><a href="javascript:AddCartClick();" class="btn_brown_w185h60 ml10"><img src="/aboutCom/images/event/ico_cart.png" class="cartimg" alt="" />쇼핑백</a>
+                                <a href="javascript:NowOrderPluralInput();" class="btn_brown_w185h60">
+                                    바로 구매
+                                </a><a href="javascript:AddCartClick();" class="btn_brown_w185h60 ml10"><img src="/aboutCom/images/event/ico_cart.png" class="cartimg" alt="" />쇼핑백</a>
                                 </div>
                                 <!--//상품리스트-->
                             </fieldset>

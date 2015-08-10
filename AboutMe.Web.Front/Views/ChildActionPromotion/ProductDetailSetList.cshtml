@@ -1,38 +1,48 @@
-﻿
+﻿@model List<AboutMe.Domain.Entity.AdminPromotion.SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result>
+
 @{
     Layout = null;
 }
+
 <!--오른쪽영역 : 상품상세 세트상품 정보-->
-<div class="setgoods">
-    <a href="#"><img src="/aboutCom/images/shopping/tit_setgoods.gif" alt="" /></a>
-    <ul>
-        <li>
-            <a href="#">
-                <img src="/aboutCom/images/sample/thum_recommend1.jpg" alt="" />
-                <span class="tag"><span class="ico_new">NEW</span></span>
-                <strong class="gti">스킨톤업마사지크림</strong>
-                <span class="desc">매끈한 피부결을 위한 100%천연유래</span>
-                <span class="price"><strong>23,000</strong>원</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <img src="/aboutCom/images/sample/thum_recommend2.jpg" alt="" />
-                <span class="tag"><span class="ico_new">NEW</span></span>
-                <strong class="gti">어바웃미 화장솜</strong>
-                <span class="desc">이중압축 </span>
-                <span class="price"><strong>950</strong>원</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <img src="/aboutCom/images/sample/thum_recommend2.jpg" alt="" />
-                <span class="tag"><span class="ico_new">NEW</span></span>
-                <strong class="gti">어바웃미 화장솜</strong>
-                <span class="desc">이중압축 </span>
-                <span class="price"><strong>950</strong>원</span>
-            </a>
-        </li>
-    </ul>
-</div>
-<!--오른쪽영역 : 상품상세 세트상품 정보-->
+
+    <div class="setgoods">
+@if(Model.Count == 0 )
+{ 
+        <a href="javascript:alert('상품 준비중입니다.')"><img src="/aboutCom/images/shopping/tit_setgoods.gif" alt="" /></a>
+}
+else
+{
+        <a href="/Event/SetPromotion"><img src="/aboutCom/images/shopping/tit_setgoods.gif" alt="" /></a>
+        <ul>
+            @foreach (var item in Model)
+            {
+                string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                <li>
+                    <a href="/shopping/detail?pcode=@item.P_CODE">
+                        <img src="@imgUrl1" alt="" />
+                        <!-- <span class="tag"><span class="ico_new">NEW</span></span>-->
+                        @if (!string.IsNullOrEmpty(item.ICON_YN))
+                        {
+                            if (item.ICON_YN.IndexOf('B') != -1)
+                            { <text> <span class="ico ico_best">BEST</span></text> }
+                            if (item.ICON_YN.IndexOf('S') != -1)
+                            { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                            if (item.ICON_YN.IndexOf('N') != -1)
+                            { <text> <span class="ico ico_new">NEW</span></text> }
+                            if (item.ICON_YN.IndexOf('C') != -1)
+                            { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                        }
+                        <text> <span class="ico ico_set">SET</span></text>
+
+                        <strong class="gti">@(new HtmlString(item.P_NAME))</strong>
+                        <span class="desc">@(new HtmlString(item.P_SUB_TITLE))</span>
+                        <span class="price"><strong>@string.Format("{0:#,##0}", item.SELLING_PRICE)</strong>원</span>
+                    </a>
+                </li>
+            }       
+        </ul>
+}
+    </div>
+    <!--오른쪽영역 : 상품상세 세트상품 정보-->
+

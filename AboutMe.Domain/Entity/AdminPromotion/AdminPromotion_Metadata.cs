@@ -37,6 +37,7 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         [Required(ErrorMessage = "종료일자를 입력하세요.")]
         [DataType(DataType.Date,ErrorMessage="YYYY-MM-DD 날짜 형식으로 입력하세요.")]
         public System.DateTime? PMO_TOTAL_DATE_TO { get; set; }
+        [Required(ErrorMessage = "활성화/비활성화 구분을 선택하세요.")]
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
     
@@ -73,9 +74,13 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         [Required(ErrorMessage = "종료일자를 입력하세요.")]
         [DataType(DataType.Date, ErrorMessage = "YYYY-MM-DD 날짜 형식으로 입력하세요.")]
         public System.DateTime? PMO_PRODUCT_DATE_TO { get; set; }
+        [Required(ErrorMessage = "활성화/비활성화 구분을 선택하세요.")]
         public string USABLE_YN { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
-    
+
+        public string PMO_PRODUCT_MAIN_TITLE { get; set; }
+        public string PMO_PRODUCT_SUB_TITLE { get; set; }
+        public string PMO_PRODUCT_SHOPPING_TIP { get; set; }
     
     }
 

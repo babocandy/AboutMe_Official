@@ -402,8 +402,8 @@
                     <div class="right_area">
                         <!--배너 지젠 기획전-->
                         @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}
-                        <!--세트상품 ssw-->
-                        @{Html.RenderAction("ProductDetailSetList", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE });}
+                        <!--세트상품 ssw --2015.8.8 ssw 수정 CD_PROMOTION_PRODUCT 추가-->
+                        @{Html.RenderAction("ProductDetailSetList", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE , CD_PROMOTION_PRODUCT=@ViewBag.CD_PROMOTION_PRODUCT });}
 
                         @if (this.ViewBag.withCnt != 0) //관련상품 리스트
                         { 
