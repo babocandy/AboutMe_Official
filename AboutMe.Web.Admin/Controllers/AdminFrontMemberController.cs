@@ -16,6 +16,8 @@ using System.IO;
 using System.Web.UI;
 
 using AboutMe.Web.Admin.Common.Filters;
+using System.Data.OleDb;
+using System.Data;
 
 //관리자 -회원 관리 ctl --jsh
 
@@ -649,56 +651,149 @@ namespace AboutMe.Web.Admin.Controllers
 
         //관리자 - 임직원 기준DB - Excel등록(파일 업로드 & DB저장) :ajax > JSON리턴
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult AjaxStaffBaseExcelUplodBatch(IEnumerable<HttpPostedFileBase> files)
+        public ActionResult StaffBaseExcelUplodBatch()
         {
-            // The Name of the Upload component is "files"
-            if (files != null)
-            {
-                foreach (var file in files)
-                {
-                    // Some browsers send file names with full path.
-                    // We are only interested in the file name.
-                    var fileName = Path.GetFileName(file.FileName);
-                    var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+            DataSet ds = new DataSet();
+            int OK_CNT = 0;
 
-                    // The files are not actually saved in this demo
-                    // file.SaveAs(physicalPath);
-                }
+            if (Request.Files["FILE1"].ContentLength < 1)
+            {
+                return Content("엑셀 첨부파일 오류1.");
             }
 
-            // Return an empty string to signify success
-            return Content("");
+            string fileExtension = System.IO.Path.GetExtension(Request.Files["FILE1"].FileName);
+
+            if (fileExtension.ToLower() == ".xls" || fileExtension.ToLower() == ".xlsx")
+                ;
+            else
+            {
+                return Content("엑셀 첨부파일 오류2.<br>엑셀파일이 아님!");
+
+            }
+
+  
+            //string fileLocation = Server.MapPath("~/Upload/Staff/") + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);
+            //string fileLocation = Config.GetConfigValue("StaffBaseDB") +System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유
+            string fileLocation = Server.MapPath("~/App_Data/Staff/") + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);
+            
+            if (System.IO.File.Exists(fileLocation))
+            {
+
+                System.IO.File.Delete(fileLocation);
+            }
+            Request.Files["FILE1"].SaveAs(fileLocation);
+            string excelConnectionString = string.Empty;
+            excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+            fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+            //connection String for xls file format.
+            if (fileExtension.ToLower() == ".xls")
+            {
+                excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
+                fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+            }
+            //connection String for xlsx file format.
+            else if (fileExtension.ToLower() == ".xlsx")
+            {
+                excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+            }
+            //Create Connection to Excel work book and add oledb namespace
+            OleDbConnection excelConnection = new OleDbConnection(excelConnectionString);
+            excelConnection.Open();
+            DataTable dt = new DataTable();
+
+            dt = excelConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+            if (dt == null)
+            {
+                return null;
+            }
+
+            String[] excelSheets = new String[dt.Rows.Count];
+            int t = 0;
+            //excel data saves in temp file here.
+            foreach (DataRow row in dt.Rows)
+            {
+                excelSheets[t] = row["TABLE_NAME"].ToString();
+                t++;
+            }
+            OleDbConnection excelConnection1 = new OleDbConnection(excelConnectionString);
+
+
+            string query = string.Format("Select * from [{0}]", excelSheets[0]);
+            using (OleDbDataAdapter dataAdapter = new OleDbDataAdapter(query, excelConnection1))
+            {
+                dataAdapter.Fill(ds);
+            }
+
+
+            string strNOW_TIME = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string strWORK_TEMP_ID = "B" + strNOW_TIME + "_" + Utility01.GetRandomAlphanumeric(4);
+            string strADM_ID = AdminUserInfo.GetAdmId(); 
+            string strIP = "";
+            int nERR_CODE_SP;
+
+            //Step1. 임시테이블 저장
+            //string conn = "data source=0.0.0.0;initial catalog=AboutMe;user id=uuuu;password=1111;";
+            //SqlConnection con = new SqlConnection(conn);
+            //con.Open();
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                if (ds.Tables[0].Rows[i][0].ToString() != "")
+                {
+                    //string query = "Insert into TB_MEMBER_STAFF_BASE_TMP " +
+                    //    " (STAFF_COMAPNY,STAFF_ID,STAFF_NAME,INS_DATE,WORK_TEMP_ID,APP_RESULT,ADM_ID,IP) " +
+                    //    " Values " +
+                    //    " ('" + ds.Tables[0].Rows[i][0].ToString() + "','" + ds.Tables[0].Rows[i][1].ToString() + "','" + ds.Tables[0].Rows[i][2].ToString() + "',getdate(),'" + strWORK_TEMP_ID + "','','" + strADM_ID + "','" + strIP + "')";
+                    //SqlCommand cmd = new SqlCommand(query, con);
+                    //cmd.ExecuteNonQuery();
+                    string strSTAFF_COMPANY = ds.Tables[0].Rows[i][0].ToString() ;
+                    string strSTAFF_ID=ds.Tables[0].Rows[i][1].ToString() ;
+                    string strSTAFF_NAME = ds.Tables[0].Rows[i][2].ToString();
+
+                    nERR_CODE_SP = _AdminFrontMemberService.SetAdminMemberStaffBaseTempInsert(strSTAFF_COMPANY, strSTAFF_ID, strSTAFF_NAME,strWORK_TEMP_ID,strADM_ID,strIP); //임시테이블 저장
+                    OK_CNT++;
+                }
+            } //for
+            //con.Close();
+
+
+
+            //Step2. 임시테이블 검증 및 임직원테이블 등록
+            List<SP_ADMIN_MEMBER_STAFF_BASE_TMP_LIST_Result> tmpList = _AdminFrontMemberService.GetAdminMemberStaffBaseTempList(strWORK_TEMP_ID);
+            for(int i=0; i<tmpList.Count;i++)
+            {
+                nERR_CODE_SP = _AdminFrontMemberService.SetAdminMemberStaffBaseInsert(tmpList[i].STAFF_COMPANY,tmpList[i].STAFF_ID,tmpList[i].STAFF_NAME,tmpList[i].WORK_TEMP_ID); //임직원 DB - 1건 INSERT
+                if(nERR_CODE_SP==0) //성공
+                    _AdminFrontMemberService.SetAdminMemberStaffBaseTempUpdate(tmpList[i].IDX,"추가");
+                else if(nERR_CODE_SP==10) //중복오류
+                    _AdminFrontMemberService.SetAdminMemberStaffBaseTempUpdate(tmpList[i].IDX,"중복오류");
+                else  //기타오류
+                    _AdminFrontMemberService.SetAdminMemberStaffBaseTempUpdate(tmpList[i].IDX,"기타오류");
+
+
+            }
+
+            //업로드 엑셀파일 삭제 : 사용중 오류 발생
+            excelConnection.Close();
+            FileInfo file = new FileInfo(fileLocation);
+            file.Delete();
+
+
+            //return View();
+            //return View(_AdminFrontMemberService.GetAdminMemberStaffBaseTempList(strWORK_TEMP_ID)); //결과 리스트
+            return RedirectToAction("StaffBaseExcelUploadResult", "AdminFrontMember", new { WORK_TEMP_ID = strWORK_TEMP_ID }); // 결과 리스트
+
+
         }
 
-        //관리자 - 임직원 기준DB - Excel파일 삭제 :ajax > JSON리턴
+        //관리자 - 임직원 기준DB - Excel등록결과
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult AjaxStaffBaseExcelUplodDeleteFile(string[] fileNames)
+        public ActionResult StaffBaseExcelUploadResult(string WORK_TEMP_ID = "XXXXXXXX")
         {
-            // The parameter of the Remove action must be called "fileNames"
-
-            if (fileNames != null)
-            {
-                foreach (var fullName in fileNames)
-                {
-                    var fileName = Path.GetFileName(fullName);
-                    var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
-
-                    // TODO: Verify user permissions
-
-                    if (System.IO.File.Exists(physicalPath))
-                    {
-                        // The files are not actually removed in this demo
-                        // System.IO.File.Delete(physicalPath);
-                    }
-                }
-            }
-
-            // Return an empty string to signify success
-            //return Content("<script>alert('Upload 성공...')</script>");
-            //return Json(new {ERR_CODE="0",ERR_MSG="업로드성공!", status = "OK" }, "text/plain");
-            return Json(new { ERR_CODE = "0", ERR_MSG = "업로드성공!", status = "OK" });
+            this.ViewBag.WORK_TEMP_ID = WORK_TEMP_ID;
+            return View(_AdminFrontMemberService.GetAdminMemberStaffBaseTempList(WORK_TEMP_ID)); //결과 리스트
         }
-
 
         //#####################################################################################################################################
         //-//데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요 =============================================================================================================================
