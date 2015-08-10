@@ -11,7 +11,6 @@
 
 <!--header-->
 @section Header{
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
 }
 <!--//header-->
 
@@ -36,6 +35,7 @@
 @section Body{
     
     <div class="wrap detail">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
      <div id="container">
             <h2>본문시작</h2>
             <div class="container1080">
@@ -109,40 +109,27 @@
                             @if (!string.IsNullOrEmpty(Model.ICON_YN))
                             {
                                 if (Model.ICON_YN.IndexOf('B') != -1)
-                                { <text> <span class="ico ico_best">BEST</span></text> }
+                                { <text> <span class="ico_best">BEST</span></text> }
                                 if (Model.ICON_YN.IndexOf('S') != -1)
-                                { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                { <text> <span class="ico_soldout">SOLD OUT</span></text> }
                                 if (Model.ICON_YN.IndexOf('N') != -1)
-                                { <text> <span class="ico ico_new">NEW</span></text> }
+                                { <text> <span class="ico_new">NEW</span></text> }
                                 if (Model.ICON_YN.IndexOf('C') != -1)
-                                { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                { <text> <span class="ico_custom ">커스텀</span></text> }
                             }
                             @if (!string.IsNullOrEmpty(Model.PMO_PRODUCT_CATEGORY))
                             {
                                 if (Model.PMO_PRODUCT_CATEGORY == "01")
-                                { <text> <span class="ico ico_set">SET</span></text> }
+                                { <text> <span class="ico_set">SET</span></text> }
                                 if (Model.PMO_PRODUCT_CATEGORY == "02")
-                                { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                { <text> <span class="ico_1_1">1+1</span></text> }
                                 if (Model.PMO_PRODUCT_CATEGORY == "03")
-                                { <text> <span class="ico ico_time">TIME</span></text> }
+                                { <text> <span class="ico_time">TIME</span></text> }
                             }
                             @if (!string.IsNullOrEmpty(Model.COUPON_CODE))
                             {
-                                <text> <span class="ico ico_coupon">COUPON</span></text>
+                                <text> <span class="ico_coupon">COUPON</span></text>
                             }
-                            
-
-                            <!---<span class="ico_time">TIME</span>
-                             각 종류별 아이콘
-                        <span class="ico_new">NEW</span>
-                        <span class="ico_coupon">COUPON</span>
-                        <span class="ico_1_1">1+1</span>
-                        <span class="ico_best">BEST</span>
-                        <span class="ico_soldout">SOLD OUT</span>
-                        <span class="ico_soldout">SET</span>
-                        <span class="ico_sale">SALE</span>
-                        <span class="ico_custom">커스텀</span>
-                        -->
                         </div>
                         <!--//상품해당아이콘-->
                         <div class="pro_tit">
@@ -169,7 +156,8 @@
                                     </div>
                                 </li>
                             </ul>
-                            <div class="btn_group">
+                        </div>
+                        <div class="btn_group">
                                 <a href="#" class="btn_brown_w170h60" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로 구매</a>
                                 <a href="#" class="btn_white_w148h60" onclick="javascript:Cart_Product_Input('@Model.P_CODE',$('#product_num_count').val());"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
                                 @{
@@ -185,7 +173,7 @@
                                  }
 
                             </div>
-                        </div>
+                       
                     </div>
                     <!--//상품정보-->
                     <!-- cartinfo -->
@@ -224,78 +212,7 @@
 
                             <!--관련상품-->
                             <div class="related_product">
-                                <p class="tit"><img src="/aboutCom/images/shopping/tit_related_product.gif" alt="함께 하용하면 더 좋은 어바웃미, 이렇게 시작해보세요!" /></p>
-                                <div class="boxtypee">
-                                    <div class="top"></div>
-                                    <div class="middle">
-                                        <p class="tit">디톡스 마사지 케어  Skin tone up + 멀티비타 에센스 3step</p>
-                                        <p class="txt">레몬의 비타민C,플라보노이드 성분으로  피부정화마사지+ 여신의 물 셀릭워터를 담은 멀티비타 에센스로 피부 tone-up</p>
-                                    </div>
-                                    <div class="bottom"></div>
-                                </div>
-
-                                <!--사용자가 올리는 부분-->
-                                <div class="product_admin">
-                                    <img src="/aboutCom/images/sample/sample_detailadmin.jpg" alt="" />
-                                </div>
-                                <!--//사용자가 올리는 부분-->
-                            </div>
-                            <!--//관련상품-->
-
-                            <div class="pro_content">
                                 @(new HtmlString(Model.P_INFO_DETAIL_WEB))
-                                @*<!--사용자가 올리는 이미지-->
-                                <div class="admin_img">
-                                    <img src="/aboutCom/images/sample/sample_detailadmin2.jpg" alt="" />
-                                </div>
-                                <!--//사용자가 올리는 이미지-->
-                                <!--성분표시-->
-                                <div class="admin_ingredient">
-                                    <table summary="용량, 제조국, 피부타입, 제조자 및 제조판매자, 사용기간, 식품의약안정청 심사유무, 주요성분, 전성분">
-                                        <caption>성분표시 표</caption>
-                                        <colgroup>
-                                            <col width="90" />
-                                            <col width="290" />
-                                            <col width="165" />
-                                            <col width="215" />
-                                        </colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <th>용량</th>
-                                                <td>150ml</td>
-                                                <th>제조국</th>
-                                                <td>한국</td>
-                                            </tr>
-                                            <tr>
-                                                <th>피부타입</th>
-                                                <td>모든 피부타입</td>
-                                                <th>제조자 및 제조판매자</th>
-                                                <td>-</td>
-                                            </tr>
-                                            <tr>
-                                                <th>사용기간</th>
-                                                <td>개봉전 30개월/개봉 후 12개월</td>
-                                                <th>식품의약안정청 심사유무</th>
-                                                <td>무</td>
-                                            </tr>
-                                            <tr>
-                                                <th>주요성분</th>
-                                                <td colspan="3">
-                                                    모링가추출물, 레몬, 호박 등의 성분이 노폐물과 각질 케어에 도움을 주며 대나무 수와 로얄제리 성분의 함유로 피부에 필요한 수분과 영양을 공급해 줍니다
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>전성분</th>
-                                                <td colspan="3">
-                                                    정제수,미네랄오일,옥틸도데칸올,글리세린,부틸렌글라이콜,폴리소르베이트60,세틸알코올,느릅나무뿌리추출물,
-                                                    줄맨드라미씨추출물,카바잎/뿌리/줄기추출물,드럼스틱나무씨추출물,레몬추출물,로얄젤리추출물,호박추출물,마치현추출물,칡뿌리추출물,감초추출물,작약추출물,천궁추출물,양송이버섯추출물,키위추출물,레몬껍질오일,대나무수,수용성콜라겐,알로에베라잎즙,하이드로제네이티드레시틴,소듐하이알루로네이트,글리세릴스테아레이트,피이지-100스테아레이트,1,2-헥산디올,디메치콘,프룩토올리고사카라이드,소듐폴리아크릴레이트,소르비탄스테아레이트,
-                                                    암모늄아크릴로일디메칠타우레이트/브이피코폴리머,소르비탄세스퀴올리에이트,하이드록시에칠아크릴레이트/소듐아크릴로일디메칠타우레이트코폴리머,스쿠알란,에칠헥실글리세린,티타늄디옥사이드,토코페릴아세테이트,만니톨,디소듐이디티에이,아크릴레이트/암모늄메타크릴레이트코폴리머,바이오플라보노이드,잔탄검,페녹시에탄올,황색산화철
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!--//성분표시-->*@
                             </div>
                             <!--//상세정보-->
                             <!--리뷰 dykim-->
@@ -402,8 +319,6 @@
                     <div class="right_area">
                         <!--배너 지젠 기획전-->
                        @* @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}*@
-                        <!--세트상품 ssw --2015.8.8 ssw 수정 CD_PROMOTION_PRODUCT 추가-->
-                        @{Html.RenderAction("ProductDetailSetList", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE , CD_PROMOTION_PRODUCT=@ViewBag.CD_PROMOTION_PRODUCT });}
                         <!--오른쪽영역 : 상품상세의 right 프로모션-->
                         <div class="promotion">
                             <ul>
@@ -424,7 +339,8 @@
                             </ul>
                         </div>
                         <!--오른쪽영역 : 상품상세의 right 프로모션-->
-
+                        <!--세트상품 ssw --2015.8.8 ssw 수정 CD_PROMOTION_PRODUCT 추가-->
+                        @{Html.RenderAction("ProductDetailSetList", "ChildActionPromotion", new { P_CODE = @ViewBag.P_CODE, CD_PROMOTION_PRODUCT = @ViewBag.CD_PROMOTION_PRODUCT });}
                         @if (this.ViewBag.withCnt != 0) //관련상품 리스트
                         { 
                            <div class="setgoods">
