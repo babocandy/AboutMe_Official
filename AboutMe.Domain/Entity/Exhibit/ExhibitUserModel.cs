@@ -153,8 +153,6 @@ namespace AboutMe.Domain.Entity.Exhibit
         public string OLD_MOBILE_FILE { get; set; }
         public string OLD_WEB_BANNER { get; set; }
         public string OLD_MOBILE_BANNER { get; set; }
-        public string WEB_URL { get; set; }
-        public string MOBILE_URL { get; set; }
         public string USE_YN { get; set; }
         public string ADM_ID { get; set; }
     }
@@ -168,8 +166,20 @@ namespace AboutMe.Domain.Entity.Exhibit
     }
 
     public class TAB_ORDER_UPDATE
-    { 
+    {
         public int TAB_IDX { get; set; }
+        public int DISPLAY_ORDER { get; set; }
+    }
+
+    public class TAB_PRODUCT_UPDATE
+    {
+        public string P_CODE { get; set; }
+        public int DISPLAY_ORDER { get; set; }
+    }
+
+    public class TAB_PRODUCT_ORDER_UPDATE
+    {
+        public string PRODUCT_IDX { get; set; }
         public int DISPLAY_ORDER { get; set; }
     }
 }

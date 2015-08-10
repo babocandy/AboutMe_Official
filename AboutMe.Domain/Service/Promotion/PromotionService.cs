@@ -56,15 +56,15 @@ namespace AboutMe.Domain.Service.Promotion
 
     #region 상품상세 페이지 -pc 모바일 공통 ==================================================
 
-        //특정 상품에 적용된 모든 전체할인 프로모션정책을 가져온다 
-        public List<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result> GetPromotionTotalInfo_ByProduct(string PCode, string MGbn , string MGrade)
+        //특정 상품에 적용된 모든 전체할인 프로모션정책을 가져온다  (상품별 프로모션에 소속된 상품과 그렇지 않은 상품 모두)
+        public List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> GetPromotionTotalInfo_ByProduct(string PCode, string MGbn, string MGrade)
         {
 
-            List<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result> lst = new List<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result>();
+            List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> lst = new List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result>();
             using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
             {
                 /**try {**/
-                lst = AdmPromotionContext.SP_PROMOTION_TOTAL_BY_PRODUCT_SEL(PCode,MGbn,MGrade).ToList();
+                lst = AdmPromotionContext.SP_PROMOTION_TOTAL_BY_PRODUCT_ALL_SEL(PCode,MGbn,MGrade).ToList();
                 /** }catch()
                  {
                        AdmEtcContext.Dispose();

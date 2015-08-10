@@ -17,7 +17,6 @@ namespace AboutMe.Domain.Entity.Exhibit
         public int EXHIBIT_IDX { get; set; }
         public string TAB_NAME { get; set; }
         public int DISPLAY_ORDER { get; set; }
-        public string ADM_ID { get; set; }
-        public System.DateTime REG_DATE { get; set; }
+        public int PRODUCT_COUNT { get; set; }
     }
 }

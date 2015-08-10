@@ -24,8 +24,6 @@
           <Parameter Name="MOBILE_FILE" Type="varchar" Mode="In" />
           <Parameter Name="WEB_BANNER" Type="varchar" Mode="In" />
           <Parameter Name="MOBILE_BANNER" Type="varchar" Mode="In" />
-          <Parameter Name="WEB_URL" Type="varchar" Mode="In" />
-          <Parameter Name="MOBILE_URL" Type="varchar" Mode="In" />
           <Parameter Name="USE_YN" Type="char" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
           <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
@@ -54,6 +52,9 @@
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="DISPLAY_ORDER" Type="int" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TAB_IDX" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
@@ -98,8 +99,6 @@
           <Parameter Name="MOBILE_FILE" Type="varchar" Mode="In" />
           <Parameter Name="WEB_BANNER" Type="varchar" Mode="In" />
           <Parameter Name="MOBILE_BANNER" Type="varchar" Mode="In" />
-          <Parameter Name="WEB_URL" Type="varchar" Mode="In" />
-          <Parameter Name="MOBILE_URL" Type="varchar" Mode="In" />
           <Parameter Name="USE_YN" Type="char" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
@@ -131,8 +130,6 @@
             <Parameter Name="MOBILE_FILE" Mode="In" Type="String" />
             <Parameter Name="WEB_BANNER" Mode="In" Type="String" />
             <Parameter Name="MOBILE_BANNER" Mode="In" Type="String" />
-            <Parameter Name="WEB_URL" Mode="In" Type="String" />
-            <Parameter Name="MOBILE_URL" Mode="In" Type="String" />
             <Parameter Name="USE_YN" Mode="In" Type="String" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
             <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
@@ -159,8 +156,6 @@
             <Parameter Name="MOBILE_FILE" Mode="In" Type="String" />
             <Parameter Name="WEB_BANNER" Mode="In" Type="String" />
             <Parameter Name="MOBILE_BANNER" Mode="In" Type="String" />
-            <Parameter Name="WEB_URL" Mode="In" Type="String" />
-            <Parameter Name="MOBILE_URL" Mode="In" Type="String" />
             <Parameter Name="USE_YN" Mode="In" Type="String" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
@@ -189,10 +184,10 @@
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EXHIBIT_TAB_DEL">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_DEL">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_INS">
             <Parameter Name="TAB_IDX" Mode="In" Type="Int32" />
@@ -202,7 +197,7 @@
             <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_LIST" ReturnType="Collection(AboutMeModel8.SP_ADMIN_EXHIBIT_TAB_PRODUCT_LIST_Result)">
-            <Parameter Name="TAB_IDX" Mode="In" Type="Int32" />
+          <Parameter Name="TAB_IDX" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_SEARCH" ReturnType="Collection(AboutMeModel8.SP_ADMIN_EXHIBIT_TAB_PRODUCT_SEARCH_Result)">
             <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
@@ -212,6 +207,9 @@
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="DISPLAY_ORDER" Mode="In" Type="Int32" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL">
+          <Parameter Name="TAB_IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_EXHIBIT_CNT_Result" >
@@ -229,8 +227,6 @@
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
@@ -247,8 +243,6 @@
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="WEB_URL" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MOBILE_URL" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
@@ -258,9 +252,8 @@
           <Property Type="Int32" Name="EXHIBIT_IDX" Nullable="false" />
           <Property Type="String" Name="TAB_NAME" Nullable="false" MaxLength="200" />
           <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
-          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
-          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
-        </ComplexType>
+          <Property Type="Int32" Name="PRODUCT_COUNT" Nullable="false" />
+          </ComplexType>
         <ComplexType Name="SP_ADMIN_EXHIBIT_TAB_PRODUCT_LIST_Result">
           <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
@@ -309,8 +302,6 @@
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
-                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
                 <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
@@ -332,8 +323,6 @@
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="WEB_URL" ColumnName="WEB_URL" />
-                <ScalarProperty Name="MOBILE_URL" ColumnName="MOBILE_URL" />
                 <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
@@ -349,9 +338,8 @@
                 <ScalarProperty Name="EXHIBIT_IDX" ColumnName="EXHIBIT_IDX" />
                 <ScalarProperty Name="TAB_NAME" ColumnName="TAB_NAME" />
                 <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
-                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
-                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="PRODUCT_COUNT" ColumnName="PRODUCT_COUNT" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_EXHIBIT_TAB_UPD" FunctionName="AboutMeModel8.Store.SP_ADMIN_EXHIBIT_TAB_UPD" />
@@ -387,6 +375,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_EXHIBIT_TAB_PRODUCT_UPD" FunctionName="AboutMeModel8.Store.SP_ADMIN_EXHIBIT_TAB_PRODUCT_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL" FunctionName="AboutMeModel8.Store.SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

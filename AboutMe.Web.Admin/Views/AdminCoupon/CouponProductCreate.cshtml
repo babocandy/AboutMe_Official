@@ -127,18 +127,17 @@
 
         function allChk(obj) {
             var f = document.frm02;
+            //alert(f.Check_ins_cd_coupon.length);
       
-            for(var i =0 ; f.Check_ins_cd_coupon.length > i ; i++ )
-            {
-                if(obj.checked == false)
-                {
-                    f.Check_ins_cd_coupon[i].checked = false;
-                }
-                else
-                {
-                    f.Check_ins_cd_coupon[i].checked = true;
-                }
-            }
+            for (var i = 0 ; f.Check_ins_cd_coupon.length > i ; i++) {
+                    if (obj.checked == false) {
+                        f.Check_ins_cd_coupon[i].checked = false;
+                    }
+                    else {
+                        f.Check_ins_cd_coupon[i].checked = true;
+                    }
+           }
+            
         }
     </script>
 }

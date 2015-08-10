@@ -45,6 +45,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize]
+        [Route("Update/{id:int}")]
         public ActionResult Update(int? id , AdminReviewRouteParam p)
         {
             

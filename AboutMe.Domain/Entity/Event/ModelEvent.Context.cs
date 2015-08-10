@@ -57,7 +57,7 @@ namespace AboutMe.Domain.Entity.Event
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EVENT_CNT_Result>("SP_ADMIN_EVENT_CNT", fROM_DATEParameter, tO_DATEParameter, iNG_GBNParameter, uSE_YNParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
         }
     
-        public virtual int SP_ADMIN_EVENT_INS(string eVENT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eVENT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string wEB_URL, string mOBILE_URL, string uSE_YN, string aDM_ID, ObjectParameter nEW_IDX)
+        public virtual int SP_ADMIN_EVENT_INS(string eVENT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eVENT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string uSE_YN, string aDM_ID, ObjectParameter nEW_IDX)
         {
             var eVENT_NAMEParameter = eVENT_NAME != null ?
                 new ObjectParameter("EVENT_NAME", eVENT_NAME) :
@@ -99,14 +99,6 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("MOBILE_BANNER", mOBILE_BANNER) :
                 new ObjectParameter("MOBILE_BANNER", typeof(string));
     
-            var wEB_URLParameter = wEB_URL != null ?
-                new ObjectParameter("WEB_URL", wEB_URL) :
-                new ObjectParameter("WEB_URL", typeof(string));
-    
-            var mOBILE_URLParameter = mOBILE_URL != null ?
-                new ObjectParameter("MOBILE_URL", mOBILE_URL) :
-                new ObjectParameter("MOBILE_URL", typeof(string));
-    
             var uSE_YNParameter = uSE_YN != null ?
                 new ObjectParameter("USE_YN", uSE_YN) :
                 new ObjectParameter("USE_YN", typeof(string));
@@ -115,7 +107,7 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("ADM_ID", aDM_ID) :
                 new ObjectParameter("ADM_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_INS", eVENT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eVENT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, wEB_URLParameter, mOBILE_URLParameter, uSE_YNParameter, aDM_IDParameter, nEW_IDX);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_INS", eVENT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eVENT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, uSE_YNParameter, aDM_IDParameter, nEW_IDX);
         }
     
         public virtual int SP_ADMIN_EVENT_MAIN_DEL(string bANNER_GBN, string aDM_ID)
@@ -189,7 +181,7 @@ namespace AboutMe.Domain.Entity.Event
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EVENT_SEL_Result>("SP_ADMIN_EVENT_SEL", fROM_DATEParameter, tO_DATEParameter, iNG_GBNParameter, uSE_YNParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, pAGEParameter, pAGESIZEParameter);
         }
     
-        public virtual int SP_ADMIN_EVENT_UPD(Nullable<int> iDX, string eVENT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eVENT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string wEB_URL, string mOBILE_URL, string uSE_YN, string aDM_ID)
+        public virtual int SP_ADMIN_EVENT_UPD(Nullable<int> iDX, string eVENT_NAME, string fROM_DATE, string fROM_TIME, string tO_DATE, string tO_TIME, string eVENT_GBN, string wEB_CONTENTS, string mOBILE_FILE, string wEB_BANNER, string mOBILE_BANNER, string uSE_YN, string aDM_ID)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -235,14 +227,6 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("MOBILE_BANNER", mOBILE_BANNER) :
                 new ObjectParameter("MOBILE_BANNER", typeof(string));
     
-            var wEB_URLParameter = wEB_URL != null ?
-                new ObjectParameter("WEB_URL", wEB_URL) :
-                new ObjectParameter("WEB_URL", typeof(string));
-    
-            var mOBILE_URLParameter = mOBILE_URL != null ?
-                new ObjectParameter("MOBILE_URL", mOBILE_URL) :
-                new ObjectParameter("MOBILE_URL", typeof(string));
-    
             var uSE_YNParameter = uSE_YN != null ?
                 new ObjectParameter("USE_YN", uSE_YN) :
                 new ObjectParameter("USE_YN", typeof(string));
@@ -251,7 +235,7 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("ADM_ID", aDM_ID) :
                 new ObjectParameter("ADM_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_UPD", iDXParameter, eVENT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eVENT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, wEB_URLParameter, mOBILE_URLParameter, uSE_YNParameter, aDM_IDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_UPD", iDXParameter, eVENT_NAMEParameter, fROM_DATEParameter, fROM_TIMEParameter, tO_DATEParameter, tO_TIMEParameter, eVENT_GBNParameter, wEB_CONTENTSParameter, mOBILE_FILEParameter, wEB_BANNERParameter, mOBILE_BANNERParameter, uSE_YNParameter, aDM_IDParameter);
         }
     
         public virtual ObjectResult<SP_ADMIN_EVENT_VIEW_Result> SP_ADMIN_EVENT_VIEW(Nullable<int> iDX)
@@ -292,6 +276,28 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("PAGESIZE", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_ING_LIST_Result>("SP_EVENT_ING_LIST", pAGEParameter, pAGESIZEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_EVENT_MAIN_LIST_Result> SP_ADMIN_EVENT_MAIN_LIST()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EVENT_MAIN_LIST_Result>("SP_ADMIN_EVENT_MAIN_LIST");
+        }
+    
+        public virtual int SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD(string gBN, Nullable<int> iDX, Nullable<int> oRDER)
+        {
+            var gBNParameter = gBN != null ?
+                new ObjectParameter("GBN", gBN) :
+                new ObjectParameter("GBN", typeof(string));
+    
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var oRDERParameter = oRDER.HasValue ?
+                new ObjectParameter("ORDER", oRDER) :
+                new ObjectParameter("ORDER", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD", gBNParameter, iDXParameter, oRDERParameter);
         }
     }
 }

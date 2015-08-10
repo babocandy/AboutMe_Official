@@ -19,7 +19,8 @@ namespace AboutMe.Domain.Service.Promotion
         List<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> GetPromotionByProductList(string CdPromotionProduct);
 
         //특정 상품에 적용된 모든 전체할인 프로모션정책을 가져온다 
-        List<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result> GetPromotionTotalInfo_ByProduct(string PCode, string MGbn, string MGrade);
+        //List<SP_PROMOTION_TOTAL_BY_PRODUCT_SEL_Result> GetPromotionTotalInfo_ByProduct(string PCode, string MGbn, string MGrade); ==> 폐기
+        List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> GetPromotionTotalInfo_ByProduct(string PCode, string MGbn, string MGrade);
 
         //상세페이지의 세트상품 리스트 - 특정상품과 연관된 세트상품리스트 보여주기 
         List<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result> GetPromotionByProduct_SET_RelatedList(string CdPromotionProduct, string PCode);

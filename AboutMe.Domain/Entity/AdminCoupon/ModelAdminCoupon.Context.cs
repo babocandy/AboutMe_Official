@@ -625,5 +625,14 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result>("SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL", uSABLE_DEVICE_GBNParameter, p_CODEParameter, m_IDParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_COUPON_COMMON_CNT_Result> SP_COUPON_DOWNLOADABLE_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_COUPON_DOWNLOADABLE_CNT", m_IDParameter);
+        }
     }
 }
