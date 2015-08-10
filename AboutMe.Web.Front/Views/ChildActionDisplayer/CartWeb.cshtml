@@ -1,0 +1,11 @@
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+<div class="banner mt40">
+    <h3>배너 이미지</h3>
+    <a href="@Model.List[0].URL"><img src="@(myController._img_path_display)@(Model.List[0].IMG)" alt="" /></a>
+</div>

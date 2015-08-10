@@ -12,6 +12,8 @@ namespace AboutMe.Domain.Entity.Display
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DisplayEntities : DbContext
     {
@@ -25,5 +27,22 @@ namespace AboutMe.Domain.Entity.Display
             throw new UnintentionalCodeFirstException();
         }
     
+    
+        public virtual ObjectResult<SP_DISPLAY_SEL_Result> SP_DISPLAY_SEL(string kIND, string sUB_KIND, Nullable<int> sEQ)
+        {
+            var kINDParameter = kIND != null ?
+                new ObjectParameter("KIND", kIND) :
+                new ObjectParameter("KIND", typeof(string));
+    
+            var sUB_KINDParameter = sUB_KIND != null ?
+                new ObjectParameter("SUB_KIND", sUB_KIND) :
+                new ObjectParameter("SUB_KIND", typeof(string));
+    
+            var sEQParameter = sEQ.HasValue ?
+                new ObjectParameter("SEQ", sEQ) :
+                new ObjectParameter("SEQ", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_DISPLAY_SEL_Result>("SP_DISPLAY_SEL", kINDParameter, sUB_KINDParameter, sEQParameter);
+        }
     }
 }

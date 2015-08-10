@@ -160,4 +160,18 @@ namespace AboutMe.Domain.Entity.Event
         public string ADM_ID { get; set; }
 
     }
+
+    public class EVENT_ADMIN_MAIN_INDEX
+    {
+        public SP_ADMIN_EVENT_MAIN_VIEW_Result MainInfo { get; set; }
+        public List<SP_EVENT_ING_LIST_Result> ListInfo { get; set; }
+    }
+
+    public class EVENT_MAIN_SAVE_PARAM
+    {
+        public string BANNER_GBN { get; set; } //-- 배너위치구분 (메인배너1~5 : M1~M5 / 우측배너1 : R1 / 중간배너1~4 : B1~B4 [BOTTOM] )
+        public string URL { get; set; }
+        public HttpPostedFileBase IMAGE_FILE { get; set; }
+        public string OLD_IMAGE_FILE { get; set; }
+    }
 }

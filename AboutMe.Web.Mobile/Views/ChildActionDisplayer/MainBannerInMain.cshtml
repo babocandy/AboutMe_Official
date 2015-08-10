@@ -1,0 +1,16 @@
+﻿@model AboutMe.Web.Mobile.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Mobile.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+
+<ul class="slider">
+
+    @foreach (var item in Model.List)
+    {
+        <li><img src="@string.Format("{0}{1}", myController._img_path_display, item.IMG)" alt="" /></li>
+    }
+
+</ul>

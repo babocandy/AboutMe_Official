@@ -1,22 +1,76 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+
+   Layout = null ;
 }
 
-<li>
-    <strong>임직원가</strong>
-    <span class="staff_price">22,400원</span>
-</li>
-<li>
-    <strong>VIP 할인가</strong>
-    <span class="staff_price">22,400원</span>
-</li>
-<li>
-    <strong>즉시할인</strong>
-    <span class="discount_num">10</span>% 할인쿠폰
-    <a href="#" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="" /></a>
-</li>
-<li>
-    <strong>포인트</strong>
-    ⓟ<span class="discount_num"> 298</span>
-</li>
+
+@if (ViewBag.M_ID == "") { //로그인 안했으면
+
+    if(ViewBag.NoLogin_Coupon_RateOrMoney != "")
+    {
+        string StrUnit = "", StrDC = "";  ;
+        if (ViewBag.NoLogin_Coupon_RateOrMoney == "R")
+        {
+            StrDC = ViewBag.NoLogin_Coupon_Discount_Rate;
+            StrUnit = "%";
+        }
+        else
+        {
+            StrDC = ViewBag.NoLogin_Coupon_Discount_Money;
+            StrUnit = "원";
+        }
+    
+        <li>
+            <strong>즉시할인</strong>
+            <span class="discount_num">@ViewBag.NoLogin_Coupon_Discount_Rate</span>@StrUnit 할인쿠폰
+            <a href="" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="alert('작업중')" /></a>
+        </li>
+     }
+    <li>
+        <strong>포인트</strong>
+        ⓟ<span class="discount_num"> @ViewBag.NoLogin_Point</span>
+    </li>
+}
+else
+{
+
+    if(ViewBag.MGbn == "S")
+    { 
+        <li>
+            <strong>임직원가</strong>
+            <span class="staff_price">@ViewBag.Login_Promotion_00_result_price원</span>
+        </li>
+    }
+    if(ViewBag.MGrade == "V")
+    { 
+        <li>
+            <strong>VIP 할인가</strong>
+            <span class="staff_price">@ViewBag.Login_Promotion_03_result_price원</span>
+        </li>
+    }
+
+    if (ViewBag.Login_Coupon_RateOrMoney != "")
+    {
+        string StrUnit = "" , StrDC = "";
+        if (ViewBag.Login_Coupon_RateOrMoney == "R") 
+        {
+            StrDC = ViewBag.Login_Coupon_Discount_Rate;
+            StrUnit = "%"; 
+        } 
+        else 
+        {
+            StrDC = ViewBag.Login_Coupon_Discount_Money;
+            StrUnit = "원"; 
+        }
+
+        <li>
+            <strong>즉시할인</strong>
+            <span class="discount_num">@ViewBag.Login_Coupon_Discount_Rate</span>@StrUnit 할인쿠폰
+            <a href="" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="alert('작업중')" /></a>
+        </li>
+    }
+    <li>
+        <strong>포인트</strong>
+        ⓟ<span class="discount_num"> @ViewBag.Login_Point</span>
+    </li>
+}

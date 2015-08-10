@@ -4,20 +4,63 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AboutMeModel8.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AboutMeModel8.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_DISPLAY_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KIND" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_KIND" Type="varchar" Mode="In" />
+          <Parameter Name="SEQ" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="AboutMeModel8StoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AboutMeModel8" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="DisplayEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="DisplayEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_DISPLAY_SEL" ReturnType="Collection(AboutMeModel8.SP_DISPLAY_SEL_Result)">
+            <Parameter Name="KIND" Mode="In" Type="String" />
+            <Parameter Name="SUB_KIND" Mode="In" Type="String" />
+            <Parameter Name="SEQ" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_DISPLAY_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="true" />
+          <Property Type="String" Name="URL" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="IMG" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TITLE1" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TITLE2" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="SEQ" Nullable="true" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AboutMeModel8StoreContainer" CdmEntityContainer="DisplayEntities" />
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel8StoreContainer" CdmEntityContainer="DisplayEntities" >
+          <FunctionImportMapping FunctionImportName="SP_DISPLAY_SEL" FunctionName="AboutMeModel8.Store.SP_DISPLAY_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel8.SP_DISPLAY_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="IMG" ColumnName="IMG" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="TITLE1" ColumnName="TITLE1" />
+                <ScalarProperty Name="TITLE2" ColumnName="TITLE2" />
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
+                <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

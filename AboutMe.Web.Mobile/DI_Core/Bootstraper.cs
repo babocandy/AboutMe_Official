@@ -28,7 +28,9 @@ namespace AboutMe.Web.Mobile.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Product.IProductService, AboutMe.Domain.Service.Product.ProductService>(); //상품관리
             container.RegisterType<AboutMe.Domain.Service.Member.IMemberService, AboutMe.Domain.Service.Member.MemberService>(); //회원관리
             container.RegisterType<AboutMe.Domain.Service.Cart.ICartService, AboutMe.Domain.Service.Cart.CartService>(); //Cart
-
+            container.RegisterType<AboutMe.Domain.Service.Review.IReviewService, AboutMe.Domain.Service.Review.ReviewService>(); //Review
+            container.RegisterType<AboutMe.Domain.Service.Point.IPointService, AboutMe.Domain.Service.Point.PointService>(); //포인트
+            container.RegisterType<AboutMe.Domain.Service.Display.IDisplayService, AboutMe.Domain.Service.Display.DisplayService>(); //전시,배너,팝업
             /**
            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminMemberService, AboutMe.Domain.Service.AdminEtc.AdminMemberService>();   //샘플용임
            container.RegisterType<AboutMe.Domain.Service.AdminProduct.IAdminProductService, AboutMe.Domain.Service.AdminProduct.AdminProductService>();

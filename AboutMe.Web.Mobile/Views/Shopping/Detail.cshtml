@@ -628,10 +628,7 @@
             </div>
             <!--//상품정보, 리뷰, 보증/배송 탭-->
             <!--배너-->
-            <div class="bnr_area">
-                <div class="bnr"><img src="/aboutCom/images/sample/event_ban4.jpg" alt="여름휴가에 지친 모공 리프트 업 세트구매시 30%할인" /></div>
-                <div class="bnr"><img src="/aboutCom/images/sample/event_ban3.jpg" alt="씨스타 뷰티아이템" /></div>
-            </div>
+            @Html.Action("BannerInProductDetail", "ChildActionDisplayer")
             <!--//배너-->
             <!--같이구매하면 좋은 상품 (최소 두개의 리스트제공)-->
             @if (this.ViewBag.withCnt != 0) //관련상품 리스트
