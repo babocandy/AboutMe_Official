@@ -122,10 +122,18 @@ namespace AboutMe.Web.Front.Controllers
 
 
         [ChildActionOnly]
-        public ActionResult GbnLink()
+        public ActionResult GbnLink1()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.GBN_LINK);
+            model.One = GetOneDisplayResult( _service.GetListDisplay(DisplayerCode.GBN_LINK, DisplayerCode.SUB_KIND_10, 1) );
+            return View(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult GbnLink2()
+        {
+            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.GBN_LINK, DisplayerCode.SUB_KIND_10, 2));
             return View(model);
         }
 
@@ -153,6 +161,7 @@ namespace AboutMe.Web.Front.Controllers
 
             return View(model);
         }
+
 
         [ChildActionOnly]
         private SP_DISPLAY_SEL_Result GetOneDisplayResult(List<SP_DISPLAY_SEL_Result> list)

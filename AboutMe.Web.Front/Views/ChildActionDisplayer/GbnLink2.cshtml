@@ -1,0 +1,11 @@
+﻿@model AboutMe.Web.Front.Models.BaseDisplayerViewModel
+@using AboutMe.Web.Front.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+<a href="@Model.One.URL">
+    <span class="ban_tit">@Model.One.TITLE1</span>
+    <span class="ban_txt">@Model.One.TITLE2</span>
+</a>
