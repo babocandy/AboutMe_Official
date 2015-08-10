@@ -12,7 +12,7 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     {
         public int IDX { get; set; }
         public string CD_COUPON { get; set; }
-        [Required(ErrorMessage = "상품코드를 입력하세요.")]
+        [Required(ErrorMessage = "쿠폰명을 입력하세요.")]
         public string COUPON_NAME { get; set; }
         public string COUPON_AD_MSG { get; set; }
         public string COUPON_USE_DESCRIPTION { get; set; }

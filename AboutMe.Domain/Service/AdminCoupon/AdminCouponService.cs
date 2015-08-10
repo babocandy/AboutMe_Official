@@ -13,6 +13,9 @@ namespace AboutMe.Domain.Service.AdminCoupon
 {
     public class AdminCouponService : IAdminCouponService
     {
+
+        #region 쿠폰마스터 정보 
+
         //쿠폰마스터 리스트 가져오기
         public List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponList(string SearchCol, string SearchKeyword, int Page, int PageSize)
         {
@@ -117,6 +120,59 @@ namespace AboutMe.Domain.Service.AdminCoupon
         }
 
 
+        //쿠폰정책 수정
+        public int UpdateAdminCouponMaster(TB_COUPON_MASTER Tb, string[] CheckMemGrade , string CdCoupon)
+        {
+
+            int IsSuccess = 1;
+       
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+                    using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                    {
+                      
+                        //마스터정보 insert
+                        AdmCouponContext.SP_ADMIN_COUPON_MASTER_UPD
+                            (CdCoupon, Tb.COUPON_NAME, Tb.COUPON_AD_MSG, Tb.COUPON_USE_DESCRIPTION, Tb.FIXED_PERIOD_FROM, Tb.FIXED_PERIOD_TO, Tb.EXRIRED_DAY_FROM_ISSUE_DT
+                            , Tb.MASTER_FROM_DATE, Tb.MASTER_TO_DATE, Tb.USABLE_YN);
+
+
+                        //적용 회원등급 삭제
+                        AdmCouponContext.SP_ADMIN_COUPON_MEMBER_GRADE_DEL(CdCoupon);
+
+                        //적용 회원등급 insert
+                        for (int i = 0; i < CheckMemGrade.Length; i++)
+                        {
+                            string[] MemGradeInfo = CheckMemGrade[i].Split('$');
+                            AdmCouponContext.SP_ADMIN_COUPON_MEM_GRADE_INS(CdCoupon, MemGradeInfo[0], MemGradeInfo[1]);
+                        }
+
+                        //전체상품 대상의 쿠폰이라면 지금 모든 상품을 대상으로 사용할 수 있게 INSERT 처리 
+                        /**
+                        if (Tb.PRODUCT_APP_SCOPE_GBN == "B")
+                        {
+                            AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_CREATE_ALL_INS(NewCdCoupon);
+                        }
+                        **/
+                    }
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                    IsSuccess = -1;
+                }
+
+            }
+
+            return IsSuccess;
+        }
+
+
 
 
        
@@ -138,6 +194,8 @@ namespace AboutMe.Domain.Service.AdminCoupon
             return lst;
 
         }
+
+        #endregion 
 
 
         #region 쿠폰 적용된 상품  ==================================================================

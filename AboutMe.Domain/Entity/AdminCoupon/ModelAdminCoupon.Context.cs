@@ -634,5 +634,59 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COUPON_COMMON_CNT_Result>("SP_COUPON_DOWNLOADABLE_CNT", m_IDParameter);
         }
+    
+        public virtual int SP_ADMIN_COUPON_MASTER_UPD(string cD_COUPON, string cOUPON_NAME, string cOUPON_AD_MSG, string cOUPON_USE_DESCRIPTION, Nullable<System.DateTime> fIXED_PERIOD_FROM, Nullable<System.DateTime> fIXED_PERIOD_TO, Nullable<int> eXRIRED_DAY_FROM_ISSUE_DT, Nullable<System.DateTime> mASTER_FROM_DATE, Nullable<System.DateTime> mASTER_TO_DATE, string uSABLE_YN)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            var cOUPON_NAMEParameter = cOUPON_NAME != null ?
+                new ObjectParameter("COUPON_NAME", cOUPON_NAME) :
+                new ObjectParameter("COUPON_NAME", typeof(string));
+    
+            var cOUPON_AD_MSGParameter = cOUPON_AD_MSG != null ?
+                new ObjectParameter("COUPON_AD_MSG", cOUPON_AD_MSG) :
+                new ObjectParameter("COUPON_AD_MSG", typeof(string));
+    
+            var cOUPON_USE_DESCRIPTIONParameter = cOUPON_USE_DESCRIPTION != null ?
+                new ObjectParameter("COUPON_USE_DESCRIPTION", cOUPON_USE_DESCRIPTION) :
+                new ObjectParameter("COUPON_USE_DESCRIPTION", typeof(string));
+    
+            var fIXED_PERIOD_FROMParameter = fIXED_PERIOD_FROM.HasValue ?
+                new ObjectParameter("FIXED_PERIOD_FROM", fIXED_PERIOD_FROM) :
+                new ObjectParameter("FIXED_PERIOD_FROM", typeof(System.DateTime));
+    
+            var fIXED_PERIOD_TOParameter = fIXED_PERIOD_TO.HasValue ?
+                new ObjectParameter("FIXED_PERIOD_TO", fIXED_PERIOD_TO) :
+                new ObjectParameter("FIXED_PERIOD_TO", typeof(System.DateTime));
+    
+            var eXRIRED_DAY_FROM_ISSUE_DTParameter = eXRIRED_DAY_FROM_ISSUE_DT.HasValue ?
+                new ObjectParameter("EXRIRED_DAY_FROM_ISSUE_DT", eXRIRED_DAY_FROM_ISSUE_DT) :
+                new ObjectParameter("EXRIRED_DAY_FROM_ISSUE_DT", typeof(int));
+    
+            var mASTER_FROM_DATEParameter = mASTER_FROM_DATE.HasValue ?
+                new ObjectParameter("MASTER_FROM_DATE", mASTER_FROM_DATE) :
+                new ObjectParameter("MASTER_FROM_DATE", typeof(System.DateTime));
+    
+            var mASTER_TO_DATEParameter = mASTER_TO_DATE.HasValue ?
+                new ObjectParameter("MASTER_TO_DATE", mASTER_TO_DATE) :
+                new ObjectParameter("MASTER_TO_DATE", typeof(System.DateTime));
+    
+            var uSABLE_YNParameter = uSABLE_YN != null ?
+                new ObjectParameter("USABLE_YN", uSABLE_YN) :
+                new ObjectParameter("USABLE_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MASTER_UPD", cD_COUPONParameter, cOUPON_NAMEParameter, cOUPON_AD_MSGParameter, cOUPON_USE_DESCRIPTIONParameter, fIXED_PERIOD_FROMParameter, fIXED_PERIOD_TOParameter, eXRIRED_DAY_FROM_ISSUE_DTParameter, mASTER_FROM_DATEParameter, mASTER_TO_DATEParameter, uSABLE_YNParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_MEMBER_GRADE_DEL(string cD_COUPON)
+        {
+            var cD_COUPONParameter = cD_COUPON != null ?
+                new ObjectParameter("CD_COUPON", cD_COUPON) :
+                new ObjectParameter("CD_COUPON", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MEMBER_GRADE_DEL", cD_COUPONParameter);
+        }
     }
 }

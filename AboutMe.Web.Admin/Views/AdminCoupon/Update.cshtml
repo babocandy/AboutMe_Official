@@ -28,6 +28,20 @@
 
         return rtn;
     }
+
+
+    protected string SetCheckboxReadonly() 
+    {
+        string rtn = "";
+
+
+        if (DateTime.Now > Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE) //  프로모션이 시작된 경우 수정불가한 항목들  readonly  처리
+        {
+            rtn = "Onclick=\" alert('쿠폰 유효기간이 시작되어서 수정불가합니다.'); return false;\"";
+        }
+
+        return rtn;
+    }
 }
 
 @section Scripts{
@@ -43,7 +57,7 @@
 
             var f = document.frm01;
 
-
+            /**
             //용도구분값이 지불쿠폰 일때
 
             if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
@@ -124,7 +138,7 @@
                 }
             }
 
-
+            **/
 
             var is_mem_checked = false;
            // alert(f.CheckMemGrade.length);
@@ -146,27 +160,38 @@
 
             }
 
-            if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value != '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value != '') {
+            if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM.value != '' || f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO.value != '') {
 
-                if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value > f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value) {
+                if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM.value > f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO.value) {
                     alert("[고정기간 일자]의 시작일이 종료일보다 먼저여야 합니다.");
-                    f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
+                    f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TOfocus();
                     return false;
                 }
             }
 
 
-            if (f.inst_TB_COUPON_MASTER_MASTER_FROM_DATE.value != '' || f.inst_TB_COUPON_MASTER_MASTER_TO_DATE.value != '') {
+            if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE.value != '' || f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE.value != '') {
 
-                if (f.inst_TB_COUPON_MASTER_MASTER_FROM_DATE.value > f.inst_TB_COUPON_MASTER_MASTER_TO_DATE.value) {
+                if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE.value > f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE.value) {
                     alert("[발행가능기간]의 시작일이 종료일보다 먼저여야 합니다.");
                     f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
                     return false;
                 }
             }
 
-
-
+            if (f.SERVICE_LIFE_GBN == 'B') //쿠폰유효기간 구분이 발행일 기준이면
+            {
+                if(f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.value == "")
+                {
+                    alert("발행일 기준 유효기간을 입력하세요");
+                    f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.focus();
+                }
+                else if(isNaN(f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.value))
+                {
+                    alert("발행일 기준 유효기간에는 숫자만 입력하세요.");
+                    f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.focus();
+                }
+            }
 
             return true;
 
@@ -260,9 +285,15 @@
             <h3 class="sub-header">쿠폰정책 등록</h3>
             @using (Html.BeginForm("Update", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
-                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+                @Html.AntiForgeryToken()              //폼 데이터 위조 방지 토큰 생성
+                                        
+                                         <input type="hidden" id="SERVICE_LIFE_GBN" name="SERVICE_LIFE_GBN" value="@Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].SERVICE_LIFE_GBN" />
+                                        <input type="hidden" id="ORG_MASTER_FROM_DATE" name="ORG_MASTER_FROM_DATE" value="@Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE">
+                                        <input type="hidden" id="ORG_MASTER_TO_DATE" name="ORG_MASTER_TO_DATE" value="@Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE">
+                                        <input type="hidden" id="ORG_FIXED_PERIOD_FROM" name="ORG_FIXED_PERIOD_FROM" value="@Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM">
+                                        <input type="hidden" id="ORG_FIXED_PERIOD_TO" name="ORG_FIXED_PERIOD_TO" value="@Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO">
 
-                                     <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
+                                        <input type="hidden" name="CdCoupon" value="@Request["CdCoupon"].ToString()" />
 
                                         <table class="table table_row">
                                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
@@ -420,18 +451,18 @@
 
                                                
                                                 <tr>
-                                                    <th>발행가능기간(정책유효기간) 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>정책유효기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>발행가능기간(정책유효기간) 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>정책유효기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
                                                 </tr>
                                                 <tr>
                                                     <th>발행 대상 회원등급 </th>
                                                     <td>
-                                                        일반 <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$B" @DisplayMemGradeCheck("A$B") />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$S" @DisplayMemGradeCheck("A$S") />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$G" @DisplayMemGradeCheck("A$G") />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="A$V" @DisplayMemGradeCheck("A$V") /> VIP
-                                                        <br>임직원 <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$B" @DisplayMemGradeCheck("S$B") />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$S" @DisplayMemGradeCheck("S$S") />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$G" @DisplayMemGradeCheck("S$G") /> >골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" disabled="true" value="S$V" @DisplayMemGradeCheck("S$V") /> VIP
+                                                        일반 <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="A$B" @DisplayMemGradeCheck("A$B") />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="A$S" @DisplayMemGradeCheck("A$S") />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="A$G" @DisplayMemGradeCheck("A$G") />골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="A$V" @DisplayMemGradeCheck("A$V") /> VIP
+                                                        <br>임직원 <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="S$B" @DisplayMemGradeCheck("S$B") />브론즈 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="S$S" @DisplayMemGradeCheck("S$S") />실버  , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="S$G" @DisplayMemGradeCheck("S$G") /> 골드 , <input type="checkbox" id="CheckMemGrade" name="CheckMemGrade" @Html.Raw(SetCheckboxReadonly())  value="S$V" @DisplayMemGradeCheck("S$V") /> VIP
                                                     </td>
                                                 </tr>
                                                 <tr>
