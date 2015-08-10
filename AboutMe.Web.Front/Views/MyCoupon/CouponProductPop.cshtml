@@ -136,22 +136,11 @@
                     </div>
                 </div>
                 <!-- 페이징 -->
-                <div class="paging mt30">
-                    <a href="#" class="prev">이전</a>
-                    <!-- 현재 페이지 -->
-                    <strong>1</strong>
-                    <!-- //현재 페이지 -->
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
-                    <a href="#">7</a>
-                    <a href="#">8</a>
-                    <a href="#">9</a>
-                    <a href="#">10</a>
-                    <a href="#" class="next">다음</a>
-                </div>
+                @{
+                    string AddGetStr = "";
+                    AddGetStr = "IdxCouponNumber=" + Request["IdxCouponNumber"].ToString();
+                    Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = 10, PagePerBlock = ViewBag.PageSize, CurrentPage = ViewBag.Page, QueryStr = AddGetStr });
+                }
                 <!-- //페이징 -->
             </div>
             <!--//coupon_info-->

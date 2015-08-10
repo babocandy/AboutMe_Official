@@ -15,16 +15,19 @@ namespace AboutMe.Domain.Service.Coupon
 
         #region PC버전 - 마이페이지
         
-        //다운로드 가능 쿠폰리스트
+        //다운로드 가능 쿠폰리스트 - PC버전 
         List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponList(string M_Id);
+
+        //다운로드 가능한 쿠폰 수량 가져오기  - pc버전 , 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        List<SP_ADMIN_COUPON_COMMON_CNT_Result> GetDownloadableCouponCnt(string M_Id);
 
         //다운로드 처리  - pc버전 , 번호 인증 필요없는 쿠폰
         int UpdateCouponDownload_Pc_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod);
 
-        //사용가능한 쿠폰 리스트 가져오기 
+        //사용가능한 쿠폰 리스트 가져오기 -PC
         List<SP_COUPON_ISSUED_DETAIL_SEL_Result> GetCouponAvailableList(string M_ID, string SearchCol, string SearchKeyword, int Page, int PageSize);
 
-        //사용가능한 쿠폰리스트 COUNT 가져오기 
+        //사용가능한 쿠폰리스트 COUNT 가져오기 -PC
         int GettCouponAvailableListCnt(string M_ID, string SearchCol, string SearchKeyword);
 
         //쿠폰별 상품 리스트 가져오기 --PC 모바일 공통

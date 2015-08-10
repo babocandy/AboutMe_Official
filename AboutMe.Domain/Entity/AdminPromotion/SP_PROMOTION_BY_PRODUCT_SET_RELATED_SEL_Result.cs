@@ -30,6 +30,7 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public string P_SUB_TITLE { get; set; }
+        public string ICON_YN { get; set; }
         public Nullable<int> SELLING_PRICE { get; set; }
         public Nullable<int> DISCOUNT_PRICE { get; set; }
         public string P_INFO_DETAIL_WEB { get; set; }

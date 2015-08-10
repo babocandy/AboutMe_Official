@@ -27,7 +27,79 @@
                 f.SEL_PMO_TOTAL_CATEGORY.focus();
                 return false;
             }
+
+            if (getRadioVal(f, 'inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_RATE_OR_MONEY') == 'R') {
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DISCOUNT_RATE.value == '') {
+                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 할인율]를 입력해야 합니다.");
+                    f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DISCOUNT_RATE.focus();
+                    return false;
+                }
+            }
+
+
+            if (getRadioVal(f, 'inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_RATE_OR_MONEY') == 'M') {
+                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+                if (f.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY.value == '') {
+                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 금액]을 입력해야 합니다.");
+                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.focus();
+                    return false;
+                }
+            }
+
+            var is_mem_checked = false;
+            // alert(f.CheckMemGrade.length);
+
+
+            for (var k = 0 ; f.CheckMemGrade.length > k ; k++) {
+                if (f.CheckMemGrade[k].checked == true) {
+                    is_mem_checked = true;
+                    //alert(k);
+                    break;
+                }
+            }
+
+   
+
+            if (is_mem_checked == false) {
+
+                alert("적용회원등급을 선택하세요");
+                f.CheckMemGrade[0].focus();
+                return false;
+
+            }
+
+            if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_FROM.value != '' || f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_TO.value != '') {
+
+                if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_FROM.value > f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_TO.value) {
+                    alert("[프로모션시작일시]가 종료일시보다 먼저여야 합니다.");
+                    f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_FROM.focus();
+                    return false;
+                }
+            }
+
             
+        }
+
+
+
+
+        function getRadioVal(form, name) {
+            var val = "";
+            // get list of radio buttons with specified name
+            var radios = form.elements[name];
+
+
+            // loop through list of radio buttons
+            // for (var i = 0; radios.length < i; i++)
+            for (var i = 0, len = radios.length; i < len; i++) {
+                //alert('in:   ' +name + ':' + radios[i].value);
+                if (radios[i].checked) { // radio checked?
+                    val = radios[i].value; // if so, hold its value in val
+                    break; // and break out of for loop
+                }
+            }
+            return val; // return value of checked radio or undefined if none checked
         }
 
         function setTotalCategory(obj_selectbox, sel_index) {
@@ -100,7 +172,7 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/">HOME</a> &gt; <a href="#">프로모션 관리</a> &gt; <strong>전체할인 프로모션 등록</strong>
         </div>
         <!--//path-->
 

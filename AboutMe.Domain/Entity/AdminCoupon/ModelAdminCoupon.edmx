@@ -239,6 +239,9 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="IDX_COUPON_NUMBER" Type="int" Mode="In" />
           <Parameter Name="METHOD" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_COUPON_DOWNLOADABLE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_COUPON_DOWNLOADABLE_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
@@ -507,6 +510,9 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <FunctionImport Name="SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result)">
             <Parameter Name="USABLE_DEVICE_GBN" Mode="In" Type="String" />
             <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_DOWNLOADABLE_CNT" ReturnType="Collection(AboutMeModel3.SP_ADMIN_COUPON_COMMON_CNT_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -1313,6 +1319,13 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
                 <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="P_TAG" ColumnName="P_TAG" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_DOWNLOADABLE_CNT" FunctionName="AboutMeModel3.Store.SP_COUPON_DOWNLOADABLE_CNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_ADMIN_COUPON_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
