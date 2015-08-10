@@ -136,17 +136,23 @@ namespace AboutMe.Web.Admin.Controllers
                 MasterFromDate= tb_coupon_master.MASTER_FROM_DATE.Value;
                 MasterToDate= tb_coupon_master.MASTER_TO_DATE.Value;
 
-                if (tb_coupon_master.FIXED_PERIOD_FROM.HasValue && tb_coupon_master.FIXED_PERIOD_TO.HasValue)
+                if (tb_coupon_master.SERVICE_LIFE_GBN == "A" && (tb_coupon_master.FIXED_PERIOD_FROM.HasValue && tb_coupon_master.FIXED_PERIOD_TO.HasValue)) //고정기간 기준이면
                 {
                     FixedPeriodFrom= tb_coupon_master.FIXED_PERIOD_FROM.Value;
                     FixedPeriodTo = tb_coupon_master.FIXED_PERIOD_TO.Value;
 
-                    if(FixedPeriodFrom < MasterFromDate) //고정기간의 시작일자가 발행가능기간보다 먼저이면 에러
+                    if(FixedPeriodFrom < MasterFromDate) //고정기간의 시작일자가 정책유효기간보다 먼저이면 에러
                     {
                         DateValid = false;
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 발행가능기간보다 나중이어야 합니다.')</script>";
+                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 정책유효기간보다 나중이어야 합니다.')</script>";
+                    }
+                    else if (FixedPeriodTo > MasterToDate)
+                    {
+                        DateValid = false;
+                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 종료일자는 정책유효기간 이내 이어야 합니다.')</script>";
                     }
                 }
+
 
                 if (DateValid == true)
                 {
@@ -170,6 +176,7 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult Update(string CdCoupon)
         {
 
+
             var mMyMultiModelForCreate = new MyMultiModelForCreate
             {
                  inst_TB_COUPON_MASTER = new TB_COUPON_MASTER()
@@ -181,6 +188,12 @@ namespace AboutMe.Web.Admin.Controllers
             mMyMultiModelForCreate.inst_SP_ADMIN_COUPON_MEMBER_GRADE_SEL_Result = _AdminCouponService.GetAdminCouponMemberGradeList(CdCoupon);
             mMyMultiModelForCreate.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result = _AdminCouponService.GetAdminCouponDetail(CdCoupon);
 
+
+            //int TotalRecord = 0;
+            //TotalRecord = _AdminCouponService.GetAdminCouponIssuedListCnt("", "", CdCoupon);
+
+            //ViewBag.IssuedCoponCount = TotalRecord; 
+
             return View(mMyMultiModelForCreate);
 
         }
@@ -190,48 +203,127 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
-        public ActionResult Update([Bind(Prefix = "inst_TB_COUPON_MASTER", Exclude = "IDX,CD_COUPON,COUPON_NUM_CHECK_TF,ISSUE_MAX_LIMIT,INS_DATE")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade)
+        public ActionResult Update([Bind(Prefix = "inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0]", Include = "COUPON_NAME,FIXED_PERIOD_FROM,FIXED_PERIOD_TO,EXRIRED_DAY_FROM_ISSUE_DT,MASTER_FROM_DATE,MASTER_TO_DATE,USABLE_YN")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade, string CdCoupon
+                            , string SERVICE_LIFE_GBN, string ORG_MASTER_FROM_DATE, string ORG_MASTER_TO_DATE, string ORG_FIXED_PERIOD_FROM, string ORG_FIXED_PERIOD_TO)
         {
 
-            /**
-            int is_success = 1;
 
-            DateTime FixedPeriodFrom, FixedPeriodTo;
-            DateTime MasterFromDate, MasterToDate;
+            bool PostedDataValid = true;
 
-            bool DateValid = true;
-            @TempData["jsMessage"] = "";
+            int TotalRecord = 0;
+            TotalRecord = _AdminCouponService.GetAdminCouponIssuedListCnt("", "", CdCoupon);
 
-            if (ModelState.IsValid)
+            DateTime OrgMasterFromDate, OrgMasterToDate, InputMasterFromDate, InputMasterToDate ;
+            DateTime OrgFixedPeriodFrom, OrgFixedPeriodTo, InputFixedPeriodFrom  , InputFixedPeriodTo;
+
+            //DateTime TargetMasterFromDate, TargetMasterToDate;
+            //DateTime TargetFixedPeriodFrom, TargetFixedPeriodTo;
+
+            OrgMasterFromDate = Convert.ToDateTime(ORG_MASTER_FROM_DATE);
+            OrgMasterToDate = Convert.ToDateTime(ORG_MASTER_TO_DATE); 
+            InputMasterFromDate = tb_coupon_master.MASTER_FROM_DATE.Value;
+            InputMasterToDate = tb_coupon_master.MASTER_TO_DATE.Value;
+
+
+            //[발행된 쿠폰이 있거나 없거나 공통 START]========================================================================================================
+            if (OrgMasterFromDate != InputMasterFromDate) // || OrgMasterToDate != InputMasterToDate)
             {
-                MasterFromDate = tb_coupon_master.MASTER_FROM_DATE.Value;
-                MasterToDate = tb_coupon_master.MASTER_TO_DATE.Value;
-
-                if (tb_coupon_master.FIXED_PERIOD_FROM.HasValue && tb_coupon_master.FIXED_PERIOD_TO.HasValue)
+                if (InputMasterFromDate < DateTime.Now )
                 {
-                    FixedPeriodFrom = tb_coupon_master.FIXED_PERIOD_FROM.Value;
-                    FixedPeriodTo = tb_coupon_master.FIXED_PERIOD_TO.Value;
+                    PostedDataValid = false;
+                    @TempData["jsMessage"] = "<script language='javascript'>alert('[정책유효기간 시작일시]를 현재 이전 으로 변경 할 수 없습니다.')</script>";
+                }
+            }
 
-                    if (FixedPeriodFrom < MasterFromDate) //고정기간의 시작일자가 발행가능기간보다 먼저이면 에러
-                    {
-                        DateValid = false;
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 발행가능기간보다 나중이어야 합니다.')</script>";
-                    }
+            if (PostedDataValid == true && OrgMasterToDate != InputMasterToDate) // || OrgMasterToDate != InputMasterToDate)
+            {
+                if ( InputMasterToDate < DateTime.Now)
+                {
+                    PostedDataValid = false;
+                    @TempData["jsMessage"] = "<script language='javascript'>alert('[정책유효기간 종료일시]를 현재 이전 으로 변경 할 수 없습니다.')</script>";
+                }
+            }
+
+            if (PostedDataValid == true && SERVICE_LIFE_GBN == "A") // 유효기간 기준이 '고정기간 기준'이면
+            {
+                OrgFixedPeriodFrom = Convert.ToDateTime(ORG_FIXED_PERIOD_FROM);
+                OrgFixedPeriodTo = Convert.ToDateTime(ORG_FIXED_PERIOD_TO);
+                InputFixedPeriodFrom = tb_coupon_master.FIXED_PERIOD_FROM.Value;
+                InputFixedPeriodTo = tb_coupon_master.FIXED_PERIOD_TO.Value;
+                //정책유효기간은 고정기간보다 넓은 범위내에서만 변경할 수 있다
+                if (InputFixedPeriodFrom < InputMasterFromDate) //고정기간의 시작일자가 정책유효기간보다 먼저이면 에러
+                {
+                    PostedDataValid = false;
+                    @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 정책유효기간 시작일자보다 나중이어야 합니다.')</script>";
+                }
+                else if (InputFixedPeriodTo > InputMasterToDate)
+                {
+                    PostedDataValid = false;
+                    @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 종료일자는 정책유효기간 이내 이어야 합니다.')</script>";
+                }
+            }
+
+            //[발행된 쿠폰이 있거나 없거나 END]==========================================================================================================
+
+
+            if (PostedDataValid == true && TotalRecord > 0) //[이미 발행된 쿠폰이 있으면 START]======================================================================================
+            {
+                if(OrgMasterFromDate != InputMasterFromDate)
+                {
+                    PostedDataValid = false;
+                    @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 [정책유효기간 시작일시]를 변경 할 수 없습니다.')</script>";
+                }else if (OrgMasterToDate > InputMasterToDate) 
+                {
+                    PostedDataValid = false;
+                    @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 [정책유효기간 종료일시]는 연장만 가능합니다.')</script>";
                 }
 
-                if (DateValid == true)
+
+                //[2]고정기간 변경 검증 ======================================================================
+             
+                else if (SERVICE_LIFE_GBN == "A") // 유효기간 기준이 '고정기간 기준'이면
                 {
-                    is_success = _AdminCouponService.InsAdminCouponMaster(tb_coupon_master, CheckMemGrade);
+                    OrgFixedPeriodFrom = Convert.ToDateTime(ORG_FIXED_PERIOD_FROM);
+                    OrgFixedPeriodTo = Convert.ToDateTime(ORG_FIXED_PERIOD_TO);
+                    InputFixedPeriodFrom = tb_coupon_master.FIXED_PERIOD_FROM.Value;
+                    InputFixedPeriodTo = tb_coupon_master.FIXED_PERIOD_TO.Value;
+
+                    if (OrgFixedPeriodFrom != InputFixedPeriodFrom ) //고정기간 시작일자가 변경되었으면 
+                    {
+                         PostedDataValid = false;
+                         @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 고정기간의 시작일시를 변경 할 수 없습니다.')</script>";
+                    }
+                    else if (InputFixedPeriodFrom < OrgFixedPeriodFrom)
+                    {
+                        PostedDataValid = false;
+                        @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 고정기간의 만료일시를 연장만 할 수 있습니다.')</script>";
+                    }      
+                }
+            } //발행된 쿠폰이 있으면 [END]======================================================================================================
+       
+
+           
+
+            
+            int is_success = 1;
+       
+
+            //if (ModelState.IsValid)
+            //{
+
+                if (PostedDataValid == true)
+                {
+                    is_success = _AdminCouponService.UpdateAdminCouponMaster(tb_coupon_master, CheckMemGrade,CdCoupon);
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    return View();
+                    return RedirectToAction("Update", new { CdCoupon = CdCoupon });
                 }
-            }
-             **/
+            //}
 
-            return View();
+
+                return RedirectToAction("Update", new { CdCoupon = CdCoupon });
 
             //return RedirectToAction("Index", new { CdPromotionTotal = _CdPromotionTotal });
 
