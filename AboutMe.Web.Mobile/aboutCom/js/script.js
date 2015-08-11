@@ -35,6 +35,9 @@ $(function(){
 		$(".f_bottom ").show();
 	});
 	$(".nav li a").on("click", function(){
+		if($(this).parent(".slidetype").hasClass("v2")){
+			return false;
+		}
 		if($(this).parent(".slidetype").hasClass("on")){
 			$(this).parent().find(".depth2").slideUp(300, function(){
 				$(this).parent(".slidetype").removeClass("on");
@@ -44,7 +47,17 @@ $(function(){
 				$(this).parent(".slidetype").addClass("on");
 			});
 		}
+		
 	});
+	/*상단검색*/
+	$(".h_top .btn_search").toggle(function(){
+		$(".h_search_wrap").slideDown(300);
+		$("body").bind('touchmove', function(e){e.preventDefault()});
+	}, function(){
+		$(".h_search_wrap").slideUp(300);
+		$("body").unbind('touchmove');
+	});
+
 	/*footer*/
 	$(".footer .btn_term").toggle(function(e){
 		e.preventDefault();
@@ -70,6 +83,14 @@ $(function(){
 			$(".f_bottom .historyback, .f_bottom .documtop").css({"position":"absolute"});
 		}
 	});*/
+	$(window).scroll(function(){
+		scrollTop=$(window).scrollTop();
+		if(scrollTop > 10){
+			$(".f_bottom").fadeIn()
+		}else {
+			$(".f_bottom").fadeOut()
+		}
+	});
 	$(".documtop").on("click", function(){
 		$('html, body').stop().animate({ scrollTop : 0 },300 ,"easeInExpo");
 	});
@@ -350,31 +371,48 @@ $(function(){
 		$(".detail .produt_photo .nav ul").append("<li><a href='#'></a></li> ");
 	});
 	$(".detail .produt_photo .nav li").eq(0).addClass("cnt");
-	$(".detail .produt_photo .slider li").eq(0).show();
 	var detailPhoto_navW = $(".detail .produt_photo .nav").width();
+	var detailPhoto_itemW=$(".produt_photo .slider ").width();
+	var detail_length = $(".detail .produt_photo .nav li").length;
+	$(".produt_photo .slider li").css({"width":detailPhoto_itemW});
 	$(".detail .produt_photo .nav").css({"margin-left":-(detailPhoto_navW/2)});
 
 	var detailprd_idx =0;
 	$(".detail .produt_photo .nav ul li a").on("click", function(e){
 		e.preventDefault();
 		detailprd_idx = $(this).parent().index();
-		$(".detail .produt_photo .slider li").fadeOut(500);
-		$(".detail .produt_photo .slider li:eq("+detailprd_idx+")").fadeIn(500);
+		$(".produt_photo .slider ul").animate({"margin-left": -(detailPhoto_itemW*detailprd_idx)},300,"easeInExpo");
 		$(".detail .produt_photo .nav li").removeClass("cnt");
 		$(".detail .produt_photo .nav li:eq("+detailprd_idx+")").addClass("cnt");
 	});
-	var detail_length = $(".detail .produt_photo .nav li").length;
+	
 	function detailprd_left(){
-		if(detailprd_idx==0){
-			detailprd_idx =detail_length;
-		}
 		detailprd_idx--;
+		if (detailprd_idx==-1){
+			detailprd_idx=(detail_length-1);
+			$(".produt_photo .slider ul li:eq("+(detail_length-1)+")").clone().insertBefore($(".produt_photo .slider ul li:eq(0)"));
+			$(".produt_photo .slider ul").css({"margin-left":-detailPhoto_itemW});
+			$(".produt_photo .slider ul").animate({"margin-left":0},300,"easeInExpo", function(){
+				$(".produt_photo .slider ul").css({"margin-left":-(detailPhoto_itemW*(detailprd_idx))});
+				$(".produt_photo .slider ul li:eq(0)").remove();
+			});
+		}
+		else{
+			$(".produt_photo .slider ul").animate({"margin-left": -(detailPhoto_itemW*detailprd_idx)},300,"easeInExpo");
+		}
 		$(".detail .produt_photo .nav li:eq("+detailprd_idx+") a").click();
 	}
 	function detailprd_right(){
 		detailprd_idx++;
-		if(detailprd_idx==detail_length){
-			detailprd_idx = 0;
+		if (detailprd_idx==detail_length){
+			detailprd_idx=0;
+			$(".produt_photo .slider ul li:eq(0)").clone().insertAfter($(".produt_photo .slider ul li:eq("+(detail_length-1)+")")); 
+			$(".produt_photo .slider ul").animate({"margin-left": +(-(detailPhoto_itemW*detail_length)) },300,"easeInExpo", function(){
+				$(".produt_photo .slider ul").css({"margin-left":0});
+				$(".produt_photo .slider ul li:eq("+(detail_length)+")").remove();
+			});
+		}else{
+			$(".produt_photo .slider ul").animate({"margin-left": -(detailPhoto_itemW*detailprd_idx)},300,"easeInExpo");
 		}
 		$(".detail .produt_photo .nav li:eq("+detailprd_idx+") a").click();
 	}
@@ -627,6 +665,15 @@ $(function(){
 			return;
 		}
 	}); 
+
+	/*cart*/
+	$(".sliderh3_tit").toggle(function(){
+		$(this).parent().find(".sliderh3_con").slideDown();
+		$(this).addClass("on")
+	}, function(){
+		$(this).parent().find(".sliderh3_con").slideUp();
+		$(this).removeClass("on")
+	});
 
 
 });

@@ -278,5 +278,44 @@ namespace AboutMe.Domain.Entity.Product
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_WITH_SEL_Result>("SP_PRODUCT_WITH_SEL", p_CODE_LISTParameter);
         }
+    
+        public virtual ObjectResult<SP_CATEGORY_NAME_INFO_VIEW_Result> SP_CATEGORY_NAME_INFO_VIEW(string cATE_CODE)
+        {
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORY_NAME_INFO_VIEW_Result>("SP_CATEGORY_NAME_INFO_VIEW", cATE_CODEParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_CNT(string c_CATE_CODE)
+        {
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_CNT", c_CATE_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL_Result> SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string c_CATE_CODE, string sORT_GBN)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var c_CATE_CODEParameter = c_CATE_CODE != null ?
+                new ObjectParameter("C_CATE_CODE", c_CATE_CODE) :
+                new ObjectParameter("C_CATE_CODE", typeof(string));
+    
+            var sORT_GBNParameter = sORT_GBN != null ?
+                new ObjectParameter("SORT_GBN", sORT_GBN) :
+                new ObjectParameter("SORT_GBN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL_Result>("SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL", pAGEParameter, pAGESIZEParameter, c_CATE_CODEParameter, sORT_GBNParameter);
+        }
     }
 }
