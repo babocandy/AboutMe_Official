@@ -47,7 +47,12 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         int SetAdminMemberStaffBaseTempInsert(string sTAFF_COMPANY = "", string sTAFF_ID = "", string sTAFF_NAME = "", string wORK_TEMP_ID = "", string aDM_ID = "", string iP = "");//관리자 -임직원기준DB TEMP -INSERT 1건
         int SetAdminMemberStaffBaseTempUpdate(int iDX = -1, string aPP_RESULT = "");//관리자 -임직원기준DB TEMP -처리결과 수정 1건
 
+         //관리자 - 휴면계정-----------------------------------------------------------
+        List<SP_ADMIN_FRONT_MEMBER_VIEW_Result> GetAdminMemberSleepingList(string m_LASTVISITDATE = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "", string sORT_COL = "M_LASTVISITDATE", string sORT_DIR = "DESC", int pAGE = 1, int pAGESIZE = 10);//관리자 - 휴면계정-목록
+        int GetAdminMemberSleepingCount(string m_LASTVISITDATE = "", string sEARCH_COL = "", string sEARCH_KEYWORD = ""); //관리자-휴면계정-목록 COUNT
 
+
+        //#####################################################################################################################
         //데이타 이행 :회원암호--오픈전 마이그레이션시 1회 필요 -----------------------------------------
         List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL(); //데이타 이행 :회원암호 -list 
         void SetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_UPD(string m_ID = "", string m_PWD_SHA256 = ""); //데이타 이행 :회원암호 -수정저장

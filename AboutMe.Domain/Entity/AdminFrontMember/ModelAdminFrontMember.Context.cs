@@ -615,5 +615,55 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT", wORK_TEMP_IDParameter, aPP_RESULTParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_FRONT_COMMON_CNT_Result> SP_ADMIN_MEMBER_SLEEPING_CNT(string m_LASTVISITDATE, string sEARCH_COL, string sEARCH_KEYWORD)
+        {
+            var m_LASTVISITDATEParameter = m_LASTVISITDATE != null ?
+                new ObjectParameter("M_LASTVISITDATE", m_LASTVISITDATE) :
+                new ObjectParameter("M_LASTVISITDATE", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_COMMON_CNT_Result>("SP_ADMIN_MEMBER_SLEEPING_CNT", m_LASTVISITDATEParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_FRONT_MEMBER_VIEW_Result> SP_ADMIN_MEMBER_SLEEPING_SEL(string m_LASTVISITDATE, string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var m_LASTVISITDATEParameter = m_LASTVISITDATE != null ?
+                new ObjectParameter("M_LASTVISITDATE", m_LASTVISITDATE) :
+                new ObjectParameter("M_LASTVISITDATE", typeof(string));
+    
+            var sEARCH_COLParameter = sEARCH_COL != null ?
+                new ObjectParameter("SEARCH_COL", sEARCH_COL) :
+                new ObjectParameter("SEARCH_COL", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            var sORT_COLParameter = sORT_COL != null ?
+                new ObjectParameter("SORT_COL", sORT_COL) :
+                new ObjectParameter("SORT_COL", typeof(string));
+    
+            var sORT_DIRParameter = sORT_DIR != null ?
+                new ObjectParameter("SORT_DIR", sORT_DIR) :
+                new ObjectParameter("SORT_DIR", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_MEMBER_VIEW_Result>("SP_ADMIN_MEMBER_SLEEPING_SEL", m_LASTVISITDATEParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
     }
 }

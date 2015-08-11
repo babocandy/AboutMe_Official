@@ -106,6 +106,9 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;   //P_CATE_CODE_3DEPTH
             this.ViewBag.DEPTH_NAME3 = product_front_search_entity.DEPTH_NAME3;                 //뷰티3DEPTH NAME
 
+            this.ViewBag.DEPTH1_NAME = productView.DEPTH1_NAME;                                 //카테고리 depth1 name
+            this.ViewBag.DEPTH2_NAME = productView.DEPTH2_NAME;                                 //카테고리 depth2 name
+
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
             this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();  //회원 등급
@@ -118,16 +121,6 @@ namespace AboutMe.Web.Front.Controllers
             
             #endregion 
 
-            //#region 메서드 파라메터 설명
-            //    //string UsableDeviceGbn => 디바이스구분 P = PC , M = Mobile
-            //    //string MGbn  => 회원종류 
-            //    //string MGrade => 회원등급
-            //    //string M_id  => 회원아이디
-            //    //string PCode  => 상품코드
-            //    //int ResultPrice  => 최종상품가
-            //#endregion
-            //Dictionary<string, string> dic = _BizPromotionService.GetPromotionInfoForDetialPage("P", this.ViewBag.M_GB, this.ViewBag.M_GRADE, this.ViewBag.M_ID, _pcode, _resultprice);
-            
 
             #region 연관상품 가져오기
             ViewData["WITH_PRODUCT_LIST"] = "";

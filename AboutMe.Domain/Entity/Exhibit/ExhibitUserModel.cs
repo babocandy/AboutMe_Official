@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AboutMe.Domain.Entity.Common;
+using AboutMe.Domain.Entity.Event;
 
 namespace AboutMe.Domain.Entity.Exhibit
 {
@@ -181,5 +182,18 @@ namespace AboutMe.Domain.Entity.Exhibit
     {
         public string PRODUCT_IDX { get; set; }
         public int DISPLAY_ORDER { get; set; }
+    }
+    
+    public class EXHIBIT_TAB_PRODUCT
+    {
+        public SP_ADMIN_EXHIBIT_TAB_SEL_Result Tabinfo { get; set; }
+        public List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> ProductList { get; set; }
+    }
+
+    public class EXHIBIT_VIEW
+    {
+        public SP_EXHIBIT_VIEW_Result ExhibitInfo { get; set; }
+        public List<EXHIBIT_TAB_PRODUCT> TabProductList { get; set; }
+        public List<SP_EVENT_ING_LIST_Result> IngList { get; set; }
     }
 }

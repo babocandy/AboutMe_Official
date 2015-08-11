@@ -88,7 +88,6 @@
 
     function fExcel() {
         var f = document.frmSearch;
-        fMakeGRADE_LIST();
         f.action = "/AdminFrontMember/StaffBaseExcel";
         f.method = "post";
         f.submit();
@@ -274,7 +273,7 @@
 
         <div class="tar mb10">
             <a class="btn btn-default middium" href="/AdminFrontMember/StaffBaseInsert">임직원DB 등록</a>
-            <!--<a class="btn btn-default middium" href="javascript:fExcel();">EXEL 다운로드</a>-->
+            <a class="btn btn-default middium" href="javascript:fExcel();">EXEL 다운로드</a>
         </div>
 
         <div class="panel">

@@ -1,0 +1,54 @@
+﻿@model AboutMe.Domain.Entity.Event.EVENT_VIEW
+@{
+    
+    if (Model.EventInfo == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
+    ViewBag.Title = "이벤트 - ABOUT ME";
+    ViewBag.TopClass = "detail";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts {
+    <link href="/aboutCom/css/event.css" rel="stylesheet" />
+
+    <script language="javascript">
+        function goEvent(s)
+        {
+            var idx = s.value;
+            if (idx != "") {
+                location.href = "/Event/EventView?IDX=" + idx;
+            }
+        }
+    </script>
+}
+
+<!--container-->
+<div id="container">
+    <div class="container100per">
+        <div class="inner">
+            <div class="etit">
+                <h3>@Model.EventInfo.EVENT_NAME</h3>
+                <p class="edate"><em>@Model.EventInfo.FROM_DATE</em>~<em>@Model.EventInfo.TO_DATE</em></p>
+                <select class="selectstyleb" title="" onchange="goEvent(this)"> 
+                    <option selected="selected" value="">다른 이벤트 보기</option>
+                    @foreach (var item in Model.IngListInfo)
+                    {
+                        if (item.GBN == "EVENT" && item.IDX != Model.EventInfo.IDX)
+                        { 
+                            @Html.Raw("<option value='"+Convert.ToString(item.IDX)+"'>"+item.NAME+"</option>");
+                        }
+                    }
+                </select>
+            </div>
+            <div class="econt" width="1080">
+                @Html.Raw(Model.EventInfo.WEB_CONTENTS)
+            </div>
+        </div>
+    </div>
+</div>
+<!--//container-->
+

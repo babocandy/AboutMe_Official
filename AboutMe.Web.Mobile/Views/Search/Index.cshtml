@@ -111,15 +111,21 @@
                                 if (item.ICON_YN.IndexOf('N') != -1)
                                 { <text> <span class="ico_new">NEW</span></text> }
                                 if (item.ICON_YN.IndexOf('C') != -1)
-                                { <text> <span class="ico_custom ">CUSTOM</span></text> }
+                                { <text> <span class="ico_custom ">커스텀</span></text> }
                             }
-                            <!--
-            .ico_best
-            .ico_coupon
-            .ico_time
-            .ico_soldout
-            .ico_set
-            -->
+                            @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                            {
+                                if (item.PMO_PRODUCT_CATEGORY == "01")
+                                { <text> <span class="ico_set">SET</span></text> }
+                                if (item.PMO_PRODUCT_CATEGORY == "02")
+                                { <text> <span class="ico_1_1">1+1</span></text> }
+                                if (item.PMO_PRODUCT_CATEGORY == "03")
+                                { <text> <span class="ico_time">TIME</span></text> }
+                            }
+                            @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                            {
+                                <text> <span class="ico_coupon">COUPON</span></text>
+                            }
                             <span class="tit">@(new HtmlString(item.P_NAME))</span>
                             <span class="stit">@(new HtmlString(item.P_SUB_TITLE))</span>
                             <span class="price"><del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span>

@@ -621,6 +621,51 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         }
 
 
+        //----------------------------------------------------------------------------------------------------------
+        //관리자 - 휴면계정-목록
+        public List<SP_ADMIN_FRONT_MEMBER_VIEW_Result> GetAdminMemberSleepingList(string m_LASTVISITDATE = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "", string sORT_COL = "M_LASTVISITDATE", string sORT_DIR = "DESC", int pAGE=1, int pAGESIZE=10)
+        {
+
+            List<SP_ADMIN_FRONT_MEMBER_VIEW_Result> lst = new List<SP_ADMIN_FRONT_MEMBER_VIEW_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_SLEEPING_SEL(m_LASTVISITDATE, sEARCH_COL, sEARCH_KEYWORD, sORT_COL, sORT_DIR, pAGE, pAGESIZE).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //관리자-휴면계정-목록 COUNT
+        public int GetAdminMemberSleepingCount(string m_LASTVISITDATE = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "")
+        {
+
+            List<SP_ADMIN_FRONT_COMMON_CNT_Result> lst = new List<SP_ADMIN_FRONT_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_SLEEPING_CNT(m_LASTVISITDATE, sEARCH_COL, sEARCH_KEYWORD).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+        }
+
+
+
         //####################################################################################################################################
         //데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요
         public List<SP_ZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL_Result> GetZZ_MIGRATION_MEMBER_PWD_MD5_2_SHA256_SEL()

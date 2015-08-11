@@ -170,6 +170,9 @@ namespace AboutMe.Web.Mobile.Controllers
                 this.ViewBag.ERR_MSG = "로그인 성공!";
                 //return RedirectToAction("Index", "AdminUser"); // 로그인 성공
 
+                //최종방문일수정 ,방문횟수증가
+                _MemberService.SetMemberLoginUpdate(ID);
+
                 //사용자 세션or 쿠키 저장
                 CookieSessionStore cookiesession = new CookieSessionStore();
                 cookiesession.SetSecretSession("M_ID", result.M_ID);  //로그인 세션 세팅
