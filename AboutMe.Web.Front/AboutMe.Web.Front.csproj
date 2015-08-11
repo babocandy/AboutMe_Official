@@ -40,7 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="INIpayNet, Version=5.0.4.0, Culture=neutral, PublicKeyToken=baf9dc2e190f803c">
+    <Reference Include="INIpayNet, Version=5.0.3.3, Culture=neutral, PublicKeyToken=baf9dc2e190f803c, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\INIpayNet.dll</HintPath>
     </Reference>
@@ -207,7 +207,9 @@
     <Compile Include="Controllers\ChildActionPromotionController.cs" />
     <Compile Include="Controllers\ChildActionDisplayerController.cs" />
     <Compile Include="Controllers\EtcController.cs" />
+    <Compile Include="Controllers\ReviewExpController.cs" />
     <Compile Include="Controllers\MyCouponController.cs" />
+    <Compile Include="Controllers\Mypage\MyReviewExpController.cs" />
     <Compile Include="Controllers\Mypage\MyPointController.cs" />
     <Compile Include="Controllers\Mypage\MyWishController.cs" />
     <Compile Include="Controllers\Mypage\QnaController.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Controllers\Mypage\MypageController.cs" />
+    <Compile Include="Controllers\SmartEditorController.cs" />
     <Compile Include="Controllers\SNSController.cs" />
     <Compile Include="DI_Core\Bootstraper.cs" />
     <Compile Include="Global.asax.cs">
@@ -696,6 +699,57 @@
     <Content Include="aboutCom\MailSkin\mail_orderend_nonmb.html" />
     <Content Include="aboutCom\MailSkin\mail_orderend_vip.html" />
     <Content Include="aboutCom\MailSkin\mail_temp_pswd.html" />
+    <Content Include="aboutCom\smarteditor\css\smart_editor2.css" />
+    <Content Include="aboutCom\smarteditor\css\smart_editor2_in.css" />
+    <Content Include="aboutCom\smarteditor\css\smart_editor2_items.css" />
+    <Content Include="aboutCom\smarteditor\css\smart_editor2_out.css" />
+    <Content Include="aboutCom\smarteditor\img\bg_b1.png" />
+    <Content Include="aboutCom\smarteditor\img\bg_button.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_button_left.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_button_right.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_find_h3.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_help.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_icon_tool.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_line1.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_quote2.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_set.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_text_tool.gif" />
+    <Content Include="aboutCom\smarteditor\img\bg_tool2.gif" />
+    <Content Include="aboutCom\smarteditor\img\editor_guideline_698.gif" />
+    <Content Include="aboutCom\smarteditor\img\editor_guideline_890.gif" />
+    <Content Include="aboutCom\smarteditor\img\icon_set.gif" />
+    <Content Include="aboutCom\smarteditor\img\ico_extend.png" />
+    <Content Include="aboutCom\smarteditor\img\ko_KR\btn_set.png" />
+    <Content Include="aboutCom\smarteditor\img\ko_KR\bx_set_110302.gif" />
+    <Content Include="aboutCom\smarteditor\img\ko_KR\text_tool_set.png" />
+    <Content Include="aboutCom\smarteditor\img\photoQuickPopup\bg_drag_image.png" />
+    <Content Include="aboutCom\smarteditor\img\photoQuickPopup\btn_cancel.png" />
+    <Content Include="aboutCom\smarteditor\img\photoQuickPopup\btn_confirm.png" />
+    <Content Include="aboutCom\smarteditor\img\photoQuickPopup\btn_confirm2.png" />
+    <Content Include="aboutCom\smarteditor\img\photoQuickPopup\btn_del.png" />
+    <Content Include="aboutCom\smarteditor\img\photoQuickPopup\btn_find.png" />
+    <Content Include="aboutCom\smarteditor\img\text_tool_set2.png" />
+    <Content Include="aboutCom\smarteditor\js\HuskyEZCreator.js" />
+    <Content Include="aboutCom\smarteditor\js\jindo.min.js" />
+    <Content Include="aboutCom\smarteditor\js\jindo_component.js" />
+    <Content Include="aboutCom\smarteditor\js\SE2BasicCreator.js" />
+    <Content Include="aboutCom\smarteditor\js\SE2B_Configuration_General.js" />
+    <Content Include="aboutCom\smarteditor\js\SE2B_Configuration_Service.js" />
+    <Content Include="aboutCom\smarteditor\js\smarteditor2.js" />
+    <Content Include="aboutCom\smarteditor\js\smarteditor2.min.js" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\plugin\hp_SE2M_AttachQuickPhoto.js" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\attach_photo.js" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\callback.html" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\jindo.fileuploader.js" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\jindo.min.js" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\photo_uploader.html" />
+    <Content Include="aboutCom\smarteditor\readme.txt" />
+    <Content Include="aboutCom\smarteditor\release_notes.txt" />
+    <Content Include="aboutCom\smarteditor\SmartEditor2.html" />
+    <Content Include="aboutCom\smarteditor\SmartEditor2Skin.html" />
+    <Content Include="aboutCom\smarteditor\smart_editor2_inputarea.html" />
+    <Content Include="aboutCom\smarteditor\smart_editor2_inputarea_ie8.html" />
+    <Content Include="aboutCom\smarteditor\src_include.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -724,6 +778,9 @@
     <Content Include="Content\child.html" />
     <Content Include="aboutCom\images\mypage\Thumbs.db" />
     <Content Include="aboutCom\images\review\Thumbs.db" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\file_uploader.php" />
+    <Content Include="aboutCom\smarteditor\photo_uploader\popup\file_uploader_html5.php" />
+    <Content Include="aboutCom\smarteditor\sample.php" />
     <None Include="Properties\PublishProfiles\AboutMeWebFront.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -863,10 +920,18 @@
     <Content Include="Views\ChildActionDisplayer\GbnLink1.cshtml" />
     <Content Include="Views\ChildActionDisplayer\GbnLink2.cshtml" />
     <Content Include="Views\ChildActionDisplayer\PopupWindow.cshtml" />
+    <Content Include="Views\MyReviewExp\Index.cshtml" />
+    <Content Include="Views\MyReviewExp\Write.cshtml" />
+    <Content Include="Views\SmartEditor\Callback.cshtml" />
+    <Content Include="Views\SmartEditor\InstallEditor.cshtml" />
+    <Content Include="Views\SmartEditor\PopupPhotoUploader.cshtml" />
+    <Content Include="Views\SmartEditor\Sample.cshtml" />
+    <Content Include="Views\ChildActionPromotion\ProductDetailSetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Upload\Product\" />
+    <Folder Include="Views\ReviewExp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

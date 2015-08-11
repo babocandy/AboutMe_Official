@@ -50,10 +50,7 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
-        public ActionResult Experience()
-        {
-            return View();
-        }
+
 
         [HttpPost]
         public JsonResult GetReviewProductList(ReviewProductListParam param)   
@@ -100,5 +97,6 @@ namespace AboutMe.Web.Front.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
+
     }
 }

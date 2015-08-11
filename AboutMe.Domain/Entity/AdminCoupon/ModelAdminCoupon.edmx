@@ -172,10 +172,25 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_COUPON_MASTER_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
+          <Parameter Name="COUPON_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="COUPON_AD_MSG" Type="varchar" Mode="In" />
+          <Parameter Name="COUPON_USE_DESCRIPTION" Type="varchar" Mode="In" />
+          <Parameter Name="FIXED_PERIOD_FROM" Type="datetime" Mode="In" />
+          <Parameter Name="FIXED_PERIOD_TO" Type="datetime" Mode="In" />
+          <Parameter Name="EXRIRED_DAY_FROM_ISSUE_DT" Type="int" Mode="In" />
+          <Parameter Name="MASTER_FROM_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="MASTER_TO_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_COUPON_MEM_GRADE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
           <Parameter Name="M_GBN" Type="varchar" Mode="In" />
           <Parameter Name="M_GRADE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_COUPON_MEMBER_GRADE_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_COUPON_MEMBER_GRADE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_COUPON" Type="varchar" Mode="In" />
@@ -513,7 +528,22 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
             <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_COUPON_DOWNLOADABLE_CNT" ReturnType="Collection(AboutMeModel3.SP_ADMIN_COUPON_COMMON_CNT_Result)">
-            <Parameter Name="M_ID" Mode="In" Type="String" />
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_COUPON_MASTER_UPD">
+            <Parameter Name="CD_COUPON" Mode="In" Type="String" />
+            <Parameter Name="COUPON_NAME" Mode="In" Type="String" />
+            <Parameter Name="COUPON_AD_MSG" Mode="In" Type="String" />
+            <Parameter Name="COUPON_USE_DESCRIPTION" Mode="In" Type="String" />
+            <Parameter Name="FIXED_PERIOD_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="FIXED_PERIOD_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="EXRIRED_DAY_FROM_ISSUE_DT" Mode="In" Type="Int32" />
+            <Parameter Name="MASTER_FROM_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="MASTER_TO_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="USABLE_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_COUPON_MEMBER_GRADE_DEL">
+            <Parameter Name="CD_COUPON" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_COUPON_COMMON_CNT_Result">
@@ -1329,6 +1359,8 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MASTER_UPD" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MASTER_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MEMBER_GRADE_DEL" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MEMBER_GRADE_DEL" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

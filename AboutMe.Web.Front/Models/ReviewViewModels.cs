@@ -91,5 +91,17 @@ namespace AboutMe.Web.Front.Models
 
     }
 
+    public class MyReviewExpWriteViewModel
+    {
+        public int? EXP_MASTER_IDX { get; set; }
+        public string P_CODE { get; set; }
+        public string TITLE { get; set; }
+        public string TAG { get; set; }
+        public string COMMENT { get; set; }
+        public string SKIN_TYPE { get; set; }
+
+        public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
+    }
+
 
 }

@@ -17,6 +17,7 @@ namespace AboutMe.Domain.Service.AdminCoupon
         int GetAdminCouponListCnt(string SearchCol, string SearchKeyword);
         int InsAdminCouponMaster(TB_COUPON_MASTER Tb, string[] CheckMemGrade);
         List<SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result> GetAdminCouponDetail(string CdCoupon);
+        int UpdateAdminCouponMaster(TB_COUPON_MASTER Tb, string[] CheckMemGrade, string CdCoupon);
 
         //쿠폰적용된 상품정보
         int GetAdminCouponProductListCnt(string SearchCol, string SearchKeyword, string CdCoupon);
