@@ -7,16 +7,24 @@ using System.Web.Mvc;
 using AboutMe.Common.Helper;
 using AboutMe.Domain.Service.Promotion;
 using AboutMe.Domain.Entity.AdminPromotion;
+using AboutMe.Domain.Service.Event;
+using AboutMe.Domain.Entity.Event;
+using AboutMe.Domain.Service.Exhibit;
+using AboutMe.Domain.Entity.Exhibit;
 
 namespace AboutMe.Web.Front.Controllers
 {
     public class EventController : BaseFrontController
     {
         private IPromotionService _PromotionService;
+        private IEventService _eventservice;
+        private IExhibitService _exhibitservice;
 
-        public EventController(PromotionService _PromotionService)
+        public EventController(PromotionService _PromotionService, IEventService _eventservice, IExhibitService _exhibitservice)
         {
             this._PromotionService = _PromotionService;
+            this._eventservice = _eventservice;
+            this._exhibitservice = _exhibitservice;
         }
 
         protected override void HandleUnknownAction(string actionName)
@@ -33,11 +41,53 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-        // GET: Event
+        #region 이벤트메인/ 이벤트 / 기획전 (gxen) ================================================================
+
+        // GET: Main
         public ActionResult Index()
         {
-            return View();
+            EVENT_MAIN_INDEX M = new EVENT_MAIN_INDEX
+            {
+                MainInfo = _eventservice.EventMainView(),
+                IngListInfo = _eventservice.EventMainIngList(),
+                EndListInfo = _eventservice.EventMainEndList()
+            };
+            return View(M);
         }
+
+        public ActionResult EventView(int IDX)
+        {
+            EVENT_VIEW M = new EVENT_VIEW
+            {
+                EventInfo = _eventservice.EventView(IDX),
+                IngListInfo = _eventservice.EventMainIngList()
+            };
+            return View(M);
+        }
+
+        public ActionResult ExhibitView(int IDX)
+        {
+            List<SP_ADMIN_EXHIBIT_TAB_SEL_Result> Tablist = _exhibitservice.ExhibitAdminTabList(IDX);
+            List<EXHIBIT_TAB_PRODUCT> TabProduct = new List<EXHIBIT_TAB_PRODUCT>();
+            foreach (SP_ADMIN_EXHIBIT_TAB_SEL_Result item in Tablist)
+            {
+                EXHIBIT_TAB_PRODUCT tp = new EXHIBIT_TAB_PRODUCT { 
+                    Tabinfo = item,
+                    ProductList = _exhibitservice.ExhibitTabProductList(item.IDX)
+                };
+                TabProduct.Add(tp);
+            }
+
+            EXHIBIT_VIEW M = new EXHIBIT_VIEW
+            {
+                ExhibitInfo = _exhibitservice.ExhibitView(IDX),
+                TabProductList = TabProduct,
+                IngList = _eventservice.EventMainIngList()
+            };
+            return View(M);
+        }
+
+        #endregion
 
 
         #region 세트상품 / 타임세일등 ================================================================

@@ -367,5 +367,23 @@ namespace AboutMe.Domain.Entity.Exhibit
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EXHIBIT_TAB_PRODUCT_ALLDEL", tAB_IDXParameter);
         }
+    
+        public virtual ObjectResult<SP_EXHIBIT_VIEW_Result> SP_EXHIBIT_VIEW(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EXHIBIT_VIEW_Result>("SP_EXHIBIT_VIEW", iDXParameter);
+        }
+    
+        public virtual ObjectResult<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> SP_EXHIBIT_TAB_PRODUCT_LIST(Nullable<int> tAB_IDX)
+        {
+            var tAB_IDXParameter = tAB_IDX.HasValue ?
+                new ObjectParameter("TAB_IDX", tAB_IDX) :
+                new ObjectParameter("TAB_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EXHIBIT_TAB_PRODUCT_LIST_Result>("SP_EXHIBIT_TAB_PRODUCT_LIST", tAB_IDXParameter);
+        }
     }
 }

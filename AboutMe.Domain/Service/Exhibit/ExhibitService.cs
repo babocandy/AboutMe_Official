@@ -195,5 +195,29 @@ namespace AboutMe.Domain.Service.Exhibit
             }
         }
         #endregion
+
+        #region User 기획전 View
+        public SP_EXHIBIT_VIEW_Result ExhibitView(int IDX)
+        {
+            SP_EXHIBIT_VIEW_Result result = new SP_EXHIBIT_VIEW_Result();
+            using (ExhibitEntities EfContext = new ExhibitEntities())
+            {
+                result = EfContext.SP_EXHIBIT_VIEW(IDX).FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+        #region User 기획전 Product List
+        public List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> ExhibitTabProductList(int TAB_IDX)
+        {
+            List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> lst = new List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result>();
+            using (ExhibitEntities EfContext = new ExhibitEntities())
+            {
+                lst = EfContext.SP_EXHIBIT_TAB_PRODUCT_LIST(TAB_IDX).ToList();
+            }
+            return lst;
+        }
+        #endregion
     }
 }

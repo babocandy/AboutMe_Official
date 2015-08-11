@@ -28,5 +28,8 @@ namespace AboutMe.Domain.Service.Exhibit
         void ExhibitAdminTabProductUpdate(int IDX, int DISPLAY_ORDER, string ADM_ID);
         void ExhibitAdminTabProductDelete(int IDX);
         void ExhibitAdminTabProductAllDelete(int TAB_IDX);
+        
+        SP_EXHIBIT_VIEW_Result ExhibitView(int IDX);
+        List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> ExhibitTabProductList(int TAB_IDX);
     }
 }

@@ -1,0 +1,124 @@
+﻿@model AboutMe.Domain.Entity.Exhibit.EXHIBIT_VIEW
+@{
+    if (Model.ExhibitInfo == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
+    ViewBag.Title = "기획전 - ABOUT ME";
+    ViewBag.TopClass = "exhibition";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+}
+@section Scripts {
+    <link href="/aboutCom/css/event.css" rel="stylesheet" />
+
+    <script language="javascript">
+        function goEvent(s)
+        {
+            var idx = s.value;
+            if (idx != "") {
+                location.href = "/Event/ExhibitView?IDX=" + idx;
+            }
+        }
+    </script>
+}
+
+<!--container-->
+<div id="container">
+    <div class="container100per">
+        <div class="inner">
+            <div class="etit">
+                <h3>@Model.ExhibitInfo.EXHIBIT_NAME</h3>
+                <p class="edate"><em>@Model.ExhibitInfo.FROM_DATE</em>~<em>@Model.ExhibitInfo.TO_DATE</em></p>
+                <select class="selectstyleb" title="" onchange="goEvent(this)">
+                    <option selected="selected" value="">다른 기획전 보기</option>
+                    @foreach (var item in Model.IngList)
+                    {
+                        if (item.GBN == "EXHIBIT" && item.IDX != Model.ExhibitInfo.IDX)
+                        {
+                            @Html.Raw("<option value='" + Convert.ToString(item.IDX) + "'>" + item.NAME + "</option>");
+                        }
+                    }
+                </select>
+            </div>
+            <div class="econt">
+                <img src="@Model.ExhibitInfo.WEB_BANNER" width="1080" alt="" />
+            </div>
+            <!--상품리스트1-->
+            @foreach (var item in Model.TabProductList)
+            { 
+            <div class="product_area mt40">
+                <div class="ltit">
+                    <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                    <p><i></i>@item.Tabinfo.TAB_NAME</p>
+                </div>
+                <!--상품리스트1-->
+                <ul class="product_list">
+                    @foreach (var productInfo in item.ProductList)
+                    {
+                        string imgUrl1 = productImgPath + "R270_" + productInfo.MAIN_IMG;
+                        string imgUrl2 = productImgPath + "R270_" + productInfo.OTHER_IMG1;
+
+                      <li>
+                        <a href="/shopping/detail?pcode=@productInfo.P_CODE" class="list">
+                            <span class="photo">
+                                <img src="@imgUrl1" data-pic="@imgUrl2" class="item" alt="">
+                            </span>
+                            <span class="info">
+                                <span class="tag">
+                                @if (!string.IsNullOrEmpty(productInfo.ICON_YN))
+                                {
+                                    if (productInfo.ICON_YN.IndexOf('B') != -1)
+                                    { <text> <span class="ico_best">BEST</span></text> }
+                                    if (productInfo.ICON_YN.IndexOf('S') != -1)
+                                    { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                    if (productInfo.ICON_YN.IndexOf('N') != -1)
+                                    { <text> <span class="ico_new">NEW</span></text> }
+                                    if (productInfo.ICON_YN.IndexOf('C') != -1)
+                                    { <text> <span class="ico_custom ">커스텀</span></text> }
+                                }
+                                @if (!string.IsNullOrEmpty(productInfo.PMO_PRODUCT_CATEGORY))
+                                {
+                                    if (productInfo.PMO_PRODUCT_CATEGORY == "01")
+                                    { <text> <span class="ico_set">SET</span></text> }
+                                    if (productInfo.PMO_PRODUCT_CATEGORY == "02")
+                                    { <text> <span class="ico_1_1">1+1</span></text> }
+                                    if (productInfo.PMO_PRODUCT_CATEGORY == "03")
+                                    { <text> <span class="ico_time">TIME</span></text> }
+                                }
+                                @if (!string.IsNullOrEmpty(productInfo.COUPON_CODE))
+                                {
+                                    <text> <span class="ico_coupon">COUPON</span></text>
+                                }
+                                </span>
+                                <span class="title">
+                                    <em class="product_tit">@(new HtmlString(productInfo.P_NAME))</em>
+                                    <em class="product_name">@(new HtmlString(productInfo.P_SUB_TITLE))</em>
+                                </span>
+                                <em class="price">
+                                    @if (productInfo.SELLING_PRICE != productInfo.DISCOUNT_PRICE)
+                                    { 
+                                        <del>@String.Format("{0:#,#0.}", productInfo.SELLING_PRICE)원</del>
+                                    }
+                                    <strong>@String.Format("{0:#,#0.}", productInfo.DISCOUNT_PRICE)원</strong>
+                                </em>
+                            </span>
+                        </a>
+                        <a href="#none" class="cart" onclick="javascript:Cart_Product_Input('@productInfo.P_CODE','1');"><img src="/aboutCom/images/shopping/ico_cart.png" alt="" /></a>
+                        <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
+                    </li>
+                    }
+                </ul>
+                <!--//상품리스트1-->
+            </div>
+            <!--//상품리스트1-->
+            }
+            
+        </div>
+    </div>
+</div>
+<!--//container-->
