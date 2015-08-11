@@ -13,27 +13,76 @@
 @section Scripts {
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
 
+<style>
+    .field-validation-error, .validation-summary-errors {
+        color: red;
+        font-size: 13px;
+        line-height: 15px;
+    }
+</style>
+
+
+
 <script>
     /**
         저장시 form 값들을 보낼때 호출하는 함수 핸들러
     */
     function submitContents() {
-        var frm = document.frmFORM;
+        var frm = document.frm;
 
         // 에디터의 내용이 textarea에 적용된다.
-        oEditors.getById["default_se"].exec("UPDATE_CONTENTS_FIELD", []);
+        oEditors.getById["COMMENT"].exec("UPDATE_CONTENTS_FIELD", []);
 
         //내용 참조하기
-        document.getElementById("default_se").value;
+        var comment = document.getElementById("COMMENT").value;
 
-        try {
-            frm.submit();
-        } catch (e) { }
+        var elem = document.createElement("div");
+        elem.innerHTML = comment;
+
+        var images = elem.getElementsByTagName("img");
+
+        for (var i = 0; i < images.length; i++) {
+            //console.log(images[i].src);
+            var src = images[i].src;
+            var target = "@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority,myController._img_path_review)";
+            console.log(src)
+            console.log(src.indexOf(target))
+            if (src.indexOf(target) > -1) {
+
+                var arr = src.split("/");
+                var img =  document.getElementById("SUB_IMG_" + (i + 1));
+                img.value = arr[arr.length-1];
+            }
+
+        }
+
+        //OriginalString.replace(/(<([^>]+)>)/ig,""); 
+        var tmp_comment = comment;
+        var rm_html = /<[^>]*>/g;
+        var rm_etc = /&(nbsp|amp|quot|lt|gt);/g;
+        var rm_space = /(\s*)/g;
+        tmp_comment = tmp_comment.replace(rm_html, "");
+        tmp_comment = tmp_comment.replace(rm_etc, "");
+        tmp_comment = tmp_comment.replace(rm_space, "");
+
+        console.log(tmp_comment, tmp_comment.length)
+
+        if (tmp_comment.length == 0) {
+            document.getElementById("COMMENT").value = "";
+        }
+        /*
+        var regex = /\< *[img][^\>]*[src] *= *[\"\']{0,1}([^\"\'\ >]*)/g;
+        var comment = document.getElementById("COMMENT").value;
+        //var lst = regex.exec(comment)
+        var m;
+        while ( m = regex.exec(comment)) {
+            console.log(m[1]);
+        }
+       */
+
+        frm.submit();
     }
 
-    window.PASTE_HTML2 = function (arr) {
-        consoloe.log("===>", arr);
-    }
 </script>
 
 }
@@ -52,10 +101,14 @@
         <div class="writeform exp mt40">
             @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frm", name = "frm" }))
             {
+                <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
-                Html.AntiForgeryToken();  //폼 데이터 위조 방지 토큰 생성
-                
                  <input type="hidden" name="EXP_MASTER_IDX" value="@Model.EXP_MASTER_IDX" />
+                <input type="hidden" name="P_CODE" value="@Model.P_CODE" />
+                <input type="hidden" id="SUB_IMG_1" name="SUB_IMG_1" value="@Model.SUB_IMG_1" />
+                <input type="hidden" id="SUB_IMG_2" name="SUB_IMG_2" value="@Model.SUB_IMG_2" />
+                <input type="hidden" id="SUB_IMG_3" name="SUB_IMG_3" value="@Model.SUB_IMG_3" />
                 <fieldset>
                     <legend>체험단리뷰 등록 폼</legend>
 
@@ -84,7 +137,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>피부타입</th>
+                                <th><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
                                 <td class="skintype">
 
                                     @{
@@ -111,21 +164,22 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>제목</th>
+                                <th><span>@Html.ValidationMessageFor(model => model.TITLE)</span>제목</th>
                                 <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="제목 입력" name="TITLE" value="@Model.TITLE" /></td>
                             </tr>
                             <tr>
-                                <th>태그</th>
+                                <th><span>@Html.ValidationMessageFor(model => model.TAG)</span>태그</th>
                                 <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="태그 입력" name="TAG" value="@Model.TAG" /></td>
                             </tr>
                             <tr>
-                                <td colspan="3" class="edit">
+                                <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용</th>
+                                <td colspan="2" class="edit">
 
              
                                     @{
                                         Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
                                         {
-                                            width = 1000 //에디터 width 값
+                                            width = 850 //에디터 width 값
                                             ,
                                             height = 600 //에디터 height 값
                                             ,
@@ -133,7 +187,7 @@
                                             ,
                                             memo = Model.COMMENT //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
                                             ,
-                                            uploadPath = "~/Upload/Review/"//업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
+                                            uploadPath = string.Format("~{0}", myController._img_path_review)//업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
                                         });
 }
                                                            
@@ -142,9 +196,15 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="coution">
+                        <h3>유의사항</h3>
+                        <div class="box">
+                            근거없는 악성 비방글, 게시판의 성격과 맞지 않는 글은 삭제될 수 있으니 양해 부탁드립니다.
+                        </div>
+                    </div>
                     <div class="btngroup mt40">
                         <a href="#" class="btn_brown_w96h38" onclick="submitContents(); return false;">등록</a>
-                        <a href="#" class="btn_white_w96h38 typeb">취소</a>
+                        <a href="@Url.Action("Index", "MyReviewExp")" class="btn_white_w96h38 typeb">취소</a>
                     </div>
                 </fieldset>
   }

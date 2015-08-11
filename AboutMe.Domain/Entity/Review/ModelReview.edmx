@@ -9,6 +9,41 @@
         <Function Name="SP_REVIEW_GET_PRODUCT_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_REVIEW_MY_EXP_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_REVIEW_MY_EXP_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="EXP_MASTER_IDX" Type="int" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="SKIN_TYPE" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_IMG_1" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_IMG_2" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_IMG_3" Type="varchar" Mode="In" />
+          <Parameter Name="TAG" Type="varchar" Mode="In" />
+          <Parameter Name="COMMENT" Type="text" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_REVIEW_MY_EXP_MASTER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_REVIEW_MY_EXP_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="EXP_MASTER_IDX" Type="int" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="SKIN_TYPE" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_IMG_1" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_IMG_2" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_IMG_3" Type="varchar" Mode="In" />
+          <Parameter Name="TAG" Type="varchar" Mode="In" />
+          <Parameter Name="COMMENT" Type="text" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="SP_REVIEW_PRODUCT_COMPLETE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
@@ -119,7 +154,42 @@
           </FunctionImport>
           <FunctionImport Name="SP_REVIEW_CATE_THEMA_SEL" ReturnType="Collection(ReviewModel.SP_REVIEW_CATE_THEMA_SEL_Result)" />
           <FunctionImport Name="SP_REVIEW_PRODUCT_READY_CNT" ReturnType="Collection(Int32)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_MY_EXP_INS">
             <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="EXP_MASTER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SKIN_TYPE" Mode="In" Type="String" />
+            <Parameter Name="SUB_IMG_1" Mode="In" Type="String" />
+            <Parameter Name="SUB_IMG_2" Mode="In" Type="String" />
+            <Parameter Name="SUB_IMG_3" Mode="In" Type="String" />
+            <Parameter Name="TAG" Mode="In" Type="String" />
+            <Parameter Name="COMMENT" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_MY_EXP_MASTER_SEL" ReturnType="Collection(ReviewModel.SP_REVIEW_MY_EXP_MASTER_SEL_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_MY_EXP_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="EXP_MASTER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SKIN_TYPE" Mode="In" Type="String" />
+            <Parameter Name="SUB_IMG_1" Mode="In" Type="String" />
+            <Parameter Name="SUB_IMG_2" Mode="In" Type="String" />
+            <Parameter Name="SUB_IMG_3" Mode="In" Type="String" />
+            <Parameter Name="TAG" Mode="In" Type="String" />
+            <Parameter Name="COMMENT" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_MY_EXP_DETAIL" ReturnType="Collection(ReviewModel.SP_REVIEW_MY_EXP_DETAIL_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_REVIEW_PRODUCT_READY_SEL_Result">
@@ -244,6 +314,29 @@
           <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
           <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_REVIEW_MY_EXP_MASTER_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="true" />
+          <Property Type="String" Name="IS_AUTH" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="FROM_DATE" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="TO_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IS_DATE_VALID" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IS_WRITTEN" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="ARTICLE_IDX" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_REVIEW_MY_EXP_DETAIL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="Int32" Name="EXP_MASTER_IDX" Nullable="true" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="TAG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SUB_IMG_1" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="SUB_IMG_2" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="SUB_IMG_3" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -406,6 +499,39 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODUCT_READY_CNT" FunctionName="ReviewModel.Store.SP_REVIEW_PRODUCT_READY_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_MY_EXP_INS" FunctionName="ReviewModel.Store.SP_REVIEW_MY_EXP_INS" />
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_MY_EXP_MASTER_SEL" FunctionName="ReviewModel.Store.SP_REVIEW_MY_EXP_MASTER_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_MY_EXP_MASTER_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="IS_AUTH" ColumnName="IS_AUTH" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
+                <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
+                <ScalarProperty Name="IS_DATE_VALID" ColumnName="IS_DATE_VALID" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="IS_WRITTEN" ColumnName="IS_WRITTEN" />
+                <ScalarProperty Name="ARTICLE_IDX" ColumnName="ARTICLE_IDX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_MY_EXP_UPD" FunctionName="ReviewModel.Store.SP_REVIEW_MY_EXP_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_MY_EXP_DETAIL" FunctionName="ReviewModel.Store.SP_REVIEW_MY_EXP_DETAIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_MY_EXP_DETAIL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="EXP_MASTER_IDX" ColumnName="EXP_MASTER_IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="TAG" ColumnName="TAG" />
+                <ScalarProperty Name="SUB_IMG_1" ColumnName="SUB_IMG_1" />
+                <ScalarProperty Name="SUB_IMG_2" ColumnName="SUB_IMG_2" />
+                <ScalarProperty Name="SUB_IMG_3" ColumnName="SUB_IMG_3" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

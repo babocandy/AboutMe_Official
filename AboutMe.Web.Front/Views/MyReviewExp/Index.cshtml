@@ -1,17 +1,153 @@
-﻿
+﻿@model AboutMe.Web.Front.Models.MyReviewExpListViewModel
+@using AboutMe.Domain.Entity.Review
+@using AboutMe.Web.Front.Controllers
+@using AboutMe.Common.Data
 @{
-    Layout = null;
+    ViewBag.Title = "체험단 리뷰 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    var myController = ViewContext.Controller as MyReviewExpController;
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+    <script>
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+           //
+        }
+    </script>
+
 }
 
-<!DOCTYPE html>
+<!--container-->
+<div id="container" class="expreview">
+    <div class="container1080">
+        <!--mypage_top-->
+        <div class="mypage_top">
+            <!--h2_area-->
+            <div class="h2_area">
+                <h2>체험단<br />리뷰<i></i></h2>
+                <!--mypage_menu-->
+                @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
+                <!--//mypage_menu-->
+            </div>
+            <!--//h2_area-->
+            <!--꼭 읽어주세요-->
+            <div class="userread">
+                <p class="tit">꼭 읽어주세요</p>
+                <ul class="ps_list">
+                    <li>리뷰 작성 시 개인정보는 가급적 노출하지 마시기 바랍니다. (본 쇼핑몰에서는 책임지지 않습니다.)</li>
+                    <li>근거 없는 악성 비방글, 게시판 성격과 맞지 않는 글은 삭제 될 수 있으니 양해 부탁드립니다.</li>
+                </ul>
+            </div>
+            <!--//꼭 읽어주세요-->
+        </div>
+        <!--//mypage_top-->
+        <!--리뷰영역-->
+        <div class="contypeb">
+            <div class="writable tabletypeb">
+                <!--작성 가능한 리뷰 목록-->
+                <table summary="주문 상품 정보, 수량, 결제금액, 비고">
+                    <caption>작성 가능한 리뷰 목록</caption>
+                    <colgroup>
+                        <col width="170" />
+                        <col width="*" />
+                        <col width="256" />
+                        <col width="231" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="2">리뷰상품</th>
+                            <th>기간</th>
+                            <th>비고</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
+@foreach (var item in Model.List)
+{
+                        <tr>
+                            <td class="proimg">
+                                <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})"><img src="@string.Format("{0}{1}", myController._img_path_product, item.Item2.MAIN_IMG)" alt="상품 이미지" /></a>
+                            </td>
+                            <td class="product">
+                                <dl>
+                                    <dt>
+                                        <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})">
+                                            <span class="tag">
+                                                @if (!string.IsNullOrEmpty(item.Item2.ICON_YN))
+                                                {
+                                                    if (item.Item2.ICON_YN.IndexOf('B') != -1)
+                                                    { <text> <span class="ico ico_best">BEST</span></text> }
+                                                    if (item.Item2.ICON_YN.IndexOf('S') != -1)
+                                                    { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                                    if (item.Item2.ICON_YN.IndexOf('N') != -1)
+                                                    { <text> <span class="ico ico_new">NEW</span></text> }
+                                                    if (item.Item2.ICON_YN.IndexOf('C') != -1)
+                                                    { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.Item2.PMO_PRODUCT_CATEGORY))
+                                                {
+                                                    if (item.Item2.PMO_PRODUCT_CATEGORY == "01")
+                                                    { <text> <span class="ico ico_set">SET</span></text> }
+                                                    if (item.Item2.PMO_PRODUCT_CATEGORY == "02")
+                                                    { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                                    if (item.Item2.PMO_PRODUCT_CATEGORY == "03")
+                                                    { <text> <span class="ico ico_time">TIME</span></text> }
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.Item2.COUPON_CODE))
+                                                {
+                                                    <text> <span class="ico ico_coupon">COUPON</span></text>
+                                                }
+                                            </span>
+                                            @item.Item2.P_NAME
+                                        </a>
+                                    </dt>
+                                    <dd>@item.Item2.P_SUB_TITLE</dd>
+                                </dl>
+                            </td>
+                            <td>@string.Format("{0}~{1}", item.Item1.FROM_DATE.Value.ToString("yyyy.MM.dd"), item.Item1.TO_DATE.Value.ToString("yyyy.MM.dd"))</td>
+                            <td>
+                            
+                                @if (item.Item1.IS_AUTH != "Y" || item.Item1.IS_DATE_VALID != "Y")
+                                {
+                                                                    
+                                }
+                                else
+                                {
+                                    if (item.Item1.IS_WRITTEN == "Y")
+                                    {
+                                        <a href="@Url.Action("Update", new { ARTICLE_IDX = item.Item1.ARTICLE_IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview" >리뷰수정</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Write", new { EXP_MASTER_IDX = item.Item1.IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview">리뷰쓰기</a>
+                                    }
+
+
+                                }
+
+                                
+                            
+                            </td>
+                        </tr>
+}
+                    </tbody>
+                </table>
+                <!--//작성 가능한 리뷰 목록-->
+            </div>
+        </div>
+        <!--//리뷰영역-->
+
+
     </div>
-</body>
-</html>
+</div>
+<!--//container-->
+
