@@ -540,6 +540,71 @@ namespace AboutMe.Web.Admin.Controllers
 
             return View(_AdminFrontMemberService.GetAdminMemberStaffBaseList(SEL_DATE_FROM, SEL_DATE_TO, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, PAGE, PAGESIZE).ToList());
         }
+        
+        //관리자 - 임직원 기준DB - 엑셀
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult StaffBaseExcel(string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "IDX", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 100000)
+        {
+
+            var products = new System.Data.DataTable("test");
+            //헤더 구성
+            products.Columns.Add("회사", typeof(string));
+            products.Columns.Add("사번", typeof(string));
+            products.Columns.Add("이름", typeof(string));
+            products.Columns.Add("등록일", typeof(string));
+            
+            int nDOWN_ROW_CNT = 0;
+            var Data = _AdminFrontMemberService.GetAdminMemberStaffBaseList(SEL_DATE_FROM, SEL_DATE_TO, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, 1, 100000).ToList(); //데이타 가져오기
+            if (Data != null && Data.Any())
+            {
+
+                foreach (var result in Data)
+                {
+                    products.Rows.Add(result.STAFF_COMPANY, result.STAFF_ID, result.STAFF_NAME, result.INS_DATE);
+
+                    nDOWN_ROW_CNT++;
+                } //for
+            } //if
+
+            var grid = new GridView();
+            grid.DataSource = products;
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=StaffBase.xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "euc-kr";  //UTF-8 ,euc-kr
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding("euc-kr");
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htw);
+
+            //Response.Output.Write(sw.ToString());
+            //Response.Flush();
+            //Response.End();
+
+            //return View("MyView");
+
+            //로그 기록
+            string memo = "관리자-임직원 기준DB-엑셀다운";
+            string comment = "관리자-임직원 기준DB-엑셀다운";
+            memo = memo + "|nDOWN_ROW_CNT:" + nDOWN_ROW_CNT.ToString();
+            memo = memo + "|SEL_DATE_FROM:" + SEL_DATE_FROM;
+            memo = memo + "|SEL_DATE_TO:" + SEL_DATE_TO;
+            memo = memo + "|SEARCH_COL:" + SEARCH_COL;
+            memo = memo + "|SEARCH_KEYWORD:" + SEARCH_KEYWORD;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+
+            return Content(sw.ToString(), "application/ms-excel");
+
+        }
+
 
         //관리자 - 임직원 기준DB - 삭제 :ajax > JSON리턴
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
@@ -675,8 +740,8 @@ namespace AboutMe.Web.Admin.Controllers
 
   
             //string fileLocation = Server.MapPath("~/Upload/Staff/") + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);
-            //string fileLocation = Config.GetConfigValue("StaffBaseDB") +System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유
-            //string fileLocation = Server.MapPath("~"+Config.GetConfigValue("StaffBaseDB")) + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유
+            //string fileLocation = Config.GetConfigValue("StaffBaseDB") +System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유- 제외
+            //string fileLocation = Server.MapPath("~"+Config.GetConfigValue("StaffBaseDB")) + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);  // 보안상의 이유- 제외
             string fileLocation = Server.MapPath("~/App_Data/Staff/") + System.IO.Path.GetFileName(Request.Files["FILE1"].FileName);
             
             if (System.IO.File.Exists(fileLocation))
@@ -779,9 +844,13 @@ namespace AboutMe.Web.Admin.Controllers
 
             //업로드 엑셀파일 삭제 : 사용중 오류 발생
             excelConnection.Close();
-            FileInfo file = new FileInfo(fileLocation);
-            file.Delete();
+            //FileInfo file = new FileInfo(fileLocation);
+            //file.Delete();
+            if (System.IO.File.Exists(fileLocation))
+            {
 
+                System.IO.File.Delete(fileLocation);
+            }
 
             //return View();
             //return View(_AdminFrontMemberService.GetAdminMemberStaffBaseTempList(strWORK_TEMP_ID)); //결과 리스트
@@ -797,6 +866,132 @@ namespace AboutMe.Web.Admin.Controllers
             this.ViewBag.WORK_TEMP_ID = WORK_TEMP_ID;
             return View(_AdminFrontMemberService.GetAdminMemberStaffBaseTempList(WORK_TEMP_ID)); //결과 리스트
         }
+
+        //-휴면계정  =============================================================================================================================
+        //휴면계정-목록
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult SleepingIndex(string M_LASTVISITDATE = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "M_LASTVISITDATE", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
+        {
+            //return View();
+            if (M_LASTVISITDATE == "")
+                M_LASTVISITDATE = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd");  //기본 1년전 로그인
+
+            this.ViewBag.M_LASTVISITDATE = M_LASTVISITDATE;
+
+            this.ViewBag.SEARCH_COL = SEARCH_COL;
+            this.ViewBag.SEARCH_KEYWORD = SEARCH_KEYWORD;
+            this.ViewBag.SORT_COL = SORT_COL;
+            this.ViewBag.SORT_DIR = SORT_DIR;
+            this.ViewBag.PAGE = PAGE;
+            this.ViewBag.PAGESIZE = PAGESIZE;
+
+
+            int TotalRecord = 0;
+            //TotalRecord = 999;
+            TotalRecord = _AdminFrontMemberService.GetAdminMemberSleepingCount(M_LASTVISITDATE, SEARCH_COL, SEARCH_KEYWORD);
+
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+
+            return View(_AdminFrontMemberService.GetAdminMemberSleepingList(M_LASTVISITDATE, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, PAGE, PAGESIZE).ToList());
+        }
+
+        //휴면계정-엑셀
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult SleepingExcel(string M_LASTVISITDATE = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "M_LASTVISITDATE", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 100000)
+        {
+            //return View();
+            if (M_LASTVISITDATE == "")
+                M_LASTVISITDATE = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd");  //기본 1년전 로그인
+
+
+            var products = new System.Data.DataTable("test");
+            //헤더 구성
+            products.Columns.Add("계정", typeof(string));
+            products.Columns.Add("이름", typeof(string));
+            products.Columns.Add("임직원구분", typeof(string));
+            products.Columns.Add("임직원_회사", typeof(string));
+            products.Columns.Add("임직원_사번", typeof(string));
+            products.Columns.Add("등급", typeof(string));
+            products.Columns.Add("EMAIL", typeof(string));
+            products.Columns.Add("핸드폰", typeof(string));
+            products.Columns.Add("전화", typeof(string));
+            products.Columns.Add("현재포인트", typeof(string));
+
+            products.Columns.Add("성별", typeof(string));
+            products.Columns.Add("생일", typeof(string));
+            products.Columns.Add("우편번호", typeof(string));
+            products.Columns.Add("주소1", typeof(string));
+            products.Columns.Add("주소2", typeof(string));
+
+            products.Columns.Add("SMS수신", typeof(string));
+            products.Columns.Add("EMAIL수신", typeof(string));
+            products.Columns.Add("DM수신", typeof(string));
+            products.Columns.Add("개인정보제3자제공에동의", typeof(string));
+            products.Columns.Add("고유식별정보수집및이용동의", typeof(string));
+
+            products.Columns.Add("가입일", typeof(string));
+            products.Columns.Add("최종방문일", typeof(string));
+            products.Columns.Add("탈퇴여부", typeof(string));
+            products.Columns.Add("탈퇴일", typeof(string));
+            products.Columns.Add("탈퇴시잔여포인트", typeof(string));
+            products.Columns.Add("탈퇴사유", typeof(string));
+
+            int nDOWN_ROW_CNT = 0;
+            var Data = _AdminFrontMemberService.GetAdminMemberSleepingList(M_LASTVISITDATE, SEARCH_COL, SEARCH_KEYWORD, SORT_COL, SORT_DIR, 1, 100000).ToList(); //데이타 가져오기
+            if (Data != null && Data.Any())
+            {
+
+                foreach (var result in Data)
+                {
+                    products.Rows.Add(result.M_ID, result.M_NAME, result.M_GBN, result.M_STAFF_COMPANY, result.M_STAFF_ID, result.M_GRADE, result.M_EMAIL, result.M_MOBILE, result.M_PHONE, result.M_POINT
+                                       , result.M_SEX, result.M_BIRTHDAY, result.M_ZIPCODE, result.M_ADDR1, result.M_ADDR2
+                                       , result.M_ISSMS, result.M_ISEMAIL, result.M_ISDM, result.M_AGREE, result.M_AGREE2
+                                       , result.M_CREDATE, result.M_LASTVISITDATE, result.M_IS_RETIRE, result.M_DEL_DATE, result.M_DEL_POINT, result.M_DEL_REASON
+                        );
+
+                    nDOWN_ROW_CNT++;
+                } //for
+            } //if
+
+            var grid = new GridView();
+            grid.DataSource = products;
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=SleepingMember.xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "euc-kr";  //UTF-8 ,euc-kr
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding("euc-kr");
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htw);
+
+            //Response.Output.Write(sw.ToString());
+            //Response.Flush();
+            //Response.End();
+
+            //return View("MyView");
+
+            //로그 기록
+            string memo = "관리자-회원정보-엑셀다운-휴면계정";
+            string comment = "관리자-회원정보-엑셀다운-휴면계정";
+            memo = memo + "|nDOWN_ROW_CNT:" + nDOWN_ROW_CNT.ToString();
+            memo = memo + "|M_LASTVISITDATE:" + M_LASTVISITDATE;
+            memo = memo + "|SEARCH_COL:" + SEARCH_COL;
+            memo = memo + "|SEARCH_KEYWORD:" + SEARCH_KEYWORD;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(memo, comment);
+
+
+            return Content(sw.ToString(), "application/ms-excel");
+
+        }
+
 
         //#####################################################################################################################################
         //-//데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요 =============================================================================================================================

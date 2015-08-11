@@ -82,6 +82,20 @@
         <Function Name="SP_ADMIN_FRONT_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_MEMBER_SLEEPING_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_LASTVISITDATE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MEMBER_SLEEPING_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_LASTVISITDATE" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_MEMBER_STAFF_BASE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DATE_FROM" Type="varchar" Mode="In" />
           <Parameter Name="DATE_TO" Type="varchar" Mode="In" />
@@ -361,6 +375,20 @@
           <FunctionImport Name="SP_ADMIN_MEMBER_STAFF_BASE_TMP_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
             <Parameter Name="WORK_TEMP_ID" Mode="In" Type="String" />
             <Parameter Name="APP_RESULT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_SLEEPING_CNT" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result)">
+            <Parameter Name="M_LASTVISITDATE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MEMBER_SLEEPING_SEL" ReturnType="Collection(AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result)">
+            <Parameter Name="M_LASTVISITDATE" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_FRONT_COMMON_CNT_Result" >
@@ -722,6 +750,53 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
                 <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_SLEEPING_CNT" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_SLEEPING_CNT" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_SLEEPING_SEL" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_SLEEPING_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_FRONT_MEMBER_VIEW_Result">
+                <ScalarProperty Name="M_NO" ColumnName="M_NO" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_PWD" ColumnName="M_PWD" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_MOBILE" ColumnName="M_MOBILE" />
+                <ScalarProperty Name="M_PHONE" ColumnName="M_PHONE" />
+                <ScalarProperty Name="M_EMAIL" ColumnName="M_EMAIL" />
+                <ScalarProperty Name="M_ZIPCODE" ColumnName="M_ZIPCODE" />
+                <ScalarProperty Name="M_ADDR1" ColumnName="M_ADDR1" />
+                <ScalarProperty Name="M_ADDR2" ColumnName="M_ADDR2" />
+                <ScalarProperty Name="M_ISSMS" ColumnName="M_ISSMS" />
+                <ScalarProperty Name="M_ISEMAIL" ColumnName="M_ISEMAIL" />
+                <ScalarProperty Name="M_ISDM" ColumnName="M_ISDM" />
+                <ScalarProperty Name="M_POINT" ColumnName="M_POINT" />
+                <ScalarProperty Name="M_CREDATE" ColumnName="M_CREDATE" />
+                <ScalarProperty Name="M_VISITCNT" ColumnName="M_VISITCNT" />
+                <ScalarProperty Name="M_LASTVISITDATE" ColumnName="M_LASTVISITDATE" />
+                <ScalarProperty Name="M_UPDATEDATE" ColumnName="M_UPDATEDATE" />
+                <ScalarProperty Name="M_JOIN_MODE" ColumnName="M_JOIN_MODE" />
+                <ScalarProperty Name="M_DI" ColumnName="M_DI" />
+                <ScalarProperty Name="M_SKIN_TROUBLE_CD" ColumnName="M_SKIN_TROUBLE_CD" />
+                <ScalarProperty Name="M_AGREE" ColumnName="M_AGREE" />
+                <ScalarProperty Name="M_AGREE2" ColumnName="M_AGREE2" />
+                <ScalarProperty Name="M_GBN" ColumnName="M_GBN" />
+                <ScalarProperty Name="M_STAFF_COMPANY" ColumnName="M_STAFF_COMPANY" />
+                <ScalarProperty Name="M_STAFF_ID" ColumnName="M_STAFF_ID" />
+                <ScalarProperty Name="M_STAFF_APPROV_DATE" ColumnName="M_STAFF_APPROV_DATE" />
+                <ScalarProperty Name="M_IS_RETIRE" ColumnName="M_IS_RETIRE" />
+                <ScalarProperty Name="M_DEL_DATE" ColumnName="M_DEL_DATE" />
+                <ScalarProperty Name="M_DEL_POINT" ColumnName="M_DEL_POINT" />
+                <ScalarProperty Name="M_DEL_REASON" ColumnName="M_DEL_REASON" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_MEMBER_STAFF_BASE_VIEW_Result>
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_FRONT_MEMBER_VIEW_Result>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "SleepingIndex";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 
 }
@@ -13,13 +13,58 @@
     QueryStr = QueryStr + "&SORTCOL=" + ViewBag.SORTCOL;
     QueryStr = QueryStr + "&SORTDIR=" + ViewBag.SORTDIR;
 
-    QueryStr = QueryStr + "&SEL_DATE_FROM=" + ViewBag.SEL_DATE_FROM;
-    QueryStr = QueryStr + "&SEL_DATE_TO=" + ViewBag.SEL_DATE_TO;
+    QueryStr = QueryStr + "&M_LASTVISITDATE=" + ViewBag.M_LASTVISITDATE;
 
     QueryStr = QueryStr + "&SEARCH_COL=" + ViewBag.SEARCH_COL;
     QueryStr = QueryStr + "&SEARCH_KEYWORD=" + ViewBag.SEARCH_KEYWORD;
 
+    @helper fGradeName(string gradeCode)
+{
+    var grade_name = gradeCode;
+    switch (gradeCode)
+    {
+        case "B": grade_name = "브론즈";
+            break;
+        case "S": grade_name = "실버";
+            break;
+        case "G": grade_name = "골드";
+            break;
+        case "V": grade_name = "VIP";
+            break;
 
+    }
+    <div>@grade_name</div>
+}
+
+    @helper fIsRerireNAME(string is_retire)
+{
+    var isretire_name = is_retire;
+    switch (is_retire)
+    {
+        case "Y": isretire_name = "탈퇴";
+            break;
+        case "N": isretire_name = "활동";
+            break;
+
+    }
+    <div>@isretire_name</div>
+}
+
+    @helper fM_GBN_NAME(string m_gbn)
+{
+    var m_gbn_name = m_gbn;
+    switch (m_gbn)
+    {
+        case "A": m_gbn_name = "일반회원";
+            break;
+        case "S": m_gbn_name = "임직원";
+            break;
+
+    }
+    <div>@m_gbn_name</div>
+}
+    
+    
     @helper fCheckBoxChecked(string strList, string strChked)
 {
     if (strList != null && strChked != null)
@@ -61,34 +106,23 @@
 
     function fGoSearch() {
         var f = document.frmSearch;
-        if (f.SEL_DATE_FROM.value.length > 0) {
-            if (fISDate(f.SEL_DATE_FROM.value) == false) {
+        if (f.M_LASTVISITDATE.value.length > 0) {
+            if (fISDate(f.M_LASTVISITDATE.value) == false) {
                 alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
                 return;
             }
-        }
-        if (f.SEL_DATE_TO.value.length > 0) {
-            if (fISDate(f.SEL_DATE_TO.value) == false) {
-                alert("날짜는 YYYY-MM-DD형식이어야 합니다.");
-                return;
-            }
-        }
-        if (f.SEL_DATE_FROM.value > f.SEL_DATE_TO.value) {
-            var tmp = f.SEL_DATE_FROM.value;
-            f.SEL_DATE_FROM.value = f.SEL_DATE_TO.value;
-            f.SEL_DATE_TO.value = tmp;
         }
 
 
         f.PAGE.value = "1";
-        f.action = "/AdminFrontMember/StaffBaseIndex";
+        f.action = "/AdminFrontMember/SleepingIndex";
         f.method = "post";
         f.submit();
     }
 
     function fExcel() {
         var f = document.frmSearch;
-        f.action = "/AdminFrontMember/StaffBaseExcel";
+        f.action = "/AdminFrontMember/SleepingExcel";
         f.method = "post";
         f.submit();
     }
@@ -97,7 +131,7 @@
     function fISRowChecked()
     {
         var ret = false; //기본 선택행 없음
-        $('input[name=SEL_IDX').each(function () {
+        $('input[name=SEL_M_ID').each(function () {
             if ($(this).is(":checked")) {
                 ret = true;
                 return ret;
@@ -112,16 +146,16 @@
     {
         if (fISRowChecked() == false)
         {
-            alert("선택을 1개이상 하시고 삭제하십시오.");
+            alert("선택을 1개이상 하시고 탈퇴처리하십시오.");
             return;
         }
-        if (confirm("선택된 행을 정말 삭제하시겠습니까?"))
+        if (confirm("탈퇴후 복원 불가능합니다. 선택된 행을 정말 탈퇴처리하시겠습니까?"))
         {
-            $('input[name=SEL_IDX').each(function () {
+            $('input[name=SEL_M_ID').each(function () {
                 if ($(this).is(":checked")) {
-                    var strCHKED_IDX = $(this).val();
+                    var strCHKED_M_ID = $(this).val();
                     //alert("Checked IDX:" + strCHKED_IDX);
-                    fDelAction(strCHKED_IDX); //실제로 삭제 -1건
+                    fDelAction(strCHKED_M_ID); //실제로 탈퇴 -1건
                 }
             });
 
@@ -130,13 +164,14 @@
     }
 
 
-    //선택행 삭제-처리
-    function fDelAction(argIDX)
+        //선택행 탈퇴-처리
+    function fDelAction(argM_ID)
     {
-        //var strTOKEN = f.__RequestVerificationToken.value;
-        var strIDX = argIDX;
+        var f = document.frmSearch;
+        var strTOKEN = f.__RequestVerificationToken.value;
+        var strM_ID = argM_ID;
 
-        var strURL = "/AdminFrontMember/AjaxStaffBaseDeleteProc"; 
+        var strURL = "/AdminFrontMember/EditOK_Retire";
 
         $.ajax({
             url: strURL,
@@ -144,8 +179,9 @@
             type: 'POST',
             dataType: 'json',
             data: {
-                //__RequestVerificationToken: strTOKEN
-                 IDX: strIDX
+                __RequestVerificationToken: strTOKEN
+                ,M_ID: strM_ID
+                ,M_DEL_REASON: '휴면계정-관리자탈퇴처리'
             },
             success: function (retDATA) {
                 if (retDATA.ERR_CODE == "0") {
@@ -169,7 +205,7 @@
         var base_chk = false;
         base_chk = document.getElementById("ALL_CHECK").checked;
         //alert("base_chk:" + base_chk);
-        $("input[name=SEL_IDX]:checkbox").attr("checked", base_chk);
+        $("input[name=SEL_M_ID]:checkbox").attr("checked", base_chk);
     }
 
     </script>
@@ -183,51 +219,27 @@
 
         if (v == "1") //오늘
         {
-            from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
             to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
         }
-        else if (v == "2") //-7 ~오늘
+        else if (v == "11") // 11개월
         {
-            from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
-            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.AddMonths(-11).ToString("yyyy-MM-dd")';
         }
-        else if (v == "3") //-30~오늘
+        else if (v == "12") //1년
         {
-            from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
-            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")';
         }
-        else if (v == "4") // --60일~오늘
+        else if (v == "24") //2년
         {
-            from_date = '@DateTime.Now.AddMonths(-2).ToString("yyyy-MM-dd")';
-            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd")';
         }
-        else if (v == "5") //  -90일~오늘
+        else if (v == "36") //3년
         {
-            from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
-            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-        }
-        else//  전체기간
-        {
-            from_date = '';
-            to_date = '';
+            to_date = '@DateTime.Now.AddYears(-3).ToString("yyyy-MM-dd")';
         }
 
-        $('#SEL_DATE_FROM').val(from_date);
-        $('#SEL_DATE_TO').val(to_date);
-        /*
-        if (v) {
-            $('#SEL_DATE_FROM').removeAttr("disabled");
-            $('#SEL_DATE_TO').removeAttr("disabled");
-            $('#SEL_DATE_FROM').css("background-color", "#ffffff");
-            $('#SEL_DATE_TO').css("background-color", "#ffffff");
-        }
-        else {
-            $('#SEL_DATE_FROM').attr("disabled", "disabled");
-            $('#SEL_DATE_TO').attr("disabled", "disabled");
-            $('#SEL_DATE_FROM').css("background-color", "#c0c0c0");
-            $('#SEL_DATE_TO').css("background-color", "#c0c0c0");
-        }
-        */
+        $('#M_LASTVISITDATE').val(to_date);
+
 
 
     }
@@ -235,16 +247,28 @@
     //DatePicker
     $(document).ready(function () {
         // create DatePicker from input HTML element
-        $("#SEL_DATE_FROM").kendoDatePicker({
+        $("#M_LASTVISITDATE").kendoDatePicker({
             format: "yyyy-MM-dd"
         });
 
-        $("#SEL_DATE_TO").kendoDatePicker({
-            format: "yyyy-MM-dd"
-        });
+
     });
 
-    </script>
+
+    //기능별 상세팝업 :
+    function fPopPersonalDetail(argM_ID) {
+        var f = document.frmSearch;
+        var strM_ID = argM_ID;
+        var xurl = "";
+        var wid = "1000";
+        var hei = "600";
+        var tar = "PERSONAL_POP";
+
+        xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;  //default
+        ow_yes(xurl, tar, wid, hei); //팝업
+    }
+
+</script>
 
 
 
@@ -267,51 +291,47 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>임직원DB 관리</strong>
+            <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>휴면계정 관리</strong>
         </div>
         <!--//path-->
 
         <div class="tar mb10">
-            <a class="btn btn-default middium" href="/AdminFrontMember/StaffBaseInsert">임직원DB 등록</a>
             <a class="btn btn-default middium" href="javascript:fExcel();">EXEL 다운로드</a>
         </div>
 
         <div class="panel">
-            <h3 class="sub-header">임직원DB 관리</h3>
+            <h3 class="sub-header">휴면계정 관리</h3>
             <div class="alert alert-info">
                 <ul>
-                    <li>· 임직원DB를 수정/삭제 합니다.</li>
-                    <li>· 임직원DB를 수정/삭제 합니다.</li>
+                    <li>· 휴면계정을 관리 합니다.</li>
                 </ul>
             </div>
         </div>
 
         <div class="panel">
-            <h4>임직원DB관리</h4>
+            <h4>휴면계정 관리</h4>
 
 
 
             <div id="calendar" style="position:absolute;top:100px;left:100px; z-index:10000;"></div> <!--kendo달력-->
 
-
-            <form name="frmSearch" method="post" action="">
+@using (Html.BeginForm("SleepingIndex", "AdminFrontMember", FormMethod.Post, new { id = "frmSearch", name = "frmSearch" }))
+{
+    @Html.AntiForgeryToken()                                           //폼 데이터 위조 방지 토큰 생성
                 <input type="hidden" name="PAGE" value="@ViewBag.PAGE">
 
                 <table class="table table_row">
                     <colgroup><col style="width:12%" /><col style="width:auto" /></colgroup>
                     <tbody>
                         <tr>
-                            <th scope="row" class="vam">등록기간</th>
+                            <th scope="row" class="vam">최종로그인</th>
                             <td class="condition_seacth">
-                                <input type="text" class="input-sm text-left" id="SEL_DATE_FROM" name="SEL_DATE_FROM" value="@ViewBag.SEL_DATE_FROM" maxlength="10">
-                                ~
-                                <input type="text" class="input-sm text-left" id="SEL_DATE_TO" name="SEL_DATE_TO" value="@ViewBag.SEL_DATE_TO" maxlength="10">(YYYY-MM-DD)&nbsp;
-                                <a href="javascript:search_date_change('1');" class="btn btn-default small">오늘</a>
-                                <a href="javascript:search_date_change('2');" class="btn btn-default small">7일</a>
-                                <a href="javascript:search_date_change('3');" class="btn btn-default small">1개월</a>
-                                <a href="javascript:search_date_change('4');" class="btn btn-default small">2개월</a>
-                                <a href="javascript:search_date_change('5');" class="btn btn-default small">3개월</a>
-                                <a href="javascript:search_date_change('6');" class="btn btn-default small">전체</a>
+                                ~<input type="text" class="input-sm text-left" id="M_LASTVISITDATE" name="M_LASTVISITDATE" value="@ViewBag.M_LASTVISITDATE" maxlength="10">이전
+                                &nbsp;
+                                <a href="javascript:search_date_change('11');" class="btn btn-default small">11개월</a>
+                                <a href="javascript:search_date_change('12');" class="btn btn-default small">1년</a>
+                                <a href="javascript:search_date_change('24');" class="btn btn-default small">2년</a>
+                                <a href="javascript:search_date_change('36');" class="btn btn-default small">3년</a>
 
                             </td>
                             <td class="condition_seacth" rowspan="4">
@@ -323,9 +343,10 @@
                             <th scope="row" class="vam">검색조건</th>
                             <td class="condition_seacth">
                                 <select name="SEARCH_COL" style="width:170px;">
-                                    <option value="STAFF_ID" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "STAFF_ID")>사번</option>
-                                    <option value="STAFF_NAME" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "STAFF_NAME")>이름</option>
-                                    <option value="STAFF_COMPANY" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "STAFF_COMPANY")>회사</option>
+                                    <option value="M_ID" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_ID")>아이디</option>
+                                    <option value="M_NAME" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_NAME")>이름</option>
+                                    <option value="M_EMAIL" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_EMAIL")>EMAIL</option>
+                                    <option value="M_MOBILE" @fSelectBoxSelecteded(ViewBag.SEARCH_COL, "M_MOBILE")>휴대폰</option>
                                 </select>  <input type="text" class="input-sm text-left" name="SEARCH_KEYWORD" maxlength="20" value="@ViewBag.SEARCH_KEYWORD" />
                             </td>
                         </tr>
@@ -339,7 +360,7 @@
                         <colgroup><col style="width:200px" /><col style="width:12%" /><col style="width:auto" /><col style="width:12%" /><col style="width:auto" /></colgroup>
 
                         <tr>
-                            <th><a href="javascript:fDelCheckedRows();" class=" btn btn-default large btn_search">선택행 삭제</a></th>
+                            <th><a href="javascript:fDelCheckedRows();" class=" btn btn-default large btn_search">선택행 탈퇴</a></th>
                             <th>총검색</th>
                             <td>@ViewBag.TotalRecord.ToString("#,##0") 건</td>
                             <th>출력수</th>
@@ -357,7 +378,7 @@
                 </div>
 
 
-            </form>
+}
 
 
 
@@ -369,15 +390,19 @@
             <h4>임직원DB 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
-                <colgroup><col /><col /><col /><col /><col /><col /></colgroup>
+                <colgroup><col /><col /><col /><col /><col /><col /><col /><col /><col /><col /></colgroup>
                 <thead>
                     <tr>
                         <th scope="col" class="brnone"><input type="checkbox" name="ALL_CHECK" id="ALL_CHECK" style="vertical-align:middle;margin-bottom:2px;" onclick="fAllCkeckToggle();" /></th>
-                        <th scope="col">IDX</th>
-                        <th scope="col">사번</th>
+                        <th scope="col">최종로그인</th>
+                        <th scope="col">아이디</th>
                         <th scope="col">이름</th>
-                        <th scope="col">회사</th>
-                        <th scope="col" class="brnone">등록일</th>
+                        <th scope="col">임직원구분</th>
+                        <th scope="col">등급</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">전화</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col" class="brnone">가입일</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -386,7 +411,7 @@
                         if (Model.Count() < 1)
                         {
                             <tr>
-                                <td colspan="6" class="brnone">No data...</td>
+                                <td colspan="10" class="brnone">No data...</td>
                             </tr>
                         }
                     }
@@ -396,12 +421,16 @@
                         foreach (var item in Model)
                         {
                             <tr>
-                                <td class="brnone"><input type="checkbox" id="SEL_IDX" name="SEL_IDX" value="@item.IDX" /></td>
-                                <td>@item.IDX</td>
-                                <td>@item.STAFF_ID</td>
-                                <td>@item.STAFF_NAME</td>
-                                <td>@item.STAFF_COMPANY</td>
-                                <td class="brnone">@item.INS_DATE.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td class="brnone"><input type="checkbox" id="SEL_M_ID" name="SEL_M_ID" value="@item.M_ID" /></td>
+                                <td>@item.M_LASTVISITDATE.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td><a href="javascript: fPopPersonalDetail('@item.M_ID');" class="btn btn-primary small">@item.M_ID</a></td>
+                                <td><a href="javascript: fPopPersonalDetail('@item.M_ID');" class="btn btn-primary small">@item.M_NAME</a></td>
+                                <td>@fM_GBN_NAME(@item.M_GBN)</td>
+                                <td>@fGradeName(@item.M_GRADE)</td>
+                                <td>@item.M_EMAIL</td>
+                                <td>@item.M_MOBILE</td>
+                                <td>@item.M_POINT.ToString("#,##0")</td>
+                                <td class="brnone">@item.M_CREDATE.ToString("yyyy-MM-dd HH:mm")</td>
                             </tr>
                             count = count - 1;
                         }
