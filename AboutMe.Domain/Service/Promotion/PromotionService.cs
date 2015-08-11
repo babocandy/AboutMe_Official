@@ -34,7 +34,7 @@ namespace AboutMe.Domain.Service.Promotion
         }
 
 
-        //전체할인 프로모션 리스트 가져오기
+        //특정프로모션에 소속된 상품리스트 가져오기 
         public List<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> GetPromotionByProductList(string CdPromotionProduct)
         {
 
