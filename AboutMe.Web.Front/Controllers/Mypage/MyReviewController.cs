@@ -4,16 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
 using AboutMe.Domain.Service.Review;
-
 using System.Diagnostics;
 using AboutMe.Web.Front.Models;
 using AboutMe.Web.Front.Common.Filters;
 using AboutMe.Web.Front.Common;
-
 using AboutMe.Domain.Entity.Review;
-
 using AboutMe.Common.Helper;
 using AboutMe.Common.Data;
 
@@ -25,9 +21,9 @@ namespace AboutMe.Web.Front.Controllers
     {
         private IReviewService _ReviewService;
 
-        public MyReviewController(IReviewService _reviewService)
+        public MyReviewController(IReviewService s)
         {
-            this._ReviewService = _reviewService;
+            this._ReviewService = s;
         }
 
         /**

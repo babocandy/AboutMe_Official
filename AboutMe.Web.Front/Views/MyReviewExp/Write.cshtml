@@ -1,0 +1,155 @@
+﻿@model AboutMe.Web.Front.Models.MyReviewExpWriteViewModel
+@using AboutMe.Domain.Entity.Review
+@using AboutMe.Web.Front.Controllers
+@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "체험단 리뷰 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    var myController = ViewContext.Controller as MyReviewExpController;
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+<script>
+    /**
+        저장시 form 값들을 보낼때 호출하는 함수 핸들러
+    */
+    function submitContents() {
+        var frm = document.frmFORM;
+
+        // 에디터의 내용이 textarea에 적용된다.
+        oEditors.getById["default_se"].exec("UPDATE_CONTENTS_FIELD", []);
+
+        //내용 참조하기
+        document.getElementById("default_se").value;
+
+        try {
+            frm.submit();
+        } catch (e) { }
+    }
+
+    window.PASTE_HTML2 = function (arr) {
+        consoloe.log("===>", arr);
+    }
+</script>
+
+}
+
+<!--container-->
+<div id="container" class="review_write">
+    <div class="container1080">
+        <!--path-->
+        <div class="path">
+            <a href="#" class="home"><img src="/aboutCom/images/common/ico_home.png" alt="home" /></a>
+            <a href="#">제품리뷰</a>
+            <span>리뷰등록</span>
+        </div>
+        <!--//path-->
+        <h2><img src="/aboutCom/images/mypage/h2_expwrite.gif" alt="체험단리뷰 등록" /></h2>
+        <div class="writeform exp mt40">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frm", name = "frm" }))
+            {
+
+                Html.AntiForgeryToken();  //폼 데이터 위조 방지 토큰 생성
+                
+                 <input type="hidden" name="EXP_MASTER_IDX" value="@Model.EXP_MASTER_IDX" />
+                <fieldset>
+                    <legend>체험단리뷰 등록 폼</legend>
+
+
+                    <table summary="상품찾기, 피부타입, 제목">
+                        <caption>체험단리뷰 등록 입력 표</caption>
+                        <colgroup>
+                            <col width="147" />
+                            <col width="472" />
+                            <col width="*" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>상품</th>
+             
+                                <td class="prosearch"> @(Model.ProductInfo.P_NAME)</td>
+                                <td rowspan="2" class="product">
+                                    <div class="pro_info">
+                                        <!--이미지사이즈 96x96-->
+                                        <div class="photo"><img src="@string.Format("{0}R64_{1}", myController._img_path_product, Model.ProductInfo.MAIN_IMG)" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">@Model.ProductInfo.P_NAME</p>
+                                            <p class="stit">@Model.ProductInfo.P_SUB_TITLE</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>피부타입</th>
+                                <td class="skintype">
+
+                                    @{
+                                        List<SelectListItem> items = new List<SelectListItem>();
+                                        items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
+                                        items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
+                                        items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
+
+
+                                        foreach (var xx in items)
+                                        {
+                                            if (xx.Value == Model.SKIN_TYPE)
+                                            {
+                                                xx.Selected = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    @Html.DropDownList("SKIN_TYPE", items, "선택", new { @class = "selectstyleb" })
+                                    
+                                  
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>제목</th>
+                                <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="제목 입력" name="TITLE" value="@Model.TITLE" /></td>
+                            </tr>
+                            <tr>
+                                <th>태그</th>
+                                <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="태그 입력" name="TAG" value="@Model.TAG" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="edit">
+
+             
+                                    @{
+                                        Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
+                                        {
+                                            width = 1000 //에디터 width 값
+                                            ,
+                                            height = 600 //에디터 height 값
+                                            ,
+                                            tfID = "COMMENT" //에디터 id 혹은 name
+                                            ,
+                                            memo = Model.COMMENT //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+                                            ,
+                                            uploadPath = "~/Upload/Review/"//업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
+                                        });
+}
+                                                           
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="btngroup mt40">
+                        <a href="#" class="btn_brown_w96h38" onclick="submitContents(); return false;">등록</a>
+                        <a href="#" class="btn_white_w96h38 typeb">취소</a>
+                    </div>
+                </fieldset>
+  }
+        </div>
+
+    </div>
+</div>
+<!--//container-->
