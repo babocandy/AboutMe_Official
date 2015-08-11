@@ -303,12 +303,12 @@ namespace AboutMe.Web.Admin.Controllers
             return View(mMyMultiModelForCreateProduct);
 
         }
-     
-        [HttpPost]
+
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_PRODUCT  , string[] CheckMemGrade)
-        public ActionResult PrdCreate(HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE, [Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
+        public ActionResult PrdCreate(HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE, [Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Exclude = "IDX,CD_PROMOTION_PRODUCT,PMO_CATEGORY,INS_DATE")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
         {
 
 
@@ -416,7 +416,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
       //  public ActionResult PrdUpdate(String OLD_PRODUCT_MAIN_IMG, HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE, [Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Include = "PMO_PRODUCT_NAME,PMO_PRODUCT_CATEGORY,PMO_PRODUCT_RATE_OR_MONEY,PMO_ONEONE_MULTIPLE_CNT,PMO_SET_DISCOUNT_CNT,PMO_PRODUCT_DISCOUNT_RATE,PMO_PRODUCT_DISCOUNT_MONEY,PMO_PRODUCT_DATE_FROM,PMO_PRODUCT_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product, string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)

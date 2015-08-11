@@ -115,7 +115,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
@@ -172,7 +172,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
-        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        [CustomAuthorize, ValidateInput(false)]//어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult Update(string CdCoupon)
         {
 
@@ -199,7 +199,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
