@@ -252,30 +252,14 @@ namespace AboutMe.Domain.Entity.Event
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_EVENT_MAIN_VIEW_Result>("SP_ADMIN_EVENT_MAIN_VIEW");
         }
     
-        public virtual ObjectResult<SP_EVENT_END_LIST_Result> SP_EVENT_END_LIST(Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        public virtual ObjectResult<SP_EVENT_END_LIST_Result> SP_EVENT_END_LIST()
         {
-            var pAGEParameter = pAGE.HasValue ?
-                new ObjectParameter("PAGE", pAGE) :
-                new ObjectParameter("PAGE", typeof(int));
-    
-            var pAGESIZEParameter = pAGESIZE.HasValue ?
-                new ObjectParameter("PAGESIZE", pAGESIZE) :
-                new ObjectParameter("PAGESIZE", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_END_LIST_Result>("SP_EVENT_END_LIST", pAGEParameter, pAGESIZEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_END_LIST_Result>("SP_EVENT_END_LIST");
         }
     
-        public virtual ObjectResult<SP_EVENT_ING_LIST_Result> SP_EVENT_ING_LIST(Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        public virtual ObjectResult<SP_EVENT_ING_LIST_Result> SP_EVENT_ING_LIST()
         {
-            var pAGEParameter = pAGE.HasValue ?
-                new ObjectParameter("PAGE", pAGE) :
-                new ObjectParameter("PAGE", typeof(int));
-    
-            var pAGESIZEParameter = pAGESIZE.HasValue ?
-                new ObjectParameter("PAGESIZE", pAGESIZE) :
-                new ObjectParameter("PAGESIZE", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_ING_LIST_Result>("SP_EVENT_ING_LIST", pAGEParameter, pAGESIZEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_ING_LIST_Result>("SP_EVENT_ING_LIST");
         }
     
         public virtual ObjectResult<SP_ADMIN_EVENT_MAIN_LIST_Result> SP_ADMIN_EVENT_MAIN_LIST()
@@ -298,6 +282,20 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("ORDER", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD", gBNParameter, iDXParameter, oRDERParameter);
+        }
+    
+        public virtual ObjectResult<SP_EVENT_MAIN_VIEW_Result> SP_EVENT_MAIN_VIEW()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_MAIN_VIEW_Result>("SP_EVENT_MAIN_VIEW");
+        }
+    
+        public virtual ObjectResult<SP_EVENT_VIEW_Result> SP_EVENT_VIEW(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EVENT_VIEW_Result>("SP_EVENT_VIEW", iDXParameter);
         }
     }
 }

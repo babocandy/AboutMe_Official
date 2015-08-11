@@ -130,5 +130,53 @@ namespace AboutMe.Domain.Service.Event
         }
         #endregion
 
+        #region User Main View
+        public SP_EVENT_MAIN_VIEW_Result EventMainView()
+        {
+            SP_EVENT_MAIN_VIEW_Result result = new SP_EVENT_MAIN_VIEW_Result();
+            using (EventEntities EfContext = new EventEntities())
+            {
+                result = EfContext.SP_EVENT_MAIN_VIEW().FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+        #region User Main 진행중인 이벤트 목록
+        public List<SP_EVENT_ING_LIST_Result> EventMainIngList()
+        {
+            List<SP_EVENT_ING_LIST_Result> lst = new List<SP_EVENT_ING_LIST_Result>();
+            using (EventEntities EfContext = new EventEntities())
+            {
+                lst = EfContext.SP_EVENT_ING_LIST().ToList();
+            }
+            return lst;
+        }
+        #endregion
+
+        #region User Main 종료 이벤트 목록
+        public List<SP_EVENT_END_LIST_Result> EventMainEndList()
+        {
+            List<SP_EVENT_END_LIST_Result> lst = new List<SP_EVENT_END_LIST_Result>();
+            using (EventEntities EfContext = new EventEntities())
+            {
+                lst = EfContext.SP_EVENT_END_LIST().ToList();
+            }
+            return lst;
+        }
+        #endregion
+
+
+        #region User Main View
+        public SP_EVENT_VIEW_Result EventView(int IDX)
+        {
+            SP_EVENT_VIEW_Result result = new SP_EVENT_VIEW_Result();
+            using (EventEntities EfContext = new EventEntities())
+            {
+                result = EfContext.SP_EVENT_VIEW(IDX).FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
     }
 }
