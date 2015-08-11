@@ -58,22 +58,27 @@
                     @if (!string.IsNullOrEmpty(Model.ICON_YN))
                     {
                         if (Model.ICON_YN.IndexOf('B') != -1)
-                        { <text> <span class="ico ico_best">BEST</span></text> }
+                        { <text> <span class="ico_best">BEST</span></text> }
                         if (Model.ICON_YN.IndexOf('S') != -1)
-                        { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                        { <text> <span class="ico_soldout">SOLD OUT</span></text> }
                         if (Model.ICON_YN.IndexOf('N') != -1)
-                        { <text> <span class="ico ico_new">NEW</span></text> }
+                        { <text> <span class="ico_new">NEW</span></text> }
                         if (Model.ICON_YN.IndexOf('C') != -1)
-                        { <text> <span class="ico ico_custom ">CUSTOM</span></text> }
+                        { <text> <span class="ico_custom ">커스텀</span></text> }
                     }
-                    <!--
-                .ico_best
-                .ico_coupon
-                .ico_time
-                .ico_soldout
-                .ico_set
-
-                <span class="ico ico_best">BEST</span>-->
+                    @if (!string.IsNullOrEmpty(Model.PMO_PRODUCT_CATEGORY))
+                    {
+                        if (Model.PMO_PRODUCT_CATEGORY == "01")
+                        { <text> <span class="ico_set">SET</span></text> }
+                        if (Model.PMO_PRODUCT_CATEGORY == "02")
+                        { <text> <span class="ico_1_1">1+1</span></text> }
+                        if (Model.PMO_PRODUCT_CATEGORY == "03")
+                        { <text> <span class="ico_time">TIME</span></text> }
+                    }
+                    @if (!string.IsNullOrEmpty(Model.COUPON_CODE))
+                    {
+                        <text> <span class="ico_coupon">COUPON</span></text>
+                    }
                     <span class="tit">@(new HtmlString(Model.P_NAME))</span>
                     <span class="tittxt">@(new HtmlString(Model.P_SUB_TITLE))</span>
                 </div>
@@ -180,68 +185,7 @@
 
                 <!--상품정보-->
                 <div id="proInfo" class="tab_content" style="display:block">
-                    @(new HtmlString(Model.P_INFO_DETAIL_WEB))
-                    @*<!--사용자가 관리자에서 올리는 상세이미지-->
-                    <div><img src="/aboutCom/images/sample/sample_detail1.jpg" style="width:100%;" alt="" /></div>
-                    <!--//사용자가 관리자에서 올리는 상세이미지-->
-                    <!--용법 용량-->
-                    <div class="product_capacity">
-                        <ul>
-                            <li>
-                                <dl>
-                                    <dt>용량</dt>
-                                    <dd>150ML</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>제조국</dt>
-                                    <dd>한국</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>피부타입</dt>
-                                    <dd>모든 피부타입</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>제조자 및 제조판매자</dt>
-                                    <dd>-</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>사용기간</dt>
-                                    <dd>개봉전 30개월/개봉 후 12개월</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>식품의약안정청 심사유무</dt>
-                                    <dd>무</dd>
-                                </dl>
-                            </li>
-                            <li class="component">
-                                <dl>
-                                    <dt>주요성분</dt>
-                                    <dd>
-                                        모링가추출물, 레몬, 호박 등의 성분이 노폐물과 각질 케어에 도움을 주며 대나무 수와 로얄제리 성분의 함유로 피부에 필요한 수분과 영양을 공급해 줍니다
-                                    </dd>
-                                </dl>
-                            </li>
-                            <li class="component">
-                                <dl>
-                                    <dt>전성분</dt>
-                                    <dd>
-                                        정제수,미네랄오일,옥틸도데칸올,글리세린,부틸렌글라이콜,폴리소르베이트60,세틸알코올,느릅나무뿌리추출물,
-                                        줄맨드라미씨추출물,카바잎/뿌리/줄기추출물,드럼스틱나무씨추출물,레몬추출물,로얄젤리추출물,호박추출물,마치현추출물,칡뿌리추출물,감초추출물,작약추출물,천궁추출물,양송이버섯추출물,키위추출물,레몬껍질오일,대나무수,수용성콜라겐,알로에베라잎즙,하이드로제네이티드레시틴,소듐하이알루로네이트,글리세릴스테아레이트,피이지-100스테아레이트,1,2-헥산디올,디메치콘, 프룩토올리고사카라이드,소듐폴리아크릴레이트,소르비탄스테아레이트,암모늄아크릴로일디메칠타우레이트/브이피코폴리머,소르비탄세스퀴올리에이트,하이드록시에칠아크릴레이트/소듐아크릴로일디메칠타우레이트코폴리머,스쿠알란,에칠헥실글리세린,티타늄디옥사이드,토코페릴아세테이트,만니톨,디소듐이디티에이,아크릴레이트/암모늄메타크릴레이트코폴리머,바이오플라보노이드,잔탄검,페녹시에탄올,황색산화철
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
-                    </div>*@
+                    @(new HtmlString(Model.P_INFO_DETAIL_MOBILE))
                     <!--//용법 용량-->
                     <!--함께하면 좋은 제품추천-->
                     <div class="relative_recom">

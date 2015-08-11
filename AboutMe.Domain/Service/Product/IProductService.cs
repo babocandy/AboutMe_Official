@@ -52,6 +52,15 @@ namespace AboutMe.Domain.Service.Product
         //연관 상품 리스트[모바일]
         List<SP_PRODUCT_MOBILE_WITH_SEL_Result> GetProductMobileWithList(string _with_product_list);
 
+        //상품 mypage skin type 카운트 [모바일]
+        int GetProductMypageMobileSkinTypeCnt(string cate);
+
+        //상품 mypage skin type 리스트 [모바일]
+        List<SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL_Result> GetProductMypageMobileSkinTypeList(string cate, Product_front_search_entity product_front_search_entity);
+
+        //카테고리 이름 가져오기
+        SP_CATEGORY_NAME_INFO_VIEW_Result GetCategoryNameInfo(string cate);
+
         #endregion
     }
 }
