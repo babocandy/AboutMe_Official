@@ -12,6 +12,7 @@ using AboutMe.Domain.Service.Product;
 using AboutMe.Common.Data;
 using AboutMe.Common.Helper;
 using AboutMe.Domain.Entity.Review;
+using System.Text.RegularExpressions;
 
 namespace AboutMe.Web.Front.Controllers
 {
@@ -27,12 +28,12 @@ namespace AboutMe.Web.Front.Controllers
             this._ReviewService = _reviewService;
             this._ProductService = _productService;
         }
-        /*// GET: Review
-        public ActionResult Index()
-        {
-            return View();
-        }*/
 
+        /**
+         * 
+         * 상품리뷰 목록
+         * 
+         */
         public ActionResult Product()
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
@@ -51,9 +52,13 @@ namespace AboutMe.Web.Front.Controllers
         }
 
 
-
+        /**
+         * 
+         * 상품리뷰 목록 - JSON
+         * 
+         */
         [HttpPost]
-        public JsonResult GetReviewProductList(ReviewProductListParam param)   
+        public JsonResult GetReviewProductList(ReviewListJsonParam param)   
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
             var tp = _ReviewService.GetReviewProductList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
@@ -98,5 +103,69 @@ namespace AboutMe.Web.Front.Controllers
 
         }
 
+        /**
+         * 체험단 리뷰 목록
+         */
+        public ActionResult Experience()
+        {
+
+            ReviewExpListViewModel model = new ReviewExpListViewModel();
+
+            model.CategoryBeauty = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.BEAUTY, "");
+            model.CategoryCodeHealth = CategoryCode.HEALTH_DEFAULT;
+            model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
+
+
+
+            var tp = _ReviewService.GetReviewExpList(null, CategoryCode.BEAUTY_DEFAULT, ReviewExpListViewModel.SORT_LASTEST);
+            model.Reviews = tp.Item1;// ReviewHelper.GetDataForUser(tp.Item1);
+            model.Total = tp.Item2;
+
+
+
+
+            return View(model);
+        }
+
+
+        /**
+         * 체험단 리뷰 목록 - JSON
+         */
+        [HttpPost]
+        public JsonResult GetReviewExpList(ReviewListJsonParam param)
+        {
+            ReviewExpListViewModel model = new ReviewExpListViewModel();
+            var tp = _ReviewService.GetReviewExpList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
+            model.Reviews = tp.Item1;//ReviewHelper.GetDataForUser(tp.Item1);
+            model.Total = tp.Item2;
+
+            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+        /*
+       private string replaceHtml(string s){
+           
+           var result = s;
+           string pattern = @"<[^>]*?>|<[^>]*>";
+
+           Regex rgx = new Regex(pattern);
+           result = rgx.Replace(result, String.Empty);
+           //result = result.Replace(@"&amp;amp;", @"&amp;");
+           result = result.Replace(@"&amp;", @"&");
+           result = result.Replace(@"&pound;", @"£");
+           result = result.Replace(@"&#163;", @"£");
+           result = result.Replace(@"&quot;", @"""");
+           result = result.Replace(@"&apos;", @"'");
+           //result = result.Replace(@"&", @"&amp;");
+           //result = result.Replace(@"£", @"&pound;");
+           //result = result.Replace(@"""", @"&quot;");
+           //result = result.Replace(@"'", @"&apos;");
+            
+           return result;
+
+       }
+       */
     }
 }

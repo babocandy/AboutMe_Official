@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Front.Models.MyReviewExpListViewModel
+﻿@model AboutMe.Domain.Entity.Review.MyReviewExpListViewModel
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Front.Controllers
 @using AboutMe.Common.Data
@@ -82,6 +82,7 @@
                                     <dt>
                                         <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})">
                                             <span class="tag">
+
                                                 @if (!string.IsNullOrEmpty(item.Item2.ICON_YN))
                                                 {
                                                     if (item.Item2.ICON_YN.IndexOf('B') != -1)
@@ -106,6 +107,7 @@
                                                 {
                                                     <text> <span class="ico ico_coupon">COUPON</span></text>
                                                 }
+                                                
                                             </span>
                                             @item.Item2.P_NAME
                                         </a>
@@ -124,7 +126,7 @@
                                 {
                                     if (item.Item1.IS_WRITTEN == "Y")
                                     {
-                                        <a href="@Url.Action("Update", new { ARTICLE_IDX = item.Item1.ARTICLE_IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview" >리뷰수정</a>
+                                        <a href="@Url.Action("Update", new { ARTICLE_IDX = item.Item1.ARTICLE_IDX, EXP_MASTER_IDX = item.Item1.IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview" >리뷰수정</a>
                                     }
                                     else
                                     {
