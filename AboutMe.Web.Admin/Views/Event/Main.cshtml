@@ -19,7 +19,7 @@
         //]]>
 
         function UpdateSubmit(f) {
-            if (f.IMAGE_FILE.value == "") {
+            if (f.IMAGE_FILE.value == "" && f.OLD_IMAGE_FILE.value == "") {
                 alert("이미지를 선택해주세요.");
                 f.IMAGE_FILE.setfocus();
                 return false;
@@ -29,7 +29,22 @@
                 f.URL.setfocus();
                 return false;
             }
-            if (confirm("이미지를 변경하시겠습니까?")) {
+            if (f.TITLE) {
+                if (f.TITLE.value == "")
+                {
+                    alert("이벤트/기획전명을 입력해주세요.");
+                    f.TITLE.setfocus();
+                    return false;
+                }
+            }
+            if (f.DESC) {
+                if (f.DESC.value == "") {
+                    alert("설명을 입력해주세요.");
+                    f.DESC.setfocus();
+                    return false;
+                }
+            }
+            if (confirm("저장 하시겠습니까?")) {
                 f.action = "/Event/MainUpdate";
                 f.submit();
             }
@@ -290,8 +305,10 @@
                             <p class="tac mt5"> <a href="#none" class="btn btn-info small" onclick="DeleteSubmit(document.form_b1);">삭제</a></p>
                             <br />
                         }
-                            <input type="file" name="IMAGE_FILE" style="width:80%; margin-left:38px;" />
-                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL1" />
+                            <input type="file" name="IMAGE_FILE" style="width:80%; margin-left:38px;" /><br />
+                            URL: <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL1" /><br />
+                            이벤트명: <input type="text" name="TITLE" class="input-sm mt5" style="width:70%" value="@Model.MainInfo.MIDDLE_TITLE1" /><br />
+                            설명: <input type="text" name="DESC" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_DESC1" /><br />
                             <a href="#none" class="btn btn-default small mt10" onclick="UpdateSubmit(document.form_b1);">저장</a>
                         </td>
                     }    
@@ -310,7 +327,9 @@
                             <br />
                         }
                             <input type="file" name="IMAGE_FILE" style="width:80%; margin-left:38px;" />
-                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL2" />
+                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL2" /><br />
+                            이벤트명: <input type="text" name="TITLE" class="input-sm mt5" style="width:70%" value="@Model.MainInfo.MIDDLE_TITLE2" /><br />
+                            설명: <input type="text" name="DESC" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_DESC2" /><br />
                             <a href="#none" class="btn btn-default small mt10" onclick="UpdateSubmit(document.form_b2);">저장</a>
                         </td>
                     }    
@@ -329,7 +348,9 @@
                             <br />
                         }
                             <input type="file" name="IMAGE_FILE" style="width:80%; margin-left:38px;" />
-                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL3" />
+                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL3" /><br />
+                            이벤트명: <input type="text" name="TITLE" class="input-sm mt5" style="width:70%" value="@Model.MainInfo.MIDDLE_TITLE3" /><br />
+                            설명: <input type="text" name="DESC" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_DESC3" /><br />
                             <a href="#none" class="btn btn-default small mt10" onclick="UpdateSubmit(document.form_b3);">저장</a>
                         </td>
                     }    
@@ -357,7 +378,7 @@
                             <br />
                         }
                             <input type="file" name="IMAGE_FILE" style="width:80%; margin-left:50px;" />
-                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL4" />
+                            URL : <input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MainInfo.MIDDLE_URL4" /><br />
                             <a href="#none" class="btn btn-default small mt10" onclick="UpdateSubmit(document.form_b4);">저장</a>
                         </td>
                     }

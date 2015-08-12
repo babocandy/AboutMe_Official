@@ -1,10 +1,200 @@
-﻿@{
-    ViewBag.Title = "Ready";
+﻿@model AboutMe.Domain.Entity.Review.ReviewExpListViewModel
+@using AboutMe.Domain.Entity.Review
+@using AboutMe.Common.Data
+@using AboutMe.Common.Helper
+@using AboutMe.Web.Front.Models
+@using AboutMe.Web.Front.Controllers
+@using System.Text.RegularExpressions
+@{
+    ViewBag.Title = "Review Experience";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+    var myController = ViewContext.Controller as ReviewController;
 }
+
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <script src="/aboutCom/js/lib/masonry.pkgd.min.js" type="text/javascript"></script>
+    <script src="/aboutCom/js/lib/imagesloaded.pkgd.min.js" type="text/javascript"></script>
     <link href="/aboutCom/css/review.css" rel="stylesheet" />
+
+    <script>
+
+    </script>
+
+
+    <script type="text/javascript">
+
+
+    var $grid;
+
+
+    var img_path_product = "@myController._img_path_product";
+    var img_path_review = "@myController._img_path_review";
+
+    var categoryCode = "@CategoryCode.BEAUTY_DEFAULT";
+    var sort = "@ReviewExpListViewModel.SORT_LASTEST";//최신순
+    var tailIdx = @(Model.Reviews.Count > 0 ? Model.Reviews.Last().IDX : -1);
+
+    console.log("tailIdx", tailIdx);
+
+    // select category
+    function selectCategoryMenu(cc) {
+        if (categoryCode != cc) categoryCode = cc;
+        tailIdx = undefined;
+        removeAllItems();
+
+        getReviewProducList();
+    }
+
+    //
+    function sorting(s) {
+        if (sort != s) sort = s;
+        tailIdx = undefined;
+        removeAllItems();
+        getReviewProducList();
+    }
+
+    //더 보기
+    function moreView() {
+        getReviewProducList();
+    }
+
+    $(function () {
+        initMasonry();
+    });
+
+    function initMasonry() {
+        /**/
+        // init Masonry
+        $grid = $('#reviewConts').masonry({
+            itemSelector: ".grid",
+            transitionDuration: 0
+        });
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress(function () {
+            $grid.masonry('layout');
+        });
+
+        /*
+        //example  http://masonry.desandro.com/methods.html#appended
+
+       */
+    }
+    function getReviewProducList() {
+        console.log(tailIdx, categoryCode, sort);
+
+        $.ajax({
+            url: "@(Url.Action("GetReviewExpList", "Review"))",
+            type: "POST",
+            dataType: "json",
+            data: {
+                TAIL_IDX: tailIdx
+                , CATEGORY_CODE: categoryCode
+                , SORT: sort
+            },
+            success: function (data) {
+                //alert(data.success);
+                console.log(data);
+
+                if (data.Success) {
+
+
+                    addItems(data.Reviews);
+
+                    $("#totalReview").text(data.Total);
+
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }//end func
+
+    function addItems(list) {
+        if (list.length > 0) {
+            //var $items = [];
+            for (var i = 0 ; i < list.length ; ++i) {
+                var item = list[i];
+
+
+                var html = "<div class='grid' onclick='reviewpop_view()'>";
+
+                //<!--제품 이름 및 정보-->
+                html += "<div class='product_info'>";
+                html += "    <div class='photo'><img src='"+img_path_product + item.P_MAIN_IMG+"' alt=''></div>";
+                html += "    <div class='detail'>";
+                html += "       <p class='tit'>"+item.P_NAME+"</p>";
+                html += "       <p class='stit'>"+(item.P_SUB_TITLE != undefined ? item.P_SUB_TITLE : "")+"</p>";
+                html += "    </div>";
+                html += "</div>";
+
+                // <!--리뷰-->
+                html += "<div class='comments'>";
+                html += "   <div class='idhit'>";
+                html += "       <span class='id'>"+item.M_ID_LBL+"</span>";
+                html += "       <span class='hit'>조회수 "+(item.VIEW_CNT != undefined ? item.VIEW_CNT : "0")+"</span>";
+                html += "   </div>";
+
+                html += "   <div class='writer'>";
+                html += "       <span class='skin "+item.SKIN_TYPE_LBL+"'>"+item.SKIN_TYPE_CSS+"</span><em class='userage'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em>";
+                html += "   </div>";
+                html += "   <div class='tag'>";
+                html +=         item.TAG;
+                html += "   </div>";
+                html += "   <div class='reviewtxt'>";
+                html += "       <p class='title'>"+item.TITLE+"</p>";
+                html += "       <p class='txt txtdotdot'>";
+                /*
+                var tmp_comment = item.COMMENT_TEXT;
+                var rm_html = /<[^>]*>/g;
+                var rm_etc = /&(nbsp|amp|quot|lt|gt);/g;
+                tmp_comment = tmp_comment.replace(rm_html, "");
+                tmp_comment = tmp_comment.replace(rm_etc, "");*/
+                html +=             item.COMMENT_TEXT;
+
+                html += "       </p>";
+
+                if (item.SUB_IMG_1 != null)
+                {
+                    html += "<img src='"+ img_path_review +item.SUB_IMG_1+"' alt='' /><br />";
+                }
+                if (item.SUB_IMG_2 != null)
+                {
+                    html += "<img src='"+ img_path_review +item.SUB_IMG_2+"' alt='' /><br />";
+                }
+
+                html += "   </div>";
+                html += "</div>";
+                // <!--//리뷰-->
+
+                html += "</div>";
+
+
+
+
+                var elem = $(html);
+                $grid.masonry().append(elem).masonry('appended', elem).masonry();
+            }
+
+           // console.log("d.IDX", d.IDX)
+
+        //꼬리값 물기
+            if (tailIdx != item.IDX) {
+                tailIdx = item.IDX;
+            }
+        } else {
+                alert("더 이상 결과값이 없습니다.");
+        }
+    }//end func
+
+        function removeAllItems() {
+            $(".grid").each(function () {
+                $grid.masonry('remove', this)
+            });
+        }//end func
+
+    </script>
 }
 
 @section Body{
@@ -16,7 +206,7 @@
         <div id="container">
             <div class="container1080">
                 <div class="h_tit">
-                    <h2><a href="/Review/Product">상품 리뷰</a></h2>
+                    <h2><a href="@Url.Action("Product", "Review")">상품 리뷰</a></h2>
                     <h2 class="cnt">체험단 리뷰</h2>
                 </div>
 
@@ -24,175 +214,111 @@
                     <!--현재 소팅 대분류 class "on" 사용-->
                     <div class="sort">
                         <p class="tit"><a href="#">뷰티</a></p>
-                        <ul>
-                            <li><a href="#">전체</a></li>
-                            <li><a href="#">수분/보습</a></li>
-                            <li><a href="#">탄력/주름</a></li>
-                            <li><a href="#">브라이트닝</a></li>
-                            <li><a href="#">화이트닝</a></li>
-                            <li><a href="#">안티에이징</a></li>
-                            <li><a href="#">모공/트러블</a></li>
-                            <li><a href="#">생기/활력</a></li>
-                            <li><a href="#">선케어</a></li>
-                            <li><a href="#">남성</a></li>
-                        </ul>
+                        @if (Model.CategoryBeauty.Count > 0)
+                        {
+                            <ul>
+                                <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.BEAUTY_DEFAULT'); return false;">전체</a></li>
+                                @foreach (var item in Model.CategoryBeauty)
+                                {
+
+                                    <li><a href="#" onclick="selectCategoryMenu('@item.CATE_CODE'); return false;">@item.DEPTH2_NAME</a></li>
+                                }
+                            </ul>
+                        }
                     </div>
-                    <div class="sort ">
+                    <div class="sort nolist">
                         <p class="tit">헬스</p>
                         <ul>
-                            <li><a href="#">전체</a></li>
-                            <li><a href="#">스킨케어</a></li>
-                            <li><a href="#">뉴트리션케어</a></li>
-                            <li><a href="#">웨이트케어</a></li>
+                            <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.HEALTH_DEFAULT'); return false;">전체</a></li>
                         </ul>
                     </div>
                     <div class="sort">
-                        <p class="tit">셀렉샵</p>
-                        <ul>
-                            <li><a href="#">전체</a></li>
-                            <li><a href="#">슈퍼아쿠아</a></li>
-                            <li><a href="#">슈퍼아쿠아</a></li>
-                            <li><a href="#">뉴트리워터</a></li>
-                            <li><a href="#">브라이트닝</a></li>
-                            <li><a href="#">초보습</a></li>
-                            <li><a href="#">스킨톤업</a></li>
-                            <li><a href="#">퓨어퐈이트</a></li>
-                            <li><a href="#">이뮤젠</a></li>
-                            <li><a href="#">멀티사인즈</a></li>
-                            <li><a href="#">멀티비사</a></li>
-                            <li><a href="#">더블리페어클래식</a></li>
-                        </ul>
+                        <p class="tit">기타브랜드</p>
+                        @if (Model.CategorySelShop.Count > 0)
+                        {
+                            <ul>
+                                <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.SEL_SHOP_DEFAULT'); return false;">전체</a></li>
+                                @foreach (var item in Model.CategorySelShop)
+                                {
+                                    <li><a href="#" onclick="selectCategoryMenu('@item.CATE_CODE');return false;">@item.DEPTH2_NAME</a></li>
+                                }
+                            </ul>
+                        }
                     </div>
                 </div>
 
                 <div class="reviewConts_area">
-                    <span class="totaltxt">총 <strong>100</strong>개의 상품이 있습니다.</span>
+                    <span class="totaltxt">총 <strong id="totalReview">@Model.Total</strong>개의 상품이 있습니다.</span>
                     <!--sort-->
                     <div class="sort">
                         <ul>
-                            <li class="cnt"><a href="#">최신순</a></li>
-                            <li><a href="#">인기순</a></li>
+                            <li class="cnt"><a href="#" onclick="sorting('@ReviewExpListViewModel.SORT_LASTEST');return false;">최신순</a></li>
+                            <li><a href="#" onclick="sorting('@ReviewExpListViewModel.SORT_LIKE');return false;">인기순</a></li>
+                            
                         </ul>
                     </div>
                     <!--//sort-->
                     <div id="reviewConts" class="bocksitls">
+
+@foreach (var item in Model.Reviews)
+{
                         <div class="grid" onclick="reviewpop_view()">
                             <!--제품 이름 및 정보-->
                             <div class="product_info">
-                                <div class="photo"><img src="/aboutCom/images/sample/thumb_6464.gif" alt="" /></div>
+                                <div class="photo"><img src="@myController._img_path_product@item.P_MAIN_IMG" alt=""></div>
                                 <div class="detail">
-                                    <p class="tit">굿나잇 모이쳐앰플</p>
-                                    <p class="stit">단 한 방울로도 놀라운 촉촉함</p>
-                                    <p class="price">45,000원</p>
+                                    <p class="tit">@item.P_NAME</p>
+                                    <p class="stit">@item.P_SUB_TITLE</p>
                                 </div>
                             </div>
                             <!--//제품 이름 및 정보-->
                             <!--리뷰-->
                             <div class="comments">
+                                <div class="idhit">
+                                    <span class="id">@item.M_ID_LBL</span>
+                                    <span class="hit">조회수 @(item.VIEW_CNT ?? 0)</span>
+                                </div>
                                 <div class="writer">
-                                    <span class="id">kkon***</span>
-                                    <span class="hits">조회수 253</span>
-                                    <!--
-                                    피부타입 css
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <span class="skin oily">지성</span>
+                                    <span class="skin @(item.SKIN_TYPE_LBL)">@(item.SKIN_TYPE_CSS)</span><em class="userage">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</em>
                                 </div>
                                 <div class="tag">
-                                    <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
+                                    @(item.TAG)
+                                    <!--<span>#마사지</span> <span>#미백</span> <span>#촉촉</span>-->
                                 </div>
                                 <div class="reviewtxt">
-                                    <p class="title">어바웃미 슈퍼아쿠아젤리크림 사용후기</p>
+                                    <p class="title">@item.TITLE</p>
                                     <p class="txt txtdotdot">
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!<br />
-                                        특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요.
+                                        @item.COMMENT_TEXT
+                                        @{
+                                            /*
+                                           string textOnly = string.Empty;
+                                            Regex tagRemove = new Regex(@"<[^>]*(>|$)");
+                                            Regex compressSpaces = new Regex(@"[\s\r\n]+");
+                                            Regex etc = new Regex(@"&(nbsp|amp|quot|lt|gt);");
+                                            textOnly = tagRemove.Replace(item.COMMENT, string.Empty);
+                                            textOnly = compressSpaces.Replace(textOnly, " ");
+                                            textOnly = etc.Replace(textOnly, " ");
+                                             */
+                                        }
+                                    
                                     </p>
-                                    <img src="/aboutCom/images/review/thumb308.jpg" alt="" /><br />
-                                    <img src="/aboutCom/images/review/thumb308.jpg" alt="" />
+
+                                    @if (item.SUB_IMG_1 != null)
+                                    {
+                                        <img src="@string.Format("{0}{1}", myController._img_path_review, item.SUB_IMG_1)" alt="" /><br />
+                                    }
+                                   
+                                    @if (item.SUB_IMG_2 != null)
+                                    {
+                                        <img src="@string.Format("{0}{1}", myController._img_path_review, item.SUB_IMG_2)" alt="" /><br />
+                                    }
+                                    
                                 </div>
                             </div>
                             <!--//리뷰-->
                         </div>
-                        <div class="grid" onclick="reviewpop_view()">
-                            <!--제품 이름 및 정보-->
-                            <div class="product_info">
-                                <div class="photo"><img src="/aboutCom/images/sample/thumb_6464.gif" alt="" /></div>
-                                <div class="detail">
-                                    <p class="tit">굿나잇 모이쳐앰플</p>
-                                    <p class="stit">단 한 방울로도 놀라운 촉촉함</p>
-                                    <p class="price">45,000원</p>
-                                </div>
-                            </div>
-                            <!--//제품 이름 및 정보-->
-                            <!--리뷰-->
-                            <div class="comments">
-                                <div class="writer">
-                                    <span class="id">kkon***</span>
-                                    <span class="hits">조회수 253</span>
-                                    <!--
-                                    피부타입 css
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <span class="skin oily">지성</span>
-                                </div>
-                                <div class="tag">
-                                    <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
-                                </div>
-                                <div class="reviewtxt">
-                                    <p class="title">어바웃미 슈퍼아쿠아젤리크림 사용후기</p>
-                                    <p class="txt txtdotdot">
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!<br />
-                                        특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요.
-                                    </p>
-                                    <img src="/aboutCom/images/review/thumb308.jpg" alt="" /><br />
-                                    <img src="/aboutCom/images/review/thumb308.jpg" alt="" />
-                                </div>
-                            </div>
-                            <!--//리뷰-->
-                        </div>
-                        <div class="grid" onclick="reviewpop_view()">
-                            <!--제품 이름 및 정보-->
-                            <div class="product_info">
-                                <div class="photo"><img src="/aboutCom/images/sample/thumb_6464.gif" alt="" /></div>
-                                <div class="detail">
-                                    <p class="tit">굿나잇 모이쳐앰플</p>
-                                    <p class="stit">단 한 방울로도 놀라운 촉촉함</p>
-                                    <p class="price">45,000원</p>
-                                </div>
-                            </div>
-                            <!--//제품 이름 및 정보-->
-                            <!--리뷰-->
-                            <div class="comments">
-                                <div class="writer">
-                                    <span class="id">kkon***</span>
-                                    <span class="hits">조회수 253</span>
-                                    <!--
-                                    피부타입 css
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <span class="skin oily">지성</span>
-                                </div>
-                                <div class="tag">
-                                    <span>#마사지</span> <span>#미백</span> <span>#촉촉</span>
-                                </div>
-                                <div class="reviewtxt">
-                                    <p class="title">어바웃미 슈퍼아쿠아젤리크림 사용후기</p>
-                                    <p class="txt txtdotdot">
-                                        마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!<br />
-                                        특히 자기전에 듬뿍바르고 자면 다음날 화장이 확실히 잘 받아요! 마지막 단계에서 앰플 바르니까 촉촉해요.
-                                    </p>
-                                    <img src="/aboutCom/images/review/thumb308.jpg" alt="" /><br />
-                                    <img src="/aboutCom/images/review/thumb308.jpg" alt="" />
-                                </div>
-                            </div>
-                            <!--//리뷰-->
-                        </div>
+                       
+}
                     </div>
 
                     <!--리뷰상세팝업-->
@@ -209,25 +335,20 @@
                                     </div>
                                 </div>
                                 <div class="writer">
-                                    <span class="id">kkon***</span>
-                                    <span class="hits">조회수 <em>253</em></span>
-                                    <span class="date">2015.06.06</span>
-                                    <!-- <span class="otherreview">사용자 다른 리뷰 <a href="#">12</a>개</span> -->
+                                    <div class="userinfo">
+                                        <span class="skin normal">중성</span>
+                                        <span class="age_gender">40대, 여</span>
+                                    </div>
+                                    <div class="right">
+                                        <span class="id">kkon***</span>
+                                        <span class="date">2015.06.06</span>
+                                        <span class="hits">조회수 <em>253</em></span>
+                                    </div>
                                 </div>
                             </div>
                             <!--//reviewpop_top-->
                             <!--reviewpop_bottom-->
                             <div class="reviewpop_bottom">
-                                <div class="userinfo">
-                                    <!--
-                                    피부타입 css
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <span class="skin normal">중성</span>
-                                    <span class="age_gender">40대, 여</span>
-                                </div>
                                 <div class="reviewtxt">
                                     <p>
                                         어바웃미 스킨 톤업 마사지크림 리뷰입니다.<br />
@@ -278,6 +399,7 @@
                         </div>
                     </div>
                     <!--//리뷰상세팝업-->
+
                 </div>
 
                 <a href="#" class="btn_more">더보기<i></i></a>

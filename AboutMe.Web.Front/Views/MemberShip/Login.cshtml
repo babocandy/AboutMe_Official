@@ -102,10 +102,10 @@
                               
                         <h3><img src="/aboutCom/images/membership/h3_memberlogin.gif" alt="회원 로그인" /></h3>
                         <div class="iptarea">
-                            <label for="id"><span class="txt">아이디</span><input type="text" id="id" name="ID" value="" maxlength="13" class="ipttypea h35" style="width:210px" onkeydown="javascript: fEnterSubmit('PW');" /></label>
+                            <label for="id"><span class="txt">아이디</span><input type="text" id="id" name="ID" value="@ViewBag.REMEMBER_M_ID" maxlength="13" class="ipttypea h35" style="width:210px" onkeydown="javascript: fEnterSubmit('PW');" /></label>
                             <label for="pw" class="mt10"><span class="txt">비밀번호</span><input type="password" id="pw" name="PW" value="" maxlength="12" class="ipttypea h35" style="width:210px" onkeydown="javascript: fEnterSubmit('SUBMIT');" /></label>
                             <a href="javascript:fGoLogin();" class="btn_login btn_brown_w175h80"><img src="/aboutCom/images/common/ico_lock.png" class="lockimg" alt="">로그인</a>
-                            <label for="idsave" class="chkcon idsave"><input type="checkbox" id="idsave" /><span class="txt">아이디 저장</span></label>
+                            <label for="idsave" class="chkcon idsave"><input type="checkbox" id="idsave" name="IS_SAVE_ID" value="Y" /><span class="txt">아이디 저장</span></label>
                         </div>
 
                         <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->

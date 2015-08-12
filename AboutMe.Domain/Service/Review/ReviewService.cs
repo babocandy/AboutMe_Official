@@ -213,7 +213,7 @@ namespace AboutMe.Domain.Service.Review
         /**
          *  체험단  나의 리뷰 저장
          */
-        public Tuple<string, string> InsertMyReviewExp(MyReviewExpParamOnSaveToDb p)
+        public Tuple<string, string> InsertMyReviewExp(MyReviewExpInputViewModel p)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -224,6 +224,54 @@ namespace AboutMe.Domain.Service.Review
             }
 
             return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+        }
+
+
+        /**
+         *  체험단  나의 리뷰 상세
+         */
+        public SP_REVIEW_MY_EXP_DETAIL_Result GetMyReviewExpDetail(int? idx)
+        {
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                return context.SP_REVIEW_MY_EXP_DETAIL(idx).SingleOrDefault();
+            }
+
+        }
+
+
+        /**
+         *  체험단 나의 리뷰 상세
+         */
+        public Tuple<string, string> UpdateMyReviewExp(MyReviewExpInputViewModel p)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                context.SP_REVIEW_MY_EXP_UPD(p.ARTICLE_IDX, p.M_ID, p.EXP_MASTER_IDX, p.P_CODE, p.TITLE, p.SKIN_TYPE, p.SUB_IMG_1, p.SUB_IMG_2, p.SUB_IMG_3, p.TAG, p.COMMENT, retNum, retMsg);
+            }
+             return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+        }
+
+
+        /**
+         *  체험단리뷰 전체 조회 - 프론트
+         */
+        public Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> GetReviewExpList(int? tailIdx, string categoryCode, string sort)
+        {
+            List<SP_REVIEW_EXP_SEL_Result> lst = new List<SP_REVIEW_EXP_SEL_Result>();
+
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_EXP_SEL(tailIdx, categoryCode, sort, total).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_EXP_SEL_Result>, int>(lst, Convert.ToInt32(total.Value));
+
+            return tp;
         }
 
     }

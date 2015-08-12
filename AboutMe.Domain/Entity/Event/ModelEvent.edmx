@@ -42,6 +42,8 @@
           <Parameter Name="BANNER_GBN" Type="char" Mode="In" />
           <Parameter Name="IMG" Type="varchar" Mode="In" />
           <Parameter Name="URL" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="DESC" Type="varchar" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_EVENT_MAIN_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -116,6 +118,8 @@
             <Parameter Name="BANNER_GBN" Mode="In" Type="String" />
             <Parameter Name="IMG" Mode="In" Type="String" />
             <Parameter Name="URL" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="DESC" Mode="In" Type="String" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EVENT_SEL" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_SEL_Result)">
@@ -221,6 +225,12 @@
           <Property Type="String" Name="MIDDLE_URL4" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MIDDLE_TITLE1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC3" Nullable="true" MaxLength="200" />
         </ComplexType>
         <ComplexType Name="SP_EVENT_END_LIST_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -294,6 +304,12 @@
           <Property Type="String" Name="MIDDLE_URL4" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MIDDLE_TITLE1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC3" Nullable="true" MaxLength="200" />
         </ComplexType>
         <ComplexType Name="SP_EVENT_VIEW_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -394,6 +410,12 @@
                 <ScalarProperty Name="MIDDLE_URL4" ColumnName="MIDDLE_URL4" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="MIDDLE_TITLE1" ColumnName="MIDDLE_TITLE1" />
+                <ScalarProperty Name="MIDDLE_DESC1" ColumnName="MIDDLE_DESC1" />
+                <ScalarProperty Name="MIDDLE_TITLE2" ColumnName="MIDDLE_TITLE2" />
+                <ScalarProperty Name="MIDDLE_DESC2" ColumnName="MIDDLE_DESC2" />
+                <ScalarProperty Name="MIDDLE_TITLE3" ColumnName="MIDDLE_TITLE3" />
+                <ScalarProperty Name="MIDDLE_DESC3" ColumnName="MIDDLE_DESC3" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -484,6 +506,12 @@
                 <ScalarProperty Name="MIDDLE_URL4" ColumnName="MIDDLE_URL4" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="MIDDLE_TITLE1" ColumnName="MIDDLE_TITLE1" />
+                <ScalarProperty Name="MIDDLE_DESC1" ColumnName="MIDDLE_DESC1" />
+                <ScalarProperty Name="MIDDLE_TITLE2" ColumnName="MIDDLE_TITLE2" />
+                <ScalarProperty Name="MIDDLE_DESC2" ColumnName="MIDDLE_DESC2" />
+                <ScalarProperty Name="MIDDLE_TITLE3" ColumnName="MIDDLE_TITLE3" />
+                <ScalarProperty Name="MIDDLE_DESC3" ColumnName="MIDDLE_DESC3" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
