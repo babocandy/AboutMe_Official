@@ -325,6 +325,13 @@
           <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="true" />
           <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="true" />
           <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="VACT_Num" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_BankCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_InputName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="VACT_Time" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -352,6 +359,15 @@
           <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="false" />
           <Property Type="String" Name="CD_COUPON" Nullable="false" MaxLength="6" />
           <Property Type="String" Name="PROMOTION_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ICON_NEW" Nullable="false" />
+          <Property Type="Int32" Name="ICON_BEST" Nullable="false" />
+          <Property Type="Int32" Name="ICON_SOLDOUT" Nullable="false" />
+          <Property Type="Int32" Name="ICON_CUSTOM" Nullable="false" />
+          <Property Type="Int32" Name="ICON_ONEPLUS" Nullable="false" />
+          <Property Type="Int32" Name="ICON_SET" Nullable="false" />
+          <Property Type="Int32" Name="ICON_TIME" Nullable="false" />
+          <Property Type="Int32" Name="ICON_COUPON" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDER_LIST_Result" >
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -513,6 +529,13 @@
                 <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
                 <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
                 <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+                <ScalarProperty Name="VACT_Num" ColumnName="VACT_Num" />
+                <ScalarProperty Name="VACT_BankCode" ColumnName="VACT_BankCode" />
+                <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
+                <ScalarProperty Name="VACT_InputName" ColumnName="VACT_InputName" />
+                <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
+                <ScalarProperty Name="VACT_Time" ColumnName="VACT_Time" />
+                <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -544,6 +567,15 @@
                 <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
                 <ScalarProperty Name="CD_COUPON" ColumnName="CD_COUPON" />
                 <ScalarProperty Name="PROMOTION_NAME" ColumnName="PROMOTION_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="ICON_NEW" ColumnName="ICON_NEW" />
+                <ScalarProperty Name="ICON_BEST" ColumnName="ICON_BEST" />
+                <ScalarProperty Name="ICON_SOLDOUT" ColumnName="ICON_SOLDOUT" />
+                <ScalarProperty Name="ICON_CUSTOM" ColumnName="ICON_CUSTOM" />
+                <ScalarProperty Name="ICON_ONEPLUS" ColumnName="ICON_ONEPLUS" />
+                <ScalarProperty Name="ICON_SET" ColumnName="ICON_SET" />
+                <ScalarProperty Name="ICON_TIME" ColumnName="ICON_TIME" />
+                <ScalarProperty Name="ICON_COUPON" ColumnName="ICON_COUPON" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

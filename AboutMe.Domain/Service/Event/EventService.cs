@@ -111,11 +111,11 @@ namespace AboutMe.Domain.Service.Event
         #endregion
 
         #region Admin Main 이미지/URL 업데이트
-        public void EventAdminMainImageUpdate(string BANNER_GBN, string IMG, string URL, string ADM_ID)
+        public void EventAdminMainImageUpdate(string BANNER_GBN, string IMG, string URL, string ADM_ID, string TITLE = "", string DESC = "")
         {
             using (EventEntities EfContext = new EventEntities())
             {
-                EfContext.SP_ADMIN_EVENT_MAIN_UPD(BANNER_GBN, IMG, URL, ADM_ID);
+                EfContext.SP_ADMIN_EVENT_MAIN_UPD(BANNER_GBN, IMG, URL, TITLE, DESC, ADM_ID);
             }
         }
         #endregion

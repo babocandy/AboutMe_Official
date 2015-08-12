@@ -35,5 +35,14 @@ namespace AboutMe.Domain.Entity.Order
         public int ORDER_PRICE { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
         public int POINT_ACCML { get; set; }
+        public string P_SUB_TITLE { get; set; }
+        public int ICON_NEW { get; set; }
+        public int ICON_BEST { get; set; }
+        public int ICON_SOLDOUT { get; set; }
+        public int ICON_CUSTOM { get; set; }
+        public int ICON_ONEPLUS { get; set; }
+        public int ICON_SET { get; set; }
+        public int ICON_TIME { get; set; }
+        public int ICON_COUPON { get; set; }
     }
 }

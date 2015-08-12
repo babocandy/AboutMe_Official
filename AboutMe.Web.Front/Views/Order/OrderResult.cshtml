@@ -8,6 +8,8 @@
         ViewBag.TopClass += " nonmb";
     }
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 }
 @section Scripts {
 <link href="/aboutCom/css/cart.css" rel="stylesheet" />
@@ -122,6 +124,12 @@
     }
     else
     {
+            if (Model.DetailInfo == null)
+            {
+                Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+                Response.End();
+            }
+        
         <h2><img src="/aboutCom/images/cart/h2_orderend.png" alt="주문 완료" /></h2>
         <ol class="orderstep">
             <li class="step1"><span>주문/결제</span></li>
@@ -139,19 +147,56 @@
                             <tbody>
                                @foreach (var item in Model.ProductList)
                                {
+                                   string imgUrl1 = productImgPath + "R120_" + item.P_IMG1_S;
+                                        
                                 <tr>
                                     <td class="proimg">
-                                        <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                        <a href="/shopping/detail?pcode=@item.P_CODE"><img src="@imgUrl1" alt="상품 이미지" /></a>
                                     </td>
                                     <td class="product">
                                         <dl>
                                             <dt>
                                                 <a href="#">
-                                                    <span class="tag"><span class="ico_new">NEW</span></span>
-                                                    @item.P_NAME
+                                                    <span class="tag">
+                                                        @if (item.ICON_BEST == 1)
+                                                        {
+                                                            <text> <span class="ico_best">BEST</span></text>
+                                                        }
+                                                        @if (item.ICON_SOLDOUT == 1)
+                                                        {
+                                                            <text> <span class="ico_soldout">SOLD OUT</span></text>
+                                                        }
+                                                        @if (item.ICON_NEW == 1)
+                                                        {
+                                                            <text> <span class="ico_new">NEW</span></text>
+                                                        }
+                                                        @if (item.ICON_CUSTOM == 1)
+                                                        {
+                                                            <text> <span class="ico_custom">커스텀</span></text>
+                                                        }
+
+                                                        @if (item.ICON_SET == 1)
+                                                        {
+                                                            <text> <span class="ico_set">SET</span></text>
+                                                        }
+                                                        @if (item.ICON_ONEPLUS == 1)
+                                                        {
+                                                            <text> <span class="ico_1_1">1+1</span></text>
+                                                        }
+                                                        @if (item.ICON_TIME == 1)
+                                                        {
+                                                            <text> <span class="ico_time">TIME</span></text>
+                                                        }
+
+                                                        @if (item.ICON_COUPON == 1)
+                                                        {
+                                                            <text> <span class="ico_coupon">COUPON</span></text>
+                                                        }
+                                                    </span>
+                                                    @(new HtmlString(item.P_NAME))
                                                 </a>
                                             </dt>
-                                            <dd>제주 참마 유래성분으로 미백기능성</dd>
+                                            <dd>@(new HtmlString(item.P_SUB_TITLE))</dd>
                                         </dl>
                                     </td>
                                     <td class="proprice">

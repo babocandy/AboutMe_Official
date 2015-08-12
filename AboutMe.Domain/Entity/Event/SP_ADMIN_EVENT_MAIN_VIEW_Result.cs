@@ -36,5 +36,11 @@ namespace AboutMe.Domain.Entity.Event
         public string MIDDLE_URL4 { get; set; }
         public string ADM_ID { get; set; }
         public System.DateTime REG_DATE { get; set; }
+        public string MIDDLE_TITLE1 { get; set; }
+        public string MIDDLE_DESC1 { get; set; }
+        public string MIDDLE_TITLE2 { get; set; }
+        public string MIDDLE_DESC2 { get; set; }
+        public string MIDDLE_TITLE3 { get; set; }
+        public string MIDDLE_DESC3 { get; set; }
     }
 }

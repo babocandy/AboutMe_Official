@@ -40,7 +40,6 @@ namespace AboutMe.Web.Front.Controllers
             public List<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result { get; set; }
         }
 
-
         #region 이벤트메인/ 이벤트 / 기획전 (gxen) ================================================================
 
         // GET: Main
@@ -87,6 +86,12 @@ namespace AboutMe.Web.Front.Controllers
             return View(M);
         }
 
+        //상품상세 : 우측하단의 이벤트/기획전 목록
+        public ActionResult EventInProductDetail()
+        {
+            List<SP_EVENT_ING_LIST_Result> M = _eventservice.EventMainIngList();
+            return PartialView(M);
+        }
         #endregion
 
 

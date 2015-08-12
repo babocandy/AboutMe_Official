@@ -49,5 +49,12 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public Nullable<int> GRADE_DISCOUNT_AMT { get; set; }
         public Nullable<int> EMP_DISCOUNT_AMT { get; set; }
         public string PAY_GBN { get; set; }
+        public string VACT_Num { get; set; }
+        public string VACT_BankCode { get; set; }
+        public string VACT_Name { get; set; }
+        public string VACT_InputName { get; set; }
+        public string VACT_Date { get; set; }
+        public string VACT_Time { get; set; }
+        public string VACT_BankName { get; set; }
     }
 }

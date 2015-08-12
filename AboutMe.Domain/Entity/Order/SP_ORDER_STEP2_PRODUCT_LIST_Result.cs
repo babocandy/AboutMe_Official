@@ -27,7 +27,7 @@ namespace AboutMe.Domain.Entity.Order
         public string CD_COUPON { get; set; }
         public string COUPON_NAME { get; set; }
         public int COUPON_DISCOUNT_AMT { get; set; }
-        public int COUPON_DISCOUNT_PRICE { get; set; }
+        public Nullable<int> COUPON_DISCOUNT_PRICE { get; set; }
         public int USE_POINT { get; set; }
         public int GRADE_DISCOUNT_AMT { get; set; }
         public Nullable<int> REAL_PAY_PRICE { get; set; }
@@ -35,5 +35,14 @@ namespace AboutMe.Domain.Entity.Order
         public int ORDER_PRICE { get; set; }
         public int EMP_DISCOUNT_PRICE { get; set; }
         public Nullable<int> IDX_COUPON_NUMBER { get; set; }
+        public string P_SUB_TITLE { get; set; }
+        public int ICON_NEW { get; set; }
+        public int ICON_BEST { get; set; }
+        public int ICON_SOLDOUT { get; set; }
+        public int ICON_CUSTOM { get; set; }
+        public int ICON_ONEPLUS { get; set; }
+        public int ICON_SET { get; set; }
+        public int ICON_TIME { get; set; }
+        public int ICON_COUPON { get; set; }
     }
 }
