@@ -43,4 +43,20 @@ namespace AboutMe.Domain.Entity.Review
         public string ADD_IMAGE { get; set; }
         public string SKIN_TYPE { get; set; }
     }
+
+    public class MyReviewExpParamOnSaveToDb
+    {
+        public string M_ID { get; set; }
+        public int? EXP_MASTER_IDX { get; set; }
+        public string P_CODE { get; set; }
+        public string TITLE { get; set; }
+        public string SKIN_TYPE { get; set; }
+        public string COMMENT { get; set; }
+        public string TAG { get; set; }
+        public string SUB_IMG_1 { get; set; }
+        public string SUB_IMG_2 { get; set; }
+        public string SUB_IMG_3 { get; set; }
+        
+    }
+
 }

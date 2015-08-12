@@ -134,7 +134,7 @@ namespace AboutMe.Domain.Service.Review
         }
 
         /**
-         * 상품코드별 상품리뷰 조회
+         * 상품코드별 상품리뷰 조회 - 상품상세에서 사용
          */
         public Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10)
         {
@@ -170,7 +170,9 @@ namespace AboutMe.Domain.Service.Review
             return info;
         }
 
-
+        /**
+         * 테마 카테고리 조회
+         */
         public List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList()
         {
             List<SP_REVIEW_CATE_THEMA_SEL_Result> lst = new List<SP_REVIEW_CATE_THEMA_SEL_Result>();
@@ -183,6 +185,9 @@ namespace AboutMe.Domain.Service.Review
             return lst;
         }
 
+        /**
+         * 마이페이지. 상품리뷰 작성준비 총수
+         */
         public int ReadyTotal(string mid)
         {
             using (ReviewEntities context = new ReviewEntities())
@@ -191,6 +196,35 @@ namespace AboutMe.Domain.Service.Review
             }
         }
 
+        /**
+         *  체험단 마스터 조회
+         */
+        public List<SP_REVIEW_MY_EXP_MASTER_SEL_Result> GetReviewExpMyMasterList(string mid)
+        {
+            List<SP_REVIEW_MY_EXP_MASTER_SEL_Result> lst = new List<SP_REVIEW_MY_EXP_MASTER_SEL_Result>();
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_MY_EXP_MASTER_SEL(mid).ToList();
+            }
+            return lst;
+        }
+
+
+        /**
+         *  체험단  나의 리뷰 저장
+         */
+        public Tuple<string, string> InsertMyReviewExp(MyReviewExpParamOnSaveToDb p)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                context.SP_REVIEW_MY_EXP_INS(p.M_ID, p.EXP_MASTER_IDX, p.P_CODE, p.TITLE, p.SKIN_TYPE, p.SUB_IMG_1, p.SUB_IMG_2, p.SUB_IMG_3, p.TAG, p.COMMENT, retNum, retMsg);
+            }
+
+            return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+        }
 
     }
 }

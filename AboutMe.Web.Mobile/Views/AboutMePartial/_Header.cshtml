@@ -19,6 +19,17 @@
         </ul>
     </div>
     <!--//h_menu-->
+
+    <!--상단검색-->
+    <div class="h_search_wrap">
+        <div class="dimd"></div>
+        <span class="h_search">
+            <input type="text" id="h_search_keyword" name="h_search_keyword" value="" placeholder="상품을 검색해 주세요" />
+            <a href="javascript:goSearch();" class="btn_search"><img src="/aboutCom/images/common/btn_search.gif" alt="" /></a>
+        </span>
+    </div>
+    <!--//상단검색-->
+
     <!--lnb-->
     <div class="lnb_area">
         <div class="dim"></div>
@@ -42,39 +53,8 @@
                             </ul>
                         </div>
                     </li>
+                    <!--카테고리정보-->
                     @{Html.RenderAction("HeaderCategoryMenu", "ChildActionProduct");}
-                    @*<li class="slidetype on">
-                        <a href="#">쇼핑</a>
-                        <div class="depth2">
-                            <div class="fl">
-                                <p class="tit">뷰티</p>
-                                <ul>
-                                    <li><a href="#">스킨케어</a></li>
-                                    <li><a href="#">팩/마스트</a></li>
-                                    <li><a href="#">선케어</a></li>
-                                    <li><a href="#">클렌징</a></li>
-                                    <li><a href="#">바디/핸드</a></li>
-                                    <li><a href="#">베이스메이크업</a></li>
-                                    <li><a href="#">옴므</a></li>
-                                    <li><a href="#">뷰티툴</a></li>
-                                </ul>
-                            </div>
-                            <div class="fl">
-                                <p class="tit">헬스</p>
-                                <ul>
-                                    <li><a href="#">스킨케어</a></li>
-                                    <li><a href="#">뉴트리선케어</a></li>
-                                    <li><a href="#">웨이트케어</a></li>
-                                </ul>
-                                <p class="tit">기타브랜드</p>
-                                <ul>
-                                    <li><a href="#">엘라바쉐</a></li>
-                                    <li><a href="#">엘라바쉐</a></li>
-                                    <li><a href="#">엘라바쉐</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>*@
                     <li><a href="#">이벤트</a></li>
                     <li><a href="#">멤버쉽혜택</a></li>
                     <li><a href="#">상품리뷰</a></li>
@@ -93,3 +73,10 @@
     <!--//lnb-->
 </div>
 
+
+<script language="javascript">
+    function goSearch() {
+        var param = document.getElementById("h_search_keyword").value
+        location.href = "/Search/Index?SEARCH_KEWWORD=" + param;
+    }
+</script>

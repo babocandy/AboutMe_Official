@@ -10,20 +10,18 @@ namespace AboutMe.Web.Front.Models
 {
     public class MyReviewInsertViewModel
     {
-        [Required]
+
         public string M_ID { get; set; }
 
-        [Required]
         public int? ORDER_DETAIL_IDX { get; set; }
 
-        [Required]
         public string P_CODE { get; set; }
 
         [Required(ErrorMessage = "*")]
         public string SKIN_TYPE { get; set; }
 
         [Required(ErrorMessage = "*")]
-        public string COMMENT { get; set; }        
+        public string COMMENT { get; set; }
         public string ADD_IMAGE { get; set; }
 
 
@@ -67,7 +65,7 @@ namespace AboutMe.Web.Front.Models
 
 
 
-    public class ReviewProductListViewModel 
+    public class ReviewProductListViewModel
     {
         public static string SORT_PHOTO = "0";
         public static string SORT_LASTEST = "1";
@@ -82,7 +80,7 @@ namespace AboutMe.Web.Front.Models
         public string Pcode { get; set; }
 
 
-        public List<SP_CATEGORY_DEPTH_SEL_Result> CategoryBeauty { get; set; }        
+        public List<SP_CATEGORY_DEPTH_SEL_Result> CategoryBeauty { get; set; }
         public string CategoryCodeHealth { get; set; }
         public List<SP_CATEGORY_DEPTH_SEL_Result> CategorySelShop { get; set; }
 
@@ -91,17 +89,6 @@ namespace AboutMe.Web.Front.Models
 
     }
 
-    public class MyReviewExpWriteViewModel
-    {
-        public int? EXP_MASTER_IDX { get; set; }
-        public string P_CODE { get; set; }
-        public string TITLE { get; set; }
-        public string TAG { get; set; }
-        public string COMMENT { get; set; }
-        public string SKIN_TYPE { get; set; }
-
-        public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
-    }
 
 
 }
