@@ -54,24 +54,25 @@ namespace AboutMe.Web.Front.Controllers
         [CustomAuthorize]
         public ActionResult Write(int? EXP_MASTER_IDX, string P_CODE)
         {
-            MyReviewExpWriteViewModel model = new MyReviewExpWriteViewModel();
+            MyReviewExpInputViewModel model = new MyReviewExpInputViewModel();
             model.EXP_MASTER_IDX = EXP_MASTER_IDX;
             model.P_CODE = P_CODE;
             model.ProductInfo = _service.GetProductInfo(P_CODE);
-            return View(model);
+            return View("Input", model);
         }
 
 
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Write(MyReviewExpWriteViewModel model)
+        public ActionResult Write(MyReviewExpInputViewModel model)
         {
 
             model.ProductInfo = _service.GetProductInfo(model.P_CODE);
 
             if (ModelState.IsValid)
             {
+                /*
                 MyReviewExpParamOnSaveToDb p = new MyReviewExpParamOnSaveToDb();
 
                 p.M_ID = _user_profile.M_ID;                
@@ -85,8 +86,10 @@ namespace AboutMe.Web.Front.Controllers
                 p.SUB_IMG_1 = model.SUB_IMG_1;
                 p.SUB_IMG_2 = model.SUB_IMG_2;
                 p.SUB_IMG_3 = model.SUB_IMG_3;
+                */
+                model.M_ID = _user_profile.M_ID;
 
-                Tuple<string, string> ret = _service.InsertMyReviewExp(p);
+                Tuple<string, string> ret = _service.InsertMyReviewExp(model);
 
                 TempData["ResultNum"] = ret.Item1;
                 TempData["ResultMessage"] = ret.Item2;
@@ -94,33 +97,49 @@ namespace AboutMe.Web.Front.Controllers
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
-            return View(model);
+            return View("Input", model);
         }
 
 
         [CustomAuthorize]
-        public ActionResult Update(int? ARTICLE_IDX,  string P_CODE)
+        public ActionResult Update(int? ARTICLE_IDX, int? EXP_MASTER_IDX,  string P_CODE)
         {
-            MyReviewExpUpdateViewModel model = new MyReviewExpUpdateViewModel();
+            SP_REVIEW_MY_EXP_DETAIL_Result detail = _service.GetMyReviewExpDetail(ARTICLE_IDX);
+
+            MyReviewExpInputViewModel model = new MyReviewExpInputViewModel();
+
+            model.EXP_MASTER_IDX = EXP_MASTER_IDX;
             model.ARTICLE_IDX = ARTICLE_IDX;
             model.P_CODE = P_CODE;
+
+            model.TITLE = detail.TITLE;
+            model.TAG = detail.TAG;
+            model.SKIN_TYPE = detail.SKIN_TYPE;
+            model.SUB_IMG_1 = detail.SUB_IMG_1;
+            model.SUB_IMG_2 = detail.SUB_IMG_2;
+            model.SUB_IMG_3 = detail.SUB_IMG_3;
+            model.COMMENT = detail.COMMENT;
+
             model.ProductInfo = _service.GetProductInfo(P_CODE);
-            return View(model);
+
+            return View("Input", model);
         }
 
 
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(MyReviewExpUpdateViewModel model)
+        public ActionResult Update(MyReviewExpInputViewModel model)
         {
             model.ProductInfo = _service.GetProductInfo(model.P_CODE);
 
             if (ModelState.IsValid)
             {
+                /*
                 MyReviewExpParamOnSaveToDb p = new MyReviewExpParamOnSaveToDb();
 
                 p.M_ID = _user_profile.M_ID;
+                p.ARTICLE_IDX = model.ARTICLE_IDX;
                 p.EXP_MASTER_IDX = model.EXP_MASTER_IDX;
                 p.TITLE = model.TITLE;
                 p.SKIN_TYPE = model.SKIN_TYPE;
@@ -128,19 +147,27 @@ namespace AboutMe.Web.Front.Controllers
                 p.COMMENT = model.COMMENT;
                 p.TAG = model.TAG;
 
+                Debug.WriteLine("1,"+model.SUB_IMG_1);
+                Debug.WriteLine("2," + model.SUB_IMG_2);
+                Debug.WriteLine("3," + model.SUB_IMG_3);
+
+
                 p.SUB_IMG_1 = model.SUB_IMG_1;
                 p.SUB_IMG_2 = model.SUB_IMG_2;
                 p.SUB_IMG_3 = model.SUB_IMG_3;
 
-                //Tuple<string, string> ret = _service.InsertMyReviewExp(p);
+                 */
+                model.M_ID = _user_profile.M_ID;
 
-                //TempData["ResultNum"] = ret.Item1;
-                //TempData["ResultMessage"] = ret.Item2;
+                Tuple<string, string> ret = _service.UpdateMyReviewExp(model);
+
+                TempData["ResultNum"] = ret.Item1;
+                TempData["ResultMessage"] = ret.Item2;
 
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
-            return View(model);
+            return View("Input", model);
         }
 
     }
