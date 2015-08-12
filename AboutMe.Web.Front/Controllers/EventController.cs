@@ -7,16 +7,24 @@ using System.Web.Mvc;
 using AboutMe.Common.Helper;
 using AboutMe.Domain.Service.Promotion;
 using AboutMe.Domain.Entity.AdminPromotion;
+using AboutMe.Domain.Service.Event;
+using AboutMe.Domain.Entity.Event;
+using AboutMe.Domain.Service.Exhibit;
+using AboutMe.Domain.Entity.Exhibit;
 
 namespace AboutMe.Web.Front.Controllers
 {
     public class EventController : BaseFrontController
     {
         private IPromotionService _PromotionService;
+        private IEventService _eventservice;
+        private IExhibitService _exhibitservice;
 
-        public EventController(PromotionService _PromotionService)
+        public EventController(PromotionService _PromotionService, IEventService _eventservice, IExhibitService _exhibitservice)
         {
             this._PromotionService = _PromotionService;
+            this._eventservice = _eventservice;
+            this._exhibitservice = _exhibitservice;
         }
 
         protected override void HandleUnknownAction(string actionName)
@@ -32,15 +40,62 @@ namespace AboutMe.Web.Front.Controllers
             public List<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result> inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result { get; set; }
         }
 
+        #region 이벤트메인/ 이벤트 / 기획전 (gxen) ================================================================
 
-        // GET: Event
+        // GET: Main
         public ActionResult Index()
         {
-            return View();
+            EVENT_MAIN_INDEX M = new EVENT_MAIN_INDEX
+            {
+                MainInfo = _eventservice.EventMainView(),
+                IngListInfo = _eventservice.EventMainIngList(),
+                EndListInfo = _eventservice.EventMainEndList()
+            };
+            return View(M);
         }
 
+        public ActionResult EventView(int IDX)
+        {
+            EVENT_VIEW M = new EVENT_VIEW
+            {
+                EventInfo = _eventservice.EventView(IDX),
+                IngListInfo = _eventservice.EventMainIngList()
+            };
+            return View(M);
+        }
 
-        #region 세트상품 / 타임세일등 ================================================================
+        public ActionResult ExhibitView(int IDX)
+        {
+            List<SP_ADMIN_EXHIBIT_TAB_SEL_Result> Tablist = _exhibitservice.ExhibitAdminTabList(IDX);
+            List<EXHIBIT_TAB_PRODUCT> TabProduct = new List<EXHIBIT_TAB_PRODUCT>();
+            foreach (SP_ADMIN_EXHIBIT_TAB_SEL_Result item in Tablist)
+            {
+                EXHIBIT_TAB_PRODUCT tp = new EXHIBIT_TAB_PRODUCT { 
+                    Tabinfo = item,
+                    ProductList = _exhibitservice.ExhibitTabProductList(item.IDX)
+                };
+                TabProduct.Add(tp);
+            }
+
+            EXHIBIT_VIEW M = new EXHIBIT_VIEW
+            {
+                ExhibitInfo = _exhibitservice.ExhibitView(IDX),
+                TabProductList = TabProduct,
+                IngList = _eventservice.EventMainIngList()
+            };
+            return View(M);
+        }
+
+        //상품상세 : 우측하단의 이벤트/기획전 목록
+        public ActionResult EventInProductDetail()
+        {
+            List<SP_EVENT_ING_LIST_Result> M = _eventservice.EventMainIngList();
+            return PartialView(M);
+        }
+        #endregion
+
+
+        #region 세트상품 / 타임세일 / 아웃렛 등 ================================================================
 
 
         //세트상품 
@@ -75,13 +130,10 @@ namespace AboutMe.Web.Front.Controllers
 
 
                 return View(mMyMultiModelForPromotionProduct);
-
             }
             else
             {
-
                 return View("/");
-
             }
 
 
@@ -116,17 +168,54 @@ namespace AboutMe.Web.Front.Controllers
                 CdPromotionProduct = mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result[0].CD_PROMOTION_PRODUCT;
                 mMyMultiModelForPromotionProduct.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result = _PromotionService.GetPromotionByProductList(CdPromotionProduct).ToList();
 
-
                 return View(mMyMultiModelForPromotionProduct);
 
             }
             else
             {
-
                 return View("/");
-
             }
 
+        }
+
+        // 아웃렛 
+        public ActionResult Outlet()
+        {
+
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //상품 이미지디렉토리경로
+            ViewBag.PROMOTION_IMG_PATH = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //프로모션 이미지디렉토리경로
+
+            var mMyMultiModelForPromotionProduct = new MyMultiModelForPromotionProduct
+            {
+                inst_PROMOTION_TOP_1_Result = new List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>(),
+                inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result = new List<SP_PROMOTION_BY_PRODUCT_PRICE_LIST_SEL_Result>()
+            };
+
+
+            string aas = "";
+            if (TempData["jsMessage"] != null)
+            {
+                aas = TempData["jsMessage"].ToString();
+            }
+
+            string CdPromotionProduct = ""; //상품별 프로모션 코드 
+
+            //세트상품 프로모션 정보중 유효한 TOP 1 가져온다
+            mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result = _PromotionService.GetPromotionByProductTop1_Info("05").ToList();
+
+            if (mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result.Count != 0)
+            {
+                CdPromotionProduct = mMyMultiModelForPromotionProduct.inst_PROMOTION_TOP_1_Result[0].CD_PROMOTION_PRODUCT;
+                mMyMultiModelForPromotionProduct.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result = _PromotionService.GetPromotionByProductList(CdPromotionProduct).ToList();
+
+                return View(mMyMultiModelForPromotionProduct);
+            }
+            else
+            {
+                return View("/");
+            }
+
+            //return View();
         }
 
 

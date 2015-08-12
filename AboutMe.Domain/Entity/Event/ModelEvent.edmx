@@ -42,6 +42,8 @@
           <Parameter Name="BANNER_GBN" Type="char" Mode="In" />
           <Parameter Name="IMG" Type="varchar" Mode="In" />
           <Parameter Name="URL" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="DESC" Type="varchar" Mode="In" />
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_EVENT_MAIN_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -73,13 +75,11 @@
         <Function Name="SP_ADMIN_EVENT_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
-        <Function Name="SP_EVENT_END_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PAGE" Type="int" Mode="In" />
-          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SP_EVENT_ING_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PAGE" Type="int" Mode="In" />
-          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        <Function Name="SP_EVENT_END_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_EVENT_ING_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_EVENT_MAIN_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_EVENT_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="AboutMeModel7StoreContainer" />
       </Schema></edmx:StorageModels>
@@ -118,6 +118,8 @@
             <Parameter Name="BANNER_GBN" Mode="In" Type="String" />
             <Parameter Name="IMG" Mode="In" Type="String" />
             <Parameter Name="URL" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="DESC" Mode="In" Type="String" />
             <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EVENT_SEL" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_SEL_Result)">
@@ -150,18 +152,18 @@
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EVENT_MAIN_VIEW" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_MAIN_VIEW_Result)" />
           <FunctionImport Name="SP_EVENT_END_LIST" ReturnType="Collection(AboutMeModel7.SP_EVENT_END_LIST_Result)">
-            <Parameter Name="PAGE" Mode="In" Type="Int32" />
-            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
-          </FunctionImport>
+            </FunctionImport>
           <FunctionImport Name="SP_EVENT_ING_LIST" ReturnType="Collection(AboutMeModel7.SP_EVENT_ING_LIST_Result)">
-            <Parameter Name="PAGE" Mode="In" Type="Int32" />
-            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
-          </FunctionImport>
+            </FunctionImport>
           <FunctionImport Name="SP_ADMIN_EVENT_MAIN_LIST" ReturnType="Collection(AboutMeModel7.SP_ADMIN_EVENT_MAIN_LIST_Result)" />
           <FunctionImport Name="SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD">
             <Parameter Name="GBN" Mode="In" Type="String" />
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="ORDER" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_EVENT_MAIN_VIEW" ReturnType="Collection(AboutMeModel7.SP_EVENT_MAIN_VIEW_Result)" />
+          <FunctionImport Name="SP_EVENT_VIEW" ReturnType="Collection(AboutMeModel7.SP_EVENT_VIEW_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_EVENT_SEL_Result">
@@ -223,38 +225,44 @@
           <Property Type="String" Name="MIDDLE_URL4" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MIDDLE_TITLE1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC3" Nullable="true" MaxLength="200" />
         </ComplexType>
         <ComplexType Name="SP_EVENT_END_LIST_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
-          <Property Type="String" Name="EVENT_NAME" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="FROM_DATE" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="FROM_TIME" Nullable="false" MaxLength="2" />
           <Property Type="String" Name="TO_DATE" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="TO_TIME" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="EVENT_GBN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="WEB_CONTENTS" Nullable="false" MaxLength="Max" />
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="GBN" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="NAME" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_EVENT_ING_LIST_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
-          <Property Type="String" Name="EVENT_NAME" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="FROM_DATE" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="FROM_TIME" Nullable="false" MaxLength="2" />
           <Property Type="String" Name="TO_DATE" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="TO_TIME" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="EVENT_GBN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="WEB_CONTENTS" Nullable="false" MaxLength="Max" />
           <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="GBN" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="NAME" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_EVENT_MAIN_LIST_Result">
           <Property Type="String" Name="GBN" Nullable="false" MaxLength="7" />
@@ -271,6 +279,53 @@
           <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="IDX" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_EVENT_MAIN_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="MAIN_IMG1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_URL1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_IMG2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_URL2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_IMG3" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_URL3" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_IMG4" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_URL4" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_IMG5" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MAIN_URL5" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RIGHT_IMG" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RIGHT_URL" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_IMG1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_URL1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_IMG2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_URL2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_IMG3" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_URL3" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_IMG4" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MIDDLE_URL4" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MIDDLE_TITLE1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MIDDLE_TITLE3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MIDDLE_DESC3" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="SP_EVENT_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="EVENT_NAME" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="FROM_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="FROM_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="TO_DATE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="TO_TIME" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="EVENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="WEB_CONTENTS" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="MOBILE_FILE" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="WEB_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MOBILE_BANNER" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -355,6 +410,12 @@
                 <ScalarProperty Name="MIDDLE_URL4" ColumnName="MIDDLE_URL4" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="MIDDLE_TITLE1" ColumnName="MIDDLE_TITLE1" />
+                <ScalarProperty Name="MIDDLE_DESC1" ColumnName="MIDDLE_DESC1" />
+                <ScalarProperty Name="MIDDLE_TITLE2" ColumnName="MIDDLE_TITLE2" />
+                <ScalarProperty Name="MIDDLE_DESC2" ColumnName="MIDDLE_DESC2" />
+                <ScalarProperty Name="MIDDLE_TITLE3" ColumnName="MIDDLE_TITLE3" />
+                <ScalarProperty Name="MIDDLE_DESC3" ColumnName="MIDDLE_DESC3" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -362,19 +423,19 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel7.SP_EVENT_END_LIST_Result">
                 <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
                 <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
                 <ScalarProperty Name="FROM_TIME" ColumnName="FROM_TIME" />
                 <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
                 <ScalarProperty Name="TO_TIME" ColumnName="TO_TIME" />
-                <ScalarProperty Name="EVENT_GBN" ColumnName="EVENT_GBN" />
                 <ScalarProperty Name="WEB_CONTENTS" ColumnName="WEB_CONTENTS" />
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="GBN" ColumnName="GBN" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -382,19 +443,19 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="AboutMeModel7.SP_EVENT_ING_LIST_Result">
                 <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
                 <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
                 <ScalarProperty Name="FROM_TIME" ColumnName="FROM_TIME" />
                 <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
                 <ScalarProperty Name="TO_TIME" ColumnName="TO_TIME" />
-                <ScalarProperty Name="EVENT_GBN" ColumnName="EVENT_GBN" />
                 <ScalarProperty Name="WEB_CONTENTS" ColumnName="WEB_CONTENTS" />
                 <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
                 <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
                 <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
-                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
                 <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="GBN" ColumnName="GBN" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -419,6 +480,61 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD" FunctionName="AboutMeModel7.Store.SP_ADMIN_EVENT_MAIN_LIST_ORDER_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_EVENT_MAIN_VIEW" FunctionName="AboutMeModel7.Store.SP_EVENT_MAIN_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel7.SP_EVENT_MAIN_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="MAIN_IMG1" ColumnName="MAIN_IMG1" />
+                <ScalarProperty Name="MAIN_URL1" ColumnName="MAIN_URL1" />
+                <ScalarProperty Name="MAIN_IMG2" ColumnName="MAIN_IMG2" />
+                <ScalarProperty Name="MAIN_URL2" ColumnName="MAIN_URL2" />
+                <ScalarProperty Name="MAIN_IMG3" ColumnName="MAIN_IMG3" />
+                <ScalarProperty Name="MAIN_URL3" ColumnName="MAIN_URL3" />
+                <ScalarProperty Name="MAIN_IMG4" ColumnName="MAIN_IMG4" />
+                <ScalarProperty Name="MAIN_URL4" ColumnName="MAIN_URL4" />
+                <ScalarProperty Name="MAIN_IMG5" ColumnName="MAIN_IMG5" />
+                <ScalarProperty Name="MAIN_URL5" ColumnName="MAIN_URL5" />
+                <ScalarProperty Name="RIGHT_IMG" ColumnName="RIGHT_IMG" />
+                <ScalarProperty Name="RIGHT_URL" ColumnName="RIGHT_URL" />
+                <ScalarProperty Name="MIDDLE_IMG1" ColumnName="MIDDLE_IMG1" />
+                <ScalarProperty Name="MIDDLE_URL1" ColumnName="MIDDLE_URL1" />
+                <ScalarProperty Name="MIDDLE_IMG2" ColumnName="MIDDLE_IMG2" />
+                <ScalarProperty Name="MIDDLE_URL2" ColumnName="MIDDLE_URL2" />
+                <ScalarProperty Name="MIDDLE_IMG3" ColumnName="MIDDLE_IMG3" />
+                <ScalarProperty Name="MIDDLE_URL3" ColumnName="MIDDLE_URL3" />
+                <ScalarProperty Name="MIDDLE_IMG4" ColumnName="MIDDLE_IMG4" />
+                <ScalarProperty Name="MIDDLE_URL4" ColumnName="MIDDLE_URL4" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="MIDDLE_TITLE1" ColumnName="MIDDLE_TITLE1" />
+                <ScalarProperty Name="MIDDLE_DESC1" ColumnName="MIDDLE_DESC1" />
+                <ScalarProperty Name="MIDDLE_TITLE2" ColumnName="MIDDLE_TITLE2" />
+                <ScalarProperty Name="MIDDLE_DESC2" ColumnName="MIDDLE_DESC2" />
+                <ScalarProperty Name="MIDDLE_TITLE3" ColumnName="MIDDLE_TITLE3" />
+                <ScalarProperty Name="MIDDLE_DESC3" ColumnName="MIDDLE_DESC3" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_EVENT_VIEW" FunctionName="AboutMeModel7.Store.SP_EVENT_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel7.SP_EVENT_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
+                <ScalarProperty Name="FROM_DATE" ColumnName="FROM_DATE" />
+                <ScalarProperty Name="FROM_TIME" ColumnName="FROM_TIME" />
+                <ScalarProperty Name="TO_DATE" ColumnName="TO_DATE" />
+                <ScalarProperty Name="TO_TIME" ColumnName="TO_TIME" />
+                <ScalarProperty Name="EVENT_GBN" ColumnName="EVENT_GBN" />
+                <ScalarProperty Name="WEB_CONTENTS" ColumnName="WEB_CONTENTS" />
+                <ScalarProperty Name="MOBILE_FILE" ColumnName="MOBILE_FILE" />
+                <ScalarProperty Name="WEB_BANNER" ColumnName="WEB_BANNER" />
+                <ScalarProperty Name="MOBILE_BANNER" ColumnName="MOBILE_BANNER" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

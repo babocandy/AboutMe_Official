@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
-
+    string img_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 }
 @section Scripts{
     <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
@@ -329,12 +329,51 @@
 		<tbody>
             @foreach (var item in Model.OrderDetailList)
             {
-                string img_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+                string imgUrl1 = img_path + "R120_" + item.P_IMG1_S;
+                 
 			<tr>
 				<td>
-					<img src="@img_path@item.P_IMG1_S" alt="" /><br/>
+
+                    <span class="tag">
+                        @if (item.ICON_BEST == 1)
+                        {
+                            <text> <span class="ico_best">BEST</span></text>
+                        }
+                        @if (item.ICON_SOLDOUT == 1)
+                        {
+                            <text> <span class="ico_soldout">SOLD OUT</span></text>
+                        }
+                        @if (item.ICON_NEW == 1)
+                        {
+                            <text> <span class="ico_new">NEW</span></text>
+                        }
+                        @if (item.ICON_CUSTOM == 1)
+                        {
+                            <text> <span class="ico_custom">커스텀</span></text>
+                        }
+
+                        @if (item.ICON_SET == 1)
+                        {
+                            <text> <span class="ico_set">SET</span></text>
+                        }
+                        @if (item.ICON_ONEPLUS == 1)
+                        {
+                            <text> <span class="ico_1_1">1+1</span></text>
+                        }
+                        @if (item.ICON_TIME == 1)
+                        {
+                            <text> <span class="ico_time">TIME</span></text>
+                        }
+
+                        @if (item.ICON_COUPON == 1)
+                        {
+                            <text> <span class="ico_coupon">COUPON</span></text>
+                        }
+                    </span><br />
+					<img src="@imgUrl1" alt="" /><br/>
 					@item.P_NAME <br />
-                    (@item.P_CODE)
+                    (@item.P_CODE) 
+
 				</td>
 				<td>@item.PROMOTION </td>
 				<td>
@@ -543,10 +582,21 @@
 			<th>승인 번호</th>
 			<td class="fcred">@Model.BodyInfo.PAT_TID</td>
 		</tr>
-		<tr>
-			<th>이메일</th>
-			<td colspan="3">@Model.BodyInfo.SENDER_EMAIL</td>
-		</tr>
+@if (Model.BodyInfo.PAY_GBN == "3") //가상계좌
+{
+    <tr>
+        <th>가상계좌번호</th>
+        <td>@Model.BodyInfo.VACT_Num</td>
+        <th>입금은행</th>
+        <td class="fcred">@Model.BodyInfo.VACT_BankName</td>
+    </tr>
+    <tr>
+        <th>예금주명</th>
+        <td>@Model.BodyInfo.VACT_Name</td>
+        <th>입금 예정일</th>
+        <td class="fcred">@Model.BodyInfo.VACT_Date 까지</td>
+    </tr>
+}
 	</table>
 
 	<h3 class="sub-header mt20">주문자 정보</h3>
@@ -566,6 +616,10 @@
                 }
             </td>
 		</tr>
+        <tr>
+            <th>이메일</th>
+            <td colspan="3">@Model.BodyInfo.SENDER_EMAIL</td>
+        </tr>
 		<tr>
 			<th>주소</th>
 			<td colspan="3">

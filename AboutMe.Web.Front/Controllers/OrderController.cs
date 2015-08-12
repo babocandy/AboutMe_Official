@@ -12,6 +12,7 @@ using AboutMe.Domain.Entity.Order;
 using AboutMe.Domain.Entity.Cart;
 using AboutMe.Web.Front.Common.Filters;
 
+using AboutMe.Common.Helper;
 using INIpayNet;
 
 namespace AboutMe.Web.Front.Controllers
@@ -25,7 +26,20 @@ namespace AboutMe.Web.Front.Controllers
             this._orderservice = _orderservice;
         }
 
-        
+        //HTML태그제거
+        private String TagStrip(String text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+
+                return String.Empty;
+            }
+            else
+            {
+                return System.Text.RegularExpressions.Regex.Replace(text, @"<(.|\n)*?>", String.Empty);
+            }
+        }
+
         //이니페이에서사용
         private Hashtable hstCode_PayMethod = new Hashtable();
         private string _inipay_setpath = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.SetPath");
@@ -193,6 +207,7 @@ namespace AboutMe.Web.Front.Controllers
             }
             List<SP_ORDER_STEP2_PRODUCT_LIST_Result> OrderList = _orderservice.OrderStep1List(OrderIdx);
             string goodname = OrderList.FirstOrDefault().P_NAME;
+            goodname = TagStrip(goodname);
             if (OrderList.Count() > 1) {
                 goodname = goodname + "외 " + Convert.ToString(OrderList.Count() - 1) + "건";
             }
@@ -282,9 +297,37 @@ namespace AboutMe.Web.Front.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult SaveReceiverAddress(Int32 ORDER_IDX, SENDER_RECEIVER_SAVE_Param Param)
         {
+            
+            Param.ORDER_MEMO = TagStrip(Param.ORDER_MEMO);
+            Param.SENDER_NAME = TagStrip(Param.SENDER_NAME);
+            Param.SENDER_POST1 = TagStrip(Param.SENDER_POST1);
+            Param.SENDER_POST2 = TagStrip(Param.SENDER_POST2);
+            Param.SENDER_ADDR1 = TagStrip(Param.SENDER_ADDR1);
+            Param.SENDER_ADDR2 = TagStrip(Param.SENDER_ADDR2);
+            Param.SENDER_TEL1 = TagStrip(Param.SENDER_TEL1);
+            Param.SENDER_TEL2 = TagStrip(Param.SENDER_TEL2);
+            Param.SENDER_TEL3 = TagStrip(Param.SENDER_TEL3);
+            Param.SENDER_HP1 = TagStrip(Param.SENDER_HP1);
+            Param.SENDER_HP2 = TagStrip(Param.SENDER_HP2);
+            Param.SENDER_HP3 = TagStrip(Param.SENDER_HP3);
+            Param.SENDER_EMAIL1 = TagStrip(Param.SENDER_EMAIL1);
+            Param.SENDER_EMAIL2 = TagStrip(Param.SENDER_EMAIL2);
+
+            Param.RECEIVER_NAME = TagStrip(Param.RECEIVER_NAME);
+            Param.RECEIVER_POST1 = TagStrip(Param.RECEIVER_POST1);
+            Param.RECEIVER_POST2 = TagStrip(Param.RECEIVER_POST2);
+            Param.RECEIVER_ADDR1 = TagStrip(Param.RECEIVER_ADDR1);
+            Param.RECEIVER_ADDR2 = TagStrip(Param.RECEIVER_ADDR2);
+            Param.RECEIVER_TEL1 = TagStrip(Param.RECEIVER_TEL1);
+            Param.RECEIVER_TEL2 = TagStrip(Param.RECEIVER_TEL2);
+            Param.RECEIVER_TEL3 = TagStrip(Param.RECEIVER_TEL3);
+            Param.RECEIVER_HP1 = TagStrip(Param.RECEIVER_HP1);
+            Param.RECEIVER_HP2 = TagStrip(Param.RECEIVER_HP2);
+            Param.RECEIVER_HP3 = TagStrip(Param.RECEIVER_HP3);
+
             _orderservice.OrderStep1SaveReceiverAddress(ORDER_IDX, Param);
             var jsonData = new { result = "true" };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
@@ -472,7 +515,7 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //결제완료
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult OrderProcess(INISYSPAY_PARAM FrmData)
         {
@@ -480,6 +523,12 @@ namespace AboutMe.Web.Front.Controllers
             INIPAYRESULT Result = new INIPAYRESULT();
             OrderResult orderResult = new OrderResult();
             HashData();
+
+            FrmData.goodname = TagStrip(FrmData.goodname);
+            FrmData.buyername = TagStrip(FrmData.buyername);
+            FrmData.buyertel = TagStrip(FrmData.buyertel);
+            FrmData.buyeremail = TagStrip(FrmData.buyeremail);
+            FrmData.goodname = TagStrip(FrmData.goodname);
 
             //###############################################################################
             //# 1. 객체 생성 #
@@ -774,6 +823,13 @@ namespace AboutMe.Web.Front.Controllers
                 }
             }
             
+            //메일발송
+            if (PayResult.Resultcode == "00" && !string.IsNullOrEmpty(orderResult.ORDER_CODE))
+            {
+                SendOrderResultMail(orderResult.ORDER_CODE);
+            }
+            
+
             StringBuilder SBuilder = new StringBuilder();
             SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
             SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n","ORDER_IDX" , orderResult.ORDER_IDX.ToString() );
@@ -794,6 +850,140 @@ namespace AboutMe.Web.Front.Controllers
             M.ProductList = _orderservice.OrderResultProductList(result.ORDER_CODE, _user_profile.M_ID, _user_profile.SESSION_ID);
             M.DetailInfo = _orderservice.OrderResultDetailInfo(result.ORDER_CODE, _user_profile.M_ID, _user_profile.SESSION_ID);
             return View(M);
+        }
+
+        //주문완료 메일발송
+        private void SendOrderResultMail(string ORDER_CODE)
+        {
+            List<SP_ORDER_RESULT_PRODUCT_LIST_Result> ProductList = _orderservice.OrderResultProductList(ORDER_CODE, _user_profile.M_ID, _user_profile.SESSION_ID);
+            SP_ORDER_RESULT_DETAIL_Result DetailInfo = _orderservice.OrderResultDetailInfo(ORDER_CODE, _user_profile.M_ID, _user_profile.SESSION_ID);
+            string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+
+            if (DetailInfo != null)
+            {
+                string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
+                string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+                string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_orderend.html");  
+                skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
+                skin_body = skin_body.Replace("$$ORDER_NAME$$", DetailInfo.ORDER_NAME);
+                
+                //주문목록
+                StringBuilder ListBuilder = new StringBuilder();
+                foreach(SP_ORDER_RESULT_PRODUCT_LIST_Result item in ProductList)
+                {
+                    string imgUrl1 = cur_domain+productImgPath + "R120_" + item.P_IMG1_S;
+                    string sellingPrice = "";
+                    if (item.SELLING_PRICE != item.DISCOUNT_PRICE)
+                    {
+                        sellingPrice = String.Format("<p style=\"margin:0 0 3px 0;font-size:13px;color:#696361;text-decoration:line-through;\">{0}원</p>", String.Format("{0:#,#0.}", item.SELLING_PRICE));
+                    }
+                    string oneplus = "";
+                    if (item.PROMOTION_TYPE == "02") //1+1
+                    {
+                        oneplus = "(1+1상품)";
+                    }
+                    ListBuilder.Append("<tr>");
+                    ListBuilder.AppendFormat("<td width=\"136\" height=\"128\" bgcolor=\"#ffffff\" align=\"right\" style=\"padding:0 17px 0 0;border-bottom:1px solid #efe8e6;\"><img src=\"{0}\" alt=\"\" /></td>", imgUrl1);
+                    ListBuilder.AppendFormat("<td width=\"185\" bgcolor=\"#ffffff\" align=\"left\" style=\"padding:0;font:11px/1.2 Dotum,'돋움';color:#bbb5b4;border-bottom:1px solid #efe8e6;\"><p style=\"margin:13px 0 4px;padding:0;font-size:14px;color:#1b1818;\">{0}</p><p style=\"margin:0;padding:0;\">{1}</p></td>", item.P_NAME, item.P_SUB_TITLE);
+                    ListBuilder.AppendFormat("<td width=\"121\" bgcolor=\"#ffffff\" align=\"center\" style=\"font:16px/1.3 Dotum,'돋움';color:#1b1818;border-bottom:1px solid #efe8e6;\">{0}<b style=\"font-family:'Verdana';\">{1}</b>원</td>", sellingPrice, String.Format("{0:#,#0.}", item.DISCOUNT_PRICE));
+                    ListBuilder.AppendFormat("<td width=\"70\" bgcolor=\"#ffffff\" align=\"center\" style=\"font:16px/1.3 Dotum,'돋움';color:#1b1818;border-bottom:1px solid #efe8e6;\"><b>{0}</b> {1}</td>", Convert.ToString(item.P_COUNT), oneplus);
+                    ListBuilder.AppendFormat("<td width=\"130\" bgcolor=\"#ffffff\" align=\"center\" style=\"font:bold 16px/1.3 Dotum,'돋움';color:#9aca3c;border-bottom:1px solid #efe8e6;letter-spacing:1px;\">ⓟ&nbsp;<b>{0}</b></td>", String.Format("{0:#,#0.}", item.POINT_ACCML));
+                    ListBuilder.AppendFormat("<td width=\"120\" bgcolor=\"#ffffff\" align=\"center\" style=\"font:16px/1.3 Dotum,'돋움';color:#252626;border-bottom:1px solid #efe8e6;\"><b style=\"font-family:'Verdana';\">{0}</b>원</td>", String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_PRICE));
+                    ListBuilder.Append("</tr>");	
+                }
+                skin_body = skin_body.Replace("$$PRODUCT_LIST$$", ListBuilder.ToString());
+   														
+                skin_body = skin_body.Replace("$$TOTAL_SUM_PRICE$$", String.Format("{0:#,#0.}", DetailInfo.TOTAL_PRICE + DetailInfo.TRANS_PRICE));
+                skin_body = skin_body.Replace("$$TOTAL_PRICE$$", String.Format("{0:#,#0.}", DetailInfo.TOTAL_PRICE));
+                skin_body = skin_body.Replace("$$TRANS_PRICE$$", String.Format("{0:#,#0.}", DetailInfo.TRANS_PRICE));
+
+                //전체할인금액
+                skin_body = skin_body.Replace("$$DISCOUNT_AMT$$", String.Format("{0:#,#0.}", DetailInfo.DISCOUNT_AMT));
+
+                //임직원할인
+                string empPriceStr = "";
+                if (_user_profile.IS_LOGIN == true && _user_profile.M_GBN == "S")
+                {
+                    empPriceStr = "<tr><td width=\"100\" style=\"padding:0 0 8px 0;font:14px/1.2 Dotum,'돋움';color:#696361;letter-spacing:-1px;\">임직원 할인</td>";
+                    empPriceStr += "<td align=\"right\" style=\"padding:0 0 8px 3px;font:14px/1.2 Dotum,'돋움';color:#696361;letter-spacing:-1px;\"><b>"+String.Format("{0:#,#0.}", DetailInfo.EMP_DISCOUNT_AMT)+"</b> 원</td></tr>";
+                }
+                skin_body = skin_body.Replace("$$EMP_DISCOUNT$$", empPriceStr);
+
+                skin_body = skin_body.Replace("$$COUPON_DISCOUNT_AMT$$", String.Format("{0:#,#0.}", DetailInfo.COUPON_DISCOUNT_AMT));
+                skin_body = skin_body.Replace("$$POINT_USE_PRICE$$", String.Format("{0:#,#0.}", DetailInfo.POINT_USE_PRICE));
+                skin_body = skin_body.Replace("$$GRADE_DISCOUNT_AMT$$", String.Format("{0:#,#0.}", DetailInfo.GRADE_DISCOUNT_AMT));
+                skin_body = skin_body.Replace("$$TOTAL_PAY_PRICE$$", String.Format("{0:#,#0.}", DetailInfo.TOTAL_PAY_PRICE));
+                skin_body = skin_body.Replace("$$ACCML_POINT$$", String.Format("{0:#,#0.}", DetailInfo.ACCML_POINT));
+                
+                //주문자 & 배송지정보
+                skin_body = skin_body.Replace("$$SENDER_POST$$",  DetailInfo.SENDER_POST);
+                skin_body = skin_body.Replace("$$SENDER_ADDR1$$",  DetailInfo.SENDER_ADDR1);
+                skin_body = skin_body.Replace("$$SENDER_ADDR2$$",  DetailInfo.SENDER_ADDR2);
+                skin_body = skin_body.Replace("$$SENDER_TEL$$",  DetailInfo.SENDER_TEL);
+                skin_body = skin_body.Replace("$$SENDER_HP$$",  DetailInfo.SENDER_HP);
+                skin_body = skin_body.Replace("$$SENDER_EMAIL$$",  DetailInfo.SENDER_EMAIL);
+                skin_body = skin_body.Replace("$$RECEIVER_NAME$$",  DetailInfo.RECEIVER_NAME);
+                skin_body = skin_body.Replace("$$RECEIVER_POST$$",  DetailInfo.RECEIVER_POST);
+                skin_body = skin_body.Replace("$$RECEIVER_ADDR1$$",  DetailInfo.RECEIVER_ADDR1);
+                skin_body = skin_body.Replace("$$RECEIVER_ADDR2$$",  DetailInfo.RECEIVER_ADDR2);
+                skin_body = skin_body.Replace("$$RECEIVER_HP$$",  DetailInfo.RECEIVER_HP);
+                skin_body = skin_body.Replace("$$RECEIVER_TEL$$",  DetailInfo.RECEIVER_TEL);
+                skin_body = skin_body.Replace("$$ORDER_MEMO$$",  DetailInfo.ORDER_MEMO);
+
+                skin_body = skin_body.Replace("$$ORDER_CODE$$",  DetailInfo.ORDER_CODE);
+                skin_body = skin_body.Replace("$$PAT_TID$$",  DetailInfo.PAT_TID);
+                skin_body = skin_body.Replace("$$PAY_GBN_NM$$",  DetailInfo.PAY_GBN_NM);
+                if (!string.IsNullOrEmpty(DetailInfo.NOMEMBER_PASS))
+                {
+                    skin_body = skin_body.Replace("$$NOMEMBER_PASS_TEXT$$",  "비회원비밀번호");
+                    skin_body = skin_body.Replace("$$NOMEMBER_PASS$$",  DetailInfo.NOMEMBER_PASS);
+                }
+                else
+                {
+                    skin_body = skin_body.Replace("$$NOMEMBER_PASS_TEXT$$",  "");
+                    skin_body = skin_body.Replace("$$NOMEMBER_PASS$$", "");
+                }
+
+                //가상계좌정보
+                if (DetailInfo.PAY_GBN == "3") //가상계좌
+                { 
+                    StringBuilder VactBuilder = new StringBuilder();
+                    VactBuilder.Append("<tr>");
+					VactBuilder.Append("<td width=\"130\" bgcolor=\"#faf7f6\" align=\"left\" valign=\"top\" style=\"padding:15px 0 15px 30px;font:12px/1.2 Dotum,'돋움';color:#1b1818;\">가상계좌번호</td>");
+					VactBuilder.AppendFormat("<td width=\"220\" bgcolor=\"#faf7f6\" align=\"left\" style=\"padding:15px 0 15px 10px;font:12px/1.2 Dotum,'돋움';color:#252626;\">{0}</td>",DetailInfo.VACT_Num);
+					VactBuilder.Append("<td width=\"130\" bgcolor=\"#faf7f6\" align=\"left\" valign=\"top\" style=\"padding:15px 0 15px 30px;font:12px/1.2 Dotum,'돋움';color:#1b1818;border-left:1px solid #ffffff;\">입금은행</td>");
+				    VactBuilder.AppendFormat("<td width=\"220\" bgcolor=\"#faf7f6\" align=\"left\" style=\"padding:15px 0 15px 10px;font:12px/1.2 Dotum,'돋움';color:#252626;\">{0}</td>",DetailInfo.VACT_BankName);
+					VactBuilder.Append("</tr>");
+                    VactBuilder.Append("<tr>");
+                    VactBuilder.Append("<td width=\"130\" bgcolor=\"#faf7f6\" align=\"left\" valign=\"top\" style=\"padding:15px 0 15px 30px;font:12px/1.2 Dotum,'돋움';color:#1b1818;\">예금주명</td>");
+					VactBuilder.AppendFormat("<td width=\"220\" bgcolor=\"#faf7f6\" align=\"left\" style=\"padding:15px 0 15px 10px;font:12px/1.2 Dotum,'돋움';color:#252626;\">{0}</td>",DetailInfo.VACT_Num);
+                    VactBuilder.Append("<td width=\"130\" bgcolor=\"#faf7f6\" align=\"left\" valign=\"top\" style=\"padding:15px 0 15px 30px;font:12px/1.2 Dotum,'돋움';color:#1b1818;border-left:1px solid #ffffff;\">입금예정일</td>");
+				    VactBuilder.AppendFormat("<td width=\"220\" bgcolor=\"#faf7f6\" align=\"left\" style=\"padding:15px 0 15px 10px;font:12px/1.2 Dotum,'돋움';color:#252626;\">{0}까지</td>",DetailInfo.VACT_Date);
+			        VactBuilder.Append("</tr>");
+                    skin_body = skin_body.Replace("$$VACT_INFO$$",  VactBuilder.ToString());
+                }
+                else
+                {
+                    skin_body = skin_body.Replace("$$VACT_INFO$$","");
+                }
+
+                string M_EMAIL = DetailInfo.SENDER_EMAIL; //수신자이메일
+
+                string MAIL_SUBJECT = "[AboutMe] " + DetailInfo.ORDER_NAME+ "님이 결제하신 주문이 완료되었습니다.";
+                string MAIL_BODY = skin_body;
+
+                //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
+                string MAIL_SENDER_EMAIL = Config.GetConfigValue("MAIL_SENDER_EMAIL"); //noreply@cstone.co.kr
+                string MAIL_SENDER_PW = Config.GetConfigValue("MAIL_SENDER_PW"); //cstonedev12
+                string MAIL_SENDER_SMTP_SERVER = Config.GetConfigValue("MAIL_SENDER_SMTP_SERVER"); //smtp.gmail.com
+                string MAIL_SENDER_SMTP_PORT = Config.GetConfigValue("MAIL_SENDER_SMTP_PORT"); //587
+                string MAIL_SENDER_SMTP_TIMEOUT = Config.GetConfigValue("MAIL_SENDER_SMTP_TIMEOUT"); //20000
+
+                //메일 발송
+                MailSender mObj = new MailSender();
+                mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+            }
+            
         }
     }
 }

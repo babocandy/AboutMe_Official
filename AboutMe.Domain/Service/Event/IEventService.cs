@@ -20,7 +20,12 @@ namespace AboutMe.Domain.Service.Event
         SP_ADMIN_EVENT_MAIN_VIEW_Result EventAdminMainView();
         List<SP_ADMIN_EVENT_MAIN_LIST_Result> EventAdminMainIngList();
         void EventAdminMainListOrderUpdate(string GBN, int IDX, int ORDER);
-        void EventAdminMainImageUpdate(string BANNER_GBN, string IMG, string URL, string ADM_ID);
+        void EventAdminMainImageUpdate(string BANNER_GBN, string IMG, string URL, string ADM_ID, string TITLE = "", string DESC = "");
         void EventAdminMainImageDelete(string BANNER_GBN, string ADM_ID);
+
+        SP_EVENT_MAIN_VIEW_Result EventMainView();
+        List<SP_EVENT_ING_LIST_Result> EventMainIngList();
+        List<SP_EVENT_END_LIST_Result> EventMainEndList();
+        SP_EVENT_VIEW_Result EventView(int IDX);
     }
 }

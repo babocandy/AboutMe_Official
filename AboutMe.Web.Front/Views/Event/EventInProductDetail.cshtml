@@ -1,0 +1,25 @@
+﻿@model List<AboutMe.Domain.Entity.Event.SP_EVENT_ING_LIST_Result>
+<div class="promotion">
+    <ul>
+        @foreach (var item in Model)
+        {
+            string urlPath = "";
+            if (item.GBN == "EVENT")
+            {
+                urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
+            }
+            else
+            {
+                urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
+            }
+
+            <li>
+                <a href="@urlPath">
+                    <img src="@item.WEB_BANNER" alt="" width="255" height="255" />
+                    <span class="date"><em>@item.FROM_DATE</em>~<em>@item.TO_DATE</em></span>
+                    <strong>@item.NAME</strong>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

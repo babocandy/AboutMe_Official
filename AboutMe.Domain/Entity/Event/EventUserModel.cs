@@ -171,6 +171,8 @@ namespace AboutMe.Domain.Entity.Event
         public string URL { get; set; }
         public HttpPostedFileBase IMAGE_FILE { get; set; }
         public string OLD_IMAGE_FILE { get; set; }
+        public string TITLE { get; set; }
+        public string DESC { get; set; }
     }
 
     public class EVENT_MAIN_ORDER_PARAM
@@ -178,5 +180,18 @@ namespace AboutMe.Domain.Entity.Event
         public string GBN { get; set; } //-- EVENT, EXHIBIT
         public int IDX { get; set; }
         public int ORDER { get; set; }
+    }
+
+    public class EVENT_MAIN_INDEX
+    {
+        public SP_EVENT_MAIN_VIEW_Result MainInfo { get; set; }
+        public List<SP_EVENT_ING_LIST_Result> IngListInfo { get; set; }
+        public List<SP_EVENT_END_LIST_Result> EndListInfo { get; set; }
+    }
+
+    public class EVENT_VIEW
+    {
+        public SP_EVENT_VIEW_Result EventInfo { get; set; }
+        public List<SP_EVENT_ING_LIST_Result> IngListInfo { get; set; }
     }
 }

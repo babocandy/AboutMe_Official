@@ -1,0 +1,215 @@
+﻿@model AboutMe.Web.Front.Models.MyReviewExpUpdateViewModel
+@using AboutMe.Domain.Entity.Review
+@using AboutMe.Web.Front.Controllers
+@using AboutMe.Common.Data
+@{
+    ViewBag.Title = "체험단 리뷰 - ABOUT ME";
+    ViewBag.TopClass = "mypage";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    var myController = ViewContext.Controller as MyReviewExpController;
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+    <style>
+        .field-validation-error, .validation-summary-errors {
+            color: red;
+            font-size: 13px;
+            line-height: 15px;
+        }
+    </style>
+
+
+
+    <script>
+    /**
+        저장시 form 값들을 보낼때 호출하는 함수 핸들러
+    */
+    function submitContents() {
+        var frm = document.frm;
+
+        // 에디터의 내용이 textarea에 적용된다.
+        oEditors.getById["COMMENT"].exec("UPDATE_CONTENTS_FIELD", []);
+
+        //내용 참조하기
+        var comment = document.getElementById("COMMENT").value;
+
+        var elem = document.createElement("div");
+        elem.innerHTML = comment;
+
+        var images = elem.getElementsByTagName("img");
+
+        for (var i = 0; i < images.length; i++) {
+            //console.log(images[i].src);
+            var src = images[i].src;
+            var target = "@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority,myController._img_path_review)";
+            console.log(src)
+            console.log(src.indexOf(target))
+            if (src.indexOf(target) > -1) {
+
+                var arr = src.split("/");
+                var img =  document.getElementById("SUB_IMG_" + (i + 1));
+                img.value = arr[arr.length-1];
+            }
+
+        }
+
+        //OriginalString.replace(/(<([^>]+)>)/ig,"");
+        var tmp_comment = comment;
+        var rm_html = /<[^>]*>/g;
+        var rm_etc = /&(nbsp|amp|quot|lt|gt);/g;
+        var rm_space = /(\s*)/g;
+        tmp_comment = tmp_comment.replace(rm_html, "");
+        tmp_comment = tmp_comment.replace(rm_etc, "");
+        tmp_comment = tmp_comment.replace(rm_space, "");
+
+        console.log(tmp_comment, tmp_comment.length)
+
+        if (tmp_comment.length == 0) {
+            document.getElementById("COMMENT").value = "";
+        }
+        /*
+        var regex = /\< *[img][^\>]*[src] *= *[\"\']{0,1}([^\"\'\ >]*)/g;
+        var comment = document.getElementById("COMMENT").value;
+        //var lst = regex.exec(comment)
+        var m;
+        while ( m = regex.exec(comment)) {
+            console.log(m[1]);
+        }
+       */
+
+        frm.submit();
+    }
+
+    </script>
+
+}
+
+<!--container-->
+<div id="container" class="review_write">
+    <div class="container1080">
+        <!--path-->
+        <div class="path">
+            <a href="#" class="home"><img src="/aboutCom/images/common/ico_home.png" alt="home" /></a>
+            <a href="#">제품리뷰</a>
+            <span>리뷰등록</span>
+        </div>
+        <!--//path-->
+        <h2><img src="/aboutCom/images/mypage/h2_expwrite.gif" alt="체험단리뷰 등록" /></h2>
+        <div class="writeform exp mt40">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frm", name = "frm" }))
+            {
+                <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+                @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+                                        <input type="hidden" name="EXP_MASTER_IDX" value="@Model.EXP_MASTER_IDX" />
+                                        <input type="hidden" name="P_CODE" value="@Model.P_CODE" />
+                                        <input type="hidden" id="SUB_IMG_1" name="SUB_IMG_1" value="@Model.SUB_IMG_1" />
+                                        <input type="hidden" id="SUB_IMG_2" name="SUB_IMG_2" value="@Model.SUB_IMG_2" />
+                                        <input type="hidden" id="SUB_IMG_3" name="SUB_IMG_3" value="@Model.SUB_IMG_3" />
+                                        <fieldset>
+                                            <legend>체험단리뷰 등록 폼</legend>
+
+
+                                            <table summary="상품찾기, 피부타입, 제목">
+                                                <caption>체험단리뷰 등록 입력 표</caption>
+                                                <colgroup>
+                                                    <col width="147" />
+                                                    <col width="472" />
+                                                    <col width="*" />
+                                                </colgroup>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>상품</th>
+
+                                                        <td class="prosearch"> @(Model.ProductInfo.P_NAME)</td>
+                                                        <td rowspan="2" class="product">
+                                                            <div class="pro_info">
+                                                                <!--이미지사이즈 96x96-->
+                                                                <div class="photo"><img src="@string.Format("{0}R64_{1}", myController._img_path_product, Model.ProductInfo.MAIN_IMG)" alt="" /></div>
+                                                                <div class="detail">
+                                                                    <p class="tit">@Model.ProductInfo.P_NAME</p>
+                                                                    <p class="stit">@Model.ProductInfo.P_SUB_TITLE</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
+                                                        <td class="skintype">
+
+                                                            @{
+                List<SelectListItem> items = new List<SelectListItem>();
+                items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
+                items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
+                items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
+
+
+                foreach (var xx in items)
+                {
+                    if (xx.Value == Model.SKIN_TYPE)
+                    {
+                        xx.Selected = true;
+                        break;
+                    }
+                }
+                                                            }
+
+                                                            @Html.DropDownList("SKIN_TYPE", items, "선택", new { @class = "selectstyleb" })
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span>@Html.ValidationMessageFor(model => model.TITLE)</span>제목</th>
+                                                        <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="제목 입력" name="TITLE" value="@Model.TITLE" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span>@Html.ValidationMessageFor(model => model.TAG)</span>태그</th>
+                                                        <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="태그 입력" name="TAG" value="@Model.TAG" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용</th>
+                                                        <td colspan="2" class="edit">
+
+
+                                                            @{
+                Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
+                {
+                    width = 850 //에디터 width 값
+                    ,
+                    height = 600 //에디터 height 값
+                    ,
+                    tfID = "COMMENT" //에디터 id 혹은 name
+                    ,
+                    memo = Model.COMMENT //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+                    ,
+                    uploadPath = string.Format("~{0}", myController._img_path_review)//업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
+                });
+                                                            }
+
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="coution">
+                                                <h3>유의사항</h3>
+                                                <div class="box">
+                                                    근거없는 악성 비방글, 게시판의 성격과 맞지 않는 글은 삭제될 수 있으니 양해 부탁드립니다.
+                                                </div>
+                                            </div>
+                                            <div class="btngroup mt40">
+                                                <a href="#" class="btn_brown_w96h38" onclick="submitContents(); return false;">등록</a>
+                                                <a href="@Url.Action("Index", "MyReviewExp")" class="btn_white_w96h38 typeb">취소</a>
+                                            </div>
+                                        </fieldset>
+            }
+        </div>
+
+    </div>
+</div>
+<!--//container-->

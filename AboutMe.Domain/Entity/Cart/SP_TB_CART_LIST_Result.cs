@@ -43,5 +43,14 @@ namespace AboutMe.Domain.Entity.Cart
         public int EMP_DISCOUNT_PRICE { get; set; }
         public int ORDER_PRICE { get; set; }
         public int CART_IDX { get; set; }
+        public int ICON_NEW { get; set; }
+        public int ICON_BEST { get; set; }
+        public int ICON_SOLDOUT { get; set; }
+        public int ICON_CUSTOM { get; set; }
+        public int ICON_SET { get; set; }
+        public int ICON_ONEPLUS { get; set; }
+        public int ICON_TIME { get; set; }
+        public int ICON_COUPON { get; set; }
+        public string P_SUB_TITLE { get; set; }
     }
 }

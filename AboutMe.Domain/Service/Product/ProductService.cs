@@ -11,7 +11,6 @@ namespace AboutMe.Domain.Service.Product
 {
     public class ProductService : IProductService
     {
-
         #region 상품
 
         #region 상품 메인 리스트
@@ -224,6 +223,31 @@ namespace AboutMe.Domain.Service.Product
         }
         #endregion
 
+        #region 상품 mypage skin type 카운트 [모바일]
+        public int GetProductMypageMobileSkinTypeCnt(string CATECODE)
+        {
+            int? productCount = -1;
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                productCount = ProductContext.SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_CNT(CATECODE).FirstOrDefault();
+            }
+            return productCount.Value;
+
+        }
+        #endregion
+
+        #region 상품 mypage skin type 리스트 [모바일]
+        public List<SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL_Result> GetProductMypageMobileSkinTypeList(string CATECODE, Product_front_search_entity product_front_search_entity)
+        {
+            List<SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL_Result> lst = new List<SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL_Result>();
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                lst = ProductContext.SP_PRODUCT_MYPAGE_MOBILE_SKIKTYPE_SEL(product_front_search_entity.PAGE, product_front_search_entity.PAGESIZE, CATECODE, product_front_search_entity.SORT_GBN).ToList();
+            }
+            return lst;
+        }
+        #endregion
+
         #endregion
 
         #region 카테고리
@@ -239,6 +263,22 @@ namespace AboutMe.Domain.Service.Product
             return lst;
 
         }
+        #endregion
+
+        #region 카테고리 이름정보 가져오기
+
+        public SP_CATEGORY_NAME_INFO_VIEW_Result GetCategoryNameInfo(string CATECODE)
+        {
+
+            SP_CATEGORY_NAME_INFO_VIEW_Result productView;
+
+            using (ProductEntities ProductContext = new ProductEntities())
+            {
+                productView = ProductContext.SP_CATEGORY_NAME_INFO_VIEW(CATECODE).FirstOrDefault();
+            }
+            return productView;
+        }
+
         #endregion
 
         #endregion

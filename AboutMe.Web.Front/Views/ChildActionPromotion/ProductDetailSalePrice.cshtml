@@ -84,7 +84,7 @@
      }
     <li>
         <strong>포인트</strong>
-        ⓟ<span class="discount_num"> @string.Format("{0:#,##0}",ViewBag.NoLogin_Point)</span>
+        <span class="discount_num v2">ⓟ @string.Format("{0:#,##0}",ViewBag.NoLogin_Point)</span>
     </li>
 }
 else //로그인 했으면 
@@ -96,7 +96,7 @@ else //로그인 했으면
         { 
             <li>
                 <strong>임직원가</strong>
-                <span class="staff_price">@string.Format("{0:#,##0}",ViewBag.Login_Promotion_00_result_price)<text>원</text></span>
+                <span class="staff_price"><b>@string.Format("{0:#,##0}",ViewBag.Login_Promotion_00_result_price)</b><text>원</text></span>
             </li>
         }
     }
@@ -106,7 +106,7 @@ else //로그인 했으면
         { 
             <li>
                 <strong>VIP 할인가</strong>
-                <span class="staff_price">@ViewBag.Login_Promotion_03_result_price<text>원</text></span>
+                <span class="staff_price"><b>@ViewBag.Login_Promotion_03_result_price</b><text>원</text></span>
             </li>
         }
    // }
@@ -133,6 +133,6 @@ else //로그인 했으면
     }
     <li>
         <strong>포인트</strong>
-        ⓟ<span class="discount_num"> @string.Format("{0:#,##0}",ViewBag.Login_Point)</span>
+        <span class="discount_num v2">ⓟ @string.Format("{0:#,##0}",ViewBag.Login_Point)</span>
     </li>
 }

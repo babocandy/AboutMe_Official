@@ -14,18 +14,18 @@ namespace AboutMe.Domain.Entity.Event
     public partial class SP_EVENT_END_LIST_Result
     {
         public int IDX { get; set; }
-        public string EVENT_NAME { get; set; }
         public string FROM_DATE { get; set; }
         public string FROM_TIME { get; set; }
         public string TO_DATE { get; set; }
         public string TO_TIME { get; set; }
-        public string EVENT_GBN { get; set; }
         public string WEB_CONTENTS { get; set; }
         public string MOBILE_FILE { get; set; }
         public string WEB_BANNER { get; set; }
         public string MOBILE_BANNER { get; set; }
-        public string USE_YN { get; set; }
         public string ADM_ID { get; set; }
         public System.DateTime REG_DATE { get; set; }
+        public string GBN { get; set; }
+        public string NAME { get; set; }
+        public int DISPLAY_ORDER { get; set; }
     }
 }
