@@ -71,7 +71,7 @@
 		</div>
 	</div>
 	<div class="btn_group mt15">
-		<a href="#" class="btn btn_gray_h25 mr5">PC 버전</a><a href="#" class="btn btn_gray_h25">로그인</a>
+		<a href="http://aboutme.cstone.co.kr" target="_blank" class="btn btn_gray_h25 mr5">PC 버전</a><a href="/membership/login.asp" class="btn btn_gray_h25">로그인</a>
 	</div>
 	<div class="copy">
 		<img src="/aboutCom/images/common/f_copy.gif" alt="" />

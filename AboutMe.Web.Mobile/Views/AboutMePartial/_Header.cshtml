@@ -1,11 +1,13 @@
-﻿<div class="header">
+﻿@using AboutMe.Web.Mobile.Common;
+
+<div class="header">
     <!--h_top-->
     <div class="h_top">
         <h1><a href="#"><img src="/aboutCom/images/common/h_logo.png" alt="ABOUTME" /></a></h1>
         <a href="#" class="openlnb"><img src="/aboutCom/images/common/btn_nav.png" alt="" /></a>
         <a href="#" class="btn_search"><img src="/aboutCom/images/common/btn_search.png" alt="" /></a>
-        <a href="#" class="btn_cart">
-            <span class="num">5</span>
+        <a href="/Cart/" class="btn_cart">
+            <span class="num" id="flycart_cnt_txt">0</span>
             <img src="/aboutCom/images/common/btn_cart.png" alt="" />
         </a>
     </div>
@@ -38,7 +40,7 @@
             <!--로그인 여부에 따른 메뉴 조정-->
             @{Html.RenderAction("ChildLayoutMenu_Util", "CommonChildAction");}
 
-            <a href="#" class="btn_cart"><img src="/aboutCom/images/common/btn_lnbcart.gif" alt="쇼핑백" /></a>
+            <a href="/Cart/" class="btn_cart"><img src="/aboutCom/images/common/btn_lnbcart.gif" alt="쇼핑백" /></a>
             <div class="nav">
                 <ul class="depth1">
                     <li><a href="/MyPage/Main">마이페이지</a></li>
@@ -70,6 +72,9 @@
             </div>
         </div>
     </div>
+    <form name="nowOrderform" method="post">
+        <input type="hidden" name="OrderList" value="">
+    </form>
     <!--//lnb-->
 </div>
 
@@ -79,4 +84,194 @@
         var param = document.getElementById("h_search_keyword").value
         location.href = "/Search/Index?SEARCH_KEWWORD=" + param;
     }
+
+    // 장바구니담기
+    function Cart_Product_Input(p_code, p_count) {
+        var arrP = new Array;
+        var obj = new Object();
+        obj.p_code = p_code;
+        obj.p_count = p_count;
+        arrP.push(obj);
+        Cart_Input(arrP);
+    }
+
+    // 장바구니담기
+    //var arr = [ {"p_code":"1111111", "p_count":"1" }, {"p_code":"1111111", "p_count":"1" }];
+    function Cart_Input(arrayOfObjects) {
+
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
+
+        var src_url = "/Cart/CartInput";
+        var param = "data=" + jobj;
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.cart_count > -1) {
+                    $("#flycart_cnt_txt").text(data.cart_count);
+                }
+
+                if (data.result == "true") {
+                    //  ow_no("/order/cart_confirm.asp",'cart_confirm', "416","270");
+                    if (confirm("장바구니에 담았습니다. 장바구니로 이동하시겠습니까?")) {
+                        location.href = "/Cart/";
+                    }
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+
+
+    }
+    // 장바구니 개수
+    function CartCount() {
+        var src_url = "/Cart/CartCount";
+        //var result = jQuery.parseJSON(getHttpRequest(src_url, 'POST', param));
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: "",
+            success: function (data) {
+                if (data.cart_count > -1) {
+                    $("#flycart_cnt_txt").text(data.cart_count);
+                }
+
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+
+    }
+
+    //바로구매 하기 (ToDo)
+    function NowOrderInput(p_code, p_count) {
+        if (confirm('바로구매하시겠습니까?')) {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = p_code;
+            obj.p_count = p_count;
+            arrP.push(obj);
+
+            var jobj = JSON.stringify(arrP);
+            var f = document.nowOrderform;
+            f.OrderList.value = jobj;
+            var islogin = '@MemberInfo.IsMemberLogin()';
+
+            if (islogin == 'True') {
+                f.action = '/Order/InsertOrderStep1';
+            }
+            else {
+                f.action = '/MemberShip/Login';
+            }
+            f.submit();
+        }
+    }
+
+
+
+
+    //찜하기
+    function Wish_Product_Input(p_code) {
+        var arrP = new Array;
+        arrP.push(p_code);
+        Wish_Input(arrP);
+    }
+
+    //찜하기 저장
+    function Wish_Input(arrayOfObjects) {
+
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
+
+        var src_url = "/Cart/WishInput";
+        var param = "data=" + jobj;
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.wish_count > -1) {
+                    // $("#div_QUICK_CART_CNT").text(data.wish_count);
+                }
+
+                if (data.result == "true") {
+                    alert("찜하였습니다.");
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    //찜하기 카운트
+    function Wish_Count() {
+        var src_url = "/Cart/WishCount";
+        var param = "";
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.wish_count > -1) {
+                    // $("#div_QUICK_CART_CNT").text(data.wish_count);
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    //찜하기 삭제
+    function Wish_Delete(arrayOfObjects) {
+
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
+
+        var src_url = "/Cart/WishDelete";
+        var param = "data=" + jobj;
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.wish_count > -1) {
+                    // $("#div_QUICK_CART_CNT").text(data.wish_count);
+                }
+
+                if (data.result == "true") {
+                    alert("찜을 삭제하였습니다.");
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        CartCount();
+    });
 </script>
