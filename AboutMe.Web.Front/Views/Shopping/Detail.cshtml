@@ -42,8 +42,8 @@
                 <!--path-->
                 <div class="path">
                     <a href="#" class="home"><img src="/aboutCom/images/common/ico_home.png" alt="home" /></a>
-                    <a href="/shopping/Index?p_cate_code=@ViewBag.P_CATE_CODE">@ViewBag.DEPTH1_NAME</a>
-                    <span>@ViewBag.DEPTH2_NAME</span>
+                    <a href="#">Beauty</a>
+                    <span>클렌징</span>
                 </div>
                 <!--//path-->
                 <!--detail_top : 상품정보-->
@@ -158,7 +158,7 @@
                             </ul>
                         </div>
                         <div class="btn_group">
-                                <a href="#" class="btn_brown_w170h60" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로 구매</a>
+                                <a href="#" class="btn_brown_w160h60" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로 구매</a>
                                 <a href="#" class="btn_white_w148h60" onclick="javascript:Cart_Product_Input('@Model.P_CODE',$('#product_num_count').val());"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
                                 @{
                                    bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
