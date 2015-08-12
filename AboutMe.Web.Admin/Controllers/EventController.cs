@@ -69,8 +69,16 @@ namespace AboutMe.Web.Admin.Controllers
                     IMG = saveParam.OLD_IMAGE_FILE;
                 }
             }
+            string TITLE = "";
+            string DESC = "";
+            
+            if (saveParam.BANNER_GBN == "B1" ||saveParam.BANNER_GBN == "B2" ||saveParam.BANNER_GBN == "B3")
+            {
+                TITLE = saveParam.TITLE;
+                DESC = saveParam.DESC;
+            }
 
-            _eventservice.EventAdminMainImageUpdate(saveParam.BANNER_GBN, IMG, saveParam.URL, ADM_ID);
+            _eventservice.EventAdminMainImageUpdate(saveParam.BANNER_GBN, IMG, saveParam.URL, ADM_ID, TITLE, DESC);
             
             return RedirectToAction("Main");
         }

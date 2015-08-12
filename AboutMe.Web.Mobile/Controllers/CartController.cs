@@ -9,20 +9,17 @@ using AboutMe.Domain.Service.Cart;
 using AboutMe.Domain.Entity.Cart;
 using AboutMe.Domain.Service.Coupon;
 using AboutMe.Domain.Entity.AdminCoupon;
-using AboutMe.Web.Front.Common.Filters;
+using AboutMe.Web.Mobile.Common.Filters;
 
-namespace AboutMe.Web.Front.Controllers
+namespace AboutMe.Web.Mobile.Controllers
 {
-    public class CartController : BaseFrontController
+    public class CartController : BaseMobileController
     {
         private ICartService _cartservice;
-        private ICouponService _CouponService;
 
-
-        public CartController(ICartService _cartservice, ICouponService _couponservice)
+        public CartController(ICartService _cartservice)
         {
             this._cartservice = _cartservice;
-            this._CouponService = _couponservice;
         }
 
         // GET: Cart
@@ -33,29 +30,12 @@ namespace AboutMe.Web.Front.Controllers
 
             CART_INDEX_MODEL viewModel = new CART_INDEX_MODEL();
             viewModel.UserProfile = _user_profile;
-            viewModel.BannerUrl = "/aboutCom/images/sample/thum_banner.jpg";
+            viewModel.BannerUrl = "";
             viewModel.CartCnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
             viewModel.CartList = lst;
             viewModel.SumPoint = (lst.Count() < 1) ? 0 : lst.Sum(x => x.P_POINT);
             viewModel.SumPrice = (lst.Count() < 1) ? 0 : lst.Sum(x => x.ORDER_PRICE);
 
-            //다운로드 가능한 쿠폰 수량 가져오기  
-            if (_user_profile.IS_LOGIN == true)
-            {
-                List<SP_ADMIN_COUPON_COMMON_CNT_Result> cpnlst = _CouponService.GetDownloadableCouponCnt(_user_profile.M_ID);
-                if (cpnlst.Count > 0)
-                    viewModel.DownloadCouponCnt = cpnlst[0].CNT;
-                else
-                    viewModel.DownloadCouponCnt = 0;
-
-                //사용가능한 쿠폰 수량 가져오기
-                viewModel.DownloadedCouponCnt = _CouponService.GettCouponAvailableListCnt(_user_profile.M_ID, "", "");
-            }
-            else
-            {
-                viewModel.DownloadCouponCnt = 0;
-                viewModel.DownloadedCouponCnt = 0;
-            }
             return View(viewModel);
         }
 

@@ -38,5 +38,14 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public int GRADE_DISCOUNT_AMT { get; set; }
         public string CD_COUPON { get; set; }
         public string PROMOTION_NAME { get; set; }
+        public string P_SUB_TITLE { get; set; }
+        public int ICON_NEW { get; set; }
+        public int ICON_BEST { get; set; }
+        public int ICON_SOLDOUT { get; set; }
+        public int ICON_CUSTOM { get; set; }
+        public int ICON_ONEPLUS { get; set; }
+        public int ICON_SET { get; set; }
+        public int ICON_TIME { get; set; }
+        public int ICON_COUPON { get; set; }
     }
 }

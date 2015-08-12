@@ -171,6 +171,8 @@ namespace AboutMe.Domain.Entity.Event
         public string URL { get; set; }
         public HttpPostedFileBase IMAGE_FILE { get; set; }
         public string OLD_IMAGE_FILE { get; set; }
+        public string TITLE { get; set; }
+        public string DESC { get; set; }
     }
 
     public class EVENT_MAIN_ORDER_PARAM

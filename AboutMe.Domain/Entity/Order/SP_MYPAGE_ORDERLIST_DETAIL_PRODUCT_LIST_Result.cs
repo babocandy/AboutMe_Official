@@ -38,5 +38,15 @@ namespace AboutMe.Domain.Entity.Order
         public string ORDER_DETAIL_STATUS { get; set; }
         public string DELIVERY_NUM { get; set; }
         public string ORDER_DETAIL_STATUS_NM { get; set; }
+        public string P_SUB_TITLE { get; set; }
+        public int ICON_NEW { get; set; }
+        public int ICON_BEST { get; set; }
+        public int ICON_SOLDOUT { get; set; }
+        public int ICON_CUSTOM { get; set; }
+        public int ICON_ONEPLUS { get; set; }
+        public int ICON_SET { get; set; }
+        public int ICON_TIME { get; set; }
+        public int ICON_COUPON { get; set; }
+        public string REVIEW_YN { get; set; }
     }
 }

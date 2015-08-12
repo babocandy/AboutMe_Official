@@ -39,9 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="INIpayNet, Version=5.0.4.0, Culture=neutral, PublicKeyToken=baf9dc2e190f803c">
+    <Reference Include="INIpayNet, Version=5.0.3.3, Culture=neutral, PublicKeyToken=baf9dc2e190f803c, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\INIpayNet.dll</HintPath>
+      <HintPath>..\AboutMe.Web.Admin\bin\INIpayNet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -207,6 +207,7 @@
     <Compile Include="Controllers\AboutMeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseMobileController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ChildActionDisplayerController.cs" />
     <Compile Include="Controllers\ChildActionProductController.cs" />
     <Compile Include="Controllers\CommonChildActionController.cs" />
@@ -601,6 +602,9 @@
       <Project>{1c6378e7-6069-4915-946c-1eee9ef3ffe0}</Project>
       <Name>AboutMe.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
