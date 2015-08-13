@@ -288,6 +288,11 @@
             return;
         }
 
+        //새로운암호 유효성 검증
+        if (fIsValidMemberPWD(f.M_PWD.value) == false) {
+            return;
+        }
+
         if (confirm("비밀번호를 변경 하시겠습니까?"))
         {; }
         else
@@ -459,7 +464,7 @@
 <div class="content">
     <!--path-->
     <div class="path">
-        <a href="/index.asp">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원수정</strong>
+        <a href="/">HOME</a> &gt; <a href="#">회원관리</a> &gt; <a href="#">회원관리</a> &gt; <strong>회원수정</strong>
     </div>
 
     <div class="panel">

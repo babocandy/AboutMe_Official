@@ -51,6 +51,10 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         List<SP_ADMIN_FRONT_MEMBER_VIEW_Result> GetAdminMemberSleepingList(string m_LASTVISITDATE = "", string sEARCH_COL = "", string sEARCH_KEYWORD = "", string sORT_COL = "M_LASTVISITDATE", string sORT_DIR = "DESC", int pAGE = 1, int pAGESIZE = 10);//관리자 - 휴면계정-목록
         int GetAdminMemberSleepingCount(string m_LASTVISITDATE = "", string sEARCH_COL = "", string sEARCH_KEYWORD = ""); //관리자-휴면계정-목록 COUNT
 
+         //관리자 - 통계-회원-----------------------------------------------------------
+        List<SP_ADMIN_MEMBER_REPORT_GRADE_Result> GetAdminReportMemberGradeList(); //관리자 - 통계-회원등급별
+        List<SP_ADMIN_MEMBER_REPORT_MONTHLY_Result> GetAdminReportMemberMonthlyList(string yEAR = ""); //관리자 - 통계-월별- 회원가입/탈퇴
+
 
         //#####################################################################################################################
         //데이타 이행 :회원암호--오픈전 마이그레이션시 1회 필요 -----------------------------------------

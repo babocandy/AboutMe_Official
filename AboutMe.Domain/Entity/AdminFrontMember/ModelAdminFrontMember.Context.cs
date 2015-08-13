@@ -665,5 +665,19 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_FRONT_MEMBER_VIEW_Result>("SP_ADMIN_MEMBER_SLEEPING_SEL", m_LASTVISITDATEParameter, sEARCH_COLParameter, sEARCH_KEYWORDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_REPORT_GRADE_Result> SP_ADMIN_MEMBER_REPORT_GRADE()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_REPORT_GRADE_Result>("SP_ADMIN_MEMBER_REPORT_GRADE");
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_MEMBER_REPORT_MONTHLY_Result> SP_ADMIN_MEMBER_REPORT_MONTHLY(string yEAR)
+        {
+            var yEARParameter = yEAR != null ?
+                new ObjectParameter("YEAR", yEAR) :
+                new ObjectParameter("YEAR", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_MEMBER_REPORT_MONTHLY_Result>("SP_ADMIN_MEMBER_REPORT_MONTHLY", yEARParameter);
+        }
     }
 }
