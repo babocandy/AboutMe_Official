@@ -665,6 +665,47 @@ namespace AboutMe.Domain.Service.AdminFrontMember
         }
 
 
+        //----------------------------------------------------------------------------------------------------------
+        //관리자 - 통계-회원등급별
+        public List<SP_ADMIN_MEMBER_REPORT_GRADE_Result> GetAdminReportMemberGradeList()
+        {
+
+            List<SP_ADMIN_MEMBER_REPORT_GRADE_Result> lst = new List<SP_ADMIN_MEMBER_REPORT_GRADE_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_REPORT_GRADE().ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //관리자 - 통계-월별- 회원가입/탈퇴
+        public List<SP_ADMIN_MEMBER_REPORT_MONTHLY_Result> GetAdminReportMemberMonthlyList(string yEAR = "")
+        {
+
+            List<SP_ADMIN_MEMBER_REPORT_MONTHLY_Result> lst = new List<SP_ADMIN_MEMBER_REPORT_MONTHLY_Result>();
+            using (AdminFrontMemberEntities AdminFrontMemberContext = new AdminFrontMemberEntities())
+            {
+                /**try {**/
+                lst = AdminFrontMemberContext.SP_ADMIN_MEMBER_REPORT_MONTHLY(yEAR).ToList();
+
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
 
         //####################################################################################################################################
         //데이타 이행 :회원암호 -list  --오픈전 마이그레이션시 1회 필요
