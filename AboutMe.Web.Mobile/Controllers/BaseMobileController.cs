@@ -89,7 +89,7 @@ namespace AboutMe.Web.Mobile.Controllers
             string ThisHost = Request.Url.Host.ToString(); 
 
             string ThisDevice = this.DetectingDevice();
-            if (ThisDevice != "s" || ThisDevice != "t") //스마트폰이나 태블릿이 아니라면 강제로 데스크탑 사이트로 이동.
+            if (ThisDevice != "s" && ThisDevice != "t") //스마트폰이나 태블릿이 아니라면 강제로 데스크탑 사이트로 이동.
             {
                 if (Request["forced"] == null || Request["forced"].ToString() == ""  )
                 {
