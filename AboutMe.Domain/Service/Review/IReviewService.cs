@@ -26,7 +26,11 @@ namespace AboutMe.Domain.Service.Review
         List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
         int ReadyTotal(string mid);
 
-        Tuple<string, string> InsertMyReviewExp(MyReviewExpParamOnSaveToDb p);
+        Tuple<string, string> InsertMyReviewExp(MyReviewExpInputViewModel p);
         List<SP_REVIEW_MY_EXP_MASTER_SEL_Result> GetReviewExpMyMasterList(string mid);
+        SP_REVIEW_MY_EXP_DETAIL_Result GetMyReviewExpDetail(int? idx);
+        Tuple<string, string> UpdateMyReviewExp(MyReviewExpInputViewModel p);
+
+        Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> GetReviewExpList(int? tailIdx, string categoryCode, string sort);
     }
 }

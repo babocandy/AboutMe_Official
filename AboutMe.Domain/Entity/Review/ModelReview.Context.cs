@@ -282,5 +282,22 @@ namespace AboutMe.Domain.Entity.Review
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_MY_EXP_DETAIL_Result>("SP_REVIEW_MY_EXP_DETAIL", iDXParameter);
         }
+    
+        public virtual ObjectResult<SP_REVIEW_EXP_SEL_Result> SP_REVIEW_EXP_SEL(Nullable<int> tAIL_IDX, string cATE_CODE, string sORT, ObjectParameter tOTAL)
+        {
+            var tAIL_IDXParameter = tAIL_IDX.HasValue ?
+                new ObjectParameter("TAIL_IDX", tAIL_IDX) :
+                new ObjectParameter("TAIL_IDX", typeof(int));
+    
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            var sORTParameter = sORT != null ?
+                new ObjectParameter("SORT", sORT) :
+                new ObjectParameter("SORT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_EXP_SEL_Result>("SP_REVIEW_EXP_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter, tOTAL);
+        }
     }
 }
