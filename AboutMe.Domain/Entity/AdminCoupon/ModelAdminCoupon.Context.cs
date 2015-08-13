@@ -706,5 +706,22 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT", p_CODEParameter);
         }
+    
+        public virtual int SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE(string m_ID, Nullable<int> iDX_COUPON_NUMBER, string mETHOD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var iDX_COUPON_NUMBERParameter = iDX_COUPON_NUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPON_NUMBER", iDX_COUPON_NUMBER) :
+                new ObjectParameter("IDX_COUPON_NUMBER", typeof(int));
+    
+            var mETHODParameter = mETHOD != null ?
+                new ObjectParameter("METHOD", mETHOD) :
+                new ObjectParameter("METHOD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE", m_IDParameter, iDX_COUPON_NUMBERParameter, mETHODParameter);
+        }
     }
 }
