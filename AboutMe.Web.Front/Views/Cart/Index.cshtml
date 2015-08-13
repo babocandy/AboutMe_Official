@@ -9,6 +9,8 @@
     }
 
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 }
 @section Scripts {
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
@@ -292,7 +294,7 @@
                 </li>
                 <li class="downpoint">
                     <span class="ico"></span>
-                    <span class="num">@Model.MyPoint</span>
+                    <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
                     <span class="tit">포인트</span>
                 </li>
             </ul>
@@ -444,20 +446,57 @@
 
                                     @foreach (var item in @Model.CartList)
                                     {
+                                        string imgUrl1 = productImgPath + "R120_" + item.MAIN_IMG;
+                                        
                                         <tr>
                                             <td class="chkbox"><label class="chkcon chkcon_on"><input type="checkbox" name="gridchk" value="@item.CART_IDX" data-pcode="@item.P_CODE" onclick="GridCheck(this)" checked="true" /></label></td>
                                             <td>
-                                                <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="상품 이미지" /></a>
+                                                <a href="/shopping/detail?pcode=@item.P_CODE"><img src="@imgUrl1" alt="상품 이미지" /></a>
                                             </td>
                                             <td class="product">
                                                 <dl>
                                                     <dt>
                                                         <a href="#">
-                                                            <span class="tag"><span class="ico_new">NEW</span></span>
-                                                            @item.P_NAME
+                                                            <span class="tag">
+                                                                @if (item.ICON_BEST == 1)
+                                                                {
+                                                                    <text> <span class="ico_best">BEST</span></text>
+                                                                }
+                                                                @if (item.ICON_SOLDOUT == 1)
+                                                                {
+                                                                    <text> <span class="ico_soldout">SOLD OUT</span></text>
+                                                                }
+                                                                @if (item.ICON_NEW == 1)
+                                                                {
+                                                                    <text> <span class="ico_new">NEW</span></text>
+                                                                }
+                                                                @if (item.ICON_CUSTOM == 1)
+                                                                {
+                                                                    <text> <span class="ico_custom">커스텀</span></text>
+                                                                }
+                                                                 
+                                                                @if (item.ICON_SET == 1)
+                                                                {
+                                                                    <text> <span class="ico_set">SET</span></text>
+                                                                }
+                                                                @if (item.ICON_ONEPLUS == 1)
+                                                                {
+                                                                    <text> <span class="ico_1_1">1+1</span></text>
+                                                                }
+                                                                @if (item.ICON_TIME == 1)
+                                                                {
+                                                                    <text> <span class="ico_time">TIME</span></text>
+                                                                }
+
+                                                                @if (item.ICON_COUPON == 1)
+                                                                {
+                                                                    <text> <span class="ico_coupon">COUPON</span></text>
+                                                                }
+                                                            </span>
+                                                            @(new HtmlString(item.P_NAME))
                                                         </a>
                                                     </dt>
-                                                    <dd>제주 참마 유래성분으로 미백기능성</dd>
+                                                    <dd>@(new HtmlString(item.P_SUB_TITLE))</dd>
                                                 </dl>
                                             </td>
                                             <td class="proprice">
@@ -607,9 +646,6 @@
 
         @BuyAsGoods()
 
-        @Model.UserProfile.SESSION_ID
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111111" data-pcount="1">1111111 장바구니</a>
-        <a href="#none" class="btn_gray_w185h60" onclick="AddCartClick(this)" data-pcode="1111112" data-pcount="1">1111112 장바구니</a>
     </div>
     <div class="container100per notify">
         <div class="inner">
@@ -625,37 +661,3 @@
         </div>
     </div>
 </div>
-<script language="javascript">
-
-
-    function AddCartClick(b) {
-        var arrP = new Array;
-        var obj = new Object();
-        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
-        obj.p_count = $(b).attr('data-pcount');
-        arrP.push(obj);
-        Cart_Input(arrP);
-    }
-
-    function CartMerge(b) {
-        var src_url = "/Cart/CartMerge";
-
-        $.ajax({
-            cache: false,
-            type: "POST",
-            url: src_url,
-            success: function (data) {
-                if (data.result == "true") {
-                    alert("장바구니합치기, 성공적!!");
-                }
-                else {
-                    if (data.msg != "") {
-                        alert(data.msg);
-                    }
-                }
-            },
-            complete: function (jqXHR, textStatus) {
-            }
-        });
-    }
-</script>

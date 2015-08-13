@@ -44,7 +44,9 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
         //쿠폰발행 - 지불쿠폰 OR 배송쿠폰/인증번호 필요없는 쿠폰/수동발행/개별발행 INSERT(admin) 
         int InsAdminCouponIssue_WithNoNumcheck_Manual_Single(string CdCoupon, int CouponMoney, int CouponDiscountRate, string M_id, string AdminId, string IssuedMemo);
-        
+       
+        //새로운 상품 등록시 , '상품적용범위' 가 전체상품인 쿠폰마스터에 이 상품을 추가
+        int InsAdminCouponProductCreateOnAddingPrd(string P_Code);
         #endregion
 
     }

@@ -123,7 +123,7 @@ namespace AboutMe.Domain.Entity.Event
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_MAIN_DEL", bANNER_GBNParameter, aDM_IDParameter);
         }
     
-        public virtual int SP_ADMIN_EVENT_MAIN_UPD(string bANNER_GBN, string iMG, string uRL, string aDM_ID)
+        public virtual int SP_ADMIN_EVENT_MAIN_UPD(string bANNER_GBN, string iMG, string uRL, string tITLE, string dESC, string aDM_ID)
         {
             var bANNER_GBNParameter = bANNER_GBN != null ?
                 new ObjectParameter("BANNER_GBN", bANNER_GBN) :
@@ -137,11 +137,19 @@ namespace AboutMe.Domain.Entity.Event
                 new ObjectParameter("URL", uRL) :
                 new ObjectParameter("URL", typeof(string));
     
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+    
+            var dESCParameter = dESC != null ?
+                new ObjectParameter("DESC", dESC) :
+                new ObjectParameter("DESC", typeof(string));
+    
             var aDM_IDParameter = aDM_ID != null ?
                 new ObjectParameter("ADM_ID", aDM_ID) :
                 new ObjectParameter("ADM_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_MAIN_UPD", bANNER_GBNParameter, iMGParameter, uRLParameter, aDM_IDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_EVENT_MAIN_UPD", bANNER_GBNParameter, iMGParameter, uRLParameter, tITLEParameter, dESCParameter, aDM_IDParameter);
         }
     
         public virtual ObjectResult<SP_ADMIN_EVENT_SEL_Result> SP_ADMIN_EVENT_SEL(string fROM_DATE, string tO_DATE, string iNG_GBN, string uSE_YN, string sEARCH_COL, string sEARCH_KEYWORD, Nullable<int> pAGE, Nullable<int> pAGESIZE)

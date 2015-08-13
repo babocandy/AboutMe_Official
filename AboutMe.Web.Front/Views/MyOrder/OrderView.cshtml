@@ -1,5 +1,10 @@
 ﻿@model AboutMe.Domain.Entity.Order.MyORDER_VIEW
 @{
+    if (Model.DetailInfo == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
     ViewBag.Title = "주문배송조회 - ABOUT ME";
     ViewBag.TopClass = "mypage";
 
@@ -128,14 +133,48 @@
                                     <dl>
                                         <dt>
                                             <a href="/shopping/detail?pcode=@item.P_CODE">
-                                                @if (item.PROMOTION_TYPE == "02") //1+1
-                                                {
-                                                    <span class="tag"><span class="ico_1_1">1+1</span></span>
-                                                }
-                                                @item.P_NAME
+                                                
+                                                    <span class="tag">
+                                                        @if (item.ICON_BEST == 1)
+                                                        {
+                                                            <text> <span class="ico_best">BEST</span></text>
+                                                        }
+                                                        @if (item.ICON_SOLDOUT == 1)
+                                                        {
+                                                            <text> <span class="ico_soldout">SOLD OUT</span></text>
+                                                        }
+                                                        @if (item.ICON_NEW == 1)
+                                                        {
+                                                            <text> <span class="ico_new">NEW</span></text>
+                                                        }
+                                                        @if (item.ICON_CUSTOM == 1)
+                                                        {
+                                                            <text> <span class="ico_custom">커스텀</span></text>
+                                                        }
+
+                                                        @if (item.ICON_SET == 1)
+                                                        {
+                                                            <text> <span class="ico_set">SET</span></text>
+                                                        }
+                                                        @if (item.ICON_ONEPLUS == 1)
+                                                        {
+                                                            <text> <span class="ico_1_1">1+1</span></text>
+                                                        }
+                                                        @if (item.ICON_TIME == 1)
+                                                        {
+                                                            <text> <span class="ico_time">TIME</span></text>
+                                                        }
+
+                                                        @if (item.ICON_COUPON == 1)
+                                                        {
+                                                            <text> <span class="ico_coupon">COUPON</span></text>
+                                                        }
+                                                    </span>
+                                                
+                                                @(new HtmlString(item.P_NAME))
                                             </a>
                                         </dt>
-                                        <dd>제주 참마 유래성분으로 미백기능성</dd>
+                                        <dd>@(new HtmlString(item.P_SUB_TITLE))</dd>
                                     </dl>
                                 </td>
                                 <td class="count">
@@ -161,11 +200,17 @@
                                     <a href="#none" class="btn_buyconfirm mt5" onclick="ConfirmSell('@item.ORDER_DETAIL_IDX')">구매확정</a><br />
                                 }
                                     
-                                @if (item.ORDER_DETAIL_STATUS == "60")
+                                @if (item.REVIEW_YN == "Y")
                                 {
-                                    <a href="#" class="btn_goreview">리뷰쓰기</a><br />
+                                    <a href="/MyPage/MyReview/Complete" class="btn_writereview">리뷰보기</a><br />
                                 }
-                                    <!--a href="#" class="btn_writereview">리뷰보기</a><br /-->
+                                else
+                                { 
+                                    if (item.ORDER_DETAIL_STATUS == "60")
+                                    {
+                                        <a href="/MyPage/MyReview" class="btn_goreview">리뷰쓰기</a><br />
+                                    }
+                                }
                                     
                                 </td> <!--rowspan="2"-->
                             </tr>

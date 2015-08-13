@@ -6,8 +6,12 @@ using AboutMe.Domain.Entity.Product;
 using AboutMe.Common.Helper;
 using System.Diagnostics;
 using System;
+using System.Web.Mvc;
 namespace AboutMe.Web.Front.Models
 {
+    /**
+     *  나의 상품리뷰
+     */
     public class MyReviewInsertViewModel
     {
 
@@ -64,7 +68,7 @@ namespace AboutMe.Web.Front.Models
     }
 
 
-
+    //상품리뷰 목록
     public class ReviewProductListViewModel
     {
         public static string SORT_PHOTO = "0";
@@ -88,6 +92,8 @@ namespace AboutMe.Web.Front.Models
 
 
     }
+
+
 
 
 

@@ -16,6 +16,8 @@ using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
 using AboutMe.Domain.Entity.Common;
 
+using AboutMe.Domain.Service.Coupon;  //회원가입시 쿠폰 발행
+
 using System.Text;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -33,12 +35,14 @@ namespace AboutMe.Web.Front.Controllers
         private IMemberService _MemberService;
         private ICartService _Cartservice;
         private IOrderService _orderservice;
+        private ICouponService _CoupoService;
 
-        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice)
+        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice, ICouponService _couposervice)
         {
             this._MemberService = _memberService;
             this._Cartservice = _cartservice;
             this._orderservice = _orderservice;
+            this._CoupoService = _couposervice;
         }
 
         public ActionResult Index()
@@ -73,11 +77,16 @@ namespace AboutMe.Web.Front.Controllers
 
             this.ViewBag.RedirectUrl = RedirectUrl;
 
-            this.ViewBag.M_ID = MemberInfo.GetMemberId();
-            this.ViewBag.M_NAME = MemberInfo.GetMemberName();
-            this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade();
-            this.ViewBag.M_EMAIL = MemberInfo.GetMemberEmail();
-
+            this.ViewBag.REMEMBER_M_ID = "";
+            this.ViewBag.REMEMBER_PW = "";
+            //--- 모바일 아이디 저장, 로그인상태유지 
+            CookieSessionStore cookiesession = new CookieSessionStore();
+            string IS_SAVE_ID = cookiesession.GetSecretCookie("IS_SAVE_ID");
+            string IS_SAVE_PW = cookiesession.GetSecretCookie("IS_SAVE_PW");
+            if (IS_SAVE_ID == "Y")
+                this.ViewBag.REMEMBER_M_ID = cookiesession.GetSecretCookie("REMEMBER_M_ID"); ;
+            if (IS_SAVE_PW == "Y")
+                this.ViewBag.REMEMBER_PW = cookiesession.GetSecretCookie("REMEMBER_PW"); ;
 
 
 
@@ -94,7 +103,7 @@ namespace AboutMe.Web.Front.Controllers
         //사용자 로그인
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "")
+        public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "",string IS_SAVE_ID = "N", string IS_SAVE_PW="N" )
         {
 
             string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
@@ -184,8 +193,20 @@ namespace AboutMe.Web.Front.Controllers
                 cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", "");  //비회원주문 ORDER_CODE
 
                 cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅
-
                 cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅 -평문
+
+                //--- 아이디 저장, 로그인상태유지 정보저장 :30일간 유지------------------
+                cookiesession.SetSecretCookie("IS_SAVE_ID", IS_SAVE_ID, 30);
+                cookiesession.SetSecretCookie("IS_SAVE_PW", IS_SAVE_PW, 30);
+                if (IS_SAVE_ID == "Y")
+                    cookiesession.SetSecretCookie("REMEMBER_M_ID", result.M_ID, 30);
+                else
+                    cookiesession.SetSecretCookie("REMEMBER_M_ID", "", 30);
+                if (IS_SAVE_PW == "Y")
+                    cookiesession.SetSecretCookie("REMEMBER_PW", PW, 30);
+                else
+                    cookiesession.SetSecretCookie("REMEMBER_PW", "", 30);  
+                
 
 
                 _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "N");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청 :  HttpContext.Session.SessionID???
@@ -196,6 +217,8 @@ namespace AboutMe.Web.Front.Controllers
                 memo = memo + "|ID:" + ID;
                 memo = memo + "|PW:" + PW;
                 memo = memo + "|RedirectUrl:" + RedirectUrl;
+                memo = memo + "|IS_SAVE_ID:" + IS_SAVE_ID;
+                memo = memo + "|IS_SAVE_PW:" + IS_SAVE_PW; 
                 UserLog userlog = new UserLog();
                 userlog.UserLogSave(memo, comment);
 
@@ -769,9 +792,16 @@ namespace AboutMe.Web.Front.Controllers
             //ViewBag.mail_err_no = mObj.err_no;
             //ViewBag.mail_err_msg = mObj.err_msg;
 
-            //가입 축하메일 발송
+            //회원가입 쿠폰발행 + 가입 축하메일 발송
             if (strERR_CODE == "0")
             {
+                //회원가입시 가입쿠폰 자동발행  --송선우 제공------------------------
+                if(_CoupoService.InsCouponMakeOnMemberJoin(M_ID)==1)
+                    userlog.UserLogSave("회원가입쿠폰발행-성공|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+                else
+                    userlog.UserLogSave("회원가입쿠폰발행-실패|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+
+
                 //신규회원가입 축하메일 발송 --------------------------
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
                 string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234

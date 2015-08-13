@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Front.Models.MyReviewExpUpdateViewModel
+﻿@model AboutMe.Domain.Entity.Review.MyReviewExpInputViewModel
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Front.Controllers
 @using AboutMe.Common.Data
@@ -9,6 +9,8 @@
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 
     var myController = ViewContext.Controller as MyReviewExpController;
+
+    var mode = ViewContext.Controller.ValueProvider.GetValue("action").RawValue;
 }
 @section Scripts {
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
@@ -24,68 +26,81 @@
 
 
     <script>
-    /**
-        저장시 form 값들을 보낼때 호출하는 함수 핸들러
-    */
-    function submitContents() {
-        var frm = document.frm;
+        /**
+            저장시 form 값들을 보낼때 호출하는 함수 핸들러
+        */
+        function submitContents() {
+            var frm = document.frm;
 
-        // 에디터의 내용이 textarea에 적용된다.
-        oEditors.getById["COMMENT"].exec("UPDATE_CONTENTS_FIELD", []);
+            // 에디터의 내용이 textarea에 적용된다.
+            oEditors.getById["COMMENT"].exec("UPDATE_CONTENTS_FIELD", []);
 
-        //내용 참조하기
-        var comment = document.getElementById("COMMENT").value;
+            //내용 참조하기
+            var comment = document.getElementById("COMMENT").value;
 
-        var elem = document.createElement("div");
-        elem.innerHTML = comment;
+            var elem = document.createElement("div");
+            elem.innerHTML = comment;
 
-        var images = elem.getElementsByTagName("img");
+            var images = elem.getElementsByTagName("img");
 
-        for (var i = 0; i < images.length; i++) {
-            //console.log(images[i].src);
-            var src = images[i].src;
-            var target = "@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority,myController._img_path_review)";
-            console.log(src)
-            console.log(src.indexOf(target))
-            if (src.indexOf(target) > -1) {
+            document.getElementById("SUB_IMG_1").value = "";
+            document.getElementById("SUB_IMG_2").value = "";
+            document.getElementById("SUB_IMG_3").value = "";
 
-                var arr = src.split("/");
-                var img =  document.getElementById("SUB_IMG_" + (i + 1));
-                img.value = arr[arr.length-1];
+            var img_arr = new Array();
+            for (var i = 0; i < images.length; i++) {
+                
+                var src = images[i].src;
+                var target = "@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority,myController._img_path_review)";
+
+                console.log(src);
+                console.log(src.indexOf(target));
+
+                if (src.indexOf(target) > -1) {
+
+                    var arr = src.split("/");
+                    var img = document.getElementById("SUB_IMG_" + (i + 1));
+                    if (img != undefined) {
+                        img.value = arr[arr.length - 1];
+                        img_arr.push(img.value);
+                    }
+  
+                }
+
             }
 
+            //OriginalString.replace(/(<([^>]+)>)/ig,"");
+            var tmp_comment = comment;
+            var rm_html = /<[^>]*>/g;
+            var rm_etc = /&(nbsp|amp|quot|lt|gt);/g;
+            var rm_space = /(\s*)/g;
+            tmp_comment = tmp_comment.replace(rm_html, "");
+            tmp_comment = tmp_comment.replace(rm_etc, "");
+            tmp_comment = tmp_comment.replace(rm_space, "");
+
+            console.log(tmp_comment, tmp_comment.length)
+
+            if (tmp_comment.length == 0 && img_arr.length == 0) {
+                document.getElementById("COMMENT").value = "";
+            }
+            /*
+            var regex = /\< *[img][^\>]*[src] *= *[\"\']{0,1}([^\"\'\ >]*)/g;
+            var comment = document.getElementById("COMMENT").value;
+            //var lst = regex.exec(comment)
+            var m;
+            while ( m = regex.exec(comment)) {
+                console.log(m[1]);
+            }
+           */
+
+            frm.submit();
         }
-
-        //OriginalString.replace(/(<([^>]+)>)/ig,"");
-        var tmp_comment = comment;
-        var rm_html = /<[^>]*>/g;
-        var rm_etc = /&(nbsp|amp|quot|lt|gt);/g;
-        var rm_space = /(\s*)/g;
-        tmp_comment = tmp_comment.replace(rm_html, "");
-        tmp_comment = tmp_comment.replace(rm_etc, "");
-        tmp_comment = tmp_comment.replace(rm_space, "");
-
-        console.log(tmp_comment, tmp_comment.length)
-
-        if (tmp_comment.length == 0) {
-            document.getElementById("COMMENT").value = "";
-        }
-        /*
-        var regex = /\< *[img][^\>]*[src] *= *[\"\']{0,1}([^\"\'\ >]*)/g;
-        var comment = document.getElementById("COMMENT").value;
-        //var lst = regex.exec(comment)
-        var m;
-        while ( m = regex.exec(comment)) {
-            console.log(m[1]);
-        }
-       */
-
-        frm.submit();
-    }
 
     </script>
 
 }
+
+
 
 <!--container-->
 <div id="container" class="review_write">
@@ -94,16 +109,28 @@
         <div class="path">
             <a href="#" class="home"><img src="/aboutCom/images/common/ico_home.png" alt="home" /></a>
             <a href="#">제품리뷰</a>
-            <span>리뷰등록</span>
+            <span>@(mode.Equals("Write") ? "리뷰등록" : "리뷰수정")</span>
         </div>
         <!--//path-->
-        <h2><img src="/aboutCom/images/mypage/h2_expwrite.gif" alt="체험단리뷰 등록" /></h2>
+        <h2>
+            @mode
+            @if (mode.Equals( "Write"))
+            {
+                <img src="/aboutCom/images/mypage/h2_expwrite.gif" alt="체험단리뷰 등록"/>
+            }
+            else
+            {
+                <img src="/aboutCom/images/mypage/h2_expmodify.gif" alt="체험단리뷰 수정">
+            }
+        </h2>
+        
         <div class="writeform exp mt40">
             @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frm", name = "frm" }))
             {
                 <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
-
+                
+                                        <input type="hidden" name="ARTICLE_IDX" value="@Model.ARTICLE_IDX" />
                                         <input type="hidden" name="EXP_MASTER_IDX" value="@Model.EXP_MASTER_IDX" />
                                         <input type="hidden" name="P_CODE" value="@Model.P_CODE" />
                                         <input type="hidden" id="SUB_IMG_1" name="SUB_IMG_1" value="@Model.SUB_IMG_1" />
@@ -203,7 +230,7 @@
                                                 </div>
                                             </div>
                                             <div class="btngroup mt40">
-                                                <a href="#" class="btn_brown_w96h38" onclick="submitContents(); return false;">등록</a>
+                                                <a href="#" class="btn_brown_w96h38" onclick="submitContents(); return false;">@(mode.Equals("Write") ? "등록" : "수정")</a>
                                                 <a href="@Url.Action("Index", "MyReviewExp")" class="btn_white_w96h38 typeb">취소</a>
                                             </div>
                                         </fieldset>
