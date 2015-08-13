@@ -258,6 +258,43 @@ namespace AboutMe.Domain.Service.Coupon
 
         #endregion 
 
+        #region 회원가입시 쿠폰발행
+
+
+        //회원가입시 가입쿠폰발행 
+        public int InsCouponMakeOnMemberJoin(string M_Id)
+        {
+
+            int IsSuccess = 1;
+            
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+                    using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                    {                   
+                        //마스터정보 insert
+                        AdmCouponContext.SP_COUPON_MAKE_AT_MEM_JOIN_INSERT(M_Id);
+                    }
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                    IsSuccess = -1;
+                }
+
+            }
+
+
+            return IsSuccess;
+        }
+
+
+        #endregion 
+
 
 
     }

@@ -688,5 +688,23 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_MEMBER_GRADE_DEL", cD_COUPONParameter);
         }
+    
+        public virtual int SP_COUPON_MAKE_AT_MEM_JOIN_INSERT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_COUPON_MAKE_AT_MEM_JOIN_INSERT", m_IDParameter);
+        }
+    
+        public virtual int SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT", p_CODEParameter);
+        }
     }
 }

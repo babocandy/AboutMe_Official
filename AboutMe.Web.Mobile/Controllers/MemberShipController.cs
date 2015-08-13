@@ -10,10 +10,13 @@ using AboutMe.Common.Helper;
 using AboutMe.Web.Mobile.Common;
 
 using AboutMe.Domain.Service.Cart;
+using AboutMe.Domain.Service.Order;
 
 using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
 using AboutMe.Domain.Entity.Common;
+
+using AboutMe.Domain.Service.Coupon;  //회원가입시 쿠폰 발행
 
 using System.Text;
 using System.Web.UI.WebControls;
@@ -30,12 +33,16 @@ namespace AboutMe.Web.Mobile.Controllers
     {
         private IMemberService _MemberService;
         private ICartService _Cartservice;
+        private IOrderService _orderservice;
+        private ICouponService _CoupoService;
 
 
-        public MemberShipController(IMemberService _memberService, ICartService _cartservice)
+        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice, ICouponService _couposervice)
         {
             this._MemberService = _memberService;
             this._Cartservice = _cartservice;
+            this._orderservice = _orderservice;
+            this._CoupoService = _couposervice;
         }
 
         public ActionResult Index()
@@ -733,9 +740,15 @@ namespace AboutMe.Web.Mobile.Controllers
             log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
             userlog.UserLogSave(log_memo, log_comment);
 
-            //가입 축하메일 발송
+            //회원가입 쿠폰발행 +가입 축하메일 발송
             if (strERR_CODE == "0")
             {
+                //회원가입시 가입쿠폰 자동발행  --송선우 제공------------------------
+                if (_CoupoService.InsCouponMakeOnMemberJoin(M_ID) == 1)
+                    userlog.UserLogSave("회원가입쿠폰발행-성공|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+                else
+                    userlog.UserLogSave("회원가입쿠폰발행-실패|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+
                 //신규회원가입 축하메일 발송 --------------------------
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
                 string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
