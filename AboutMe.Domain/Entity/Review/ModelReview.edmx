@@ -6,6 +6,16 @@
     <edmx:StorageModels>
     <Schema Namespace="ReviewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="SP_REVIEW_CATE_THEMA_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_REVIEW_EXP_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_REVIEW_EXP_IN_SHOPPING_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="TOTAL" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_REVIEW_EXP_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TAIL_IDX" Type="int" Mode="In" />
           <Parameter Name="CATE_CODE" Type="varchar" Mode="In" />
@@ -203,6 +213,16 @@
             <Parameter Name="SORT" Mode="In" Type="String" />
             <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_EXP_DETAIL" ReturnType="Collection(ReviewModel.SP_REVIEW_EXP_DETAIL_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_EXP_IN_SHOPPING_DETAIL" ReturnType="Collection(ReviewModel.SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_REVIEW_PRODUCT_READY_SEL_Result">
           <Property Type="String" Name="ORDER_CODE" Nullable="false" MaxLength="20" />
@@ -376,6 +396,66 @@
           <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
           <Property Type="String" Name="TITLE" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_REVIEW_EXP_DETAIL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_ID_LBL" Nullable="true" MaxLength="27" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="M_SEX" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_SEX_LBL" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="M_BIRTHDAY" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_BIRTHDAY_LBL" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="SKIN_TYPE_CSS" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SUB_IMG_1" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="SUB_IMG_2" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="SUB_IMG_3" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="TAG" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="VIEW_CNT" Nullable="true" />
+          <Property Type="Int32" Name="EXP_MASTER_IDX" Nullable="true" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="EXHIBIT_IDX" Nullable="true" />
+          <Property Type="String" Name="EXHIBIT_NAME" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="EXHIBIT_DATE" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EXHIBIT_WEB_BANNER" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="EXHIBIT_MOBILE_BANNER" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="EXHIBIT_LINK_URL" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="true" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_ID_LBL" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="M_SEX" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_SEX_LBL" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="M_BIRTHDAY" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_BIRTHDAY_LBL" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="EXP_MASTER_IDX" Nullable="true" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="SKIN_TYPE_CSS" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="TITLE" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="SUB_IMG_1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SUB_IMG_2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SUB_IMG_3" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="VIEW_CNT" Nullable="true" />
+          <Property Type="String" Name="TAG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -599,6 +679,74 @@
                 <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
                 <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_EXP_DETAIL" FunctionName="ReviewModel.Store.SP_REVIEW_EXP_DETAIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_EXP_DETAIL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_ID_LBL" ColumnName="M_ID_LBL" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_SEX_LBL" ColumnName="M_SEX_LBL" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_BIRTHDAY_LBL" ColumnName="M_BIRTHDAY_LBL" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="SKIN_TYPE_CSS" ColumnName="SKIN_TYPE_CSS" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SUB_IMG_1" ColumnName="SUB_IMG_1" />
+                <ScalarProperty Name="SUB_IMG_2" ColumnName="SUB_IMG_2" />
+                <ScalarProperty Name="SUB_IMG_3" ColumnName="SUB_IMG_3" />
+                <ScalarProperty Name="TAG" ColumnName="TAG" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="EXP_MASTER_IDX" ColumnName="EXP_MASTER_IDX" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="EXHIBIT_IDX" ColumnName="EXHIBIT_IDX" />
+                <ScalarProperty Name="EXHIBIT_NAME" ColumnName="EXHIBIT_NAME" />
+                <ScalarProperty Name="EXHIBIT_DATE" ColumnName="EXHIBIT_DATE" />
+                <ScalarProperty Name="EXHIBIT_WEB_BANNER" ColumnName="EXHIBIT_WEB_BANNER" />
+                <ScalarProperty Name="EXHIBIT_MOBILE_BANNER" ColumnName="EXHIBIT_MOBILE_BANNER" />
+                <ScalarProperty Name="EXHIBIT_LINK_URL" ColumnName="EXHIBIT_LINK_URL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_EXP_IN_SHOPPING_DETAIL" FunctionName="ReviewModel.Store.SP_REVIEW_EXP_IN_SHOPPING_DETAIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_ID_LBL" ColumnName="M_ID_LBL" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_SEX_LBL" ColumnName="M_SEX_LBL" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_BIRTHDAY_LBL" ColumnName="M_BIRTHDAY_LBL" />
+                <ScalarProperty Name="EXP_MASTER_IDX" ColumnName="EXP_MASTER_IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="SKIN_TYPE_CSS" ColumnName="SKIN_TYPE_CSS" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="SUB_IMG_1" ColumnName="SUB_IMG_1" />
+                <ScalarProperty Name="SUB_IMG_2" ColumnName="SUB_IMG_2" />
+                <ScalarProperty Name="SUB_IMG_3" ColumnName="SUB_IMG_3" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="TAG" ColumnName="TAG" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

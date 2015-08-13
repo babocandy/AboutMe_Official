@@ -215,8 +215,18 @@
                                 @(new HtmlString(Model.P_INFO_DETAIL_WEB))
                             </div>
                             <!--//상세정보-->
+                            <div class="menu" id="tabCon2">
+                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                <!--tab메뉴-->
+                                <ul class="protabs">
+                                    <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                    <li class="cnt"><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                    <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                </ul>
+                                <!--//tab메뉴-->
+                            </div>
                             <!--리뷰 dykim-->
-                            @{Html.RenderAction("ProductInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
+                            @{Html.RenderAction("ReviewInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
                             <!--//리뷰-->
                             <!--품질보증-->
                             <div class="menu" id="tabCon3">

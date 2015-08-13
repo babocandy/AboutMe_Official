@@ -35,7 +35,7 @@ namespace AboutMe.Domain.Service.Review
 
         /**
          * 
-         * 제품 정보 
+         * 단일 상품 정보 
          */
         public SP_REVIEW_GET_PRODUCT_INFO_Result GetProductInfo(string pcode)
         {
@@ -48,7 +48,7 @@ namespace AboutMe.Domain.Service.Review
         /**
          * 마이리뷰 상품. 작성완료  
          */
-        public Tuple<string, string>  InsertMyReview(MyReviewPdtParamOnSaveToDb p )
+        public Tuple<string, string> InsertMyReview(MyReviewProductInputViewModel p)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -68,7 +68,7 @@ namespace AboutMe.Domain.Service.Review
         /**
          * 마이리뷰  수정
          */
-        public Tuple<string, string> UpdateMyReview(MyReviewPdtParamOnSaveToDb p)
+        public Tuple<string, string> UpdateMyReview(MyReviewProductInputViewModel p)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -136,7 +136,7 @@ namespace AboutMe.Domain.Service.Review
         /**
          * 상품코드별 상품리뷰 조회 - 상품상세에서 사용
          */
-        public Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10)
+        public Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(ReviewListJsonParamInShopping p)
         {
             List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result> lst = new List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>();
 
@@ -144,7 +144,7 @@ namespace AboutMe.Domain.Service.Review
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                lst = context.SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL(pcode, pageNo, pageSize, total).ToList();
+                lst = context.SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL(p.P_CODE, p.PAGE_NO, p.PAGE_SIZE, total).ToList();
             }
 
             Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int>(lst, Convert.ToInt32(total.Value));
@@ -154,9 +154,9 @@ namespace AboutMe.Domain.Service.Review
 
         /**
          * 
-         * 상품리뷰 정보 
+         * 상품리뷰 상세 
          */
-        public SP_REVIEW_PRODUCT_INFO_Result ReviewProductInfo(int? idx)
+        public SP_REVIEW_PRODUCT_INFO_Result GetReviewProductDetail(int? idx)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -256,7 +256,7 @@ namespace AboutMe.Domain.Service.Review
 
 
         /**
-         *  체험단리뷰 전체 조회 - 프론트
+         *  체험단리뷰 전체 조회
          */
         public Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> GetReviewExpList(int? tailIdx, string categoryCode, string sort)
         {
@@ -270,6 +270,36 @@ namespace AboutMe.Domain.Service.Review
             }
 
             Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_EXP_SEL_Result>, int>(lst, Convert.ToInt32(total.Value));
+
+            return tp;
+        }
+
+        /**
+         *  체험단리뷰 상세 + 기획전 이벤트
+         */
+        public SP_REVIEW_EXP_DETAIL_Result GetReviewExpDetail(ReviewExpDetailJsonParam p)
+        {
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                return context.SP_REVIEW_EXP_DETAIL(  p.ARTICLE_IDX    , p.P_CODE).SingleOrDefault();
+            }
+        }
+
+        /**
+         * 상품코드별 체험단리뷰 조회 - 상품상세에서 사용
+         */
+        public Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int> GetReviewExpByProductCode(ReviewListJsonParamInShopping p)
+        {
+            List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result> lst = new List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>();
+
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_EXP_IN_SHOPPING_DETAIL(p.P_CODE, p.PAGE_NO, p.PAGE_SIZE, total).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int> tp = new Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int>(lst, Convert.ToInt32(total.Value));
 
             return tp;
         }

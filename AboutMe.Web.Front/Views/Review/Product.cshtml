@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Front.Models.ReviewProductListViewModel
+﻿@model AboutMe.Domain.Entity.Review.ReviewProductListViewModel
 @using AboutMe.Common.Data
 @using AboutMe.Common.Helper
 @using AboutMe.Web.Front.Models
@@ -196,13 +196,13 @@
 
                 <div class="selecttypeC">
                     <!--현재 소팅 대분류 class "on" 사용-->
-                    <div class="sort">
+                    <div class="sort on">
                         <p class="tit"><a href="#">뷰티</a></p>
 
                         @if (Model.CategoryBeauty.Count > 0)
                         {
                             <ul>
-                                <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.BEAUTY_DEFAULT'); return false;">전체</a></li>
+                                <li class="cnt"><a href="#" onclick="selectCategoryMenu('@CategoryCode.BEAUTY_DEFAULT'); return false;">전체</a></li>
                                 @foreach (var item in Model.CategoryBeauty)
                                 {
 
