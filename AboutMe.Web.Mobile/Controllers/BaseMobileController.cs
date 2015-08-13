@@ -95,8 +95,8 @@ namespace AboutMe.Web.Mobile.Controllers
                 {
                     if(ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
                     {
-                        //Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
-                        RedirectToAction("Index", AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                        Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                        //RedirectToAction("Index", AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
                     }
                 }
             }
