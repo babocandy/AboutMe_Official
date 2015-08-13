@@ -55,6 +55,7 @@
           <Property Name="DISPLAY_YN" Type="varchar" MaxLength="1" />
           <Property Name="ICON_YN" Type="varchar" MaxLength="20" />
           <Property Name="SELLING_COUNT" Type="int" />
+          <Property Name="SELLING_MONTH_COUNT" Type="int" />
           <Property Name="P_VIEW_COUNT" Type="int" />
           <Property Name="WITH_PRODUCT_LIST" Type="varchar" MaxLength="300" />
           <Property Name="P_OUTLET_YN" Type="varchar" MaxLength="1" />
@@ -259,6 +260,14 @@
           <Parameter Name="OTHER_IMG3" Type="varchar" Mode="In" />
           <Parameter Name="ICON_YN" Type="varchar" Mode="In" />
           <Parameter Name="WITH_PRODUCT_LIST" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_SMS_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SMS_FLAG" Type="varchar" Mode="In" />
+          <Parameter Name="SEND_TIME" Type="varchar" Mode="In" />
+          <Parameter Name="HANDPHONE" Type="varchar" Mode="In" />
+          <Parameter Name="CALLBACK_NO" Type="varchar" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="SEND_MSG" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_USER_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
@@ -503,6 +512,14 @@
             <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
             <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_SMS_INS">
+            <Parameter Name="SMS_FLAG" Mode="In" Type="String" />
+            <Parameter Name="SEND_TIME" Mode="In" Type="String" />
+            <Parameter Name="HANDPHONE" Mode="In" Type="String" />
+            <Parameter Name="CALLBACK_NO" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SEND_MSG" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -673,6 +690,7 @@
           <Property Name="P_OUTLET_YN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="UPD_DATE" Type="DateTime" Precision="3" />
           <Property Name="INS_DATE" Type="DateTime" Precision="3" />
+          <Property Name="SELLING_MONTH_COUNT" Type="Int32" />
         </EntityType>
         <ComplexType Name="SP_ADMIN_PRODUCT_DETAIL_VIEW_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -869,6 +887,7 @@
           <EntitySetMapping Name="TB_PRODUCT_INFO">
             <EntityTypeMapping TypeName="ModelAdminProduct.TB_PRODUCT_INFO">
               <MappingFragment StoreEntitySet="TB_PRODUCT_INFO">
+                <ScalarProperty Name="SELLING_MONTH_COUNT" ColumnName="SELLING_MONTH_COUNT" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
                 <ScalarProperty Name="UPD_DATE" ColumnName="UPD_DATE" />
                 <ScalarProperty Name="P_OUTLET_YN" ColumnName="P_OUTLET_YN" />
@@ -1021,6 +1040,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SMS_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_SMS_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
