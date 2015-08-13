@@ -4,7 +4,7 @@
 @using AboutMe.Common.Helper
 @using AboutMe.Web.Front.Models
 @using AboutMe.Web.Front.Controllers
-@using System.Text.RegularExpressions
+@using Newtonsoft.Json
 @{
     ViewBag.Title = "Review Experience";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
@@ -35,7 +35,6 @@
     var sort = "@ReviewExpListViewModel.SORT_LASTEST";//최신순
     var tailIdx = @(Model.Reviews.Count > 0 ? Model.Reviews.Last().IDX : -1);
 
-    console.log("tailIdx", tailIdx);
 
     // select category
     function selectCategoryMenu(cc) {
@@ -43,7 +42,7 @@
         tailIdx = undefined;
         removeAllItems();
 
-        getReviewProducList();
+        getReviewList();
     }
 
     //
@@ -51,12 +50,12 @@
         if (sort != s) sort = s;
         tailIdx = undefined;
         removeAllItems();
-        getReviewProducList();
+        getReviewList();
     }
 
     //더 보기
     function moreView() {
-        getReviewProducList();
+        getReviewList();
     }
 
     $(function () {
@@ -80,7 +79,7 @@
 
        */
     }
-    function getReviewProducList() {
+    function getReviewList() {
         console.log(tailIdx, categoryCode, sort);
 
         $.ajax({
@@ -118,7 +117,7 @@
                 var item = list[i];
 
 
-                var html = "<div class='grid' onclick='reviewpop_view()'>";
+                var html = "<div class='grid' onclick=\"reviewpop_view("+item.IDX +",'"+item.P_CODE+"',this);return false;\">";
 
                 //<!--제품 이름 및 정보-->
                 html += "<div class='product_info'>";
@@ -133,7 +132,7 @@
                 html += "<div class='comments'>";
                 html += "   <div class='idhit'>";
                 html += "       <span class='id'>"+item.M_ID_LBL+"</span>";
-                html += "       <span class='hit'>조회수 "+(item.VIEW_CNT != undefined ? item.VIEW_CNT : "0")+"</span>";
+                html += "       <span class='hit'>조회수 <em>"+(item.VIEW_CNT != undefined ? item.VIEW_CNT : "0")+"</em></span>";
                 html += "   </div>";
 
                 html += "   <div class='writer'>";
@@ -145,12 +144,6 @@
                 html += "   <div class='reviewtxt'>";
                 html += "       <p class='title'>"+item.TITLE+"</p>";
                 html += "       <p class='txt txtdotdot'>";
-                /*
-                var tmp_comment = item.COMMENT_TEXT;
-                var rm_html = /<[^>]*>/g;
-                var rm_etc = /&(nbsp|amp|quot|lt|gt);/g;
-                tmp_comment = tmp_comment.replace(rm_html, "");
-                tmp_comment = tmp_comment.replace(rm_etc, "");*/
                 html +=             item.COMMENT_TEXT;
 
                 html += "       </p>";
@@ -177,22 +170,23 @@
                 $grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
 
-           // console.log("d.IDX", d.IDX)
+            // console.log("d.IDX", d.IDX)
 
-        //꼬리값 물기
+            //꼬리값 물기
             if (tailIdx != item.IDX) {
                 tailIdx = item.IDX;
             }
         } else {
-                alert("더 이상 결과값이 없습니다.");
+            alert("더 이상 결과값이 없습니다.");
         }
     }//end func
 
-        function removeAllItems() {
-            $(".grid").each(function () {
-                $grid.masonry('remove', this)
-            });
-        }//end func
+    function removeAllItems() {
+        $(".grid").each(function () {
+            $grid.masonry('remove', this)
+        });
+    }//end func
+
 
     </script>
 }
@@ -212,12 +206,12 @@
 
                 <div class="selecttypeC">
                     <!--현재 소팅 대분류 class "on" 사용-->
-                    <div class="sort">
+                    <div class="sort on">
                         <p class="tit"><a href="#">뷰티</a></p>
                         @if (Model.CategoryBeauty.Count > 0)
                         {
                             <ul>
-                                <li><a href="#" onclick="selectCategoryMenu('@CategoryCode.BEAUTY_DEFAULT'); return false;">전체</a></li>
+                                <li class="cnt"><a href="#" onclick="selectCategoryMenu('@CategoryCode.BEAUTY_DEFAULT'); return false;">전체</a></li>
                                 @foreach (var item in Model.CategoryBeauty)
                                 {
 
@@ -262,7 +256,8 @@
 
 @foreach (var item in Model.Reviews)
 {
-                        <div class="grid" onclick="reviewpop_view()">
+                        <div class="grid" onclick="reviewpop_view(@item.IDX, '@item.P_CODE', this);return false;">
+                           
                             <!--제품 이름 및 정보-->
                             <div class="product_info">
                                 <div class="photo"><img src="@myController._img_path_product@item.P_MAIN_IMG" alt=""></div>
@@ -276,10 +271,10 @@
                             <div class="comments">
                                 <div class="idhit">
                                     <span class="id">@item.M_ID_LBL</span>
-                                    <span class="hit">조회수 @(item.VIEW_CNT ?? 0)</span>
+                                    <span class="hit">조회수 <em>@(item.VIEW_CNT ?? 0)</em></span>
                                 </div>
                                 <div class="writer">
-                                    <span class="skin @(item.SKIN_TYPE_LBL)">@(item.SKIN_TYPE_CSS)</span><em class="userage">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</em>
+                                    <span class="skin @(item.SKIN_TYPE_CSS)">@(item.SKIN_TYPE_LBL)</span><em class="userage">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</em>
                                 </div>
                                 <div class="tag">
                                     @(item.TAG)
@@ -288,19 +283,7 @@
                                 <div class="reviewtxt">
                                     <p class="title">@item.TITLE</p>
                                     <p class="txt txtdotdot">
-                                        @item.COMMENT_TEXT
-                                        @{
-                                            /*
-                                           string textOnly = string.Empty;
-                                            Regex tagRemove = new Regex(@"<[^>]*(>|$)");
-                                            Regex compressSpaces = new Regex(@"[\s\r\n]+");
-                                            Regex etc = new Regex(@"&(nbsp|amp|quot|lt|gt);");
-                                            textOnly = tagRemove.Replace(item.COMMENT, string.Empty);
-                                            textOnly = compressSpaces.Replace(textOnly, " ");
-                                            textOnly = etc.Replace(textOnly, " ");
-                                             */
-                                        }
-                                    
+                                        @item.COMMENT_TEXT                                    
                                     </p>
 
                                     @if (item.SUB_IMG_1 != null)
@@ -323,99 +306,167 @@
 
                     <!--리뷰상세팝업-->
                     <div class="reviewpop_wrap">
+
                         <div class="dim"></div>
                         <div class="reviewpop">
                             <a href="#none" class="reviewpop_close" onclick="reviewpop_close()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="" /></a>
                             <!--reviewpop_top-->
                             <div class="reviewpop_top">
                                 <div class="title_area">
-                                    <p class="title">스킨 톤업 마사지 크림 완전 강추에요!</p>
+                                    <p class="title"></p>
                                     <div class="tag">
-                                        <span>#마사지</span> <span>#촉촉</span> <span>#미백</span>
+                                        <!--<span>#마사지</span> <span>#촉촉</span> <span>#미백</span>-->
                                     </div>
                                 </div>
                                 <div class="writer">
                                     <div class="userinfo">
-                                        <span class="skin normal">중성</span>
-                                        <span class="age_gender">40대, 여</span>
+                                        <span id="skin_type" class=""></span>
+                                        <span class="age_gender"></span>
                                     </div>
                                     <div class="right">
-                                        <span class="id">kkon***</span>
-                                        <span class="date">2015.06.06</span>
-                                        <span class="hits">조회수 <em>253</em></span>
+                                        <span class="id"></span>
+                                        <span class="date"></span>
+                                        <span class="hits">조회수 <em></em></span>
                                     </div>
                                 </div>
                             </div>
                             <!--//reviewpop_top-->
                             <!--reviewpop_bottom-->
                             <div class="reviewpop_bottom">
+
+
                                 <div class="reviewtxt">
-                                    <p>
-                                        어바웃미 스킨 톤업 마사지크림 리뷰입니다.<br />
-                                        지금까지 여러 화장품을 써봤지만 이런 화장품은 처음이에요!
-                                    </p>
-                                    <img src="/aboutCom/images/review/thumb640.jpg" alt="" />
-                                    <p>
-                                        제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요.
-                                        그냥 상큼한 레몬향이 나는 정도? 그래서 이때만해도 이 마사지크림에 제가 이렇게 빠져들거라고는 생각을 못했어요ㅋㅋ
-                                        그치만 크림을 얼굴에 바르고 마사지하는 순간 완전 신세계였어요!
-                                    </p>
-                                    <p>
-                                        처음에는 그냥 크림으로 마사지하는거랑 별다를게 없었는데 어느순간 크림이 다 사라지고 약간 뻑뻑해지다가 오일로 마사지하는 것처럼 변해요!
-                                        시간에 따라서 촉촉한 마사지크림-피부에 다 흡수되서 약간 뻑뻑한 느낌 -오일 마사지하는 것처럼 변하는게 너무 신기했어요
-                                    </p>
-                                    <img src="/aboutCom/images/review/thumb640.jpg" alt="" />
-                                    <p>
-                                        그리고 마사지를 다하고 화장솜으로 닦아내면 창피하지만 이렇게 노랗게 노폐물이 나옵니다ㅋㅋ
-                                        사진이 너무 노골적이긴하지만 실제로 마사지하고 닦아내면 내 피부에 이렇게 노폐물이 많았나하고 놀라게되실거에요ㅋㅋ
-                                        신기하기도하고 그동안 각질제거도 하고, 마스크팩이나 모델링팩으로 나름 피부관리를 한다고 생각했는데 이렇게 제 피부에 노폐물이 많을줄 몰랐어요.
-                                        그래도 다행인건 요샌 스킨 톤업 마사지 크림을 사용하면서 처음보다 노폐물이 조금 나오고있어요.
-                                        (색깔이 처음했을때랑 엄청 달라져요ㅋㅋ)
-                                    </p>
-                                    <p>
-                                        그리고 의외로 용량도 많은 편이라서 가격대비 정말 좋은 마사지 크림인 것 같아요, 저는 지금 쓰는 제품 다 쓰면 재구매할 예정입니다
-                                        완전 강추에용ㅋㅋ
-                                    </p>
+                                    
                                 </div>
                                 <div class="reviewproduct">
                                     <p class="title"><img src="/aboutCom/images/review/txt_review.gif" alt="리뷰상품" /></p>
                                     <div class="pro_info">
                                         <!--이미지사이즈 96x96-->
-                                        <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt4.jpg" alt="" /></div>
+                                        <div class="photo"><img src="" alt="" /></div>
                                         <div class="detail">
-                                            <p class="tit">리얼 프레쉬팩 [로즈]</p>
-                                            <p class="stit">맑고 촉촉한 피부를 위한 100%천연유래 <br />Real fresh pack</p>
-                                            <p class="price">4,000원</p>
+                                            <p class="tit"></p>
+                                            <p class="stit"></p>
                                         </div>
                                     </div>
                                     <!--상품관련 기획전-->
-                                    <div class="plbanr">
-                                        <img src="/aboutCom/images/sample/thumb310140.png" alt="" />
+                                    <div class="plbanr" data-url="" onclick="gotoEvent(this); return false;" style="cursor: pointer">
+                                        
+                                            <img src="/aboutCom/images/sample/event_thum3.jpg" class="bnrimg" alt="">
+                                        
+                                        <div class="txtarea">
+                                            <div class="date"></div>
+                                            <div class="bnr_txt"></div>
+                                        </div>
+                                       
                                     </div>
                                     <!--//상품관련 기획전-->
                                 </div>
                             </div>
                             <!--//reviewpop_bottom-->
+
                         </div>
+
+
                     </div>
                     <!--//리뷰상세팝업-->
 
                 </div>
 
-                <a href="#" class="btn_more">더보기<i></i></a>
+                <a href="#" class="btn_more"  onclick="moreView(); return false;">더보기<i></i></a>
 
                 <script type="text/javascript">
-                    //리뷰팝업
-                    function reviewpop_view() {
-                        $("html").css({ "overflow-y": "hidden" });
-                        $(".reviewpop_wrap").show();
-                        $(".reviewpop_wrap").css({ "overflow-y": "auto" });
+
+                    var detail;
+
+                    function gotoEvent(my){
+  
+                        var url =  $(my).attr("data-url");
+                        if (url != undefined) {
+                            window.location.href = url ;
+                        }                       
                     }
+
+                    //리뷰팝업
+                    function reviewpop_view(aidx,pcode, my) {
+                        console.log(aidx, pcode);
+                        $.ajax({
+                            url: "@(Url.Action("GetReviewExpDetail", "Review"))",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                ARTICLE_IDX: aidx, P_CODE: pcode                                
+                            },
+                            success: function (data) {
+                                //alert(data.success);
+                                console.log(data);
+
+                                if (data.Success) {
+
+                                    var item = data.Detail;
+                                    //detail = item;
+                                    //console.log(item.TITLE);
+                             
+                                    $(".reviewpop_wrap .title_area .title").text( item.TITLE );
+                                    $(".reviewpop_wrap .title_area .tag").text( item.TAG );
+
+                                    $(".reviewpop_wrap .writer .skin").removeClass();
+                              
+                                    $("#skin_type").addClass("skin " + item.SKIN_TYPE_CSS);
+
+                                    $(".reviewpop_wrap .writer .skin").text( item.SKIN_TYPE_LBL );
+                                    $(".reviewpop_wrap .writer .age_gender").text( item.M_BIRTHDAY_LBL +"대, "+ item.M_SEX_LBL );
+
+                                    $(".reviewpop_wrap .writer .id").text( item.SKIN_TYPE_LBL );
+                                    $(".reviewpop_wrap .writer .date").text( item.INS_DATE_LBL );
+                                    $(".reviewpop_wrap .writer .hits em").text( item.VIEW_CNT != undefined ? item.VIEW_CNT : 0 );
+                                    
+                                    $(".reviewpop_bottom .reviewtxt").html( item.COMMENT );
+
+                                    $(".reviewpop_bottom .pro_info .photo img").attr("src", img_path_product + item.P_MAIN_IMG );
+                                    $(".reviewpop_bottom .pro_info .detail tit").text(item.P_NAME);
+                                    $(".reviewpop_bottom .pro_info .detail stit").text(item.P_SUB_TITLE);
+
+                                    $(my).find(".hit em").text(item.VIEW_CNT);
+                                    
+                                    
+                                    if(item.EXHIBIT_IDX != undefined){
+                                       
+                                        $(".reviewpop_bottom .plbanr").attr("data-url", item.EXHIBIT_LINK_URL);
+          
+                                        $(".reviewpop_bottom .plbanr img").attr("src", item.EXHIBIT_WEB_BANNER);
+                                        $(".reviewpop_bottom .plbanr .date").text(item.EXHIBIT_DATE);
+                                        $(".reviewpop_bottom .plbanr .bnr_txt").text( item.EXHIBIT_NAME);
+
+                                        $(".reviewpop_bottom .plbanr").show();
+                                    }else{
+                                        $(".reviewpop_bottom .plbanr").hide();
+                                    }
+       
+                                    $("html").css({ "overflow-y": "hidden" });
+                                    $(".reviewpop_wrap").show();
+                                    $(".reviewpop_wrap").css({ "overflow-y": "auto" });
+
+                                    return;
+                                }
+
+                                //detail = undefined;
+                            },
+                            error: function (e) {
+                                //console.log(e);
+                                //detail = undefined;
+                            }
+                        });
+
+                    }
+
                     function reviewpop_close() {
                         $(".reviewpop_wrap").hide();
                         $(".reviewpop_wrap").css({ "overflow-y": "hidden" });
                         $("html").css({ "overflow-y": "auto" });
                     }
+
+
+
                 </script>
             </div>
         </div>

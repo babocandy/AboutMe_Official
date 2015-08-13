@@ -16,13 +16,13 @@ namespace AboutMe.Domain.Service.Review
         List<SP_REVIEW_PRODUCT_READY_SEL_Result> GetMyReviewReadyList(string mid);
         SP_REVIEW_GET_PRODUCT_INFO_Result GetProductInfo(string pcode);
 
-        Tuple<string, string> InsertMyReview(MyReviewPdtParamOnSaveToDb p);
-        Tuple<string, string> UpdateMyReview(MyReviewPdtParamOnSaveToDb p);
+        Tuple<string, string> InsertMyReview(MyReviewProductInputViewModel p);
+        Tuple<string, string> UpdateMyReview(MyReviewProductInputViewModel p);
         List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> GetMyReviewCompleteList(string mid, int? pageNo = 1);
         int GetMyReviewCompleteCnt(string mid);
         Tuple<List<SP_REVIEW_PRODUCT_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort);
-        Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(string pcode, int? pageNo = 1, int? pageSize = 10);
-        SP_REVIEW_PRODUCT_INFO_Result ReviewProductInfo(int? idx);
+        Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(ReviewListJsonParamInShopping p);
+        SP_REVIEW_PRODUCT_INFO_Result GetReviewProductDetail(int? idx);
         List<SP_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
         int ReadyTotal(string mid);
 
@@ -32,5 +32,7 @@ namespace AboutMe.Domain.Service.Review
         Tuple<string, string> UpdateMyReviewExp(MyReviewExpInputViewModel p);
 
         Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> GetReviewExpList(int? tailIdx, string categoryCode, string sort);
+        SP_REVIEW_EXP_DETAIL_Result GetReviewExpDetail(ReviewExpDetailJsonParam p);
+        Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int> GetReviewExpByProductCode(ReviewListJsonParamInShopping p);
     }
 }

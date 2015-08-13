@@ -43,10 +43,9 @@ namespace AboutMe.Web.Front.Controllers
          */
         [HttpGet]
         [CustomAuthorize]
-        //public ActionResult Write(int? ORDER_DETAIL_IDX, string P_CODE = null)
         public ActionResult Write(MyReviewPdtInputParam p)
         {
-            MyReviewInsertViewModel model = new MyReviewInsertViewModel();
+            MyReviewProductInputViewModel model = new MyReviewProductInputViewModel();
             model.M_ID = _user_profile.M_ID;
             model.ORDER_DETAIL_IDX = p.ORDER_DETAIL_IDX;
             model.P_CODE = p.P_CODE;
@@ -63,7 +62,7 @@ namespace AboutMe.Web.Front.Controllers
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Write(MyReviewInsertViewModel model)
+        public ActionResult Write(MyReviewProductInputViewModel model)
         {
             /**
              * 상품정보 
@@ -98,16 +97,16 @@ namespace AboutMe.Web.Front.Controllers
                        
                    }
                }
-
+               /*
                MyReviewPdtParamOnSaveToDb p = new MyReviewPdtParamOnSaveToDb();
                p.M_ID = model.M_ID;
                p.ORDER_DETAIL_IDX =  model.ORDER_DETAIL_IDX;
                p.P_CODE = model.P_CODE;
                p.SKIN_TYPE = model.SKIN_TYPE;
                p.COMMENT = model.COMMENT;
-               p.ADD_IMAGE =  model.ADD_IMAGE;
+               p.ADD_IMAGE =  model.ADD_IMAGE;*/
 
-               Tuple<string, string> ret = _ReviewService.InsertMyReview(p);
+               Tuple<string, string> ret = _ReviewService.InsertMyReview(model);
 
                TempData["ResultNum"] = ret.Item1;
                TempData["ResultMessage"] = ret.Item2;
@@ -162,14 +161,23 @@ namespace AboutMe.Web.Front.Controllers
         [Route("Update/{id:int}")]
         public ActionResult Update(int? id)
         {
-            MyReviewUpdateViewModel model = new MyReviewUpdateViewModel();
-
-            //model.Reviews = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);
-            //model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
-
-            model.ReviewPdtInfo = _ReviewService.ReviewProductInfo(id);
-            TempData["MyReviewPdtInfo"] = model.ReviewPdtInfo;
+            MyReviewProductInputViewModel model = new MyReviewProductInputViewModel();
             
+            
+            //상품리뷰 상세
+            var detail = _ReviewService.GetReviewProductDetail(id);
+
+            model.IDX = detail.IDX;
+            model.COMMENT = detail.COMMENT;
+            model.P_MAIN_IMG = detail.P_MAIN_IMG;
+            model.P_NAME = detail.P_NAME;
+            model.P_SUB_TITLE = detail.P_SUB_TITLE;
+            model.C_CATE_CODE = detail.C_CATE_CODE;
+            model.SKIN_TYPE = detail.SKIN_TYPE;
+            model.SKIN_TYPE_LBL = detail.SKIN_TYPE_LBL;
+
+            Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
+
             return View(model);
         }
 
@@ -177,21 +185,15 @@ namespace AboutMe.Web.Front.Controllers
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
         [Route("Update/{id:int}")]
-        public ActionResult Update(MyReviewUpdateViewModel model)
+        public ActionResult Update(MyReviewProductInputViewModel model)
         {
             Debug.WriteLine("Update");
 
-            model.ReviewPdtInfo = TempData["MyReviewPdtInfo"] as SP_REVIEW_PRODUCT_INFO_Result;
-           TempData["MyReveiwUpdateData"] = model.ReviewPdtInfo;
+            Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
 
             if (ModelState.IsValid)
             {
-                MyReviewPdtParamOnSaveToDb p = new MyReviewPdtParamOnSaveToDb();
-                p.IDX = model.ReviewPdtInfo.IDX;
-                p.COMMENT = model.COMMENT;
-               
-
-                Tuple<string, string> ret = _ReviewService.UpdateMyReview(p);
+                Tuple<string, string> ret = _ReviewService.UpdateMyReview(model);
 
                 TempData["ResultNum"] = ret.Item1;
                 TempData["ResultMessage"] = ret.Item2;

@@ -1,9 +1,12 @@
-﻿@model AboutMe.Web.Front.Models.MyReviewUpdateViewModel
+﻿@model AboutMe.Domain.Entity.Review.MyReviewProductInputViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
+@using AboutMe.Web.Front.Controllers
 @{
-    ViewBag.Title = "Write";
+    ViewBag.Title = "Update";
     Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
+
+    var myController = ViewContext.Controller as MyReviewController;
 }
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
@@ -29,7 +32,7 @@
         if (rNum != "0" && rNum != "") {
             alert(rMsg);
         } else if (rNum == "0") {
-            window.opener.location = "@Url.Action("Complete", "MyReview")";//"/MyPage/MyReview/Complete";
+            window.opener.location = "@Url.Action("Complete", "MyReview")";
             self.close();
         }
         
@@ -56,14 +59,20 @@
                 {
                     @Html.AntiForgeryToken()
                     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
-
+                    <input type="hidden" name="IDX" value="@Model.IDX" />
+                    <input type="hidden" name="P_MAIN_IMG" value="@Model.P_MAIN_IMG" />
+                    <input type="hidden" name="P_NAME" value="@Model.P_NAME" />
+                    <input type="hidden" name="P_SUB_TITLE" value="@Model.P_SUB_TITLE" />
+                    <input type="hidden" name="C_CATE_CODE" value="@Model.C_CATE_CODE" />
+                    <input type="hidden" name="SKIN_TYPE" value="@Model.SKIN_TYPE" />
+                    <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
                     <fieldset>
                         <legend>상품 리뷰 등록 폼</legend>
                         <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
                         <table summary="상품찾기, 피부타입, 제목">
                             <caption>상품 리뷰 등록 입력 표</caption>
                             <colgroup>
-                                @if (ReviewHelper.CheckBeauty(@Model.ReviewPdtInfo.C_CATE_CODE))
+                                @if (ReviewHelper.CheckBeauty(@Model.C_CATE_CODE))
                                 {
                                     <col width="147" />
                                     <col width="*" />
@@ -81,19 +90,18 @@
                                     <th>상품명</th>
                                     <td class="pro_info">
                                         <!--이미지사이즈 96x96-->
-                                        <div class="photo"><img src="@Model.ReviewPdtInfo.P_MAIN_IMG" alt="" /></div>
+                                        <div class="photo"><img src="@string.Format("{0}{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
                                         <div class="detail">
-                                            <p class="tit">@Model.ReviewPdtInfo.P_NAME</p>
-                                            <p class="stit">@Model.ReviewPdtInfo.P_SUB_TITLE</p>
-                                            <!--<p class="price"><strong>4,000</strong>원</p>-->
+                                            <p class="tit">@Model.P_NAME</p>
+                                            <p class="stit">@Model.P_SUB_TITLE</p>
                                         </div>
                                     </td>
 
-                                    @if (ReviewHelper.CheckBeauty(@Model.ReviewPdtInfo.C_CATE_CODE))
+                                    @if (ReviewHelper.CheckBeauty(@Model.C_CATE_CODE))
                                     {
                                         <th class="skintype">피부타입</th>
                                         <td class="skintype">
-                                            @Model.ReviewPdtInfo.SKIN_TYPE_LBL
+                                            @Model.SKIN_TYPE_LBL
                                         </td>
                                     }
 
@@ -101,14 +109,18 @@
                                 <tr class="edit">
                                     <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /></th>
                                     <td colspan="3">
-                                        <textarea name="COMMENT" class="txtareatypea" style="width:100%">@Model.ReviewPdtInfo.COMMENT</textarea>
+                                        <textarea name="COMMENT" class="txtareatypea" style="width:100%">@Model.COMMENT</textarea>
                                     </td>
                                 </tr>
                                 <tr class="attach">
-                                    <th>사진첨부</th>
+                                    <th>사진</th>
                                     <td colspan="3">
                                         <span class="imgbox">
-                                            <img id="previewImage" src="@Model.ReviewPdtInfo.ADD_IMAGE" alt="" />
+                                            @if (@Model.ADD_IMAGE != null)
+                                            {
+                                                <img id="previewImage" src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE)" alt="" />
+                                            }
+                                            
                                         </span>
                           
                                     </td>
