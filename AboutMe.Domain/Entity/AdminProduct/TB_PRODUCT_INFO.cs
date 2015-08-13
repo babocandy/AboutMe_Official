@@ -46,5 +46,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string P_OUTLET_YN { get; set; }
         public Nullable<System.DateTime> UPD_DATE { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public Nullable<int> SELLING_MONTH_COUNT { get; set; }
     }
 }

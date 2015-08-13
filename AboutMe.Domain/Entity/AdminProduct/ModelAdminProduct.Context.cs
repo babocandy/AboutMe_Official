@@ -767,5 +767,34 @@ namespace AboutMe.Domain.Entity.AdminProduct
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_GIFT_UPD", iDXParameter, gIFT_NAMEParameter, gIFT_COUNTParameter, gIFT_IMGParameter, dISPLAY_YNParameter);
         }
+
+        public virtual int SP_ADMIN_SMS_INS(string sMS_FLAG, string sEND_TIME, string hANDPHONE, string cALLBACK_NO, string tITLE, string sEND_MSG)
+        {
+            var sMS_FLAGParameter = sMS_FLAG != null ?
+                new ObjectParameter("SMS_FLAG", sMS_FLAG) :
+                new ObjectParameter("SMS_FLAG", typeof(string));
+
+            var sEND_TIMEParameter = sEND_TIME != null ?
+                new ObjectParameter("SEND_TIME", sEND_TIME) :
+                new ObjectParameter("SEND_TIME", typeof(string));
+
+            var hANDPHONEParameter = hANDPHONE != null ?
+                new ObjectParameter("HANDPHONE", hANDPHONE) :
+                new ObjectParameter("HANDPHONE", typeof(string));
+
+            var cALLBACK_NOParameter = cALLBACK_NO != null ?
+                new ObjectParameter("CALLBACK_NO", cALLBACK_NO) :
+                new ObjectParameter("CALLBACK_NO", typeof(string));
+
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+
+            var sEND_MSGParameter = sEND_MSG != null ?
+                new ObjectParameter("SEND_MSG", sEND_MSG) :
+                new ObjectParameter("SEND_MSG", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_SMS_INS", sMS_FLAGParameter, sEND_TIMEParameter, hANDPHONEParameter, cALLBACK_NOParameter, tITLEParameter, sEND_MSGParameter);
+        }
     }
 }
