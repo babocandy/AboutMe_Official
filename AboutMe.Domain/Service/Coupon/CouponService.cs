@@ -186,6 +186,54 @@ namespace AboutMe.Domain.Service.Coupon
         }
 
 
+        //다운로드 처리  - 모바일 버전 , 쿠폰번호 인증이 필요없는 쿠폰
+        //M_id =회원아이디, IdxCouponNumber = 쿠폰일련번호 , UpdateMethod = 'S' : 하나만 업데이트 할때 , 'A' = 모든 쿠폰을 다운로드 할 때
+        public int UpdateCouponDownload_Mobile_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod)
+        {
+            int ResulstCode = 1;
+
+            List<SP_COUPON_MASTER_INFO_SEL_Result> lst1 = GetCouponMasterInfo(M_Id, IdxCouponNumber);
+
+            if (lst1.Count > 0)
+            {
+                if (lst1[0].COUPON_NUM_CHECK_TF == "Y") //번호를 확인해야 하는 쿠폰이면 , 번호 인증후 다운로드 해야함
+                {
+                    ResulstCode = -2;
+                }
+                else
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        try
+                        {
+                            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                            {
+                                //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                                AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
+                                //NewCdPromotionProduct = objOutParam.Value.ToString();
+                            }
+                            scope.Complete();
+                        }
+                        catch (Exception ex)
+                        {
+                            Transaction.Current.Rollback();
+                            scope.Dispose();
+                            ResulstCode = -1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ResulstCode = -3; //존재하지 않는 쿠폰  
+            }
+
+            return ResulstCode;
+
+        }
+
+
+
         //쿠폰 마스터 정보 가져오기
         public List<SP_COUPON_MASTER_INFO_SEL_Result> GetCouponMasterInfo(string M_ID, int IdxCouponNumber)
         {

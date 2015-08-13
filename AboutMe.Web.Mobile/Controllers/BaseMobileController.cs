@@ -14,6 +14,12 @@ namespace AboutMe.Web.Mobile.Controllers
     public class BaseMobileController : Controller
     {
 
+        public string DetectingDevice()
+        {
+            string str = AboutMe.Common.Helper.DetectDeviceUtil.GetUserDeviceType();
+            return str;
+        }
+
         protected USER_PROFILE _user_profile = new USER_PROFILE
         {
             IS_LOGIN = MemberInfo.IsMemberLogin()
@@ -73,8 +79,26 @@ namespace AboutMe.Web.Mobile.Controllers
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
 
-
             base.Initialize(requestContext);
+
+
+
+
+            ///////////////////////////////////////////////////////////////////// device 디바이스 감지
+
+            string ThisHost = Request.Url.Host.ToString(); 
+
+            string ThisDevice = this.DetectingDevice();
+            if (ThisDevice != "s" || ThisDevice != "t") //스마트폰이나 태블릿이 아니라면 강제로 데스크탑 사이트로 이동.
+            {
+                if (Request["forced"] == null || Request["forced"].ToString() == ""  )
+                {
+                    if(ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
+                    {
+                        Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                    }
+                }
+            }
 
             // MyInitialzie()
 

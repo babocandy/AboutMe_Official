@@ -252,6 +252,11 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_COUPON_COMMON_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="IDX_COUPON_NUMBER" Type="int" Mode="In" />
+          <Parameter Name="METHOD" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="IDX_COUPON_NUMBER" Type="int" Mode="In" />
@@ -552,10 +557,15 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="CD_COUPON" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_COUPON_MAKE_AT_MEM_JOIN_INSERT">
-            <Parameter Name="M_ID" Mode="In" Type="String" />
+          <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
+          <Parameter Name="P_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="IDX_COUPON_NUMBER" Mode="In" Type="Int32" />
+            <Parameter Name="METHOD" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_COUPON_COMMON_CNT_Result">
@@ -1375,6 +1385,7 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_MEMBER_GRADE_DEL" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_MEMBER_GRADE_DEL" />
           <FunctionImportMapping FunctionImportName="SP_COUPON_MAKE_AT_MEM_JOIN_INSERT" FunctionName="AboutMeModel3.Store.SP_COUPON_MAKE_AT_MEM_JOIN_INSERT" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT" />
+          <FunctionImportMapping FunctionImportName="SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE" FunctionName="AboutMeModel3.Store.SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -103,6 +103,12 @@
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
+    <Reference Include="Wurfl">
+      <HintPath>..\packages\WURFL_Official_API.1.6.1.0\lib\Wurfl.dll</HintPath>
+    </Reference>
+    <Reference Include="Wurfl.Aspnet.Extensions">
+      <HintPath>..\packages\WURFL_Official_API.1.6.1.0\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Data\CommonCodes.cs" />
     <Compile Include="Helper\Config.cs" />
     <Compile Include="Helper\CookieSessionStore.cs" />
+    <Compile Include="Helper\DetectDeviceUtil.cs" />
     <Compile Include="Helper\ImageUpload.cs" />
     <Compile Include="Helper\MailSender.cs" />
     <Compile Include="Helper\MemberHelpher.cs" />
@@ -126,6 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App_Data\wurfl-latest.zip" />
+    <None Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
+    <None Include="App_Readme\WURFL-v.1.6.1.0.chm" />
+    <None Include="Introspector\Introspector.ashx" />
+    <None Include="Introspector\Introspector.pdf" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +148,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="COPYING.txt" />
+    <Content Include="WURFL AGPL License.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
