@@ -795,8 +795,12 @@ namespace AboutMe.Web.Front.Controllers
             //회원가입 쿠폰발행 + 가입 축하메일 발송
             if (strERR_CODE == "0")
             {
-                //회원가입시 가입쿠폰 자동발행  --송선우 제공
-               // _CoupoService.InsCouponMakeOnMemberJoin(M_ID);
+                //회원가입시 가입쿠폰 자동발행  --송선우 제공------------------------
+                if(_CoupoService.InsCouponMakeOnMemberJoin(M_ID)==1)
+                    userlog.UserLogSave("회원가입쿠폰발행-성공|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+                else
+                    userlog.UserLogSave("회원가입쿠폰발행-실패|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+
 
                 //신규회원가입 축하메일 발송 --------------------------
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
