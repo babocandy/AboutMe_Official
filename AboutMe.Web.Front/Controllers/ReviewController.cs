@@ -127,7 +127,7 @@ namespace AboutMe.Web.Front.Controllers
          * 체험단 리뷰 상세. 상품관련 이벤트 기획전 데이타 포함
          */
         [HttpPost]
-        public JsonResult GetReviewExpDetail(ReviewExpDetailJsonParam p)
+        public JsonResult GetReviewExpDetail(ReviewExpDetailParam p)
         {
             var pp = _ReviewService.GetReviewExpDetail(p);
             var jsonData = new { Detail = pp, Success = true, Postdata = p };

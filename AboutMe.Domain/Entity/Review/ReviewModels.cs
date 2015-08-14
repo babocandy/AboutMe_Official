@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using AboutMe.Domain.Entity.Review;
 using AboutMe.Domain.Entity.Product;
 
+
 using System.Text.RegularExpressions;
 
 namespace AboutMe.Domain.Entity.Review
@@ -78,7 +79,7 @@ namespace AboutMe.Domain.Entity.Review
     }
 
     //상품리뷰 목록
-    public class ReviewProductListViewModel
+    public partial class ReviewProductListViewModel
     {
         public static string SORT_PHOTO = "0";
         public static string SORT_LASTEST = "1";
@@ -99,7 +100,12 @@ namespace AboutMe.Domain.Entity.Review
 
         public List<SP_REVIEW_CATE_THEMA_SEL_Result> CategoryThema { get; set; }
 
-
+        //모바일용
+        public List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result> ReviewsMobile { get; set; }
+        public int? Pages { get; set; }
+        public ReviewListMobileUrlParam MobileParam { get; set; }
+        public int? PrevPage { get; set; }
+        public int? NextPage { get; set; }
     }
 
     /**
@@ -169,15 +175,14 @@ namespace AboutMe.Domain.Entity.Review
     /**
      * 체험단 리뷰 조회
      */
-    public class ReviewExpListViewModel
+    public class ReviewExpListViewModel 
     {
 
         public static string SORT_LASTEST = "0";
         public static string SORT_LIKE = "1";
 
-
+        //pc용
         public List<SP_REVIEW_EXP_SEL_Result> Reviews { get; set; }
-
         public int PageNo { get; set; }
         public int PageSize { get { return 10; } }
         public int Total { get; set; }
@@ -189,6 +194,13 @@ namespace AboutMe.Domain.Entity.Review
         public string CategoryCodeHealth { get; set; }
         public List<SP_CATEGORY_DEPTH_SEL_Result> CategorySelShop { get; set; }
 
+
+        //모바일용
+        public List<SP_REVIEW_EXP_MOBILE_SEL_Result> ReviewsMobile { get; set; }
+        public int? Pages { get; set; }
+        public ReviewListMobileUrlParam MobileParam { get; set; }
+        public int? PrevPage { get; set; }
+        public int? NextPage { get; set; }
 
     }
 
@@ -215,6 +227,29 @@ namespace AboutMe.Domain.Entity.Review
     }
 
     public partial class SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result 
+    {
+        public string COMMENT_TEXT
+        {
+            get
+            {
+
+                string _commentText = COMMENT;
+
+
+                string textOnly = string.Empty;
+                Regex tagRemove = new Regex(@"<[^>]*(>|$)");
+                Regex compressSpaces = new Regex(@"[\s\r\n]+");
+                Regex etc = new Regex(@"&(nbsp|amp|quot|lt|gt);");
+                textOnly = tagRemove.Replace(_commentText, string.Empty);
+                textOnly = compressSpaces.Replace(textOnly, " ");
+                textOnly = etc.Replace(textOnly, " ");
+
+                return textOnly;
+            }
+        }
+    }
+
+    public partial class SP_REVIEW_EXP_MOBILE_SEL_Result
     {
         public string COMMENT_TEXT
         {
@@ -276,7 +311,7 @@ namespace AboutMe.Domain.Entity.Review
         public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
     }
 
-    public class ReviewExpDetailJsonParam
+    public class ReviewExpDetailParam
     {
         public int? ARTICLE_IDX{ get; set; }
         public string P_CODE { get; set; }
@@ -292,6 +327,30 @@ namespace AboutMe.Domain.Entity.Review
             }
         }
     }
+
+
+/**
+ * 
+ * 모바일 관련
+ */
+
+    public class ReviewListMobileUrlParam
+    {
+        public ReviewListMobileUrlParam()
+        {
+            PAGE = 1;
+            PAGE_SIZE = 3;
+
+        }
+        public string CATE{ get; set; }
+        public string CATE_CODE { get; set; }
+
+        public int? PAGE { get; set; }
+        public int? PAGE_SIZE { get; set; }
+        public string SORT { get; set; }
+    }
+
+    //상품리뷰 목록
 
 
 }
