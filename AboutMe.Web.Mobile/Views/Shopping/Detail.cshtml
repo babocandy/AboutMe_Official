@@ -125,28 +125,8 @@
                         <span class="pos_right fcblue"><del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</strong>원</span>
                     </li>
                     
-                    
-                    <li>
-                        <span class="tit">임직원가</span>
-                        <span class="pos_right"><strong>23,000</strong>원</span>
-                    </li>
-                    <li>
-                        <span class="tit">VIP할인가</span>
-                        <span class="pos_right"><strong>23,000</strong>원</span>
-                    </li>
-                </ul>
-                <ul class="price_list v2">
-                    <li>
-                        <span class="tit">즉시할인</span>
-                        <span class="pos_right coupon">
-                            <strong>10%</strong>쿠폰
-                            <a href="#" class="btn btn_gray_h25 cupondown2 ml10">쿠폰 다운로드</a>
-                        </span>
-                    </li>
-                    <li>
-                        <span class="tit">포인트</span>
-                        <span class="pos_right"><strong>ⓟ 298</strong></span>
-                    </li>
+                    <!--쿠폰, 임직원가, 포인트 -->
+                    @{Html.RenderAction("ProductDetailSalePrice", "ChildActionPromotion", new { UsableDeviceGbn = "P", P_CODE = @ViewBag.P_CODE, ResultPrice = @Model.RESULT_PRICE });}
 
                     <li class="bbnone">
                         <span class="tit">구매수량</span>
