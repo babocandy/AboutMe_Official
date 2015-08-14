@@ -53,6 +53,15 @@ namespace AboutMe.Domain.Service.Coupon
 
         #endregion 
 
+
+        #region 모바일 버전 - 마이페이지 
+
+        //다운로드 처리  - pc버전 , 번호 인증 필요없는 쿠폰
+        int UpdateCouponDownload_Mobile_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod);
+
+
+        #endregion 
+
         #region 회원가입시 쿠폰발행
 
         //회원가입시 가입쿠폰발행 

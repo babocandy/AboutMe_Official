@@ -31,6 +31,11 @@ namespace AboutMe.Common.Data
         public static string HEALTH_NAME = "헬스";
         public static string SEL_SHOP_NAME = "셀렉샵";
 
+        public static string BEAUTY_MOBLE_PARAM = "beauty";
+        public static string HEALTH_MOBLE_PARAM = "health";
+        public static string SEL_SHOP_MOBLE_PARAM = "etc";
+        public static string THEMA_MOBLE_PARAM = "thema";
+
         public static Dictionary<String, String> List = new Dictionary<string, string>(){
             { BEAUTY, BEAUTY_NAME},
             { HEALTH, HEALTH_NAME},

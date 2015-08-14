@@ -33,6 +33,11 @@ namespace AboutMe.Web.Mobile.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Point.IPointService, AboutMe.Domain.Service.Point.PointService>(); //포인트
             container.RegisterType<AboutMe.Domain.Service.Display.IDisplayService, AboutMe.Domain.Service.Display.DisplayService>(); //전시,배너,팝업
 
+            container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //프로모션
+            container.RegisterType<AboutMe.Domain.Service.Coupon.ICouponService, AboutMe.Domain.Service.Coupon.CouponService>(); //쿠폰
+            container.RegisterType<AboutMe.Domain.Service.BizPromotion.IBizPromotion, AboutMe.Domain.Service.BizPromotion.BizPromotion>(); //비즈니스로직..쿠폰,프로모션을 같이 이용하는... 
+
+
             /**
            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminMemberService, AboutMe.Domain.Service.AdminEtc.AdminMemberService>();   //샘플용임
            container.RegisterType<AboutMe.Domain.Service.AdminProduct.IAdminProductService, AboutMe.Domain.Service.AdminProduct.AdminProductService>();
@@ -44,13 +49,11 @@ namespace AboutMe.Web.Mobile.DI_Core
            container.RegisterType<AboutMe.Domain.Service.Cart.ICartService, AboutMe.Domain.Service.Cart.CartService>(); //Cart
            container.RegisterType<AboutMe.Domain.Service.Order.IOrderService, AboutMe.Domain.Service.Order.OrderService>(); //Order
 
-           container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //Cart
+           container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //프로모션
            container.RegisterType<AboutMe.Domain.Service.Review.IReviewService, AboutMe.Domain.Service.Review.ReviewService>(); //Review
-           
-           container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
-           container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());
            **/
-
+           
+            
             container.RegisterType<AboutMe.Web.Mobile.Controllers.AccountController>(new InjectionConstructor());
 
             return container;

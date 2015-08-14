@@ -142,6 +142,14 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Wurfl, Version=1.6.1.0, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WURFL_Official_API.1.6.1.0\lib\Wurfl.dll</HintPath>
+    </Reference>
+    <Reference Include="Wurfl.Aspnet.Extensions, Version=1.6.1.0, Culture=neutral, PublicKeyToken=816aeec277aa13b9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WURFL_Official_API.1.6.1.0\lib\Wurfl.Aspnet.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -210,15 +218,19 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ChildActionDisplayerController.cs" />
     <Compile Include="Controllers\ChildActionProductController.cs" />
+    <Compile Include="Controllers\ChildActionPromotionController.cs" />
     <Compile Include="Controllers\CommonChildActionController.cs" />
     <Compile Include="Controllers\EtcController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberShipController.cs" />
+    <Compile Include="Controllers\MyCouponController.cs" />
     <Compile Include="Controllers\MyPage\MyPageController.cs" />
     <Compile Include="Controllers\MyPage\MyPointController.cs" />
     <Compile Include="Controllers\MyPage\MyProductController.cs" />
+    <Compile Include="Controllers\MyPage\MyReviewController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="DI_Core\Bootstraper.cs" />
@@ -463,6 +475,7 @@
     <Content Include="aboutCom\MailSkin\mail_temp_pswd.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="COPYING.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -491,6 +504,12 @@
     <Content Include="aboutCom\images\mypage\Thumbs.db" />
     <Content Include="aboutCom\images\review\Thumbs.db" />
     <Content Include="aboutCom\images\shopping\Thumbs.db" />
+    <Content Include="WURFL AGPL License.txt" />
+    <Content Include="Introspector\Introspector.pdf" />
+    <Content Include="Introspector\Introspector.ashx" />
+    <Content Include="App_Readme\WURFL-v.1.6.1.0.chm" />
+    <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
+    <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -585,10 +604,16 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Shared\_AboutMeLayoutB.cshtml" />
     <Content Include="Views\Order\Step1.cshtml" />
+    <Content Include="Views\ChildActionPromotion\ProductDetailSalePrice.cshtml" />
+    <Content Include="Views\Review\Product.cshtml" />
+    <Content Include="Views\Home\Test01.cshtml" />
+    <Content Include="Views\Review\Experience.cshtml" />
+    <Content Include="Views\Review\ExperienceDetail.cshtml" />
+    <Content Include="Views\MyReview\Ready.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\BaseMobile\" />
+    <Folder Include="Views\MyCoupon\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

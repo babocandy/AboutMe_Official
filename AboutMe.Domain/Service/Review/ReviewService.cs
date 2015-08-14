@@ -277,7 +277,7 @@ namespace AboutMe.Domain.Service.Review
         /**
          *  체험단리뷰 상세 + 기획전 이벤트
          */
-        public SP_REVIEW_EXP_DETAIL_Result GetReviewExpDetail(ReviewExpDetailJsonParam p)
+        public SP_REVIEW_EXP_DETAIL_Result GetReviewExpDetail(ReviewExpDetailParam p)
         {
             using (ReviewEntities context = new ReviewEntities())
             {
@@ -302,6 +302,47 @@ namespace AboutMe.Domain.Service.Review
             Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int> tp = new Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int>(lst, Convert.ToInt32(total.Value));
 
             return tp;
+        }
+
+
+        /*
+         * 모바일 상품리뷰 조회
+         */
+        public Tuple<List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>, int, int> GetReviewProductListMobile(ReviewListMobileUrlParam p)
+        {
+            List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result> lst = new List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>();
+
+            ObjectParameter total_page = new ObjectParameter("TOTAL_PAGE", typeof(int));
+            ObjectParameter total_item = new ObjectParameter("TOTAL_ITEM", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_PRODUCT_MOBILE_SEL(p.PAGE,p.PAGE_SIZE,p.CATE_CODE, p.SORT, total_page, total_item).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>, int, int> tp = new Tuple<List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>, int, int>(lst, Convert.ToInt32( total_page.Value) , Convert.ToInt32( total_item.Value));
+            return tp;
+
+        }
+
+        /*
+         * 모바일 체험된리뷰 조회
+         */
+        public Tuple<List<SP_REVIEW_EXP_MOBILE_SEL_Result>, int, int> GetReviewExpListMobile(ReviewListMobileUrlParam p)
+        {
+            List<SP_REVIEW_EXP_MOBILE_SEL_Result> lst = new List<SP_REVIEW_EXP_MOBILE_SEL_Result>();
+
+            ObjectParameter total_page = new ObjectParameter("TOTAL_PAGE", typeof(int));
+            ObjectParameter total_item = new ObjectParameter("TOTAL_ITEM", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_EXP_MOBILE_SEL(p.PAGE, p.PAGE_SIZE, p.CATE_CODE, p.SORT, total_page, total_item).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_EXP_MOBILE_SEL_Result>, int, int> tp = new Tuple<List<SP_REVIEW_EXP_MOBILE_SEL_Result>, int, int>(lst, Convert.ToInt32(total_page.Value), Convert.ToInt32(total_item.Value));
+            return tp;
+
         }
 
     }

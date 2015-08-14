@@ -32,7 +32,11 @@ namespace AboutMe.Domain.Service.Review
         Tuple<string, string> UpdateMyReviewExp(MyReviewExpInputViewModel p);
 
         Tuple<List<SP_REVIEW_EXP_SEL_Result>, int> GetReviewExpList(int? tailIdx, string categoryCode, string sort);
-        SP_REVIEW_EXP_DETAIL_Result GetReviewExpDetail(ReviewExpDetailJsonParam p);
+        SP_REVIEW_EXP_DETAIL_Result GetReviewExpDetail(ReviewExpDetailParam p);
         Tuple<List<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>, int> GetReviewExpByProductCode(ReviewListJsonParamInShopping p);
+
+
+        Tuple<List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>, int, int> GetReviewProductListMobile(ReviewListMobileUrlParam p);
+        Tuple<List<SP_REVIEW_EXP_MOBILE_SEL_Result>, int, int> GetReviewExpListMobile(ReviewListMobileUrlParam p);
     }
 }

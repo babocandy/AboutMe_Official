@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "MyReview";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+   <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+}
+
+<!--header-->
+@section Header{
+}
+<!--//header-->
+@section Scripts{
+    <script language="javascript">
+
+
+    </script>
+}
+<!--container-->
+@section Body{
+    <div class="wrap myreview">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <h2>나의 리뷰</h2>
+            </div>
+            <!-- 조회기간 -->
+            <div class="bullistb boxtypeb pb20">
+                <h3 class="info_sti">꼭 읽어주세요</h3>
+                <ul>
+                    <li>베스트 리뷰로 선정되면 2,000포인트 추가 지급 됩니다.</li>
+                    <li>포토리뷰 작성 시 1,000 포인트가 적립됩니다.</li>
+                    <li>텍스트 리뷰 작성 시 500 포인트가 적립니다.</li>
+                    <li>텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
+                    <li>구매확정 후 작성 가능합니다.</li>
+                    <li>
+                        리뷰 작성 시 개인정보는 가급적 노출하지 마시기 바랍니다.<br />
+                        (본 쇼핑몰에서는 책임지지 않습니다.)
+                    </li>
+                </ul>
+            </div>
+            <!-- //조회기간 -->
+            <!-- 리뷰 목록 -->
+            <div class="tabbox">
+                <ul class="tabs tabtypeb">
+                    <li class="cnt"><a href="#tab_review1">작성 가능한 리뷰</a></li>
+                    <li><a href="#tab_review2">작성한 리뷰</a></li>
+                </ul>
+            </div>
+            <!-- 작성 가능한 리뷰 -->
+            <div id="tab_review1" class="tab_content" style="display:block">
+                <h3>작성 가능한 리뷰</h3>
+                <ul class="review_list">
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                    <li class="product_info">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ico ico_best">BEST</span>
+                                <span class="tit">리얼 프레쉬 팩 [로즈]</span>
+                                <span class="price"><del>4,800원</del>4,000원</span>
+                            </div>
+                        </div>
+                        <div class="count_info">
+                            <span class="tit">수량 <strong>1</strong>개</span>
+                            <a href="#none" class="btn btn_gray_h30">리뷰쓰기</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- //작성 가능한 리뷰 -->
+        </div>
+        <!-- 리뷰 목록 -->
+        <!--//container-->
+            @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+</div>
+}
+<!--footer-->
+@section Footer{
+}
+<!--//footer-->
