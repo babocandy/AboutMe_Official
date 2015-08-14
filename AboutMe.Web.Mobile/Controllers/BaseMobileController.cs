@@ -84,7 +84,7 @@ namespace AboutMe.Web.Mobile.Controllers
 
             ///////////////////////////////////////////////////////////////////// device 디바이스 감지
 
-            string ThisHost = Request.Url.Host.ToString(); 
+            string ThisHost = Request.Url.Host.ToString();
             string ThisDevice = this.DetectingDevice();
             CookieSessionStore Sobj = new CookieSessionStore();
 
@@ -92,7 +92,7 @@ namespace AboutMe.Web.Mobile.Controllers
             {
                 if (Request["forced"] == null || Request["forced"].ToString() == "" || Sobj.GetSession("ForcedDevice") == null || Sobj.GetSession("ForcedDevice") == "")
                 {
-                    if(ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
+                    if (ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
                     {
                         Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
                         //RedirectToAction("Index", AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
@@ -103,9 +103,12 @@ namespace AboutMe.Web.Mobile.Controllers
                   
                   Sobj.SetSession("ForcedDevice", "Y");
                 }
-            }
+                else //forced=Y로 입력해서 들어왔으면 세션에 입력 
+                {
 
-            // MyInitialzie()
+                    Sobj.SetSession("ForcedDevice", "Y");
+                }
+            }
 
 
         }
