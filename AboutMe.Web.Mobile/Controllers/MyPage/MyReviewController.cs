@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 using AboutMe.Domain.Service.Review;
 using System.Diagnostics;
-using AboutMe.Web.Front.Models;
-using AboutMe.Web.Front.Common.Filters;
-using AboutMe.Web.Front.Common;
+
+using AboutMe.Web.Mobile.Common.Filters;
+using AboutMe.Web.Mobile.Common;
 using AboutMe.Domain.Entity.Review;
 using AboutMe.Common.Helper;
 using AboutMe.Common.Data;
@@ -16,11 +16,11 @@ using AboutMe.Common.Data;
 using AboutMe.Domain.Service.Product;
 using AboutMe.Domain.Entity.Product;
 
-namespace AboutMe.Web.Front.Controllers
+namespace AboutMe.Web.Mobile.Controllers
 {
     [RoutePrefix("MyPage/MyReview")]
     [Route("{action=Ready}")]
-    public class MyReviewController : BaseFrontController
+    public class MyReviewController : BaseMobileController
     {
         private IReviewService _ReviewService;
         private IProductService _service_pdt;
@@ -41,9 +41,9 @@ namespace AboutMe.Web.Front.Controllers
 
             var readyList = _ReviewService.GetMyReviewReadyList(_user_profile.M_ID);
             foreach (var item in readyList)
-            {
-                var tp = new Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>(_service_pdt.ViewProduct(item.P_CODE), item);
-
+            {                
+                var tp = new Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>( _service_pdt.ViewProduct(item.P_CODE) ,item);
+                
                 list.Add(tp);
             }
 

@@ -1,0 +1,65 @@
+﻿@model AboutMe.Domain.Entity.Review.SP_REVIEW_EXP_DETAIL_Result
+@using AboutMe.Web.Mobile.Controllers
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+    var mycontrl = ViewContext.Controller as ReviewController;
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+
+}
+
+
+<!--//header-->
+@section Scripts{
+    <script language="javascript">
+
+
+    </script>
+}
+
+@section Body{
+<div class="container popupwrap">
+    <div class="pop_head">
+        <a href="#" class="pop_close" onclick="self.close()">닫기</a>
+    </div>
+
+    <div class="prd_info">
+        <div class="photo"><img src="@string.Format("{0}{1}", mycontrl._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
+        <div class="detail">
+            <p class="prd_name">@Model.P_NAME</p>
+        </div>
+    </div>
+
+    <div class="subject_area">
+        <div class="tag">
+            @Model.TAG
+            <!--<span>#각질제거</span> <span>#각질제거</span> <span>#각질제거</span>-->
+        </div>
+        <p class="subject">@Model.TITLE</p>
+        <div class="writer_area">
+            <span class="date">@Model.INS_DATE_LBL</span>
+            <span class="hit">조회수 @Model.VIEW_CNT</span>
+        </div>
+    </div>
+
+    <div class="expreview_txt">
+        <div class="user_info">
+            <!--
+            피부타입별 class
+            건성 : dry
+            중성 : normal
+            지복합성 :oily
+            -->
+            <span class="skin @(Model.SKIN_TYPE_LBL)"></span>
+            <span class="age">@(Model.M_BIRTHDAY_LBL)대, @(Model.M_SEX_LBL)</span>
+            <strong class="id">KKON***</strong>
+        </div>
+        <div class="contxt">
+            @Html.Raw( Model.COMMENT)
+        </div>
+    </div>
+
+</div>
+}

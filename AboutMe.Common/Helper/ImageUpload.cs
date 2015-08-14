@@ -21,7 +21,7 @@ namespace AboutMe.Common.Helper
             UploadPath = "~/Upload/Temp/"; //이미지 업로드 경로 default /Upload/
             addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
             fileType = "image";  //파일 type:image/file
-            fileMaxSize = 5000000; //파일 max size 5MB
+            fileMaxSize = 10000000; //파일 max size 5MB
             Width = 500; //이미지 기본 사이즈
         }
         // set default size here

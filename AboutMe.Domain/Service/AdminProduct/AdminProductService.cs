@@ -224,11 +224,11 @@ namespace AboutMe.Domain.Service.AdminProduct
                         AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_SUB_TITLE, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
                     }
 
-                    //쿠폰 table에 상품 추가 
-                    using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
-                    {
-                        AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT(tb_product_info.P_CODE);
-                    }
+                    ////쿠폰 table에 상품 추가 
+                    //using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                    //{
+                    //    AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT(tb_product_info.P_CODE);
+                    //}
                     scope.Complete();
                 }
                 catch (Exception ex)
