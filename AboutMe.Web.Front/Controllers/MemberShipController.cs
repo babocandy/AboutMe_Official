@@ -88,8 +88,7 @@ namespace AboutMe.Web.Front.Controllers
             if (IS_SAVE_PW == "Y")
                 this.ViewBag.REMEMBER_PW = cookiesession.GetSecretCookie("REMEMBER_PW"); ;
 
-
-
+            
             //test ---------
             this.ViewBag.Request_Url_Host = Request.Url.Host;
             this.ViewBag.Request_Url_Authority = Request.Url.Authority;
