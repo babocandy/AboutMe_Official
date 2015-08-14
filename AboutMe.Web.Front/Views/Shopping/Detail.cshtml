@@ -4,9 +4,10 @@
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
 @{
+    string DomainUrl = "http://"+HttpContext.Current.Request.Url.Host;
     string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
     string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
-    string meta_big_img1 = "http://aboutme-dev.cstone.co.kr" + ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+    string meta_big_img1 = DomainUrl + ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
     string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
     string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
     string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
@@ -20,11 +21,11 @@
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/shoping.css" rel="stylesheet" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="상품테스트" />
+<meta property="og:title" content="상품 상세페이지" />
 <meta property="og:url" content="@preUrl" />
-<meta property="og:description" content="상품테스트" />
+<meta property="og:description" content="상품설명" />
 <meta property="og:image" content="@meta_big_img1" />
-<meta property="og:site_name" content="http://aboutme-dev.cstone.co.kr" />
+<meta property="og:site_name" content="@DomainUrl" />
 
 }
 
@@ -204,9 +205,8 @@
                         <div class="sns">
                             <ul>
                                 <li><a href="javascript:sendSns('facebook','@preUrl','@Model.P_NAME')"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
-                                <li><a href="http://www.facebook.com/sharer.php?u=@preUrl"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
-                                <li><a href="javascript:sendSns('kakaostory','http://aboutme-dev.cstone.co.kr/shopping/detail?pcode=56789325&page=1&pagesize=6&SORT_GBN=NEW&P_CATE_CODE=101100100&C_CATE_CODE=&L_CATE_CODE=&P_CATE_CODE_3DEPTH=&DEPTH_NAME3=','@Model.P_NAME')" "><img src=" />aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
-                                <li><a href="javascript:sendSns('kakaotalk','http://aboutme-dev.cstone.co.kr/shopping/detail?pcode=56789325&page=1&pagesize=6&SORT_GBN=NEW&P_CATE_CODE=101100100&C_CATE_CODE=&L_CATE_CODE=&P_CATE_CODE_3DEPTH=&DEPTH_NAME3=','@Model.P_NAME')" "><img src=" />aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
+                                <li><a href="javascript:sendSns('kakaostory','@preUrl','@Model.P_NAME')" ><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
+                                <li><a href="javascript:sendSns('kakaotalk','@preUrl','@Model.P_NAME')" ><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
                             </ul>
                         </div>
                         <!--//sns버튼-->
