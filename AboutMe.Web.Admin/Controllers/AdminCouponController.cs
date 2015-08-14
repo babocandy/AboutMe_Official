@@ -129,7 +129,7 @@ namespace AboutMe.Web.Admin.Controllers
             DateTime MasterFromDate, MasterToDate;
 
             bool DateValid = true;
-            @TempData["jsMessage"] = "";
+            TempData["jsMessage"] = "";
 
             if (ModelState.IsValid)
             {
@@ -144,12 +144,12 @@ namespace AboutMe.Web.Admin.Controllers
                     if(FixedPeriodFrom < MasterFromDate) //고정기간의 시작일자가 정책유효기간보다 먼저이면 에러
                     {
                         DateValid = false;
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 정책유효기간보다 나중이어야 합니다.')</script>";
+                        TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 정책유효기간보다 나중이어야 합니다.')</script>";
                     }
                     else if (FixedPeriodTo > MasterToDate)
                     {
                         DateValid = false;
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 종료일자는 정책유효기간 이내 이어야 합니다.')</script>";
+                        TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 종료일자는 정책유효기간 이내 이어야 합니다.')</script>";
                     }
                 }
 
@@ -231,7 +231,7 @@ namespace AboutMe.Web.Admin.Controllers
                 if (InputMasterFromDate < DateTime.Now )
                 {
                     PostedDataValid = false;
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('[정책유효기간 시작일시]를 현재 이전 으로 변경 할 수 없습니다.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('[정책유효기간 시작일시]를 현재 이전 으로 변경 할 수 없습니다.')</script>";
                 }
             }
 
@@ -240,7 +240,7 @@ namespace AboutMe.Web.Admin.Controllers
                 if ( InputMasterToDate < DateTime.Now)
                 {
                     PostedDataValid = false;
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('[정책유효기간 종료일시]를 현재 이전 으로 변경 할 수 없습니다.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('[정책유효기간 종료일시]를 현재 이전 으로 변경 할 수 없습니다.')</script>";
                 }
             }
 
@@ -254,12 +254,12 @@ namespace AboutMe.Web.Admin.Controllers
                 if (InputFixedPeriodFrom < InputMasterFromDate) //고정기간의 시작일자가 정책유효기간보다 먼저이면 에러
                 {
                     PostedDataValid = false;
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 정책유효기간 시작일자보다 나중이어야 합니다.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 시작일자는 정책유효기간 시작일자보다 나중이어야 합니다.')</script>";
                 }
                 else if (InputFixedPeriodTo > InputMasterToDate)
                 {
                     PostedDataValid = false;
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 종료일자는 정책유효기간 이내 이어야 합니다.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('고정기간의 종료일자는 정책유효기간 이내 이어야 합니다.')</script>";
                 }
             }
 
@@ -271,11 +271,11 @@ namespace AboutMe.Web.Admin.Controllers
                 if(OrgMasterFromDate != InputMasterFromDate)
                 {
                     PostedDataValid = false;
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 [정책유효기간 시작일시]를 변경 할 수 없습니다.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 [정책유효기간 시작일시]를 변경 할 수 없습니다.')</script>";
                 }else if (OrgMasterToDate > InputMasterToDate) 
                 {
                     PostedDataValid = false;
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 [정책유효기간 종료일시]는 연장만 가능합니다.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 [정책유효기간 종료일시]는 연장만 가능합니다.')</script>";
                 }
 
 
@@ -291,12 +291,12 @@ namespace AboutMe.Web.Admin.Controllers
                     if (OrgFixedPeriodFrom != InputFixedPeriodFrom ) //고정기간 시작일자가 변경되었으면 
                     {
                          PostedDataValid = false;
-                         @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 고정기간의 시작일시를 변경 할 수 없습니다.')</script>";
+                         TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 고정기간의 시작일시를 변경 할 수 없습니다.')</script>";
                     }
                     else if (InputFixedPeriodFrom < OrgFixedPeriodFrom)
                     {
                         PostedDataValid = false;
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 고정기간의 만료일시를 연장만 할 수 있습니다.')</script>";
+                        TempData["jsMessage"] = "<script language='javascript'>alert('발행된 쿠폰이 있으면 고정기간의 만료일시를 연장만 할 수 있습니다.')</script>";
                     }      
                 }
             } //발행된 쿠폰이 있으면 [END]======================================================================================================

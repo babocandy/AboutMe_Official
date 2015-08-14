@@ -73,7 +73,7 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 상품리뷰  수정
          */
-        public Tuple<string, string> ReviewPdtUpdate(AdminReviewSaveParam p)
+        public Tuple<string, string> ReviewPdtUpdate(AdminReviewUpdateViewModel p)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -104,7 +104,7 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 테마 수정
          */
-        public void ThemaUpdate(AdminReviewThemaParamToInputDB p)
+        public void ThemaUpdate(SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result p)
         {
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
