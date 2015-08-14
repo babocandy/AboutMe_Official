@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SP_REVIEW_PRODUCT_READY_SEL_Result>
+﻿@model List<Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>>
+@using AboutMe.Domain.Entity.Product
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Front.Controllers
 @{
@@ -51,7 +52,7 @@
                 <div class="reviewtab">
                     <ul class="">
                         <li class="cnt"><a href="#" onclick="return false;">작성 가능한 리뷰</a></li>
-                        <li><a href="/MyPage/MyReview/Complete">작성한 리뷰</a></li>
+                        <li><a href="@Url.Action("Complete", "MyReview")">작성한 리뷰</a></li>
                     </ul>
                 </div>
                 <!--//리뷰 탭-->
@@ -82,28 +83,53 @@
                                 {
                                     <tr>
                                         <td class="proimg">
-                                            <a href="#"><img src="@(myController._img_path_product)@(item.P_IMG1_S)" alt="상품 이미지" /></a>
+                                            <a href="#"><img src="@(myController._img_path_product)@(item.Item2.P_IMG1_S)" alt="상품 이미지" /></a>
                                         </td>
                                         <td class="product">
                                             <dl>
                                                 <dt>
                                                     <a href="#">
-                                                        <!--<span class="tag"><span class="ico_1_1">1+1</span></span>-->
-                                                        @item.P_NAME
+                                                        <span class="tag">
+                                                            @if (!string.IsNullOrEmpty(item.Item1.ICON_YN))
+                                                            {
+                                                                if (item.Item1.ICON_YN.IndexOf('B') != -1)
+                                                                { <text> <span class="ico ico_best">BEST</span></text> }
+                                                                if (item.Item1.ICON_YN.IndexOf('S') != -1)
+                                                                { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                                                if (item.Item1.ICON_YN.IndexOf('N') != -1)
+                                                                { <text> <span class="ico ico_new">NEW</span></text> }
+                                                                if (item.Item1.ICON_YN.IndexOf('C') != -1)
+                                                                { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(item.Item1.PMO_PRODUCT_CATEGORY))
+                                                            {
+                                                                if (item.Item1.PMO_PRODUCT_CATEGORY == "01")
+                                                                { <text> <span class="ico ico_set">SET</span></text> }
+                                                                if (item.Item1.PMO_PRODUCT_CATEGORY == "02")
+                                                                { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                                                if (item.Item1.PMO_PRODUCT_CATEGORY == "03")
+                                                                { <text> <span class="ico ico_time">TIME</span></text> }
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(item.Item1.COUPON_CODE))
+                                                            {
+                                                                <text> <span class="ico ico_coupon">COUPON</span></text>
+                                                            }
+                                                        </span>
+                                                        @item.Item2.P_NAME
                                                     </a>
                                                 </dt>
-                                                <dd>@Html.Raw(item.P_SUB_TITLE)</dd>
+                                                <dd>@Html.Raw(item.Item2.P_SUB_TITLE)</dd>
                                             </dl>
                                         </td>
                                         <td class="count">
-                                            <div class="relbox">@item.P_COUNT</div>
+                                            <div class="relbox">@item.Item2.P_COUNT</div>
                                         </td>
-                                        <td class="proprice"><strong>@string.Format("{0:#,##0}", @item.REAL_PAY_PRICE)</strong>원</td>
+                                       
 
                                         @{
                                     MyReviewPdtInputParam p = new MyReviewPdtInputParam();
-                                    p.ORDER_DETAIL_IDX = item.ORDER_DETAIL_IDX;
-                                    p.P_CODE = item.P_CODE;
+                                    p.ORDER_DETAIL_IDX = item.Item2.ORDER_DETAIL_IDX;
+                                    p.P_CODE = item.Item2.P_CODE;
                                         }
                                         <td><a href="#" class="btn_goreview" onclick="PopupCenter('@Url.Action("Write", "MyReview", p)', '', 780, 600); return false;">리뷰쓰기</a></td>
                                     </tr>

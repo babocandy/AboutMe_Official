@@ -13,6 +13,9 @@ using AboutMe.Domain.Entity.Review;
 using AboutMe.Common.Helper;
 using AboutMe.Common.Data;
 
+using AboutMe.Domain.Service.Product;
+using AboutMe.Domain.Entity.Product;
+
 namespace AboutMe.Web.Mobile.Controllers
 {
     [RoutePrefix("MyPage/MyReview")]
@@ -20,10 +23,12 @@ namespace AboutMe.Web.Mobile.Controllers
     public class MyReviewController : BaseMobileController
     {
         private IReviewService _ReviewService;
+        private IProductService _service_pdt;
 
-        public MyReviewController(IReviewService s)
+        public MyReviewController(IReviewService s, IProductService p)
         {
             this._ReviewService = s;
+            _service_pdt = p;
         }
 
         /**
@@ -32,7 +37,17 @@ namespace AboutMe.Web.Mobile.Controllers
         [CustomAuthorize]
         public ActionResult Ready()
         {
-            return View(_ReviewService.GetMyReviewReadyList(_user_profile.M_ID));
+            List<Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>> list = new List<Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>>();
+
+            var readyList = _ReviewService.GetMyReviewReadyList(_user_profile.M_ID);
+            foreach (var item in readyList)
+            {                
+                var tp = new Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>( _service_pdt.ViewProduct(item.P_CODE) ,item);
+                
+                list.Add(tp);
+            }
+
+            return View(list);
         }
 
 

@@ -13,7 +13,7 @@ namespace AboutMe.Domain.Entity.Review
     
     public partial class SP_REVIEW_CATE_THEMA_SEL_Result
     {
-        public string IDX { get; set; }
+        public int IDX { get; set; }
         public string TITLE { get; set; }
         public string TAG { get; set; }
         public string CODE { get; set; }
