@@ -90,18 +90,22 @@ namespace AboutMe.Web.Mobile.Controllers
 
             if (ThisDevice != "s" && ThisDevice != "t" && ThisDevice != "m") //스마트폰이나 태블릿이 아니라면 강제로 데스크탑 사이트로 이동.
             {
-                if (Request["forced"] == null || Request["forced"].ToString() == "" || Sobj.GetSession("ForcedDevice") == null || Sobj.GetSession("ForcedDevice") == "")
+                if (Request["forced"] == null || Request["forced"].ToString() == "" )
                 {
-                    if (ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
+                    if (Sobj.GetSession("ForcedDevice") == null || Sobj.GetSession("ForcedDevice") == "")
                     {
-                        Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
-                        //RedirectToAction("Index", AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                        if (ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
+                        {
+                            Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                            //RedirectToAction("Index", AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                        }
                     }
-                } 
-                else //forced=Y로 입력해서 들어왔으면 세션에 입력 
+
+                }
+                else if (Request["forced"] != null && Request["forced"] !="") //forced=Y로 입력해서 들어왔으면 세션에 입력 
                 {
                   
-                  Sobj.SetSession("ForcedDevice", "Y");
+                    Sobj.SetSession("ForcedDevice", "Y");
                 }
     
             }
