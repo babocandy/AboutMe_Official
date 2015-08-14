@@ -6,21 +6,16 @@ using System.Threading.Tasks;
 using System.Web;
 namespace AboutMe.Domain.Entity.AdminReview
 {
+    [Serializable] 
     public class AdminReviewRouteParam
     {
-        private int? _page;
-
-        public int? PAGE
+        public AdminReviewRouteParam()
         {
-            get
-            {
-                return _page ?? 1;
-            }
-            set
-            {
-                _page = value;
-            }
+            PAGE = 1;
         }
+
+
+        public int? PAGE { get; set; }
 
         public string SEARCH_KEY { get; set; }
         public string SEARCH_VALUE { get; set; }
@@ -41,13 +36,28 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string IS_DISPLAY_N { get; set; }
     }
 
+    public class AdminReviewUpdateViewModel : SP_ADMIN_REVIEW_PRODUCT_INFO_Result
+    {
+        /*
+        [Required(ErrorMessage = "*")]
+        public override string COMMENT { get; set; }
+        
+        public int? IDX { get; set; }
+        public string COMMENT { get; set; }
+        public string IS_DISPLAY{get;set;}
+        public string IS_BEST{get;set;}
+
+        public SP_ADMIN_REVIEW_PRODUCT_INFO_Result Review { get; set; }
+         * */
+    }
+    /*
     public class AdminReviewSaveParam{
         public int? IDX { get; set; }
         //public string COMMENT { get; set; }
         public string IS_DISPLAY{get;set;}
         public string IS_BEST{get;set;}
-    }
-
+    }*/
+    /*
     public class AdminReviewThemaParamToInputDB
     {
         public int? IDX { get; set; }
@@ -55,7 +65,7 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string IS_DISPLAY { get; set; }
         public string TAG { get; set; }
     }
-
+    */
 
     /**
      * 체험단리뷰 마스터 목록,수정,저장시
@@ -78,20 +88,12 @@ namespace AboutMe.Domain.Entity.AdminReview
 
     public class AdminReviewExpMasterListRouteParam
     {
-        private int? _page;
-        
-        public int? PAGE
+        public AdminReviewExpMasterListRouteParam()
         {
-            get
-            {
-                return _page ?? 1;
-            }
-            set
-            {
-                _page = value;
-            }
+            PAGE = 1;
         }
-
+     
+        public int? PAGE { get; set; }
         public string SEARCH_KEY { get; set; }
         public string SEARCH_VALUE { get; set; }
 

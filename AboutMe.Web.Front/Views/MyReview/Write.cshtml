@@ -155,7 +155,7 @@ else
                                     <span class="imgbox">
                                         <img id="previewImage" src="/aboutCom/images/review/write_imgnone.jpg" alt="" />
                                     </span>
-                                    <input type="text" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" value=""/>
+                                    <input type="text" readonly="readonly" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" value="" />
                                     @Html.TextBoxFor(m => m.UploadImage, new { type = "file",style="visibility:hidden;width:0px;", onchange="changeUploadFile(this);" })
                                     <a href="#" class="btn_white_w96h38 ml5" onclick="findUploadFile(); return false;">찾아보기</a>
                                 </td>

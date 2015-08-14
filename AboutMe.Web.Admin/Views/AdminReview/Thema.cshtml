@@ -67,8 +67,8 @@
                     <td>
                         <input type="hidden" name="IDX" value="@item.IDX" />
 
-                        <label for="sort1"><input type="radio" name="IS_DISPLAY" value="Y" id="sort1" @(item.IS_DISPLAY == "Y" ? "checked" : "")><span class="txt mr5">전시</span></label>
-                        <label for="sort2"><input type="radio" name="IS_DISPLAY" value="N" id="sort2" @(item.IS_DISPLAY == "N" ? "checked" : "")><span class="txt mr5">비전시</span></label>
+                        <label for="sort@(item.IDX)y"><input type="radio" name="IS_DISPLAY" value="Y" id="sort@(item.IDX)y" @(item.IS_DISPLAY == "Y" ? "checked" : "")><span class="txt mr5">전시</span></label>
+                        <label for="sort@(item.IDX)n"><input type="radio" name="IS_DISPLAY" value="N" id="sort@(item.IDX)n" @(item.IS_DISPLAY == "N" ? "checked" : "")><span class="txt mr5">비전시</span></label>
                     </td>
                 </tr>
             </table>

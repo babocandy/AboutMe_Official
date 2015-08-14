@@ -17,16 +17,7 @@ namespace AboutMe.Web.Admin.Models
         public IList<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> List { get; set; }
     }
 
-    public class AdminReviewUpdateViewModel
-    {
 
-        public int? IDX { get; set; }
-        public string COMMENT { get; set; }
-        public string IS_DISPLAY{get;set;}
-        public string IS_BEST{get;set;}
-
-        public SP_ADMIN_REVIEW_PRODUCT_INFO_Result Review { get; set; }
-    }
 
     public class AdminReviewThemaInputViewModel
     {
