@@ -5,11 +5,17 @@
 
 @{
 
-    @helper fSkinTroubleDisplay(string argCD="", string argNAME="")
+    @helper fSkinTroubleDisplay(string argCD = "", string argNAME = "", string argGRADE = "")
     {
+        string strNAME_GRADE = argNAME;
         string trouble_ico_class = "mo";
         string m_trouble_name = "보습";
         string str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+
+        if (@argGRADE=="S")
+        {
+            strNAME_GRADE = strNAME_GRADE +"[임직원]";
+        }
         switch (argCD)
         {
             case "101201100": m_trouble_name = "보습"; trouble_ico_class = "mo"; str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
@@ -45,7 +51,7 @@
                 <dt class="@trouble_ico_class">@m_trouble_name</dt>
                 <dd>
                     <p>
-                        <span>@argNAME</span>님,<br />
+                        <span>@strNAME_GRADE</span>님,<br />
                         @str_comment
                     </p>
                     <a href="/Shopping/Index?CATE_CD=@argCD" class="viewlink">상품보기 ></a>
