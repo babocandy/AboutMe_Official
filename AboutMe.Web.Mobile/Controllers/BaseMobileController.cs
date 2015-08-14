@@ -103,11 +103,7 @@ namespace AboutMe.Web.Mobile.Controllers
                   
                   Sobj.SetSession("ForcedDevice", "Y");
                 }
-                else //forced=Y로 입력해서 들어왔으면 세션에 입력 
-                {
-
-                    Sobj.SetSession("ForcedDevice", "Y");
-                }
+    
             }
 
 
