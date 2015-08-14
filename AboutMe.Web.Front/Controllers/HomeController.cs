@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 using System.Web.Script.Serialization;
 
-namespace AboutMe.Web.Front.Controllers
+namespace AboutMe.Web.Front.Controllers 
 {
 
         public class JsonpResult : JsonResult
@@ -97,12 +97,20 @@ namespace AboutMe.Web.Front.Controllers
     */
 
 //-------------------------------
-    public class HomeController : Controller
+    public class HomeController : BaseFrontController
     {
         public ActionResult Index()  //웹루트 메인 페이지  
         {
             return View();
         }
+
+        public ActionResult Test01()
+        {
+            string s = DetectingDevice();
+            ViewBag.device = s;
+            return View();
+        }
+
 
         public ActionResult About()
         {

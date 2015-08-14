@@ -1,0 +1,147 @@
+﻿@{
+
+    Layout = null;
+}
+
+<script language="javascript">
+
+    var local_COUPON_USE_STATUS = "";
+
+    //쿠폰다운로드 처리 : pc버전, 번호인증 필요없는 쿠폰만
+    function execCouponDownload(idx_coupon_number, use_status, num_check_tf) {
+        //console.log(tailIdx, categoryCode, sort);
+
+        if (use_status == "5" || local_COUPON_USE_STATUS == "5") {
+            alert("이미 다운로드 받은 쿠폰입니다.");
+        }
+
+        if ((use_status != "5" && local_COUPON_USE_STATUS == "") || num_check_tf == "Y") {
+
+            if (confirm("번호인증이 필요한 쿠폰입니다. 번호인증을 하시겠습니까>")) {
+                alert("기능 준비중");
+            }
+        }
+
+
+        if (use_status == "1" && local_COUPON_USE_STATUS == "") {
+
+            $.ajax({
+                url: "@(Url.Action("UpdateToUsableWithAjax", "MyCoupon"))",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    IdxCouponNumber: idx_coupon_number
+                    , UpdateMethod: "S"
+                },
+                success: function (data) {
+                    //alert(data.success);
+                    // console.log(data);
+
+                    if (data.ResultCode == 1) {
+
+                        //addItems(data.Reviews);
+                        COUPON_USE_STATUS = "5";
+                        alert("다운로드 되었습니다.");
+                        //$("#totalReview").text(data.Total);
+
+                    }
+                    else {
+                        alert(data.Msg);
+                    }
+                },
+                error: function (e) {
+                    //console.log(e);
+                }
+            });
+        }
+    }//end func
+
+</script>
+
+
+@if (ViewBag.M_ID == "") //로그인 안했으면
+{
+
+    @Html.Raw("</ul>");
+    @Html.Raw("<ul class=\"price_list v2\">");
+
+       if(ViewBag.NoLogin_Coupon_RateOrMoney != "")
+       {
+            string StrUnit = "", StrDC = "";
+            if (ViewBag.NoLogin_Coupon_RateOrMoney == "R")
+            {
+                StrDC = ViewBag.NoLogin_Coupon_Discount_Rate;
+                StrUnit = "%";
+            }
+            else
+            {
+                StrDC = ViewBag.NoLogin_Coupon_Discount_Money;
+                StrUnit = "원";
+            }
+
+        <li>
+            <span class="tit">즉시할인</span>
+            <span class="pos_right coupon">
+                <strong>@ViewBag.NoLogin_Coupon_Discount_Rate@StrUnit</strong>쿠폰
+            </span>
+        </li>
+       }
+ }
+else if (ViewBag.M_ID != "") // 로그인 했으면
+ {
+    if(ViewBag.MGbn == "S")
+    {
+        if (!String.IsNullOrEmpty(ViewBag.Login_Promotion_00_result_price.ToString()) && ViewBag.Login_Promotion_00_result_price.ToString() !="0")
+        {
+
+            <li>
+                <span class="tit">임직원가</span>
+                <span class="pos_right"><strong>@string.Format("{0:#,##0}",ViewBag.Login_Promotion_00_result_price)</strong>원</span>
+            </li>
+        }
+    }
+       //if(ViewBag.MGrade == "V") // 주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보여 주는것으로 한다
+    //{
+        if (!String.IsNullOrEmpty(ViewBag.Login_Promotion_03_result_price.ToString()) && ViewBag.Login_Promotion_03_result_price.ToString() !="0")
+        {
+            <li>
+                <span class="tit">VIP할인가</span>
+                <span class="pos_right"><strong>@ViewBag.Login_Promotion_03_result_price</strong>원</span>
+            </li>
+        }
+   // }
+
+     @Html.Raw("</ul>");
+     @Html.Raw("<ul class=\"price_list v2\">");
+
+     if (ViewBag.Login_Coupon_RateOrMoney != "")
+     {
+            string StrUnit = "" , StrDC = "";
+            if (ViewBag.Login_Coupon_RateOrMoney == "R")
+            {
+            StrDC = ViewBag.Login_Coupon_Discount_Rate;
+            StrUnit = "%";
+            }
+            else
+            {
+            StrDC = ViewBag.Login_Coupon_Discount_Money;
+            StrUnit = "원";
+            }
+        <li>
+            <span class="tit">즉시할인</span>
+            <span class="pos_right coupon">
+                <strong>>@ViewBag.Login_Coupon_Discount_Rate@StrUnit</strong>쿠폰
+                <a href="javascript:execCouponDownload(@ViewBag.Login_Coupon_Idx_Coupon_Number,'@ViewBag.Login_Coupon_USE_STATUS','@ViewBag.Login_Coupon_COUPON_NUM_CHECK_TF');"  class=" btn btn_gray_h25 cupondown2 ml10">쿠폰 다운로드</a>
+            </span>
+        </li>
+     }
+        <li>
+            <span class="tit">포인트</span>
+            <span class="pos_right"><strong>ⓟ @string.Format("{0:#,##0}",ViewBag.Login_Point)</strong></span>
+        </li>
+
+
+
+}
+
+

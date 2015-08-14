@@ -64,6 +64,13 @@ namespace AboutMe.Web.Mobile.Controllers
             return View();
         }
 
+        public ActionResult Test01()
+        {
+            string s = DetectingDevice();
+            ViewBag.device = s;
+            return View();
+        }
+
 
     } //class
 } //namespace
