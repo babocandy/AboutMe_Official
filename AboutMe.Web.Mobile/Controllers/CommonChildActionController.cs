@@ -32,6 +32,13 @@ namespace AboutMe.Web.Mobile.Controllers
             this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade(); //등급
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName(); //등급명
 
+            // this.ViewBag.RedirectUrl_HEADER = HttpContext.Request.Url.Authority;
+            this.ViewBag.RedirectUrl_HEADER = "/";
+            string strRedirectUrl_HEADER = HttpContext.Request.Url.OriginalString;
+            if (!strRedirectUrl_HEADER.Contains("/MemberShip/Login"))
+                this.ViewBag.RedirectUrl_HEADER = HttpContext.Request.Url.OriginalString;
+
+
             return View();
         }
 

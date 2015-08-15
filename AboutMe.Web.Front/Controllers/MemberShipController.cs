@@ -88,8 +88,7 @@ namespace AboutMe.Web.Front.Controllers
             if (IS_SAVE_PW == "Y")
                 this.ViewBag.REMEMBER_PW = cookiesession.GetSecretCookie("REMEMBER_PW"); ;
 
-
-
+            
             //test ---------
             this.ViewBag.Request_Url_Host = Request.Url.Host;
             this.ViewBag.Request_Url_Authority = Request.Url.Authority;
@@ -262,7 +261,7 @@ namespace AboutMe.Web.Front.Controllers
             
             //https ->  http 로 변경 적용시
             //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
-            return Redirect(uh.Action("Main", "Mypage", null, "http"));
+            return Redirect(uh.Action("Index", "Home", null, "http"));
             
         }
 
@@ -343,7 +342,7 @@ namespace AboutMe.Web.Front.Controllers
             //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
             //return Redirect(uh.Action("Login", "MemberShip", null, "http"));
 
-            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/Login';</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='" + strHTTP_DOMAIN + "/';</script>");
         }
 
 
