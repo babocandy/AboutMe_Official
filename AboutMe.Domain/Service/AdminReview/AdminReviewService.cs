@@ -37,11 +37,6 @@ namespace AboutMe.Domain.Service.AdminReview
                 end_dt = DateTime.ParseExact(p.SEL_DATE_TO, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             }
 
-            Debug.WriteLine("--------->");
-            Debug.WriteLine(start_dt);
-            Debug.WriteLine(end_dt);
-
-
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
                 list = context.SP_ADMIN_REVIEW_PRODUCT_SEL(p.PAGE, 10, p.SEARCH_KEY, p.SEARCH_VALUE, p.MEDIA_GBN_W,p.MEDIA_GBN_M, start_dt, end_dt, p.IS_PHOTO_Y, p.IS_PHOTO_N, p.IS_DISPLAY_Y, p.IS_DISPLAY_N, total).ToList();
@@ -73,7 +68,7 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 상품리뷰  수정
          */
-        public Tuple<string, string> ReviewPdtUpdate(AdminReviewUpdateViewModel p)
+        public Tuple<string, string> ReviewPdtUpdate(AdminReviewInputViewModel p)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -137,7 +132,7 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 체험단리뷰 마스터 저장
          */
-        public int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p)
+        public int? ReviewExpMasterInsert(AdminReviewExpMasterInputViewModel p)
         {
             ObjectParameter midx = new ObjectParameter("MASTER_IDX", typeof(int));
 

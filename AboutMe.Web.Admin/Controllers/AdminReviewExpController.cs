@@ -51,7 +51,7 @@ namespace AboutMe.Web.Admin.Controllers
             var tp = _service.ReviewExpMasterList(p);
 
             model.RouteParam = p;
-            model.List = tp.Item1;//ReviewHelper.ExpMasterForAmdinUser(tp.Item1);
+            model.List = tp.Item1;
             model.Total = tp.Item2;
 
             return View(model);
@@ -59,35 +59,28 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         [CustomAuthorize]
-        public ActionResult Create(AdminReviewRouteParam p)
+        public ActionResult Create(AdminReviewExpMasterListRouteParam p)
         {
-            AdminReviewExpCreateViewModel model = new AdminReviewExpCreateViewModel();
-            TempData["RouteData"] = p;
+            AdminReviewExpMasterInputViewModel model = new AdminReviewExpMasterInputViewModel();
+            model.RouteParam = p;
+            
             return View(model);
         }
 
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AdminReviewExpCreateViewModel model)
+        public ActionResult Create(AdminReviewExpMasterInputViewModel model, AdminReviewExpMasterListRouteParam p)
         {
+            model.RouteParam = p;
 
-            AdminReviewRouteParam p = TempData["RouteData"] as AdminReviewRouteParam;
-            TempData["RouteData"] = p;
             /**
              * 마스터 아이디 생성
              */
             if (ModelState.IsValid)
             {
-                AdminReviewExpMasterParamToInputDB m = new AdminReviewExpMasterParamToInputDB();
-                m.IS_AUTH = model.IS_AUTH;
-                m.P_CODE = model.P_CODE;
-                m.FROM_DATE = model.FROM_DATE;
-                m.TO_DATE = model.TO_DATE;
+                var midx = _service.ReviewExpMasterInsert(model);
 
-                var midx = _service.ReviewExpMasterInsert(m);
-
-                Debug.WriteLine("midx : " + midx);
 
                 if (midx != null)
                 {
@@ -189,9 +182,10 @@ namespace AboutMe.Web.Admin.Controllers
 
         [CustomAuthorize]
         [Route("Detail/{id:int}")]
-        public ActionResult Detail(int? id)
+        public ActionResult Detail(int? id, AdminReviewExpMasterListRouteParam p)
         {
             AdminReviewExpMasterDetailViewModel model = new AdminReviewExpMasterDetailViewModel();
+            model.RouteParam = p;
 
             if (id != null)
             {
@@ -205,7 +199,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost]
         [CustomAuthorize]
-        public ActionResult Update()
+        public ActionResult Update(AdminReviewExpMasterListRouteParam p)
         {
             int? idx = Convert.ToInt32( Request.Form["IDX"] );
             var isauth = Request.Form["IS_AUTH"];
@@ -216,7 +210,7 @@ namespace AboutMe.Web.Admin.Controllers
                 TempData["ResultNum"] = "0";
             }
 
-            return Redirect( Request.UrlReferrer.ToString() );
+            return RedirectToAction("Index", "AdminReviewExp", p);
         }
 
         [HttpPost]

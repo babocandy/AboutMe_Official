@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 
 using System.Diagnostics;
-using AboutMe.Web.Admin.Models;
 using AboutMe.Web.Admin.Common.Filters;
 using AboutMe.Web.Admin.Common;
 using AboutMe.Domain.Entity.AdminDisplay;
@@ -242,16 +241,19 @@ namespace AboutMe.Web.Admin.Controllers
 
 
 
-        /**
-         * 팝업 관리 전시
-         */
+        /****************************************************
+         * 
+         *              팝업 관리 전시
+         * 
+         * 
+         *********************************************************/
 
         //팝업조회
         [CustomAuthorize]
         public ActionResult Popup(PopupSearchParam parma)
         {
             AdminDisplayPopupListViewModel model = new AdminDisplayPopupListViewModel();
-            model.PopupList = _Service.PopupSel(parma).Item1;//PopupHelper.GetDataForDisplay(_Service.PopupSel(parma).Item1);
+            model.PopupList = _Service.PopupSel(parma).Item1;
             model.Total = _Service.PopupSel(parma).Item2;
             model.SearchParam = parma;
             return View(model);
@@ -261,61 +263,64 @@ namespace AboutMe.Web.Admin.Controllers
         [CustomAuthorize]
         public ActionResult PopupAdd(PopupSearchParam parma)
         {
-            AdminDisplayPopupSaveViewModel model = new AdminDisplayPopupSaveViewModel();
+            AdminDisplayPopupInputViewModel model = new AdminDisplayPopupInputViewModel();
             model.SearchParam = parma;
-            TempData["SearchParam"] = parma;
-            return View(model);
+            return View("PopupInput", model);
         }
 
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult PopupAdd(AdminDisplayPopupSaveViewModel model)
+        public ActionResult PopupAdd(AdminDisplayPopupInputViewModel model, PopupSearchParam parma)
         {
-
-            model.SearchParam = TempData["SearchParam"] as PopupSearchParam;
-            TempData["SearchParam"] = model.SearchParam;
+            model.SearchParam = parma;
 
             if (ModelState.IsValid)
             {
-                //
+                if (model.MOBILE_IMG_FILE != null)
+                {
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImageResult imageResult = imageUpload.RenameUploadFile(model.MOBILE_IMG_FILE);
 
-                PopupParam p = transViewModelToPopupParam(model);
+                    if (imageResult.Success)
+                    {
+                        model.MOBILE_IMG_NAME = imageResult.ImageName;
+                    }
+                }
 
+                if (model.WEB_IMG_FILE != null)
+                {
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImageResult imageResult = imageUpload.RenameUploadFile(model.WEB_IMG_FILE);
 
-                var tp = _Service.PopupAdd(p);
+                    if (imageResult.Success)
+                    {
+                        model.WEB_IMG_NAME = imageResult.ImageName;
+                    }
+                }
+
+                var tp = _Service.PopupAdd(model);
 
 
                 return RedirectToAction("Popup", "AdminDisplay");
             }
 
             ModelState.AddModelError("", "필수항목들(*)을 입력해주세요");
-            return View(model);
+            return View("PopupInput", model);
         }
 
-        //팝업 전시 수정
-        [HttpPost]
-        [CustomAuthorize]
-        public ActionResult PopupUpdateDisplay(PopupParam param)
-        {
-            var tp = _Service.PopupUpdateDisplay(param);
-            
-            TempData["ResultNum"] = tp.Item1;
-            TempData["ResultMessage"] = tp.Item2;
 
-            return Redirect(Request.UrlReferrer.ToString());
-        }
 
 
         //팝업수정
         [CustomAuthorize]
         public ActionResult PopupUpdate(int? id, PopupSearchParam parma)
         {
-            AdminDisplayPopupSaveViewModel model = new AdminDisplayPopupSaveViewModel();
+            AdminDisplayPopupInputViewModel model = new AdminDisplayPopupInputViewModel();
 
             var tp = _Service.PopupInfo(id);
 
-            model.IDX = tp.Item1.IDX.ToString();
+            model.IDX = tp.Item1.IDX;
             model.IS_DISPLAY = tp.Item1.IS_DISPLAY;
             
             model.MEDIA_GBN = tp.Item1.MEDIA_GBN;
@@ -338,42 +343,61 @@ namespace AboutMe.Web.Admin.Controllers
             model.DISPLAY_START = tp.Item1.DISPLAY_START != null ? tp.Item1.DISPLAY_START.Value.ToString("yyyy-MM-dd HH:mm") : "";
             model.DISPLAY_END = tp.Item1.DISPLAY_END != null ? tp.Item1.DISPLAY_END.Value.ToString("yyyy-MM-dd HH:mm") : "";
 
-            TempData["SearchParam"] = parma;
+
             model.SearchParam = parma;
 
-            return View(model);
+            return View("PopupInput", model);
         }
 
 
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult PopupUpdate(AdminDisplayPopupSaveViewModel model)
+        public ActionResult PopupUpdate(AdminDisplayPopupInputViewModel model, PopupSearchParam parma)
         {
 
-            model.SearchParam = TempData["SearchParam"] as PopupSearchParam;
-           
-            TempData["SearchParam"] = model.SearchParam;
+            model.SearchParam = parma;
 
             if (ModelState.IsValid)
             {
 
-                PopupParam p = transViewModelToPopupParam(model);
-                var tp = _Service.PopupUpdate(p);
+                if (model.MOBILE_IMG_FILE != null)
+                {
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImageResult imageResult = imageUpload.RenameUploadFile(model.MOBILE_IMG_FILE);
+
+                    if (imageResult.Success)
+                    {
+                        model.MOBILE_IMG_NAME = imageResult.ImageName;
+                    }
+                }
+
+                if (model.WEB_IMG_FILE != null)
+                {
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImageResult imageResult = imageUpload.RenameUploadFile(model.WEB_IMG_FILE);
+
+                    if (imageResult.Success)
+                    {
+                        model.WEB_IMG_NAME = imageResult.ImageName;
+                    }
+                }
+
+                var tp = _Service.PopupUpdate(model);
                 return RedirectToAction("Popup", "AdminDisplay", model.SearchParam);
             }
 
             ModelState.AddModelError("", "필수항목들(*)을 입력해주세요");
-            return View(model);
+            return View("PopupInput", model);
          }
 
 
-        //팝업삭제
+        //팝업 전시 여부 수정
         [HttpPost]
         [CustomAuthorize]
-        public ActionResult PopupRemove(PopupParam param)
+        public ActionResult PopupUpdateDisplay(AdminDisplayPopupInputViewModel model)
         {
-            var tp = _Service.PopupRemove(param);
+            var tp = _Service.PopupUpdateDisplay(model);
 
             TempData["ResultNum"] = tp.Item1;
             TempData["ResultMessage"] = tp.Item2;
@@ -381,55 +405,18 @@ namespace AboutMe.Web.Admin.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        //팝업 추가, 수정시 공통 사용
-        private PopupParam transViewModelToPopupParam(AdminDisplayPopupSaveViewModel model)
+        //팝업삭제
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult PopupRemove(AdminDisplayPopupInputViewModel m)
         {
-            PopupParam p = new PopupParam();
+            var tp = _Service.PopupRemove(m);
 
-            p.IDX = Convert.ToInt32( model.IDX );
-            p.MEDIA_GBN = model.MEDIA_GBN;
-            p.TITLE = model.TITLE;
+            TempData["ResultNum"] = tp.Item1;
+            TempData["ResultMessage"] = tp.Item2;
 
-            p.IS_DISPLAY = model.IS_DISPLAY;
-            p.DISPLAY_START = model.DISPLAY_START;
-            p.DISPLAY_END = model.DISPLAY_END;
-
-            p.POS_TOP = model.POS_TOP;
-            p.POS_LEFT = model.POS_LEFT;
-            p.SIZE_WIDTH = model.SIZE_WIDTH;
-            p.SIZE_HEIGHT = model.SIZE_HEIGHT;
-
-            p.WEB_IMG_NAME = model.WEB_IMG_NAME;
-            p.WEB_LINK = model.WEB_LINK;
-            p.WEB_TARGET = model.WEB_TARGET;
-
-            p.MOBILE_IMG_NAME = model.MOBILE_IMG_NAME;
-            p.MOBILE_LINK = model.MOBILE_LINK;
-
-            if (model.MOBILE_IMG_FILE != null)
-            {
-                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
-                ImageResult imageResult = imageUpload.RenameUploadFile(model.MOBILE_IMG_FILE);
-
-                if (imageResult.Success)
-                {
-                    p.MOBILE_IMG_NAME = imageResult.ImageName;
-                }
-            }
-
-            if (model.WEB_IMG_FILE != null)
-            {
-                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
-                ImageResult imageResult = imageUpload.RenameUploadFile(model.WEB_IMG_FILE);
-
-                if (imageResult.Success)
-                {
-                    p.WEB_IMG_NAME = imageResult.ImageName;
-                }
-            }
-
-
-            return p;
+            return Redirect(Request.UrlReferrer.ToString());
         }
+
     }
 }

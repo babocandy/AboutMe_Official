@@ -1,11 +1,26 @@
-﻿@model AboutMe.Web.Admin.Models.AdminDisplayPopupSaveViewModel
-           @using AboutMe.Web.Admin.Controllers
+﻿@model AboutMe.Domain.Entity.AdminDisplay.AdminDisplayPopupInputViewModel
+@using AboutMe.Web.Admin.Controllers
 @using AboutMe.Common.Data
 @{
-    Layout = null;
+   // ViewBag.Title = "PopupAdd";
+    //ViewBag.ButtonName = "등록";
+    //ViewBag.SubTitle = "팝업등록(팝업)";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
     var myContrl = ViewContext.Controller as BaseAdminController;
+    var mode = ViewContext.Controller.ValueProvider.GetValue("action").RawValue;
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
 }
 
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+    @{Html.RenderPartial("~/Views/AdminDisplay/_Display.cshtml");}
+}
+
+
+@section Body{
 <!--content-->
 <div class="content">
     <!--path-->
@@ -15,7 +30,7 @@
     <!--//path-->
 
     <div class="panel">
-        <h3 class="sub-header">@ViewBag.SubTitle</h3>
+        <h3 class="sub-header">@(mode.Equals("PopupAdd") ? "팝업등록" : "팝업수정")</h3>
     </div>
 
     <div class="panel">
@@ -24,11 +39,11 @@
             string ss = ViewBag.Title;
         }
 
-        @using (Html.BeginForm(ss, "AdminDisplay", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm(ss, "AdminDisplay", Model.SearchParam, FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
-            <input type="hidden" name="IDX" value="@Model.IDX"/>
+            <input type="hidden" name="IDX" value="@Model.IDX" />
             <table class="table table_row">
                 <colgroup><col width="20%" /><col width="30%" /><col width="20%" /><col width="*" /></colgroup>
                 <tr>
@@ -50,8 +65,8 @@
             var isdisplay_10 = Model.IS_DISPLAY == "Y" ? "checked" : null;
             var isdisplay_20 = Model.IS_DISPLAY == "N" ? "checked" : null;
                         }
-                        <label for="rdi5" class="mr15"><input type="radio" id="rdi5" name="IS_DISPLAY" value="Y" @isdisplay_10 /><span class="txt">전시</span></label>
-                        <label for="rdi6" class="mr15"><input type="radio" id="rdi6" name="IS_DISPLAY" value="N" @isdisplay_20 /><span class="txt">비전시</span></label>
+                        <label for="rdi10" class="mr15"><input type="radio" id="rdi10" name="IS_DISPLAY" value="Y" @isdisplay_10 /><span class="txt">전시</span></label>
+                        <label for="rdi11" class="mr15"><input type="radio" id="rdi11" name="IS_DISPLAY" value="N" @isdisplay_20 /><span class="txt">비전시</span></label>
                     </td>
                 </tr>
                 <tr>
@@ -73,12 +88,13 @@
                 <tr>
                     <th>웹팝업이미지<br />(gif, jpg)</th>
                     <td colspan="3">
-                    @if (!String.IsNullOrEmpty(Model.WEB_IMG_NAME))
-                    {
-                        <img src="@string.Format("{0}{1}", myContrl._img_path_display, Model.WEB_IMG_NAME)" alt="" style="height:90px" />
-                    }
+                        @if (!String.IsNullOrEmpty(Model.WEB_IMG_NAME))
+                        {
+                            <img src="@string.Format("{0}{1}", myContrl._img_path_display, Model.WEB_IMG_NAME)" alt="" style="height:90px" />
+                        }
                         <input type="hidden" class="wper100" name="WEB_IMG_NAME" value="@Model.WEB_IMG_NAME" />
-                    <input type="file" class="wper100" name="WEB_IMG_FILE" /></td>
+                        <input type="file" class="wper100" name="WEB_IMG_FILE" />
+                    </td>
                 </tr>
                 <tr>
                     <th>위치</th>
@@ -96,8 +112,8 @@
                     <th>WEB 링크(LINK)</th>
                     <td colspan="3">
                         <input type="text" class="input-sm mr10" style="width:50%" name="WEB_LINK" value="@Model.WEB_LINK" />
-                        <label for="rdi3" class="mr15"><input type="radio" id="rdi3" name="WEB_TARGET" value="@PopupCode.TARGET_SELF" @(Model.WEB_TARGET == PopupCode.TARGET_SELF ? "checked" : "") /><span class="txt">현재창</span></label>
-                        <label for="rdi4" class="mr15"><input type="radio" id="rdi4" name="WEB_TARGET" value="@PopupCode.TARGET_BLANK" @(Model.WEB_TARGET == PopupCode.TARGET_BLANK ? "checked" : "") /><span class="txt">새창</span></label>
+                        <label for="rdi5" class="mr15"><input type="radio" id="rdi5" name="WEB_TARGET" value="@PopupCode.TARGET_SELF" @(Model.WEB_TARGET == PopupCode.TARGET_SELF ? "checked" : "") /><span class="txt">현재창</span></label>
+                        <label for="rdi6" class="mr15"><input type="radio" id="rdi6" name="WEB_TARGET" value="@PopupCode.TARGET_BLANK" @(Model.WEB_TARGET == PopupCode.TARGET_BLANK ? "checked" : "") /><span class="txt">새창</span></label>
                     </td>
                 </tr>
                 <tr>
@@ -108,8 +124,9 @@
                             <img src="@string.Format("{0}{1}", myContrl._img_path_display, Model.MOBILE_IMG_NAME)" alt="" style="height:90px" />
                         }
                         <input type="hidden" class="wper100" name="MOBILE_IMG_NAME" value="@Model.MOBILE_IMG_NAME" />
-              
-                        <input type="file" class="wper100" name="MOBILE_IMG_FILE" /></td>
+
+                        <input type="file" class="wper100" name="MOBILE_IMG_FILE" />
+                    </td>
                 </tr>
                 <tr>
                     <th>MOBILE 링크(LINK)</th>
@@ -120,6 +137,8 @@
     </div>
 
     <div class="tac mt20">
-        <a href="#" class="btn btn-default small" onclick="document.frm.submit(); return false;">@ViewBag.ButtonName</a>
+        <a href="#" class="btn btn-default small" onclick="document.frm.submit(); return false;">@(mode.Equals("PopupAdd") ? "등록" : "수정")</a>
         <a href="@Url.Action("Popup", "AdminDisplay", @Model.SearchParam)" class="btn btn-success small">취소</a>
     </div>
+</div>
+}

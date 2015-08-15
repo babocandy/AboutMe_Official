@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewExpMasterListViewModel
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewExpMasterListViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
 @{
@@ -77,14 +77,14 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/">HOME</a> &gt; <a href="@(Url.Action("Index","AdminReview"))">컨텐츠관리 &gt; </a><strong>체험단리뷰관리</strong>
         </div>
         <!--//path-->
 
         <div class="panel">
             <h3 class="sub-header">체험단리뷰관리</h3>
             <div class="tar mb10">
-                <a href="@Url.Action("Create", "AdminReviewExp")" class="btn btn-default middium" onclick="">리뷰등록권한설정</a>
+                <a href="@Url.Action("Create", "AdminReviewExp", Model.RouteParam)" class="btn btn-default middium" onclick="">리뷰등록권한설정</a>
             </div>
             <div class="">
                 @using (Html.BeginForm("Index", "AdminReviewExp", FormMethod.Get, new { id = "frmSearch", name = "frmSearch" }))
@@ -178,7 +178,7 @@
                             <td>@item.IS_AUTH_LBL</td>
                             <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
                             <td>
-                                <a href="@Url.Action(string.Format("Detail/{0}", item.IDX), "AdminReviewExp")" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
+                                <a href="@Url.Action(string.Format("Detail/{0}", item.IDX), "AdminReviewExp", Model.RouteParam)" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
                                 <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
                             </td>
                         </tr>

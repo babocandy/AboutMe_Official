@@ -36,7 +36,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             var tp = _service.ReviewPdtList(p);
-            model.List = tp.Item1;//ReviewHelper.GetDataForAdminUser(tp.Item1);
+            model.List = tp.Item1;
             model.Total = tp.Item2;
             model.RouteParam = p;
 
@@ -51,7 +51,7 @@ namespace AboutMe.Web.Admin.Controllers
             
             var tp = _service.ReviewPdtInfo(id);
 
-            AdminReviewUpdateViewModel model = new AdminReviewUpdateViewModel();
+            AdminReviewInputViewModel model = new AdminReviewInputViewModel();
             model.IDX = tp.Item1.IDX;
             model.COMMENT = tp.Item1.COMMENT;
             model.IS_BEST = tp.Item1.IS_BEST;
@@ -74,7 +74,7 @@ namespace AboutMe.Web.Admin.Controllers
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
         [Route("Update/{id:int}")]
-        public ActionResult Update(AdminReviewUpdateViewModel model)
+        public ActionResult Update(AdminReviewInputViewModel model)
         {
             if (ModelState.IsValid)
             {

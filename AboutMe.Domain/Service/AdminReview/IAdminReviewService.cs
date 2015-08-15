@@ -15,13 +15,13 @@ namespace AboutMe.Domain.Service.AdminReview
     {
         Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> ReviewPdtList(AdminReviewRouteParam p);
         Tuple<SP_ADMIN_REVIEW_PRODUCT_INFO_Result, string, string> ReviewPdtInfo(int? idx);
-        Tuple<string, string> ReviewPdtUpdate(AdminReviewUpdateViewModel p);
+        Tuple<string, string> ReviewPdtUpdate(AdminReviewInputViewModel p);
 
         List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
         void ThemaUpdate(SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result p);
 
         Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int> ReviewExpMasterList(AdminReviewExpMasterListRouteParam p);
-        int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p);
+        int? ReviewExpMasterInsert(AdminReviewExpMasterInputViewModel p);
         void ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p);
 
         Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int> ReviewExpFindProductList(AdminReviewExpFindProductRouteParam p);

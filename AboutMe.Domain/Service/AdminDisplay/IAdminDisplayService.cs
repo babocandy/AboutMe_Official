@@ -18,11 +18,11 @@ namespace AboutMe.Domain.Service.AdminDisplay
         void RemoveOnlyImageInDisplayer(int? idx);
         List<SP_ADMIN_DISPLAY_SEL_Result> GetDisplayerList(DisplayerParam param);
 
-        Tuple<string, string> PopupAdd(PopupParam param);
+        Tuple<string, string> PopupAdd(AdminDisplayPopupInputViewModel param);
         Tuple<List<SP_ADMIN_POPUP_SEL_Result>, int> PopupSel(PopupSearchParam param);
-        Tuple<string, string> PopupUpdateDisplay(PopupParam param);
-        Tuple<string, string> PopupRemove(PopupParam param);
+        Tuple<string, string> PopupUpdateDisplay(AdminDisplayPopupInputViewModel param);
+        Tuple<string, string> PopupRemove(AdminDisplayPopupInputViewModel param);
         Tuple<SP_ADMIN_POPUP_INFO_Result, string, string> PopupInfo(int? idx);
-        Tuple<string, string> PopupUpdate(PopupParam param);
+        Tuple<string, string> PopupUpdate(AdminDisplayPopupInputViewModel param);
     }
 }

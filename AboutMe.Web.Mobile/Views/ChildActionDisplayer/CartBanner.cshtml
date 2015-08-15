@@ -5,11 +5,6 @@
 
     var myController = ViewContext.Controller as ChildActionDisplayerController;
 }
-<div class="bnr_area">
-
-    @foreach (var item in Model.List)
-    {
-        <div class="bnr"><img src="@(string.Format("{0}{1}", myController._img_path_display, item.IMG))" alt="" /></div>
-    }
-
+<div class="month_banner">
+    <img src="@(string.Format("{0}{1}", myController._img_path_display, Model.One.IMG))" alt="" />
 </div>

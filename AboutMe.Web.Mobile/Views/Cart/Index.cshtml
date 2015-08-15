@@ -215,11 +215,8 @@
 }
 
 @helper MiddleBanner()
-{
-    @*(Html.Action("CartBanner", "ChildActionDisplayer"))*@
-    <div class="month_banner">
-        <img src="/aboutCom/images/sample/thumb580.jpg" alt="" />
-    </div>
+{   
+    @Html.Action("CartBanner", "ChildActionDisplayer");
 }
 
 @helper NoMemberBanner()
@@ -249,133 +246,8 @@
 @*같이구매하면 좋은 상품*@
 @helper BuyAsGoods()
 {
-    @*    @(Html.Action("CartRelatePorducts", "ChildActionDisplayer")) *@
-
-
-        <div class="relative_product">
-            <p class="tit">같이 구매하면 좋은 상품</p>
-            <div class="btnarea">
-                <a href="javascript:" class="prev off"></a>
-                <a href="javascript:" class="next"></a>
-            </div>
-            <div class="relative_list_wrap">
-                <ul class="list">
-                    <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]1</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
-                            <!--<a href="javascript:" class="btn_cart layerpopshow">쇼핑백</a>
-                            장바구니 popup
-                            <div class="layerwrap" style="display:block;">
-                                <div class="dim"></div>
-                                <div class="layerpop cart">
-                                    <p class="tit">장바구니 담기</p>
-                                    <p class="txt">상품을 장바구니에 담았습니다.</p>
-                                    <div class="btn">
-                                        <a href="#" class="go_cart">장바구니가기</a>
-                                        <a href="javascript:" class="go_shopping layerpophide">계속쇼핑</a>
-                                    </div>
-                                </div>
-                            </div>
-                            //장바구니 popup-->
-                        </div>
-                    </li>
-                    <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]2</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:" class="btn_cart layerpopshow">쇼핑백</a>
-                            <a href="javascript:alert()" class="btn_cart">쇼핑백</a>
-                            <!--<a href="javascript:" class="btn_cart layerpopshow">쇼핑백</a>
-                            장바구니 popup
-                            <div class="layerwrap" style="display:block;">
-                                <div class="dim"></div>
-                                <div class="layerpop cart">
-                                    <p class="tit">장바구니 담기</p>
-                                    <p class="txt">상품을 장바구니에 담았습니다.</p>
-                                    <div class="btn">
-                                        <a href="#" class="go_cart">장바구니가기</a>
-                                        <a href="javascript:" class="go_shopping layerpophide">계속쇼핑</a>
-                                    </div>
-                                </div>
-                            </div>
-                            //장바구니 popup-->
-                        </div>
-                    </li>
-                    <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]3</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:" class="btn_cart layerpopshow">쇼핑백</a>
-                            <!--장바구니 popup-->
-                            <div class="layerwrap" style="display:block;">
-                                <div class="dim"></div>
-                                <div class="layerpop cart">
-                                    <p class="tit">장바구니 담기</p>
-                                    <p class="txt">상품을 장바구니에 담았습니다.</p>
-                                    <div class="btn">
-                                        <a href="#" class="go_cart">장바구니가기</a>
-                                        <a href="javascript:" class="go_shopping layerpophide">계속쇼핑</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--//장바구니 popup-->
-                        </div>
-                    </li>
-                    <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]4</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:" class="btn_cart layerpopshow">쇼핑백</a>
-                            <!--장바구니 popup-->
-                            <div class="layerwrap" style="display:block;">
-                                <div class="dim"></div>
-                                <div class="layerpop cart">
-                                    <p class="tit">장바구니 담기</p>
-                                    <p class="txt">상품을 장바구니에 담았습니다.</p>
-                                    <div class="btn">
-                                        <a href="#" class="go_cart">장바구니가기</a>
-                                        <a href="javascript:" class="go_shopping layerpophide">계속쇼핑</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--//장바구니 popup-->
-                        </div>
-                    </li>
-                    <li>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb240.jpg" alt="" /></div>
-                        <div class="detail">
-                            <span class="ptit">리얼 프레쉬팩[카란듈라]5</span>
-                            <span class="price"><del>5,000원</del><strong>4,000</strong>원</span>
-                            <a href="javascript:" class="btn_cart layerpopshow">쇼핑백</a>
-                            <!--장바구니 popup-->
-                            <div class="layerwrap" style="display:block;">
-                                <div class="dim"></div>
-                                <div class="layerpop cart">
-                                    <p class="tit">장바구니 담기</p>
-                                    <p class="txt">상품을 장바구니에 담았습니다.</p>
-                                    <div class="btn">
-                                        <a href="#" class="go_cart">장바구니가기</a>
-                                        <a href="javascript:" class="go_shopping layerpophide">계속쇼핑</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--//장바구니 popup-->
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-                <!--//같이 구매하면 좋은 상품-->
-    }
-
-
-
+    @Html.Action("CartRelatePorducts", "ChildActionDisplayer");
+}
             <!--container-->
             <div class="container">
                 <div class="h2_area">

@@ -65,10 +65,10 @@
         <!-- 리뷰 목록 -->
         <!-- 항목 선택 -->
         <ul class="tabs tabtypee">
-            <li class="@(Model.MobileParam.CATE == CategoryCode.BEAUTY_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewPdtListMobileUrlParam() { CATE = CategoryCode.BEAUTY_MOBLE_PARAM, CATE_CODE = CategoryCode.BEAUTY_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })" >뷰티</a></li>
-            <li class="@(Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewPdtListMobileUrlParam() { CATE = CategoryCode.HEALTH_MOBLE_PARAM, CATE_CODE = CategoryCode.HEALTH_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">헬스</a></li>
-            <li class="@(Model.MobileParam.CATE == CategoryCode.SEL_SHOP_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewPdtListMobileUrlParam() { CATE = CategoryCode.SEL_SHOP_MOBLE_PARAM, CATE_CODE = CategoryCode.SEL_SHOP_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">기타브랜드</a></li>
-            <li class="@(Model.MobileParam.CATE == CategoryCode.THEMA_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewPdtListMobileUrlParam() { CATE = CategoryCode.THEMA_MOBLE_PARAM, CATE_CODE = Model.CategoryThema[0].CODE, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">테마</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.BEAUTY_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.BEAUTY_MOBLE_PARAM, CATE_CODE = CategoryCode.BEAUTY_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })" >뷰티</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.HEALTH_MOBLE_PARAM, CATE_CODE = CategoryCode.HEALTH_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">헬스</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.SEL_SHOP_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.SEL_SHOP_MOBLE_PARAM, CATE_CODE = CategoryCode.SEL_SHOP_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">기타브랜드</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.THEMA_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.THEMA_MOBLE_PARAM, CATE_CODE = Model.CategoryThema[0].CODE, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">테마</a></li>
         </ul>
         <!-- //항목 선택 -->
         <!-- 뷰티 -->
