@@ -667,12 +667,20 @@ $(function(){
 	}); 
 
 	/*cart*/
-	$(".sliderh3_tit").toggle(function(){
-		$(this).parent().find(".sliderh3_con").slideDown();
-		$(this).addClass("on")
-	}, function(){
-		$(this).parent().find(".sliderh3_con").slideUp();
-		$(this).removeClass("on")
+	$(".sliderh3_tit").each(function(){
+		if( $(this).hasClass("on") ){
+			$(this).parent().find(".sliderh3_con").css({"display":"block"});
+		}
+	});
+	
+	$(".sliderh3_tit").click(function(){ 
+		if( $(this).hasClass("on") ){
+			$(this).parent().find(".sliderh3_con").slideUp();
+			$(this).removeClass("on")
+		}else{
+			$(this).parent().find(".sliderh3_con").slideDown();
+			$(this).addClass("on")
+		}
 	});
 
 

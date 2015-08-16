@@ -1,0 +1,106 @@
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_ORDERLIST
+
+<div class="product_list v2">
+    <h3>주문상품</h3>
+    <ul class="btnone">
+@{
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+}
+    @foreach (var item in Model.OrderList)
+    {
+        string imgUrl1 = productImgPath + "R120_" + item.P_IMG1_S;
+
+        <li>
+            <ul class="product_info">
+                <li class="photo_info">
+                    <div class="photo"><img src="@imgUrl1" alt="" /></div>
+                    <div class="detail">
+                        <a href="#none" class="del_ico"></a>
+                        @if (item.ICON_BEST == 1)
+                        {
+                             <span class="ico ico_best">BEST</span>
+                        }
+                        @if (item.ICON_SOLDOUT == 1)
+                        {
+                             <span class="ico ico_soldout">SOLD OUT</span>
+                        }
+                        @if (item.ICON_NEW == 1)
+                        {
+                             <span class="ico ico_new">NEW</span>
+                        }
+                        @if (item.ICON_CUSTOM == 1)
+                        {
+                             <span class="ico ico_custom">커스텀</span>
+                        }
+
+                        @if (item.ICON_SET == 1)
+                        {
+                             <span class="ico ico_set">SET</span>
+                        }
+                        @if (item.ICON_ONEPLUS == 1)
+                        {
+                             <span class="ico ico_1_1">1+1</span>
+                        }
+                        @if (item.ICON_TIME == 1)
+                        {
+                             <span class="ico ico_time">TIME</span>
+                        }
+
+                        @if (item.ICON_COUPON == 1)
+                        {
+                             <span class="ico ico_coupon">COUPON</span>
+                        }
+                        <span class="tit">@item.P_NAME</span>
+                        <span class="price">
+                        @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
+                        {
+                            <del>@item.SELLING_PRICE.ToString("#,#0.") 원</del>
+                        }
+                        @String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)원
+                        </span>
+                    </div>
+                </li>
+                @if (item.PROMOTION_TYPE == "02") //1+1
+                {
+                <li>1+1 상품</li>
+                }
+                @if (Model.UserProfile.M_GBN == "S") //임직원
+                {
+                <li>
+                    <span class="tit">임직원 금액</span>
+                    <span class="num">@item.EMP_DISCOUNT_PRICE.ToString("#,#0.")원</span>
+                </li>
+                }
+                <li class="count_info bbnone">
+                    <span class="tit">수량 <strong>@item.P_COUNT</strong>개</span>
+                    <span class="num">@item.ORDER_PRICE.ToString("#,#0.") 원</span>
+                </li>
+            @if (Model.UserProfile.IS_LOGIN == true)
+            {
+                <li class="coupon_choice bbnone">
+                    <span class="tit">쿠폰선택</span>
+                    <span class="selbox select_a" style="width:200px">
+                        <select name="" title="쿠폰선택">
+                            <option>회원가입 10,000 원 할인쿠폰</option>
+                            <option>회원가입 10,000 원 할인쿠폰</option>
+                            <option>회원가입 10,000 원 할인쿠폰</option>
+                            <option>회원가입 10,000 원 할인쿠폰</option>
+                        </select>
+                    </span>
+                </li>
+                <li class="count_info ">
+                    <span class="tit">쿠폰할인금액</span>
+                    <span class="num">@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_AMT)원</span>
+                </li>
+            }
+                <li class="point_info bbnone">
+                    <span class="point">예상포인트<strong>ⓟ @String.Format("{0:#,#0.}", item.POINT_ACCML)</strong></span>
+                    <span class="buy_amount">주문금액 <span class="fr"><strong>@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_PRICE)</strong>원</span></span>
+                </li>
+            </ul>
+        </li>
+    }
+
+
+    </ul>
+</div>
