@@ -1,0 +1,113 @@
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewExpArticleInputViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@using AboutMe.Web.Admin.Controllers
+@{
+    ViewBag.Title = "ArticleList";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    var myctl = ViewContext.Controller as AdminReviewExpController;
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+    <style>
+        .field-validation-error, .validation-summary-errors {
+            color: red;
+            font-size: 13px;
+            line-height: 15px;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script>
+        function update() {
+            if (confirm("수정하겠습니까?")) {
+                document.frm.submit();
+            }
+        }
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+            alert("수정되었습니다.");
+        }
+    </script>
+}
+
+
+@section Body{
+	<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>체험단리뷰관리</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3>체험리뷰관리</h3>
+    </div>
+@using (Html.BeginForm("ArticleUpdate", "AdminReviewExp", Model.RouteParam, FormMethod.Post, new { id = "frm", name = "frm" })) 
+{ 
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="VIEW_CNT" value="@Model.VIEW_CNT" />
+    <input type="hidden" name="P_CODE" value="@Model.P_CODE" />
+    <input type="hidden" name="M_ID" value="@Model.M_ID" />
+    <input type="hidden" name="TITLE" value="@Model.TITLE" />
+    <input type="hidden" name="TAG" value="@Model.TAG" />
+    <input type="hidden" name="COMMENT_HTML" value="@Model.COMMENT_HTML" />
+    <input type="hidden" name="IDX" value="@Model.IDX" />
+
+    <div class="panel">
+
+        <table class="table table_row">
+            <colgroup><col width="20%" /><col width="30%" /><col width="20%" /><col width="30%" /></colgroup>
+            <tr>
+                <th>상품명</th>
+                <td>@Model.P_CODE</td>
+                <th>ID</th>
+                <td>@Model.M_ID</td>
+            </tr>
+            <tr>
+                <th>제목</th>
+                <td>@Model.TITLE</td>
+                <th>태그</th>
+                <td>@Model.TAG</td>
+            </tr>
+            <tr>
+                <th>조회</th>
+                <td class="tar">@(string.Format("{0:#,##0}", Model.VIEW_CNT))</td>
+                <th>전시여부</th>
+                <td>
+                    <label for="sort1"><input type="radio" name="IS_DISPLAY" value="Y" id="sort1" @(Model.IS_DISPLAY == "Y" ? "checked" : "")><span class="txt mr5">전시</span></label>
+                    <label for="sort2"><input type="radio" name="IS_DISPLAY" value="N"  id="sort2" @(Model.IS_DISPLAY == "N" ? "checked" : "")><span class="txt mr5">비전시</span></label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    @Html.Raw(Model.COMMENT_HTML)
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+
+    <div class="panel tac">
+        <a style="width:100px" class="btn btn-default middium" href="#" onclick="update();return false;">수정</a>
+        <a style="width:100px" class="btn btn-primary  middium" href="@Url.Action("ArticleList", "AdminReviewExp", Model.RouteParam)"  >취소</a>
+    </div>
+
+    }
+</div>
+<!--//content-->
+}

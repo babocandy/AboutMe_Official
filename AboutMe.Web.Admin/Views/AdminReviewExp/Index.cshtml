@@ -1,6 +1,7 @@
 ﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewExpMasterListViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
+@using AboutMe.Domain.Entity.AdminReview
 @{
     ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
@@ -19,54 +20,66 @@
 
     <script>
 
-        function search_date_change(v) {
-            //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
 
-            var from_date, to_date;
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
 
-            if (v == "1") //-7 ~오늘
-            {
-                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
-                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-            }
-            else if (v == "2") //-15~오늘
-            {
-                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
-                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-            }
-            else if (v == "3") // -한달~오늘
-            {
-                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
-                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
-            }
-            else//  전체기간
-            {
-                from_date = '';
-                to_date = '';
-            }
-
-            $('#SEL_DATE_FROM').val(from_date);
-            $('#SEL_DATE_TO').val(to_date);
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+            
         }
 
 
-        //DatePicker
-        $(document).ready(function () {
-            // create DatePicker from input HTML element
-            $("#SEL_DATE_FROM").kendoDatePicker({
-                format: "yyyy-MM-dd"
-            });
+    function search_date_change(v) {
+        //v 1: 오늘 ,2: -7 ~오늘 ,3:-30~오늘, 4: -60일~오늘 ,5 : -90일~오늘
 
-            $("#SEL_DATE_TO").kendoDatePicker({
-                format: "yyyy-MM-dd"
-            });
+        var from_date, to_date;
+
+        if (v == "1") //-7 ~오늘
+        {
+            from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "2") //-15~오늘
+        {
+            from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (v == "3") // -한달~오늘
+        {
+            from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else//  전체기간
+        {
+            from_date = '';
+            to_date = '';
+        }
+
+        $('#SEL_DATE_FROM').val(from_date);
+        $('#SEL_DATE_TO').val(to_date);
+    }
+
+
+    //DatePicker
+    $(document).ready(function () {
+        // create DatePicker from input HTML element
+        $("#SEL_DATE_FROM").kendoDatePicker({
+            format: "yyyy-MM-dd"
         });
 
-        function searching() {
+        $("#SEL_DATE_TO").kendoDatePicker({
+            format: "yyyy-MM-dd"
+        });
+    });
 
-            document.frmSearch.submit();
+    function searching() {
 
-        }
+        document.frmSearch.submit();
+
+    }
+
 
     </script>
 
@@ -159,10 +172,10 @@
                         <th>No</th>
                         <th>상품명</th>
                         <th>상품코드</th>
-                        <th>기간▼</th>
+                        <th>기간</th>
                         <th>진행상태</th>
                         <th>권한여부</th>
-                        <th>설정일▼</th>
+                        <th>설정일</th>
                         <th>관리</th>
                     </tr>
                 </thead>
@@ -179,7 +192,7 @@
                             <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
                             <td>
                                 <a href="@Url.Action(string.Format("Detail/{0}", item.IDX), "AdminReviewExp", Model.RouteParam)" class="btn btn-success small" style="width:160px;">리뷰등록 권한 설정 보기</a><br />
-                                <a href="/cmsManager/contents/ex_review_view.html" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
+                                <a href="@Url.Action("ArticleList", "AdminReviewExp", new AdminReviewExpArticleRouteParam() { EXP_MASTER_IDX= item.IDX} )" class="btn btn-primary small mt5" style="width:160px;">체험단리뷰보기</a>
                             </td>
                         </tr>
                     }

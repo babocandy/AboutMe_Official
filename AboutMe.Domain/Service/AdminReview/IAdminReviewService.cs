@@ -31,5 +31,9 @@ namespace AboutMe.Domain.Service.AdminReview
         void ReviewExpMemberDelete(string memId, int? masterIdx);
         List<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> ReviewExpMemberList(int? midx);
         void ReviewExpMasterUpdate(int? idx, string isAuth);
+
+        Tuple<List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>, int, string, string> ReviewExpArticleList(AdminReviewExpArticleRouteParam p);
+        SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result ReviewExpArticleDetail(int? idx);
+        void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model);
     }
 }

@@ -204,6 +204,55 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string SEARCH_VALUE { get; set; }
     }
 
+    /**
+     * 체험단 관련 리뷰 글들 조회
+     */
+    public class AdminReviewExpArticleListViewModel
+    {
+        public AdminReviewExpArticleListViewModel()
+        {
+            Total = 0;
+        }
+
+        public int? EXP_MASTER_IDX { get; set; }
+
+        public List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result> List { get; set; }
+        public int? Total { get; set; }
+        public SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result MasterDetail { get; set; }
+
+        public AdminReviewExpArticleRouteParam RouteParam { get; set; }
+    }
+    //AdminReviewExpArticleInputViewModel
+    public partial class  SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result
+    {
+        public AdminReviewExpArticleRouteParam RouteParam { get; set; }
+
+
+        [AllowHtml]
+        public string COMMENT_HTML { get; set; }
+    }
+
+    /**
+     * 체험단 리뷰 글 라운트 파람
+       */
+    public class AdminReviewExpArticleRouteParam
+    {
+        public AdminReviewExpArticleRouteParam()
+        {
+            PAGE = 1;
+            PAGE_SIZE = 10;
+        }
+
+
+        public int? EXP_MASTER_IDX { get; set; }
+
+        public int? PAGE { get; set; }
+        public int PAGE_SIZE { get; set; }
+
+        public string SEARCH_KEY { get; set; }
+        public string SEARCH_VALUE { get; set; }
+
+    }
 
 
 }

@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * 
+ *  Admin Revew. Experience
+ *  writer      : dykim 
+ *  create date : 2015.08.15
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -113,8 +120,6 @@ namespace AboutMe.Web.Admin.Controllers
 
                             //connection String for xls file format.
 
-                           // excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
-                           //   fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
 
                             /** */
                             if (fileExtension == ".xls")
@@ -262,9 +267,11 @@ namespace AboutMe.Web.Admin.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-
+        /**
+         * 체험단 리뷰를 위한 상품선택
+         */
         [CustomAuthorize]
-        public ActionResult SelProduct(AdminReviewExpFindProductRouteParam p)
+        public ActionResult FindProduct(AdminReviewExpFindProductRouteParam p)
         {
             AdminReviewExpFindProductViewModel model = new AdminReviewExpFindProductViewModel();
 
@@ -274,6 +281,90 @@ namespace AboutMe.Web.Admin.Controllers
             model.Total = tp.Item2;
             model.RouteParam = p;
 
+            return View(model);
+        }
+
+
+        /**
+         * 체험단 관련 리뷰글들 조회
+         */
+        [CustomAuthorize]
+        public ActionResult ArticleList(AdminReviewExpArticleRouteParam p)
+        {
+            AdminReviewExpArticleListViewModel model = new AdminReviewExpArticleListViewModel();
+
+            if (p.EXP_MASTER_IDX == null)
+            {
+                TempData["ResultNum"] = "1";
+                TempData["ResultMessage"] = "조회시 체험단 고유아이디가 필요합니다.";
+                return   RedirectToAction("Index", "AdminReviewExp", p);
+            }
+
+            var tp = _service.ReviewExpArticleList(p);
+
+            if (tp.Item3 != "0")
+            {
+                TempData["ResultNum"] = tp.Item3;
+                TempData["ResultMessage"] = tp.Item4;
+                return RedirectToAction("Index", "AdminReviewExp", p);
+            }
+
+            model.RouteParam = p;
+            model.Total = tp.Item2;
+            model.List = tp.Item1;
+            model.MasterDetail = _service.ReviewExpMasterDetail(p.EXP_MASTER_IDX);
+
+
+
+            return View(model);
+        }
+
+        /**
+         * 체험단 관련 리뷰글들 수정
+         */
+        [CustomAuthorize]
+        [Route("ArticleUpdate/{id:int}")]
+        public ActionResult ArticleUpdate(int? id, AdminReviewExpArticleRouteParam p)
+        {
+            SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model = new SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result();
+            model.RouteParam = p;
+
+            var detail = _service.ReviewExpArticleDetail(id);
+
+            model.IDX = detail.IDX;
+            model.EXP_MASTER_IDX = detail.EXP_MASTER_IDX;
+            model.P_NAME = detail.P_NAME;
+            model.M_ID = detail.M_ID;
+            model.TITLE = detail.TITLE;
+            model.TAG = detail.TAG;
+            model.VIEW_CNT = detail.VIEW_CNT;
+            model.IS_DISPLAY = detail.IS_DISPLAY;
+            //model.COMMENT = detail.COMMENT;
+            model.COMMENT_HTML = detail.COMMENT;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        [ValidateAntiForgeryToken]
+        [Route("ArticleUpdate/{id:int}")]
+        public ActionResult ArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model, AdminReviewExpArticleRouteParam p)
+        {
+            model.RouteParam = p;
+
+            /**
+             * 마스터 아이디 생성
+             */
+            if (ModelState.IsValid)
+            {
+                _service.ReviewExpArticleUpdate(model);
+
+                TempData["ResultNum"] = "0";
+                return View(model);
+            }
+            TempData["ResultNum"] = "1";
+            TempData["ResultMessage"] = "에러가 발생했습니다.";
             return View(model);
         }
     }
