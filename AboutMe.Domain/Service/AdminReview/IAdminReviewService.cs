@@ -15,13 +15,13 @@ namespace AboutMe.Domain.Service.AdminReview
     {
         Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> ReviewPdtList(AdminReviewRouteParam p);
         Tuple<SP_ADMIN_REVIEW_PRODUCT_INFO_Result, string, string> ReviewPdtInfo(int? idx);
-        Tuple<string, string> ReviewPdtUpdate(AdminReviewSaveParam p);
+        Tuple<string, string> ReviewPdtUpdate(AdminReviewInputViewModel p);
 
         List<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> ThemaList();
-        void ThemaUpdate(AdminReviewThemaParamToInputDB p);
+        void ThemaUpdate(SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result p);
 
         Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int> ReviewExpMasterList(AdminReviewExpMasterListRouteParam p);
-        int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p);
+        int? ReviewExpMasterInsert(AdminReviewExpMasterInputViewModel p);
         void ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p);
 
         Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int> ReviewExpFindProductList(AdminReviewExpFindProductRouteParam p);
@@ -31,5 +31,9 @@ namespace AboutMe.Domain.Service.AdminReview
         void ReviewExpMemberDelete(string memId, int? masterIdx);
         List<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> ReviewExpMemberList(int? midx);
         void ReviewExpMasterUpdate(int? idx, string isAuth);
+
+        Tuple<List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>, int, string, string> ReviewExpArticleList(AdminReviewExpArticleRouteParam p);
+        SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result ReviewExpArticleDetail(int? idx);
+        void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model);
     }
 }

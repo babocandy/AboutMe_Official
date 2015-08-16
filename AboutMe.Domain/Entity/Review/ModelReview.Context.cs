@@ -299,5 +299,77 @@ namespace AboutMe.Domain.Entity.Review
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_EXP_SEL_Result>("SP_REVIEW_EXP_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter, tOTAL);
         }
+    
+        public virtual ObjectResult<SP_REVIEW_EXP_DETAIL_Result> SP_REVIEW_EXP_DETAIL(Nullable<int> iDX, string p_CODE)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_EXP_DETAIL_Result>("SP_REVIEW_EXP_DETAIL", iDXParameter, p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result> SP_REVIEW_EXP_IN_SHOPPING_DETAIL(string p_CODE, Nullable<int> pAGE, Nullable<int> pAGESIZE, ObjectParameter tOTAL)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result>("SP_REVIEW_EXP_IN_SHOPPING_DETAIL", p_CODEParameter, pAGEParameter, pAGESIZEParameter, tOTAL);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_PRODUCT_MOBILE_SEL_Result> SP_REVIEW_PRODUCT_MOBILE_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string cATE_CODE, string sORT, ObjectParameter tOTAL_PAGE, ObjectParameter tOTAL_ITEM)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            var sORTParameter = sORT != null ?
+                new ObjectParameter("SORT", sORT) :
+                new ObjectParameter("SORT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>("SP_REVIEW_PRODUCT_MOBILE_SEL", pAGEParameter, pAGESIZEParameter, cATE_CODEParameter, sORTParameter, tOTAL_PAGE, tOTAL_ITEM);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_EXP_MOBILE_SEL_Result> SP_REVIEW_EXP_MOBILE_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string cATE_CODE, string sORT, ObjectParameter tOTAL_PAGE, ObjectParameter tOTAL_ITEM)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            var sORTParameter = sORT != null ?
+                new ObjectParameter("SORT", sORT) :
+                new ObjectParameter("SORT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_EXP_MOBILE_SEL_Result>("SP_REVIEW_EXP_MOBILE_SEL", pAGEParameter, pAGESIZEParameter, cATE_CODEParameter, sORTParameter, tOTAL_PAGE, tOTAL_ITEM);
+        }
     }
 }

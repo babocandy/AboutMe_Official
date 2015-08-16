@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewListViewModel
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewListViewModel
 @using AboutMe.Common.Helper 
 @using AboutMe.Common.Data        
 @{
@@ -77,12 +77,12 @@
 <div class="content">
     <!--path-->
     <div class="path">
-        <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        <a href="/">HOME</a> &gt; <a href="@(Url.Action("Index","AdminReview"))">컨텐츠관리 &gt; </a><strong>상품리뷰관리</strong>
     </div>
     <!--//path-->
 
     <div class="panel">
-        <h3 class="sub-header">상품리뷰관리</h3>
+        <h3 class="sub-header">상품리뷰 관리</h3>
         <div class="tar mb10">
             <a href="#" class="btn btn-default middium" onclick="window.open('@Url.Action("Thema", "AdminReview")', 'window', 'width=800,height=700');" style="width:100px">테마설정</a>
         </div>

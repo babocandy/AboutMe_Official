@@ -36,7 +36,7 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             var tp = _service.ReviewPdtList(p);
-            model.List = tp.Item1;//ReviewHelper.GetDataForAdminUser(tp.Item1);
+            model.List = tp.Item1;
             model.Total = tp.Item2;
             model.RouteParam = p;
 
@@ -51,14 +51,20 @@ namespace AboutMe.Web.Admin.Controllers
             
             var tp = _service.ReviewPdtInfo(id);
 
-            AdminReviewUpdateViewModel model = new AdminReviewUpdateViewModel();
-            model.Review = tp.Item1;// ReviewHelper.GetDataForAdminUserSave()[0];
-            model.IDX = model.Review.IDX;
-            model.COMMENT = model.Review.COMMENT;
-            model.IS_BEST = model.Review.IS_BEST;
-            model.IS_DISPLAY = model.Review.IS_DISPLAY;
-
-            TempData["ReviewData"] = model.Review;
+            AdminReviewInputViewModel model = new AdminReviewInputViewModel();
+            model.IDX = tp.Item1.IDX;
+            model.COMMENT = tp.Item1.COMMENT;
+            model.IS_BEST = tp.Item1.IS_BEST;
+            model.IS_DISPLAY = tp.Item1.IS_DISPLAY;
+            model.P_CODE = tp.Item1.P_CODE;
+            model.P_NAME = tp.Item1.P_NAME;
+            model.MEDIA_GBN_LBL = tp.Item1.MEDIA_GBN_LBL;
+            model.M_ID = tp.Item1.M_ID;
+            model.M_NAME = tp.Item1.M_NAME;
+            model.ADD_IMAGE = tp.Item1.ADD_IMAGE;
+            model.SKIN_TYPE = tp.Item1.SKIN_TYPE;
+            model.SKIN_TYPE_LBL = tp.Item1.SKIN_TYPE_LBL;
+            model.INS_DATE = tp.Item1.INS_DATE;
 
             return View(model);
         }
@@ -67,22 +73,12 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(AdminReviewUpdateViewModel model)
+        [Route("Update/{id:int}")]
+        public ActionResult Update(AdminReviewInputViewModel model)
         {
-            model.Review = TempData["ReviewData"] as SP_ADMIN_REVIEW_PRODUCT_INFO_Result;
-           TempData["ReviewData"] = model.Review;
-
- 
-
             if (ModelState.IsValid)
             {
-                AdminReviewSaveParam p = new AdminReviewSaveParam();
-                p.IDX = model.IDX;
-                //p.COMMENT = model.COMMENT;
-                p.IS_DISPLAY = model.IS_DISPLAY;
-                p.IS_BEST = model.IS_BEST;
-
-                var tp = _service.ReviewPdtUpdate(p);
+                var tp = _service.ReviewPdtUpdate(model);
 
                 TempData["ResultNum"] = tp.Item1;
                 TempData["ResultMessage"] = tp.Item2;
@@ -90,6 +86,8 @@ namespace AboutMe.Web.Admin.Controllers
                 return View(model);
             }
 
+            TempData["ResultNum"] = "1";
+            TempData["ResultMessage"] = "수정실패했습니다.";
             return View(model);
         }
 
@@ -107,7 +105,7 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         [CustomAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveThema(AdminReviewThemaParamToInputDB p)
+         public ActionResult SaveThema(SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result p)
         {
 
             _service.ThemaUpdate(p);

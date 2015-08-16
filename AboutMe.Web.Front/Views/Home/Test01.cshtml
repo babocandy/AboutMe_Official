@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test01</title>
+</head>
+<body>
+    <h2>
+        Display Modes currently active
+        (@DisplayModeProvider.Instance.Modes.Count mode(s))
+    </h2>
+    <ul>
+        <li>
+            Device: <font color="red"> @ViewBag.device </font><br />
+            s : 스마트폰 , t : 태블릿 , d : 데스크탑 , m : Other mobile device 
+        </li>
+        @{
+            foreach (var d in DisplayModeProvider.Instance.Modes)
+            {
+                <li>
+                    @(String.IsNullOrEmpty(d.DisplayModeId)   ? "default" : d.DisplayModeId)
+            </li>
+            }
+        }
+    </ul>
+</body>
+</html>

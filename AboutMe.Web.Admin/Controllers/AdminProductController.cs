@@ -20,6 +20,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.UI;
 
+
 namespace AboutMe.Web.Admin.Controllers
 {
     [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
@@ -501,9 +502,8 @@ namespace AboutMe.Web.Admin.Controllers
                
                 #endregion
 
-                //_AdminProductService.InsertAdminProduct(P_CATE_CODE, C_CATE_CODE, L_CATE_CODE, P_CODE, P_NAME, P_COUNT, P_POINT, P_PRICE, SELLING_PRICE, DISCOUNT_RATE, DISCOUNT_P_POINT, DISCOUNT_PRICE, SOLDOUT_YN, P_INFO_DETAIL_WEB, P_INFO_DETAIL_MOBILE, MV_URL, P_COMPONENT_INFO, P_TAG, MAIN_IMG, OTHER_IMG1, OTHER_IMG2, OTHER_IMG3, OTHER_IMG4, OTHER_IMG5, DISPLAY_YN, ICON_YN, WITH_PRODUCT_LIST);
                 _AdminProductService.InsertAdminProduct(tb_product_info);
-                
+
                 #region 상품등록 로그 생성
                 var serialised = JsonConvert.SerializeObject(tb_product_info); //entity 클래스 값을 json 포맷으로 파싱
                 AdminLog adminlog = new AdminLog();
@@ -906,6 +906,49 @@ namespace AboutMe.Web.Admin.Controllers
             m.SearchOption = Param;
             m.TotalCount = _AdminProductService.GetAdminGiftCnt(Param);
             m.GiftList = _AdminProductService.GetAdminGiftList(Param).ToList();
+
+            #region SMS TEST
+            ////SMS 즉시 전송 샘플 
+            //AdminSMSModel adminSMSModel = new AdminSMSModel();
+            //adminSMSModel.SEND_MSG = "sms 내용"; //SMS 메시지
+            //adminSMSModel.HANDPHONE = "01000000000"; //발신번호
+            //AdminSMS adminsms = new AdminSMS();
+            //adminsms.AdminSmsSend(adminSMSModel);
+
+
+            ////SMS 예약 전송 샘플
+            //AdminSMSModel adminSMSModel = new AdminSMSModel();
+            //adminSMSModel.SMS_FLAG = "2"; //SMS 예약발송 플래그값:2
+            //adminSMSModel.SEND_TIME = "2015-08-13 18:17:00"; //예약시간
+            //adminSMSModel.SEND_MSG = "sms 내용";
+            //adminSMSModel.HANDPHONE = "01000000000"; //발신번호
+            //AdminSMS adminsms = new AdminSMS();
+            //adminsms.AdminSmsSend(adminSMSModel);
+
+
+
+            ////LMS 즉시 전송 샘플
+            //AdminSMSModel adminSMSModel = new AdminSMSModel();
+            //adminSMSModel.SMS_FLAG = "3";  //LMS 즉시발송 플래그값:3
+            //adminSMSModel.TITLE = "장문테스트입니다.";
+            //adminSMSModel.SEND_MSG = "LMS 내용";
+            //adminSMSModel.HANDPHONE = "01000000000"; //발신번호
+            //AdminSMS adminsms = new AdminSMS();
+            //adminsms.AdminSmsSend(adminSMSModel);
+
+
+
+            ////LMS 예약 전송 샘플
+            //AdminSMSModel adminSMSModel = new AdminSMSModel();
+            //adminSMSModel.SMS_FLAG = "4";  //LMS 예약발송 플래그값:4
+            //adminSMSModel.SEND_TIME = "2015-08-13 18:17:00"; //예약시간
+            //adminSMSModel.TITLE = "장문테스트입니다.";
+            //adminSMSModel.SEND_MSG = "LMS 내용";
+            //adminSMSModel.HANDPHONE = "01000000000"; //발신번호
+            //AdminSMS adminsms = new AdminSMS();
+            //adminsms.AdminSmsSend(adminSMSModel);
+            #endregion
+
             return View(m);
         }
         #endregion
@@ -1017,6 +1060,19 @@ namespace AboutMe.Web.Admin.Controllers
         }
         #endregion
 
+        #endregion
+
+        #region SMS 발송
+        //public void SMSIns(AdminSMSModel adminSMSModel)
+        //{
+        //    this._AdminProductService.InsertSMS(adminSMSModel);
+
+        //    #region SMS 등록 로그 생성
+        //    var serialised = JsonConvert.SerializeObject(adminSMSModel); //entity 클래스 값을 json 포맷으로 파싱
+        //    AdminLog adminlog = new AdminLog();
+        //    adminlog.AdminLogSave(serialised, "SMS 등록");
+        //    #endregion
+        //}
         #endregion
     }
 }

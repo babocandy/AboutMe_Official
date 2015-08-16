@@ -284,5 +284,52 @@ namespace AboutMe.Domain.Entity.AdminReview
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MASTER_UDATE", iDXParameter, iS_AUTHParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result> SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL(Nullable<int> iDX)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result>("SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL", iDXParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result> SP_ADMIN_REVIEW_EXP_ARTICLE_SEL(Nullable<int> eXP_MASTER_IDX, Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, ObjectParameter tOTAL, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        {
+            var eXP_MASTER_IDXParameter = eXP_MASTER_IDX.HasValue ?
+                new ObjectParameter("EXP_MASTER_IDX", eXP_MASTER_IDX) :
+                new ObjectParameter("EXP_MASTER_IDX", typeof(int));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_VALUEParameter = sEARCH_VALUE != null ?
+                new ObjectParameter("SEARCH_VALUE", sEARCH_VALUE) :
+                new ObjectParameter("SEARCH_VALUE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>("SP_ADMIN_REVIEW_EXP_ARTICLE_SEL", eXP_MASTER_IDXParameter, pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_VALUEParameter, tOTAL, rET_NUM, rET_MESSAGE);
+        }
+    
+        public virtual int SP_ADMIN_REVIEW_EXP_ARTICLE_UPDATE(Nullable<int> iDX, string iS_DISPLAY)
+        {
+            var iDXParameter = iDX.HasValue ?
+                new ObjectParameter("IDX", iDX) :
+                new ObjectParameter("IDX", typeof(int));
+    
+            var iS_DISPLAYParameter = iS_DISPLAY != null ?
+                new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
+                new ObjectParameter("IS_DISPLAY", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_ARTICLE_UPDATE", iDXParameter, iS_DISPLAYParameter);
+        }
     }
 }

@@ -3,9 +3,30 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
+@{
+    string DomainUrl = "http://"+HttpContext.Current.Request.Url.Host;
+    string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
+    string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+    string meta_big_img1 = DomainUrl + ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+    string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
+    string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
+    string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
+    string big_img3 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG2;
+    string thumb_img4 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG3;
+    string big_img4 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG3;
+
+    string preUrl = HttpContext.Current.Request.Url.ToString();
+}
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/shoping.css" rel="stylesheet" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="상품 상세페이지" />
+<meta property="og:url" content="@preUrl" />
+<meta property="og:description" content="상품설명" />
+<meta property="og:image" content="@meta_big_img1" />
+<meta property="og:site_name" content="@DomainUrl" />
+
 }
 
 
@@ -28,6 +49,95 @@
                 return;
             }
         }
+
+        function sendSns(sns, url, txt) {
+            var o;
+            var _url = encodeURIComponent(url);
+            var _txt = encodeURIComponent(txt);
+            var _br = encodeURIComponent('\r\n');
+
+            switch (sns) {
+                case 'facebook':
+                    o = {
+                        method: 'popup',
+                        url: 'http://www.facebook.com/sharer/sharer.php?u=' + _url
+                    };
+                    break;
+
+                case 'twitter':
+                    o = {
+                        method: 'popup',
+                        url: 'http://twitter.com/intent/tweet?text=' + _txt + '&url=' + _url
+                    };
+                    break;
+
+                case 'me2day':
+                    o = {
+                        method: 'popup',
+                        url: 'http://me2day.net/posts/new?new_post[body]=' + _txt + _br + _url + '&new_post[tags]=epiloum'
+                    };
+                    break;
+
+                case 'kakaotalk':
+                    o = {
+                        method: 'web2app',
+                        param: 'sendurl?msg=' + _txt + '&url=' + _url + '&type=link&apiver=2.0.1&appver=2.0&appid=dev.epiloum.net&appname=' + encodeURIComponent('Epiloum 개발노트'),
+                        a_store: 'itms-apps://itunes.apple.com/app/id362057947?mt=8',
+                        g_store: 'market://details?id=com.kakao.talk',
+                        a_proto: 'kakaolink://',
+                        g_proto: 'scheme=kakaolink;package=com.kakao.talk'
+                    };
+                    break;
+
+                case 'kakaostory':
+                    o = {
+                        method: 'web2app',
+                        param: 'posting?post=' + _txt + _br + _url + '&apiver=1.0&appver=2.0&appid=dev.epiloum.net&appname=' + encodeURIComponent('Epiloum 개발노트'),
+                        a_store: 'itms-apps://itunes.apple.com/app/id486244601?mt=8',
+                        g_store: 'market://details?id=com.kakao.story',
+                        a_proto: 'storylink://',
+                        g_proto: 'scheme=kakaolink;package=com.kakao.story'
+                    };
+                    break;
+
+                case 'band':
+                    o = {
+                        method: 'web2app',
+                        param: 'create/post?text=' + _txt + _br + _url,
+                        a_store: 'itms-apps://itunes.apple.com/app/id542613198?mt=8',
+                        g_store: 'market://details?id=com.nhn.android.band',
+                        a_proto: 'bandapp://',
+                        g_proto: 'scheme=bandapp;package=com.nhn.android.band'
+                    };
+                    break;
+
+                default:
+                    alert('지원하지 않는 SNS입니다.');
+                    return false;
+            }
+
+            switch (o.method) {
+                case 'popup':
+                    window.open(o.url);
+                    break;
+
+                case 'web2app':
+                    if (navigator.userAgent.match(/android/i)) {
+                        // Android
+                        setTimeout(function () { location.href = 'intent://' + o.param + '#Intent;' + o.g_proto + ';end' }, 100);
+                    }
+                    else if (navigator.userAgent.match(/(iphone)|(ipod)|(ipad)/i)) {
+                        // Apple
+                        setTimeout(function () { location.href = o.a_store; }, 200);
+                        setTimeout(function () { location.href = o.a_proto + o.param }, 100);
+                    }
+                    else {
+                        alert('이 기능은 모바일에서만 사용할 수 있습니다.');
+                    }
+                    break;
+            }
+        }
+
     </script>
 }
 
@@ -42,8 +152,8 @@
                 <!--path-->
                 <div class="path">
                     <a href="#" class="home"><img src="/aboutCom/images/common/ico_home.png" alt="home" /></a>
-                    <a href="#">Beauty</a>
-                    <span>클렌징</span>
+                    <a href="/shopping/Index?p_cate_code=@ViewBag.P_CATE_CODE">@ViewBag.DEPTH1_NAME</a>
+                    <span>@ViewBag.DEPTH2_NAME</span>
                 </div>
                 <!--//path-->
                 <!--detail_top : 상품정보-->
@@ -55,16 +165,6 @@
                             <!--
                             작은 이미지 클릭 시 큰 이미지가 보여집니다. 작은 썸네일의 기본크기는 64X64입니다.
                         -->
-                            @{
-                                string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
-                                string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
-                                string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
-                                string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
-                                string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
-                                string big_img3 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG2;
-                                string thumb_img4 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG3;
-                                string big_img4 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG3;                                                                
-                            }
                             <ul>
                                 @if (!string.IsNullOrEmpty(Model.MAIN_IMG))
                                 { <li class="cnt"><img src="@thumb_img1" data-pic="@big_img1" alt="" width="64" height="64"/><i></i></li>}
@@ -101,7 +201,15 @@
                     <!--//상품사진-->
                     <!--상품정보-->
                     <div class="info_area">
-                        @{ Html.RenderAction("SnsInProductDetail", "SNS", new { P_CODE = @ViewBag.P_CODE }); }
+                        <!--sns버튼-->
+                        <div class="sns">
+                            <ul>
+                                <li><a href="javascript:sendSns('facebook','@preUrl','@Model.P_NAME')"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
+                                <li><a href="javascript:sendSns('kakaostory','@preUrl','@Model.P_NAME')" ><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
+                                <li><a href="javascript:sendSns('kakaotalk','@preUrl','@Model.P_NAME')" ><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
+                            </ul>
+                        </div>
+                        <!--//sns버튼-->
                         
     
                         <!--상품해당아이콘-->
@@ -215,8 +323,18 @@
                                 @(new HtmlString(Model.P_INFO_DETAIL_WEB))
                             </div>
                             <!--//상세정보-->
+                            <div class="menu" id="tabCon2">
+                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                <!--tab메뉴-->
+                                <ul class="protabs">
+                                    <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                    <li class="cnt"><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                    <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                </ul>
+                                <!--//tab메뉴-->
+                            </div>
                             <!--리뷰 dykim-->
-                            @{Html.RenderAction("ProductInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
+                            @{Html.RenderAction("ReviewInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
                             <!--//리뷰-->
                             <!--품질보증-->
                             <div class="menu" id="tabCon3">

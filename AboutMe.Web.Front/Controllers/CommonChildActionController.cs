@@ -43,6 +43,12 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
 
+           // this.ViewBag.RedirectUrl_HEADER = HttpContext.Request.Url.Authority;
+            this.ViewBag.RedirectUrl_HEADER = "/";
+            string strRedirectUrl_HEADER = HttpContext.Request.Url.OriginalString;
+            if (!strRedirectUrl_HEADER.Contains("/MemberShip/Login"))
+                this.ViewBag.RedirectUrl_HEADER = HttpContext.Request.Url.OriginalString;
+
             return View();
         }
 

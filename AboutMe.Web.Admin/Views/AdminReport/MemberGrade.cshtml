@@ -1,0 +1,195 @@
+﻿@model IEnumerable<AboutMe.Domain.Entity.AdminFrontMember.SP_ADMIN_MEMBER_REPORT_GRADE_Result>
+
+@{
+    ViewBag.Title = "Report_MemberGrade";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+}
+
+@{
+
+    var QueryStr = "";
+    QueryStr = QueryStr + "YEAR=" + ViewBag.YEAR;
+
+    @helper fGradeName(string gradeCode)
+{
+    var grade_name = gradeCode;
+    switch (gradeCode)
+    {
+        case "B": grade_name = "브론즈";
+            break;
+        case "S": grade_name = "실버";
+            break;
+        case "G": grade_name = "골드";
+            break;
+        case "V": grade_name = "VIP";
+            break;
+
+    }
+    <div>@grade_name</div>
+}
+
+    @helper fIsRerireNAME(string is_retire)
+{
+    var isretire_name = is_retire;
+    switch (is_retire)
+    {
+        case "Y": isretire_name = "탈퇴";
+            break;
+        case "N": isretire_name = "활동";
+            break;
+
+    }
+    <div>@isretire_name</div>
+}
+
+    @helper fM_GBN_NAME(string m_gbn)
+{
+    var m_gbn_name = m_gbn;
+    switch (m_gbn)
+    {
+        case "A": m_gbn_name = "일반회원";
+            break;
+        case "S": m_gbn_name = "임직원";
+            break;
+
+    }
+    <div>@m_gbn_name</div>
+}
+
+    @helper fCheckBoxChecked(string strList, string strChked)
+{
+    if (strList != null && strChked != null)
+    {
+        if (strList.Contains(strChked))
+        {
+            @(" checked")
+        }
+    }
+
+}
+
+    @helper fSelectBoxSelecteded(string str1, string str2)
+{
+    if (str1 != null && str2 != null)
+    {
+        if (str1 == str2)
+        {
+            @(" selected")
+        }
+    }
+
+}
+
+}
+
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
+
+    <script>
+    function fGoSearch() {
+        var f = document.frmSearch;
+
+        f.action = "/AdminReport/MemberGrade";
+        f.method = "post";
+        f.submit();
+    }
+
+    </script>
+
+    
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">통계</a> &gt; <a href="#">회원통계</a> &gt; <strong>등급별 현황</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">등급별 현황</h3>
+            <div class="alert alert-info">
+                <ul>
+                    <li>· 현재 시점의 회원 등급별 현황 입니다.</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="panel">
+            <h4>회원-등급별 현황</h4>
+            <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+            <table class="table table_col">
+                <colgroup><col /><col /><col /><col /></colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col" class="brnone">등급</th>
+                        <th scope="col">일반회원</th>
+                        <th scope="col">임직원회원</th>
+                        <th scope="col" class="brnone">합계</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        if (Model.Count() < 1)
+                        {
+                            <tr>
+                                <td colspan="4" class="brnone">No data...</td>
+                            </tr>
+                        }
+                    }
+
+                    @{
+                        var normal_cnt = 0;
+                        var sfaff_cnt = 0;
+                        var total_cnt = 0;
+                        
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="brnone">@fGradeName(@item.M_GRADE)</td>
+                                <td>@item.MEMBER_CNT_NORMAL.ToString("#,##0")</td>
+                                <td>@item.MEMBER_CNT_STAFF.ToString("#,##0")</td>
+                                <td class="brnone">@item.MEMBER_CNT_ALL.ToString("#,##0")</td>
+                            </tr>
+                            normal_cnt = normal_cnt + item.MEMBER_CNT_NORMAL;
+                            sfaff_cnt = sfaff_cnt + item.MEMBER_CNT_STAFF;
+                            total_cnt = total_cnt + item.MEMBER_CNT_ALL;
+                        }
+
+                    }
+                    <tr>
+                        <th class="brnone">합계</th>
+                        <th>@normal_cnt.ToString("#,##0")</th>
+                        <th>@sfaff_cnt.ToString("#,##0")</th>
+                        <th class="brnone">@total_cnt.ToString("#,##0")</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+}
+

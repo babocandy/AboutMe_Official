@@ -140,17 +140,17 @@ namespace AboutMe.Web.Admin.Controllers
                         }
                         else
                         {
-                            @TempData["jsMessage"] = "<script language='javascript'>alert('Data Insert과정에서 오류가 발생하였습니다.')</script>";
+                            TempData["jsMessage"] = "<script language='javascript'>alert('Data Insert과정에서 오류가 발생하였습니다.')</script>";
                         }
                     }
                     else
                     {
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>";
+                        TempData["jsMessage"] = "<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>";
                     }
                 }
                 else
                 {
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>";
                 }
             }
 
@@ -238,17 +238,17 @@ namespace AboutMe.Web.Admin.Controllers
                         }
                         else
                         {
-                            @TempData["jsMessage"] = "<script language='javascript'>alert('Data Update과정에서 오류가 발생하였습니다.')</script>";
+                            TempData["jsMessage"] = "<script language='javascript'>alert('Data Update과정에서 오류가 발생하였습니다.')</script>";
                         }
                     }
                     else
                     {
-                        @TempData["jsMessage"] = "<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>";
+                        TempData["jsMessage"] = "<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>";
                     }
                 }
                 else 
                 {
-                    @TempData["jsMessage"] = "<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>";
+                    TempData["jsMessage"] = "<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>";
                 }
             }
 
@@ -371,17 +371,17 @@ namespace AboutMe.Web.Admin.Controllers
                         }
                         else
                         {
-                            @TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
+                            TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
                         }
                     }
                     else
                     {
-                        @TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
+                        TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
                     }
                 }
                 else
                 {
-                    @TempData["jsMessage"] = "-3"; //<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
+                    TempData["jsMessage"] = "-3"; //<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
                 }
             }
 
@@ -450,14 +450,14 @@ namespace AboutMe.Web.Admin.Controllers
                 {
                     if (DateTime.Compare(TargetDateFrom, orgin_date_from) != 0 && DateTime.Compare(DateTime.Now, TargetDateFrom) > 0) //시작일자를 현재보다 이전으로 변경하려 하면?
                     {
-                        @TempData["jsMessage"] = "-5"; //시작일시를 현재보다 이전으로 변경할 수 없습니다.           
+                        TempData["jsMessage"] = "-5"; //시작일시를 현재보다 이전으로 변경할 수 없습니다.           
                     }
                     else
                     {
                         if (DateTime.Compare(TargetDateTo, orgin_date_to) != 0 && DateTime.Compare(DateTime.Now, TargetDateTo) > 0) //종료일자를 현재보다 이전으로 변경하려 하면?
                         {
 
-                            @TempData["jsMessage"] = "-6"; //종료일시를 현재보다 이전으로 변경할 수 없습니다.   
+                            TempData["jsMessage"] = "-6"; //종료일시를 현재보다 이전으로 변경할 수 없습니다.   
                         }
                         else
                         {
@@ -473,7 +473,7 @@ namespace AboutMe.Web.Admin.Controllers
                                     if (_AdminPromotionService.GetAdminPromotionByProductForUpdateAllProductCheckDupSel(CdPromotionProduct, TargetDateFrom, TargetDateTo) != 0 || tb_promotion_by_product.USABLE_YN == "N")
                                     {
                                         FromToCheck = false;
-                                         @TempData["jsMessage"] = "-7"; //변경하고자 하는 시간대의 다른 프로모션들에 중복된 상품이 있습니다.
+                                         TempData["jsMessage"] = "-7"; //변경하고자 하는 시간대의 다른 프로모션들에 중복된 상품이 있습니다.
                                     }
                                 }
                                 
@@ -526,21 +526,21 @@ namespace AboutMe.Web.Admin.Controllers
                                     }
                                     else
                                     {
-                                        @TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
+                                        TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
                                     }
                                 }
       
                             }
                             else
                             {
-                                @TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
+                                TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('동일 날짜대에 같은 종류의 (활성화된)프로모션이 존재합니다.')</script>
                             }
                         }
                     }
                 }
                 else
                 {
-                    @TempData["jsMessage"] = "-3"; //<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
+                    TempData["jsMessage"] = "-3"; //<script language='javascript'>alert('프로모션 시작시간과 종료시간을 확인하세요.')</script>
                 }
                 
             }
@@ -721,17 +721,17 @@ namespace AboutMe.Web.Admin.Controllers
                         }
                         else
                         {
-                            @TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
+                            TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
                         }
                     }
                     else
                     {
-                        @TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
+                        TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
                     }
                 }
                 else
                 {
-                    @TempData["jsMessage"] = "-3"; //<script language='javascript'>alert('입력한 상품코드가 존재하지 않거나 비전시 상태입니다.')</script>
+                    TempData["jsMessage"] = "-3"; //<script language='javascript'>alert('입력한 상품코드가 존재하지 않거나 비전시 상태입니다.')</script>
                 }
             }
 
@@ -803,12 +803,12 @@ namespace AboutMe.Web.Admin.Controllers
                         }
                         else
                         {
-                            @TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
+                            TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
                         }
                   }
                   else
                   {
-                        @TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
+                        TempData["jsMessage"] = "-2"; //<script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
                   }
             }
 

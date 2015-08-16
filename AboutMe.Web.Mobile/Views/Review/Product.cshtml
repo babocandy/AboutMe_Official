@@ -1,0 +1,179 @@
+﻿@model AboutMe.Domain.Entity.Review.ReviewProductListViewModel
+@using AboutMe.Common.Data
+@using AboutMe.Domain.Entity.Review
+@using AboutMe.Web.Mobile.Controllers
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+    var mycontrl = ViewContext.Controller as ReviewController;
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/review.css" rel="stylesheet" />
+}
+
+<!--header-->
+@section Header{
+}
+<!--//header-->
+
+
+@section Scripts{
+    <script language="javascript">
+    function selectMenu() {
+
+    }
+
+    function selCate(my) {
+
+        var link = "@(Url.Action("Product", "Review"))?";
+        link += "CATE=@(Model.MobileParam.CATE)&";
+        link += "CATE_CODE=" + my.value+ "&";
+        link += "PAGE=@(Model.MobileParam.PAGE)&";
+        link += "PAGE_SIZE=@(Model.MobileParam.PAGE_SIZE)&";
+        link += "SORT=@Model.MobileParam.SORT";
+
+
+        window.location.href = link;
+    }
+
+    function selOrder(my) {
+
+        var link = "@(Url.Action("Product", "Review"))?";
+        link += "CATE=@(Model.MobileParam.CATE)&";
+        link += "CATE_CODE=@(Model.MobileParam.CATE_CODE)&";
+        link += "PAGE=@(Model.MobileParam.PAGE)&";
+        link += "PAGE_SIZE=@(Model.MobileParam.PAGE_SIZE)&";
+        link += "SORT=" + my.value;
+
+        window.location.href = link;
+    }
+
+    </script>
+}
+
+@section Body{
+<div class="wrap review">
+    @{Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        
+    <!--container-->
+    <div class="container pro">
+        <div class="h2_area">
+            <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+            <h2>상품리뷰</h2>
+        </div>
+        <!-- 리뷰 목록 -->
+        <!-- 항목 선택 -->
+        <ul class="tabs tabtypee">
+            <li class="@(Model.MobileParam.CATE == CategoryCode.BEAUTY_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.BEAUTY_MOBLE_PARAM, CATE_CODE = CategoryCode.BEAUTY_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })" >뷰티</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.HEALTH_MOBLE_PARAM, CATE_CODE = CategoryCode.HEALTH_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">헬스</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.SEL_SHOP_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.SEL_SHOP_MOBLE_PARAM, CATE_CODE = CategoryCode.SEL_SHOP_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">기타브랜드</a></li>
+            <li class="@(Model.MobileParam.CATE == CategoryCode.THEMA_MOBLE_PARAM ? "cnt" : "")" ><a href="@Url.Action("Product", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.THEMA_MOBLE_PARAM, CATE_CODE = Model.CategoryThema[0].CODE, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">테마</a></li>
+        </ul>
+        <!-- //항목 선택 -->
+        <!-- 뷰티 -->
+        <div id="beauty" class="tab_content" style="display:block">
+            <h3>뷰티</h3>
+            <div class="sub_top">
+                <form action="">
+                    <fieldset>
+                        <legend>뷰티상세 선택</legend>
+                        <span class="selbox select_a">
+
+
+                            <select title="세부항목 선택" onchange="selCate(this); return false;">
+                                @if (Model.CategoryBeauty.Count > 0)
+                                {
+                                    <option value="@CategoryCode.BEAUTY_DEFAULT">전체</option>
+                                    foreach (var item in Model.CategoryBeauty)
+                                    {
+                                        <option value="@item.CATE_CODE" @(item.CATE_CODE == Model.MobileParam.CATE_CODE ? "selected" : "" ) >@item.DEPTH2_NAME</option>
+                                    }                        
+                                }
+                                
+    
+                            </select>
+                        </span><!--
+                     --><span class="selbox select_a">
+                            <select title="정렬" onchange="selOrder(this); return false;">
+                                <option value="@(ReviewProductListViewModel.SORT_PHOTO)" @(Model.MobileParam.SORT == ReviewProductListViewModel.SORT_PHOTO ? "selected" : "")>포토리뷰순</option>
+                                <option value="@(ReviewProductListViewModel.SORT_LASTEST)" @(Model.MobileParam.SORT == ReviewProductListViewModel.SORT_LASTEST ? "selected" : "")>최신순</option>
+                            </select>
+                        </span>
+                    </fieldset>
+                </form>
+                <span class="information">리뷰 등록하면 <strong>500P</strong>,<br /> 포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
+                <p class="count">총 <strong>@Model.Total</strong>개 상품이 있습니다.</p>
+            </div>
+            <ul class="review_list">
+                <!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
+
+                @foreach (var item in Model.ReviewsMobile)
+                {
+                    <li class="product_info @(item.IS_BEST == "Y"? "best":"")">
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="tit">@item.P_NAME</span>
+                            </div>
+                        </div>
+                        <div class="review_info">
+                            <div class="rinfo_top">
+                                <p class="winfo"><span class="type dry"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
+                            </div>
+                            <div class="rinfo_con">
+                                <p class="txtbox">@item.COMMENT</p>
+
+@if (item.IS_PHOTO == "Y")
+{
+                                <div class="imgbox"><img src="@(string.Format("{0}{1}", mycontrl._img_path_review, item.ADD_IMAGE))" alt="" /></div>
+                                <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
+
+
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </li>
+                }
+
+
+            </ul>
+
+            <!--페이징-->
+            <div class="paging">
+                @{
+                    var prev = Model.MobileParam;
+                    prev.PAGE = Model.PrevPage;
+                }
+                <a href="@(Url.Action("Product", "Review", prev))" class="prev"></a>
+                <strong>@Model.MobileParam.PAGE</strong> / @Model.Pages
+
+                @{
+                    var next = Model.MobileParam;
+                    next.PAGE = Model.NextPage;
+                }
+                <a href="@(Url.Action("Product", "Review", next))" class="next"></a>
+            </div>
+            <!--//페이징-->
+        </div>
+        <!-- //뷰티 -->
+     
+        <!-- 리뷰 목록 -->
+    </div>
+    <!--//container-->
+
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+</div>
+}
+
+
+<!--footer-->
+@section Footer{
+}
+<!--//footer-->

@@ -79,5 +79,9 @@ namespace AboutMe.Domain.Service.AdminProduct
         void UpdateAdminGift(AdminGiftModel gift_update_model);
         
         #endregion
+
+       #region SMS 등록
+        void InsertSMS(AdminSMSModel adminSMSModel);
+       #endregion
     }
 }

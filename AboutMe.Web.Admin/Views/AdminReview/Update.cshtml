@@ -1,4 +1,5 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewUpdateViewModel
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewInputViewModel
+
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
 }
@@ -40,68 +41,66 @@
 @section Body{
 <!--content-->
 <div class="content">
-@using (Html.BeginForm("Update", "AdminReview", FormMethod.Post, new { id = "frm", name = "frm" }))
-{
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="IDX" value="@Model.IDX" />
-    <table class="table table_row" style="min-width:500px">
-        <tr>
-            <th>베스트지정</th>
-            @{
-                var isBestChk = Model.IS_BEST == "Y" ? "checked" : "";
-            }
-
-            <td colspan="3"><label for="chb1"><input type="checkbox" id="chb1" name="IS_BEST" value="Y" @isBestChk /></label></td>
-        </tr>
-        <tr>
-            <th>상품코드</th>
-            <td colspan="3">@Model.Review.P_CODE</td>
-        </tr>
-        <tr>
-            <th>상품명</th>
-            <td colspan="3">>@Model.Review.P_NAME</td>
-        </tr>
-        <tr>
-            <th>등록구분</th>
-            <td>@Model.Review.MEDIA_GBN_LBL</td>
-            <th>등록일</th>
-            <td>@Model.Review.INS_DATE.ToShortDateString()</td>
-        </tr>
-        <tr>
-            <th>회원ID/성명</th>
-            <td>@Model.Review.M_ID / @Model.Review.M_NAME</td>
-            <th>조회수</th>
-            <td>@Model.Review.VIEW_CNT</td>
-        </tr>
-        <tr>
-            <th>전시여부</th>
-            <td>
+    @using (Html.BeginForm("Update", "AdminReview", FormMethod.Post, new { id = "frm", name = "frm" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="IDX" value="@Model.IDX" />
+        <table class="table table_row" style="min-width:500px">
+            <tr>
+                <th>베스트지정</th>
                 @{
-                    var checked_0 = Model.IS_DISPLAY == "Y" ? "checked" : "";
-                    var checked_1 = Model.IS_DISPLAY == "N" ? "checked" : "";
+        var isBestChk = Model.IS_BEST == "Y" ? "checked" : "";
                 }
-                <label for="radi1"><input type="radio" name="IS_DISPLAY" id="radi1" value="Y" @checked_0 /><span class="txt mr5">전시</span></label>
-                <label for="radi1"><input type="radio" name="IS_DISPLAY" id="radi1" value="N" @checked_1 /><span class="txt mr5">비전시</span></label>
-            </td>
-        </tr>
-        <tr>
-            <th>피부타입</th>
-            <td>@Model.Review.SKIN_TYPE_LBL</td>
-            <th>포토이미지</th>
-            <td><img src="@Model.Review.ADD_IMAGE" alt="" /></td>
-        </tr>
-        <tr>
-            <th>내용</th>
-            <td colspan="3">@Model.Review.COMMENT</td>
-        </tr>
-    </table>
+
+                <td colspan="3"><label for="chb1"><input type="checkbox" id="chb1" name="IS_BEST" value="Y" @isBestChk /></label></td>
+            </tr>
+            <tr>
+                <th>상품코드</th>
+                <td colspan="3">@Model.P_CODE</td>
+            </tr>
+            <tr>
+                <th>상품명</th>
+                <td colspan="3">@Model.P_NAME</td>
+            </tr>
+            <tr>
+                <th>등록구분</th>
+                <td>@Model.MEDIA_GBN_LBL</td>
+                <th>등록일</th>
+                <td>@Model.INS_DATE.ToShortDateString()</td>
+            </tr>
+            <tr>
+                <th>회원ID/성명</th>
+                <td colspan="3">@Model.M_ID / @Model.M_NAME</td>
+            </tr>
+            <tr>
+                <th>전시여부</th>
+                <td colspan="3">
+                    @{
+        var checked_0 = Model.IS_DISPLAY == "Y" ? "checked" : "";
+        var checked_1 = Model.IS_DISPLAY == "N" ? "checked" : "";
+                    }
+                    <label for="radi1"><input type="radio" name="IS_DISPLAY" id="radi1" value="Y" @checked_0 /><span class="txt mr5">전시</span></label>
+                    <label for="radi2"><input type="radio" name="IS_DISPLAY" id="radi2" value="N" @checked_1 /><span class="txt mr5">비전시</span></label>
+                </td>
+            </tr>
+            <tr>
+                <th>피부타입</th>
+                <td>@Model.SKIN_TYPE_LBL</td>
+                <th>포토이미지</th>
+                <td><img src="@Model.ADD_IMAGE" alt="" /></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td colspan="3">@Model.COMMENT</td>
+            </tr>
+        </table>
 
 
-    <div class="tac mt20">
-        <a class="btn btn-default small" href="#" onclick="update(this.parentElement.parentElement);return false;">수정</a>
-        <a class="btn btn-success small" href="#" onclick="closePopup(); return false;">취소</a>
-    </div>
-}
+        <div class="tac mt20">
+            <a class="btn btn-default small" href="#" onclick="update(this.parentElement.parentElement);return false;">수정</a>
+            <a class="btn btn-success small" href="#" onclick="closePopup(); return false;">취소</a>
+        </div>
+    }
 </div>
 <!--//content-->
 }

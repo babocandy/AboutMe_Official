@@ -306,6 +306,21 @@
                 </ul>
             break;
 
+      case "AdminReport":  //통계
+    <h2>통계</h2>
+    <ul class="nav nav-sidebar depth1">
+        <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+        <li @fLeftMenuCSSOn("AdminReport")>
+            <a href="#" class="menu">회원통계</a>
+            <ul class="depth2">
+                <li @fLeftMenuCSSOn("MemberGrade")><a href="/AdminReport/MemberGrade">회원-등급별 현황</a></li>
+                <li @fLeftMenuCSSOn("MemberMonthly")><a href="/AdminReport/MemberMonthly">회원-가입/탈퇴 현황</a></li>
+            </ul>
+        </li>
+
+    </ul>
+            break;
+
     } //switch
 
 } //fLeftMenuMake()

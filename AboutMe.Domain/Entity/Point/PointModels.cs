@@ -19,4 +19,13 @@ namespace AboutMe.Domain.Entity.Point
         public string M_ID { get; set; }
         
     }
+
+    public class MyPointListViewModel
+    {
+        public List<SP_POINT_MY_HISTORY_SEL_Result> List { get; set; }
+        public int Total { get; set; }
+        public int MyTotalPoint { get; set; }
+        public string MyName { get; set; }
+        public MyPointRouteParam Route { get; set; }
+    }
 }

@@ -1,4 +1,4 @@
-﻿@model AboutMe.Web.Admin.Models.AdminReviewExpMasterDetailViewModel
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewExpMasterDetailViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
 @{
@@ -77,7 +77,7 @@
             <tr>
                 <th>회원지정</th>
                 <td>
-@using (Html.BeginForm("AddIds", "AdminReviewExp", FormMethod.Post, new { name = "frmAddIds" }))
+@using (Html.BeginForm("AddIds", "AdminReviewExp", Model.RouteParam, FormMethod.Post, new { name = "frmAddIds" }))
 {
     
     <span> ID 추가( 공백없이 구분자 콤마 , )</span><br />
@@ -86,7 +86,7 @@
     <a href="#" onclick="add(); return false;" class="btn btn-default small">추가</a> <br /><br />
 }
 
-@using (Html.BeginForm("DelIds", "AdminReviewExp", FormMethod.Post, new { name = "frmDelIds" }))
+@using (Html.BeginForm("DelIds", "AdminReviewExp", Model.RouteParam, FormMethod.Post, new { name = "frmDelIds" }))
 {    
     <span>ID 삭제( 공백없이 구분자 콤마 , )</span><br />
     <input type="hidden" name="IDX" value="@Model.IDX" />
@@ -133,7 +133,7 @@
             <tr>
                 <th>권한유지</th>
                 <td>
-@using (Html.BeginForm("Update", "AdminReviewExp", FormMethod.Post, new { name = "frmUpdate" }))
+@using (Html.BeginForm("Update", "AdminReviewExp", Model.RouteParam, FormMethod.Post, new { name = "frmUpdate" }))
 {
                     <input type="hidden" name="IDX" value="@Model.IDX" />
                     <label for="sort1"><input type="radio" id="sort1" name="IS_AUTH" value="Y" @(Model.Detail.IS_AUTH == "Y" ? "checked" : "" ) ><span class="txt mr5">활성</span></label>
@@ -146,7 +146,7 @@
 
     <div class="panel tac">
         <a style="width:100px" class="btn btn-default middium" href="#" onclick="update(); return false;">설정</a>
-        <a style="width:100px" class="btn btn-primary  middium" href="@Url.Action("Index", "AdminReviewExp")" >취소</a>
+        <a style="width:100px" class="btn btn-primary  middium" href="@Url.Action("Index", "AdminReviewExp",Model.RouteParam)" >취소</a>
     </div>
 
 </div>

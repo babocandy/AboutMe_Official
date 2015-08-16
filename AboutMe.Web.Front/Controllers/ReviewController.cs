@@ -44,7 +44,7 @@ namespace AboutMe.Web.Front.Controllers
             
 
             var tp = _ReviewService.GetReviewProductList(null, CategoryCode.BEAUTY_DEFAULT, ReviewProductListViewModel.SORT_PHOTO);
-            model.Reviews = tp.Item1;// ReviewHelper.GetDataForUser(tp.Item1);
+            model.Reviews = tp.Item1;
             model.Total = tp.Item2;
 
 
@@ -65,43 +65,26 @@ namespace AboutMe.Web.Front.Controllers
             model.Reviews = tp.Item1;//ReviewHelper.GetDataForUser(tp.Item1);
             model.Total = tp.Item2;
 
-            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } };
+            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = param };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
 
-        [ChildActionOnly]
-        public ActionResult ProductInShoppingDetail(string P_CODE)
-        {
-            MyReviewInProductDetailViewModel model = new MyReviewInProductDetailViewModel();
-            
-            var tp = _ReviewService.GetReviewProductListByProductCode(P_CODE);
-            model.Reviews = tp.Item1;
-            model.Total = tp.Item2;
-            model.PageNo = 1;
-            model.Pcode = P_CODE;
-
-            return View(model);
-        }
-
-
+        /**
+         * 상품상세에서 상품리뷰 조회
+         */
         [HttpPost]
-        public JsonResult GetReviewProductListInShopping(ReviewProductListParamInShopping param)
+        public JsonResult GetReviewProductListInShopping(ReviewListJsonParamInShopping p)
         {
-           // MyReviewInProductDetailViewModel model = new MyReviewInProductDetailViewModel();
-
-            var tp = _ReviewService.GetReviewProductListByProductCode(param.P_CODE, param.PAGE_NO);
-            //model.Reviews = ReviewHelper.GetDataForUser(tp.Item1);
-           // model.Reviews = tp.Item1;
-            //model.Total = tp.Item2;
-           // model.Pcode = param.P_CODE;
-
-            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = new { PAGE_NO = param.PAGE_NO, P_CODE = param.P_CODE } };
+            var tp = _ReviewService.GetReviewProductListByProductCode(p);
+            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = p };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
+
+
 
         /**
          * 체험단 리뷰 목록
@@ -115,14 +98,9 @@ namespace AboutMe.Web.Front.Controllers
             model.CategoryCodeHealth = CategoryCode.HEALTH_DEFAULT;
             model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
 
-
-
             var tp = _ReviewService.GetReviewExpList(null, CategoryCode.BEAUTY_DEFAULT, ReviewExpListViewModel.SORT_LASTEST);
             model.Reviews = tp.Item1;// ReviewHelper.GetDataForUser(tp.Item1);
             model.Total = tp.Item2;
-
-
-
 
             return View(model);
         }
@@ -136,14 +114,60 @@ namespace AboutMe.Web.Front.Controllers
         {
             ReviewExpListViewModel model = new ReviewExpListViewModel();
             var tp = _ReviewService.GetReviewExpList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
-            model.Reviews = tp.Item1;//ReviewHelper.GetDataForUser(tp.Item1);
+            model.Reviews = tp.Item1;
             model.Total = tp.Item2;
 
-            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = new { TAIL_IDX = param.TAIL_IDX, CATEGORY_CODE = param.CATEGORY_CODE, SORT = param.SORT } };
+            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = param };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
+
+        /**
+         * 체험단 리뷰 상세. 상품관련 이벤트 기획전 데이타 포함
+         */
+        [HttpPost]
+        public JsonResult GetReviewExpDetail(ReviewExpDetailParam p)
+        {
+            var pp = _ReviewService.GetReviewExpDetail(p);
+            var jsonData = new { Detail = pp, Success = true, Postdata = p };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        /**
+         * 상품상세에서 체험단리뷰 조회
+         */
+        [HttpPost]
+        public JsonResult GetReviewExpListInShopping(ReviewListJsonParamInShopping p)
+        {
+            var tp = _ReviewService.GetReviewExpByProductCode(p);
+            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = p };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        /**
+         * 공통. 상품상세에서 상품, 체험단리뷰 함께. 상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
+         */
+        [ChildActionOnly]
+        public ActionResult ReviewInShoppingDetail(string P_CODE)
+        {
+            ReviewInProductDetailViewModel model = new ReviewInProductDetailViewModel();
+            ReviewListJsonParamInShopping p = new ReviewListJsonParamInShopping();
+            p.P_CODE = P_CODE;
+            var tp = _ReviewService.GetReviewProductListByProductCode(p);
+
+            model.Reviews = tp.Item1;
+            model.Total = tp.Item2;
+            model.PageNo = 1;
+            model.Pcode = P_CODE;
+
+            return View(model);
+        }
+
         /*
        private string replaceHtml(string s){
            

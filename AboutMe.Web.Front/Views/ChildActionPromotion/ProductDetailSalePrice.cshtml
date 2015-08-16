@@ -60,7 +60,8 @@
 
 </script>
 
-@if (ViewBag.M_ID == "") { //로그인 안했으면
+@if (ViewBag.M_ID == "") //로그인 안했으면
+{ 
 
     if(ViewBag.NoLogin_Coupon_RateOrMoney != "")
     {
@@ -100,7 +101,7 @@ else //로그인 했으면
             </li>
         }
     }
-    //if(ViewBag.MGrade == "V") // 주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보뎌주는것으로 한다 
+    //if(ViewBag.MGrade == "V") // 주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보여 주는것으로 한다 
     //{ 
         if (!String.IsNullOrEmpty(ViewBag.Login_Promotion_03_result_price.ToString()) && ViewBag.Login_Promotion_03_result_price.ToString() !="0")
         { 

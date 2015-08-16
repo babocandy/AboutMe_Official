@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 
 using AboutMe.Domain.Service.Display;
-using AboutMe.Web.Front.Models;
 using AboutMe.Common.Data;
 
 using AboutMe.Domain.Service.Product;

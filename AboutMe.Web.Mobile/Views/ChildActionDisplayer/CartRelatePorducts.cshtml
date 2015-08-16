@@ -1,0 +1,31 @@
+﻿@model AboutMe.Domain.Entity.Display.BaseDisplayerViewModel
+@using AboutMe.Web.Mobile.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+
+<div class="relative_product">
+    <p class="tit">같이 구매하면 좋은 상품</p>
+    <div class="btnarea">
+        <a href="javascript:" class="prev off"></a>
+        <a href="javascript:" class="next"></a>
+    </div>
+    <div class="relative_list_wrap">
+        <ul class="list">
+            @foreach (var item in Model.PdtList)
+            {
+                <li>
+                    <div class="photo"><img src="@string.Format("{0}{1}" , myController._img_path_product, item.MAIN_IMG)" alt="" /></div>
+                    <div class="detail">
+                        <span class="ptit">@item.P_NAME</span>
+                        <span class="price"><del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}",item.DISCOUNT_PRICE)</strong>원</span>
+                        <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})" class="btn_cart">쇼핑백</a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<!--//같이 구매하면 좋은 상품-->

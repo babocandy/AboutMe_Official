@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using AboutMe.Domain.Entity.AdminProduct;
 using System.Data.Entity.Core.Objects;
 
+using System.Transactions;
+using AboutMe.Domain.Entity.AdminCoupon;
 
 namespace AboutMe.Domain.Service.AdminProduct
 {
@@ -209,17 +211,36 @@ namespace AboutMe.Domain.Service.AdminProduct
         }
         #endregion
 
-        #region 상품 등록
-        //public void InsertAdminProduct(string P_CATE_CODE, string C_CATE_CODE, string L_CATE_CODE, string P_CODE, string P_NAME, Nullable<int> P_COUNT, Nullable<int> P_POINT, Nullable<int> P_PRICE, Nullable<int> SELLING_PRICE, Nullable<int> DISCOUNT_RATE, Nullable<int> DISCOUNT_P_POINT, Nullable<int> DISCOUNT_PRICE, string SOLDOUT_YN, string P_INFO_DETAIL_WEB, string P_INFO_DETAIL_MOBILE, string MV_URL, string P_COMPONENT_INFO, string P_TAG, string MAIN_IMG, string OTHER_IMG1, string OTHER_IMG2, string OTHER_IMG3, string OTHER_IMG4, string OTHER_IMG5, string DISPLAY_YN, string ICON_YN, string WITH_PRODUCT_LIST)
+        #region 상품 등록 [Transactions]
         public void InsertAdminProduct(TB_PRODUCT_INFO tb_product_info)
         {
-
-            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            int IsSuccess = 1;
+            using (TransactionScope scope = new TransactionScope())
             {
+                try
+                {
+                    using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+                    {
+                        AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_SUB_TITLE, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
+                    }
 
-                AdminProductContext.SP_ADMIN_PRODUCT_INS(tb_product_info.P_CATE_CODE, tb_product_info.C_CATE_CODE, tb_product_info.L_CATE_CODE, tb_product_info.P_CODE, tb_product_info.P_NAME, tb_product_info.P_SUB_TITLE, tb_product_info.P_COUNT, tb_product_info.SELLING_PRICE, tb_product_info.DISCOUNT_RATE, tb_product_info.DISCOUNT_PRICE, tb_product_info.P_INFO_DETAIL_WEB, tb_product_info.P_INFO_DETAIL_MOBILE, tb_product_info.MV_URL, tb_product_info.P_COMPONENT_INFO, tb_product_info.P_TAG, tb_product_info.MAIN_IMG, tb_product_info.OTHER_IMG1, tb_product_info.OTHER_IMG2, tb_product_info.OTHER_IMG3, tb_product_info.ICON_YN, tb_product_info.WITH_PRODUCT_LIST);
+                    ////쿠폰 table에 상품 추가 
+                    //using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                    //{
+                    //    AdmCouponContext.SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT(tb_product_info.P_CODE);
+                    //}
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                    IsSuccess = -1;
+                }
 
             }
+
+
         }
         #endregion
 
@@ -415,5 +436,27 @@ namespace AboutMe.Domain.Service.AdminProduct
 
         #endregion
 
+        #region SMS 발송
+
+        #region sms 등록
+        public void InsertSMS(AdminSMSModel adminSMSModel)
+        {
+
+            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+            {
+
+                AdminProductContext.SP_ADMIN_SMS_INS(
+                    adminSMSModel.SMS_FLAG
+                   , adminSMSModel.SEND_TIME
+                   , adminSMSModel.HANDPHONE
+                   , adminSMSModel.CALLBACK_NO
+                   , adminSMSModel.TITLE
+                   , adminSMSModel.SEND_MSG);
+
+            }
+        }
+        #endregion
+
+        #endregion
     }
 }

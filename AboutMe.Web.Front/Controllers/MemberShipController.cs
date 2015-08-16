@@ -16,6 +16,8 @@ using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
 using AboutMe.Domain.Entity.Common;
 
+using AboutMe.Domain.Service.Coupon;  //회원가입시 쿠폰 발행
+
 using System.Text;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -33,12 +35,14 @@ namespace AboutMe.Web.Front.Controllers
         private IMemberService _MemberService;
         private ICartService _Cartservice;
         private IOrderService _orderservice;
+        private ICouponService _CoupoService;
 
-        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice)
+        public MemberShipController(IMemberService _memberService, ICartService _cartservice, IOrderService _orderservice, ICouponService _couposervice)
         {
             this._MemberService = _memberService;
             this._Cartservice = _cartservice;
             this._orderservice = _orderservice;
+            this._CoupoService = _couposervice;
         }
 
         public ActionResult Index()
@@ -84,8 +88,7 @@ namespace AboutMe.Web.Front.Controllers
             if (IS_SAVE_PW == "Y")
                 this.ViewBag.REMEMBER_PW = cookiesession.GetSecretCookie("REMEMBER_PW"); ;
 
-
-
+            
             //test ---------
             this.ViewBag.Request_Url_Host = Request.Url.Host;
             this.ViewBag.Request_Url_Authority = Request.Url.Authority;
@@ -258,7 +261,7 @@ namespace AboutMe.Web.Front.Controllers
             
             //https ->  http 로 변경 적용시
             //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
-            return Redirect(uh.Action("Main", "Mypage", null, "http"));
+            return Redirect(uh.Action("Index", "Home", null, "http"));
             
         }
 
@@ -339,7 +342,7 @@ namespace AboutMe.Web.Front.Controllers
             //UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);
             //return Redirect(uh.Action("Login", "MemberShip", null, "http"));
 
-            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='" + strHTTP_DOMAIN + "/MemberShip/Login';</script>");
+            return Content("<script language='javascript' type='text/javascript'>alert('로그아웃 되었습니다.'); location.href='" + strHTTP_DOMAIN + "/';</script>");
         }
 
 
@@ -788,9 +791,16 @@ namespace AboutMe.Web.Front.Controllers
             //ViewBag.mail_err_no = mObj.err_no;
             //ViewBag.mail_err_msg = mObj.err_msg;
 
-            //가입 축하메일 발송
+            //회원가입 쿠폰발행 + 가입 축하메일 발송
             if (strERR_CODE == "0")
             {
+                //회원가입시 가입쿠폰 자동발행  --송선우 제공------------------------
+                if(_CoupoService.InsCouponMakeOnMemberJoin(M_ID)==1)
+                    userlog.UserLogSave("회원가입쿠폰발행-성공|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+                else
+                    userlog.UserLogSave("회원가입쿠폰발행-실패|M_ID:" + M_ID, "회원가입쿠폰발행 - 성공");
+
+
                 //신규회원가입 축하메일 발송 --------------------------
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
                 string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234

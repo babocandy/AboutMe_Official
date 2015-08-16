@@ -122,7 +122,7 @@ namespace AboutMe.Domain.Service.AdminDisplay
         /**
          * 팝업추가
          */
-        public Tuple<string, string> PopupAdd(PopupParam param)
+        public Tuple<string, string> PopupAdd(AdminDisplayPopupInputViewModel param)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -158,7 +158,7 @@ namespace AboutMe.Domain.Service.AdminDisplay
         /**
          * 팝업 전시여부 수정
          */
-        public Tuple<string, string> PopupUpdateDisplay(PopupParam param)
+        public Tuple<string, string> PopupUpdateDisplay(AdminDisplayPopupInputViewModel param)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -174,7 +174,7 @@ namespace AboutMe.Domain.Service.AdminDisplay
         /**
          * 팝업 삭제
          */
-        public Tuple<string, string> PopupRemove(PopupParam param)
+        public Tuple<string, string> PopupRemove(AdminDisplayPopupInputViewModel param)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -212,7 +212,7 @@ namespace AboutMe.Domain.Service.AdminDisplay
         /**
          * 팝업 수정
          */
-        public Tuple< string, string> PopupUpdate(PopupParam param)
+        public Tuple<string, string> PopupUpdate(AdminDisplayPopupInputViewModel param)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));

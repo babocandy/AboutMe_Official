@@ -59,8 +59,8 @@
                     @{Html.RenderAction("HeaderCategoryMenu", "ChildActionProduct");}
                     <li><a href="#">이벤트</a></li>
                     <li><a href="#">멤버쉽혜택</a></li>
-                    <li><a href="#">상품리뷰</a></li>
-                    <li><a href="#">체험단리뷰</a></li>
+                    <li><a href="@(Url.Action("Product", "Review"))">상품리뷰</a></li>
+                    <li><a href="@(Url.Action("Experience", "Review"))">체험단리뷰</a></li>
                     <li><a href="#">고객센터</a></li>
                     <li><a href="#">매장안내</a></li>
                 </ul>
