@@ -99,7 +99,7 @@ namespace AboutMe.Web.Mobile.Controllers
 
            if (ModelState.IsValid){
 
-               ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = true };
+               ImagePlainUpload imageUpload = new ImagePlainUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = true };
                Debug.WriteLine("model.UploadImage - " + model.UploadImage );
               
                if (model.UploadImage != null)
@@ -202,9 +202,8 @@ namespace AboutMe.Web.Mobile.Controllers
         [Route("Update/{id:int}")]
         public ActionResult Update(MyReviewProductInputViewModel model)
         {
-            Debug.WriteLine("Update");
-
-            Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
+            //Debug.WriteLine("Update");
+            //Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
 
             if (ModelState.IsValid)
             {

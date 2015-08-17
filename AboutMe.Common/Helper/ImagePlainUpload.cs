@@ -61,7 +61,7 @@ namespace AboutMe.Common.Helper
         }
        
 
-        #region 파일 업로드
+ 
         private ImageResult UploadFile(HttpPostedFileBase file, string fileName)
         {
             ImageResult imageResult = new ImageResult { Success = true, ErrorMessage = null };
@@ -112,9 +112,9 @@ namespace AboutMe.Common.Helper
                 return imageResult;
             }
         }
-        #endregion
+       
 
-        #region 파일이 이미지 타입인지 체크
+  
         private bool ValidateExtension(string extension, string fileType)
         {
             extension = extension.ToLower();
@@ -171,10 +171,9 @@ namespace AboutMe.Common.Helper
             }
 
         }
-        #endregion
+        
 
-
-        #region 고유키값 생성
+     
         private string GetUniqueKey()
         {
             Random rand = new Random((int)DateTime.Now.Ticks);
@@ -184,7 +183,7 @@ namespace AboutMe.Common.Helper
 
             return UniqueKey;
         }
-        #endregion
+   
 
 
     }

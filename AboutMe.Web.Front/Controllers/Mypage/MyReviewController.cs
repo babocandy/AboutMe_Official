@@ -99,7 +99,7 @@ namespace AboutMe.Web.Front.Controllers
 
            if (ModelState.IsValid){
 
-               ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = true };
+               ImagePlainUpload imageUpload = new ImagePlainUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = false };
                Debug.WriteLine("model.UploadImage - " + model.UploadImage );
               
                if (model.UploadImage != null)
