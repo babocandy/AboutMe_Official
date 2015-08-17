@@ -112,14 +112,6 @@ namespace AboutMe.Web.Mobile.Controllers
                        
                    }
                }
-               /*
-               MyReviewPdtParamOnSaveToDb p = new MyReviewPdtParamOnSaveToDb();
-               p.M_ID = model.M_ID;
-               p.ORDER_DETAIL_IDX =  model.ORDER_DETAIL_IDX;
-               p.P_CODE = model.P_CODE;
-               p.SKIN_TYPE = model.SKIN_TYPE;
-               p.COMMENT = model.COMMENT;
-               p.ADD_IMAGE =  model.ADD_IMAGE;*/
 
                Tuple<string, string> ret = _ReviewService.InsertMyReview(model);
 
@@ -190,9 +182,9 @@ namespace AboutMe.Web.Mobile.Controllers
             model.C_CATE_CODE = detail.C_CATE_CODE;
             model.SKIN_TYPE = detail.SKIN_TYPE;
             model.SKIN_TYPE_LBL = detail.SKIN_TYPE_LBL;
-
-            Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
-
+            model.MEDIA_GBN = detail.MEDIA_GBN;
+            model.ADD_IMAGE = detail.ADD_IMAGE;
+       
             return View(model);
         }
 
@@ -202,9 +194,6 @@ namespace AboutMe.Web.Mobile.Controllers
         [Route("Update/{id:int}")]
         public ActionResult Update(MyReviewProductInputViewModel model)
         {
-            //Debug.WriteLine("Update");
-            //Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
-
             if (ModelState.IsValid)
             {
                 Tuple<string, string> ret = _ReviewService.UpdateMyReview(model);

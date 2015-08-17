@@ -111,6 +111,7 @@ namespace AboutMe.Domain.Entity.Review
 
         [Required(ErrorMessage = "*")]
         public string COMMENT { get; set; }
+
         public string ADD_IMAGE { get; set; }
 
 
