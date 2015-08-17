@@ -99,7 +99,7 @@ namespace AboutMe.Web.Mobile.Controllers
 
            if (ModelState.IsValid){
 
-               ImagePlainUpload imageUpload = new ImagePlainUpload { Width = 600, UploadPath = _img_path_review, addMobileImage = true };
+               ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true };
                Debug.WriteLine("model.UploadImage - " + model.UploadImage );
               
                if (model.UploadImage != null)

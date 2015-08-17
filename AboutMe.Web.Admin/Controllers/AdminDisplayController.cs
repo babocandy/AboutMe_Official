@@ -154,7 +154,7 @@ namespace AboutMe.Web.Admin.Controllers
 
             if (param.IMG_FILE != null)
             {
-                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display };
                 ImageResult imageResult = imageUpload.RenameUploadFile(param.IMG_FILE);
 
                 if (imageResult.Success)
@@ -279,7 +279,7 @@ namespace AboutMe.Web.Admin.Controllers
             {
                 if (model.MOBILE_IMG_FILE != null)
                 {
-                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display };
                     ImageResult imageResult = imageUpload.RenameUploadFile(model.MOBILE_IMG_FILE);
 
                     if (imageResult.Success)
@@ -290,7 +290,7 @@ namespace AboutMe.Web.Admin.Controllers
 
                 if (model.WEB_IMG_FILE != null)
                 {
-                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display };
                     ImageResult imageResult = imageUpload.RenameUploadFile(model.WEB_IMG_FILE);
 
                     if (imageResult.Success)
@@ -363,7 +363,7 @@ namespace AboutMe.Web.Admin.Controllers
 
                 if (model.MOBILE_IMG_FILE != null)
                 {
-                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display };
                     ImageResult imageResult = imageUpload.RenameUploadFile(model.MOBILE_IMG_FILE);
 
                     if (imageResult.Success)
@@ -374,7 +374,7 @@ namespace AboutMe.Web.Admin.Controllers
 
                 if (model.WEB_IMG_FILE != null)
                 {
-                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display, addMobileImage = false };
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display };
                     ImageResult imageResult = imageUpload.RenameUploadFile(model.WEB_IMG_FILE);
 
                     if (imageResult.Success)
