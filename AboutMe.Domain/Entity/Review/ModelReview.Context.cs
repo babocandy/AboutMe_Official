@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.Review
         }
     
     
-        public virtual int SP_REVIEW_PRODUCT_INS(string m_ID, Nullable<int> oRDER_DETAIL_IDX, string p_CODE, string sKIN_TYPE, string cOMMENT, string aDD_IMAGE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_REVIEW_PRODUCT_INS(string m_ID, Nullable<int> oRDER_DETAIL_IDX, string p_CODE, string sKIN_TYPE, string cOMMENT, string aDD_IMAGE, string mEDIA_GBN, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -54,7 +54,11 @@ namespace AboutMe.Domain.Entity.Review
                 new ObjectParameter("ADD_IMAGE", aDD_IMAGE) :
                 new ObjectParameter("ADD_IMAGE", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_PRODUCT_INS", m_IDParameter, oRDER_DETAIL_IDXParameter, p_CODEParameter, sKIN_TYPEParameter, cOMMENTParameter, aDD_IMAGEParameter, rET_NUM, rET_MESSAGE);
+            var mEDIA_GBNParameter = mEDIA_GBN != null ?
+                new ObjectParameter("MEDIA_GBN", mEDIA_GBN) :
+                new ObjectParameter("MEDIA_GBN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_PRODUCT_INS", m_IDParameter, oRDER_DETAIL_IDXParameter, p_CODEParameter, sKIN_TYPEParameter, cOMMENTParameter, aDD_IMAGEParameter, mEDIA_GBNParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<SP_REVIEW_PRODUCT_READY_SEL_Result> SP_REVIEW_PRODUCT_READY_SEL(string m_ID, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
