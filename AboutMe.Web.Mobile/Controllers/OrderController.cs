@@ -105,7 +105,7 @@ namespace AboutMe.Web.Mobile.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Step1(Int32 ORDER_IDX)
         {
-            //ViewBag.Order_Idx = ORDER_IDX;
+            
             ORDER_STEP1_MODEL M = new ORDER_STEP1_MODEL
             {
                 OrderIdx = ORDER_IDX,
