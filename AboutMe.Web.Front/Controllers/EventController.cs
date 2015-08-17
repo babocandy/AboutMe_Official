@@ -133,7 +133,7 @@ namespace AboutMe.Web.Front.Controllers
             }
             else
             {
-                return View("/");
+               return RedirectToAction("Index", "");
             }
 
 
@@ -173,7 +173,7 @@ namespace AboutMe.Web.Front.Controllers
             }
             else
             {
-                return View("/");
+                return RedirectToAction("Index", "");
             }
 
         }
@@ -212,7 +212,7 @@ namespace AboutMe.Web.Front.Controllers
             }
             else
             {
-                return View("/");
+                return RedirectToAction("Index", "");
             }
 
             //return View();
