@@ -94,9 +94,9 @@ namespace AboutMe.Common.Helper
 
 
             //썸네일
-            var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "thumb_s" + fileName);
-            var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "thumb_m" + fileName);
-            var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "thumb_b" + fileName);
+            var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "s_" + fileName);
+            var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "m_" + fileName);
+            var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "b_" + fileName);
 
             try
             {
