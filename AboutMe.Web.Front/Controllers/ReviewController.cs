@@ -169,6 +169,10 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         /*
+         * 
+  Regex urlregex = new Regex(@"(#)((?:[A-Za-z0-9-_]*))", RegexOptions.IgnoreCase RegexOptions.Compiled);
+            return urlregex.Replace(urlText, "<a href=\"$1$2\" style=\"color: #f68b1f;\">$1$2</a>");
+         * 
        private string replaceHtml(string s){
            
            var result = s;

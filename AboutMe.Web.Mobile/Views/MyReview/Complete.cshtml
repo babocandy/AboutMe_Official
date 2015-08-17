@@ -67,7 +67,7 @@
                     {
                         <li class="product_info">
                             <div class="photo_info">
-                                <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                                <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
                                 <div class="detail">
                                     <span class="tit">@item.P_NAME</span>
                                 </div>
@@ -80,7 +80,7 @@
                                     <p class="txtbox">@item.COMMENT</p>
                                     @if (item.IS_PHOTO == "Y")
                                     {
-                                        <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
+                                        <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" /></div>
                                     <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
                                         <div class="morebox">
                                             <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
