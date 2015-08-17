@@ -213,6 +213,7 @@
           <Parameter Name="OTHER_IMG3" Type="varchar" Mode="In" />
           <Parameter Name="ICON_YN" Type="varchar" Mode="In" />
           <Parameter Name="WITH_PRODUCT_LIST" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_PCODE_CHK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
@@ -260,6 +261,7 @@
           <Parameter Name="OTHER_IMG3" Type="varchar" Mode="In" />
           <Parameter Name="ICON_YN" Type="varchar" Mode="In" />
           <Parameter Name="WITH_PRODUCT_LIST" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_SMS_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SMS_FLAG" Type="varchar" Mode="In" />
@@ -404,29 +406,6 @@
             <Parameter Name="P_CODE" Mode="In" Type="String" />
             <Parameter Name="imgColumName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PRODUCT_INS">
-            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
-            <Parameter Name="C_CATE_CODE" Mode="In" Type="String" />
-            <Parameter Name="L_CATE_CODE" Mode="In" Type="String" />
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
-            <Parameter Name="P_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_SUB_TITLE" Mode="In" Type="String" />
-            <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
-            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
-            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="P_INFO_DETAIL_WEB" Mode="In" Type="String" />
-            <Parameter Name="P_INFO_DETAIL_MOBILE" Mode="In" Type="String" />
-            <Parameter Name="MV_URL" Mode="In" Type="String" />
-            <Parameter Name="P_COMPONENT_INFO" Mode="In" Type="String" />
-            <Parameter Name="P_TAG" Mode="In" Type="String" />
-            <Parameter Name="MAIN_IMG" Mode="In" Type="String" />
-            <Parameter Name="OTHER_IMG1" Mode="In" Type="String" />
-            <Parameter Name="OTHER_IMG2" Mode="In" Type="String" />
-            <Parameter Name="OTHER_IMG3" Mode="In" Type="String" />
-            <Parameter Name="ICON_YN" Mode="In" Type="String" />
-            <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PRODUCT_PCODE_CHK" ReturnType="Collection(Int32)">
           <Parameter Name="P_CODE" Mode="In" Type="String" />
           </FunctionImport>
@@ -449,30 +428,6 @@
             <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
             <Parameter Name="FROM_DATE" Mode="In" Type="String" />
             <Parameter Name="TO_DATE" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PRODUCT_UPD">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
-            <Parameter Name="C_CATE_CODE" Mode="In" Type="String" />
-            <Parameter Name="L_CATE_CODE" Mode="In" Type="String" />
-            <Parameter Name="P_NAME" Mode="In" Type="String" />
-            <Parameter Name="P_SUB_TITLE" Mode="In" Type="String" />
-            <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
-            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
-            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
-            <Parameter Name="P_INFO_DETAIL_WEB" Mode="In" Type="String" />
-            <Parameter Name="P_INFO_DETAIL_MOBILE" Mode="In" Type="String" />
-            <Parameter Name="MV_URL" Mode="In" Type="String" />
-            <Parameter Name="P_COMPONENT_INFO" Mode="In" Type="String" />
-            <Parameter Name="P_TAG" Mode="In" Type="String" />
-            <Parameter Name="MAIN_IMG" Mode="In" Type="String" />
-            <Parameter Name="OTHER_IMG1" Mode="In" Type="String" />
-            <Parameter Name="OTHER_IMG2" Mode="In" Type="String" />
-            <Parameter Name="OTHER_IMG3" Mode="In" Type="String" />
-            <Parameter Name="ICON_YN" Mode="In" Type="String" />
-            <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PRODUCT_BATCH_UPD">
             <Parameter Name="P_CODE" Mode="In" Type="String" />
@@ -519,6 +474,55 @@
             <Parameter Name="CALLBACK_NO" Mode="In" Type="String" />
             <Parameter Name="TITLE" Mode="In" Type="String" />
             <Parameter Name="SEND_MSG" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="C_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="L_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_WEB" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="MV_URL" Mode="In" Type="String" />
+            <Parameter Name="P_COMPONENT_INFO" Mode="In" Type="String" />
+            <Parameter Name="P_TAG" Mode="In" Type="String" />
+            <Parameter Name="MAIN_IMG" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG1" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG2" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG3" Mode="In" Type="String" />
+            <Parameter Name="ICON_YN" Mode="In" Type="String" />
+            <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_INS">
+            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="C_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="L_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="P_NAME" Mode="In" Type="String" />
+            <Parameter Name="P_SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="P_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="P_INFO_DETAIL_WEB" Mode="In" Type="String" />
+            <Parameter Name="P_INFO_DETAIL_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="MV_URL" Mode="In" Type="String" />
+            <Parameter Name="P_COMPONENT_INFO" Mode="In" Type="String" />
+            <Parameter Name="P_TAG" Mode="In" Type="String" />
+            <Parameter Name="MAIN_IMG" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG1" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG2" Mode="In" Type="String" />
+            <Parameter Name="OTHER_IMG3" Mode="In" Type="String" />
+            <Parameter Name="ICON_YN" Mode="In" Type="String" />
+            <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
@@ -963,7 +967,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_IMG_DEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_IMG_DEL" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PCODE_CHK" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PCODE_CHK" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PRICE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PRICE_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_SEL" >
@@ -999,7 +1002,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_CNT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_CNT" >
             <ResultMapping>
@@ -1041,6 +1043,8 @@
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_SMS_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_SMS_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
