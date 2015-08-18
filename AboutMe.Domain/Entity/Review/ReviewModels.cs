@@ -111,6 +111,7 @@ namespace AboutMe.Domain.Entity.Review
 
         [Required(ErrorMessage = "*")]
         public string COMMENT { get; set; }
+
         public string ADD_IMAGE { get; set; }
 
 
@@ -126,6 +127,8 @@ namespace AboutMe.Domain.Entity.Review
         public string P_SUB_TITLE{ get; set; }
         public string SKIN_TYPE_LBL{ get; set; }
         public string C_CATE_CODE { get; set; }
+
+        public string MEDIA_GBN { get; set; }
     }
 
     public class ReviewInProductDetailViewModel

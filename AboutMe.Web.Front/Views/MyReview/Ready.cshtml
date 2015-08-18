@@ -125,7 +125,9 @@
                                             <div class="relbox">@item.Item2.P_COUNT</div>
                                         </td>
                                        
-
+                                        <td class="count">
+                                            <div class="relbox">@string.Format("{0:#,##0}", item.Item2.REAL_PAY_PRICE)</div>
+                                        </td>
                                         @{
                                     MyReviewPdtInputParam p = new MyReviewPdtInputParam();
                                     p.ORDER_DETAIL_IDX = item.Item2.ORDER_DETAIL_IDX;

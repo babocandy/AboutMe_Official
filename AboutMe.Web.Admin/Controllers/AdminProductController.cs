@@ -424,6 +424,7 @@ namespace AboutMe.Web.Admin.Controllers
         //public ActionResult ProductInsert(string P_CATE_CODE, string C_CATE_CODE, string L_CATE_CODE, string P_CODE, string P_NAME, Nullable<int> P_COUNT, Nullable<int> P_POINT, Nullable<int> P_PRICE, Nullable<int> SELLING_PRICE, Nullable<int> DISCOUNT_RATE, Nullable<int> DISCOUNT_P_POINT, Nullable<int> DISCOUNT_PRICE, string SOLDOUT_YN, string P_INFO_DETAIL_WEB, string P_INFO_DETAIL_MOBILE, string MV_URL, string P_COMPONENT_INFO, string P_TAG, string MAIN_IMG, string OTHER_IMG1, string OTHER_IMG2, string OTHER_IMG3, string OTHER_IMG4, string OTHER_IMG5, string DISPLAY_YN, string ICON_YN, string WITH_PRODUCT_LIST)
         public ActionResult ProductInsert(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
         {
+            int intResult = -1; //결과값 0:정상, 나머지 오류
             if (ModelState.IsValid)
             {
 
@@ -434,12 +435,8 @@ namespace AboutMe.Web.Admin.Controllers
                 #region 파일 업로드
                 if (MAIN_IMG != null)
                 {
-                    //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
-                    //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
                     ImageUpload imageUpload = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
 
-                    // rename, resize, and upload
-                    //return object that contains {bool Success,string ErrorMessage,string ImageName}
                     ImageResult imageResult = imageUpload.RenameUploadFile(MAIN_IMG);
                     if (imageResult.Success)
                     {
@@ -447,16 +444,12 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        //ViewBag.Error = imageResult.ErrorMessage;
-                        tb_product_info.MAIN_IMG = "";
+                        return Content("<script language='javascript' type='text/javascript'>alert('대표 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult.ErrorMessage + "');history.go(-1);</script>");
                     }
                 }
 
                 if (OTHER_IMG1 != null)
                 {
-                    //OTHER_IMG1.SaveAs(Server.MapPath(Product_path) + OTHER_IMG1.FileName);
-                    //tb_product_info.OTHER_IMG1 = OTHER_IMG1.FileName;
-
                     ImageUpload imageUpload1 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult1 = imageUpload1.RenameUploadFile(OTHER_IMG1);
                     if (imageResult1.Success)
@@ -465,15 +458,12 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.OTHER_IMG1 = "";
+                        return Content("<script language='javascript' type='text/javascript'>alert('추가1 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult1.ErrorMessage + "');history.go(-1);</script>");
                     }
 
                 }
                 if (OTHER_IMG2 != null)
                 {
-                    //OTHER_IMG2.SaveAs(Server.MapPath(Product_path) + OTHER_IMG2.FileName);
-                    //tb_product_info.OTHER_IMG2 = OTHER_IMG2.FileName;
-
                     ImageUpload imageUpload2 = new ImageUpload { UploadPath = Product_path, addMobileImage = true };
                     ImageResult imageResult2 = imageUpload2.RenameUploadFile(OTHER_IMG2);
                     if (imageResult2.Success)
@@ -482,7 +472,7 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.OTHER_IMG2 = "";
+                        return Content("<script language='javascript' type='text/javascript'>alert('추가2 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult2.ErrorMessage + "');history.go(-1);</script>");
                     }
                 }
                 if (OTHER_IMG3 != null)
@@ -495,22 +485,31 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.OTHER_IMG3 = "";
+                        return Content("<script language='javascript' type='text/javascript'>alert('추가3 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult3.ErrorMessage + "');history.go(-1);</script>");
                     }
                 }
 
                
                 #endregion
 
-                _AdminProductService.InsertAdminProduct(tb_product_info);
+                intResult = _AdminProductService.InsertAdminProduct(tb_product_info);
 
                 #region 상품등록 로그 생성
-                var serialised = JsonConvert.SerializeObject(tb_product_info); //entity 클래스 값을 json 포맷으로 파싱
+                var serialised = "결과값 intResult :" + intResult;
+                serialised = serialised + JsonConvert.SerializeObject(tb_product_info); //entity 클래스 값을 json 포맷으로 파싱
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자상품등록");
                 #endregion
 
-                return RedirectToAction("ProductIndex", new { SearchCol = "" });
+
+                if (intResult != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('상품정보가 등록되지 않았습니다.');history.go(-1);</script>");
+                }
+                else
+                {
+                    return RedirectToAction("ProductIndex", new { SearchCol = "" });
+                }
             }
             else
             {
@@ -559,7 +558,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProductUpdate(ProductSearch_Entity Param, TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
         {
-            
+            int intResult = -1; //결과값 0:정상, 나머지 오류
             if (ModelState.IsValid)
             {
 
@@ -579,7 +578,7 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.MAIN_IMG = tb_product_info.OLD_MAIN_IMG;
+                        return Content("<script language='javascript' type='text/javascript'>alert('대표 이미지가 업로드 되지 않았습니다. 에러메시지:"+imageResult.ErrorMessage+"');history.go(-1);</script>");
                     }
                 }
                 else
@@ -597,7 +596,7 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.OTHER_IMG1 = tb_product_info.OLD_OTHER_IMG1;
+                        return Content("<script language='javascript' type='text/javascript'>alert('추가1 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult1.ErrorMessage + "');history.go(-1);</script>");
                     }
 
                 }
@@ -615,7 +614,7 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.OTHER_IMG2 = tb_product_info.OLD_OTHER_IMG2;
+                        return Content("<script language='javascript' type='text/javascript'>alert('추가2 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult2.ErrorMessage + "');history.go(-1);</script>");
                     }
                 }
                 else
@@ -632,7 +631,7 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        tb_product_info.OTHER_IMG3 = tb_product_info.OLD_OTHER_IMG3;
+                        return Content("<script language='javascript' type='text/javascript'>alert('추가3 이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult3.ErrorMessage + "');history.go(-1);</script>");
                     }
                 }
                 else
@@ -642,16 +641,26 @@ namespace AboutMe.Web.Admin.Controllers
                
                 #endregion
 
-                _AdminProductService.UpdateAdminProduct(tb_product_info);
+                intResult = _AdminProductService.UpdateAdminProduct(tb_product_info);
 
                 #region 상품수정 로그 생성
-                var serialised = JsonConvert.SerializeObject(tb_product_info);
+                var serialised = "결과값 intResult :" + intResult;
+                serialised = serialised + JsonConvert.SerializeObject(tb_product_info);
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자상품수정");
                 #endregion
 
-                RouteValueDictionary param = ConvertRouteValue(Param);
-                return RedirectToAction("ProductIndex", param);
+                if (intResult != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('상품정보가 변경되지 않았습니다.');history.go(-1);</script>");
+                }
+                else
+                {
+                    RouteValueDictionary param = ConvertRouteValue(Param);
+                    return RedirectToAction("ProductIndex", param);
+                }
+
+                
             }
             else
             {
@@ -661,16 +670,16 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 상품 가격 일괄 수정
-        public ActionResult ProductPriceUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity Param)
+        public ActionResult ProductPriceUpdate(List<PRODUCT_PRICE_BATCH_MODEL> product_price_batch, ProductSearch_Entity Param)
         {
-                foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
+            foreach (PRODUCT_PRICE_BATCH_MODEL product_price in product_price_batch)
                 {
-                    if (!string.IsNullOrEmpty(tb_product.P_CODE))
+                    if (!string.IsNullOrEmpty(product_price.P_CODE))
                     {
-                        _AdminProductService.UpdateAdminProductPrice(tb_product);
+                        _AdminProductService.UpdateAdminProductPrice(product_price);
 
                         #region 상품가격 일괄 수정 로그 생성
-                        var serialised = JsonConvert.SerializeObject(tb_product);
+                        var serialised = JsonConvert.SerializeObject(product_price);
                         serialised += JsonConvert.SerializeObject(Param);
                         AdminLog adminlog = new AdminLog();
                         adminlog.AdminLogSave(serialised, "관리자상품가격일괄수정");
@@ -682,29 +691,35 @@ namespace AboutMe.Web.Admin.Controllers
         }
         #endregion
 
+
         #region 상품 정보 일괄 수정
-        public ActionResult ProductBatchUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity Param)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult ProductBatchUpdate(List<PRODUCT_INFO_BATCH_MODEL> product_info_batch, ProductSearch_Entity Param)
         {
             Param.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
             Param.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"].Replace(",", "");
             this.ViewBag.IconBatchChk = string.IsNullOrEmpty(Request.Form["IconBatchChk"]) ? "" : Request.Form["IconBatchChk"];
-                foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
+            foreach (PRODUCT_INFO_BATCH_MODEL product_info in product_info_batch)
+            {
+                if (!string.IsNullOrEmpty(product_info.P_CODE))
                 {
-                    if (!string.IsNullOrEmpty(tb_product.P_CODE))
-                    {
-                        tb_product.ICON_YN = Param.BatchIconYn;
-                        tb_product.ICON_BATCH_CHK   = this.ViewBag.IconBatchChk; 
+                    product_info.ICON_YN = Param.BatchIconYn;
+                    product_info.ICON_BATCH_CHK = this.ViewBag.IconBatchChk;
 
-                        _AdminProductService.UpdateAdminProductBatch(tb_product);
+                    product_info.DISPLAY_YN = string.IsNullOrEmpty(product_info.DISPLAY_YN) ? "N" : product_info.DISPLAY_YN ;
+                    product_info.P_OUTLET_YN = string.IsNullOrEmpty(product_info.P_OUTLET_YN) ? "N" : product_info.P_OUTLET_YN;
+                    product_info.SOLDOUT_YN = string.IsNullOrEmpty(product_info.SOLDOUT_YN) ? "N" : product_info.SOLDOUT_YN;
 
-                        #region 상품가격 일괄 수정 로그 생성
-                        var serialised = JsonConvert.SerializeObject(tb_product);
-                        serialised += JsonConvert.SerializeObject(Param);
-                        AdminLog adminlog = new AdminLog();
-                        adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
-                        #endregion
-                    }
+                    _AdminProductService.UpdateAdminProductBatch(product_info);
+
+                    #region 상품가격 일괄 수정 로그 생성
+                    var serialised = JsonConvert.SerializeObject(product_info);
+                    serialised += JsonConvert.SerializeObject(Param);
+                    AdminLog adminlog = new AdminLog();
+                    adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
+                    #endregion
                 }
+            }
 
                 RouteValueDictionary param = ConvertRouteValue(Param);
                 return RedirectToAction("ProductIndex", Param);
