@@ -141,28 +141,61 @@
 
                                                 <tr>
                                                     <th>프로모션 Main Title </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" }) </td>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" , rows=5,cols=30,maxlength=50 }) </td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>프로모션 Sub Title </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SUB_TITLE, new { cssClass = "input-sm text-left" })</td>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SUB_TITLE, new { cssClass = "input-sm text-left", rows = 5, cols = 30, maxlength = 50 })</td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>프로모션 쇼핑팁 </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left" })</td>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left",rows=5,cols=30,maxlength=50 })</td>
 
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <th>프로모션 대표 이미지 </th>
+                                                    <th>PC-프로모션 상세페이지 이미지 </th>
                                                     <td>
                                                     @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MAIN_IMG)
                                                     <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" /></td>
                                                 </tr>
-                                                
-                                               
+                                                <tr>
+                                                    <th>PC-메인 페이지 이미지 </th>
+                                                    <td>
+                                                        @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_PC_MAINPG_IMG)
+                                                        <input type="file" id="PMO_PRODUCT_PC_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>PC-이벤트메인 페이지 이미지 </th>
+                                                    <td>
+                                                        @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_PC_EVENT_MAINPG_IMG)
+                                                        <input type="file" id="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>M-프로모션 상세페이지 이미지 </th>
+                                                    <td>
+                                                        @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MOBILE_MAIN_IMG)
+                                                        <input type="file" id="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" maxlength="100" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>M-메인 페이지 이미지 </th>
+                                                    <td>
+                                                        @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MOBILE_MAINPG_IMG)
+                                                        <input type="file" id="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                 <th>M-이벤트 메인 페이지 이미지 </th>
+                                                    <td>
+                                                        @Html.HiddenFor(model => model.inst_TB_PROMOTION_BY_PRODUCT.PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG)
+                                                        <input type="file" id="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                    </td>
+                                                </tr>
                                                 <!--
                                                 <tr>
                                                     <th>정률/정액 </th>

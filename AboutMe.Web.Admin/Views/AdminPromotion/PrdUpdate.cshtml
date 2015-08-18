@@ -162,6 +162,12 @@
                                         <input type="hidden" name="orgin_date_from" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM" />
                                         <input type="hidden" name="orgin_date_to" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO" />
                                         <input type="hidden" name="OLD_PRODUCT_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG">
+    <input type="hidden" name="OLD_PMO_PRODUCT_PC_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG">
+    <input type="hidden" name="OLD_PMO_PRODUCT_PC_EVENT_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG">
+    <input type="hidden" name="OLD_PMO_PRODUCT_MOBILE_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG">
+    <input type="hidden" name="OLD_PMO_PRODUCT_MOBILE_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG">
+    <input type="hidden" name="OLD_PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG">
+
                                         <table class="table table_row">
                                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
                                             <tbody>
@@ -234,17 +240,17 @@
 
                                                 <tr>
                                                     <th>프로모션 Main Title </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE)</font></td>
+                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE, new { cssClass = "input-sm text-left", rows = 5, cols = 30, maxlength = 50 }) <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_TITLE)</font></td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>프로모션 Sub Title </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_SUB_TITLE, new { cssClass = "input-sm text-left" })</td>
+                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_SUB_TITLE, new { cssClass = "input-sm text-left", rows = 5, cols = 30, maxlength = 50 })</td>
 
                                                 </tr>
                                                 <tr>
                                                     <th>프로모션 쇼핑팁 </th>
-                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left" })</td>
+                                                    <td>@Html.TextAreaFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_SHOPPING_TIP, new { cssClass = "input-sm text-left", rows = 5, cols = 30, maxlength = 50 })</td>
 
                                                 </tr>
 
@@ -345,8 +351,10 @@
 
                                                 </tr>
                                                 @{ string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");}
+
+
                                                 <tr>
-                                                    <th>프로모션 대표이미지</th>
+                                                    <th>PC-프로모션 대표 페이지 이미지</th>
                                                     <td>
                                                         <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" />
                                                         @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG))
@@ -356,8 +364,61 @@
                                                         }
                                                     </td>
                                                 </tr>
-
-
+                                                <tr>
+                                                    <th>PC-메인 페이지 이미지</th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_PC_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG))
+                                                        {
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>PC-이벤트메인 페이지 이미지</th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG))
+                                                        {
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>M-프로모션 상세페이지 이미지 </th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG))
+                                                        {
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>M-메인 페이지 이미지 </th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG))
+                                                        {
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>M-이벤트 메인 페이지 이미지 </th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG))
+                                                        {
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <th>저장</th>
                                                     <td>

@@ -143,6 +143,8 @@ namespace AboutMe.Domain.Service.Coupon
         }
 
 
+
+
         //쿠폰별 상품 리스트 가져오기 --PC/모바일 공통
         public List<SP_COUPON_VIEW_PRODUCT_DETAIL_SEL_Result> GetCouponProductList(string M_ID,int IdxCouponNumber, string SearchCol, string SearchKeyword, int Page, int PageSize)
         {
@@ -234,6 +236,48 @@ namespace AboutMe.Domain.Service.Coupon
 
 
 
+
+        //사용완료,종료된 쿠폰 리스트 - PC,모바일 공통
+        public List<SP_COUPON_ISSUED_DETAIL_SEL_Result> GetCouponClosedList(string M_ID,string UsableDevice ,string SearchCol, string SearchKeyword, int Page, int PageSize)
+        {
+
+            List<SP_COUPON_ISSUED_DETAIL_SEL_Result> lst = new List<SP_COUPON_ISSUED_DETAIL_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_CLOSED_LIST_SEL(M_ID, UsableDevice, Page, PageSize, SearchCol, SearchKeyword).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+            return lst;
+
+        }
+
+        //사용완료,종료된 쿠폰 리스트 COUNT - PC,모바일 공통
+        public int GetCouponClosedListCnt(string M_ID, string UsableDevice , string SearchCol, string SearchKeyword)
+        {
+
+            List<SP_COUPON_COMMON_CNT_Result> lst = new List<SP_COUPON_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_CLOSED_LIST_COUNT(M_ID,UsableDevice, 0,0,SearchCol, SearchKeyword).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+        }
+        
+        
         //쿠폰 마스터 정보 가져오기
         public List<SP_COUPON_MASTER_INFO_SEL_Result> GetCouponMasterInfo(string M_ID, int IdxCouponNumber)
         {
@@ -251,6 +295,8 @@ namespace AboutMe.Domain.Service.Coupon
             return lst;
 
         }
+
+
 
 
         //==============================================================
