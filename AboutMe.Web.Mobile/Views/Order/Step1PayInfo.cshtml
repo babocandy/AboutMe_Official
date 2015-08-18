@@ -1,23 +1,19 @@
-﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_PAYINFO
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_MOBILE_PAYINFO
 <script language="javascript">
-    StartSmartUpdate();
+
+    window.name = "BTPG_CLIENT";
+
+    var width = 330;
+    var height = 480;
+    var xpos = (screen.width - width) / 2;
+    var ypos = (screen.width - height) / 2;
+    var position = "top=" + ypos + ",left=" + xpos;
+    var features = position + ", width=320, height=440";
 
     var openwin;
 
     //주문결제
     function payConfirm() {
-        var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
-        if (paygbn == "1") {
-            $("#gopaymethod").val("Card");
-        }
-        else if (paygbn == "2") //실시간계좌이체
-        {
-            $("#gopaymethod").val("onlydbank");
-        }
-        else if (paygbn == "3") //무통장(가상계좌)
-        {
-            $("#gopaymethod").val("VBank");
-        }
 
         if ($("#SENDER_NAME").val().trim() == "") {
             alert('주문자명을 입력해주세요.');
@@ -25,7 +21,7 @@
             return false;
         }
 
-        if ($("#SENDER_POST1").val().trim() == "" ) {
+        if ($("#SENDER_POST1").val().trim() == "") {
             alert('우편번호를 입력해주세요.');
             $("#SENDER_POST1").setfocus();
             return false;
@@ -186,39 +182,39 @@
     }
 
     function pay(frm) {
-        if ($("#clickcontrol").val() == "enable")
-        {
-            if ($("#goodname").val() == "")  // 필수항목 체크 (상품명, 상품가격)
+        if ($("#clickcontrol").val() == "enable") {
+            if ($("#P_GOODS").val() == "")  // 필수항목 체크 (상품명, 상품가격)
             {
                 alert("상품명이 빠졌습니다. 필수항목입니다.");
                 return false;
             }
-            else if (ini_IsInstalledPlugin() == false) {
-                alert("\n이니페이 플러그인 128이 설치되지 않았습니다. \n\n안전한 결제를 위하여 이니페이 플러그인 128의 설치가 필요합니다. \n\n다시 설치하시려면 Ctrl + F5키를 누르시거나 메뉴의 [보기/새로고침]을 선택하여 주십시오.");
-                return false;
-            }
-            else {
-                if (MakePayMessage(frm)) {
-                    disable_click();
-                    var sw = screen.availWidth;
-                    var sh = screen.availHeight;
-                    var width = 300;
-                    var height = 150;
-                    var px = (sw - width) / 2;
-                    var py = (sh - height) / 2;
-                    var set = 'top=' + py + ',left=' + px;
-                    set += ',width=' + width + ',height=' + height + ',menubar = no, toolbar = no, location = no, status = no, scrollbars = no, resizable = no';
 
-                   // openwin = window.open("/Content/child.html", "childwin", set);
-                    document.ini.submit();
-                    return true;
-                } else {
-                    if (IsPluginModule()) {//plugin타입 체크
-                        alert("결제를 취소하셨습니다.");
-                    }
-                    return false;
-                }
+            var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
+            if (paygbn == "1") {
+                document.ini.action = "https://mobile.inicis.com/smart/wcard/";
             }
+            else if (paygbn == "2") //실시간계좌이체
+            {
+                document.ini.action = "https://mobile.inicis.com/smart/bank/";
+
+            }
+            else if (paygbn == "3") //무통장(가상계좌)
+            {
+                document.ini.action = "https://mobile.inicis.com/smart/vbank/";
+            }
+
+            var email = $("#SENDER_EMAIL1").val().trim() + "@@" + $("#SENDER_EMAIL2").val().trim();
+            $("#P_EMAIL").val(email);
+
+            var uname = $("#SENDER_NAME").val().trim();
+            $("#P_UNAME").val(uname);
+
+            var pmobile = $("#SENDER_HP1").val().trim() + "-" + $("#SENDER_HP2").val().trim() + "-" + $("#SENDER_HP3").val().trim();
+            $("#P_MOBILE").val(pmobile);
+
+            document.ini.target = "_self";
+
+            document.ini.submit();
         }
         else {
             return false;
@@ -238,60 +234,25 @@
             openwin.focus();
     }
 </script>
-<script language="JavaScript" type="text/JavaScript">
-<!--
-function MM_reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
-  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
-}
-MM_reloadPage(true);
-
-function MM_jumpMenu(targ,selObj,restore){ //v3.0
-  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
-  if (restore) selObj.selectedIndex=0;
-}
-//-->
-</script>
-
+@Model.P_NEXT_URL
 <!-- 결제 정보 -->
-<form id="ini" name="ini" method="post" action="/Order/OrderProcess">
-    <input type="hidden" id="gopaymethod" name="gopaymethod" value="Card">
-    <input type="hidden" id="goodname" name="goodname" value="@Model.GoodName">
-    <input type="hidden" id="buyername" name="buyername" value="">
-    <input type="hidden" id="buyeremail" name="buyeremail" value="">
-    <input type="hidden" id="buyertel" name="buyertel" value="">
-    <!--
-    SKIN : 플러그인 스킨 칼라 변경 기능 - 5가지 칼라(ORIGINAL/BLUE 중 택1, GREEN, ORANGE, BLUE, KAKKI, GRAY)
-    HPP : 컨텐츠 또는 실물 결제 여부에 따라 HPP(1)과 HPP(2)중 선택 적용(HPP(1):컨텐츠, HPP(2):실물)
-    Card(0): 신용카드 지불시에 이니시스 대표 가맹점인 경우에 필수적으로 세팅 필요 ( 자체 가맹점인 경우에는 카드사의 계약에 따라 설정) - 자세한 내용은 메뉴얼  참조
-    OCB : OK CASH BAG 가맹점으로 신용카드 결제시에 OK CASH BAG 적립을 적용하시기 원하시면 "OCB" 세팅 필요 그 외에 경우에는 삭제해야 정상적인 결제 이루어짐
+<form id="ini" name="ini" method="post" action="" accept-charset="euc-kr">
+    <input type="hidden" id="P_GOODS" name="P_GOODS" value="@Model.GoodName">
+    <input type="hidden" id="P_MID" name="P_MID" value="@Model.Mid">
+    <input type="hidden" id="P_AMT" name="P_AMT" value="@Model.TotalPrice">
+    <input type="hidden" id="P_OID" name="P_OID" value="@Model.OrderIdx">
+    <input type="hidden" id="P_MNAME" name="P_MNAME" value="AboutMe Mall">
+    
+    <input type="hidden" id="P_NOTI" name="P_NOTI" value="@Model.OrderIdx">
 
+    <input type="hidden" id="P_EMAIL" name="P_EMAIL" value="">
+    <input type="hidden" id="P_UNAME" name="P_UNAME" value="">
+    <input type="hidden" id="P_MOBILE" name="P_MOBILE" value="">
+    <input type="hidden" id="P_NEXT_URL" name="P_NEXT_URL" value="@Model.P_NEXT_URL">
+    <input type="hidden" id="P_NOTI_URL" name="P_NOTI_URL" value="@Model.P_NOTI_URL">
+    <input type="hidden" id="P_RETURN_URL" name="P_RETURN_URL" value="@Model.P_RETURN_URL">
 
-        va_recept : 현금영수증
-    -->
-    @{
-        //가상계좌 입금예정일
-        DateTime dt = DateTime.Now.AddDays(3);
-        string vbankDate = dt.ToString("yyyyMMdd");
-    }
-    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):">
-    <input type="hidden" id="oid" name="oid" size="40" value="@Model.OrderIdx">
-    <input type="hidden" id="INIregno" name="INIregno" size="40">
-
-    <input type="hidden" id="ini_encfield" name="ini_encfield" value="@Model.InisysStart.ini_encfield">
-    <input type="hidden" id="ini_certid" name="ini_certid" value="@Model.InisysStart.ini_certid">
-    <input type="hidden" id="quotainterest" name="quotainterest">
-    <input type="hidden" id="paymethod" name="paymethod">
-    <input type="hidden" id="cardcode" name="cardcode">
-    <input type="hidden" id="cardquota" name="cardquota">
-    <input type="hidden" id="rbankcode" name="rbankcode">
-    <input type="hidden" id="reqsign" name="reqsign" value="DONE">
-    <input type="hidden" id="encrypted" name="encrypted">
-    <input type="hidden" id="sessionkey" name="sessionkey">
-    <input type="hidden" id="uid" name="uid">
-    <input type="hidden" id="sid" name="sid">
-    <input type="hidden" id="version" name="version" value="5000">
+    <input type="hidden" name="P_RESERVED" value="twotrs_isp=Y&block_isp=N&app_scheme=http&apprun_check=Y " /> 
     <input type="hidden" id="clickcontrol" name="clickcontrol">
 
     <!--결제정보-->
@@ -302,6 +263,32 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <label class="racon" style="width:42%"><input type="radio" name="PAY_GBN" value="2" title="" /> <span class="txt">실시간 계좌이체</span></label>
             <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" value="3" title="" /> <span class="txt">가상계좌</span></label>
         </div>
+@if (Model.UserProfile.IS_LOGIN == false)
+{
+        <div class="txtcon">
+            <p class="tit">비회원 필수입력정보 수집 동의서</p>
+            <div class="boxtypee">
+                <p class="nomemagree_txt">
+                    1. 개인정보의 수집 및 이용 목적<br />
+                    1) 주문자 정보 확보<br />
+                    2) 물품에 관한 배송지 정보 확보<br />
+                    3) 불만처리 의사소통 경로 확보
+                </p>
+                <p class="nomemagree_txt">
+                    2. 수집하는 개인정보의 항목<br />
+                    주문자의 이름, 주소, 휴대폰, 전화번호, 이메일<br />
+                    (단, 주문자와 주문물품의 수령자가 다른 경우에는 <br />
+                    수령자의 이름, 주소, 휴대폰, 전화번호)
+                </p>
+                <p class="nomemagree_txt">
+                    3. 비회원 주문 시 제공하신 모든 정보는 상기 목적에 필요한
+                    용도 이외로는 사용되지 않습니다. 기타 자세한 사항은
+                    '개인정보취급방침'을 참고하여 주시기 바랍니다.
+                </p>
+            </div>
+            <label class="chkcon v2"><input type="checkbox" name="nomem_agree_chk" id="nomem_agree_chk" title="" value="1" /> <span class="txt">동의합니다.</span></label>
+        </div>
+}
         <div class="txtcon">
             <p class="tit">주문자 동의</p>
             <div class="boxtypee">
@@ -315,6 +302,14 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <a href="#" class="btn btn_white_h30 v2 btn_agree">약관전체보기</a>
             <label class="chkcon v2 mt10"><input type="checkbox" name="mem_agree2_chk" id="mem_agree2_chk" value="1" title="" /> <span class="txt">동의합니다.</span></label>
         </div>
+@if (Model.UserProfile.IS_LOGIN == false)
+{
+        <div class="txtcon v2">
+            <p class="tit">비회원 비밀번호</p>
+            <p class="pstxt"><span>ⓘ</span> 비회원 주문 주회시 사용 4자에서 12자 영문 또는 숫자 조합</p>
+            <input type="text" name="NOMEMBER_PASS" id="NOMEMBER_PASS" title="비회원 비밀번호 입력" class="ipttypea" style="width:100%">
+        </div>
+}
     </div>
     <!--//결제정보-->
     <!--버튼영역-->

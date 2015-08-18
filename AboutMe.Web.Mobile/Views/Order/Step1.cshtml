@@ -9,13 +9,6 @@
 @section Scripts{
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
 
-    <!-------------------------------------------------------------------------------
-    * 웹SITE 가 https를 이용하면 https://plugin.inicis.com/pay61_secunissl_cross.js 사용
-    * 웹SITE 가 Unicode(UTF-8)를 이용하면 http://plugin.inicis.com/pay61_secuni_cross.js 사용
-    * 웹SITE 가 https, unicode를 이용하면 https://plugin.inicis.com/pay61_secunissl_cross.js 사용
-    -------------------------------------------------------------------------------->
-    <script language="javascript" src="http://plugin.inicis.com/pay61_secuni_cross.js"></script>
-
     <script language="javascript">
         function textCounter(field, maxlimit) {
             var applycontents;
@@ -115,6 +108,7 @@
     </script>
 }
 
+<form name="dummyForm1" action="" method="POST"><input type="hidden" name="ORDER_IDX" value="@Model.OrderIdx"></form>
 <!--container-->
 <div class="container oder">
     <div class="h2_area">

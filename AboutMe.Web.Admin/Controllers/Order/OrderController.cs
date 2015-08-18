@@ -237,17 +237,18 @@ namespace AboutMe.Web.Admin.Controllers.Order
             //# 4. 정보 설정 #
             //################
             INIpayCancel.SetField("type", "repay");	          			        // 수정금지
-            INIpayCancel.SetField("pgid", "IniTechPG_");	          			// 서브 PG아이디 , 수정금지 INIpayRPAY
-            //INIpayCancel.SetField("spgip", "203.238.3.10");	          			// 서브 PG아이디 , 수정금지 
+            INIpayCancel.SetField("pgid", "INInetRPAY");	          			// 서브 PG아이디 , 수정금지 INIpayRPAY
             INIpayCancel.SetField("mid", _inipay_mid);	               			// 상점아이디
             INIpayCancel.SetField("admin", _inipay_admin);						// 키패스워드(상점아이디에 따라 변경)
-            INIpayCancel.SetField("oldtid", Param.oldtid);					    // 원거래 TID
+            INIpayCancel.SetField("PRTC_TID", Param.oldtid);					// 원거래 TID
+            INIpayCancel.SetField("uip", Request.UserHostAddress);				// 사용자 IP
             INIpayCancel.SetField("currency", "WON");
-            INIpayCancel.SetField("price", Param.price);
-            INIpayCancel.SetField("confirm_price", Param.confirm_price);
+            INIpayCancel.SetField("PRTC_Price", Param.price);
+            INIpayCancel.SetField("PRTC_Remains", Param.confirm_price);
             INIpayCancel.SetField("buyeremail", Param.buyeremail);
-            INIpayCancel.SetField("PRTC_NoAcctFNBC", "");                               //국민은행 부분취소 환불계좌번호
-            INIpayCancel.SetField("PRTC_NmAcctFNBC", "");                               //국민은행 부분취소 환불계좌주명
+            INIpayCancel.SetField("MReserved1", "");                            //"예비1"
+            INIpayCancel.SetField("PRTC_NoAcctFNBC", "");                      //국민은행 부분취소 환불계좌번호
+            INIpayCancel.SetField("PRTC_NmAcctFNBC", "");                      //국민은행 부분취소 환불계좌주명
             INIpayCancel.SetField("debug", _inipay_debug);						// 로그모드(실서비스시에는 "false"로)
 
             //###############################################################################
@@ -258,9 +259,9 @@ namespace AboutMe.Web.Admin.Controllers.Order
             //###############################################################################
             //# 6. 취소 결과 #
             //################
-            cancel.ResultCode = INIpayCancel.GetResult("ResultCode");				// 결과코드 ("00"이면 부분취소 성공)
-            cancel.ResultMsg = INIpayCancel.GetResult("ResultMsg");					// 결과내용
-            cancel.TID = INIpayCancel.GetResult("TID");	                            //신거래ID
+            cancel.ResultCode = INIpayCancel.GetResult("resultcode");				// 결과코드 ("00"이면 부분취소 성공)
+            cancel.ResultMsg = INIpayCancel.GetResult("resultmsg");					// 결과내용
+            cancel.TID = INIpayCancel.GetResult("tid");	                            //신거래ID
             cancel.PRTC_TID = INIpayCancel.GetResult("PRTC_TID");	                //원거래ID
             cancel.PRTC_Remains = INIpayCancel.GetResult("PRTC_Remains");	        //최종결제금액
             cancel.PRTC_Price = INIpayCancel.GetResult("PRTC_Price");	            //부분취소금액

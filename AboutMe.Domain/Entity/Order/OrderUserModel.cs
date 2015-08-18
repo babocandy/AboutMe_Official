@@ -54,6 +54,21 @@ namespace AboutMe.Domain.Entity.Order
         public SP_ORDER_STEP2_PRICE_INFO_Result PriceInfo { get; set; }
         public INISYSPAY_MODEL InisysStart { get; set; }
     }
+
+    public class ORDER_STEP1_MOBILE_PAYINFO
+    {
+        public Int32 OrderIdx { get; set; }
+        public USER_PROFILE UserProfile { get; set; }
+        public string GoodName { get; set; }
+        public SP_ORDER_STEP2_PRICE_INFO_Result PriceInfo { get; set; }
+        public INISYSPAY_MODEL InisysStart { get; set; }
+        public string Mid { get; set; }
+        public string TotalPrice { get; set; }
+        public string P_NEXT_URL { get; set; }
+        public string P_NOTI_URL { get; set; }
+        public string P_RETURN_URL { get; set; }
+    }
+
     public class COUPON_APPLY_MODEL
     {
         public string ORDER_DETAIL_IDX { get; set; }
@@ -314,4 +329,33 @@ namespace AboutMe.Domain.Entity.Order
         public SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result DetailInfo { get; set; }
         public List<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result> ProductList { get; set; }
     }
+
+    public class INIPAYMOBILE_NEXT_RETURN
+    { 
+        public string P_STATUS {get; set;}   //00 성공, 그외실패
+        public string P_RMESG1 { get; set; }  //결과메시지
+        public string P_TID { get; set; }     //거래인정번호(성공시에만)
+        public string P_REQ_URL { get; set; } //승인요청 URL
+        public string P_NOTI { get; set; }    //거래시 설정한 변수값
+    }
+    
+    public class INIPAYMOBILE_CALL_RETURN
+    {
+        public string P_STATUS { get; set; }   //00 성공, 그외실패
+        public string P_TID { get; set; }     //거래인정번호(성공시에만)
+        public string P_OID { get; set; }     //주문번호
+        public string P_AUTH_DT { get; set; }   //승인일자 char(14) YYYYmmddHHmmss 
+        public string P_TYPE { get; set; }     //지불수단  CARD(ISP,안심클릭,국민앱카드,케이 페이) HPMN(해피머니) CULTURE(문화상품권) MOBILE(휴대폰) VBANK(가상계좌) EWALLET(전자지갑) ETC_(알리페이,페이팔 외 기타) 
+        public string P_AMT { get; set; }      //거래금액 char(8) 
+        public string P_RMESG2 { get; set; }   //신용카드 할부 여부
+        public string P_CARD_PURCHASE_CODE { get; set; }   //신용카드 발급사 코드 
+        public string P_FN_CD1 { get; set; }    //신용카드 발급사 코드 
+        
+        public string P_VACT_NUM { get; set; }
+        public string P_VACT_DATE { get; set; }
+        public string P_VACT_TIME { get; set; }
+        public string P_VACT_NAME { get; set; }
+        public string P_VACT_BANK_CODE { get; set; }
+    }
+    
 }

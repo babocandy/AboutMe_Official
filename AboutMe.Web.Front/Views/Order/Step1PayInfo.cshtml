@@ -275,7 +275,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         DateTime dt = DateTime.Now.AddDays(3); 
         string vbankDate = dt.ToString("yyyyMMdd");
     }
-    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):">
+    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):useescrow:">
     <input type="hidden" id="oid" name="oid" size="40" value="@Model.OrderIdx">
     <input type="hidden" id="INIregno" name="INIregno" size="40">
 
