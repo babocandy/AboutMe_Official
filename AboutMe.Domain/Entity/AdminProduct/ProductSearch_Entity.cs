@@ -172,4 +172,28 @@ namespace AboutMe.Domain.Entity.AdminProduct
     }
     #endregion
 
+    #region 상품 정보 일괄 배치 엔티티
+    public class PRODUCT_INFO_BATCH_MODEL
+    {
+        public string P_CODE { get; set; }
+        public string DEFAULT_PCODE { get; set; }
+        public string DISPLAY_YN { set; get; }
+        public string SOLDOUT_YN { set; get; }
+        public string P_OUTLET_YN { set; get; }
+        public string ICON_YN { set; get; }
+        public string ICON_BATCH_CHK { set; get; }
+    }
+    #endregion
+
+    #region 상품 가격 일괄 배치 엔티티
+    public class PRODUCT_PRICE_BATCH_MODEL
+    {
+        public string P_CODE { get; set; }
+        public string DEFAULT_PCODE { get; set; }
+        public int SELLING_PRICE { get; set; }
+        public int DISCOUNT_PRICE { get; set; }
+        public int DISCOUNT_RATE { get; set; }
+    }
+    #endregion
+
 }

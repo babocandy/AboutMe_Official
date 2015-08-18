@@ -670,16 +670,16 @@ namespace AboutMe.Web.Admin.Controllers
         #endregion
 
         #region 상품 가격 일괄 수정
-        public ActionResult ProductPriceUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity Param)
+        public ActionResult ProductPriceUpdate(List<PRODUCT_PRICE_BATCH_MODEL> product_price_batch, ProductSearch_Entity Param)
         {
-                foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
+            foreach (PRODUCT_PRICE_BATCH_MODEL product_price in product_price_batch)
                 {
-                    if (!string.IsNullOrEmpty(tb_product.P_CODE))
+                    if (!string.IsNullOrEmpty(product_price.P_CODE))
                     {
-                        _AdminProductService.UpdateAdminProductPrice(tb_product);
+                        _AdminProductService.UpdateAdminProductPrice(product_price);
 
                         #region 상품가격 일괄 수정 로그 생성
-                        var serialised = JsonConvert.SerializeObject(tb_product);
+                        var serialised = JsonConvert.SerializeObject(product_price);
                         serialised += JsonConvert.SerializeObject(Param);
                         AdminLog adminlog = new AdminLog();
                         adminlog.AdminLogSave(serialised, "관리자상품가격일괄수정");
@@ -691,29 +691,35 @@ namespace AboutMe.Web.Admin.Controllers
         }
         #endregion
 
+
         #region 상품 정보 일괄 수정
-        public ActionResult ProductBatchUpdate(List<TB_PRODUCT_INFO> tb_product_info, ProductSearch_Entity Param)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult ProductBatchUpdate(List<PRODUCT_INFO_BATCH_MODEL> product_info_batch, ProductSearch_Entity Param)
         {
             Param.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
             Param.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"].Replace(",", "");
             this.ViewBag.IconBatchChk = string.IsNullOrEmpty(Request.Form["IconBatchChk"]) ? "" : Request.Form["IconBatchChk"];
-                foreach (TB_PRODUCT_INFO tb_product in tb_product_info)
+            foreach (PRODUCT_INFO_BATCH_MODEL product_info in product_info_batch)
+            {
+                if (!string.IsNullOrEmpty(product_info.P_CODE))
                 {
-                    if (!string.IsNullOrEmpty(tb_product.P_CODE))
-                    {
-                        tb_product.ICON_YN = Param.BatchIconYn;
-                        tb_product.ICON_BATCH_CHK   = this.ViewBag.IconBatchChk; 
+                    product_info.ICON_YN = Param.BatchIconYn;
+                    product_info.ICON_BATCH_CHK = this.ViewBag.IconBatchChk;
 
-                        _AdminProductService.UpdateAdminProductBatch(tb_product);
+                    product_info.DISPLAY_YN = string.IsNullOrEmpty(product_info.DISPLAY_YN) ? "N" : product_info.DISPLAY_YN ;
+                    product_info.P_OUTLET_YN = string.IsNullOrEmpty(product_info.P_OUTLET_YN) ? "N" : product_info.P_OUTLET_YN;
+                    product_info.SOLDOUT_YN = string.IsNullOrEmpty(product_info.SOLDOUT_YN) ? "N" : product_info.SOLDOUT_YN;
 
-                        #region 상품가격 일괄 수정 로그 생성
-                        var serialised = JsonConvert.SerializeObject(tb_product);
-                        serialised += JsonConvert.SerializeObject(Param);
-                        AdminLog adminlog = new AdminLog();
-                        adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
-                        #endregion
-                    }
+                    _AdminProductService.UpdateAdminProductBatch(product_info);
+
+                    #region 상품가격 일괄 수정 로그 생성
+                    var serialised = JsonConvert.SerializeObject(product_info);
+                    serialised += JsonConvert.SerializeObject(Param);
+                    AdminLog adminlog = new AdminLog();
+                    adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
+                    #endregion
                 }
+            }
 
                 RouteValueDictionary param = ConvertRouteValue(Param);
                 return RedirectToAction("ProductIndex", Param);

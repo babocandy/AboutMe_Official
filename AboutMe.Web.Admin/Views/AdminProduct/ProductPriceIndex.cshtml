@@ -687,7 +687,7 @@
             <h3 class="sub-header">상품가격관리</h3>
             <form action="" id="bform" method="post" name="bform">
                 <input type="hidden" name="searchStatus" id="searchStatus" value="@Model.productSearch_Entity.searchStatus" />
-                <input type="hidden" name="Page" id="Page" value="@Model.productSearch_Entity..Page" />
+                <input type="hidden" name="Page" id="Page" value="@Model.productSearch_Entity.Page" />
                 <input type="hidden" name="cateCode" id="cateCode" value="@Model.productSearch_Entity.cateCode" />
 
                 <div class="tar mb10">
@@ -780,7 +780,7 @@
         <div class="panel">
             <div class="">
                 <table class="table table_row">
-                    <colgroup><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /></colgroup>
+                    <colgroup><col width="12%" /><col width="12%" /><col width="12%" /><col width="12%" /><col width="15%" /><col width="12%" /><col width="12%" /><col width="12%" /></colgroup>
                     <tr>
                         <th><a href="javascript:allProductChk()" class=" btn btn-default large btn_search">체크 상품 일괄 저장</a></th>
                         <td>현재 선택한 <input type="text" name="number_ch" id="number_ch" style="padding-right:5px;width:40px;height:15px;text-align:right;" class="intext" readonly /> 건</td>
@@ -846,7 +846,9 @@
                         }
                         
                         <tr>
-                            <td><input type="checkbox" name="tb_product_info[@i].P_CODE" value="@item.P_CODE" id="P_CODE" style="vertical-align:middle;margin-bottom:2px;" onclick="sel_ck('@i');" /></td>
+                            <td><input type="checkbox" name="product_price_batch[@i].P_CODE" value="@item.P_CODE" id="P_CODE" style="vertical-align:middle;margin-bottom:2px;" onclick="sel_ck('@i');" />
+                                <input type="hidden" name="product_price_batch[@i].DEFAULT_PCODE" value="@item.P_CODE" id="DEFAULT_PCODE" />
+                            </td>
                             <td>
                                 @if (!string.IsNullOrEmpty(item.MAIN_IMG))
                                 {
@@ -862,9 +864,9 @@
                             <td>@Html.ActionLink(item.P_NAME, "ProductUpdate", param)
                             @*<a href="/AdminProduct/ProductUpdate?pcode=@item.P_CODE">@item.P_NAME</a>*@
                             </td>
-                            <td><input id="SELLING_PRICE" name="tb_product_info[@i].SELLING_PRICE" type="text" size="7" maxlength="7" value="@item.SELLING_PRICE" onkeyup="NumObj(this); selectedChk('@i');" /></td>
-                            <td><input id="DISCOUNT_PRICE" name="tb_product_info[@i].DISCOUNT_PRICE" type="text" size="7" maxlength="7" value="@item.DISCOUNT_PRICE" onkeyup="NumObj(this); selectedChk('@i');" /></td>
-                            <td><input id="DISCOUNT_RATE" name="tb_product_info[@i].DISCOUNT_RATE" type="text" size="3" maxlength="3" value="@item.DISCOUNT_RATE" onkeyup="NumObj(this); selectedChk('@i');" />%</td>
+                            <td><input id="SELLING_PRICE" name="product_price_batch[@i].SELLING_PRICE" type="text" size="7" maxlength="7" value="@item.SELLING_PRICE" onkeyup="NumObj(this); selectedChk('@i');" /></td>
+                            <td><input id="DISCOUNT_PRICE" name="product_price_batch[@i].DISCOUNT_PRICE" type="text" size="7" maxlength="7" value="@item.DISCOUNT_PRICE" onkeyup="NumObj(this); selectedChk('@i');" /></td>
+                            <td><input id="DISCOUNT_RATE" name="product_price_batch[@i].DISCOUNT_RATE" type="text" size="3" maxlength="3" value="@item.DISCOUNT_RATE" onkeyup="NumObj(this); selectedChk('@i');" />%</td>
                             <td>@if (item.DISPLAY_YN == "Y"){<text>전시</text>}else{<text>비전시</text>}</td>
                             <td>@if (item.SOLDOUT_YN == "Y"){<text>품절</text>}</td>
                             <td>@item.REGDATE</td>

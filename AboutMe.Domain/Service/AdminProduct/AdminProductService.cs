@@ -309,7 +309,7 @@ namespace AboutMe.Domain.Service.AdminProduct
         #endregion
 
         #region 상품 가격 일괄 수정
-        public void UpdateAdminProductPrice(TB_PRODUCT_INFO tb_product_info)
+        public void UpdateAdminProductPrice(PRODUCT_PRICE_BATCH_MODEL tb_product_info)
         {
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
@@ -320,7 +320,7 @@ namespace AboutMe.Domain.Service.AdminProduct
         #endregion
 
         #region 상품 정보 일괄 수정
-        public void UpdateAdminProductBatch(TB_PRODUCT_INFO tb_product_info)
+        public void UpdateAdminProductBatch(PRODUCT_INFO_BATCH_MODEL tb_product_info)
         {
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
