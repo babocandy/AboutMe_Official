@@ -153,7 +153,11 @@ namespace AboutMe.Web.Front.Controllers
             List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
             foreach (var item in model.List)
             {
-                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                if (_service_pdt.ViewProduct(item.P_CODE) != null)
+                {
+                    plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                }
+                
             }
 
             model.PdtList = plist;
