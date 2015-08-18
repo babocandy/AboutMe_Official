@@ -1,0 +1,438 @@
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP2_MODEL
+@{
+    ViewBag.Title = "주문/결제 - ABOUT ME";
+    ViewBag.TopClass = "cart";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+
+    if (Model == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
+}
+@section Scripts{
+<link href="/aboutCom/css/cart.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div class="container oder">
+    
+    @if (!Model.OrderResult.Resultcode.Equals("00"))
+    {
+        
+    <div class="h2_area">
+        <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>주문에러</h2>
+    </div>
+    
+    <div class="boxtypec">
+        <h3>이니시스 결제도중 에러가 발생했습니다. 재주문하시기 바랍니다.</h3>
+        <ul class="con_list pd0">
+            <li>
+                <div>
+                    <span class="tit">에러메시지</span>
+                    <span class="tit">@Model.OrderResult.ResultMsg</span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <span class="tit">Order IDX</span>
+                    <span class="tit">@Model.OrderResult.ORDER_IDX</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="btn_group mt20">
+        <a href="/Cart" class="btn btn_brown_h40 mr5" style="width:142px;">장바구니</a><a href="/" class="btn btn_white_h40" style="width:142px;">홈</a>
+    </div>
+    }
+    else
+    {
+
+        if (Model.DetailInfo == null)
+        {
+            Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+            Response.End();
+        }
+
+        <div class="h2_area">
+            <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+            <h2>주문완료</h2>
+        </div>
+
+    <!--주문완료확인텍스트-->
+        <div class="order_fin_txt">
+            <strong>@Model.DetailInfo.ORDER_NAME</strong>님이 결제하신 <strong>주문이 완료</strong>되었습니다.<br />
+            주문해 주셔서 감사합니다.
+        </div>
+    <!--주문완료확인텍스트-->
+    <!--상품리스트-->
+        <div class="product_list v2">
+            <h3>주문상품</h3>
+            <ul class="btnone">
+
+@foreach (var item in Model.ProductList)
+{
+     string imgUrl1 = productImgPath + "R120_" + item.P_IMG1_S;
+    
+                <li>
+                    <ul class="product_info">
+                        <li class="photo_info">
+                            <div class="photo"><img src="@imgUrl1" alt="" /></div>
+                            <div class="detail">
+                                @if (item.ICON_BEST == 1)
+                                {
+                                    <span class="ico ico_best">BEST</span>
+                                }
+                                @if (item.ICON_SOLDOUT == 1)
+                                {
+                                    <span class="ico ico_soldout">SOLD OUT</span>
+                                }
+                                @if (item.ICON_NEW == 1)
+                                {
+                                    <span class="ico ico_new">NEW</span>
+                                }
+                                @if (item.ICON_CUSTOM == 1)
+                                {
+                                    <span class="ico ico_custom">커스텀</span>
+                                }
+
+                                @if (item.ICON_SET == 1)
+                                {
+                                    <span class="ico ico_set">SET</span>
+                                }
+                                @if (item.ICON_ONEPLUS == 1)
+                                {
+                                    <span class="ico ico_1_1">1+1</span>
+                                }
+                                @if (item.ICON_TIME == 1)
+                                {
+                                    <span class="ico ico_time">TIME</span>
+                                }
+
+                                @if (item.ICON_COUPON == 1)
+                                {
+                                    <span class="ico ico_coupon">COUPON</span>
+                                }
+                                <span class="tit">@(new HtmlString(item.P_NAME))</span>
+                                <span class="price">
+                                @if (@item.SELLING_PRICE != @item.DISCOUNT_PRICE)
+                                {
+                                    <del>@item.SELLING_PRICE.ToString("#,#0.")원</del>
+                                }
+                                @String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)원</span>
+                            </div>
+                        </li>
+                        
+                        @if (item.PROMOTION_TYPE == "02") //1+1
+                        {
+                            <li>1+1 상품</li>
+                        }
+                        
+                        @if (Model.UserProfile.M_GBN == "S") //임직원
+                        {
+                            <li>
+                                <span class="tit">임직원 금액</span>
+                                <span class="num">@item.EMP_DISCOUNT_PRICE.ToString("#,#0.")원</span>
+                            </li>
+                        }
+                        <li class="count_info">
+                            <span class="tit">수량</span>
+                            <span class="num"><strong>@item.P_COUNT</strong>개</span>
+                        </li>
+                        <li class="count_info ">
+                            <span class="tit">쿠폰할인금액</span>
+                            <span class="num">@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_AMT)원</span>
+                        </li>
+                        <li>
+                            <strong class="tit">주문금액</strong>
+                            <strong class="num">@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_PRICE)원</strong>
+                        </li>
+                    </ul>
+                </li>
+}
+
+            </ul>
+        </div>
+    <!--//상품리스트-->
+    <!--결제금액-->
+        <div class="boxtypec">
+            <h3>결제금액</h3>
+            <ul class="con_list pd0">
+                <li>
+                    <div>
+                        <span class="tit">상품금액</span>
+                        <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.TOTAL_PRICE)원</span>
+                    </div>
+                    <div>
+                        <span class="tit">배송비</span>
+                        <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.TRANS_PRICE)원</span>
+                    </div>
+                </li>
+                <li>
+                    <strong class="tit">총 상품금액</strong>
+                    <strong class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.TOTAL_PRICE + Model.DetailInfo.TRANS_PRICE)원</strong>
+                </li>
+                <li>
+                    @if (Model.UserProfile.IS_LOGIN == true && Model.UserProfile.M_GBN == "S")
+                    {
+                        <div>
+                            <span class="tit">임직원할인</span>
+                            <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.EMP_DISCOUNT_AMT)원</span>
+                        </div>
+                    }
+                    
+                    <div>
+                        <span class="tit">쿠폰할인금액</span>
+                        <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.COUPON_DISCOUNT_AMT)원</span>
+                    </div>
+                    <div>
+                        <span class="stit">보유포인트 사용</span>
+                        <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.POINT_USE_PRICE)원</span>
+                    </div>
+                    <div>
+                        <span class="stit">VIP회원할인</span>
+                        <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.GRADE_DISCOUNT_AMT)원</span>
+                    </div>
+                </li>
+                <li class="bbnone">
+                    <span class="tit">총 할인금액</span>
+                    <span class="num">@String.Format("{0:#,#0.}", Model.DetailInfo.DISCOUNT_AMT)원</span>
+                </li>
+            </ul>
+        </div>
+        <div class="total_paywrap">
+            <div class="total_pay">
+                <dl class="point">
+                    <dt>예상적립포인트</dt>
+                    <dd>ⓟ@String.Format("{0:#,#0.}", Model.DetailInfo.ACCML_POINT)</dd>
+                </dl>
+                <dl class="amount">
+                    <dt>총 결제금액</dt>
+                    <dd>@String.Format("{0:#,#0.}", Model.DetailInfo.TOTAL_PAY_PRICE)원</dd>
+                </dl>
+            </div>
+            <p class="pstxt2"><span>ⓘ</span> 최종 결제금액 기준으로 포인트는 적립됩니다.</p>
+        </div>
+    <!--//결제금액-->
+    <!--주문자정보-->
+        <div class="boxtypec">
+            <h3 class="sliderh3_tit">주문자 정보</h3>
+            <div class="sliderh3_con">
+                <ul class="addressform2">
+                    <li>
+                        <dl>
+                            <dt>주문하시는 분</dt>
+                            <dd>@Model.DetailInfo.ORDER_NAME</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>주소</dt>
+                            <dd>
+                                @Model.DetailInfo.SENDER_POST<br />
+                                @Model.DetailInfo.SENDER_ADDR1<br />
+                                @Model.DetailInfo.SENDER_ADDR2
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>집전화번호</dt>
+                            <dd>
+                                @Model.DetailInfo.SENDER_TEL
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>휴대번호</dt>
+                            <dd>
+                                @Model.DetailInfo.SENDER_HP
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="bbnone">
+                        <dl>
+                            <dt>이메일</dt>
+                            <dd>
+                                @Model.DetailInfo.SENDER_EMAIL
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <!--//주문자정보-->
+    <!--배송지정보-->
+        <div class="boxtypec">
+            <h3 class="sliderh3_tit on">배송지 정보</h3>
+
+            <div class="sliderh3_con">
+                <ul class="addressform2">
+                    <li>
+                        <dl>
+                            <dt>받으시는 분</dt>
+                            <dd>@Model.DetailInfo.RECEIVER_NAME</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>주소</dt>
+                            <dd>
+                                @Model.DetailInfo.RECEIVER_POST<br />
+                                @Model.DetailInfo.RECEIVER_ADDR1<br />
+                                @Model.DetailInfo.RECEIVER_ADDR2
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>집전화번호</dt>
+                            <dd>
+                                @Model.DetailInfo.RECEIVER_TEL
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>휴대번호</dt>
+                            <dd>
+                                @Model.DetailInfo.RECEIVER_HP
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="bbnone">
+                        <dl>
+                            <dt>배송시 요청사항</dt>
+                            <dd>
+                                @Model.DetailInfo.ORDER_MEMO
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <!--//배송지정보-->
+    <!--결제정보-->
+        <div class="boxtypec payinfo">
+            <h3>결제정보</h3>
+            <div class="wrap">
+                <dl>
+                    <dt>주문번호</dt>
+                    <dd>@Model.DetailInfo.ORDER_CODE</dd>
+                </dl>
+                <dl>
+                    <dt>결제수단</dt>
+                    <dd>@Model.DetailInfo.PAY_GBN_NM</dd>
+                </dl>
+                @if (!Model.DetailInfo.NOMEMBER_PASS.IsEmpty())
+                {
+                    <dl>
+                        <dt>비회원비밀번호</dt>
+                        <dd>@Model.DetailInfo.NOMEMBER_PASS</dd>
+                    </dl>
+                }
+                <dl>
+                    <dt>승인번호</dt>
+                    <dd>@Model.DetailInfo.PAT_TID</dd>
+                </dl>
+
+                @if (Model.DetailInfo.PAY_GBN == "3") //가상계좌
+                {
+                    <dl>
+                        <dt>가상계좌번호</dt>
+                        <dd>@Model.DetailInfo.VACT_Num</dd>
+                    </dl>
+                    <dl>
+                        <dt>입금은행</dt>
+                        <dd>@Model.DetailInfo.VACT_BankName</dd>
+                    </dl>
+                    <dl>
+                        <dt>예금주명</dt>
+                        <dd>@Model.DetailInfo.VACT_Name</dd>
+                    </dl>
+                    <dl>
+                        <dt>입금 예정일</dt>
+                        <dd>@Model.DetailInfo.VACT_Date 까지</dd>
+                    </dl>
+                }
+            </div>
+        </div>
+    <!--//결제정보-->
+    <!--배송안내-->
+        <div class="boxtypec odercon">
+            <h3>배송안내</h3>
+            <p class="tit">배송사</p>
+            <p class="contxt">한진택배 <i class="tel"></i>1588-0011</p>
+            <p class="tit">배송비</p>
+            <p class="contxt">2500원 <span>(단, 제주도 및 도서산간지역은 추가 운임료 발생)</span> </p>
+            <p class="tit">배송기간</p>
+            <p class="contxt">
+                입금완료 확인 후 2-5일 이내에 배송됩니다.(단, 제주도 및 도서산
+                간지역은 추가기간 발생)고객님의 연락두절 및 부재 등으로
+                인하여 반송된 경우에는 왕복 택배비가 부과 됩니다.
+                연락처 및 주소를 정확히 기입해 주시기 바랍니다.
+            </p>
+            <p class="tit">배송 전 취소 및 변경 </p>
+            <p class="contxt">
+                게시판 또는 웹상에서 접수하신 경우 처리가 지연.(누락)될 수
+                있사오니, 신속한 처리를 위하여 고객센터로 문의 부탁드립니다.<br />
+                <span class="fcblue">*</span> 단, 오후 2시 이후 상품취소 및 옵션변경 불가
+            </p>
+        </div>
+    <!--//배송안내-->
+    <!--주문 취소/ 교환/ 반품 안내-->
+        <div class="boxtypec odercon">
+            <h3>주문 취소 / 교환 / 반품 안내</h3>
+            <p class="contxt mt20">
+                교환 및 반품은 물품 수령 후 <strong>7일 이내</strong>에 접수(전화 및 게시판)
+                후 당사에 입고된 상품에 한하여 처리됩니다.
+                시일이 지난 상품에 대해서는 처리가 되지 않습니다.
+                (물품훼손/ 빈 포장폐기 및 물품가치를 상실할 경우에는
+                불가합니다.) 교환 및 반품 신청 시에는 <strong>해당구매 사이트</strong>를
+                통하여 해주시길 바랍니다. 신청하지 않고 임의 발송하신 경우
+                처리가 지연될 수 있습니다.(상품을 보내실 때 발송 시 동봉
+                되었던 교환/반품 요청서를 작성하여 함께 보내주시면 신속
+                하고 원활한 처리가 이루어집니다.)
+            </p>
+            <p class="tit">불량 및 오배송 등으로 인한 교환</p>
+            <p class="contxt">
+                맞교환은 불가하며 교환 상품이 물류센터에 도착하여 상품
+                확인 후 처리가 가능합니다. 왕복운송료는 모두 ㈜삼양제넥스
+                에서 부담합니다. 단, 동일상품이 아닌 다른 칼라나 사이즈
+                등으로 교환 원하시는 경우에는 고객 변심으로 처리됩니다.<br />
+                (교환택배 구매자 부담)
+            </p>
+            <p class="tit">
+                교환 및 반품이 불가한 상품
+            </p>
+            <p class="contxt">
+                0000000내용 아직 없음 자리만 만들어주면 됨00000
+            </p>
+            <p class="tit">교환 및 반품 배송비 결제시</p>
+            <p class="contxt">
+                무료배송 상품, 단순교환일 경우 5000원(동봉 또는 계좌)을
+                지불하셔야 합니다. 선결제, 착불, 단순 반품 및 교환일 경우
+                모두 5000원을 지불하셔야 하며, 선결제 배송비는 상품금액<br />
+                + 배송료 모두 함께 환불됩니다.
+            </p>
+            <p class="tit">교환 및 반품 배송비 계좌</p>
+            <p class="contxt">
+                교환 및 반품 배송비는 아래 계좌로 입금해 주십시오.
+                은행명 : 00은행 / 계좌번호 000-000-00000 예금주 0000<br />
+                (동봉시 분실 및 분쟁의 소지가 있사오니 가급적 계좌로 입금
+                부탁 드립니다.)
+            </p>
+        </div>
+    <!--주문 취소/ 교환/ 반품 안내-->
+
+        <div class="btn_group mt20">
+            <a href="/MyPage/MyOrder/" class="btn btn_brown_h40 mr5" style="width:142px;">주문조회</a><a href="/" class="btn btn_white_h40" style="width:142px;">홈</a>
+        </div>
+
+    }
+</div>
+<!--//container-->

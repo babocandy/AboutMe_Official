@@ -55,9 +55,9 @@ namespace AboutMe.Domain.Service.AdminProduct
         int UpdateAdminProduct(TB_PRODUCT_INFO tb_product_info);
 
         //상품가격 일괄수정
-        void UpdateAdminProductPrice(TB_PRODUCT_INFO tb_product);
+        void UpdateAdminProductPrice(PRODUCT_PRICE_BATCH_MODEL tb_product);
         //상품정보 일괄수정
-        void UpdateAdminProductBatch(TB_PRODUCT_INFO tb_product);
+        void UpdateAdminProductBatch(PRODUCT_INFO_BATCH_MODEL tb_product);
         //상품전시 순서 바꾸기
         void UpdateAdminProductReSort(int IDX, int RE_SORT, string CLICKCHK);
 

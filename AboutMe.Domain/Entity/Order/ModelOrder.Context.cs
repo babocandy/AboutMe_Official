@@ -627,5 +627,14 @@ namespace AboutMe.Domain.Entity.Order
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_PART_CANCEL_INSERT", oRDER_IDXParameter, pAT_TIDParameter, oLD_PAT_TIDParameter, cANCEL_PRICEParameter, rEMAINS_PRICEParameter, eMAILParameter, pRTC_RemainsParameter, pRTC_TypeParameter, pRTC_PriceParameter, pRTC_CntParameter, rEG_IDParameter, rEG_IPParameter);
         }
+    
+        public virtual ObjectResult<SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result> SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX(Nullable<int> oLD_ORDER_IDX)
+        {
+            var oLD_ORDER_IDXParameter = oLD_ORDER_IDX.HasValue ?
+                new ObjectParameter("OLD_ORDER_IDX", oLD_ORDER_IDX) :
+                new ObjectParameter("OLD_ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result>("SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX", oLD_ORDER_IDXParameter);
+        }
     }
 }
