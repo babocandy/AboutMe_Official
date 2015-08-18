@@ -32,8 +32,8 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public virtual DbSet<TB_PROMOTION_BY_TOTAL> TB_PROMOTION_BY_TOTAL { get; set; }
         public virtual DbSet<TB_PROMOTION_PRODUCT_CATEGORY> TB_PROMOTION_PRODUCT_CATEGORY { get; set; }
         public virtual DbSet<TB_PROMOTION_PRODUCT_VS_TOTAL> TB_PROMOTION_PRODUCT_VS_TOTAL { get; set; }
-        public virtual DbSet<TB_PROMOTION_BY_PRODUCT> TB_PROMOTION_BY_PRODUCT { get; set; }
         public virtual DbSet<TB_PROMOTION_BY_PRODUCT_PRICE> TB_PROMOTION_BY_PRODUCT_PRICE { get; set; }
+        public virtual DbSet<TB_PROMOTION_BY_PRODUCT> TB_PROMOTION_BY_PRODUCT { get; set; }
     
         public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_TOTAL_CNT(string sEARCH_KEY, string sEARCH_KEYWORD)
         {
@@ -473,158 +473,6 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result>("SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL", m_GBNParameter, m_GRADEParameter);
         }
     
-        public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL(string cD_PROMOTION_PRODUCT)
-        {
-            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
-                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
-                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL", cD_PROMOTION_PRODUCTParameter);
-        }
-    
-        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_INS(string pMO_PRODUCT_NAME, string pMO_PRODUCT_CATEGORY, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, ObjectParameter cD_PROMOTION_PRODUCT)
-        {
-            var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
-                new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
-                new ObjectParameter("PMO_PRODUCT_NAME", typeof(string));
-    
-            var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
-                new ObjectParameter("PMO_PRODUCT_CATEGORY", pMO_PRODUCT_CATEGORY) :
-                new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
-    
-            var pMO_PRODUCT_MAIN_TITLEParameter = pMO_PRODUCT_MAIN_TITLE != null ?
-                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", pMO_PRODUCT_MAIN_TITLE) :
-                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", typeof(string));
-    
-            var pMO_PRODUCT_SUB_TITLEParameter = pMO_PRODUCT_SUB_TITLE != null ?
-                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", pMO_PRODUCT_SUB_TITLE) :
-                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", typeof(string));
-    
-            var pMO_PRODUCT_SHOPPING_TIPParameter = pMO_PRODUCT_SHOPPING_TIP != null ?
-                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", pMO_PRODUCT_SHOPPING_TIP) :
-                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", typeof(string));
-    
-            var pMO_PRODUCT_MAIN_IMGParameter = pMO_PRODUCT_MAIN_IMG != null ?
-                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", pMO_PRODUCT_MAIN_IMG) :
-                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", typeof(string));
-    
-            var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
-                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
-                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
-    
-            var pMO_PRODUCT_DISCOUNT_RATEParameter = pMO_PRODUCT_DISCOUNT_RATE.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", pMO_PRODUCT_DISCOUNT_RATE) :
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", typeof(byte));
-    
-            var pMO_PRODUCT_DISCOUNT_MONEYParameter = pMO_PRODUCT_DISCOUNT_MONEY.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", pMO_PRODUCT_DISCOUNT_MONEY) :
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", typeof(int));
-    
-            var pMO_SET_DISCOUNT_CNTParameter = pMO_SET_DISCOUNT_CNT.HasValue ?
-                new ObjectParameter("PMO_SET_DISCOUNT_CNT", pMO_SET_DISCOUNT_CNT) :
-                new ObjectParameter("PMO_SET_DISCOUNT_CNT", typeof(byte));
-    
-            var pMO_ONEONE_MULTIPLE_CNTParameter = pMO_ONEONE_MULTIPLE_CNT.HasValue ?
-                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", pMO_ONEONE_MULTIPLE_CNT) :
-                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", typeof(byte));
-    
-            var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
-                new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
-    
-            var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
-                new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
-    
-            var uSABLE_YNParameter = uSABLE_YN != null ?
-                new ObjectParameter("USABLE_YN", uSABLE_YN) :
-                new ObjectParameter("USABLE_YN", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_INS", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_CATEGORYParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCT);
-        }
-    
-        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(string pMO_PRODUCT_NAME, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, string cD_PROMOTION_PRODUCT)
-        {
-            var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
-                new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
-                new ObjectParameter("PMO_PRODUCT_NAME", typeof(string));
-    
-            var pMO_PRODUCT_MAIN_TITLEParameter = pMO_PRODUCT_MAIN_TITLE != null ?
-                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", pMO_PRODUCT_MAIN_TITLE) :
-                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", typeof(string));
-    
-            var pMO_PRODUCT_SUB_TITLEParameter = pMO_PRODUCT_SUB_TITLE != null ?
-                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", pMO_PRODUCT_SUB_TITLE) :
-                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", typeof(string));
-    
-            var pMO_PRODUCT_SHOPPING_TIPParameter = pMO_PRODUCT_SHOPPING_TIP != null ?
-                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", pMO_PRODUCT_SHOPPING_TIP) :
-                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", typeof(string));
-    
-            var pMO_PRODUCT_MAIN_IMGParameter = pMO_PRODUCT_MAIN_IMG != null ?
-                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", pMO_PRODUCT_MAIN_IMG) :
-                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", typeof(string));
-    
-            var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
-                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
-                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
-    
-            var pMO_PRODUCT_DISCOUNT_RATEParameter = pMO_PRODUCT_DISCOUNT_RATE.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", pMO_PRODUCT_DISCOUNT_RATE) :
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", typeof(byte));
-    
-            var pMO_PRODUCT_DISCOUNT_MONEYParameter = pMO_PRODUCT_DISCOUNT_MONEY.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", pMO_PRODUCT_DISCOUNT_MONEY) :
-                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", typeof(int));
-    
-            var pMO_SET_DISCOUNT_CNTParameter = pMO_SET_DISCOUNT_CNT.HasValue ?
-                new ObjectParameter("PMO_SET_DISCOUNT_CNT", pMO_SET_DISCOUNT_CNT) :
-                new ObjectParameter("PMO_SET_DISCOUNT_CNT", typeof(byte));
-    
-            var pMO_ONEONE_MULTIPLE_CNTParameter = pMO_ONEONE_MULTIPLE_CNT.HasValue ?
-                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", pMO_ONEONE_MULTIPLE_CNT) :
-                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", typeof(byte));
-    
-            var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
-                new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
-    
-            var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
-                new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
-                new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
-    
-            var uSABLE_YNParameter = uSABLE_YN != null ?
-                new ObjectParameter("USABLE_YN", uSABLE_YN) :
-                new ObjectParameter("USABLE_YN", typeof(string));
-    
-            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
-                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
-                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCTParameter);
-        }
-    
-        public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
-        {
-            var pAGEParameter = pAGE.HasValue ?
-                new ObjectParameter("PAGE", pAGE) :
-                new ObjectParameter("PAGE", typeof(int));
-    
-            var pAGESIZEParameter = pAGESIZE.HasValue ?
-                new ObjectParameter("PAGESIZE", pAGESIZE) :
-                new ObjectParameter("PAGESIZE", typeof(int));
-    
-            var sEARCH_KEYParameter = sEARCH_KEY != null ?
-                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
-                new ObjectParameter("SEARCH_KEY", typeof(string));
-    
-            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
-                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
-                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
-        }
-    
         public virtual ObjectResult<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> SP_PROMOTION_TOTAL_BY_PRODUCT_ALL_SEL(string p_CODE, string mEM_GBN, string mEM_GRADE)
         {
             var p_CODEParameter = p_CODE != null ?
@@ -681,6 +529,36 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL_Result>("SP_PROMOTION_BY_PRODUCT_SET_RELATED_SEL", cD_PROMOTION_PRODUCTParameter, p_CODEParameter);
         }
     
+        public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL(string cD_PROMOTION_PRODUCT)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL", cD_PROMOTION_PRODUCTParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
         public virtual ObjectResult<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL(string pMO_PRODUCT_CATEGORY)
         {
             var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
@@ -688,6 +566,168 @@ namespace AboutMe.Domain.Entity.AdminPromotion
                 new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>("SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL", pMO_PRODUCT_CATEGORYParameter);
+        }
+    
+        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_INS(string pMO_PRODUCT_NAME, string pMO_PRODUCT_CATEGORY, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_PC_MAINPG_IMG, string pMO_PRODUCT_PC_EVENT_MAINPG_IMG, string pMO_PRODUCT_MOBILE_MAIN_IMG, string pMO_PRODUCT_MOBILE_MAINPG_IMG, string pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, ObjectParameter cD_PROMOTION_PRODUCT)
+        {
+            var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
+                new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
+                new ObjectParameter("PMO_PRODUCT_NAME", typeof(string));
+    
+            var pMO_PRODUCT_CATEGORYParameter = pMO_PRODUCT_CATEGORY != null ?
+                new ObjectParameter("PMO_PRODUCT_CATEGORY", pMO_PRODUCT_CATEGORY) :
+                new ObjectParameter("PMO_PRODUCT_CATEGORY", typeof(string));
+    
+            var pMO_PRODUCT_MAIN_TITLEParameter = pMO_PRODUCT_MAIN_TITLE != null ?
+                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", pMO_PRODUCT_MAIN_TITLE) :
+                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", typeof(string));
+    
+            var pMO_PRODUCT_SUB_TITLEParameter = pMO_PRODUCT_SUB_TITLE != null ?
+                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", pMO_PRODUCT_SUB_TITLE) :
+                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", typeof(string));
+    
+            var pMO_PRODUCT_SHOPPING_TIPParameter = pMO_PRODUCT_SHOPPING_TIP != null ?
+                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", pMO_PRODUCT_SHOPPING_TIP) :
+                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", typeof(string));
+    
+            var pMO_PRODUCT_MAIN_IMGParameter = pMO_PRODUCT_MAIN_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", pMO_PRODUCT_MAIN_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", typeof(string));
+    
+            var pMO_PRODUCT_PC_MAINPG_IMGParameter = pMO_PRODUCT_PC_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", pMO_PRODUCT_PC_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter = pMO_PRODUCT_PC_EVENT_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_PC_EVENT_MAINPG_IMG", pMO_PRODUCT_PC_EVENT_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_PC_EVENT_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_MOBILE_MAIN_IMGParameter = pMO_PRODUCT_MOBILE_MAIN_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAIN_IMG", pMO_PRODUCT_MOBILE_MAIN_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAIN_IMG", typeof(string));
+    
+            var pMO_PRODUCT_MOBILE_MAINPG_IMGParameter = pMO_PRODUCT_MOBILE_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAINPG_IMG", pMO_PRODUCT_MOBILE_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter = pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG", pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
+                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
+                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
+    
+            var pMO_PRODUCT_DISCOUNT_RATEParameter = pMO_PRODUCT_DISCOUNT_RATE.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", pMO_PRODUCT_DISCOUNT_RATE) :
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", typeof(byte));
+    
+            var pMO_PRODUCT_DISCOUNT_MONEYParameter = pMO_PRODUCT_DISCOUNT_MONEY.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", pMO_PRODUCT_DISCOUNT_MONEY) :
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", typeof(int));
+    
+            var pMO_SET_DISCOUNT_CNTParameter = pMO_SET_DISCOUNT_CNT.HasValue ?
+                new ObjectParameter("PMO_SET_DISCOUNT_CNT", pMO_SET_DISCOUNT_CNT) :
+                new ObjectParameter("PMO_SET_DISCOUNT_CNT", typeof(byte));
+    
+            var pMO_ONEONE_MULTIPLE_CNTParameter = pMO_ONEONE_MULTIPLE_CNT.HasValue ?
+                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", pMO_ONEONE_MULTIPLE_CNT) :
+                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", typeof(byte));
+    
+            var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
+                new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
+    
+            var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
+                new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
+    
+            var uSABLE_YNParameter = uSABLE_YN != null ?
+                new ObjectParameter("USABLE_YN", uSABLE_YN) :
+                new ObjectParameter("USABLE_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_INS", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_CATEGORYParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCT);
+        }
+    
+        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(string pMO_PRODUCT_NAME, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_PC_MAINPG_IMG, string pMO_PRODUCT_PC_EVENT_MAINPG_IMG, string pMO_PRODUCT_MOBILE_MAIN_IMG, string pMO_PRODUCT_MOBILE_MAINPG_IMG, string pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, string cD_PROMOTION_PRODUCT)
+        {
+            var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
+                new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
+                new ObjectParameter("PMO_PRODUCT_NAME", typeof(string));
+    
+            var pMO_PRODUCT_MAIN_TITLEParameter = pMO_PRODUCT_MAIN_TITLE != null ?
+                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", pMO_PRODUCT_MAIN_TITLE) :
+                new ObjectParameter("PMO_PRODUCT_MAIN_TITLE", typeof(string));
+    
+            var pMO_PRODUCT_SUB_TITLEParameter = pMO_PRODUCT_SUB_TITLE != null ?
+                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", pMO_PRODUCT_SUB_TITLE) :
+                new ObjectParameter("PMO_PRODUCT_SUB_TITLE", typeof(string));
+    
+            var pMO_PRODUCT_SHOPPING_TIPParameter = pMO_PRODUCT_SHOPPING_TIP != null ?
+                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", pMO_PRODUCT_SHOPPING_TIP) :
+                new ObjectParameter("PMO_PRODUCT_SHOPPING_TIP", typeof(string));
+    
+            var pMO_PRODUCT_MAIN_IMGParameter = pMO_PRODUCT_MAIN_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", pMO_PRODUCT_MAIN_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MAIN_IMG", typeof(string));
+    
+            var pMO_PRODUCT_PC_MAINPG_IMGParameter = pMO_PRODUCT_PC_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", pMO_PRODUCT_PC_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter = pMO_PRODUCT_PC_EVENT_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_PC_EVENT_MAINPG_IMG", pMO_PRODUCT_PC_EVENT_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_PC_EVENT_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_MOBILE_MAIN_IMGParameter = pMO_PRODUCT_MOBILE_MAIN_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAIN_IMG", pMO_PRODUCT_MOBILE_MAIN_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAIN_IMG", typeof(string));
+    
+            var pMO_PRODUCT_MOBILE_MAINPG_IMGParameter = pMO_PRODUCT_MOBILE_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAINPG_IMG", pMO_PRODUCT_MOBILE_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MOBILE_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter = pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG", pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG) :
+                new ObjectParameter("PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_RATE_OR_MONEYParameter = pMO_PRODUCT_RATE_OR_MONEY != null ?
+                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", pMO_PRODUCT_RATE_OR_MONEY) :
+                new ObjectParameter("PMO_PRODUCT_RATE_OR_MONEY", typeof(string));
+    
+            var pMO_PRODUCT_DISCOUNT_RATEParameter = pMO_PRODUCT_DISCOUNT_RATE.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", pMO_PRODUCT_DISCOUNT_RATE) :
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_RATE", typeof(byte));
+    
+            var pMO_PRODUCT_DISCOUNT_MONEYParameter = pMO_PRODUCT_DISCOUNT_MONEY.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", pMO_PRODUCT_DISCOUNT_MONEY) :
+                new ObjectParameter("PMO_PRODUCT_DISCOUNT_MONEY", typeof(int));
+    
+            var pMO_SET_DISCOUNT_CNTParameter = pMO_SET_DISCOUNT_CNT.HasValue ?
+                new ObjectParameter("PMO_SET_DISCOUNT_CNT", pMO_SET_DISCOUNT_CNT) :
+                new ObjectParameter("PMO_SET_DISCOUNT_CNT", typeof(byte));
+    
+            var pMO_ONEONE_MULTIPLE_CNTParameter = pMO_ONEONE_MULTIPLE_CNT.HasValue ?
+                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", pMO_ONEONE_MULTIPLE_CNT) :
+                new ObjectParameter("PMO_ONEONE_MULTIPLE_CNT", typeof(byte));
+    
+            var pMO_PRODUCT_DATE_FROMParameter = pMO_PRODUCT_DATE_FROM.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DATE_FROM", pMO_PRODUCT_DATE_FROM) :
+                new ObjectParameter("PMO_PRODUCT_DATE_FROM", typeof(System.DateTime));
+    
+            var pMO_PRODUCT_DATE_TOParameter = pMO_PRODUCT_DATE_TO.HasValue ?
+                new ObjectParameter("PMO_PRODUCT_DATE_TO", pMO_PRODUCT_DATE_TO) :
+                new ObjectParameter("PMO_PRODUCT_DATE_TO", typeof(System.DateTime));
+    
+            var uSABLE_YNParameter = uSABLE_YN != null ?
+                new ObjectParameter("USABLE_YN", uSABLE_YN) :
+                new ObjectParameter("USABLE_YN", typeof(string));
+    
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCTParameter);
         }
     }
 }
