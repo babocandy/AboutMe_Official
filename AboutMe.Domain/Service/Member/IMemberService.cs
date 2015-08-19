@@ -27,7 +27,7 @@ namespace AboutMe.Domain.Service.Member
 
         ReturnDic SetMemberRegister(string m_ID, string m_NAME, string m_PWD, string m_GRADE, string m_SEX, string m_BIRTHDAY, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM
             , string m_JOIN_MODE, string m_DI, string m_AGREE, string m_AGREE2, string m_SKIN_TROUBLE_CD
-            , string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID); //회원 신규가입
+            , string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID,string m_DEVICE_GBN); //회원 신규가입
 
         ReturnDic GetMemberFindID(string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "");//회원 ID찾기 ->리턴:ReturnDic
         ReturnDic GetMemberFindPWD(string m_ID = "", string m_NAME = "", string m_EMAIL = "", string m_MOBILE = "", string m_PWD_NEW = "");//PW 찾기 ->리턴:ReturnDic

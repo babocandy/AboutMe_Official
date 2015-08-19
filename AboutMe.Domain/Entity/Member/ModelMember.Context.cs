@@ -55,103 +55,6 @@ namespace AboutMe.Domain.Entity.Member
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_DUP_CHK", m_IDParameter, eRR_CODE);
         }
     
-        public virtual int SP_MEMBER_INS(string m_ID, string m_NAME, string m_PWD, string m_GRADE, string m_SEX, string m_BIRTHDAY, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, string m_JOIN_MODE, string m_DI, string m_AGREE, string m_AGREE2, string m_SKIN_TROUBLE_CD, string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID, ObjectParameter eRR_CODE)
-        {
-            var m_IDParameter = m_ID != null ?
-                new ObjectParameter("M_ID", m_ID) :
-                new ObjectParameter("M_ID", typeof(string));
-    
-            var m_NAMEParameter = m_NAME != null ?
-                new ObjectParameter("M_NAME", m_NAME) :
-                new ObjectParameter("M_NAME", typeof(string));
-    
-            var m_PWDParameter = m_PWD != null ?
-                new ObjectParameter("M_PWD", m_PWD) :
-                new ObjectParameter("M_PWD", typeof(string));
-    
-            var m_GRADEParameter = m_GRADE != null ?
-                new ObjectParameter("M_GRADE", m_GRADE) :
-                new ObjectParameter("M_GRADE", typeof(string));
-    
-            var m_SEXParameter = m_SEX != null ?
-                new ObjectParameter("M_SEX", m_SEX) :
-                new ObjectParameter("M_SEX", typeof(string));
-    
-            var m_BIRTHDAYParameter = m_BIRTHDAY != null ?
-                new ObjectParameter("M_BIRTHDAY", m_BIRTHDAY) :
-                new ObjectParameter("M_BIRTHDAY", typeof(string));
-    
-            var m_MOBILEParameter = m_MOBILE != null ?
-                new ObjectParameter("M_MOBILE", m_MOBILE) :
-                new ObjectParameter("M_MOBILE", typeof(string));
-    
-            var m_PHONEParameter = m_PHONE != null ?
-                new ObjectParameter("M_PHONE", m_PHONE) :
-                new ObjectParameter("M_PHONE", typeof(string));
-    
-            var m_EMAILParameter = m_EMAIL != null ?
-                new ObjectParameter("M_EMAIL", m_EMAIL) :
-                new ObjectParameter("M_EMAIL", typeof(string));
-    
-            var m_ZIPCODEParameter = m_ZIPCODE != null ?
-                new ObjectParameter("M_ZIPCODE", m_ZIPCODE) :
-                new ObjectParameter("M_ZIPCODE", typeof(string));
-    
-            var m_ADDR1Parameter = m_ADDR1 != null ?
-                new ObjectParameter("M_ADDR1", m_ADDR1) :
-                new ObjectParameter("M_ADDR1", typeof(string));
-    
-            var m_ADDR2Parameter = m_ADDR2 != null ?
-                new ObjectParameter("M_ADDR2", m_ADDR2) :
-                new ObjectParameter("M_ADDR2", typeof(string));
-    
-            var m_ISSMSParameter = m_ISSMS != null ?
-                new ObjectParameter("M_ISSMS", m_ISSMS) :
-                new ObjectParameter("M_ISSMS", typeof(string));
-    
-            var m_ISEMAILParameter = m_ISEMAIL != null ?
-                new ObjectParameter("M_ISEMAIL", m_ISEMAIL) :
-                new ObjectParameter("M_ISEMAIL", typeof(string));
-    
-            var m_ISDMParameter = m_ISDM != null ?
-                new ObjectParameter("M_ISDM", m_ISDM) :
-                new ObjectParameter("M_ISDM", typeof(string));
-    
-            var m_JOIN_MODEParameter = m_JOIN_MODE != null ?
-                new ObjectParameter("M_JOIN_MODE", m_JOIN_MODE) :
-                new ObjectParameter("M_JOIN_MODE", typeof(string));
-    
-            var m_DIParameter = m_DI != null ?
-                new ObjectParameter("M_DI", m_DI) :
-                new ObjectParameter("M_DI", typeof(string));
-    
-            var m_AGREEParameter = m_AGREE != null ?
-                new ObjectParameter("M_AGREE", m_AGREE) :
-                new ObjectParameter("M_AGREE", typeof(string));
-    
-            var m_AGREE2Parameter = m_AGREE2 != null ?
-                new ObjectParameter("M_AGREE2", m_AGREE2) :
-                new ObjectParameter("M_AGREE2", typeof(string));
-    
-            var m_SKIN_TROUBLE_CDParameter = m_SKIN_TROUBLE_CD != null ?
-                new ObjectParameter("M_SKIN_TROUBLE_CD", m_SKIN_TROUBLE_CD) :
-                new ObjectParameter("M_SKIN_TROUBLE_CD", typeof(string));
-    
-            var m_GBNParameter = m_GBN != null ?
-                new ObjectParameter("M_GBN", m_GBN) :
-                new ObjectParameter("M_GBN", typeof(string));
-    
-            var m_STAFF_COMPANYParameter = m_STAFF_COMPANY != null ?
-                new ObjectParameter("M_STAFF_COMPANY", m_STAFF_COMPANY) :
-                new ObjectParameter("M_STAFF_COMPANY", typeof(string));
-    
-            var m_STAFF_IDParameter = m_STAFF_ID != null ?
-                new ObjectParameter("M_STAFF_ID", m_STAFF_ID) :
-                new ObjectParameter("M_STAFF_ID", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_INS", m_IDParameter, m_NAMEParameter, m_PWDParameter, m_GRADEParameter, m_SEXParameter, m_BIRTHDAYParameter, m_MOBILEParameter, m_PHONEParameter, m_EMAILParameter, m_ZIPCODEParameter, m_ADDR1Parameter, m_ADDR2Parameter, m_ISSMSParameter, m_ISEMAILParameter, m_ISDMParameter, m_JOIN_MODEParameter, m_DIParameter, m_AGREEParameter, m_AGREE2Parameter, m_SKIN_TROUBLE_CDParameter, m_GBNParameter, m_STAFF_COMPANYParameter, m_STAFF_IDParameter, eRR_CODE);
-        }
-    
         public virtual int SP_MEMBER_UPD(string m_ID, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, ObjectParameter eRR_CODE)
         {
             var m_IDParameter = m_ID != null ?
@@ -384,6 +287,107 @@ namespace AboutMe.Domain.Entity.Member
                 new ObjectParameter("STAFF_NAME", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_STAFF_REQUEST_INS", m_IDParameter, m_NAMEParameter, m_GRADEParameter, sTAFF_COMPANYParameter, sTAFF_IDParameter, sTAFF_NAMEParameter, eRR_CODE);
+        }
+    
+        public virtual int SP_MEMBER_INS(string m_ID, string m_NAME, string m_PWD, string m_GRADE, string m_SEX, string m_BIRTHDAY, string m_MOBILE, string m_PHONE, string m_EMAIL, string m_ZIPCODE, string m_ADDR1, string m_ADDR2, string m_ISSMS, string m_ISEMAIL, string m_ISDM, string m_JOIN_MODE, string m_DI, string m_AGREE, string m_AGREE2, string m_SKIN_TROUBLE_CD, string m_GBN, string m_STAFF_COMPANY, string m_STAFF_ID, string m_DEVICE_GBN, ObjectParameter eRR_CODE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var m_NAMEParameter = m_NAME != null ?
+                new ObjectParameter("M_NAME", m_NAME) :
+                new ObjectParameter("M_NAME", typeof(string));
+    
+            var m_PWDParameter = m_PWD != null ?
+                new ObjectParameter("M_PWD", m_PWD) :
+                new ObjectParameter("M_PWD", typeof(string));
+    
+            var m_GRADEParameter = m_GRADE != null ?
+                new ObjectParameter("M_GRADE", m_GRADE) :
+                new ObjectParameter("M_GRADE", typeof(string));
+    
+            var m_SEXParameter = m_SEX != null ?
+                new ObjectParameter("M_SEX", m_SEX) :
+                new ObjectParameter("M_SEX", typeof(string));
+    
+            var m_BIRTHDAYParameter = m_BIRTHDAY != null ?
+                new ObjectParameter("M_BIRTHDAY", m_BIRTHDAY) :
+                new ObjectParameter("M_BIRTHDAY", typeof(string));
+    
+            var m_MOBILEParameter = m_MOBILE != null ?
+                new ObjectParameter("M_MOBILE", m_MOBILE) :
+                new ObjectParameter("M_MOBILE", typeof(string));
+    
+            var m_PHONEParameter = m_PHONE != null ?
+                new ObjectParameter("M_PHONE", m_PHONE) :
+                new ObjectParameter("M_PHONE", typeof(string));
+    
+            var m_EMAILParameter = m_EMAIL != null ?
+                new ObjectParameter("M_EMAIL", m_EMAIL) :
+                new ObjectParameter("M_EMAIL", typeof(string));
+    
+            var m_ZIPCODEParameter = m_ZIPCODE != null ?
+                new ObjectParameter("M_ZIPCODE", m_ZIPCODE) :
+                new ObjectParameter("M_ZIPCODE", typeof(string));
+    
+            var m_ADDR1Parameter = m_ADDR1 != null ?
+                new ObjectParameter("M_ADDR1", m_ADDR1) :
+                new ObjectParameter("M_ADDR1", typeof(string));
+    
+            var m_ADDR2Parameter = m_ADDR2 != null ?
+                new ObjectParameter("M_ADDR2", m_ADDR2) :
+                new ObjectParameter("M_ADDR2", typeof(string));
+    
+            var m_ISSMSParameter = m_ISSMS != null ?
+                new ObjectParameter("M_ISSMS", m_ISSMS) :
+                new ObjectParameter("M_ISSMS", typeof(string));
+    
+            var m_ISEMAILParameter = m_ISEMAIL != null ?
+                new ObjectParameter("M_ISEMAIL", m_ISEMAIL) :
+                new ObjectParameter("M_ISEMAIL", typeof(string));
+    
+            var m_ISDMParameter = m_ISDM != null ?
+                new ObjectParameter("M_ISDM", m_ISDM) :
+                new ObjectParameter("M_ISDM", typeof(string));
+    
+            var m_JOIN_MODEParameter = m_JOIN_MODE != null ?
+                new ObjectParameter("M_JOIN_MODE", m_JOIN_MODE) :
+                new ObjectParameter("M_JOIN_MODE", typeof(string));
+    
+            var m_DIParameter = m_DI != null ?
+                new ObjectParameter("M_DI", m_DI) :
+                new ObjectParameter("M_DI", typeof(string));
+    
+            var m_AGREEParameter = m_AGREE != null ?
+                new ObjectParameter("M_AGREE", m_AGREE) :
+                new ObjectParameter("M_AGREE", typeof(string));
+    
+            var m_AGREE2Parameter = m_AGREE2 != null ?
+                new ObjectParameter("M_AGREE2", m_AGREE2) :
+                new ObjectParameter("M_AGREE2", typeof(string));
+    
+            var m_SKIN_TROUBLE_CDParameter = m_SKIN_TROUBLE_CD != null ?
+                new ObjectParameter("M_SKIN_TROUBLE_CD", m_SKIN_TROUBLE_CD) :
+                new ObjectParameter("M_SKIN_TROUBLE_CD", typeof(string));
+    
+            var m_GBNParameter = m_GBN != null ?
+                new ObjectParameter("M_GBN", m_GBN) :
+                new ObjectParameter("M_GBN", typeof(string));
+    
+            var m_STAFF_COMPANYParameter = m_STAFF_COMPANY != null ?
+                new ObjectParameter("M_STAFF_COMPANY", m_STAFF_COMPANY) :
+                new ObjectParameter("M_STAFF_COMPANY", typeof(string));
+    
+            var m_STAFF_IDParameter = m_STAFF_ID != null ?
+                new ObjectParameter("M_STAFF_ID", m_STAFF_ID) :
+                new ObjectParameter("M_STAFF_ID", typeof(string));
+    
+            var m_DEVICE_GBNParameter = m_DEVICE_GBN != null ?
+                new ObjectParameter("M_DEVICE_GBN", m_DEVICE_GBN) :
+                new ObjectParameter("M_DEVICE_GBN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_MEMBER_INS", m_IDParameter, m_NAMEParameter, m_PWDParameter, m_GRADEParameter, m_SEXParameter, m_BIRTHDAYParameter, m_MOBILEParameter, m_PHONEParameter, m_EMAILParameter, m_ZIPCODEParameter, m_ADDR1Parameter, m_ADDR2Parameter, m_ISSMSParameter, m_ISEMAILParameter, m_ISDMParameter, m_JOIN_MODEParameter, m_DIParameter, m_AGREEParameter, m_AGREE2Parameter, m_SKIN_TROUBLE_CDParameter, m_GBNParameter, m_STAFF_COMPANYParameter, m_STAFF_IDParameter, m_DEVICE_GBNParameter, eRR_CODE);
         }
     }
 }
