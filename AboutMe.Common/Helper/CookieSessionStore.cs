@@ -38,7 +38,7 @@ namespace AboutMe.Common.Helper
                 //cookieOld.Expires = DateTime.Now.Add(expires);
                 if (expire_days != 99999)
                 {
-                   // cookieOld.Expires.AddDays(expire_days);
+                   // cookieOld.Expires.AddDays(expire_days); 
                     cookieOld.Expires = DateTime.UtcNow.AddDays(30);
                 }
 
