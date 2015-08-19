@@ -23,6 +23,7 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public Nullable<System.DateTime> PMO_PRODUCT_DATE_TO { get; set; }
         public string PMO_PRODUCT_MAIN_IMG { get; set; }
         public string PMO_PRODUCT_PC_MAINPG_IMG { get; set; }
+        public string PMO_PRODUCT_PC_MAINPG_SMALL_IMG { get; set; }
         public string PMO_PRODUCT_PC_EVENT_MAINPG_IMG { get; set; }
         public string PMO_PRODUCT_MOBILE_MAIN_IMG { get; set; }
         public string PMO_PRODUCT_MOBILE_MAINPG_IMG { get; set; }

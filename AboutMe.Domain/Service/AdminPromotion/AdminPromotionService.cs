@@ -360,6 +360,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
                         AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_INS(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_CATEGORY,Tb.PMO_PRODUCT_MAIN_TITLE,Tb.PMO_PRODUCT_SUB_TITLE,Tb.PMO_PRODUCT_SHOPPING_TIP 
                             ,Tb.PMO_PRODUCT_MAIN_IMG
                             ,Tb.PMO_PRODUCT_PC_MAINPG_IMG
+                            ,Tb.PMO_PRODUCT_PC_MAINPG_SMALL_IMG
                             ,Tb.PMO_PRODUCT_PC_EVENT_MAINPG_IMG
                             ,Tb.PMO_PRODUCT_MOBILE_MAIN_IMG
                             ,Tb.PMO_PRODUCT_MOBILE_MAINPG_IMG
@@ -432,6 +433,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
                         AdmPromotionContext.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(Tb.PMO_PRODUCT_NAME, Tb.PMO_PRODUCT_MAIN_TITLE, Tb.PMO_PRODUCT_SUB_TITLE, Tb.PMO_PRODUCT_SHOPPING_TIP
                             , Tb.PMO_PRODUCT_MAIN_IMG
                             , Tb.PMO_PRODUCT_PC_MAINPG_IMG
+                            , Tb.PMO_PRODUCT_PC_MAINPG_SMALL_IMG
                             , Tb.PMO_PRODUCT_PC_EVENT_MAINPG_IMG
                             , Tb.PMO_PRODUCT_MOBILE_MAIN_IMG
                             , Tb.PMO_PRODUCT_MOBILE_MAINPG_IMG
