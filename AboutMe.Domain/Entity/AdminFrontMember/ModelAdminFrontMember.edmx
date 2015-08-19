@@ -518,6 +518,8 @@
           <Property Type="Int32" Name="MEMBER_CNT_REG" Nullable="false" />
           <Property Type="Int32" Name="MEMBER_CNT_STAFF_APPROV" Nullable="false" />
           <Property Type="Int32" Name="MEMBER_CNT_RETIRE" Nullable="false" />
+          <Property Type="Int32" Name="MEMBER_CNT_REG_M" Nullable="false" />
+          <Property Type="Int32" Name="MEMBER_CNT_REG_W" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -832,7 +834,14 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_MEMBER_REPORT_MONTHLY" FunctionName="AboutMeModel.Store.SP_ADMIN_MEMBER_REPORT_MONTHLY" >
             <ResultMapping>
-              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_REPORT_MONTHLY_Result" />
+              <ComplexTypeMapping TypeName="AboutMeModel.SP_ADMIN_MEMBER_REPORT_MONTHLY_Result" >
+                <ScalarProperty Name="YEAR_MON" ColumnName="YEAR_MON" />
+                <ScalarProperty Name="MEMBER_CNT_REG" ColumnName="MEMBER_CNT_REG" />
+                <ScalarProperty Name="MEMBER_CNT_STAFF_APPROV" ColumnName="MEMBER_CNT_STAFF_APPROV" />
+                <ScalarProperty Name="MEMBER_CNT_RETIRE" ColumnName="MEMBER_CNT_RETIRE" />
+                <ScalarProperty Name="MEMBER_CNT_REG_M" ColumnName="MEMBER_CNT_REG_M" />
+                <ScalarProperty Name="MEMBER_CNT_REG_W" ColumnName="MEMBER_CNT_REG_W" />
+              </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

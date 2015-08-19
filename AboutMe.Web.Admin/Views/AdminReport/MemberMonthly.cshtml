@@ -191,11 +191,13 @@
             <h4>회원-월별 가입/탈퇴현황</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
-                <colgroup><col /><col /><col /><col /></colgroup>
+                <colgroup><col /><col /><col /><col /><col /><col /></colgroup>
                 <thead>
                     <tr>
                         <th scope="col" class="brnone">년월</th>
-                        <th scope="col">가입</th>
+                        <th scope="col">가입(모바일)</th>
+                        <th scope="col">가입(PC)</th>
+                        <th scope="col">가입계</th>
                         <th scope="col">탈퇴</th>
                         <th scope="col" class="brnone">임직원승인</th>
                     </tr>
@@ -206,12 +208,14 @@
                         if (Model.Count() < 1)
                         {
                             <tr>
-                                <td colspan="4" class="brnone">No data...</td>
+                                <td colspan="6" class="brnone">No data...</td>
                             </tr>
                         }
                     }
 
                     @{
+                        var reg_cnt_M = 0;
+                        var reg_cnt_W = 0;
                         var reg_cnt = 0;
                         var retire_cnt = 0;
                         var staff_approv_cnt = 0;
@@ -220,10 +224,14 @@
                         {
                             <tr>
                                 <td class="brnone">@item.YEAR_MON</td>
+                                <td>@item.MEMBER_CNT_REG_M.ToString("#,##0")</td>
+                                <td>@item.MEMBER_CNT_REG_W.ToString("#,##0")</td>
                                 <td>@item.MEMBER_CNT_REG.ToString("#,##0")</td>
                                 <td>@item.MEMBER_CNT_RETIRE.ToString("#,##0")</td>
                                 <td class="brnone">@item.MEMBER_CNT_STAFF_APPROV.ToString("#,##0")</td>
                             </tr>
+                            reg_cnt_M = reg_cnt_M + item.MEMBER_CNT_REG_M;
+                            reg_cnt_W = reg_cnt_W + item.MEMBER_CNT_REG_W;
                             reg_cnt = reg_cnt + item.MEMBER_CNT_REG;
                             staff_approv_cnt = staff_approv_cnt + item.MEMBER_CNT_STAFF_APPROV;
                             retire_cnt = retire_cnt + item.MEMBER_CNT_RETIRE;
@@ -232,6 +240,8 @@
                     }
                     <tr>
                         <th class="brnone">합계</th>
+                        <th>@reg_cnt_M.ToString("#,##0")</th>
+                        <th>@reg_cnt_W.ToString("#,##0")</th>
                         <th>@reg_cnt.ToString("#,##0")</th>
                         <th>@retire_cnt.ToString("#,##0")</th>
                         <th class="brnone">@staff_approv_cnt.ToString("#,##0")</th>
