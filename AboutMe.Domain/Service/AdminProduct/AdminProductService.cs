@@ -556,24 +556,24 @@ namespace AboutMe.Domain.Service.AdminProduct
 
         #region SMS 발송
 
-        #region sms 등록
-        public void InsertSMS(AdminSMSModel adminSMSModel)
-        {
+        //#region sms 등록
+        //public void InsertSMS(AdminSMSModel adminSMSModel)
+        //{
 
-            using (AdminProductEntities AdminProductContext = new AdminProductEntities())
-            {
+        //    using (AdminProductEntities AdminProductContext = new AdminProductEntities())
+        //    {
 
-                AdminProductContext.SP_ADMIN_SMS_INS(
-                    adminSMSModel.SMS_FLAG
-                   , adminSMSModel.SEND_TIME
-                   , adminSMSModel.HANDPHONE
-                   , adminSMSModel.CALLBACK_NO
-                   , adminSMSModel.TITLE
-                   , adminSMSModel.SEND_MSG);
+        //        AdminProductContext.SP_ADMIN_SMS_INS(
+        //            adminSMSModel.SMS_FLAG
+        //           , adminSMSModel.SEND_TIME
+        //           , adminSMSModel.HANDPHONE
+        //           , adminSMSModel.CALLBACK_NO
+        //           , adminSMSModel.TITLE
+        //           , adminSMSModel.SEND_MSG);
 
-            }
-        }
-        #endregion
+        //    }
+        //}
+        //#endregion
 
         #endregion
     }
