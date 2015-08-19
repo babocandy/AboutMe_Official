@@ -224,19 +224,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PRODUCT_DETAIL_VIEW_Result>("SP_ADMIN_PRODUCT_DETAIL_VIEW", p_CODEParameter);
         }
 
-        public virtual int SP_ADMIN_PRODUCT_IMG_DEL(string p_CODE, string imgColumName)
-        {
-            var p_CODEParameter = p_CODE != null ?
-                new ObjectParameter("P_CODE", p_CODE) :
-                new ObjectParameter("P_CODE", typeof(string));
-
-            var imgColumNameParameter = imgColumName != null ?
-                new ObjectParameter("imgColumName", imgColumName) :
-                new ObjectParameter("imgColumName", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_IMG_DEL", p_CODEParameter, imgColumNameParameter);
-        }
-
         public virtual ObjectResult<Nullable<int>> SP_ADMIN_PRODUCT_PCODE_CHK(string p_CODE)
         {
             var p_CODEParameter = p_CODE != null ?
@@ -799,6 +786,19 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("SEND_MSG", typeof(string));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_SMS_INS", sMS_FLAGParameter, sEND_TIMEParameter, hANDPHONEParameter, cALLBACK_NOParameter, tITLEParameter, sEND_MSGParameter, iNTRESULT);
+        }
+
+        public virtual int SP_ADMIN_PRODUCT_IMG_DEL(string p_CODE, string imgColumName, ObjectParameter iNTRESULT)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+
+            var imgColumNameParameter = imgColumName != null ?
+                new ObjectParameter("imgColumName", imgColumName) :
+                new ObjectParameter("imgColumName", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_IMG_DEL", p_CODEParameter, imgColumNameParameter, iNTRESULT);
         }
     }
 }

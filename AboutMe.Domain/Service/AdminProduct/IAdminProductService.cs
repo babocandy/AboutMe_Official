@@ -46,7 +46,7 @@ namespace AboutMe.Domain.Service.AdminProduct
         //상품코드 유효성 체크
         int? PcodeChkAdminProduct(string pcode);
         //상품이미지 개별 삭제
-        void ImageDelAdminProduct(string P_CODE, string imgColumName);
+        int ImageDelAdminProduct(string P_CODE, string imgColumName);
         //상품 보기
         SP_ADMIN_PRODUCT_DETAIL_VIEW_Result ViewAdminProduct(string PCODE);
         //상품 수정
@@ -59,8 +59,6 @@ namespace AboutMe.Domain.Service.AdminProduct
         //상품전시 순서 바꾸기
         int UpdateAdminProductReSort(int IDX, int RE_SORT, string CLICKCHK, string catecode);
 
-        //void InsertAdminCategoryOne(string DEPTH1_NAME);
-        //List<SP_ADM_ADMIN_DEPT_SEL_Result> GetAdmDeptList();
         #endregion
 
         #region 사은품
@@ -78,8 +76,5 @@ namespace AboutMe.Domain.Service.AdminProduct
         
         #endregion
 
-       #region SMS 등록
-        //void InsertSMS(AdminSMSModel adminSMSModel);
-       #endregion
     }
 }

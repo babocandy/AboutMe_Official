@@ -29,15 +29,12 @@ namespace AboutMe.Web.Admin.Common
 
                 #region SMS 로그
                 string ip;
-                string preUrl;
                 string adminid;
                 string userAgent;
-                string urlReFerrer;
                 ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                preUrl = HttpContext.Current.Request.Url.ToString();
                 adminid = AdminUserInfo.GetAdmId();
                 userAgent = HttpContext.Current.Request.UserAgent;
-                urlReFerrer = HttpContext.Current.Request.UrlReferrer.ToString();
+                
                 logtran = "ResultValue:" + ResultValue;
                 logtran += "|SMS_FLAG:" + adminSMSModel.SMS_FLAG;
                 logtran += "|SEND_TIME:" + adminSMSModel.SEND_TIME;
@@ -58,12 +55,8 @@ namespace AboutMe.Web.Admin.Common
                 {
                     userAgent = userAgent.Substring(0, 990);
                 }
-                if (urlReFerrer.Length > 1000)
-                {
-                    urlReFerrer = urlReFerrer.Substring(0, 990);
-                }
-
-                AdminProductContext.SP_ADMIN_LOG_INS(adminid, logtran, "관리자SMS발송로그", preUrl, ip, userAgent, urlReFerrer);
+               
+                AdminProductContext.SP_ADMIN_LOG_INS(adminid, logtran, "관리자SMS발송로그", "", ip, userAgent, "");
                 #endregion
             }
             return ResultValue;

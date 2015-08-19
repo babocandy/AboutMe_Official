@@ -496,8 +496,25 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         public ActionResult AjaxImageDel(string P_CODE, string imgColumName)
         {
-            _AdminProductService.ImageDelAdminProduct(P_CODE, imgColumName);
-            return Json(new { success = true, msg = "사용가능한 상품코드입니다." });
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            intResult = _AdminProductService.ImageDelAdminProduct(P_CODE, imgColumName);
+
+            #region 상품 개별 이미지 DB에서 삭제 로그 생성
+            var serialised = "결과값 intResult :" + intResult;
+            serialised += "|P_CODE:" + P_CODE;
+            serialised += "|imgColumName:" + imgColumName;
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(serialised, "상품 이미지 삭제");
+            #endregion
+
+            if (intResult != 0)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('이미지가 삭제되지 않았습니다.');history.go(-1);</script>");
+            }
+            else
+            {
+                return Json(new { success = true, msg = "삭제 성공" });
+            }
             
         }
         #endregion
@@ -923,7 +940,7 @@ namespace AboutMe.Web.Admin.Controllers
             //adminSMSModel.SEND_MSG = "sms 내용"; //SMS 메시지
             //adminSMSModel.HANDPHONE = "01000000000"; //발신번호
             //AdminSMS adminsms = new AdminSMS();
-            //adminsms.AdminSmsSend(adminSMSModel);
+            //int result = adminsms.AdminSmsSend(adminSMSModel);
 
 
             ////SMS 예약 전송 샘플
@@ -1094,17 +1111,5 @@ namespace AboutMe.Web.Admin.Controllers
 
         #endregion
 
-        #region SMS 발송
-        //public void SMSIns(AdminSMSModel adminSMSModel)
-        //{
-        //    this._AdminProductService.InsertSMS(adminSMSModel);
-
-        //    #region SMS 등록 로그 생성
-        //    var serialised = JsonConvert.SerializeObject(adminSMSModel); //entity 클래스 값을 json 포맷으로 파싱
-        //    AdminLog adminlog = new AdminLog();
-        //    adminlog.AdminLogSave(serialised, "SMS 등록");
-        //    #endregion
-        //}
-        #endregion
     }
 }

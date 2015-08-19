@@ -287,12 +287,16 @@ namespace AboutMe.Domain.Service.AdminProduct
 
         #region 상품 이미지 개별 삭제
 
-        public void ImageDelAdminProduct(string P_CODE, string imgColumName)
+        public int ImageDelAdminProduct(string P_CODE, string imgColumName)
         {
+            int ResultValue = -5; 
             using (AdminProductEntities AdminProductContext = new AdminProductEntities())
             {
-                AdminProductContext.SP_ADMIN_PRODUCT_IMG_DEL(P_CODE, imgColumName);
+                ObjectParameter objOutParam = new ObjectParameter("INTRESULT", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
+                int val = AdminProductContext.SP_ADMIN_PRODUCT_IMG_DEL(P_CODE, imgColumName, objOutParam);
+                ResultValue = (int)objOutParam.Value;
             }
+            return ResultValue;
         }
 
         #endregion
@@ -554,27 +558,5 @@ namespace AboutMe.Domain.Service.AdminProduct
 
         #endregion
 
-        #region SMS 발송
-
-        //#region sms 등록
-        //public void InsertSMS(AdminSMSModel adminSMSModel)
-        //{
-
-        //    using (AdminProductEntities AdminProductContext = new AdminProductEntities())
-        //    {
-
-        //        AdminProductContext.SP_ADMIN_SMS_INS(
-        //            adminSMSModel.SMS_FLAG
-        //           , adminSMSModel.SEND_TIME
-        //           , adminSMSModel.HANDPHONE
-        //           , adminSMSModel.CALLBACK_NO
-        //           , adminSMSModel.TITLE
-        //           , adminSMSModel.SEND_MSG);
-
-        //    }
-        //}
-        //#endregion
-
-        #endregion
     }
 }
