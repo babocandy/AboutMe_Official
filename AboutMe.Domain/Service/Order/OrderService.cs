@@ -182,7 +182,7 @@ namespace AboutMe.Domain.Service.Order
             SP_ORDER_PAY_Result result = new SP_ORDER_PAY_Result();
             using (OrderEntities EfContext = new OrderEntities())
             {
-               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN, Param.VACT_Num, Param.VACT_BankCode, Param.VACT_Name, Param.VACT_InputName, Param.VACT_Date, Param.VACT_Time).FirstOrDefault(); 
+               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN, Param.VACT_Num, Param.VACT_BankCode, Param.VACT_Name, Param.VACT_InputName, Param.VACT_Date, Param.VACT_Time, Param.ESCROW_YN).FirstOrDefault(); 
             }
             return result.ORDER_CODE;
         }

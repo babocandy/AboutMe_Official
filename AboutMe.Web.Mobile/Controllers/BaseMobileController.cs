@@ -88,6 +88,8 @@ namespace AboutMe.Web.Mobile.Controllers
             string ThisDevice = this.DetectingDevice();
             CookieSessionStore Sobj = new CookieSessionStore();
 
+            string PGIP = Request.ServerVariables["REMOTE_ADDR"]; //이니시스 PG사 아이피
+
             if (ThisDevice != "s" && ThisDevice != "t" && ThisDevice != "m") //스마트폰이나 태블릿이 아니라면 강제로 데스크탑 사이트로 이동.
             {
                 if (Request["forced"] == null || Request["forced"].ToString() == "" )
@@ -96,8 +98,11 @@ namespace AboutMe.Web.Mobile.Controllers
                     {
                         if (ThisHost != "localhost") //개발툴에서 디버깅 중일때는 이동 안시킴
                         {
-                            Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                            if (!(PGIP == "118.129.210.25" ||  PGIP == "211.219.96.165"))  //PG에서 보냈는지 IP로 체크 
+                            {
+                                Response.Redirect(AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
                             //RedirectToAction("Index", AboutMe.Common.Helper.Config.GetConfigValue("DesktopUrl"));
+                            }
                         }
                     }
 

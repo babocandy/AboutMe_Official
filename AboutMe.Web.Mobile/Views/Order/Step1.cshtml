@@ -70,7 +70,7 @@
         }
         
         //쿠폰적용
-        function setOrderCoupon(arrP) {
+        function setOrderCoupon(arrP, pcode) {
             var jobj = encodeURIComponent(JSON.stringify(arrP));
             var src_url = "/Order/ApplyCoupon";
             var param = "data=" + jobj;
@@ -81,7 +81,7 @@
                 data: param,
                 success: function (data) {
                     if (data.result == "true") {
-                        document.dummyForm1.action = "/Order/Step1";
+                        document.dummyForm1.action = "/Order/Step1#"+pcode;
                         document.dummyForm1.submit();
                     }
                     else {

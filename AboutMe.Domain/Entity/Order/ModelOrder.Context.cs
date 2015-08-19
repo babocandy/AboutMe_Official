@@ -28,7 +28,7 @@ namespace AboutMe.Domain.Entity.Order
         }
     
     
-        public virtual ObjectResult<SP_ORDER_PAY_Result> SP_ORDER_PAY(Nullable<int> oRDER_IDX, string pAY_GBN, string cARD_GBN, string iNSTLMT_AT, string bANK_CODE, string pAT_TID, string rEAL_ACCOUNT_AT, string cASHRECEIPT_SE_CODE, string cASHRECEIPT_RESULT_CODE, string hTTP_USER_AGENT, string pAT_GUBUN, string sVR_DOMAIN, string vACT_Num, string vACT_BankCode, string vACT_Name, string vACT_InputName, string vACT_Date, string vACT_Time)
+        public virtual ObjectResult<SP_ORDER_PAY_Result> SP_ORDER_PAY(Nullable<int> oRDER_IDX, string pAY_GBN, string cARD_GBN, string iNSTLMT_AT, string bANK_CODE, string pAT_TID, string rEAL_ACCOUNT_AT, string cASHRECEIPT_SE_CODE, string cASHRECEIPT_RESULT_CODE, string hTTP_USER_AGENT, string pAT_GUBUN, string sVR_DOMAIN, string vACT_Num, string vACT_BankCode, string vACT_Name, string vACT_InputName, string vACT_Date, string vACT_Time, string eSCROW_YN)
         {
             var oRDER_IDXParameter = oRDER_IDX.HasValue ?
                 new ObjectParameter("ORDER_IDX", oRDER_IDX) :
@@ -102,7 +102,11 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("VACT_Time", vACT_Time) :
                 new ObjectParameter("VACT_Time", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_PAY_Result>("SP_ORDER_PAY", oRDER_IDXParameter, pAY_GBNParameter, cARD_GBNParameter, iNSTLMT_ATParameter, bANK_CODEParameter, pAT_TIDParameter, rEAL_ACCOUNT_ATParameter, cASHRECEIPT_SE_CODEParameter, cASHRECEIPT_RESULT_CODEParameter, hTTP_USER_AGENTParameter, pAT_GUBUNParameter, sVR_DOMAINParameter, vACT_NumParameter, vACT_BankCodeParameter, vACT_NameParameter, vACT_InputNameParameter, vACT_DateParameter, vACT_TimeParameter);
+            var eSCROW_YNParameter = eSCROW_YN != null ?
+                new ObjectParameter("ESCROW_YN", eSCROW_YN) :
+                new ObjectParameter("ESCROW_YN", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_PAY_Result>("SP_ORDER_PAY", oRDER_IDXParameter, pAY_GBNParameter, cARD_GBNParameter, iNSTLMT_ATParameter, bANK_CODEParameter, pAT_TIDParameter, rEAL_ACCOUNT_ATParameter, cASHRECEIPT_SE_CODEParameter, cASHRECEIPT_RESULT_CODEParameter, hTTP_USER_AGENTParameter, pAT_GUBUNParameter, sVR_DOMAINParameter, vACT_NumParameter, vACT_BankCodeParameter, vACT_NameParameter, vACT_InputNameParameter, vACT_DateParameter, vACT_TimeParameter, eSCROW_YNParameter);
         }
     
         public virtual ObjectResult<SP_ORDER_STEP2_Result> SP_ORDER_STEP1(string m_ID, string sESSION_ID, string p_CODE_LIST, string p_COUNT_LIST)

@@ -15,7 +15,7 @@
             {
                 <li>
                     <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})">
-                        <img src="@(myController._img_path_product)@(item.MAIN_IMG)" alt="상품 이미지" />
+                        <img src="@string.Format("{0}R270_{1}", myController._img_path_product, item.MAIN_IMG)" alt="상품 이미지" />
                         <span class="tag">
              
                             @if (!string.IsNullOrEmpty(item.ICON_YN))
