@@ -62,7 +62,38 @@ namespace AboutMe.Common.Helper
             return UploadFile(file, finalFileName);
 
         }
-       
+
+        public void SaveImageByFileName(string UploadPath, string fileName)
+        {
+            try
+            {
+                //썸네일
+                var path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath),  fileName);
+
+                var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R100_" + fileName);
+                var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R308_" + fileName);
+                var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R500_" + fileName);
+
+                //원본 뜨기
+                Image imgOriginal = Image.FromFile(path);
+
+                //썸네일 이미지 생성
+                Image imgActual = Scale(imgOriginal, 500);
+                imgActual.Save(path_big);
+                imgActual.Dispose();
+
+                imgActual = Scale(imgOriginal, 308);
+                imgActual.Save(path_middle);
+                imgActual.Dispose();
+
+                imgOriginal.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+            //
+             }
+        }
 
  
         private ImageResult UploadFile(HttpPostedFileBase file, string fileName)
@@ -94,9 +125,9 @@ namespace AboutMe.Common.Helper
 
 
             //썸네일
-            var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "s_" + fileName);
-            var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "m_" + fileName);
-            var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "b_" + fileName);
+            var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R100_" + fileName);
+            var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R308_" + fileName);
+            var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R500_" + fileName);
 
             try
             {
@@ -136,27 +167,26 @@ namespace AboutMe.Common.Helper
 
                 //file.SaveAs(path);
                 originalImage.Save(path);
-                
 
-                //원본 뜨기
-                Image imgOriginal = Image.FromFile(path);
+                if (IsThumbNail)
+                {
+                    //원본 뜨기
+                    Image imgOriginal = Image.FromFile(path);
 
-                //썸네일 이미지 생성
-                Image imgActual = Scale(originalImage, 500);
-                imgActual.Save(path_big);
-                imgActual.Dispose();
+                    //썸네일 이미지 생성
+                    Image imgActual = Scale(imgOriginal, 500);
+                    imgActual.Save(path_big);
+                    imgActual.Dispose();
 
-                imgActual = Scale(originalImage, 308);
-                imgActual.Save(path_middle);
-                imgActual.Dispose();
+                    imgActual = Scale(imgOriginal, 308);
+                    imgActual.Save(path_middle);
+                    imgActual.Dispose();
 
+                    imgOriginal.Dispose();
+                }
 
-                //imgActual = Scale(imgOriginal, 100);                   
-                //imgActual.Save(path_small);
-                //imgActual.Dispose();
 
                 //원본제거
-                //imgOriginal.Dispose();
                 originalImage.Dispose();
 
                 imageResult.ImageName = fileName;
