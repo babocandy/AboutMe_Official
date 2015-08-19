@@ -31,5 +31,6 @@ namespace AboutMe.Domain.Service.Cart
         int WishDelete(string m_id, int idx);
 
         List<SP_TB_WISHLIST_LIST_Result> WishList(string m_id, int? page, int? pagesize);
+        Int32 ProductofCartCnt(string p_code);
     }
 }

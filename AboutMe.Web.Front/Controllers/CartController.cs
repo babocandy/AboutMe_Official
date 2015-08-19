@@ -231,6 +231,13 @@ namespace AboutMe.Web.Front.Controllers
 
         }
 
+        [ChildActionOnly]
+        public string ProductofCartCnt(string p_code)
+        {
+            return string.Format("{0:#,##0}", _cartservice.ProductofCartCnt(p_code));
+        }
+
+
 
     }
 }

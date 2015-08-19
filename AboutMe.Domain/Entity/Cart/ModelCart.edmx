@@ -50,6 +50,9 @@
           <Parameter Name="SESSION_ID" Type="varchar" Mode="In" />
           <Parameter Name="MERGY_OPT" Type="char" Mode="In" />
         </Function>
+        <Function Name="SP_TB_CART_PCODE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_TB_CART_PRODUCT_ADD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
           <Parameter Name="SESSION_ID" Type="varchar" Mode="In" />
@@ -146,6 +149,9 @@
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
             <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_CART_PCODE_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_TB_CART_CNT_Result" >
@@ -287,6 +293,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TB_CART_PCODE_CNT" FunctionName="Cart.Store.SP_TB_CART_PCODE_CNT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
