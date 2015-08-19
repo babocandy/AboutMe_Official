@@ -166,9 +166,14 @@ namespace AboutMe.Common.Data
     public class DisplayerCode
     {
         public static string WEB_MAIN_BANNER = "10";
-        public static string WEB_MAIN_MIDDLE_BANNER = "20";
-        public static string WEB_MAIN_PRODUCT_DISPLAY = "30";
+        public static string WEB_MAIN_MOVIE_LINK = "11";
+        public static string WEB_MAIN_MOVIE_PRODUCT = "12";
 
+        public static string WEB_MAIN_MIDDLE_BANNER = "20";
+        public static string WEB_MAIN_SIDE_BANNER = "21";
+
+        public static string WEB_MAIN_PRODUCT_DISPLAY = "30";
+       
 
         public static string MOBILE_MAIN_BANNER = "40";
         public static string MOBILE_MAIN_TALK = "50";
@@ -183,6 +188,9 @@ namespace AboutMe.Common.Data
 
         public static string PDT_DETAIL_WEB = "120";
         public static string PDT_DETAIL_MOBILE = "130";
+
+
+       
 
         public static string SUB_KIND_10 = "10";
         public static string SUB_KIND_20 = "20";

@@ -52,7 +52,11 @@
                 {
                     <tr>
                         <th scope="row" class="vam">
-                            <img src="" alt=""><br>
+                            @if (item.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, item.IMG)" alt="" style="width:300px" />
+                            }
+                            <br>
                             <p class="tac"> @item.IMG 
                                 <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a>
                             </p>
@@ -60,10 +64,6 @@
                         <td>
                             @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-                                if (item.IMG != null)
-                                {
-                                    <img src="@string.Format("{0}{1}", myctrl._img_path_display, item.IMG)" alt="" style="width:500px"/>
-                                }
                                 <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                                 <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@item.URL">
                                 <input type="hidden" name="IDX" value="@item.IDX" />
@@ -111,24 +111,54 @@
             <colgroup><col width="20%"><col width="*"><col width="15%"></colgroup>
             <tbody>
                 <tr>
-
-
                     <th scope="row" class="vam">
-                        <img src="" alt=""><br><p class="tac"> @Model.WebMiddleBanner.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a></p>
+                        @if (Model.WebMiddleBanner.IMG != null)
+                        {
+                            <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.WebMiddleBanner.IMG)" alt="" style="width:300px" />
+                        }
+                        <br><p class="tac"> @Model.WebMiddleBanner.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a></p>
                     </th>
                     <td>
 
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                            if (Model.WebMiddleBanner.IMG != null)
-                            {
-                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.WebMiddleBanner.IMG)" alt="" style="width:500px" />
-                            }
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.WebMiddleBanner.URL">
                             <input type="hidden" name="IDX" value="@Model.WebMiddleBanner.IDX" />
                             <input type="hidden" name="IMG_NAME" value="@Model.WebMiddleBanner.IMG" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_MIDDLE_BANNER" />
+                        }
+                    </td>
+                    <td class="tac">
+                        <a href="#" class="btn btn-default large" onclick="saveImageTypeDisplayer(this.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">저장</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <h4>중간 배너 - 255 * 256</h4>
+        <table class="table table_row">
+            <colgroup><col width="20%"><col width="*"><col width="15%"></colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row" class="vam">
+                        @if (Model.WebSideBanner.IMG != null)
+                        {
+                            <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.WebSideBanner.IMG)" alt="" style="width:300px" />
+                        }
+                        <br><p class="tac"> @Model.WebSideBanner.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement.parentElement.getElementsByTagName('form')[0]); return false;">전체삭제</a></p>
+                    </th>
+                    <td>
+
+                        @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
+                            <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.WebSideBanner.URL">
+                            <input type="hidden" name="IDX" value="@Model.WebSideBanner.IDX" />
+                            <input type="hidden" name="IMG_NAME" value="@Model.WebSideBanner.IMG" />
+                            <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_SIDE_BANNER" />
                         }
                     </td>
                     <td class="tac">

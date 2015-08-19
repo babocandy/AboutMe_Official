@@ -45,6 +45,7 @@
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="SELLING_PRICE" Nullable="true" />
           <Property Type="Int32" Name="DISCOUNT_PRICE" Nullable="true" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="SP_POPUP_MOBILE_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -104,6 +105,7 @@
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="SELLING_PRICE" ColumnName="SELLING_PRICE" />
                 <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
