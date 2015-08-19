@@ -741,7 +741,7 @@ namespace AboutMe.Web.Front.Controllers
             # 지불결과 DB 연동 부분 #
             # 지불결과를 디비처리하시고 디비처리시 실패가 나시면 이니시스에 취소요청을 합니다
             ###############################################################################*/
-
+            string PAY_GBN = "";
             string order_code = "";
             // * 데이터베이스 처리부분 삽입
             // * 처리 실패시 아래 주석부분을 풀면, 이니시스에 해당 거래를 취소요청합니다
@@ -749,7 +749,6 @@ namespace AboutMe.Web.Front.Controllers
             {
                 ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
                 Param.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                Param.PAY_GBN = FrmData.PAY_GBN;
                 Param.CARD_GBN = PayResult.CARD_Code;
                 Param.INSTLMT_AT = PayResult.CARD_Interest; //할부여부
                 Param.PAT_TID = PayResult.Tid;
@@ -757,12 +756,24 @@ namespace AboutMe.Web.Front.Controllers
                 {
                     Param.REAL_ACCOUNT_AT = "1";
                     Param.BANK_CODE = PayResult.ACCT_BankCode; //은행코드
+                    PAY_GBN = "2";
+                    Param.ESCROW_YN = "N";
                 }
-                else
+                else if (FrmData.PAY_GBN == "20") //실시간계좌이체 (에스크로)
+                {
+                    Param.REAL_ACCOUNT_AT = "1";
+                    Param.BANK_CODE = PayResult.ACCT_BankCode; //은행코드
+                    PAY_GBN = "2";
+                    Param.ESCROW_YN = "Y";
+                }
+                else //카드
                 {
                     Param.REAL_ACCOUNT_AT = "0";
                     Param.BANK_CODE = PayResult.CARD_BankCode; //은행코드
+                    Param.ESCROW_YN = "Y";
+                    PAY_GBN = "1";
                 }
+
                 if (PayResult.rcash_rslt == "0000") //현금영수증 발행
                 {
                     Param.CASHRECEIPT_SE_CODE = "1";
@@ -793,8 +804,14 @@ namespace AboutMe.Web.Front.Controllers
                     orderResult.ResultMsg = Result.ResultMsg;
                     orderResult.ResultErrorCode = Result.ResultErrorCode;
                     orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                    orderResult.PAY_GBN = FrmData.PAY_GBN;
+                    orderResult.PAY_GBN = PAY_GBN;
                     orderResult.ORDER_CODE = order_code;
+
+                    //메일발송
+                    if (PayResult.Resultcode == "00" && !string.IsNullOrEmpty(orderResult.ORDER_CODE))
+                    {
+                        SendOrderResultMail(orderResult.ORDER_CODE);
+                    }
 
                 }
                 catch (Exception e)
@@ -806,34 +823,38 @@ namespace AboutMe.Web.Front.Controllers
                     if (cancel.Resultcode.Equals("00"))
                     {
                         Result.Resultcode = "01";
-                        Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")";                    
+                        Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")";
                     }
                     else
                     {
-                        Result.Resultcode = "0101";
-                        Result.ResultMsg = "AboutMe DB입력중 에러(err : "+e.Message+")로 Inisys 취소중 에러발생! ";                    
+                        Result.Resultcode = "09";
+                        Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")로 Inisys 취소중 에러발생! ";
                     }
 
                     orderResult.Resultcode = Result.Resultcode;
                     orderResult.ResultMsg = Result.ResultMsg;
                     orderResult.ResultErrorCode = Result.ResultErrorCode;
                     orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                    orderResult.PAY_GBN = FrmData.PAY_GBN;
+                    orderResult.PAY_GBN = PAY_GBN;
                     orderResult.ORDER_CODE = order_code;
                 }
             }
-            
-            //메일발송
-            if (PayResult.Resultcode == "00" && !string.IsNullOrEmpty(orderResult.ORDER_CODE))
+            else
             {
-                SendOrderResultMail(orderResult.ORDER_CODE);
+                orderResult.Resultcode = Result.Resultcode;
+                orderResult.ResultMsg = Result.ResultMsg;
+                orderResult.ResultErrorCode = Result.ResultErrorCode;
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                orderResult.PAY_GBN = "";
+                orderResult.ORDER_CODE ="";
             }
             
+           
 
             StringBuilder SBuilder = new StringBuilder();
             SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
             SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n","ORDER_IDX" , orderResult.ORDER_IDX.ToString() );
-            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", PAY_GBN);
             SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
             SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
             SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);

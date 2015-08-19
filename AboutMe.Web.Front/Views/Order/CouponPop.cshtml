@@ -175,16 +175,21 @@
                 <div class="product_coupon">
                     
                     <div class="prolist">
-                        <ul>
+                        <ul>                           
+                            @{
+                                string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+                            }
                             @foreach (var item in @Model.OrderList)
                             {
+                                string imgUrl1 = productImgPath + "R120_" + item.P_IMG1_S;
+                                
                                 <li class="coupon_item" data-pcode="@item.P_CODE"><a href="#none" name="@item.P_CODE"></a>
                                     <div class="pro_info">
                                         <!-- 이미지사이즈 96x96 -->
-                                        <div class="photo"><img src="/aboutCom/images/sample/thum_cartpdt1.jpg" alt="" /></div>
+                                        <div class="photo"><img src="@imgUrl1" alt="" /></div>
                                         <div class="detail">
                                             <p class="tit">@item.P_NAME</p>
-                                            <p class="stit">피부 노화를 집중적이고 총체적으로<br />해결해주는 2중 기능성 발효공법 에멀전</p>
+                                            <p class="stit">@item.P_SUB_TITLE</p>
                                         </div>
                                         <div class="couponsel">
                                             <select class="selectstyleb" title="" name="COUPON_@item.P_CODE" id="COUPON_@item.P_CODE" data-pcode="@item.P_CODE" data-pcount="@item.P_COUNT" data-price="@item.EMP_DISCOUNT_PRICE" data-detail-idx="@item.ORDER_DETAIL_IDX" onchange="couponSelect(this,'@item.P_CODE')">

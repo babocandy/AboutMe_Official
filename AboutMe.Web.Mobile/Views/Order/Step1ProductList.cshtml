@@ -1,5 +1,65 @@
 ﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_ORDERLIST
 
+@helper SelectOption(string pcode, int? coupon_idx)
+{
+    Html.RenderAction("SelectCouponOption", "Order", new { P_CODE = pcode, COUPON_IDX = coupon_idx });
+}
+
+<script language="javascript">
+
+
+        function formatnumber(v1) {
+            var str = new Array();
+            v1 = String(v1);
+            for (var i = 1; i <= v1.length; i++) {
+                if (i % 3) str[v1.length - i] = v1.charAt(v1.length - i);
+                else str[v1.length - i] = ',' + v1.charAt(v1.length - i);
+            }
+            return str.join('').replace(/^,/, '');
+        }
+        function couponSelect(selectbox, pcode)
+        {
+            var select_value = $(selectbox).val();
+            var is_cancel = false;
+            //기적용된 쿠폰이 있는지 검사
+            if (select_value != '') {
+                $(".selectstyleb").each(function (idx) {
+                    var bx = $(this);
+                    if ($(selectbox).attr('id') != bx.attr('id')) {
+
+                        if ($(selectbox).val().trim() == bx.val().trim()) {
+                            if (confirm('해당쿠폰으로 적용된 상품이 존재합니다.\n적용된 쿠폰을 취소하고 현재상품에 적용하시겠습니까?')) {
+                                setCoupon(selectbox, pcode);
+                            }
+                            else {
+                                $(selectbox).val('');
+                                is_cancel = true;
+                                return false;
+                            }
+                        }
+                    }
+                });
+            }
+
+            if (is_cancel != true)
+            {
+                setCoupon(selectbox, pcode);
+            }
+        }
+
+        function setCoupon(s, pcode)
+        {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.ORDER_DETAIL_IDX = $(s).attr('data-detail-idx');
+            obj.COUPON_IDX = $(s).val();
+            arrP.push(obj);
+
+            setOrderCoupon(arrP, pcode);
+        }
+
+</script>
+
 <div class="product_list v2">
     <h3>주문상품</h3>
     <ul class="btnone">
@@ -10,7 +70,7 @@
     {
         string imgUrl1 = productImgPath + "R120_" + item.P_IMG1_S;
 
-        <li>
+        <li><a href="#none" name="@item.P_CODE"></a>
             <ul class="product_info">
                 <li class="photo_info">
                     <div class="photo"><img src="@imgUrl1" alt="" /></div>
@@ -80,11 +140,8 @@
                 <li class="coupon_choice bbnone">
                     <span class="tit">쿠폰선택</span>
                     <span class="selbox select_a" style="width:200px">
-                        <select name="" title="쿠폰선택">
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                            <option>회원가입 10,000 원 할인쿠폰</option>
+                        <select title="쿠폰선택" name="COUPON_@item.P_CODE" class="selectstyleb" id="COUPON_@item.P_CODE" data-pcode="@item.P_CODE" data-pcount="@item.P_COUNT" data-price="@item.EMP_DISCOUNT_PRICE" data-detail-idx="@item.ORDER_DETAIL_IDX" onchange="couponSelect(this,'@item.P_CODE')">
+                            @SelectOption(item.P_CODE, item.IDX_COUPON_NUMBER)
                         </select>
                     </span>
                 </li>
