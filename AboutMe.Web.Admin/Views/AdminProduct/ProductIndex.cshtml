@@ -56,7 +56,12 @@
     function selectCateValue(d) {
         //alert(d.value);
         var f = document.bform;
-        f.cateCode.value = d.value;
+        if(d.value!=''){
+            f.cateCode.value = d.value;
+        } else {
+            f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
+        }
+        //alert("d:" + d.value + "P_CATE_CODE2:" + f.cateCode.value);
     }
 
 
@@ -152,17 +157,20 @@
         });
     }
 
-    //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+    //카테고리 유형별(PRODUCT_TYPE) ProductType 3
     function ajaxSelectCateCodeJavascriptProductType2() {
 
         var f = document.bform;
-        f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
         var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
         var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
 
-        if ((DEPTH1_CODE == '') || (DEPTH2_CODE == '') ) {
+        $('#ajaxPCateCode3').html('');
+        //alert("DEPTH1_CODE:" + DEPTH1_CODE + "DEPTH2_CODE:" + DEPTH2_CODE);
+        if ((DEPTH1_CODE == '') || (DEPTH2_CODE == '')) {
+            f.cateCode.value = $("#P_CATE_CODE1 option:selected").val();
             return;
         }
+        f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
 
 
         //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
@@ -450,251 +458,256 @@
 
     <!--content-->
 <div class="content">
-    <!--path-->
-    <div class="path">
-        <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
-    </div>
-    <!--//path-->
+    <form action="" id="bform" method="post" name="bform">
+        <input type="hidden" name="searchStatus" id="searchStatus" value="@Model.productSearch_Entity.searchStatus" />
+        <input type="hidden" name="Page" id="Page" value="@Model.productSearch_Entity.Page" />
+        <input type="hidden" name="cateCode" id="cateCode" value="@Model.productSearch_Entity.cateCode" />
+        @Html.AntiForgeryToken()
 
-    <div class="panel">
-        <h3 class="sub-header">상품관리</h3>
-        <form action="" id="bform" method="post" name="bform">
-            <input type="hidden" name="searchStatus" id="searchStatus" value="@Model.productSearch_Entity.searchStatus" />
-            <input type="hidden" name="Page" id="Page" value="@Model.productSearch_Entity.Page" />
-            <input type="hidden" name="cateCode" id="cateCode" value="@Model.productSearch_Entity.cateCode" />
-            
-                   @Html.AntiForgeryToken()<div class="tar mb10">
-                                <a class="btn btn-default middium" href="/AdminProduct/ProductInsert">상품등록</a>
-                                               <a class="btn btn-default middium" href="#none" onclick="javasript:excelDw();">엑셀다운로드</a>
-                                @if (Model.productSearch_Entity.searchStatus=="Y")
-                                {
-                                    <a class="btn btn-default middium" href="/AdminProduct/ProductIndex">검색초기화</a>
-                                }
-                            </div>
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
 
-                            <div class="">
-                                <table class="table table_row">
-                                    <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="20%" /></colgroup>
-                                    <tfoot>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <th>일자</th>
-                                            <td>
-                                                @(Html.Kendo().DatePicker()
+        <div class="panel">
+            <h3 class="sub-header">상품관리</h3>
+            <div class="tar mb10">
+                <a class="btn btn-default middium" href="/AdminProduct/ProductInsert">상품등록</a>
+                <a class="btn btn-default middium" href="#none" onclick="javasript:excelDw();">엑셀다운로드</a>
+                @if (Model.productSearch_Entity.searchStatus == "Y")
+                {
+                    <a class="btn btn-default middium" href="/AdminProduct/ProductIndex">검색초기화</a>
+                }
+            </div>
+
+            <div class="">
+                <table class="table table_row">
+                    <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="9%" /><col width="10%" /></colgroup>
+                    <tfoot>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <th>일자</th>
+                            <td>
+                                @(Html.Kendo().DatePicker()
                           .Name("FROM_DATE")
                           .Value(Model.productSearch_Entity.FROM_DATE)
                           .HtmlAttributes(new { style = "width:120px" })
-                                                )
-                                                ~
-                                                @(Html.Kendo().DatePicker()
+                                )
+                                ~
+                                @(Html.Kendo().DatePicker()
                           .Name("TO_DATE")
                           .Value(Model.productSearch_Entity.TO_DATE)
                           .HtmlAttributes(new { style = "width:120px" })
-                                                )
-                                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
-                                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('1')">오늘</a>
-                                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('7')">7일</a>
-                                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
-                                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
-                                            </td>
-                                            <th rowspan="5">검색조건</th>
-                                            <td rowspan="5" class="condition_seacth">
-                                                <select name="SearchKey" style="width:170px;">
-                                                    <option value="P_CODE" @if (Model.productSearch_Entity.SearchKey == "P_CODE") { <text> selected</text> }>상품품번</option>
-                                                    <option value="P_NAME" @if (Model.productSearch_Entity.SearchKey == "P_NAME") { <text> selected</text> }>상품명</option>
-                                                </select><br />
-                                                <input type="text" value="@Model.productSearch_Entity.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
-                                                <a href="javascript:frmCheck();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>판매상태</th>
-                                            <td>
-                                                <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (Model.productSearch_Entity.searchDisplayY == "Y") { <text> checked</text> } /><span class="txt mr5">전시</span></label>
-                                                <label for="sale2"><input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (Model.productSearch_Entity.searchDisplayN == "Y")
-                                                                                                                                              { <text> checked</text> } /><span class="txt mr5">비전시</span></label>
-                                                <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (Model.productSearch_Entity.soldoutYn == "Y") { <text> checked</text> } /><span class="txt mr5">품절</span></label>
-                                                <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (Model.productSearch_Entity.POutletYn == "Y") { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>카테고리</th>
-                                            <td>
-                                                <span id="ajaxPCateCode1"></span>
-                                                <span id="ajaxPCateCode2"></span>
-                                                <span id="ajaxPCateCode3"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>아이콘</th>
-                                            <td>
-                                                <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
-                                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-            
-</div>
-    <div class="panel">
-        <div class="">
-            <table class="table table_row">
-                <colgroup><col width="9%" /><col width="11%" /><col width="5%" /><col width="5%" /><col width="9%" /><col width="30%" /><col width="6%" /><col width="5%" /></colgroup>
-                <tr>
-                    <th><a href="javascript:allProductChk()" class=" btn btn-default large btn_search">체크 상품 일괄 저장</a></th>
-                    <td>현재 선택한 <input type="text" name="number_ch" id="number_ch" style="padding-right:5px;width:40px;height:15px;text-align:right;" class="intext" readonly /> 건</td>
-                    <th>총검색</th>
-                    <td>@Model.TotalCount 건</td>
-                    <th><input type="checkbox" id="IconBatchChk" name="IconBatchChk" value="Y" /> 아이콘 일괄변경</th>
-                    <td>
-                        <label for="icon1"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="N" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('N') != -1)
-                                                                                                                { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">NEW</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="B" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('B') != -1)
-                                                                                                                { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">BEST</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('S') != -1)
-                                                                                                                { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SOLD OUT</span></label>
-                        <label for="icon4"><input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('C') != -1)
-                                                                                                                { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">커스텀</span></label>
-                    </td>
-                    <th>출력수</th>
-                    <td>
-                        <select name="PageSize" onchange="javascript:rePageSize();">
-                            <option value="10" @if (Model.productSearch_Entity.PageSize == 10)
-                                               { <text> selected</text> }>10개</option>
-                            <option value="20" @if (Model.productSearch_Entity.PageSize == 20)
-                                               { <text> selected</text> }>20개</option>
-                            <option value="50" @if (Model.productSearch_Entity.PageSize == 50)
-                                               { <text> selected</text> }>50개</option>
-                            <option value="100" @if (Model.productSearch_Entity.PageSize == 100)
-                                                { <text> selected</text> }>100개</option>
-                            <option value="200" @if (Model.productSearch_Entity.PageSize == 200)
-                                                { <text> selected</text> }>200개</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <table class="table table_col addtable">
-            <colgroup></colgroup>
-            <thead>
-                <tr>
-                    <th scope="col"><input type="checkbox" name="chec" id="chec" style="vertical-align:middle;margin-bottom:2px;" onclick="allchecked_result();" /></th>
-                    <th scope="col">이미지</th>
-                    <th scope="col">상품품번</th>
-                    <th scope="col">아이콘</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col">판매가</th>
-                    <th scope="col">할인가</th>
-                    <th scope="col">할인률</th>
-                    <th scope="col">상품<br/>전시여부</th>
-                    <th scope="col">품절여부</th>
-                    <th scope="col">아울렛<br/>전시여부</th>
-                    <th scope="col">전시순서</th>
-                    <th scope="col">등록일</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    if (Model.TotalCount < 1)
-                    {
-                        <tr>
-                            <td colspan="13" class="brnone">No data...</td>
+                                )
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('1')">오늘</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('7')">7일</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
+                            </td>
+                            <th rowspan="4">검색조건</th>
+                            <td rowspan="4" class="condition_seacth">
+                                <select name="SearchKey" style="width:170px;">
+                                    <option value="P_CODE" @if (Model.productSearch_Entity.SearchKey == "P_CODE") { <text> selected</text> }>상품품번</option>
+                                    <option value="P_NAME" @if (Model.productSearch_Entity.SearchKey == "P_NAME") { <text> selected</text> }>상품명</option>
+                                </select><br />
+                                <input type="text" value="@Model.productSearch_Entity.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
+                            </td>
+                            <td rowspan="4">
+                                <a href="javascript:frmCheck();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
+                            </td>
                         </tr>
-                    }
-                }
-                @{ var i = 0;
-                    string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
-                    Type type = Model.productSearch_Entity.GetType();
-                    PropertyInfo[] properties = type.GetProperties();
-                   }
-                @foreach (var item in Model.ProductList)
-                {
-                    //query string만들기 idx를 맨처음으로
-                    RouteValueDictionary param = new RouteValueDictionary();
-                    param.Add("pcode", item.P_CODE);
-                    foreach (PropertyInfo property in properties)
+
+                        <tr>
+                            <th>판매상태</th>
+                            <td>
+                                <label for="sale1"><input type="checkbox" id="searchDisplayY" value="Y" name="searchDisplayY" @if (Model.productSearch_Entity.searchDisplayY == "Y") { <text> checked</text> } /><span class="txt mr5">전시</span></label>
+                                <label for="sale2">
+                                    <input type="checkbox" id="searchDisplayN" value="Y" name="searchDisplayN" @if (Model.productSearch_Entity.searchDisplayN == "Y") { <text> checked</text> } /><span class="txt mr5">비전시</span>
+                                </label>
+                                <label for="sale4"><input type="checkbox" id="soldoutYn" value="Y" name="soldoutYn" @if (Model.productSearch_Entity.soldoutYn == "Y") { <text> checked</text> } /><span class="txt mr5">품절</span></label>
+                                <label for="sale4"><input type="checkbox" id="POutletYn" value="Y" name="POutletYn" @if (Model.productSearch_Entity.POutletYn == "Y") { <text> checked</text> } /><span class="txt mr5">아울렛</span></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>카테고리</th>
+                            <td>
+                                <span id="ajaxPCateCode1"></span>
+                                <span id="ajaxPCateCode2"></span>
+                                <span id="ajaxPCateCode3"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>아이콘</th>
+                            <td>
+                                <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
+                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
+                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
+                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="panel">
+            <div class="">
+                <table class="table table_row">
+                    <colgroup><col width="9%" /><col width="11%" /><col width="5%" /><col width="5%" /><col width="9%" /><col width="30%" /><col width="6%" /><col width="5%" /></colgroup>
+                    <tr>
+                        <th><a href="javascript:allProductChk()" class=" btn btn-default large btn_search">체크 상품 일괄 저장</a></th>
+                        <td>현재 선택한 <input type="text" name="number_ch" id="number_ch" style="padding-right:5px;width:40px;height:15px;text-align:right;" class="intext" readonly /> 건</td>
+                        <th>총검색</th>
+                        <td>@Model.TotalCount 건</td>
+                        <th><input type="checkbox" id="IconBatchChk" name="IconBatchChk" value="Y" /> 아이콘 일괄변경</th>
+                        <td>
+                            <label for="icon1">
+                                <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="N" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">NEW</span>
+                            </label>
+                            <label for="icon4">
+                                <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="B" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">BEST</span>
+                            </label>
+                            <label for="icon4">
+                                <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SOLD OUT</span>
+                            </label>
+                            <label for="icon4">
+                                <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">커스텀</span>
+                            </label>
+                        </td>
+                        <th>출력수</th>
+                        <td>
+                            <select name="PageSize" onchange="javascript:rePageSize();">
+                                <option value="10" @if (Model.productSearch_Entity.PageSize == 10) { <text> selected</text> }>10개</option>
+                                <option value="20" @if (Model.productSearch_Entity.PageSize == 20) { <text> selected</text> }>20개</option>
+                                <option value="50" @if (Model.productSearch_Entity.PageSize == 50) { <text> selected</text> }>50개</option>
+                                <option value="100" @if (Model.productSearch_Entity.PageSize == 100) { <text> selected</text> }>100개</option>
+                                <option value="200" @if (Model.productSearch_Entity.PageSize == 200) { <text> selected</text> }>200개</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <table class="table table_col addtable">
+                <colgroup></colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col"><input type="checkbox" name="chec" id="chec" style="vertical-align:middle;margin-bottom:2px;" onclick="allchecked_result();" /></th>
+                        <th scope="col">이미지</th>
+                        <th scope="col">상품품번</th>
+                        <th scope="col">아이콘</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">판매가</th>
+                        <th scope="col">할인가</th>
+                        <th scope="col">할인률</th>
+                        <th scope="col">상품<br />전시여부</th>
+                        <th scope="col">품절여부</th>
+                        <th scope="col">아울렛<br />전시여부</th>
+                        <th scope="col">전시순서</th>
+                        <th scope="col">등록일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
                     {
-                        param.Add(property.Name, property.GetValue(Model.productSearch_Entity));
-                    }
-                    
-                <tr>
-                    <td><input type="checkbox" name="product_info_batch[@i].P_CODE" value="@item.P_CODE" id="P_CODE" style="vertical-align:middle;margin-bottom:2px;" onclick="sel_ck('@i');" />
-                        <input type="hidden" name="product_info_batch[@i].DEFAULT_PCODE" value="@item.P_CODE" id="DEFAULT_PCODE" />
-                    </td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.MAIN_IMG))
+                        if (Model.TotalCount < 1)
                         {
-                            <span id="SPAN_MAIN_IMG"><img src="@Product_path@item.MAIN_IMG" width="70" height="70" /></span>
+                            <tr>
+                                <td colspan="13" class="brnone">No data...</td>
+                            </tr>
                         }
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.P_CODE, "ProductUpdate", param)
-                        @*<a href="/AdminProduct/ProductUpdate?pcode=@item.P_CODE">
-                            @item.P_CODE
-                        </a>*@
-                    </td>
-                    <td>@{ string ICON_NAME = "";}
-                    @if (!String.IsNullOrEmpty(@item.ICON_YN))
-                    {
-                        if (item.ICON_YN.ToString().IndexOf('N') != -1)
-                        { ICON_NAME = ICON_NAME + ",NEW"; }
-                        if (item.ICON_YN.ToString().IndexOf('B') != -1)
-                        { ICON_NAME = ICON_NAME + ",BEST"; }
-                        if (item.ICON_YN.ToString().IndexOf('S') != -1)
-                        { ICON_NAME = ICON_NAME + ",SOLD OUT"; }
-                        if (item.ICON_YN.ToString().IndexOf('C') != -1)
-                        { ICON_NAME = ICON_NAME + ",커스텀"; }
                     }
-                    
-                    @if (ICON_NAME.Length > 1) { 
-                           ICON_NAME = ICON_NAME.Substring(1, (ICON_NAME.Length-1));
-                     }
-                        @ICON_NAME
-                    </td>
-                    <td class="tal">
-                    @Html.ActionLink(item.P_NAME, "ProductUpdate", param)
-                    </td>
-                    <td>@string.Format("{0:#,##0}", item.SELLING_PRICE) </td>
-                    <td>@string.Format("{0:#,##0}", item.DISCOUNT_PRICE) </td>
-                    <td>@item.DISCOUNT_RATE%</td>
-                    <td><input type="checkbox" name="product_info_batch[@i].DISPLAY_YN" @if (item.DISPLAY_YN == "Y") { <text> checked </text>   } value="Y" id="DISPLAY_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
-                    <td><input type="checkbox" name="product_info_batch[@i].SOLDOUT_YN" @if (item.SOLDOUT_YN == "Y") { <text> checked </text>    } value="Y" id="SOLDOUT_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
-                    <td><input type="checkbox" name="product_info_batch[@i].P_OUTLET_YN" @if (item.P_OUTLET_YN == "Y") { <text> checked </text>    } value="Y" id="P_OUTLET_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
-                    <td>@if (Model.productSearch_Entity.searchStatus != "Y")
-                    {
-                        <a href="/AdminProduct/display_re_sort?clickChk=UP&re_sort=@item.RE_SORT&idx=@item.IDX">▲</a>
-                        <br /><a href="/AdminProduct/display_re_sort?clickChk=DOWN&re_sort=@item.RE_SORT&idx=@item.IDX">▼</a>
+                    @{ var i = 0;
+                     string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+                     Type type = Model.productSearch_Entity.GetType();
+                     PropertyInfo[] properties = type.GetProperties();
                     }
+                    @foreach (var item in Model.ProductList)
+                    {
+                        //query string만들기 idx를 맨처음으로
+                        RouteValueDictionary param = new RouteValueDictionary();
+                        param.Add("pcode", item.P_CODE);
+                        foreach (PropertyInfo property in properties)
+                        {
+                            param.Add(property.Name, property.GetValue(Model.productSearch_Entity));
+                        }
+
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="product_info_batch[@i].P_CODE" value="@item.P_CODE" id="P_CODE" style="vertical-align:middle;margin-bottom:2px;" onclick="sel_ck('@i');" />
+                                <input type="hidden" name="product_info_batch[@i].DEFAULT_PCODE" value="@item.P_CODE" id="DEFAULT_PCODE" />
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.MAIN_IMG))
+                                {
+                                    <span id="SPAN_MAIN_IMG"><img src="@Product_path@item.MAIN_IMG" width="70" height="70" /></span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink(item.P_CODE, "ProductUpdate", param)
+                                @*<a href="/AdminProduct/ProductUpdate?pcode=@item.P_CODE">
+                                        @item.P_CODE
+                                    </a>*@
+                            </td>
+                            <td>
+                                @{ string ICON_NAME = "";}
+                            @if (!String.IsNullOrEmpty(@item.ICON_YN))
+                            {
+                                if (item.ICON_YN.ToString().IndexOf('N') != -1)
+                                { ICON_NAME = ICON_NAME + ",NEW"; }
+                                if (item.ICON_YN.ToString().IndexOf('B') != -1)
+                                { ICON_NAME = ICON_NAME + ",BEST"; }
+                                if (item.ICON_YN.ToString().IndexOf('S') != -1)
+                                { ICON_NAME = ICON_NAME + ",SOLD OUT"; }
+                                if (item.ICON_YN.ToString().IndexOf('C') != -1)
+                                { ICON_NAME = ICON_NAME + ",커스텀"; }
+                            }
+
+                            @if (ICON_NAME.Length > 1)
+                            {
+                                ICON_NAME = ICON_NAME.Substring(1, (ICON_NAME.Length - 1));
+                            }
+                            @ICON_NAME
+                        </td>
+                        <td class="tal">
+                            @Html.ActionLink(item.P_NAME, "ProductUpdate", param)
+                        </td>
+                        <td>@string.Format("{0:#,##0}", item.SELLING_PRICE) </td>
+                        <td>@string.Format("{0:#,##0}", item.DISCOUNT_PRICE) </td>
+                        <td>@item.DISCOUNT_RATE%</td>
+                        <td><input type="checkbox" name="product_info_batch[@i].DISPLAY_YN" @if (item.DISPLAY_YN == "Y") { <text> checked </text>    } value="Y" id="DISPLAY_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
+                        <td><input type="checkbox" name="product_info_batch[@i].SOLDOUT_YN" @if (item.SOLDOUT_YN == "Y") { <text> checked </text>     } value="Y" id="SOLDOUT_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
+                        <td><input type="checkbox" name="product_info_batch[@i].P_OUTLET_YN" @if (item.P_OUTLET_YN == "Y") { <text> checked </text>     } value="Y" id="P_OUTLET_YN" style="vertical-align:middle;margin-bottom:2px;" onclick="selectedChk('@i');" /></td>
+                        <td>
+                            @if ((string.IsNullOrEmpty(Model.productSearch_Entity.FROM_DATE)) && (string.IsNullOrEmpty(Model.productSearch_Entity.TO_DATE)) && (Model.productSearch_Entity.SearchKeyword == "") && (Model.productSearch_Entity.soldoutYn == "") && (Model.productSearch_Entity.iconYn == "") && (Model.productSearch_Entity.POutletYn == "") && (Model.productSearch_Entity.searchDisplayN == "") && (Model.productSearch_Entity.searchDisplayY == ""))
+                            {
+                                <a href="/AdminProduct/display_re_sort?clickChk=UP&re_sort=@item.RE_SORT&idx=@item.IDX&cateCode=@Model.productSearch_Entity.cateCode&page=@Model.productSearch_Entity.Page&PageSize=@Model.productSearch_Entity.PageSize">▲</a>
+                                <br /><a href="/AdminProduct/display_re_sort?clickChk=DOWN&re_sort=@item.RE_SORT&idx=@item.IDX&cateCode=@Model.productSearch_Entity.cateCode&page=@Model.productSearch_Entity.Page&PageSize=@Model.productSearch_Entity.PageSize">▼</a>
+                            }
                     </td>
                     <td>@item.REGDATE</td>
                 </tr>
-                    i++;
-                }
-            </tbody>
-        </table>
-    </div>
-    @{
-        //paging 파라메터
-        string PagingParam = "";
-        foreach (PropertyInfo property in properties)
-        {
-            if (property.Name != "Page")
+                            i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        @{
+            //paging 파라메터
+            string PagingParam = "";
+            foreach (PropertyInfo property in properties)
             {
-                PagingParam = PagingParam + property.Name + "=" + property.GetValue(Model.productSearch_Entity) + "&";
+                if (property.Name != "Page")
+                {
+                    PagingParam = PagingParam + property.Name + "=" + property.GetValue(Model.productSearch_Entity) + "&";
+                }
             }
         }
-    }
-    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalCount, RecordPerPage = Model.productSearch_Entity.PageSize, PagePerBlock = 10, CurrentPage = Model.productSearch_Entity.Page, QueryStr = PagingParam });}
-
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.TotalCount, RecordPerPage = Model.productSearch_Entity.PageSize, PagePerBlock = 10, CurrentPage = Model.productSearch_Entity.Page, QueryStr = PagingParam });}
+</form>
 </div>
 <!--//content-->
-
-
 
 }

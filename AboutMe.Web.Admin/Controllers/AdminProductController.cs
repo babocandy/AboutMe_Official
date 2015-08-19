@@ -37,12 +37,8 @@ namespace AboutMe.Web.Admin.Controllers
         #region 카테고리
 
         #region 카테고리 리스트
-        public ActionResult Index(string cate_gbn, string depth1_code, string depth2_code)
+        public ActionResult Index(string depth1_code, string depth2_code)
         {
-            if (cate_gbn == null)
-            {
-                cate_gbn = "PRODUCT_TYPE";
-            }
             if (depth1_code == null)
             {
                 depth1_code = "101";
@@ -52,7 +48,6 @@ namespace AboutMe.Web.Admin.Controllers
                 depth2_code = "101";
             }
 
-            ViewBag.cate_gbn = cate_gbn;
             ViewBag.depth1_code = depth1_code;
             ViewBag.depth2_code = depth2_code;
 
@@ -67,7 +62,6 @@ namespace AboutMe.Web.Admin.Controllers
 
         #region 카테고리 등록
         
-        // GET: AdminProduct/Create
         public ActionResult Create()
         {
             return View();
@@ -78,43 +72,47 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult Create(string CATE_GBN, string DEPTH1_CODE, string DEPTH2_CODE, string DEPTH_NAME)
         {
 
-            //System.Data.Entity.Core.Objects.ObjectParameter intResult;
-            //int intResult = 0;
-            try
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                //;
                 if (String.IsNullOrEmpty(DEPTH1_CODE))
-                { 
-                 _AdminProductService.InsertAdminCategoryOne(DEPTH_NAME);
+                {
+                    intResult = _AdminProductService.InsertAdminCategoryOne(DEPTH_NAME);
                 }
                 else if (CATE_GBN != "PRODUCT_TYPE") //피부타입 또는 라인타입은 무조건 여기
                 {
-                    _AdminProductService.InsertAdminCategoryTwo(CATE_GBN, DEPTH1_CODE, DEPTH_NAME);
+                    intResult = _AdminProductService.InsertAdminCategoryTwo(CATE_GBN, DEPTH1_CODE, DEPTH_NAME);
                 }
                 else if ( (!String.IsNullOrEmpty(DEPTH1_CODE)) && (String.IsNullOrEmpty(DEPTH2_CODE)) )
                 {
-                    _AdminProductService.InsertAdminCategoryTwo(CATE_GBN, DEPTH1_CODE, DEPTH_NAME);
+                    intResult = _AdminProductService.InsertAdminCategoryTwo(CATE_GBN, DEPTH1_CODE, DEPTH_NAME);
                 }
                 else if ((!String.IsNullOrEmpty(DEPTH1_CODE)) && (!String.IsNullOrEmpty(DEPTH2_CODE)) )
                 {
-                    _AdminProductService.InsertAdminCategoryThree(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE, DEPTH_NAME);
+                    intResult = _AdminProductService.InsertAdminCategoryThree(CATE_GBN, DEPTH1_CODE, DEPTH2_CODE, DEPTH_NAME);
+                }
+                
+                #region 카테고리 등록 로그 생성
+                var serialised = "결과값 intResult :" + intResult;
+                serialised += " CATE_GBN:" + CATE_GBN;
+                serialised += " DEPTH1_CODE:" + DEPTH1_CODE;
+                serialised += " DEPTH2_CODE:" + DEPTH2_CODE;
+                serialised += " DEPTH_NAME:" + DEPTH_NAME;
+                AdminLog adminlog = new AdminLog();
+                adminlog.AdminLogSave(serialised, "카테고리 등록");
+                #endregion
+
+                if (intResult != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('등록되지 않았습니다.');history.go(-1);</script>");
                 }
                 else
                 {
-                    
+                    return View();
                 }
-
-                //return RedirectToAction("Index");
-                //Redirect("/AdminMember/Index");
-                //return View(Index("" ,"", "","", 1, 10));
-                //ViewBag.resultVal = i;
-                //return RedirectToAction("Index", new { SearchCol = ViewBag.resultVal });
-                //return RedirectToAction("Index");
-                return View();
+                
             }
-            catch
+            else
             {
                 return View();
             }
@@ -125,28 +123,47 @@ namespace AboutMe.Web.Admin.Controllers
         #region 카테고리 수정
 
         #region 카테고리 수정 1depth
-        // POST
         [HttpPost]
-        public ActionResult CategoryOneUpdate(List<TB_CATEGORY> tb_category)
+        public ActionResult CategoryOneUpdate(List<TB_CATEGORY> tb_category, string depth1_code, string depth2_code)
         {
+            ViewBag.depth1_code = depth1_code;
+            ViewBag.depth2_code = depth2_code;
             
-            try
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            int intResultAll = 0; //결과값 0:정상, 나머지 오류
+            if (ModelState.IsValid)
             {
                 foreach (TB_CATEGORY category in tb_category)
                 {
-                    //category.DEPTH1_NAME.ToString();
-                    if (category.DISPLAY_YN != null)
-                    { category.DISPLAY_YN = "Y"; }
-                    else
-                    { category.DISPLAY_YN = "N"; }
-                    _AdminProductService.UpdateAdminCategoryOne(category.IDX, category.DEPTH1_NAME, category.DISPLAY_YN, category.RE_SORT);
+                    category.DISPLAY_YN = string.IsNullOrEmpty(category.DISPLAY_YN) ? "N" : "Y";
+                    intResult = _AdminProductService.UpdateAdminCategoryOne(category.IDX, category.DEPTH1_NAME, category.DISPLAY_YN, category.RE_SORT);
+
+                    if (intResult != 0)
+                    {
+                        intResultAll = -1;
+                    }
+                    #region 카테고리 수정 로그 생성
+                    var serialised = "결과값 intResult :" + intResult;
+                    serialised = serialised + JsonConvert.SerializeObject(category); //entity 클래스 값을 json 포맷으로 파싱
+                    AdminLog adminlog = new AdminLog();
+                    adminlog.AdminLogSave(serialised, "카테고리 수정 1depth");
+                    #endregion
                 }
 
-                return RedirectToAction("Index");
+
+                if (intResultAll != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('카테고리 1depth 수정이 안된 부분이 있습니다. 로그를 확인해주세요.');history.go(-1);</script>");
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { depth1_code = depth1_code, depth2_code = depth2_code });
+                }
+                
             }
-            catch
+            else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { depth1_code = depth1_code, depth2_code = depth2_code });
             }
         }
         #endregion
@@ -154,26 +171,44 @@ namespace AboutMe.Web.Admin.Controllers
         #region 카테고리 수정 2depth
         // POST
         [HttpPost]
-        public ActionResult CategoryTwoUpdate(List<TB_CATEGORY> tb_category)
+        public ActionResult CategoryTwoUpdate(List<TB_CATEGORY> tb_category, string depth1_code, string depth2_code)
         {
+            ViewBag.depth1_code = depth1_code;
+            ViewBag.depth2_code = depth2_code;
 
-            try
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            int intResultAll = 0; //결과값 0:정상, 나머지 오류
+            if (ModelState.IsValid)
             {
                 foreach (TB_CATEGORY category in tb_category)
                 {
-                    //category.DEPTH1_NAME.ToString();
-                    if (category.DISPLAY_YN != null)
-                    { category.DISPLAY_YN = "Y"; }
-                    else
-                    { category.DISPLAY_YN = "N"; }
-                    _AdminProductService.UpdateAdminCategoryTwo(category.IDX, category.DEPTH2_NAME, category.DISPLAY_YN, category.RE_SORT);
+                    category.DISPLAY_YN = string.IsNullOrEmpty(category.DISPLAY_YN) ? "N" : "Y";
+                    intResult = _AdminProductService.UpdateAdminCategoryTwo(category.IDX, category.DEPTH2_NAME, category.DISPLAY_YN, category.RE_SORT);
+
+                    if (intResult != 0)
+                    {
+                        intResultAll = -1;
+                    }
+                    #region 카테고리 수정 로그 생성
+                    var serialised = "결과값 intResult :" + intResult;
+                    serialised = serialised + JsonConvert.SerializeObject(category); //entity 클래스 값을 json 포맷으로 파싱
+                    AdminLog adminlog = new AdminLog();
+                    adminlog.AdminLogSave(serialised, "카테고리 수정 2depth");
+                    #endregion
                 }
 
-                return RedirectToAction("Index");
+                if (intResultAll != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('카테고리 2depth 수정이 안된 부분이 있습니다. 로그를 확인해주세요.');history.go(-1);</script>");
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { depth1_code = depth1_code, depth2_code = depth2_code });
+                }
             }
-            catch
+           else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { depth1_code = depth1_code, depth2_code = depth2_code });
             }
         }
         #endregion
@@ -181,132 +216,57 @@ namespace AboutMe.Web.Admin.Controllers
         #region 카테고리 수정 3depth
         // POST
         [HttpPost]
-        public ActionResult CategoryThreeUpdate(List<TB_CATEGORY> tb_category)
+        public ActionResult CategoryThreeUpdate(List<TB_CATEGORY> tb_category, string depth1_code, string depth2_code)
         {
+            ViewBag.depth1_code = depth1_code;
+            ViewBag.depth2_code = depth2_code;
 
-            try
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            int intResultAll = 0; //결과값 0:정상, 나머지 오류
+            if (ModelState.IsValid)
             {
                 foreach (TB_CATEGORY category in tb_category)
                 {
-                    //category.DEPTH1_NAME.ToString();
-                    if (category.DISPLAY_YN != null)
-                    { category.DISPLAY_YN = "Y"; }
-                    else
-                    { category.DISPLAY_YN = "N"; }
-                    _AdminProductService.UpdateAdminCategoryThree(category.IDX, category.DEPTH3_NAME, category.DISPLAY_YN, category.RE_SORT);
+                    
+                    category.DISPLAY_YN = string.IsNullOrEmpty(category.DISPLAY_YN) ? "N" : "Y";
+                    intResult = _AdminProductService.UpdateAdminCategoryThree(category.IDX, category.DEPTH3_NAME, category.DISPLAY_YN, category.RE_SORT);
+                    
+                    if (intResult != 0)
+                    {
+                        intResultAll = -1;
+                    }
+                    #region 카테고리 수정 로그 생성
+                    var serialised = "결과값 intResult :" + intResult;
+                    serialised = serialised + JsonConvert.SerializeObject(category); //entity 클래스 값을 json 포맷으로 파싱
+                    AdminLog adminlog = new AdminLog();
+                    adminlog.AdminLogSave(serialised, "카테고리 수정 3depth");
+                    #endregion
                 }
 
-                return RedirectToAction("Index");
+                if (intResultAll != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('카테고리 3depth 수정이 안된 부분이 있습니다. 로그를 확인해주세요.');history.go(-1);</script>");
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { depth1_code = depth1_code, depth2_code = depth2_code });
+                }
             }
-            catch
+            else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { depth1_code = depth1_code, depth2_code = depth2_code });
             }
         }
         #endregion
-
-        // GET:  수정
-        public ActionResult CategoryUpdate(int idx)
-        {
-            SP_ADMIN_CATEGORY_VIEW_Result categoryView = _AdminProductService.ViewAdminCategory(idx);
-            return View(categoryView);
-        }
-
-        // POST
-        [HttpPost]
-        public ActionResult CategoryUpdate(int IDX, string DEPTH1_NAME, string DISPLAY_YN, int RE_SORT)
-        {
-            try
-            {
-                _AdminProductService.UpdateAdminCategoryOne(IDX, DEPTH1_NAME, DISPLAY_YN, RE_SORT);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST
-        [HttpPost]
-        //public ActionResult CategoryOneInsert(IEnumerable<string> IsEnabled, IEnumerable<string> DEPTH1_NAME)
-        //public ActionResult CategoryOneInsert(IEnumerable<TB_CATEGORY> tb_category)
-        //public ActionResult CategoryOneInsert(FormCollection tb_category)
-        //public ActionResult CategoryOneInsert(List<TB_CATEGORY> tb_category)
-        //public ActionResult CategoryOneInsert(IEnumerable<string> IsEnabled, IEnumerable<string> DEPTH1_NAME, IEnumerable<string> DEPTH1_CODE)
-        //public ActionResult CategoryOneInsert(IEnumerable<SP_ADMIN_CATEGORY_ONE_SEL_Result> IsEnabled, IEnumerable<string> DEPTH1_NAME, IEnumerable<string> DEPTH1_CODE)
-        //public ActionResult CategoryOneInsert(FormCollection form)
-        //public ActionResult CategoryOneInsert(FormCollection form)
-        public ActionResult CategoryOneInsert(List<TB_CATEGORY> tb_category)
-        {
-
-            foreach (TB_CATEGORY category in tb_category)
-            {
-              category.DEPTH1_NAME.ToString();
-            }
-
-
-            //foreach (var key in form.AllKeys)
-            //{
-            //    var value = form[key];
-            //    // etc.
-            //}
-
-            //foreach (var key in form.Keys)
-            //{
-            //    var value = form[key.ToString()];
-            //    // etc.
-            //}
-
-            //string IsEnabled = Request.Form["IsEnabled"];
-            //string DEPTH1_NAME = Request.Form["DEPTH1_NAME"];
-
-            //string[] AllStrings = form["IsEnabled"].Split(',');
-            //foreach (string item in AllStrings)
-            //{
-            //    int value = int.Parse(item);
-            //    // handle value
-            //}
-
-            //var allvalues = form["IsEnabled"].Split(',').Select(x => int.Parse(x));
-          
-            //if (tb_category.DEPTH1_CODE.Any(m => m.ToString()))  
-            //{
-            //   //How to get the selected Code & Name here
-            //}
-            //IsEnabled.Count(0).ToString();
-            
-
-
-            //foreach (TB_CATEGORY tb_category in tb_category)
-            //{
-            //    enabled.ToString();
-            //}
-
-            try
-            {
-                //_AdminProductService.UpdateAdminCategoryOne(IDX, DEPTH1_NAME, DISPLAY_YN, RE_SORT);
-                //return RedirectToAction("Index");
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         
 
         #endregion
 
         #region 카테고리 삭제
-        
-        // POST: AdminProduct/CategoryDelete
         public ActionResult CategoryDelete(int idx)
         {
             try
             {
-                // TODO: Add delete logic here
                 _AdminProductService.DeleteAdminCategoryOne(idx);
                 return RedirectToAction("Index");
             }
@@ -420,8 +380,6 @@ namespace AboutMe.Web.Admin.Controllers
 
         [HttpPost, ValidateInput(false)] //"<" 같은 위지윅 게시판의 html코드 값을 가져올때 false로 세팅
         [ValidateAntiForgeryToken]
-       
-        //public ActionResult ProductInsert(string P_CATE_CODE, string C_CATE_CODE, string L_CATE_CODE, string P_CODE, string P_NAME, Nullable<int> P_COUNT, Nullable<int> P_POINT, Nullable<int> P_PRICE, Nullable<int> SELLING_PRICE, Nullable<int> DISCOUNT_RATE, Nullable<int> DISCOUNT_P_POINT, Nullable<int> DISCOUNT_PRICE, string SOLDOUT_YN, string P_INFO_DETAIL_WEB, string P_INFO_DETAIL_MOBILE, string MV_URL, string P_COMPONENT_INFO, string P_TAG, string MAIN_IMG, string OTHER_IMG1, string OTHER_IMG2, string OTHER_IMG3, string OTHER_IMG4, string OTHER_IMG5, string DISPLAY_YN, string ICON_YN, string WITH_PRODUCT_LIST)
         public ActionResult ProductInsert(TB_PRODUCT_INFO tb_product_info, HttpPostedFileBase MAIN_IMG, HttpPostedFileBase OTHER_IMG1, HttpPostedFileBase OTHER_IMG2, HttpPostedFileBase OTHER_IMG3)
         {
             int intResult = -1; //결과값 0:정상, 나머지 오류
@@ -672,93 +630,130 @@ namespace AboutMe.Web.Admin.Controllers
         #region 상품 가격 일괄 수정
         public ActionResult ProductPriceUpdate(List<PRODUCT_PRICE_BATCH_MODEL> product_price_batch, ProductSearch_Entity Param)
         {
-            foreach (PRODUCT_PRICE_BATCH_MODEL product_price in product_price_batch)
-                {
-                    if (!string.IsNullOrEmpty(product_price.P_CODE))
-                    {
-                        _AdminProductService.UpdateAdminProductPrice(product_price);
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            intResult = _AdminProductService.UpdateAdminProductPrice(product_price_batch, Param);
 
-                        #region 상품가격 일괄 수정 로그 생성
-                        var serialised = JsonConvert.SerializeObject(product_price);
-                        serialised += JsonConvert.SerializeObject(Param);
-                        AdminLog adminlog = new AdminLog();
-                        adminlog.AdminLogSave(serialised, "관리자상품가격일괄수정");
-                        #endregion
-                    }
-                }
+            #region 상품가격 일괄 수정 로그 생성
+            var serialised = "트랜잭션 결과값 intResult :" + intResult;
+            serialised += JsonConvert.SerializeObject(product_price_batch);
+            serialised += JsonConvert.SerializeObject(Param);
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(serialised, "관리자상품가격_일괄수정");
+            #endregion
+
+            if (intResult != 0)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('상품 가격 일괄수정이 취소되었습니다.');history.go(-1);</script>");
+            }
+            else
+            {
                 RouteValueDictionary param = ConvertRouteValue(Param);
-                return RedirectToAction("ProductPriceIndex", Param);
+                return RedirectToAction("ProductPriceIndex", param);
+            }
+
+            //foreach (PRODUCT_PRICE_BATCH_MODEL product_price in product_price_batch)
+            //    {
+            //        if (!string.IsNullOrEmpty(product_price.P_CODE))
+            //        {
+            //            _AdminProductService.UpdateAdminProductPrice(product_price);
+
+            //            #region 상품가격 일괄 수정 로그 생성
+            //            var serialised = JsonConvert.SerializeObject(product_price);
+            //            serialised += JsonConvert.SerializeObject(Param);
+            //            AdminLog adminlog = new AdminLog();
+            //            adminlog.AdminLogSave(serialised, "관리자상품가격일괄수정");
+            //            #endregion
+            //        }
+            //    }
+            //    RouteValueDictionary param = ConvertRouteValue(Param);
+            //    return RedirectToAction("ProductPriceIndex", Param);
         }
         #endregion
 
 
-        #region 상품 정보 일괄 수정
+        #region 상품 정보 일괄 수정 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ProductBatchUpdate(List<PRODUCT_INFO_BATCH_MODEL> product_info_batch, ProductSearch_Entity Param)
         {
             Param.iconYn = string.IsNullOrEmpty(Request.Form["iconYn"]) ? "" : Request.Form["iconYn"];
             Param.BatchIconYn = string.IsNullOrEmpty(Request.Form["BatchIconYn"]) ? "" : Request.Form["BatchIconYn"].Replace(",", "");
-            this.ViewBag.IconBatchChk = string.IsNullOrEmpty(Request.Form["IconBatchChk"]) ? "" : Request.Form["IconBatchChk"];
-            foreach (PRODUCT_INFO_BATCH_MODEL product_info in product_info_batch)
+            Param.IconBatchChk = string.IsNullOrEmpty(Request.Form["IconBatchChk"]) ? "" : Request.Form["IconBatchChk"];
+
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            intResult = _AdminProductService.UpdateAdminProductBatch(product_info_batch, Param);
+
+            #region 상품정보 일괄 수정 로그 생성
+            var serialised = "트랜잭션 결과값 intResult :" + intResult;
+            serialised += JsonConvert.SerializeObject(product_info_batch);
+            serialised += JsonConvert.SerializeObject(Param);
+            AdminLog adminlog = new AdminLog();
+            adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
+            #endregion
+
+            if (intResult != 0)
             {
-                if (!string.IsNullOrEmpty(product_info.P_CODE))
-                {
-                    product_info.ICON_YN = Param.BatchIconYn;
-                    product_info.ICON_BATCH_CHK = this.ViewBag.IconBatchChk;
-
-                    product_info.DISPLAY_YN = string.IsNullOrEmpty(product_info.DISPLAY_YN) ? "N" : product_info.DISPLAY_YN ;
-                    product_info.P_OUTLET_YN = string.IsNullOrEmpty(product_info.P_OUTLET_YN) ? "N" : product_info.P_OUTLET_YN;
-                    product_info.SOLDOUT_YN = string.IsNullOrEmpty(product_info.SOLDOUT_YN) ? "N" : product_info.SOLDOUT_YN;
-
-                    _AdminProductService.UpdateAdminProductBatch(product_info);
-
-                    #region 상품가격 일괄 수정 로그 생성
-                    var serialised = JsonConvert.SerializeObject(product_info);
-                    serialised += JsonConvert.SerializeObject(Param);
-                    AdminLog adminlog = new AdminLog();
-                    adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
-                    #endregion
-                }
+                return Content("<script language='javascript' type='text/javascript'>alert('상품정보 일괄수정이 취소되었습니다.');history.go(-1);</script>");
+            }
+            else
+            {
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("ProductIndex", param);
             }
 
-                RouteValueDictionary param = ConvertRouteValue(Param);
-                return RedirectToAction("ProductIndex", Param);
+            #region 트랜잭션 전 기존소스 
+            //foreach (PRODUCT_INFO_BATCH_MODEL product_info in product_info_batch)
+            //{
+            //    if (!string.IsNullOrEmpty(product_info.P_CODE))
+            //    {
+            //        product_info.ICON_YN = Param.BatchIconYn;
+            //        product_info.ICON_BATCH_CHK = Param.IconBatchChk;
+
+            //        product_info.DISPLAY_YN = string.IsNullOrEmpty(product_info.DISPLAY_YN) ? "N" : product_info.DISPLAY_YN ;
+            //        product_info.P_OUTLET_YN = string.IsNullOrEmpty(product_info.P_OUTLET_YN) ? "N" : product_info.P_OUTLET_YN;
+            //        product_info.SOLDOUT_YN = string.IsNullOrEmpty(product_info.SOLDOUT_YN) ? "N" : product_info.SOLDOUT_YN;
+
+            //        _AdminProductService.UpdateAdminProductBatch(product_info);
+
+            //        #region 상품가격 일괄 수정 로그 생성
+            //        var serialised = JsonConvert.SerializeObject(product_info);
+            //        serialised += JsonConvert.SerializeObject(Param);
+            //        AdminLog adminlog = new AdminLog();
+            //        adminlog.AdminLogSave(serialised, "관리자상품정보_일괄수정");
+            //        #endregion
+            //    }
+            //}
+
+                //RouteValueDictionary param = ConvertRouteValue(Param);
+            //return RedirectToAction("ProductIndex", Param);
+            #endregion
         }
         #endregion
 
         #region 상품전시 순서 바꾸기
-        public ActionResult display_re_sort(int IDX, int RE_SORT, string CLICKCHK, ProductSearch_Entity productSearch_Entity)
+        public ActionResult display_re_sort(int IDX, int RE_SORT, string CLICKCHK, ProductSearch_Entity Param)
         {
-            this.ViewBag.PageSize = productSearch_Entity.PageSize;
-            this.ViewBag.SearchKey = productSearch_Entity.SearchKey;
-            this.ViewBag.SearchKeyword = productSearch_Entity.SearchKeyword;
-            this.ViewBag.cateCode = productSearch_Entity.cateCode;
-            this.ViewBag.iconYn = productSearch_Entity.iconYn;
-            this.ViewBag.searchDisplayY = productSearch_Entity.searchDisplayY;
-            this.ViewBag.searchDisplayN = productSearch_Entity.searchDisplayN;
-            this.ViewBag.soldoutYn = productSearch_Entity.soldoutYn;
-            this.ViewBag.POutletYn = productSearch_Entity.POutletYn;
+            int intResult = -1; //결과값 0:정상, 나머지 오류
+            intResult = _AdminProductService.UpdateAdminProductReSort(IDX, RE_SORT, CLICKCHK, Param.cateCode);
 
-
-             try
-            {
-                _AdminProductService.UpdateAdminProductReSort(IDX, RE_SORT, CLICKCHK);
-
-                #region 로그 생성
-                var serialised = "idx:"+IDX.ToString();
+            #region 로그 생성
+                var serialised = "결과값 intResult :" + intResult;
+                serialised += "idx:"+IDX.ToString();
                 serialised += "RE_SORT:" + RE_SORT.ToString();
                 serialised += "CLICKCHK:" + CLICKCHK.ToString();
-                serialised += JsonConvert.SerializeObject(productSearch_Entity);
+                serialised += JsonConvert.SerializeObject(Param);
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자_상품전시_순서_바꾸기");
                 #endregion
-            return RedirectToAction("ProductIndex");
-            }
-             catch
-             {
-                 return RedirectToAction("ProductIndex");
-             }
 
+            if (intResult != 0)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('상품순서가 변경되지 않았습니다.');history.go(-1);</script>");
+            }
+            else
+            {
+                RouteValueDictionary param = ConvertRouteValue(Param);
+                return RedirectToAction("ProductIndex", Param); ;
+            }
         }
         #endregion
 
@@ -979,6 +974,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GiftInsert(AdminGiftModel admin_gift_model, HttpPostedFileBase GIFT_IMG)
         {
+            int intResult = -1; //결과값 0:정상, 나머지 오류
             if (ModelState.IsValid)
             {
                 string Product_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
@@ -995,20 +991,29 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        admin_gift_model.GIFT_IMG = "";
+                        return Content("<script language='javascript' type='text/javascript'>alert('이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult.ErrorMessage + "');history.go(-1);</script>");;
                     }
                 }
                 #endregion
 
-                _AdminProductService.InsertAdminGift(admin_gift_model);
+                intResult = _AdminProductService.InsertAdminGift(admin_gift_model);
 
                 #region 사은품 등록 로그 생성
-                var serialised = JsonConvert.SerializeObject(admin_gift_model); //entity 클래스 값을 json 포맷으로 파싱
+                var serialised = "결과값 intResult :" + intResult;
+                serialised += JsonConvert.SerializeObject(admin_gift_model); //entity 클래스 값을 json 포맷으로 파싱
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자사은품등록");
                 #endregion
 
-                return RedirectToAction("GiftIndex", new { SearchCol = "" });
+                if (intResult != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('등록 되지 않았습니다.');history.go(-1);</script>");
+                }
+                else
+                {
+                    return RedirectToAction("GiftIndex", new { SearchCol = "" });
+                }
+
             }
             else
             {
@@ -1033,6 +1038,7 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult GiftUpdate(SP_TB_FREE_GIFT_INFO_Param Param, AdminGiftModel admin_gift_model, HttpPostedFileBase GIFT_IMG)
         {
 
+            int intResult = -1; //결과값 0:정상, 나머지 오류
             if (ModelState.IsValid)
             {
                 string Gift_path = AboutMe.Common.Helper.Config.GetConfigValue("GiftPhotoPath");
@@ -1048,7 +1054,7 @@ namespace AboutMe.Web.Admin.Controllers
                     }
                     else
                     {
-                        admin_gift_model.GIFT_IMG = admin_gift_model.OLD_GIFT_IMG;
+                        return Content("<script language='javascript' type='text/javascript'>alert('이미지가 업로드 되지 않았습니다. 에러메시지:" + imageResult.ErrorMessage + "');history.go(-1);</script>"); ;
                     }
                 }
                 else
@@ -1056,17 +1062,28 @@ namespace AboutMe.Web.Admin.Controllers
                     admin_gift_model.GIFT_IMG = admin_gift_model.OLD_GIFT_IMG;
                 }
                 #endregion
-                _AdminProductService.UpdateAdminGift(admin_gift_model);
+
+                intResult = _AdminProductService.UpdateAdminGift(admin_gift_model);
          
                 #region 사은품 수정 로그 생성
-                var serialised = JsonConvert.SerializeObject(admin_gift_model);
+                var serialised = "결과값 intResult :" + intResult;
+                serialised += JsonConvert.SerializeObject(admin_gift_model);
                 serialised += JsonConvert.SerializeObject(Param);
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자사은품수정");
                 #endregion
 
-                RouteValueDictionary param = ConvertRouteValue(Param);
-                return RedirectToAction("GiftIndex", param);
+
+                if (intResult != 0)
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('사은품 정보가 변경되지 않았습니다.');history.go(-1);</script>");
+                }
+                else
+                {
+                    RouteValueDictionary param = ConvertRouteValue(Param);
+                    return RedirectToAction("GiftIndex", param);
+                }
+                
             }
             else
             {
