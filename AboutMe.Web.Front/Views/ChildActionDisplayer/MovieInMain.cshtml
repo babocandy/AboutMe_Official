@@ -4,32 +4,43 @@
     Layout = null;
     var myController = ViewContext.Controller as ChildActionDisplayerController;
 }
-<div class="mvarea_wrap">
-    <div class="mvarea">
-        <div class="movie">
-            <iframe width="810" height="410" src="@(Model.One.URL)?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+
+
+@if(!String.IsNullOrEmpty(Model.One.URL))
+{
+    <div class="mv_area">
+        <a href="#" class="btn_mv"><img src="/aboutCom/images/common/btn_mainmv.png" alt="영상보기" /></a>
+        <div class="lymv">
+            <span class="movie_close"><img src="/aboutCom/images/common/btn_movieclose.png" alt="영상닫기" /></span>
+            <div class="mvarea_wrap">
+                <div class="mvarea">
+                    <div class="movie">
+                        <iframe width="810" height="410" src="@(Model.One.URL)?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <p class="mv_subject">@Model.One.TITLE1</p>
+                    <span class="enroll_date"><strong>등록일</strong>@(Model.One.INS_DATE != null ? Model.One.INS_DATE.Value.ToString("yyyy.MM.dd") : "")</span>
+                    <!--<a href="#"><img src="/aboutCom/images/common/tmp_share.gif" alt="공유" /></a>-->
+                </div>
+                <div class="relative">
+                    <img src="/aboutCom/images/common/img_aboutbeauty.gif" alt="About Beauty" />
+                    <p class="tit"><img src="/aboutCom/images/common/txt_raltive.gif" alt="" /></p>
+                    <ul>
+                        @foreach (var item in Model.List)
+                        {
+                            <li>
+                                <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})">
+                                    <span class="photo"><img src="@string.Format("{0}R64_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></span>
+                                    <span class="detail">
+                                        <em class="title">@item.P_NAME</em>
+                                        <em class="stit">@item.P_SUB_TITLE</em>
+                                        <em class="price"><strong>@string.Format("{0:#,##0}", item.SELLING_PRICE)</strong>원</em>
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
         </div>
-        <p class="mv_subject">@Model.One.TITLE1</p>
-        <span class="enroll_date"><strong>등록일</strong>@(Model.One.INS_DATE != null ? Model.One.INS_DATE.Value.ToString("yyyy.MM.dd") : "")</span>
-        <!--<a href="#"><img src="/aboutCom/images/common/tmp_share.gif" alt="공유" /></a>-->
     </div>
-    <div class="relative">
-        <img src="/aboutCom/images/common/img_aboutbeauty.gif" alt="About Beauty" />
-        <p class="tit"><img src="/aboutCom/images/common/txt_raltive.gif" alt="" /></p>
-        <ul>
-            @foreach (var item in Model.List)
-            {
-                <li>
-                    <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})">
-                        <span class="photo"><img src="@string.Format("{0}R64_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></span>
-                        <span class="detail">
-                            <em class="title">@item.P_NAME</em>
-                            <em class="stit">@item.P_SUB_TITLE</em>
-                            <em class="price"><strong>@string.Format("{0:#,##0}", item.SELLING_PRICE)</strong>원</em>
-                        </span>
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>
-</div>
+}

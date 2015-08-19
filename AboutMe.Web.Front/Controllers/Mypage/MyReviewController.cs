@@ -42,7 +42,10 @@ namespace AboutMe.Web.Front.Controllers
             var readyList = _ReviewService.GetMyReviewReadyList(_user_profile.M_ID);
             foreach (var item in readyList)
             {
-                var tp = new Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>(_service_pdt.ViewProduct(item.P_CODE), item);
+                var pdt = _service_pdt.ViewProduct(item.P_CODE);
+                if (pdt == null) pdt = new SP_PRODUCT_DETAIL_VIEW_Result();
+
+                var tp = new Tuple<SP_PRODUCT_DETAIL_VIEW_Result, SP_REVIEW_PRODUCT_READY_SEL_Result>(pdt, item);
 
                 list.Add(tp);
             }
