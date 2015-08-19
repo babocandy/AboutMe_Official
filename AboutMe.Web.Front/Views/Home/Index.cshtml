@@ -27,58 +27,8 @@
                     <a href="#" class="btn_mv"><img src="/aboutCom/images/common/btn_mainmv.png" alt="영상보기" /></a>
                     <div class="lymv">
                         <span class="movie_close"><img src="/aboutCom/images/common/btn_movieclose.png" alt="영상닫기" /></span>
-                        <div class="mvarea_wrap">
-                            <div class="mvarea">
-                                <div class="movie">
-                                    <iframe width="810" height="410" src="https://www.youtube.com/embed/x9-TIy7WPQI?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                                <p class="mv_subject">ABOUT BEAUTY에서 추천하는 수분 끝판왕 크림!</p>
-                                <span class="enroll_date"><strong>등록</strong>2015. 04. 28</span>
-                                <select class="selectstyleb" title="">
-                                    <option selected="selected">피부속까지 건강하게! 이너뷰티의 모든것</option>
-                                    <option>피부속까지 건강하게! 이너뷰티의 모든것2</option>
-                                    <option>피부속까지 건강하게! 이너뷰티의 모든것3</option>
-                                </select>
-                                <a href="#"><img src="/aboutCom/images/common/tmp_share.gif" alt="공유" /></a>
-                            </div>
-                            <div class="relative">
-                                <img src="/aboutCom/images/common/img_aboutbeauty.gif" alt="About Beauty" />
-                                <p class="tit"><img src="/aboutCom/images/common/txt_raltive.gif" alt="" /></p>
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <span class="photo"><img src="/aboutCom/images/sample/thumb_96.gif" alt="" /></span>
-                                            <span class="detail">
-                                                <em class="title">퓨어 화이트 토너</em>
-                                                <em class="stit">미백기능성</em>
-                                                <em class="price"><strong>25,000</strong>원</em>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="photo"><img src="/aboutCom/images/sample/thumb_96.gif" alt="" /></span>
-                                            <span class="detail">
-                                                <em class="title">퓨어 화이트 토너</em>
-                                                <em class="stit">미백기능성</em>
-                                                <em class="price"><strong>25,000</strong>원</em>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="photo"><img src="/aboutCom/images/sample/thumb_96.gif" alt="" /></span>
-                                            <span class="detail">
-                                                <em class="title">퓨어 화이트 토너</em>
-                                                <em class="stit">미백기능성</em>
-                                                <em class="price"><strong>25,000</strong>원</em>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
+                        @(Html.Action("MovieInMain", "ChildActionDisplayer"))
                     </div>
                 </div>
                 <!--//영상-->
@@ -155,25 +105,9 @@
                     @(Html.Action("MiddleBannerInMain", "ChildActionDisplayer"))
                 </div>
                 <!--//기획배너-->
-                <!--날씨-->
-                <div class="weather">
-                    <!--
-                        날씨타입 총 8개
-                        맑음 : weathertype1,
-                    -->
-                    <div class="weathertype1">
-                        <a href="#">
-                            <span class="tit"><img src="/aboutCom/images/common/tit_weather.png" alt="weather pick" /></span>
-                            <span class="temperature">30℃</span>
-                            <span class="txt">깜빡 잊은 선크림<br />순식간에 얼굴 탈 수 있어요</span>
-                            <span class="ico"><img src="/aboutCom/images/common/weather_arrow.png" alt="" /></span>
-                        </a>
-                    </div>
-                    <div class="weather_detail">
-                        
-                    </div>
-                </div>
-                <!--//날씨-->
+                <!--중간 사이드 배너-->
+                @(Html.Action("SideBannerInMain", "ChildActionDisplayer"))
+                <!--//중간 사이드 배너-->
             </div>
             <!--//기획배너,날씨-->
 

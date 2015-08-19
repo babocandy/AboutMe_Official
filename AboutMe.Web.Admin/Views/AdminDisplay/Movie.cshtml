@@ -1,0 +1,128 @@
+﻿@model AboutMe.Domain.Entity.AdminDisplay.AdminDisplayMovieViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@using AboutMe.Web.Admin.Controllers
+@{
+    ViewBag.Title = "Point";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myctrl = ViewContext.Controller as AdminDisplayController;
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+    @{Html.RenderPartial("~/Views/AdminDisplay/_Display.cshtml");}
+}
+
+
+@section Body{
+
+		<!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/index.asp">HOME</a> &gt; <a href="#">전시관리</a> &gt; <strong>동영상관리</strong>
+    </div>
+    <!--//path-->
+
+    <div class="panel">
+        <h3 class="sub-header">동영상관리</h3>
+    </div>
+
+    <div class="panel">
+        <h4>영상</h4>
+@using (Html.BeginForm("saveLinkTypeDisplayer", "AdminDisplay", FormMethod.Post, new { name="frmMovie" }))
+{
+    <input type="hidden" name="IDX" value="@Model.Movie.IDX" />
+    <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_MOVIE_LINK" />
+
+        <table class="table table_row">
+            <colgroup><col width="10%" /><col width="*" /><col width="10%" /></colgroup>
+            <tbody>
+                <tr>
+                    <th>타이틀</th>
+                    <td><input type="text" class="input-sm" style="width:100%" name="TITLE1" value="@Model.Movie.TITLE1"></td>
+                    <td rowspan="2">
+                    <a href="#" class="btn btn-default large btn_search" style="height:80px; line-height:60px;" onclick="saveLinkTypeDisplayer(document.frmMovie); return false;">저장</a></td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td><input type="text" class="input-sm" style="width:100%" name="URL" value="@Model.Movie.URL"></td>
+                </tr>
+            </tbody>
+        </table>
+}
+    </div>
+
+    <div class="panel">
+        <h4>상품전시</h4>
+        <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+        <table class="table table_col">
+            <colgroup><col width="25%"><col width="25%"><col width="25%"><col width="25%"></colgroup>
+            <tbody>
+                <tr>
+                    <td class="brnone">
+@using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+{
+                        <input type="hidden" name="IDX" value="@Model.Product10.IDX" />
+                        <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_MOVIE_PRODUCT" />
+                        <input type="hidden" name="SUB_KIND" value="@DisplayerCode.SUB_KIND_10" />
+                        <input type="hidden" name="SEQ" value="1" />
+                        
+                        if (Model.Product10.P_MAIN_IMG != null)
+	                    {
+                            <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.Product10.P_MAIN_IMG)" alt="" /><br />
+	                    }
+
+                        <p class="tac mt5">@Model.Product10.P_NAME</p><br /><br />
+                        <span> 상품코드 :</span> <input type="text" class="input-sm mt5" style="width:80%" name="P_CODE" value="@Model.Product10.P_CODE"/>
+                        <a href="#" class="btn btn-default small mt10" onclick="saveProductTypeDisplayer(this.parentElement); return false;">저장</a>
+}
+                    </td>
+                    <td>
+@using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+{
+    <input type="hidden" name="IDX" value="@Model.Product11.IDX" />
+    <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_MOVIE_PRODUCT" />
+    <input type="hidden" name="SUB_KIND" value="@DisplayerCode.SUB_KIND_10" />
+    <input type="hidden" name="SEQ" value="2" />
+
+    if (Model.Product11.P_MAIN_IMG != null)
+    {
+        <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.Product11.P_MAIN_IMG)" alt="" /><br />
+    }
+
+    <p class="tac mt5">@Model.Product11.P_NAME</p><br /><br />
+    <span> 상품코드 :</span> <input type="text" class="input-sm mt5" style="width:80%" name="P_CODE" value="@Model.Product11.P_CODE" />
+    <a href="#" class="btn btn-default small mt10" onclick="saveProductTypeDisplayer(this.parentElement); return false;">저장</a>
+}
+                    </td>
+                    <td>
+@using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+{
+    <input type="hidden" name="IDX" value="@Model.Product12.IDX" />
+    <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_MOVIE_PRODUCT" />
+    <input type="hidden" name="SUB_KIND" value="@DisplayerCode.SUB_KIND_10" />
+    <input type="hidden" name="SEQ" value="3" />
+
+    if (Model.Product12.P_MAIN_IMG != null)
+    {
+        <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.Product12.P_MAIN_IMG)" alt="" /><br />
+    }
+
+    <p class="tac mt5">@Model.Product12.P_NAME</p><br /><br />
+    <span> 상품코드 :</span> <input type="text" class="input-sm mt5" style="width:80%" name="P_CODE" value="@Model.Product12.P_CODE" />
+    <a href="#" class="btn btn-default small mt10" onclick="saveProductTypeDisplayer(this.parentElement); return false;">저장</a>
+}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--//content-->
+}

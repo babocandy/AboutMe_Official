@@ -103,6 +103,10 @@ namespace AboutMe.Web.Mobile.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginProc(string ID = "", string PW = "", string RedirectUrl = "", string OrderList = "", string IS_SAVE_ID = "N", string IS_SAVE_PW = "N")
         {
+            //로그인후 : 로그인,회원가입,id/PW찾기 페이지 이동 방지 
+            if (RedirectUrl.Contains("/MemberShip/"))
+                RedirectUrl = "";
+
             //string HTTP_DOMAIN = Config.GetConfigValue("HTTP_DOMAIN");
             string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
             string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr

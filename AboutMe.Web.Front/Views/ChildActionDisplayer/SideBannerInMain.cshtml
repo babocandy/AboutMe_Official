@@ -5,4 +5,6 @@
 
     var myController = ViewContext.Controller as ChildActionDisplayerController;
 }
-<a href="@Model.One.URL"><img src="@(myController._img_path_display)@(Model.One.IMG)" alt="" /></a>
+<div class="weather">
+    <a href="@Model.One.URL"><img src="@string.Format("{0}{1}", myController._img_path_display, Model.One.IMG)" alt=""></a>    
+</div>
