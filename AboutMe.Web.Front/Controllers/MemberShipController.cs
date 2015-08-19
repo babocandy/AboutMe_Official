@@ -721,6 +721,7 @@ namespace AboutMe.Web.Front.Controllers
                 log_memo = log_memo + "|M_GBN:" + M_GBN;
                 log_memo = log_memo + "|M_STAFF_COMPANY:" + M_STAFF_COMPANY;
                 log_memo = log_memo + "|M_STAFF_ID:" + M_STAFF_ID;
+                log_memo = log_memo + "|M_DEVICE_GBN:W" ;
                 userlog.UserLogSave(log_memo, log_comment);
 
                 return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
@@ -732,7 +733,7 @@ namespace AboutMe.Web.Front.Controllers
             //DB저장: 회원 신규가입 -----------------------
             ObjretDIC = _MemberService.SetMemberRegister(M_ID, M_NAME, M_PWD_SHA256_HASH, M_GRADE, M_SEX, M_BIRTHDAY, M_MOBILE, M_PHONE, M_EMAIL, M_ZIPCODE, M_ADDR1, M_ADDR2, M_ISSMS, M_ISEMAIL, M_ISDM
             , M_JOIN_MODE, M_DI, M_AGREE, M_AGREE2, M_SKIN_TROUBLE_CD
-            , M_GBN, M_STAFF_COMPANY, M_STAFF_ID);
+            , M_GBN, M_STAFF_COMPANY, M_STAFF_ID,"W"); //W: PC가입
             if (ObjretDIC.ERR_CODE != "0")
             {
                 strERR_CODE = ObjretDIC.ERR_CODE;

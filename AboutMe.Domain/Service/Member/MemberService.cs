@@ -184,7 +184,7 @@ namespace AboutMe.Domain.Service.Member
         //리턴:ReturnDic
         public ReturnDic SetMemberRegister(string m_ID = "", string m_NAME = "", string m_PWD = "", string m_GRADE = "", string m_SEX = "", string m_BIRTHDAY = "", string m_MOBILE = "", string m_PHONE = "", string m_EMAIL = "", string m_ZIPCODE = "", string m_ADDR1 = "", string m_ADDR2 = "", string m_ISSMS = "", string m_ISEMAIL = "", string m_ISDM = ""
             , string m_JOIN_MODE = "", string m_DI = "", string m_AGREE = "", string m_AGREE2 = "", string m_SKIN_TROUBLE_CD = ""
-            , string m_GBN = "", string m_STAFF_COMPANY = "", string m_STAFF_ID = "")
+            , string m_GBN = "", string m_STAFF_COMPANY = "", string m_STAFF_ID = "",string m_DEVICE_GBN="W")
         {
 
             int nERR_CODE = 0; //에러 없음
@@ -195,7 +195,7 @@ namespace AboutMe.Domain.Service.Member
                 ObjectParameter objOutParam = new ObjectParameter("ERR_CODE", typeof(Int32));//sp의 output parameter변수명을 동일하게 사용한다.
                 int sp_ret = MemberContext.SP_MEMBER_INS(m_ID, m_NAME, m_PWD, m_GRADE, m_SEX, m_BIRTHDAY, m_MOBILE, m_PHONE, m_EMAIL, m_ZIPCODE, m_ADDR1, m_ADDR2, m_ISSMS, m_ISEMAIL, m_ISDM
                                                                 , m_JOIN_MODE, m_DI, m_AGREE, m_AGREE2, m_SKIN_TROUBLE_CD
-                                                                , m_GBN, m_STAFF_COMPANY, m_STAFF_ID
+                                                                , m_GBN, m_STAFF_COMPANY, m_STAFF_ID, m_DEVICE_GBN
                                                                 , objOutParam);
                 nERR_CODE = (int)objOutParam.Value;
 
