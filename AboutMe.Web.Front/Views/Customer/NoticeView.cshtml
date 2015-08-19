@@ -1,0 +1,40 @@
+﻿@model AboutMe.Domain.Entity.Notice.NoticeUserView
+@{
+    ViewBag.Title = "공지사항 - ABOUT ME";
+    ViewBag.TopClass = "notice";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <!-- cs_top -->
+        <div class="cs_top">
+            @{
+                ViewBag.MenuTitle = "공지사항";
+                ViewBag.MenuGbn = "notice";
+                Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
+            }
+        </div>
+        <!-- //cs_top -->
+        <!-- notice_view -->
+        <div class="board_view mt40">
+            <p class="subject">
+                <span class="num">@Model.Notice.IDX</span>
+                <span class="tit">@Model.Notice.TITLE</span>
+                <span class="date">@Model.Notice.REG_DATE.ToString().Substring(0, 10)</span>
+            </p>
+            <div class="txt">
+                @(new HtmlString(HttpUtility.HtmlDecode(Model.Notice.CONTENTS)))
+            </div>
+        </div>
+        @Html.ActionLink("목록", "Notice", Model.searchOption, new { @class = "btn_golist btn_brown_w96h38" })
+        
+        <!-- //notice_view -->
+    </div>
+</div>
+<!--//container-->

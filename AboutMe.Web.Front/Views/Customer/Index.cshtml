@@ -1,0 +1,115 @@
+﻿@model AboutMe.Domain.Entity.Notice.CustomerMainModel
+@{
+    ViewBag.Title = "고객센터 - ABOUT ME";
+    ViewBag.TopClass = "cscenter";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+    <script language="javascript">
+
+        function goFaqSearch() {
+            var f = document.frm;
+            f.submit();
+        }
+
+    </script>
+}
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <!-- cs_top -->
+        <div class="cs_top">
+            <!-- h2_area -->
+            @{
+                ViewBag.MenuTitle = "고객센터";
+                ViewBag.MenuGbn = "main";
+                Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
+            }
+        </div>
+        <!-- //cs_top -->
+        <!-- FAQ -->
+        <div class="contypea faqwrap">
+            <h3>FAQ</h3>
+            <!-- FAQ Search bar -->
+            <div class="faq_search">
+                @using (Html.BeginForm("", "Customer", FormMethod.Get, new { id = "frm", name = "frm" }))
+                {
+                    <input type="hidden" name="Page" value="1" />
+                    <input type="hidden" name="CategorySearch" value="false" />
+                    <input type="hidden" name="SearchCol" value="ALL" />
+                    <fieldset>
+                        <legend>FAQ 검색어 입력</legend>
+                        <h3 class="ti">FAQ</h3>
+                        <div class="searchin mt15">
+                            <input type="text" class="ipttypec" style="width:480px" title="검색어 입력" name="SearchKeyword" value="@Model.Faq.searchOption.SearchKeyword"/><a href="#none" class="btn_brown_w96h38 ml5" onclick="goFaqSearch()">검색</a>
+                        </div>
+                        <span class="info"><i></i>찾으시는 FAQ 답변이 없을 경우 1:1문의를 이용해 주세요.</span>
+                    </fieldset>
+                }
+            </div>
+            <!-- //FAQ Search bar -->
+            <!-- FAQ List -->
+            <div class="faq_list accordion mt40">
+                <ul>
+                @foreach(var item in Model.Faq.faqList)
+                {
+                    <li class="accordcont">
+                        <div class="accordsubject">
+                            <a href="javascript:void(0)">
+                                <span class="category">@item.CATEGORY</span>
+                                <span class="title">@(new HtmlString(HttpUtility.HtmlDecode(item.QUESTION)))</span>
+                                <i>열기</i>
+                            </a>
+                        </div>
+                        <div class="accordtxt">
+                            <span class="desc">
+                                @(new HtmlString(HttpUtility.HtmlDecode(item.ANSWER)))
+                            </span>
+                        </div>
+                    </li>
+                }
+                </ul>
+            </div>
+            <!-- //FAQ List -->
+            @{
+                string Querystr = string.Format("CategorySearch={0}&SearchCol={1}&SearchKeyword={2}", Model.Faq.searchOption.CategorySearch, Model.Faq.searchOption.SearchCol, Model.Faq.searchOption.SearchKeyword);
+
+                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Faq.faqCnt, RecordPerPage = Model.Faq.searchOption.PageSize, PagePerBlock = 10, CurrentPage = Model.Faq.searchOption.Page, QueryStr = @Querystr });
+            }
+        </div>
+        <!-- //FAQ -->
+        <div class="row mt20">
+            <!-- notice -->
+            <div class="notice">
+                <h3><img src="/aboutCom/images/customer/h3_notice.gif" alt="공지사항" /></h3>
+                <a href="/Customer/Notice" class="more">더보기<i></i></a>
+                <div class="con">
+                    <ul>
+                        @foreach (var item in Model.Notice.NoticeList)
+                        {
+                            string linkStr = string.Format("/Customer/NoticeView?IDX={0}&Page={1}&SearchCol={2}&SearchKeyword={3}", item.IDX, Model.Notice.searchOption.Page, Model.Notice.searchOption.SearchCol, Model.Notice.searchOption.SearchKeyword);
+                            
+                            <li><a href="@linkStr">@item.TITLE</a><span>@item.REG_DATE.ToString().Substring(0, 10)</span></li>
+                        }                        
+                    </ul>
+                </div>
+            </div>
+            <!-- //notice -->
+            <!-- contact -->
+            <div class="contact">
+                <h3>고객센터 안내</h3>
+                <img src="/aboutCom/images/customer/contact.jpg" alt="고객센터 080.740.7983 평일 : 오전 10시 ~ 12시, 오후 2시 ~ 5시 토,일 공휴일 : 휴무" />
+            </div>
+            <!-- //contact -->
+            <!-- storeinfo -->
+            <div class="storeinfo">
+                <h3>매장 안내</h3>
+                <a href="/Customer/Store"><img src="/aboutCom/images/customer/storeinfo.jpg" alt="매장안내 ABOUT ME store 가까운 매장에서 직접 어바웃미를 만나보세요" /></a>
+            </div>
+            <!-- //storeinfo -->
+        </div>
+    </div>
+</div>
+<!--//container-->

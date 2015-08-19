@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AboutMe.Domain.Entity.Order.SP_MYPAGE_MAIN_STATUS_Result
+@{
     ViewBag.Title = "Mypage";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
@@ -150,25 +151,31 @@
                     -->
                     <div class="info @ViewBag.M_GRADE_NAME.ToLower()">
                         @ViewBag.M_NAME 님은<br /><span class="grade">@ViewBag.M_GRADE_NAME 클래스</span>입니다.
-                        <a class="benefitview" href="#">회원혜택 보기<i></i></a>
+                        <a class="benefitview" href="/Customer/Benefit">회원혜택 보기<i></i></a>
                     </div>
                     <div class="userbenefit">
                         <ul>
-                            <li class="downcoupon">
-                                <span class="ico"></span>
-                                <span class="num">@ViewBag.DownloadableCouponCnt</span>
-                                <span class="tit">다운로드 가능 쿠폰</span>
-                            </li>
-                            <li class="havecoupon">
-                                <span class="ico"></span>
-                                <span class="num">@ViewBag.AvailableCouponCnt</span>
-                                <span class="tit">보유 쿠폰</span>
-                            </li>
-                            <li class="downpoint">
-                                <span class="ico"></span>
-                                <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = @ViewBag.M_ID}))</span>
-                                <span class="tit">포인트</span>
-                            </li>
+                            <a href="/MyPage/MyCoupon">
+                                <li class="downcoupon">
+                                    <span class="ico"></span>
+                                    <span class="num">@ViewBag.DownloadableCouponCnt</span>
+                                    <span class="tit">다운로드 가능 쿠폰</span>
+                                </li>
+                            </a>
+                            <a href="/MyPage/MyCoupon/Availablelist">
+                                <li class="havecoupon">
+                                    <span class="ico"></span>
+                                    <span class="num">@ViewBag.AvailableCouponCnt</span>
+                                    <span class="tit">보유 쿠폰</span>
+                                </li>
+                            </a>
+                            <a href="/MyPage/MyPoint">
+                                <li class="downpoint">
+                                    <span class="ico"></span>
+                                    <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = @ViewBag.M_ID }))</span>
+                                    <span class="tit">포인트</span>
+                                </li>
+                            </a>
                         </ul>
                     </div>
                 </div>
@@ -177,17 +184,17 @@
             <!--//mypage_top-->
             <!--배송현황-->
             <div class="contypea">
-                <h3><img src="/aboutCom/images/mypage/h3_delivery.gif" alt="배송현황" /></h3>
+                <h3><a href="/MyPage/MyOrder"><img src="/aboutCom/images/mypage/h3_delivery.gif" alt="배송현황" /></a></h3>
                 <div class="delivery">
                     <p class="delitxt">
-                        진행중인<br />주문/배송현황이<br /><span>02</span>건 입니다.
+                        진행중인<br />주문/배송현황이<br /><span>@Model.STATUS_ALL</span>건 입니다.
                     </p>
                     <ul class="delilist">
-                        <li class="status1"> <span class="num">0</span><span class="statustxt">입금대기</span></li>
-                        <li class="status2"><span class="num">2</span><span class="statustxt">결제완료</span></li>
-                        <li class="status3"><span class="num">2</span><span class="statustxt">상품준비중</span></li>
-                        <li class="status4"><span class="num">0</span><span class="statustxt">배송중</span></li>
-                        <li class="status5"><span class="num">0</span><span class="statustxt">배송완료</span></li>
+                        <li class="status1"> <span class="num">@Model.STATUS_10</span><span class="statustxt">입금대기</span></li>
+                        <li class="status2"><span class="num">@Model.STATUS_20</span><span class="statustxt">결제완료</span></li>
+                        <li class="status3"><span class="num">@Model.STATUS_30</span><span class="statustxt">상품준비중</span></li>
+                        <li class="status4"><span class="num">@Model.STATUS_40</span><span class="statustxt">배송중</span></li>
+                        <li class="status5"><span class="num">@Model.STATUS_50</span><span class="statustxt">배송완료</span></li>
                     </ul>
                 </div>
             </div>
@@ -196,7 +203,7 @@
             <div class="contypewrap fltype num3 mt20">
                 <!--나의 리뷰-->
                 <div class="contypea">
-                    <h3><img src="/aboutCom/images/mypage/h3_review.gif" alt="나의 리뷰" /></h3>
+                    <h3><a href="/MyPage/MyReview"><img src="/aboutCom/images/mypage/h3_review.gif" alt="나의 리뷰" /></a></h3>
                     <dl class="dltypea">
                         <dt>작성할 리뷰</dt>
                         <dd><strong>@(Html.Action("GetReadyToal", "MyReview", new { mid = @ViewBag.M_ID }))</strong>건</dd>
@@ -207,23 +214,23 @@
                 <!--//나의 리뷰-->
                 <!--1:1문의-->
                 <div class="contypea">
-                    <h3><img src="/aboutCom/images/mypage/h3_1_1qna.gif" alt="1:1 문의" /></h3>
+                    <h3><a href="/MyPage/Qna"><img src="/aboutCom/images/mypage/h3_1_1qna.gif" alt="1:1 문의" /></a></h3>
                     <dl class="dltypea">
                         <dt>진행중인 문의</dt>
-                        <dd><strong>3</strong>건</dd>
+                        <dd><strong>@Model.QNA_ING</strong>건</dd>
                         <dt>완료된 문의</dt>
-                        <dd><strong>13</strong>건</dd>
+                        <dd><strong>@Model.QNA_END</strong>건</dd>
                     </dl>
                 </div>
                 <!--//1:1문의-->
                 <!--교환/반품 신청-->
                 <div class="contypea">
-                    <h3><img src="/aboutCom/images/mypage/h3_return.gif" alt="교환/반품 신청" /></h3>
+                    <h3><a href="/MyPage/Recall"><img src="/aboutCom/images/mypage/h3_return.gif" alt="교환/반품 신청" /></a></h3>
                     <dl class="dltypea">
                         <dt>진행중인 신청</dt>
-                        <dd><strong>3</strong>건</dd>
+                        <dd><strong>@Model.RECALL_ING</strong>건</dd>
                         <dt>완료된 신청</dt>
-                        <dd><strong>13</strong>건</dd>
+                        <dd><strong>@Model.RECALL_END</strong>건</dd>
                     </dl>
                 </div>
                 <!--//교환/반품 신청-->
