@@ -1,10 +1,11 @@
 ﻿@model AboutMe.Domain.Entity.AdminDisplay.AdminDisplayMobileMainViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
-
+@using AboutMe.Web.Admin.Controllers
 @{
     ViewBag.Title = "Point";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myctrl = ViewContext.Controller as AdminDisplayController;
 }
 @section Left {
 
@@ -52,6 +53,10 @@
                         <td>
                             @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
+                                if (item.IMG != null)
+                                {
+                                    <img src="@string.Format("{0}{1}", myctrl._img_path_display, item.IMG)" alt="" style="width:500px"/>
+                                }
 
                                 <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                                 <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@item.URL">
@@ -108,7 +113,10 @@
                     <td>
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-
+                            if (Model.MobileTalkOnBeauty.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.MobileTalkOnBeauty.IMG)" alt="" style="width:500px" />
+                            }
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MobileTalkOnBeauty.URL">
                             <input type="hidden" name="IDX" value="@Model.MobileTalkOnBeauty.IDX" />
@@ -143,7 +151,10 @@
                     <td>
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-
+                            if (Model.MobileBest.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.MobileBest.IMG)" alt="" style="width:500px" />
+                            }
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.MobileBest.URL">
                             <input type="hidden" name="IDX" value="@Model.MobileBest.IDX" />

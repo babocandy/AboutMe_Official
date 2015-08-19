@@ -1,6 +1,7 @@
 ﻿@model AboutMe.Domain.Entity.AdminDisplay.AdminDisplayWebMainViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
+@using AboutMe.Web.Admin.Controllers
 
 
 @{
@@ -11,6 +12,7 @@
 @{
     ViewBag.Title = "Point";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myctrl = ViewContext.Controller as AdminDisplayController;
 }
 @section Left {
 
@@ -58,7 +60,10 @@
                         <td>
                             @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
-
+                                if (item.IMG != null)
+                                {
+                                    <img src="@string.Format("{0}{1}", myctrl._img_path_display, item.IMG)" alt="" style="width:500px"/>
+                                }
                                 <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                                 <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@item.URL">
                                 <input type="hidden" name="IDX" value="@item.IDX" />
@@ -80,6 +85,7 @@
                     <td>
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
+
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                              <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%">
                             <input type="hidden" name="IDX" value="" />
@@ -114,6 +120,10 @@
 
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
+                            if (Model.WebMiddleBanner.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.WebMiddleBanner.IMG)" alt="" style="width:500px" />
+                            }
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.WebMiddleBanner.URL">
                             <input type="hidden" name="IDX" value="@Model.WebMiddleBanner.IDX" />
@@ -140,7 +150,7 @@
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                                  
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay10.IMG<a href="#" class="btn btn-info small" onclick="removeOnlyImage(this.parentElement.parentElement); return false;">이미지삭제</a></p><br><br>
+                            <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.WebProductDisplay10.IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay10.IMG<a href="#" class="btn btn-info small" onclick="removeOnlyImage(this.parentElement.parentElement); return false;">이미지삭제</a></p><br><br>
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay10.URL">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay10.IDX" />
@@ -152,9 +162,9 @@
                         }
                     </td>
                     <td>
-                        @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
-                        {
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay11.P_NAME</p><br><br>
+                                                @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+                                                {
+                                                    <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.WebProductDisplay11.P_MAIN_IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay11.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay11.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay11.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />
@@ -164,9 +174,9 @@
                         }
                     </td>
                     <td>
-                        @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
-                        {
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay12.P_NAME</p><br><br>
+                                                @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+                                                {
+                                                    <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.WebProductDisplay12.P_MAIN_IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay12.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay12.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay12.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />
@@ -176,9 +186,9 @@
                         }
                     </td>
                     <td class="brnone">
-                        @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
-                        {
-                              <img src="@Model.WebProductDisplay13.P_MAIN_IMG" alt=""><br><p class="tac mt5">@Model.WebProductDisplay13.P_NAME</p><br><br>
+                                                @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+                                                {
+                                                    <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.WebProductDisplay13.P_MAIN_IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay13.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay13.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay13.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />
@@ -190,24 +200,24 @@
                 </tr>
                 <tr>
                     <td class="brnone">
-                        @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
+                                                                        @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                                        {
 
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay20.IMG<a href="#" class="btn btn-info small" onclick="removeOnlyImage(this.parentElement.parentElement); return false;">이미지삭제</a></p><br><br>
+                                                                            <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.WebProductDisplay20.IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay20.IMG<a href="#" class="btn btn-info small" onclick="removeOnlyImage(this.parentElement.parentElement); return false;">이미지삭제</a></p><br><br>
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay20.URL">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay20.IDX" />
                             <input type="hidden" name="IMG_NAME" value="@Model.WebProductDisplay20.IMG" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />
-                            <input type="hidden" name="SUB_KIND" value="20" />
+                            <input type="hidden" name="SUB_KIND" value="@DisplayerCode.SUB_KIND_20" />
                             <input type="hidden" name="SEQ" value="1" />
                             <a href="#" class="btn btn-default small mt10" onclick="saveImageTypeDisplayer(this.parentElement); return false;">저장</a>
-                        }
+                                                                        }
                     </td>
                     <td>
-                        @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
-                        {
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay21.P_NAME</p><br><br>
+                                                @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+                                                {
+                                                    <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.WebProductDisplay21.P_MAIN_IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay21.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay21.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay21.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />
@@ -219,7 +229,7 @@
                     <td>
                         @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
                         {
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay22.P_NAME</p><br><br>
+                            <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.WebProductDisplay22.P_MAIN_IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay22.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay22.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay22.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />
@@ -229,9 +239,9 @@
                         }
                     </td>
                     <td class="brnone">
-                        @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
-                        {
-                            <img src="" alt=""><br><p class="tac mt5">@Model.WebProductDisplay23.P_NAME</p><br><br>
+                                                @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+                                                {
+                                                    <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.WebProductDisplay23.P_MAIN_IMG)" alt=""><br><p class="tac mt5">@Model.WebProductDisplay23.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.WebProductDisplay23.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.WebProductDisplay23.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY" />

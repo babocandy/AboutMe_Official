@@ -39,6 +39,13 @@ namespace AboutMe.Domain.Service.Coupon
         //쿠폰 마스터 정보 가져오기 --PC 모바일 공통
         List<SP_COUPON_MASTER_INFO_SEL_Result> GetCouponMasterInfo(string M_ID, int IdxCouponNumber);
 
+        //사용완료,종료된 쿠폰 리스트 - PC,모바일 공통
+        List<SP_COUPON_ISSUED_DETAIL_SEL_Result> GetCouponClosedList(string M_ID, string UsableDevice, string SearchCol, string SearchKeyword, int Page, int PageSize);
+
+        //사용완료,종료된 쿠폰 리스트 COUNT - PC,모바일 공통
+        int GetCouponClosedListCnt(string M_ID, string UsableDevice, string SearchCol, string SearchKeyword);
+
+
         #endregion
 
 

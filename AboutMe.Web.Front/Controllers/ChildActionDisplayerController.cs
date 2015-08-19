@@ -87,7 +87,7 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult DisplayProductHealthInMain()
         {
             ProductDisplayMainViewModel model = new ProductDisplayMainViewModel();
-            model.Header = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_10, 1));
+            model.Header = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_20, 1));
 
             var p = _service.GetListDisplay(DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, DisplayerCode.SUB_KIND_20, 2);
             if (p.Count > 0)
@@ -153,7 +153,11 @@ namespace AboutMe.Web.Front.Controllers
             List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
             foreach (var item in model.List)
             {
-                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                if (_service_pdt.ViewProduct(item.P_CODE) != null)
+                {
+                    plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                }
+                
             }
 
             model.PdtList = plist;

@@ -1,9 +1,10 @@
 ﻿@model AboutMe.Domain.Entity.AdminDisplay.AdminDisplayGBNViewModel
 @using AboutMe.Common.Data
-
+@using AboutMe.Web.Admin.Controllers
 @{
     ViewBag.Title = "Point";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myctrl = ViewContext.Controller as AdminDisplayController;
 }
 @section Left {
 
@@ -40,8 +41,13 @@
                     <td class="brnone">
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
+                            if (Model.Banner10.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.Banner10.IMG)" alt="" />
+                            }
 
-                            <img src="" alt="" /><span class="tac"> @Model.Banner10.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
+
+                            <span class="tac"> @Model.Banner10.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
 
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.Banner10.URL">
@@ -59,7 +65,11 @@
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
 
-                            <img src="" alt="" /><span class="tac"> @Model.Banner11.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
+                            if (Model.Banner11.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.Banner11.IMG)" alt="" />
+                            }
+                            <span class="tac"> @Model.Banner11.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
 
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.Banner11.URL">
@@ -77,7 +87,12 @@
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
 
-                            <img src="" alt="" /><span class="tac"> @Model.Banner12.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
+                            if (Model.Banner12.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.Banner12.IMG)" alt="" />
+                            }
+                            
+                            <span class="tac"> @Model.Banner12.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
 
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.Banner12.URL">
@@ -94,8 +109,12 @@
                     <td class="brnone">
                         @using (Html.BeginForm("SaveImageTypeDisplayer", "AdminDisplay", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
+                            if (Model.Banner13.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.Banner13.IMG)" alt="" />
+                            }
 
-                            <img src="" alt="" /><span class="tac"> @Model.Banner13.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
+                            <span class="tac"> @Model.Banner13.IMG  <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
 
                             <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                             <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.Banner13.URL">

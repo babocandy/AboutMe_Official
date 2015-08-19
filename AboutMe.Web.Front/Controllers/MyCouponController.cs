@@ -151,6 +151,37 @@ namespace AboutMe.Web.Front.Controllers
           
         }
 
+        //종료 혹은 사용완료된 쿠폰 리스트 
+        [CustomAuthorize]
+        public ActionResult ClosedCouponlist(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
+        {
+
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.SortCol = SortCol;
+            this.ViewBag.SortDir = SortDir;
+
+
+
+            string M_Id = ""; //회원아이디
+
+            //M_Id = "aszx0505";
+            M_Id = _user_profile.M_ID.ToString(); //로그인정보에서 회원아이디 가져오기 
+
+
+            int TotalRecord = 0;
+            TotalRecord = _CouponService.GetCouponClosedListCnt(M_Id, "P" ,SearchCol, SearchKeyword);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+            return View(_CouponService.GetCouponClosedList(M_Id, "P" ,SearchCol, SearchKeyword, Page, PageSize).ToList());
+
+        }
+
+
    
         public ActionResult CouponProductPop(int IdxCouponNumber, string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {

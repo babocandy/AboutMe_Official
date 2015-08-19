@@ -17,5 +17,7 @@ namespace AboutMe.Domain.Entity.AdminFrontMember
         public int MEMBER_CNT_REG { get; set; }
         public int MEMBER_CNT_STAFF_APPROV { get; set; }
         public int MEMBER_CNT_RETIRE { get; set; }
+        public int MEMBER_CNT_REG_M { get; set; }
+        public int MEMBER_CNT_REG_W { get; set; }
     }
 }

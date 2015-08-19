@@ -57,6 +57,7 @@
           <Parameter Name="M_GBN" Type="varchar" Mode="In" />
           <Parameter Name="M_STAFF_COMPANY" Type="varchar" Mode="In" />
           <Parameter Name="M_STAFF_ID" Type="varchar" Mode="In" />
+          <Parameter Name="M_DEVICE_GBN" Type="varchar" Mode="In" />
           <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_MEMBER_LOGIN_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -137,32 +138,6 @@
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_MEMBER_INS">
-            <Parameter Name="M_ID" Mode="In" Type="String" />
-            <Parameter Name="M_NAME" Mode="In" Type="String" />
-            <Parameter Name="M_PWD" Mode="In" Type="String" />
-            <Parameter Name="M_GRADE" Mode="In" Type="String" />
-            <Parameter Name="M_SEX" Mode="In" Type="String" />
-            <Parameter Name="M_BIRTHDAY" Mode="In" Type="String" />
-            <Parameter Name="M_MOBILE" Mode="In" Type="String" />
-            <Parameter Name="M_PHONE" Mode="In" Type="String" />
-            <Parameter Name="M_EMAIL" Mode="In" Type="String" />
-            <Parameter Name="M_ZIPCODE" Mode="In" Type="String" />
-            <Parameter Name="M_ADDR1" Mode="In" Type="String" />
-            <Parameter Name="M_ADDR2" Mode="In" Type="String" />
-            <Parameter Name="M_ISSMS" Mode="In" Type="String" />
-            <Parameter Name="M_ISEMAIL" Mode="In" Type="String" />
-            <Parameter Name="M_ISDM" Mode="In" Type="String" />
-            <Parameter Name="M_JOIN_MODE" Mode="In" Type="String" />
-            <Parameter Name="M_DI" Mode="In" Type="String" />
-            <Parameter Name="M_AGREE" Mode="In" Type="String" />
-            <Parameter Name="M_AGREE2" Mode="In" Type="String" />
-            <Parameter Name="M_SKIN_TROUBLE_CD" Mode="In" Type="String" />
-            <Parameter Name="M_GBN" Mode="In" Type="String" />
-            <Parameter Name="M_STAFF_COMPANY" Mode="In" Type="String" />
-            <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
-            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_MEMBER_UPD">
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="M_MOBILE" Mode="In" Type="String" />
@@ -241,6 +216,33 @@
             <Parameter Name="STAFF_COMPANY" Mode="In" Type="String" />
             <Parameter Name="STAFF_ID" Mode="In" Type="String" />
             <Parameter Name="STAFF_NAME" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MEMBER_INS">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="M_NAME" Mode="In" Type="String" />
+            <Parameter Name="M_PWD" Mode="In" Type="String" />
+            <Parameter Name="M_GRADE" Mode="In" Type="String" />
+            <Parameter Name="M_SEX" Mode="In" Type="String" />
+            <Parameter Name="M_BIRTHDAY" Mode="In" Type="String" />
+            <Parameter Name="M_MOBILE" Mode="In" Type="String" />
+            <Parameter Name="M_PHONE" Mode="In" Type="String" />
+            <Parameter Name="M_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="M_ZIPCODE" Mode="In" Type="String" />
+            <Parameter Name="M_ADDR1" Mode="In" Type="String" />
+            <Parameter Name="M_ADDR2" Mode="In" Type="String" />
+            <Parameter Name="M_ISSMS" Mode="In" Type="String" />
+            <Parameter Name="M_ISEMAIL" Mode="In" Type="String" />
+            <Parameter Name="M_ISDM" Mode="In" Type="String" />
+            <Parameter Name="M_JOIN_MODE" Mode="In" Type="String" />
+            <Parameter Name="M_DI" Mode="In" Type="String" />
+            <Parameter Name="M_AGREE" Mode="In" Type="String" />
+            <Parameter Name="M_AGREE2" Mode="In" Type="String" />
+            <Parameter Name="M_SKIN_TROUBLE_CD" Mode="In" Type="String" />
+            <Parameter Name="M_GBN" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_COMPANY" Mode="In" Type="String" />
+            <Parameter Name="M_STAFF_ID" Mode="In" Type="String" />
+            <Parameter Name="M_DEVICE_GBN" Mode="In" Type="String" />
             <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -343,7 +345,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_MEMBER_DUP_CHK" FunctionName="AboutMeModel2.Store.SP_MEMBER_DUP_CHK" />
-          <FunctionImportMapping FunctionImportName="SP_MEMBER_INS" FunctionName="AboutMeModel2.Store.SP_MEMBER_INS" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_PWD" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_PWD" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_UPD_RETIRE" FunctionName="AboutMeModel2.Store.SP_MEMBER_UPD_RETIRE" />
@@ -372,6 +373,7 @@
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_PWD" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_PWD" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_FIND_ID" FunctionName="AboutMeModel2.Store.SP_MEMBER_FIND_ID" />
           <FunctionImportMapping FunctionImportName="SP_MEMBER_STAFF_REQUEST_INS" FunctionName="AboutMeModel2.Store.SP_MEMBER_STAFF_REQUEST_INS" />
+          <FunctionImportMapping FunctionImportName="SP_MEMBER_INS" FunctionName="AboutMeModel2.Store.SP_MEMBER_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
