@@ -79,7 +79,7 @@ namespace AboutMe.Domain.Service.AdminProduct
         #endregion
 
        #region SMS 등록
-        void InsertSMS(AdminSMSModel adminSMSModel);
+        //void InsertSMS(AdminSMSModel adminSMSModel);
        #endregion
     }
 }

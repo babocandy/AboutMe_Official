@@ -350,35 +350,6 @@ namespace AboutMe.Domain.Entity.AdminProduct
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_GIFT_DETAIL_VIEW_Result>("SP_ADMIN_GIFT_DETAIL_VIEW", iDXParameter);
         }
 
-        public virtual int SP_ADMIN_SMS_INS(string sMS_FLAG, string sEND_TIME, string hANDPHONE, string cALLBACK_NO, string tITLE, string sEND_MSG)
-        {
-            var sMS_FLAGParameter = sMS_FLAG != null ?
-                new ObjectParameter("SMS_FLAG", sMS_FLAG) :
-                new ObjectParameter("SMS_FLAG", typeof(string));
-
-            var sEND_TIMEParameter = sEND_TIME != null ?
-                new ObjectParameter("SEND_TIME", sEND_TIME) :
-                new ObjectParameter("SEND_TIME", typeof(string));
-
-            var hANDPHONEParameter = hANDPHONE != null ?
-                new ObjectParameter("HANDPHONE", hANDPHONE) :
-                new ObjectParameter("HANDPHONE", typeof(string));
-
-            var cALLBACK_NOParameter = cALLBACK_NO != null ?
-                new ObjectParameter("CALLBACK_NO", cALLBACK_NO) :
-                new ObjectParameter("CALLBACK_NO", typeof(string));
-
-            var tITLEParameter = tITLE != null ?
-                new ObjectParameter("TITLE", tITLE) :
-                new ObjectParameter("TITLE", typeof(string));
-
-            var sEND_MSGParameter = sEND_MSG != null ?
-                new ObjectParameter("SEND_MSG", sEND_MSG) :
-                new ObjectParameter("SEND_MSG", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_SMS_INS", sMS_FLAGParameter, sEND_TIMEParameter, hANDPHONEParameter, cALLBACK_NOParameter, tITLEParameter, sEND_MSGParameter);
-        }
-
         public virtual int SP_ADMIN_PRODUCT_UPD(Nullable<int> iDX, string p_CATE_CODE, string c_CATE_CODE, string l_CATE_CODE, string p_NAME, string p_SUB_TITLE, Nullable<int> p_COUNT, Nullable<int> sELLING_PRICE, Nullable<int> dISCOUNT_RATE, Nullable<int> dISCOUNT_PRICE, string sOLDOUT_YN, string p_INFO_DETAIL_WEB, string p_INFO_DETAIL_MOBILE, string mV_URL, string p_COMPONENT_INFO, string p_TAG, string mAIN_IMG, string oTHER_IMG1, string oTHER_IMG2, string oTHER_IMG3, string iCON_YN, string wITH_PRODUCT_LIST, ObjectParameter iNTRESULT)
         {
             var iDXParameter = iDX.HasValue ?
@@ -799,6 +770,35 @@ namespace AboutMe.Domain.Entity.AdminProduct
                 new ObjectParameter("DISCOUNT_RATE", typeof(int));
 
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PRODUCT_PRICE_UPD", p_CODEParameter, sELLING_PRICEParameter, dISCOUNT_PRICEParameter, dISCOUNT_RATEParameter, iNTRESULT);
+        }
+
+        public virtual int SP_ADMIN_SMS_INS(string sMS_FLAG, string sEND_TIME, string hANDPHONE, string cALLBACK_NO, string tITLE, string sEND_MSG, ObjectParameter iNTRESULT)
+        {
+            var sMS_FLAGParameter = sMS_FLAG != null ?
+                new ObjectParameter("SMS_FLAG", sMS_FLAG) :
+                new ObjectParameter("SMS_FLAG", typeof(string));
+
+            var sEND_TIMEParameter = sEND_TIME != null ?
+                new ObjectParameter("SEND_TIME", sEND_TIME) :
+                new ObjectParameter("SEND_TIME", typeof(string));
+
+            var hANDPHONEParameter = hANDPHONE != null ?
+                new ObjectParameter("HANDPHONE", hANDPHONE) :
+                new ObjectParameter("HANDPHONE", typeof(string));
+
+            var cALLBACK_NOParameter = cALLBACK_NO != null ?
+                new ObjectParameter("CALLBACK_NO", cALLBACK_NO) :
+                new ObjectParameter("CALLBACK_NO", typeof(string));
+
+            var tITLEParameter = tITLE != null ?
+                new ObjectParameter("TITLE", tITLE) :
+                new ObjectParameter("TITLE", typeof(string));
+
+            var sEND_MSGParameter = sEND_MSG != null ?
+                new ObjectParameter("SEND_MSG", sEND_MSG) :
+                new ObjectParameter("SEND_MSG", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_SMS_INS", sMS_FLAGParameter, sEND_TIMEParameter, hANDPHONEParameter, cALLBACK_NOParameter, tITLEParameter, sEND_MSGParameter, iNTRESULT);
         }
     }
 }

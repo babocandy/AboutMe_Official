@@ -282,6 +282,7 @@
           <Parameter Name="CALLBACK_NO" Type="varchar" Mode="In" />
           <Parameter Name="TITLE" Type="varchar" Mode="In" />
           <Parameter Name="SEND_MSG" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_USER_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
@@ -412,14 +413,6 @@
           <FunctionImport Name="SP_ADMIN_GIFT_DETAIL_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_GIFT_DETAIL_VIEW_Result)">
           <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_SMS_INS">
-            <Parameter Name="SMS_FLAG" Mode="In" Type="String" />
-            <Parameter Name="SEND_TIME" Mode="In" Type="String" />
-            <Parameter Name="HANDPHONE" Mode="In" Type="String" />
-            <Parameter Name="CALLBACK_NO" Mode="In" Type="String" />
-            <Parameter Name="TITLE" Mode="In" Type="String" />
-            <Parameter Name="SEND_MSG" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PRODUCT_UPD">
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
@@ -546,6 +539,15 @@
             <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
             <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
             <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_SMS_INS">
+            <Parameter Name="SMS_FLAG" Mode="In" Type="String" />
+            <Parameter Name="SEND_TIME" Mode="In" Type="String" />
+            <Parameter Name="HANDPHONE" Mode="In" Type="String" />
+            <Parameter Name="CALLBACK_NO" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SEND_MSG" Mode="In" Type="String" />
             <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1036,7 +1038,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_SMS_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_SMS_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_INS" />
@@ -1069,6 +1070,7 @@
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PRICE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PRICE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SMS_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_SMS_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
