@@ -568,7 +568,7 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>("SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL", pMO_PRODUCT_CATEGORYParameter);
         }
     
-        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_INS(string pMO_PRODUCT_NAME, string pMO_PRODUCT_CATEGORY, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_PC_MAINPG_IMG, string pMO_PRODUCT_PC_EVENT_MAINPG_IMG, string pMO_PRODUCT_MOBILE_MAIN_IMG, string pMO_PRODUCT_MOBILE_MAINPG_IMG, string pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, ObjectParameter cD_PROMOTION_PRODUCT)
+        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_INS(string pMO_PRODUCT_NAME, string pMO_PRODUCT_CATEGORY, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_PC_MAINPG_IMG, string pMO_PRODUCT_PC_MAINPG_SMALL_IMG, string pMO_PRODUCT_PC_EVENT_MAINPG_IMG, string pMO_PRODUCT_MOBILE_MAIN_IMG, string pMO_PRODUCT_MOBILE_MAINPG_IMG, string pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, ObjectParameter cD_PROMOTION_PRODUCT)
         {
             var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
                 new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
@@ -597,6 +597,10 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             var pMO_PRODUCT_PC_MAINPG_IMGParameter = pMO_PRODUCT_PC_MAINPG_IMG != null ?
                 new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", pMO_PRODUCT_PC_MAINPG_IMG) :
                 new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_PC_MAINPG_SMALL_IMGParameter = pMO_PRODUCT_PC_MAINPG_SMALL_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_SMALL_IMG", pMO_PRODUCT_PC_MAINPG_SMALL_IMG) :
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_SMALL_IMG", typeof(string));
     
             var pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter = pMO_PRODUCT_PC_EVENT_MAINPG_IMG != null ?
                 new ObjectParameter("PMO_PRODUCT_PC_EVENT_MAINPG_IMG", pMO_PRODUCT_PC_EVENT_MAINPG_IMG) :
@@ -646,10 +650,10 @@ namespace AboutMe.Domain.Entity.AdminPromotion
                 new ObjectParameter("USABLE_YN", uSABLE_YN) :
                 new ObjectParameter("USABLE_YN", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_INS", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_CATEGORYParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCT);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_INS", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_CATEGORYParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_MAINPG_SMALL_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCT);
         }
     
-        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(string pMO_PRODUCT_NAME, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_PC_MAINPG_IMG, string pMO_PRODUCT_PC_EVENT_MAINPG_IMG, string pMO_PRODUCT_MOBILE_MAIN_IMG, string pMO_PRODUCT_MOBILE_MAINPG_IMG, string pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, string cD_PROMOTION_PRODUCT)
+        public virtual int SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE(string pMO_PRODUCT_NAME, string pMO_PRODUCT_MAIN_TITLE, string pMO_PRODUCT_SUB_TITLE, string pMO_PRODUCT_SHOPPING_TIP, string pMO_PRODUCT_MAIN_IMG, string pMO_PRODUCT_PC_MAINPG_IMG, string pMO_PRODUCT_PC_MAINPG_SMALL_IMG, string pMO_PRODUCT_PC_EVENT_MAINPG_IMG, string pMO_PRODUCT_MOBILE_MAIN_IMG, string pMO_PRODUCT_MOBILE_MAINPG_IMG, string pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG, string pMO_PRODUCT_RATE_OR_MONEY, Nullable<byte> pMO_PRODUCT_DISCOUNT_RATE, Nullable<int> pMO_PRODUCT_DISCOUNT_MONEY, Nullable<byte> pMO_SET_DISCOUNT_CNT, Nullable<byte> pMO_ONEONE_MULTIPLE_CNT, Nullable<System.DateTime> pMO_PRODUCT_DATE_FROM, Nullable<System.DateTime> pMO_PRODUCT_DATE_TO, string uSABLE_YN, string cD_PROMOTION_PRODUCT)
         {
             var pMO_PRODUCT_NAMEParameter = pMO_PRODUCT_NAME != null ?
                 new ObjectParameter("PMO_PRODUCT_NAME", pMO_PRODUCT_NAME) :
@@ -674,6 +678,10 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             var pMO_PRODUCT_PC_MAINPG_IMGParameter = pMO_PRODUCT_PC_MAINPG_IMG != null ?
                 new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", pMO_PRODUCT_PC_MAINPG_IMG) :
                 new ObjectParameter("PMO_PRODUCT_PC_MAINPG_IMG", typeof(string));
+    
+            var pMO_PRODUCT_PC_MAINPG_SMALL_IMGParameter = pMO_PRODUCT_PC_MAINPG_SMALL_IMG != null ?
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_SMALL_IMG", pMO_PRODUCT_PC_MAINPG_SMALL_IMG) :
+                new ObjectParameter("PMO_PRODUCT_PC_MAINPG_SMALL_IMG", typeof(string));
     
             var pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter = pMO_PRODUCT_PC_EVENT_MAINPG_IMG != null ?
                 new ObjectParameter("PMO_PRODUCT_PC_EVENT_MAINPG_IMG", pMO_PRODUCT_PC_EVENT_MAINPG_IMG) :
@@ -727,7 +735,7 @@ namespace AboutMe.Domain.Entity.AdminPromotion
                 new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
                 new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCTParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_MAINPG_SMALL_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCTParameter);
         }
     }
 }

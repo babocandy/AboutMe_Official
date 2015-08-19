@@ -320,7 +320,7 @@
                         ToDD = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
                     }
                     <div class="txtbox">
-                        <span class="txt1"># @Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE <!--밤 9시 예뻐지는 시각--></span>
+                        <span class="txt1"># @Html.Raw(Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE) <!--밤 9시 예뻐지는 시각--></span>
                         <span class="txt2">
                            <!-- <img src="/aboutCom/images/sample/txt_setgoods.png" alt="3개 이상 같이 구매해서 30% 할인 받자!" /></p> -->
                             <img src="@ViewBag.PROMOTION_IMG_PATH@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_IMG" alt="" </p>

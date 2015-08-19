@@ -5,6 +5,136 @@
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 }
 
+
+@functions{
+
+    //시작일자가 현재보다 이전인지
+    protected bool IsOverStartTime(DateTime StartDate)
+    {
+
+        bool rtn = false;
+
+        if (DateTime.Now > StartDate)
+        {
+            rtn = true;
+        }
+
+
+        return rtn;
+    }
+
+
+    //종료일자가 지났는지
+    protected bool IsOverEndingTime(DateTime ToDate)
+    {
+
+        bool rtn = false;
+
+        if (DateTime.Now > ToDate)
+        {
+            rtn = true;
+        }
+
+
+        return rtn;
+    }
+
+    protected string GetStatusStr(DateTime StartDate, DateTime EndDate , string UsableYN)
+    {
+
+        string rtn = "";
+
+        if (StartDate < DateTime.Now && EndDate > DateTime.Now) 
+        {
+            if (UsableYN == "Y")
+                rtn = "진행";
+            else
+                rtn = "비활성화";
+        }
+        else if (StartDate > DateTime.Now)
+        {
+            if (UsableYN == "Y")
+                rtn = "예정";
+            else
+                rtn = "비활성화";
+        }
+        else if (EndDate < DateTime.Now)
+        {
+            if (UsableYN == "Y")
+                rtn = "종료";
+            else
+                rtn = "비활성화";
+        }
+
+        return rtn;
+    }
+
+    //카테고리네임
+    protected string GetPmoProductCatName(string cat)
+    {
+
+        string rtn = "";
+
+        switch(cat)
+        {
+            case "01" :
+                rtn ="세트상품";
+                break;
+            case "02" :
+                rtn = "1+1";
+                break;
+            case "03" :
+                rtn = "타임세일";
+                break;
+            case "04" :
+                rtn = "일반할인";
+                break;
+            case "05" :
+                rtn = "아웃렛";
+                break;
+            default :
+                break;
+        }
+
+        return rtn;
+    }
+
+
+    //카테고리별 프런트  url 
+    protected string GetPmoProductFrontUrl(string cat)
+    {
+        string url = "";
+        string front_url = "";
+
+        AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
+
+        if (cat == "01") //세트상품
+        {
+            url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "/Event/SetPromotion";
+            front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
+           
+        }
+        else if (cat == "03") //타임세일
+        {
+            url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "/Event/TimeSale";
+            front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
+           
+        }
+        else if (cat == "05") //아웃렛
+        {
+            url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "Event/Outlet";
+            front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
+        }
+        else 
+        {
+            front_url = "-"; 
+        }
+
+
+        return front_url;
+    }
+
+}
 @section Scripts{
 
     <script type="text/javascript">
@@ -86,13 +216,29 @@
             <h4>상품별 프로모션 정책 리스트</h4>
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
-                <colgroup><col width="8%" /><col width="10%" /><col width="10%" /><col width="20%" /><col width="*" /><col width="8%" /></colgroup>
+                <colgroup>
+                    <col width="3%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="*" />
+                    
+                   
+                   
+                    <col width="8%" />
+                    <col width="8%" />
+                    
+                    <col width="8%" />
+                    <col width="8%" />
+                    <col width="4%" />
+                    <col width="8%" />
+                </colgroup>
                 <thead>
                     <tr>
                         <th scope="col" class="brnone">No</th>
                         <th scope="col">프로모션명</th>
                         <th scope="col">카테고리</th>
-                        <th scope="col">정률/정액</th>
+                        <th scope="col">FRONT URL</th>
+                        <!--<th scope="col">정률/정액</th>-->
                         <!--
                         <th scope="col">할인적용율</th>
                         <th scope="col">할인액</th>
@@ -100,6 +246,7 @@
                         <th scope="col">시작일자</th>
                         <th scope="col">종료일자</th>
                         <th scope="col">작성일자</th>
+                        <th scope="col">상태</th>
                         <th scope="col">활성화</th>
                         <th scope="col">관련상품edit</th>
                     </tr>
@@ -111,8 +258,11 @@
                             <td class="brnone">@item.IDX</td>
 
                             <td class="brnone"><b>@Html.ActionLink(item.PMO_PRODUCT_NAME, "PrdUpdate", new { CdPromotionPRODUCT = item.CD_PROMOTION_PRODUCT })</b></td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_CATEGORY_NAME)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
+                            <!--<td>@GetPmoProductCatName(item.PMO_PRODUCT_CATEGORY.ToString())</td>-->
+                            <td>@GetPmoProductCatName(item.PMO_PRODUCT_CATEGORY.ToString())</td>
+                            <td>@Html.Raw(GetPmoProductFrontUrl(item.PMO_PRODUCT_CATEGORY.ToString()))</td>
+                          
+                           
                             
                             <!--
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
@@ -122,6 +272,8 @@
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DATE_FROM)</td>
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_DATE_TO)</td>
                             <td>@item.INS_DATE</td>
+                            <td>@GetStatusStr(item.PMO_PRODUCT_DATE_FROM.Value, item.PMO_PRODUCT_DATE_TO.Value, item.USABLE_YN)</td>
+                          
                             <td>@item.USABLE_YN</td>
                             <td > <b>@Html.ActionLink("[상품가격정책추가/편집]", "PrdPricingIndex", new { CdPromotionProduct = item.CD_PROMOTION_PRODUCT })</b></td>
                         </tr>

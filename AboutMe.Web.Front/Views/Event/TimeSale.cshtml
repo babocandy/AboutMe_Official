@@ -195,7 +195,10 @@
                 <h3><img src="/aboutCom/images/event/h3_timesale.png" alt="TIME SALE 오늘만 이 가격! 놓치지 마세요~" /></h3>
                 <div class="tcont mt40">
                     <div class="time">
-                        <img src="/aboutCom/images/sample/event_timesale2.jpg" alt="긴긴 연휴 끝 나에게 필요한건? 이건 꼭 사야해! 최대 30% 할인" />
+                        <!--<img src="/aboutCom/images/sample/event_timesale2.jpg" alt="긴긴 연휴 끝 나에게 필요한건? 이건 꼭 사야해! 최대 30% 할인" />-->
+                        
+                        <img src="@ViewBag.PromotionPhotoPath@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_IMG" alt="긴긴 연휴 끝 나에게 필요한건? 이건 꼭 사야해! 최대 30% 할인" />
+                       
                         <p class="tdate"><em>@FromYYYY. @FromMM.  @FromDD</em> ~ <em>@ToYYYY. @ToMM.  @ToDD</em></p>
                         <p id="timesale" class="remain_time"></p>
                         <script type="text/javascript">
