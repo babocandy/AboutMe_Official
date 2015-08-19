@@ -55,7 +55,7 @@ namespace AboutMe.Web.Mobile.Controllers
         public ActionResult CartBanner()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.CART_MOBILE);
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.CART_MOBILE));
             return View(model);
         }
 

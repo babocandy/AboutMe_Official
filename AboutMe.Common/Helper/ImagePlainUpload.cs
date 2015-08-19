@@ -21,20 +21,23 @@ namespace AboutMe.Common.Helper
         public ImagePlainUpload()
         {
             UploadPath = "~/Upload/Temp/"; //이미지 업로드 경로 default /Upload/
-            addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
+            //addMobileImage = false; //이미지 업로드시 모바일 업로드용으로 리사이즈추가 필요시 true
             fileType = "image";  //파일 type:image/file
             fileMaxSize = 5000000; //파일 max size 5MB
-            Width = 500; //이미지 기본 사이즈
+            //Width = 500; //이미지 기본 사이즈
+            IsThumbNail = false;
         }
 
         // set default size here
-        public int Width { get; set; }
-        public int Height { get; set; }
+        //public int Width { get; set; }
+        //public int Height { get; set; }
         public string UploadPath { get; set; }
-        public bool addMobileImage { get; set; }
+        //public bool addMobileImage { get; set; }
         public string fileType { get; set; }
         private int fileMaxSize { get; set; }
-
+        public int DefaultWidth { get; set; }
+        public int DefaultHeight { get; set; }
+        public bool IsThumbNail { get; set; }
 
         //고유한 이미지네임으로 변경
         public ImageResult RenameUploadFile(HttpPostedFileBase file, Int32 counter = 0)
@@ -61,30 +64,25 @@ namespace AboutMe.Common.Helper
         }
        
 
-        #region 파일 업로드
+ 
         private ImageResult UploadFile(HttpPostedFileBase file, string fileName)
         {
+            //리턴 결과 객체
             ImageResult imageResult = new ImageResult { Success = true, ErrorMessage = null };
 
+            //오리지널 패스
             var path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), fileName);
 
-            //썸네일이미지 resize path
-            /*
-            var resize_type_500_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R500_" + fileName);
-            var resize_type_270_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R270_" + fileName);
-            var resize_type_120_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R120_" + fileName);
-            var resize_type_64_path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R64_" + fileName);
-             * */
-
+            //이미지 확장자
             string extension = Path.GetExtension(file.FileName);
 
+            //용량체크
             if (file.ContentLength > fileMaxSize)
             {
                 imageResult.Success = false;
                 imageResult.ErrorMessage = "파일 용량 초과";
                 return imageResult;
             }
-
 
             //make sure the file is valid
             if (!ValidateExtension(extension, fileType))
@@ -94,10 +92,73 @@ namespace AboutMe.Common.Helper
                 return imageResult;
             }
 
+
+            //썸네일
+            var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "s_" + fileName);
+            var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "m_" + fileName);
+            var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "b_" + fileName);
+
             try
             {
-                Debug.WriteLine("fileName: " + fileName);
-                file.SaveAs(path);
+
+
+                byte[] imageData = new byte[file.ContentLength];
+                file.InputStream.Read(imageData, 0, file.ContentLength);
+
+                MemoryStream ms = new MemoryStream(imageData);
+                Image originalImage = Image.FromStream(ms);
+
+                if (originalImage.PropertyIdList.Contains(0x0112))
+                {
+                    int rotationValue = originalImage.GetPropertyItem(0x0112).Value[0];
+
+                    Debug.WriteLine("rotationValue " + rotationValue);
+                    switch (rotationValue)
+                    {
+                        case 1: // landscape, do nothing
+                            break;
+
+                        case 8: // rotated 90 right
+                            // de-rotate:
+                            originalImage.RotateFlip(rotateFlipType: RotateFlipType.Rotate270FlipNone);
+                            break;
+
+                        case 3: // bottoms up
+                            originalImage.RotateFlip(rotateFlipType: RotateFlipType.Rotate180FlipNone);
+                            break;
+
+                        case 6: // rotated 90 left
+                            originalImage.RotateFlip(rotateFlipType: RotateFlipType.Rotate90FlipNone);
+                            break;
+                    }
+                }
+
+
+                //file.SaveAs(path);
+                originalImage.Save(path);
+                
+
+                //원본 뜨기
+                Image imgOriginal = Image.FromFile(path);
+
+                //썸네일 이미지 생성
+                Image imgActual = Scale(originalImage, 500);
+                imgActual.Save(path_big);
+                imgActual.Dispose();
+
+                imgActual = Scale(originalImage, 308);
+                imgActual.Save(path_middle);
+                imgActual.Dispose();
+
+
+                //imgActual = Scale(imgOriginal, 100);                   
+                //imgActual.Save(path_small);
+                //imgActual.Dispose();
+
+                //원본제거
+                //imgOriginal.Dispose();
+                originalImage.Dispose();
+
                 imageResult.ImageName = fileName;
 
                 return imageResult;
@@ -112,9 +173,9 @@ namespace AboutMe.Common.Helper
                 return imageResult;
             }
         }
-        #endregion
+       
 
-        #region 파일이 이미지 타입인지 체크
+  
         private bool ValidateExtension(string extension, string fileType)
         {
             extension = extension.ToLower();
@@ -171,10 +232,57 @@ namespace AboutMe.Common.Helper
             }
 
         }
-        #endregion
 
 
-        #region 고유키값 생성
+
+        private Image Scale(Image imgPhoto, int Width = 0, int Height = 0)
+        {
+            float sourceWidth = imgPhoto.Width;
+            float sourceHeight = imgPhoto.Height;
+            float destHeight = 0;
+            float destWidth = 0;
+            int sourceX = 0;
+            int sourceY = 0;
+            int destX = 0;
+            int destY = 0;
+
+            // force resize, might distort image
+            if (Width != 0 && Height != 0)
+            {
+                destWidth = Width;
+                destHeight = Height;
+            }
+            // change size proportially depending on width or height
+            else if (Height != 0)
+            {
+                destWidth = (float)(Height * sourceWidth) / sourceHeight;
+                destHeight = Height;
+            }
+            else
+            {
+                destWidth = Width;
+                destHeight = (float)(sourceHeight * Width / sourceWidth);
+                //destWidth = sourceWidth;
+                //destHeight = sourceHeight;
+            }
+
+            Bitmap bmPhoto = new Bitmap((int)destWidth, (int)destHeight,
+                                        PixelFormat.Format32bppPArgb);
+            bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
+
+            Graphics grPhoto = Graphics.FromImage(bmPhoto);
+            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            grPhoto.DrawImage(imgPhoto,
+                new Rectangle(destX, destY, (int)destWidth, (int)destHeight),
+                new Rectangle(sourceX, sourceY, (int)sourceWidth, (int)sourceHeight),
+                GraphicsUnit.Pixel);
+
+            grPhoto.Dispose();
+
+            return bmPhoto;
+        }
+     
         private string GetUniqueKey()
         {
             Random rand = new Random((int)DateTime.Now.Ticks);
@@ -184,7 +292,7 @@ namespace AboutMe.Common.Helper
 
             return UniqueKey;
         }
-        #endregion
+   
 
 
     }

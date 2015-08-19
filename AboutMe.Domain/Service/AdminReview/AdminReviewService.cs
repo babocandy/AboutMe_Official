@@ -37,19 +37,13 @@ namespace AboutMe.Domain.Service.AdminReview
                 end_dt = DateTime.ParseExact(p.SEL_DATE_TO, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             }
 
-            Debug.WriteLine("--------->");
-            Debug.WriteLine(start_dt);
-            Debug.WriteLine(end_dt);
-
-
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
                 list = context.SP_ADMIN_REVIEW_PRODUCT_SEL(p.PAGE, 10, p.SEARCH_KEY, p.SEARCH_VALUE, p.MEDIA_GBN_W,p.MEDIA_GBN_M, start_dt, end_dt, p.IS_PHOTO_Y, p.IS_PHOTO_N, p.IS_DISPLAY_Y, p.IS_DISPLAY_N, total).ToList();
             }
 
-            Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
 
-            return tp;
+            return new Tuple<List<SP_ADMIN_REVIEW_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));;
 
         }
 
@@ -73,7 +67,7 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 상품리뷰  수정
          */
-        public Tuple<string, string> ReviewPdtUpdate(AdminReviewUpdateViewModel p)
+        public Tuple<string, string> ReviewPdtUpdate(AdminReviewInputViewModel p)
         {
             ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
             ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
@@ -128,16 +122,16 @@ namespace AboutMe.Domain.Service.AdminReview
                     p.IS_STATE_10,p.IS_STATE_20, p.IS_STATE_30,p.IS_AUTH_Y,p.IS_AUTH_N ,total).ToList();
             }
 
-            Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
+   
 
-            return tp;
+            return  new Tuple<List<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
 
         }
 
         /**
          * 체험단리뷰 마스터 저장
          */
-        public int? ReviewExpMasterInsert(AdminReviewExpMasterParamToInputDB p)
+        public int? ReviewExpMasterInsert(AdminReviewExpMasterInputViewModel p)
         {
             ObjectParameter midx = new ObjectParameter("MASTER_IDX", typeof(int));
 
@@ -164,10 +158,7 @@ namespace AboutMe.Domain.Service.AdminReview
             {
                 list = context.SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL(p.PAGE, p.PAGE_SIZE, p.SEARCH_KEY, p.SEARCH_VALUE, total).ToList();
             }
-
-            Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int> tp = new Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));
-
-            return tp;
+            return new Tuple<List<SP_ADMIN_REVIEW_EXP_FIND_PRODUCT_SEL_Result>, int>(list, Convert.ToInt32(total.Value));;
         }
 
 
@@ -233,5 +224,51 @@ namespace AboutMe.Domain.Service.AdminReview
             }
         }
 
+
+        /**
+         * 체험단 리뷰 글들 조회
+         */
+
+        public Tuple<List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>, int, string, string> ReviewExpArticleList(AdminReviewExpArticleRouteParam p)
+        {
+            List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result> list = new List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>();
+
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                list = context.SP_ADMIN_REVIEW_EXP_ARTICLE_SEL(p.EXP_MASTER_IDX, p.PAGE, p.PAGE_SIZE, p.SEARCH_KEY, p.SEARCH_VALUE, total, retNum, retMsg).ToList();
+            }
+
+            return new Tuple<List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>, int, string, string>(list, Convert.ToInt32(total.Value), retNum.Value.ToString(), retMsg.Value.ToString() );
+        }
+
+        /**
+         * 체험단 리뷰 글 상세
+         */
+        public SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result ReviewExpArticleDetail(int? idx)
+        {
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                return context.SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL(idx).SingleOrDefault();
+            }
+
+        }
+
+
+        /**
+         * 체험단 리뷰 글 수정 - display 여부만
+         */
+        public void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model)
+        {
+            using (AdminReviewEntities context = new AdminReviewEntities())
+            {
+                context.SP_ADMIN_REVIEW_EXP_ARTICLE_UPDATE(model.IDX, model.IS_DISPLAY);
+            }
+
+        }
     }
 }

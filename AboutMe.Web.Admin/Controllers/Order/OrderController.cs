@@ -21,7 +21,7 @@ using AboutMe.Domain.Entity.Order;
 using AboutMe.Web.Admin.Common.Filters;
 using AboutMe.Web.Admin.Common;
 
-using INIpayNet;
+using INIpayNet; 
 
 namespace AboutMe.Web.Admin.Controllers.Order
 {
@@ -109,8 +109,57 @@ namespace AboutMe.Web.Admin.Controllers.Order
             RouteValueDictionary param = ConvertRouteValue(SEARCH_OPTION);
             param.Add("ORDER_IDX", ORDER_IDX);
 
-            _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
-            return RedirectToAction("Detail", param);
+            if (TOBE_STATUS == "90") //취소일경우
+            {
+                SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result top1 = _adminorderservice.OrderPartCancelTopSelect(ORDER_IDX);
+                Int32 remaind_price = Convert.ToInt32(top1.PAY_PRICE);
+
+                //order_detail_idx의 실제 결제 금액 구하기
+                int real_pay_price = 0;
+                List<SP_ADMIN_ORDERLIST_DETAIL_LIST_Result> pList = _adminorderservice.OrderDetailList(ORDER_IDX);
+                SP_ADMIN_ORDERLIST_DETAIL_LIST_Result Qry = (from list in pList
+                                                             where list.ORDER_DETAIL_IDX == ORDER_DETAIL_IDX
+                                                             select list
+                           ).FirstOrDefault();
+
+                if (Qry != null) real_pay_price = Convert.ToInt16(Qry.REAL_PAY_PRICE);
+
+                if (real_pay_price > 0 && remaind_price > 0)
+                {
+                    Int32 confirm_price = remaind_price - real_pay_price; ////승인요청금액 ([이전승인금액 - 취소할 금액])
+                    INIREPAY_OK_MODEL Param2 = new INIREPAY_OK_MODEL();
+                    Param2.ORDER_IDX = ORDER_IDX;
+                    Param2.oldtid = top1.TID;
+                    Param2.buyeremail = top1.EMAIL;
+                    Param2.confirm_price = Convert.ToString(confirm_price);
+                    Param2.price = Convert.ToString(real_pay_price); //취소할금액
+
+                    INIREPAY_RESULT repay = InipayReplayOk(Param2);
+
+                    if (repay.ResultCode == "00") //성공
+                    {
+                        string REG_IP = Request.ServerVariables["REMOTE_HOST"];
+                        _adminorderservice.OrderPartCancelInsert(ORDER_IDX, repay.TID, top1.TID, Convert.ToInt32(real_pay_price), Convert.ToInt32(confirm_price), top1.EMAIL, Convert.ToInt32(repay.PRTC_Remains), repay.PRTC_Type, Convert.ToInt32(repay.PRTC_Price), Convert.ToInt16(repay.PRTC_Cnt), REG_ID, REG_IP);
+                        _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
+                        return RedirectToAction("Detail", param);
+                    }
+                    else
+                    {
+                        return Content("<script>alert(\"PG사 취소시 에러가 발생했습니다.[error : " + repay.ResultMsg + " tid:" + top1.TID + "]\"); history.go(-1);</script>");
+                    }
+
+                }
+                else
+                {
+                    _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
+                    return RedirectToAction("Detail", param);
+                }
+            }
+            else
+            {
+                _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
+                return RedirectToAction("Detail", param);
+            }
         }
 
 
@@ -165,7 +214,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
             M.MasterInfo = Info;
             M.Top1Info = _adminorderservice.OrderPartCancelTopSelect(ORDER_IDX);
             M.RepayList = _adminorderservice.OrderPartCancelList(ORDER_IDX);
-            return View(M);
+            return View(M); 
         }
 
 
@@ -182,22 +231,24 @@ namespace AboutMe.Web.Admin.Controllers.Order
             //# 2. 인스턴스 초기화 /3. 거래 유형 설정 #
             //######################
             INIpayCancel.Initialize("repay");
-
+            
             INIpayCancel.SetPath(_inipay_setpath);
             //###############################################################################
             //# 4. 정보 설정 #
             //################
-            INIpayCancel.SetField("pgid", "INInetREPA_");	          			// 서브 PG아이디 , 수정금지
-            INIpayCancel.SetField("subpgip", "203.238.3.10");	          			// 서브 PG아이디 , 수정금지
+            INIpayCancel.SetField("type", "repay");	          			        // 수정금지
+            INIpayCancel.SetField("pgid", "INInetRPAY");	          			// 서브 PG아이디 , 수정금지 INIpayRPAY
             INIpayCancel.SetField("mid", _inipay_mid);	               			// 상점아이디
             INIpayCancel.SetField("admin", _inipay_admin);						// 키패스워드(상점아이디에 따라 변경)
-            INIpayCancel.SetField("oldtid", Param.oldtid);					    // 원거래 TID
+            INIpayCancel.SetField("PRTC_TID", Param.oldtid);					// 원거래 TID
+            INIpayCancel.SetField("uip", Request.UserHostAddress);				// 사용자 IP
             INIpayCancel.SetField("currency", "WON");
-            INIpayCancel.SetField("price", Param.price);
-            INIpayCancel.SetField("confirm_price", Param.confirm_price);
+            INIpayCancel.SetField("PRTC_Price", Param.price);
+            INIpayCancel.SetField("PRTC_Remains", Param.confirm_price);
             INIpayCancel.SetField("buyeremail", Param.buyeremail);
-            INIpayCancel.SetField("no_acct", "");                               //국민은행 부분취소 환불계좌번호
-            INIpayCancel.SetField("nm_acct", "");                               //국민은행 부분취소 환불계좌주명
+            INIpayCancel.SetField("MReserved1", "");                            //"예비1"
+            INIpayCancel.SetField("PRTC_NoAcctFNBC", "");                      //국민은행 부분취소 환불계좌번호
+            INIpayCancel.SetField("PRTC_NmAcctFNBC", "");                      //국민은행 부분취소 환불계좌주명
             INIpayCancel.SetField("debug", _inipay_debug);						// 로그모드(실서비스시에는 "false"로)
 
             //###############################################################################
@@ -208,9 +259,9 @@ namespace AboutMe.Web.Admin.Controllers.Order
             //###############################################################################
             //# 6. 취소 결과 #
             //################
-            cancel.ResultCode = INIpayCancel.GetResult("ResultCode");				// 결과코드 ("00"이면 부분취소 성공)
-            cancel.ResultMsg = INIpayCancel.GetResult("ResultMsg");					// 결과내용
-            cancel.TID = INIpayCancel.GetResult("TID");	                            //신거래ID
+            cancel.ResultCode = INIpayCancel.GetResult("resultcode");				// 결과코드 ("00"이면 부분취소 성공)
+            cancel.ResultMsg = INIpayCancel.GetResult("resultmsg");					// 결과내용
+            cancel.TID = INIpayCancel.GetResult("tid");	                            //신거래ID
             cancel.PRTC_TID = INIpayCancel.GetResult("PRTC_TID");	                //원거래ID
             cancel.PRTC_Remains = INIpayCancel.GetResult("PRTC_Remains");	        //최종결제금액
             cancel.PRTC_Price = INIpayCancel.GetResult("PRTC_Price");	            //부분취소금액

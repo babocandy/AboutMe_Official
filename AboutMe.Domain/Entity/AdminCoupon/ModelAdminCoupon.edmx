@@ -251,6 +251,22 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_COUPON_CLOSED_LIST_COUNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="USABLE_DEVICE_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_COUPON_CLOSED_LIST_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="USABLE_DEVICE_GBN" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_COUPON_COMMON_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
@@ -566,6 +582,22 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
             <Parameter Name="M_ID" Mode="In" Type="String" />
             <Parameter Name="IDX_COUPON_NUMBER" Mode="In" Type="Int32" />
             <Parameter Name="METHOD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_CLOSED_LIST_SEL" ReturnType="Collection(AboutMeModel3.SP_COUPON_ISSUED_DETAIL_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="USABLE_DEVICE_GBN" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_COUPON_CLOSED_LIST_COUNT" ReturnType="Collection(AboutMeModel3.SP_COUPON_COMMON_CNT_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="USABLE_DEVICE_GBN" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_COUPON_COMMON_CNT_Result">
@@ -1386,6 +1418,33 @@ warning 6002: The table/view 'AboutMe.dbo.TB_COUPON_PRODUCT' does not have a pri
           <FunctionImportMapping FunctionImportName="SP_COUPON_MAKE_AT_MEM_JOIN_INSERT" FunctionName="AboutMeModel3.Store.SP_COUPON_MAKE_AT_MEM_JOIN_INSERT" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT" FunctionName="AboutMeModel3.Store.SP_ADMIN_COUPON_PRODUCT_CREATE_INS_ON_ADDING_PRODUCT" />
           <FunctionImportMapping FunctionImportName="SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE" FunctionName="AboutMeModel3.Store.SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_COUPON_CLOSED_LIST_SEL" FunctionName="AboutMeModel3.Store.SP_COUPON_CLOSED_LIST_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_ISSUED_DETAIL_SEL_Result">
+                <ScalarProperty Name="IDX_COUPON_NUMBER" ColumnName="IDX_COUPON_NUMBER" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="DOWNLOAD_DATE_FROM" ColumnName="DOWNLOAD_DATE_FROM" />
+                <ScalarProperty Name="DOWNLOAD_DATE_TO" ColumnName="DOWNLOAD_DATE_TO" />
+                <ScalarProperty Name="COUPON_GBN" ColumnName="COUPON_GBN" />
+                <ScalarProperty Name="RATE_OR_MONEY" ColumnName="RATE_OR_MONEY" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_DISCOUNT_RATE" ColumnName="COUPON_DISCOUNT_RATE" />
+                <ScalarProperty Name="USABLE_DATE_FROM" ColumnName="USABLE_DATE_FROM" />
+                <ScalarProperty Name="USABLE_DATE_TO" ColumnName="USABLE_DATE_TO" />
+                <ScalarProperty Name="USE_STATUS" ColumnName="USE_STATUS" />
+                <ScalarProperty Name="COUPON_AD_MSG" ColumnName="COUPON_AD_MSG" />
+                <ScalarProperty Name="COUPON_USE_DESCRIPTION" ColumnName="COUPON_USE_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_COUPON_CLOSED_LIST_COUNT" FunctionName="AboutMeModel3.Store.SP_COUPON_CLOSED_LIST_COUNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel3.SP_COUPON_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

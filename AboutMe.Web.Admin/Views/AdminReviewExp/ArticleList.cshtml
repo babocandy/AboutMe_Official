@@ -1,0 +1,128 @@
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewExpArticleListViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@using AboutMe.Web.Admin.Controllers
+@{
+    ViewBag.Title = "ArticleList";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    var myctl = ViewContext.Controller as AdminReviewExpController;
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+
+    <style>
+        .field-validation-error, .validation-summary-errors {
+            color: red;
+            font-size: 13px;
+            line-height: 15px;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script>
+    </script>
+}
+
+
+@section Body{
+
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>체험단리뷰관리</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">체험리뷰관리</h3>
+            <div class="">
+                <table class="table table_row">
+                    <colgroup><col width="15%" /><col width="*" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>상품</th>
+                            <td>
+                                <dl class="dltype1">
+                                    <dt>@Model.MasterDetail.P_CODE</dt>
+                                    <dd>@Model.MasterDetail.P_NAME </dd>
+                                </dl>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>기간</th>
+                            <td>@(Model.MasterDetail.FROM_DATE.Value.ToString("yyyy.MM.dd")) ~ @(Model.MasterDetail.TO_DATE.Value.ToString("yyyy.MM.dd"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h4>총 검색 :@(Model.Total)개</h4>
+            <table class="table table_col" style="min-width:1400px;">
+                <colgroup><col width="3%"><col width="7%"><col width="5%"><col width="5%"><col width="3%"><col width="5%"><col width="7%"><col width="9%"><col width="7%"><col width="5%"><col width="7%"><col width="5%"><col width="3%"></colgroup>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>제목</th>
+                        <th>태그</th>
+                        <th>회원 ID</th>
+                        <th>리뷰이미지</th>
+                        <th>조회</th>
+                        <th>전시여부</th>
+                        <th>등록일</th>
+                        <th>수정</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.List)
+                    {
+                        <tr>
+                            <td>@item.IDX</td>
+                            <td>@item.TITLE</td>
+                            <td>@item.TAG</td>
+                            <td>@item.M_ID</td>
+                            <td>
+                                <img src="@(item.SUB_IMG_1 != null ? string.Format("{0}{1}", myctl._img_path_review, item.SUB_IMG_1) : "")" alt="" style="height:96px;" />  
+                                <img src="@(item.SUB_IMG_2 != null ? string.Format("{0}{1}", myctl._img_path_review, item.SUB_IMG_2) : "")" alt="" style="height:96px;" />
+                            </td>
+                            <td>@item.VIEW_CNT</td>
+                            <td>@item.IS_DISPLAY_LBL</td>
+                            <td>@item.INS_DATE.Value.ToShortDateString()</td>
+                            <td>
+                                <a href="@(Url.Action(string.Format("ArticleUpdate/{0}", item.IDX), "AdminReviewExp", Model.RouteParam))" class="btn btn-success small">수정</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+            <div class="tar mb10 mt10">
+                <a class="btn btn-default middium" href="@(Url.Action("Index", "AdminReviewExp"))" style="width:150px">목록</a>
+            </div>
+            @{
+
+                string search = Utility01.ConvertObject2UriQuery(Model.RouteParam);
+
+            }
+
+            @{
+                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.RouteParam.PAGE, QueryStr = search });
+            }
+
+
+        </div>
+
+    </div>
+    <!--//content-->
+
+}

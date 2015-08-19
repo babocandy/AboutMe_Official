@@ -2,19 +2,12 @@
 @{
     ViewBag.Title = "주문/결제 - ABOUT ME";
     ViewBag.TopClass = "cart";
-
+    ViewBag.BodyScript = @"onload='javascript:enable_click()' onfocus='javascript:focus_control()' ";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
     string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
 }
 @section Scripts{
     <link href="/aboutCom/css/cart.css" rel="stylesheet" />
-
-    <!-------------------------------------------------------------------------------
-    * 웹SITE 가 https를 이용하면 https://plugin.inicis.com/pay61_secunissl_cross.js 사용
-    * 웹SITE 가 Unicode(UTF-8)를 이용하면 http://plugin.inicis.com/pay61_secuni_cross.js 사용
-    * 웹SITE 가 https, unicode를 이용하면 https://plugin.inicis.com/pay61_secunissl_cross.js 사용
-    -------------------------------------------------------------------------------->
-    <script language="javascript" src="http://plugin.inicis.com/pay61_secuni_cross.js"></script>
 
     <script language="javascript">
         function textCounter(field, maxlimit) {
@@ -50,7 +43,7 @@
                 field.value = tempStr2;
             }
     
-            $(".txtcnt").html("(<em>" + str_cnt + "자</em>/" + maxlimit + "자)");
+            $("#areatxt").html("(<em>" + str_cnt + "자</em>/" + maxlimit + "자)");
 
         }
 
@@ -115,6 +108,7 @@
     </script>
 }
 
+<form name="dummyForm1" action="" method="POST"><input type="hidden" name="ORDER_IDX" value="@Model.OrderIdx"></form>
 <!--container-->
 <div class="container oder">
     <div class="h2_area">
@@ -123,356 +117,24 @@
     </div>
 
     <!--상품리스트-->
-    <div class="product_list v2">
-        <h3>주문상품</h3>
-        <ul class="btnone">
-            <li>
-            <li>
-                <ul class="product_info">
-                    <li class="photo_info">
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
-                        <div class="detail">
-                            <a href="#none" class="del_ico"></a>
-                            <span class="ico ico_best">BEST</span>
-                            <span class="tit">스킨 톤업 버블 워시</span>
-                            <span class="price"><del>32,000원</del>25,000원</span>
-                        </div>
-                    </li>
-                    <li>[기획전] 1+1 상품</li>
-                    <li>
-                        <span class="tit">임직원 금액</span>
-                        <span class="num">20,000원</span>
-                    </li>
-                    <li class="count_info bbnone">
-                        <span class="tit">수량 <strong>1</strong>개</span>
-                        <span class="num">250,000원</span>
-                    </li>
-                    <li class="coupon_choice bbnone">
-                        <span class="tit">쿠폰선택</span>
-                        <span class="selbox select_a" style="width:200px">
-                            <select name="" title="쿠폰선택">
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                            </select>
-                        </span>
-                    </li>
-                    <li class="count_info ">
-                        <span class="tit">쿠폰할인금액</span>
-                        <span class="num">5,000원</span>
-                    </li>
-                    <li class="point_info bbnone">
-                        <span class="point">예상포인트<strong>ⓟ 298</strong></span>
-                        <span class="buy_amount">주문금액 <span class="fr"><strong>25,000</strong>원</span></span>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <ul class="product_info">
-                    <li class="photo_info">
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
-                        <div class="detail">
-                            <a href="#none" class="del_ico"></a>
-                            <span class="ico ico_best">BEST</span>
-                            <span class="tit">스킨 톤업 버블 워시</span>
-                            <span class="price"><del>32,000원</del>25,000원</span>
-                        </div>
-                    </li>
-                    <li>[기획전] 1+1 상품</li>
-                    <li>
-                        <span class="tit">임직원 금액</span>
-                        <span class="num">20,000원</span>
-                    </li>
-                    <li class="count_info bbnone">
-                        <span class="tit">수량 <strong>1</strong>개</span>
-                        <span class="num">250,000원</span>
-                    </li>
-                    <li class="coupon_choice bbnone">
-                        <span class="tit">쿠폰선택</span>
-                        <span class="selbox select_a" style="width:200px">
-                            <select name="" title="쿠폰선택">
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                                <option>회원가입 10,000 원 할인쿠폰</option>
-                            </select>
-                        </span>
-                    </li>
-                    <li class="count_info ">
-                        <span class="tit">쿠폰할인금액</span>
-                        <span class="num">5,000원</span>
-                    </li>
-                    <li class="point_info bbnone">
-                        <span class="point">예상포인트<strong>ⓟ 298</strong></span>
-                        <span class="buy_amount">주문금액 <span class="fr"><strong>1,000,000</strong>원</span></span>
-                    </li>
-                </ul>
-            </li>
-
-            
-        </ul>
-    </div>
+    @{Html.RenderAction("Step1ProductList", "Order", new { OrderIdx = @Model.OrderIdx });}
     <!--//상품리스트-->
     <!--할인혜택-->
-    <div class="boxtypec pd0">
-        <h3>할인혜택</h3>
-        <ul class="con_list">
-            <li>
-                <span class="tit">할인쿠폰</span>
-                <span class="num">4,000원</span>
-            </li>
-            <li>
-                <div>
-                    <span class="tit">보유 포인트 사용</span>
-                    <span class="pointchk"><label class="chkcon v2 ml15"><input type="checkbox" name="" title="" /> <span class="txt">보유 포인트 모두사용하기</span></label></span>
-                </div>
-                <div>
-                    <span class="tit mt7">나의 포인트</span>
-                    <span class="mypoint">
-                        <input type="text" class="ipttypea" disabled style="width:70px" /> 원<span class="arrow"></span>
-                        <input type="text" class="ipttypea" value="10,000" style="width:70px" /> 원
-                    </span>
-                </div>
-                <p class="pstxt"><span>ⓘ</span>포인트 5,000 이상 보유 시  1,000 단위로 사용 가능합니다.<br />할인 혜택에서 배송비는 제외됩니다</p>
-            </li>
-            <li>
-                <span class="tit">VIP 회원 할인 금액</span>
-                <span class="num">2,000원</span>
-                <p class="pstxt"><span>ⓘ</span>VIP 클래스은 결제금액의 5% 추가 할인이 됩니다. </p>
-            </li>
-            <li class="bbnone">
-                <p>무료배송 쿠폰</p>
-                <p>
-                    <span class="tit">쿠폰선택</span>
-                    <span class="selbox select_a" style="width:200px">
-                        <select name="" title="쿠폰선택">
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                            <option>회원가입 10,000 원 할인쿠폰</option>
-                        </select>
-                    </span>
-                <p class="pstxt mt10"><span>ⓘ</span>총 결제금액이 30,000원 이상인 경우 배송비 무료입니다.</p>
-                </p>
-            </li>
-        </ul>
-    </div>
+    @if (Model.UserProfile.IS_LOGIN == true)
+    {
+        Html.RenderAction("Step1DiscountInfo", "Order", new { OrderIdx = @Model.OrderIdx });
+    }
     <!--//할인혜택-->
     <!--결제금액-->
-    <div class="boxtypec pd0">
-        <h3>결제금액</h3>
-        <ul class="con_list">
-            <li>
-                <div>
-                    <span class="tit">상품금액</span>
-                    <span class="num">36,000원</span>
-                </div>
-                <div>
-                    <span class="tit">배송비</span>
-                    <span class="num">0원</span>
-                </div>
-            </li>
-            <li>
-                <strong class="tit">총 상품금액</strong>
-                <strong class="num">36,000원</strong>
-            </li>
-            <li>
-                <div>
-                    <span class="tit">쿠폰할인금액</span>
-                    <span class="num">56,000원</span>
-                </div>
-                <div>
-                    <span class="stit">보유포인트 사용</span>
-                    <span class="num">10,000원</span>
-                </div>
-                <div>
-                    <span class="stit">VIP회원할인</span>
-                    <span class="num">0원</span>
-                </div>
-            </li>
-            <li class="bbnone">
-                <span class="tit">총 할인금액</span>
-                <span class="num">4,000원</span>
-            </li>
-        </ul>
-    </div>
-    <div class="total_paywrap">
-        <div class="total_pay">
-            <dl class="point">
-                <dt>예상적립포인트</dt>
-                <dd>ⓟ298</dd>
-            </dl>
-            <dl class="amount">
-                <dt>총 결제금액</dt>
-                <dd>29,000원</dd>
-            </dl>
-        </div>
-        <p class="pstxt2"><span>ⓘ</span> 최종 결제금액 기준으로 포인트는 적립됩니다.</p>
-    </div>
+    @{Html.RenderAction("Step1PriceInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
     <!--//결제금액-->
-    <!--주문자정보-->
-    <div class="boxtypec">
-        <h3 class="sliderh3_tit">주문자 정보</h3>
-        <div class="sliderh3_con">
-            <span class="tit_essential">표시는 필수 입력</span>
-            <!--회원정보와 동일-->
-            <label class="chkcon v2 mt10"><input type="checkbox" name="" title="" /> <span class="txt">회원정보와 동일</span></label>
-            <!--//회원정보와 동일-->
-            <ul class="addressform">
-                <li>
-                    <dl>
-                        <dt class="essential">주문하시는 분</dt>
-                        <dd class="frm_name"><input type="text" class="ipttypea" style="width:100%;" title="이름 입력" /></dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt class="essential">주소</dt>
-                        <dd class="frm_address">
-                            <input type="text" title="우편번호 입력" class="ipttypea"><a class="btn btn_white_h30 btn_zip vam" href="#">우편번호</a>
-                            <input type="text" title="주소입력" class="ipttypea mt5 wper100">
-                            <input type="text" title="주소상세입력" class="ipttypea mt5 wper100">
-                        </dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>집전화번호</dt>
-                        <dd class="frm_phone">
-                            <span class="selbox select_a">
-                                <select title="전화번호 앞자리 선택">
-                                    <option value="0">02</option>
-                                </select>
-                            </span>
-                            <!--
-                            -->
-                            <span class="hypen">-</span><input type="number" class="ipttypea" title="휴대번호 가운데자리 입력" /><span class="hypen">-</span><input type="number" class="ipttypea" title="전화번호 끝자리 입력" />
-                        </dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt class="essential">휴대번호</dt>
-                        <dd class="frm_phone">
-                            <span class="selbox select_a">
-                                <select title="휴대번호 앞자리 선택">
-                                    <option value="0">010</option>
-                                    <option value="1">011</option>
-                                    <option value="2">016</option>
-                                    <option value="3">018</option>
-                                    <option value="4">019</option>
-                                </select>
-                            </span>
-                            <!--
-                            -->
-                            <span class="hypen">-</span><input type="number" class="ipttypea" title="휴대번호 가운데자리 입력" /><span class="hypen">-</span><input type="number" class="ipttypea" title="휴대번호 끝자리 입력" />
-                        </dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt class="essential">이메일</dt>
-                        <dd class="frm_email">
-                            <input type="email" class="ipttypea" title="이메일 계정 입력" /><span class="at">@@</span><input type="email" class="ipttypea" title="이메일 도메인 입력" />
-                            <!--
-                            -->
-                            <span class="selbox select_a">
-                                <select title="이메일 도메인 선택">
-                                    <option value="0">선택</option>
-                                    <option value="1">naver.com</option>
-                                    <option value="2">gmail.com</option>
-                                    <option value="3">daum.net</option>
-                                </select>
-                            </span>
-                        </dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <!--주문자/배송지 정보-->
+    @{Html.RenderAction("Step1AddressInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
     <!--//주문자정보-->
-    <!--배송지정보-->
-    <div class="boxtypec">
-        <h3 class="sliderh3_tit">배송지 정보</h3>
-        <div class="sliderh3_con">
-            <!--회원정보와 동일-->
-            <label class="chkcon v2 mt10"><input type="checkbox" name="" title="" /> <span class="txt">주문자정보와 동일</span></label>
-            <!--//회원정보와 동일-->
-            <div class="radio_area">
-                <ul class="ea3">
-                    <li><label class="racon"><input type="radio" name="radio" checked="checked" title="" /> <span class="txt">기본주소</span></label></li>
-                    <li><label class="racon"><input type="radio" name="radio" title="" /> <span class="txt">최근배송지</span></label></li>
-                    <li><label class="racon"><input type="radio" name="radio" title="" /> <span class="txt">신규배송지</span></label></li>
-                </ul>
-            </div>
+    
+    <!--결제 정보-->
+    @{Html.RenderAction("Step1PayInfo", "Order", new { OrderIdx = @Model.OrderIdx });}
 
-            <ul class="addressform">
-                <li>
-                    <dl>
-                        <dt class="essential">받으시는 분</dt>
-                        <dd class="frm_name"><input type="text" class="ipttypea" style="width:100%;" title="이름 입력" /></dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt class="essential">주소</dt>
-                        <dd class="frm_address">
-                            <input type="text" title="우편번호 입력" class="ipttypea"><a class="btn btn_white_h30 btn_zip vam" href="#">우편번호</a>
-                            <input type="text" title="주소입력" class="ipttypea mt5 wper100">
-                            <input type="text" title="주소상세입력" class="ipttypea mt5 wper100">
-                        </dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>집전화번호</dt>
-                        <dd class="frm_phone">
-                            <span class="selbox select_a">
-                                <select title="전화번호 앞자리 선택">
-                                    <option value="0">02</option>
-                                </select>
-                            </span>
-                            <!--
-                            -->
-                            <span class="hypen">-</span><input type="number" class="ipttypea" title="휴대번호 가운데자리 입력" /><span class="hypen">-</span><input type="number" class="ipttypea" title="전화번호 끝자리 입력" />
-                        </dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt class="essential">휴대번호</dt>
-                        <dd class="frm_phone">
-                            <span class="selbox select_a">
-                                <select title="휴대번호 앞자리 선택">
-                                    <option value="0">010</option>
-                                    <option value="1">011</option>
-                                    <option value="2">016</option>
-                                    <option value="3">018</option>
-                                    <option value="4">019</option>
-                                </select>
-                            </span>
-                            <!--
-                            -->
-                            <span class="hypen">-</span><input type="number" class="ipttypea" title="휴대번호 가운데자리 입력" /><span class="hypen">-</span><input type="number" class="ipttypea" title="휴대번호 끝자리 입력" />
-                        </dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>배송시 요청사항 <span>(<em id="areatxt">0</em>자/100자)</span></dt>
-                        <dd>
-                            <textarea id="edu_thesis" class="textarea" style="height:59px"></textarea>
-                        </dd>
-                    </dl>
-                </li>
-            </ul>
-            <div class="btn_group mt20">
-                <a href="#" class="btn btn_white_h40 mr5" style="width:142px;">주문취소</a><a href="#" class="btn btn_brown_h40" style="width:142px;">주문결제</a>
-            </div>
-        </div>
-    </div>
-    <!--//배송지정보-->
     <!--알려드립니다-->
     <div class="alert">
         <p class="tit">알려드립니다</p>

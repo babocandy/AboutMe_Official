@@ -84,28 +84,40 @@
                                 <label class="chkcon v2"><input type="checkbox" name="IS_SAVE_PW" value="Y" title="비밀번호저장" /> <span class="txt">비밀번호저장</span></label>
                             </div>
                                 <a href="javascript:fGoLogin();" class="btn btn_brown_h50 lock mt20">로그인</a>
-                            <a href="#none" class="btn btn_white_h50 f13 mt10">비회원주문하기</a>
                         </fieldset>
 
                     <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
                     <input type="hidden" name="OrderList" value="@ViewBag.OrderList">
 
 }
+
+@if (ViewBag.isOrderLogin == "true")
+{
+                <form name="orderLOGIN" method="post" action="/MemberShip/GoOrder">
+                    <input type="hidden" name="OrderList" value="@ViewBag.OrderList">
+                    <fieldset>
+                        <a href="#none" class="btn btn_white_h50 f13 mt10" onclick="document.orderLOGIN.submit();">비회원주문하기</a>
+                    </fieldset>
+                </form>
+}
+
                 </div>
                 <!-- //회원 로그인 입력 -->
                 <!-- 비회원주문 입력 -->
                 <div id="login_tab2" class="loginform tab_content">
-                    <form action="">
+@using (Html.BeginForm("NoMemLoginProc", "MemberShip", FormMethod.Post, new { id = "frmNoMemLOGIN", name = "frmNoMemLOGIN" }))
+{
+                        <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
                         <fieldset>
                             <legend>비회원 주문/배송 조회 폼</legend>
                             <h3 class="hidden">비회원 주문/배송 조회 입력</h3>
                             <div class="input_group">
-                                <label>주문번호<br /><input type="text" class="ipttypea" style="width:100%;" title="주문번호 입력" /></label>
-                                <label>비밀번호<br /><input type="password" class="ipttypea" style="width:100%;" title="비밀번호 입력" /></label>
+                                <label>주문번호<br /><input type="text" id="orderNum" name="orderNum" class="ipttypea" style="width:100%;" title="주문번호 입력" /></label>
+                                <label>비밀번호<br /><input type="password" id="orderPwd" name="orderPwd" class="ipttypea" style="width:100%;" title="비밀번호 입력" /></label>
                             </div>
-                            <a href="#none" class="btn btn_brown_h50 mt30">주문/배송조회</a>
+                            <a href="#none" class="btn btn_brown_h50 mt30" onclick="return ChkOrderLogin();">주문/배송조회</a>
                         </fieldset>
-                    </form>
+}
                 </div>
                 <!-- //비회원주문 입력 -->
                 <!-- 서브링크 -->

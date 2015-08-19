@@ -55,7 +55,7 @@ namespace AboutMe.Domain.Service.Review
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                context.SP_REVIEW_PRODUCT_INS(p.M_ID, p.ORDER_DETAIL_IDX, p.P_CODE, p.SKIN_TYPE, p.COMMENT, p.ADD_IMAGE, retNum, retMsg);
+                context.SP_REVIEW_PRODUCT_INS(p.M_ID, p.ORDER_DETAIL_IDX, p.P_CODE, p.SKIN_TYPE, p.COMMENT, p.ADD_IMAGE, p.MEDIA_GBN, retNum, retMsg);
             }
 
             Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());

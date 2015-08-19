@@ -76,7 +76,6 @@ namespace AboutMe.Web.Mobile.Controllers
 
             this.ViewBag.RedirectUrl = RedirectUrl;
 
-
             this.ViewBag.REMEMBER_M_ID = "";
             this.ViewBag.REMEMBER_PW = "";
             //--- 모바일 아이디 저장, 로그인상태유지 

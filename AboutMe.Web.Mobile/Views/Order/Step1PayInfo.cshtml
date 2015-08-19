@@ -1,0 +1,320 @@
+﻿@model AboutMe.Domain.Entity.Order.ORDER_STEP1_MOBILE_PAYINFO
+<script language="javascript">
+
+    window.name = "BTPG_CLIENT";
+
+    var width = 330;
+    var height = 480;
+    var xpos = (screen.width - width) / 2;
+    var ypos = (screen.width - height) / 2;
+    var position = "top=" + ypos + ",left=" + xpos;
+    var features = position + ", width=320, height=440";
+
+    var openwin;
+
+    //주문결제
+    function payConfirm() {
+
+        if ($("#SENDER_NAME").val().trim() == "") {
+            alert('주문자명을 입력해주세요.');
+            $("#SENDER_NAME").setfocus();
+            return false;
+        }
+
+        if ($("#SENDER_POST1").val().trim() == "") {
+            alert('우편번호를 입력해주세요.');
+            $("#SENDER_POST1").setfocus();
+            return false;
+        }
+        if ($("#SENDER_ADDR1").val().trim() == "") {
+            alert('주소를 입력해주세요.');
+            $("#SENDER_ADDR1").setfocus();
+            return false;
+        }
+        if ($("#SENDER_ADDR2").val().trim() == "") {
+            alert('상세주소를 입력해주세요.');
+            $("#SENDER_ADDR2").setfocus();
+            return false;
+        }
+        /*
+        if ($("#SENDER_TEL1").val().trim() == "" || $("#SENDER_TEL2").val().trim() == "" || $("#SENDER_TEL3").val().trim() == "") {
+            alert('전화번호를 입력해주세요.');
+            $("#SENDER_TEL1").setfocus();
+            return false;
+        }
+        */
+        if ($("#SENDER_HP1").val().trim() == "" || $("#SENDER_HP2").val().trim() == "" || $("#SENDER_HP3").val().trim() == "") {
+            alert('휴대폰번호를 입력해주세요.');
+            $("#SENDER_HP1").setfocus();
+            return false;
+        }
+        if ($("#SENDER_EMAIL1").val().trim() == "" || $("#SENDER_EMAIL2").val().trim() == "") {
+            alert('이메일주소를 입력해주세요.');
+            $("#SENDER_EMAIL1").setfocus();
+            return false;
+        }
+
+
+        if ($("#RECEIVER_NAME").val().trim() == "") {
+            alert('받으시는분 이름을 입력해주세요.');
+            // $("#RECEIVER_NAME").setfocus();
+            return false;
+        }
+
+        if ($("#RECEIVER_POST1").val().trim() == "") {
+            alert('우편번호를 입력해주세요.');
+            $("#RECEIVER_POST1").setfocus();
+            return false;
+        }
+        if ($("#RECEIVER_ADDR1").val().trim() == "") {
+            alert('주소를 입력해주세요.');
+            $("#RECEIVER_ADDR1").setfocus();
+            return false;
+        }
+        if ($("#RECEIVER_ADDR2").val().trim() == "") {
+            alert('상세주소를 입력해주세요.');
+            $("#RECEIVER_ADDR2").setfocus();
+            return false;
+        }
+        /*
+        if ($("#RECEIVER_TEL1").val().trim() == "" || $("#RECEIVER_TEL2").val().trim() == "" || $("#RECEIVER_TEL3").val().trim() == "") {
+            alert('전화번호를 입력해주세요.');
+            $("#RECEIVER_TEL1").setfocus();
+            return false;
+        }
+        */
+        if ($("#RECEIVER_HP1").val().trim() == "" || $("#RECEIVER_HP2").val().trim() == "" || $("#RECEIVER_HP3").val().trim() == "") {
+            alert('휴대폰번호를 입력해주세요.');
+            $("#RECEIVER_HP1").setfocus();
+            return false;
+        }
+
+        if ($("#nomem_agree_chk").length > 0) {
+            if (!$("#nomem_agree_chk").attr("checked")) {
+                alert("비회원 필수입력정보 수집 동의를 선택하여야 합니다.");
+                return false;
+            }
+        }
+
+        if ($("#NOMEMBER_PASS").length > 0) {
+            if ($("#NOMEMBER_PASS").val().trim() == "") {
+                alert("비회원 비밀번호를 입력하세요.");
+                $("#NOMEMBER_PASS").setfocus();
+                return false;
+            }
+        }
+
+        if ($("#mem_agree1_chk").length > 0) {
+            if (!$("#mem_agree1_chk").attr("checked")) {
+                alert("주문자 동의를 선택하여야 합니다.");
+                return false;
+            }
+        }
+        if ($("#mem_agree2_chk").length > 0) {
+            if (!$("#mem_agree2_chk").attr("checked")) {
+                alert("개인정보 제3자 제공/위탁동의를 선택하여야 합니다.");
+                return false;
+            }
+        }
+
+        $("#buyername").val($("#SENDER_NAME").val().trim());
+        $("#buyeremail").val($("#SENDER_EMAIL1").val().trim() + "@@" + $("#SENDER_EMAIL2").val().trim());
+        $("#buyertel").val($("#SENDER_HP1").val().trim() + "-" + $("#SENDER_HP1").val().trim() + "-" + $("#SENDER_HP1").val().trim());
+
+        SaveReceiverAddress();
+    }
+
+    //주소저장
+    function SaveReceiverAddress() {
+        var src_url = "/Order/SaveReceiverAddress";
+        var param = "ORDER_IDX=@Model.OrderIdx"
+        param += "&SENDER_NAME=" + $("#SENDER_NAME").val().trim();
+        param += "&SENDER_POST1=" + $("#SENDER_POST1").val().trim();
+        //param += "&SENDER_POST2=" + $("#SENDER_POST2").val().trim();
+        param += "&SENDER_ADDR1=" + $("#SENDER_ADDR1").val().trim();
+        param += "&SENDER_ADDR2=" + $("#SENDER_ADDR2").val().trim();
+        param += "&SENDER_TEL1=" + $("#SENDER_TEL1").val().trim();
+        param += "&SENDER_TEL2=" + $("#SENDER_TEL2").val().trim();
+        param += "&SENDER_TEL3=" + $("#SENDER_TEL3").val().trim();
+        param += "&SENDER_HP1=" + $("#SENDER_HP1").val().trim();
+        param += "&SENDER_HP2=" + $("#SENDER_HP2").val().trim();
+        param += "&SENDER_HP3=" + $("#SENDER_HP3").val().trim();
+        param += "&SENDER_EMAIL1=" + $("#SENDER_EMAIL1").val().trim();
+        param += "&SENDER_EMAIL2=" + $("#SENDER_EMAIL2").val().trim();
+
+        param += "&RECEIVER_NAME=" + $("#RECEIVER_NAME").val().trim();
+        param += "&RECEIVER_POST1=" + $("#RECEIVER_POST1").val().trim();
+        //param += "&RECEIVER_POST2=" + $("#RECEIVER_POST1").val().trim();
+        param += "&RECEIVER_ADDR1=" + $("#RECEIVER_ADDR1").val().trim();
+        param += "&RECEIVER_ADDR2=" + $("#RECEIVER_ADDR2").val().trim();
+        param += "&RECEIVER_TEL1=" + $("#RECEIVER_TEL1").val().trim();
+        param += "&RECEIVER_TEL2=" + $("#RECEIVER_TEL2").val().trim();
+        param += "&RECEIVER_TEL3=" + $("#RECEIVER_TEL3").val().trim();
+        param += "&RECEIVER_HP1=" + $("#RECEIVER_HP1").val().trim();
+        param += "&RECEIVER_HP2=" + $("#RECEIVER_HP2").val().trim();
+        param += "&RECEIVER_HP3=" + $("#RECEIVER_HP3").val().trim();
+        param += "&ORDER_MEMO=" + $("#ORDER_MEMO").val().trim();
+
+        if ($("#NOMEMBER_PASS").length > 0) {
+            param += "&NOMEMBER_PASS=" + $("#NOMEMBER_PASS").val().trim();
+        }
+
+        var frm = document.ini;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.result == "true") {
+                    //이니시스결제 호출!
+                    pay(frm);
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    function pay(frm) {
+        if ($("#clickcontrol").val() == "enable") {
+            if ($("#P_GOODS").val() == "")  // 필수항목 체크 (상품명, 상품가격)
+            {
+                alert("상품명이 빠졌습니다. 필수항목입니다.");
+                return false;
+            }
+
+            var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
+            if (paygbn == "1") {
+                document.ini.action = "https://mobile.inicis.com/smart/wcard/";
+            }
+            else if (paygbn == "2") //실시간계좌이체
+            {
+                document.ini.action = "https://mobile.inicis.com/smart/bank/";
+
+            }
+            else if (paygbn == "3") //무통장(가상계좌)
+            {
+                document.ini.action = "https://mobile.inicis.com/smart/vbank/";
+            }
+
+            var email = $("#SENDER_EMAIL1").val().trim() + "@@" + $("#SENDER_EMAIL2").val().trim();
+            $("#P_EMAIL").val(email);
+
+            var uname = $("#SENDER_NAME").val().trim();
+            $("#P_UNAME").val(uname);
+
+            var pmobile = $("#SENDER_HP1").val().trim() + "-" + $("#SENDER_HP2").val().trim() + "-" + $("#SENDER_HP3").val().trim();
+            $("#P_MOBILE").val(pmobile);
+
+            document.ini.target = "_self";
+
+            document.ini.submit();
+        }
+        else {
+            return false;
+        }
+    }
+
+    function enable_click() {
+        $("#clickcontrol").val("enable");
+    }
+
+    function disable_click() {
+        $("#clickcontrol").val("disable");
+    }
+
+    function focus_control() {
+        if ($("#clickcontrol").val() == "disable")
+            openwin.focus();
+    }
+</script>
+@Model.P_NEXT_URL
+<!-- 결제 정보 -->
+<form id="ini" name="ini" method="post" action="" accept-charset="euc-kr">
+    <input type="hidden" id="P_GOODS" name="P_GOODS" value="@Model.GoodName">
+    <input type="hidden" id="P_MID" name="P_MID" value="@Model.Mid">
+    <input type="hidden" id="P_AMT" name="P_AMT" value="@Model.TotalPrice">
+    <input type="hidden" id="P_OID" name="P_OID" value="@Model.OrderIdx">
+    <input type="hidden" id="P_MNAME" name="P_MNAME" value="AboutMe Mall">
+    
+    <input type="hidden" id="P_NOTI" name="P_NOTI" value="@Model.OrderIdx">
+
+    <input type="hidden" id="P_EMAIL" name="P_EMAIL" value="">
+    <input type="hidden" id="P_UNAME" name="P_UNAME" value="">
+    <input type="hidden" id="P_MOBILE" name="P_MOBILE" value="">
+    <input type="hidden" id="P_NEXT_URL" name="P_NEXT_URL" value="@Model.P_NEXT_URL">
+    <input type="hidden" id="P_NOTI_URL" name="P_NOTI_URL" value="@Model.P_NOTI_URL">
+    <input type="hidden" id="P_RETURN_URL" name="P_RETURN_URL" value="@Model.P_RETURN_URL">
+
+    <input type="hidden" name="P_RESERVED" value="twotrs_isp=Y&block_isp=N&app_scheme=http&apprun_check=Y " /> 
+    <input type="hidden" id="clickcontrol" name="clickcontrol">
+
+    <!--결제정보-->
+    <div class="boxtypec pay">
+        <h3>결제정보</h3>
+        <div class="radio_area">
+            <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" value="1"  checked="checked" title="" /> <span class="txt">신용카드</span></label>
+            <label class="racon" style="width:42%"><input type="radio" name="PAY_GBN" value="2" title="" /> <span class="txt">실시간 계좌이체</span></label>
+            <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" value="3" title="" /> <span class="txt">가상계좌</span></label>
+        </div>
+@if (Model.UserProfile.IS_LOGIN == false)
+{
+        <div class="txtcon">
+            <p class="tit">비회원 필수입력정보 수집 동의서</p>
+            <div class="boxtypee">
+                <p class="nomemagree_txt">
+                    1. 개인정보의 수집 및 이용 목적<br />
+                    1) 주문자 정보 확보<br />
+                    2) 물품에 관한 배송지 정보 확보<br />
+                    3) 불만처리 의사소통 경로 확보
+                </p>
+                <p class="nomemagree_txt">
+                    2. 수집하는 개인정보의 항목<br />
+                    주문자의 이름, 주소, 휴대폰, 전화번호, 이메일<br />
+                    (단, 주문자와 주문물품의 수령자가 다른 경우에는 <br />
+                    수령자의 이름, 주소, 휴대폰, 전화번호)
+                </p>
+                <p class="nomemagree_txt">
+                    3. 비회원 주문 시 제공하신 모든 정보는 상기 목적에 필요한
+                    용도 이외로는 사용되지 않습니다. 기타 자세한 사항은
+                    '개인정보취급방침'을 참고하여 주시기 바랍니다.
+                </p>
+            </div>
+            <label class="chkcon v2"><input type="checkbox" name="nomem_agree_chk" id="nomem_agree_chk" title="" value="1" /> <span class="txt">동의합니다.</span></label>
+        </div>
+}
+        <div class="txtcon">
+            <p class="tit">주문자 동의</p>
+            <div class="boxtypee">
+                주문할 상품의 상품명,상품가격,배송정보를 확인하였으며,
+                구매에 동의하시겠습니까? (전자상거래법 제 8조 제2항)
+            </div>
+            <label class="chkcon v2"><input type="checkbox" name="mem_agree1_chk" id="mem_agree1_chk" value="1" title="" /> <span class="txt">동의합니다.</span></label>
+        </div>
+        <div class="txtcon v2">
+            <p class="tit">개인정보 제3자 제공/위탁동의</p>
+            <a href="#" class="btn btn_white_h30 v2 btn_agree">약관전체보기</a>
+            <label class="chkcon v2 mt10"><input type="checkbox" name="mem_agree2_chk" id="mem_agree2_chk" value="1" title="" /> <span class="txt">동의합니다.</span></label>
+        </div>
+@if (Model.UserProfile.IS_LOGIN == false)
+{
+        <div class="txtcon v2">
+            <p class="tit">비회원 비밀번호</p>
+            <p class="pstxt"><span>ⓘ</span> 비회원 주문 주회시 사용 4자에서 12자 영문 또는 숫자 조합</p>
+            <input type="text" name="NOMEMBER_PASS" id="NOMEMBER_PASS" title="비회원 비밀번호 입력" class="ipttypea" style="width:100%">
+        </div>
+}
+    </div>
+    <!--//결제정보-->
+    <!--버튼영역-->
+    <div class="btn_group mt20">
+        <a href="#none" class="btn btn_white_h40 mr5" style="width:142px;" onclick="cancelOrder();">주문취소</a><a href="#none" class="btn btn_brown_h40" style="width:142px;" onclick="payConfirm();">주문결제</a>
+    </div>
+    <!--//버튼영역-->
+</form>

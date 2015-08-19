@@ -723,5 +723,63 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_COUPON_DOWNLOAD_AT_MOBILE_VERSION_UPDATE", m_IDParameter, iDX_COUPON_NUMBERParameter, mETHODParameter);
         }
+    
+        public virtual ObjectResult<SP_COUPON_ISSUED_DETAIL_SEL_Result> SP_COUPON_CLOSED_LIST_SEL(string m_ID, string uSABLE_DEVICE_GBN, Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var uSABLE_DEVICE_GBNParameter = uSABLE_DEVICE_GBN != null ?
+                new ObjectParameter("USABLE_DEVICE_GBN", uSABLE_DEVICE_GBN) :
+                new ObjectParameter("USABLE_DEVICE_GBN", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_ISSUED_DETAIL_SEL_Result>("SP_COUPON_CLOSED_LIST_SEL", m_IDParameter, uSABLE_DEVICE_GBNParameter, pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_COUPON_COMMON_CNT_Result> SP_COUPON_CLOSED_LIST_COUNT(string m_ID, string uSABLE_DEVICE_GBN, Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var uSABLE_DEVICE_GBNParameter = uSABLE_DEVICE_GBN != null ?
+                new ObjectParameter("USABLE_DEVICE_GBN", uSABLE_DEVICE_GBN) :
+                new ObjectParameter("USABLE_DEVICE_GBN", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_COMMON_CNT_Result>("SP_COUPON_CLOSED_LIST_COUNT", m_IDParameter, uSABLE_DEVICE_GBNParameter, pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
     }
 }

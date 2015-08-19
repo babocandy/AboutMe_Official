@@ -304,5 +304,16 @@ namespace AboutMe.Domain.Service.Order
         }
         #endregion
 
+        #region Mobile 이니시스 결제 승인시 중복승인을 막기위해 old_order_idx로된 주문이 기저장되어있는지 체크
+        public SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result OrderGetOrderCodeByOldOrderIdx(Int32 OldOrderIdx)
+        {
+            SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result result = new SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result();
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                result = EfContext.SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX(OldOrderIdx).FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
     }
 }

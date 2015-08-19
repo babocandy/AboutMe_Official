@@ -275,7 +275,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         DateTime dt = DateTime.Now.AddDays(3); 
         string vbankDate = dt.ToString("yyyyMMdd");
     }
-    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):">
+    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):useescrow:">
     <input type="hidden" id="oid" name="oid" size="40" value="@Model.OrderIdx">
     <input type="hidden" id="INIregno" name="INIregno" size="40">
 
@@ -308,7 +308,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             </label>
             @if (Model.UserProfile.IS_LOGIN == true)
             {
-                <label id="rdoPoint" class="racon">
+                <label id="rdoPoint" class="racon" style="display:none">
                     <input type="radio" name="PAY_GBN" value="4" title="포인트결제" /> <span class="txt">포인트결제</span>
                 </label>
             }
@@ -378,7 +378,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             </div>
             <a href="#none" class="btn_white_w120h38">약관전체보기</a>
         </div>
-        <p class="btn_payment mt30"><a href="#none" class="btn_brown_w229h60" onclick="payConfirm();">주문결제</a><a href="#none" class="btn_white_w229h60" onclick="    cancelOrder();">주문취소</a></p>
+        <p class="btn_payment mt30"><a href="#none" class="btn_brown_w229h60" onclick="payConfirm();">주문결제</a><a href="#none" class="btn_white_w229h60" onclick="cancelOrder();">주문취소</a></p>
     </div>
 </form>
 <!-- //결제 정보 -->

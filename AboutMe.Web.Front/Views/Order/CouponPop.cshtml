@@ -209,7 +209,7 @@
                                             <li class="tprice">
                                                 <dl>
                                                     <dt>할인적용금액</dt>
-                                                    <dd><strong id="COUPON_PRICE_@item.P_CODE" data-couponprice="@item.COUPON_DISCOUNT_PRICE">@item.COUPON_DISCOUNT_PRICE.ToString("#,#0.")</strong>원</dd>
+                                                    <dd><strong id="COUPON_PRICE_@item.P_CODE" data-couponprice="@item.COUPON_DISCOUNT_PRICE">@String.Format("{0:#,#0.}", item.COUPON_DISCOUNT_PRICE) </strong>원</dd>
                                                 </dl>
                                             </li>
                                         </ul>

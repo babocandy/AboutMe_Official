@@ -308,7 +308,13 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_PRODUCT  , string[] CheckMemGrade)
-        public ActionResult PrdCreate(HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE, [Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Exclude = "IDX,CD_PROMOTION_PRODUCT,PMO_CATEGORY,INS_DATE")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
+        public ActionResult PrdCreate(HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE
+            , HttpPostedFileBase PMO_PRODUCT_PC_MAINPG_IMG_FILE
+            , HttpPostedFileBase PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE
+            , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAIN_IMG_FILE
+            , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE
+            , HttpPostedFileBase PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE
+            , [Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT", Exclude = "IDX,CD_PROMOTION_PRODUCT,PMO_CATEGORY,INS_DATE")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product)
         {
 
 
@@ -334,6 +340,7 @@ namespace AboutMe.Web.Admin.Controllers
                         string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");
 
                         #region 파일 업로드
+                        //[1]  
                         if (PMO_PRODUCT_MAIN_IMG_FILE != null)
                         {
                            
@@ -362,6 +369,162 @@ namespace AboutMe.Web.Admin.Controllers
                                 tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = "";
                             }
                         }
+
+                        //[2]  
+                        if (PMO_PRODUCT_PC_MAINPG_IMG_FILE != null)
+                        {
+
+                            int imgWidth = 0;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_PC_MAINPG_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_PC_MAINPG_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = "";
+                            }
+                        }
+
+                        //[3]  
+                        if (PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE != null)
+                        {
+
+                            int imgWidth = 0;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_PC_EVENT_MAINPG_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_PC_EVENT_MAINPG_IMG = "";
+                            }
+                        }
+
+                        //[4]  
+                        if (PMO_PRODUCT_MOBILE_MAIN_IMG_FILE != null)
+                        {
+
+                            int imgWidth = 0;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_MOBILE_MAIN_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MOBILE_MAIN_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAIN_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAIN_IMG = "";
+                            }
+                        }
+
+
+                        //[5]  
+                        if (PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE != null)
+                        {
+
+                            int imgWidth = 0;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAINPG_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAINPG_IMG = "";
+                            }
+                        }
+
+
+
+                        //[6]  
+                        if (PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE != null)
+                        {
+
+                            int imgWidth = 0;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG = "";
+                            }
+                        }
+
+
+
                         #endregion
                         is_success = _AdminPromotionService.InsAdminPromotionByProduct(tb_promotion_by_product);
 
@@ -424,6 +587,16 @@ namespace AboutMe.Web.Admin.Controllers
             [Bind(Prefix = "inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0]", Exclude = "IDX,CD_PROMOTION_PRODUCT,PMO_CATEGORY,INS_DATE")]  TB_PROMOTION_BY_PRODUCT tb_promotion_by_product
             , String OLD_PRODUCT_MAIN_IMG
             , HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE
+            , String OLD_PMO_PRODUCT_PC_MAINPG_IMG
+            , HttpPostedFileBase PMO_PRODUCT_PC_MAINPG_IMG_FILE
+            , String OLD_PMO_PRODUCT_PC_EVENT_MAINPG_IMG
+            , HttpPostedFileBase PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE
+            , String OLD_PMO_PRODUCT_MOBILE_MAIN_IMG
+            , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAIN_IMG_FILE
+            , String OLD_PMO_PRODUCT_MOBILE_MAINPG_IMG
+            , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE
+            , String OLD_PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG
+            , HttpPostedFileBase PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE
             , string CdPromotionProduct, DateTime orgin_date_from, DateTime orgin_date_to)
         {
             
@@ -484,6 +657,7 @@ namespace AboutMe.Web.Admin.Controllers
                                     
                                     string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");
                                     
+                                    //[1] PC 프로모션 대표페이지 이미지
                                     if (PMO_PRODUCT_MAIN_IMG_FILE != null)
                                     {
 
@@ -514,6 +688,173 @@ namespace AboutMe.Web.Admin.Controllers
                                     {
                                         tb_promotion_by_product.PMO_PRODUCT_MAIN_IMG = OLD_PRODUCT_MAIN_IMG;
                                     }
+
+                                    //[2] PC 메인페이지 이미지
+                                    if (PMO_PRODUCT_PC_MAINPG_IMG_FILE != null)
+                                    {
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_PC_MAINPG_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_PC_MAINPG_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = OLD_PMO_PRODUCT_PC_MAINPG_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = OLD_PMO_PRODUCT_PC_MAINPG_IMG;
+                                    }
+
+
+
+                                    //[3]PC 이벤트 메인페이지
+                                    if (PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE != null)
+                                    {
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_PC_EVENT_MAINPG_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_PC_EVENT_MAINPG_IMG = OLD_PMO_PRODUCT_PC_EVENT_MAINPG_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_PC_EVENT_MAINPG_IMG = OLD_PMO_PRODUCT_PC_EVENT_MAINPG_IMG;
+                                    }
+
+
+
+                                    //[4] 프로모션 모바일 대표이미지
+                                    if (PMO_PRODUCT_MOBILE_MAIN_IMG_FILE != null)
+                                    {
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_MOBILE_MAIN_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MOBILE_MAIN_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAIN_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAIN_IMG = OLD_PMO_PRODUCT_MOBILE_MAIN_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAIN_IMG = OLD_PMO_PRODUCT_MOBILE_MAIN_IMG;
+                                    }
+
+
+                                    //[5] 프로모션 모바일 메인 페이지 이미지
+                                    if (PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE != null)
+                                    {
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAINPG_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAINPG_IMG = OLD_PMO_PRODUCT_MOBILE_MAINPG_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_MOBILE_MAINPG_IMG = OLD_PMO_PRODUCT_MOBILE_MAINPG_IMG;
+                                    }
+
+                                    //[6] 프로모션 모바일 이벤트 메인 페이지 이미지
+                                    if (PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE != null)
+                                    {
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG = OLD_PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG = OLD_PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG;
+                                    }
+
+
                                     
                                     #endregion
 

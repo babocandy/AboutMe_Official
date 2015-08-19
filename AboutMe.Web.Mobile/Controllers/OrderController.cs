@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text;
+using System.IO;
 using Newtonsoft.Json;
 using System.Collections;
 
+using System.Net;
 using AboutMe.Domain.Service.Order;
 using AboutMe.Domain.Entity.Order;
 using AboutMe.Domain.Entity.Cart;
@@ -43,8 +45,8 @@ namespace AboutMe.Web.Mobile.Controllers
         //이니페이에서사용
         private Hashtable hstCode_PayMethod = new Hashtable();
         private string _inipay_setpath = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.SetPath");
-        private string _inipay_mid = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mid");
-        private string _inipay_admin = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Admin");
+        private string _inipay_mid = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mobile.Mid");
+        private string _inipay_admin = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mobile.Admin");
         private string _inipay_debug = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Debug");
 
 		//**** 지불수단별로 PGID를 다르게 표시한다 (2003.12.19: ts@inicis.com)        *
@@ -75,6 +77,48 @@ namespace AboutMe.Web.Mobile.Controllers
 			hstCode_PayMethod["AUTH"]		= "AUTH";
 		}
 
+        private void filelog(string msg, bool isline=true)
+        {
+            string sourceRootDir = _inipay_setpath + "/ini_log";
+            DateTime dt2 = new DateTime();
+            dt2 = DateTime.Now;
+            string now_dt = dt2.ToString("yyyyMMdd");
+            string now_time = dt2.ToString("yyyy-MM-dd HHmms");
+
+
+            string sourceDir = sourceRootDir + "/" + now_dt;
+            string file_name = "gxen_" + now_dt + ".log";
+
+            if (!Directory.Exists(sourceRootDir))
+            {
+                Directory.CreateDirectory(sourceRootDir);
+            }
+
+            if (!Directory.Exists(sourceDir))
+            {
+                Directory.CreateDirectory(sourceDir);
+            }
+
+            if (!System.IO.File.Exists(sourceDir + "/" + file_name))
+            {
+                using (System.IO.FileStream fs = System.IO.File.Create(sourceDir + "/" + file_name))
+                {
+                   
+                }
+            }
+
+            using (FileStream fs = new FileStream(sourceDir + "/" + file_name, FileMode.Append, FileAccess.Write))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(fs, System.Text.Encoding.UTF8))
+            {
+                if (isline) {
+                    file.WriteLine("---------"+now_time+" ------------------------------------------------------------------------------");
+                }
+                file.WriteLine("실행시간 : " + now_time);
+                file.WriteLine(msg);
+            }
+
+        }
+
 
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult InsertOrderStep1(string OrderList)
@@ -102,10 +146,10 @@ namespace AboutMe.Web.Mobile.Controllers
         }
 
         [HttpPost]
-        [OutputCache(NoStore = true, Duration = 0)]
+         /*[OutputCache(NoStore = true, Duration = 0)]*/
         public ActionResult Step1(Int32 ORDER_IDX)
         {
-            //ViewBag.Order_Idx = ORDER_IDX;
+
             ORDER_STEP1_MODEL M = new ORDER_STEP1_MODEL
             {
                 OrderIdx = ORDER_IDX,
@@ -133,7 +177,6 @@ namespace AboutMe.Web.Mobile.Controllers
                 OrderIdx = OrderIdx,
                 UserProfile = _user_profile,
                 PriceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx)
-
             };
             return PartialView(M);
         }
@@ -199,25 +242,35 @@ namespace AboutMe.Web.Mobile.Controllers
         public ActionResult Step1PayInfo(Int32 OrderIdx)
         {
             string M_ID = _user_profile.M_ID;
-            INISYSPAY_MODEL InisysInfo = new INISYSPAY_MODEL();
+
             SP_ORDER_STEP2_PRICE_INFO_Result PriceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx);
-            if (PriceInfo.TOTAL_PAY_PRICE > 0)
-            {
-                InisysInfo = GetIniPayInitialize(PriceInfo.TOTAL_PAY_PRICE.ToString());
-            }
             List<SP_ORDER_STEP2_PRODUCT_LIST_Result> OrderList = _orderservice.OrderStep1List(OrderIdx);
             string goodname = OrderList.FirstOrDefault().P_NAME;
             goodname = TagStrip(goodname);
             if (OrderList.Count() > 1) {
                 goodname = goodname + "외 " + Convert.ToString(OrderList.Count() - 1) + "건";
             }
-            ORDER_STEP1_PAYINFO M = new ORDER_STEP1_PAYINFO
+
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; 
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority;
+
+            string localurl = Request.Url.Authority;
+            string schema = Request.Url.Scheme;
+            string p_next_url = strHTTPS_DOMAIN + "/Order/InipayNext";      //2 Transaction 방식 (신용카드)
+            string p_noti_url = strHTTPS_DOMAIN + "/Order/InipayNoti";      //1 Transaction 방식 (가상계좌, 실시간계좌)
+            string p_return_url = strHTTPS_DOMAIN + "/Order/OrderReturn?ORDER_IDX=" + Convert.ToString(OrderIdx);  //1 Transaction 방식 (가상계좌, 실시간계좌)
+            
+            ORDER_STEP1_MOBILE_PAYINFO M = new ORDER_STEP1_MOBILE_PAYINFO
             {
                 OrderIdx = OrderIdx,
                 UserProfile = _user_profile,
                 GoodName = goodname,
                 PriceInfo = PriceInfo,
-                InisysStart = InisysInfo
+                Mid = _inipay_mid,
+                TotalPrice = Convert.ToString(PriceInfo.TOTAL_PAY_PRICE),
+                P_NEXT_URL = p_next_url,
+                P_NOTI_URL = p_noti_url,
+                P_RETURN_URL = p_return_url
             };
             return PartialView(M);
         }
@@ -336,140 +389,9 @@ namespace AboutMe.Web.Mobile.Controllers
 
         public ActionResult IniPayTest()
         {
-            INISYSPAY_MODEL INISYSRESULT = new INISYSPAY_MODEL();
-
-            //###############################################################################
-            //# 1. 객체 생성 #
-            //################
-            IINIpay INIpay = new IINIpay("50");
-
-            //###############################################################################
-            //# 2. 인스턴스 초기화 /  3. 체크 유형 설정 #
-            //######################
-            //
-            INIpay.Initialize("chkfake");
-
-            INIpay.SetPath(_inipay_setpath);			// 이니페이 설치 디렉토리 C:\\INIpayNet50
-
-            //###############################################################################
-            //# 5. 암호화 처리 필드 세팅        #
-            //###################################
-            INIpay.SetField("mid", _inipay_mid);		// 상점 아이디 
-            INIpay.SetField("admin", _inipay_admin);			// 상점 키패스워드
-            INIpay.SetField("price", "1004");			// 결제 금액
-            INIpay.SetField("nointerest", "no");		// 무이자 설정 세팅 
-            INIpay.SetField("quotabase", "lumpsum:00:02:03:04:05:06:07:08:09:10:11:");//할부 개월 및 카드사별 무이자 세팅
-            INIpay.SetField("currency", "WON");			// 통화단위
-            INIpay.SetField("debug", _inipay_debug);	// 로그모드("true"로 설정하면 상세한 로그를 남김)
-
-            //INIpay.SetField("test", "true");			 //Test
-
-            //###############################################################################
-            //# 5. 체크 처리를 위한 암호화 처리 #
-            //###################################
-            INIpay.StartAction();
-
-            //###############################################################################
-            //6. 암호화  결과 #
-            //###############################################################################
-            INISYSRESULT.resultcode = INIpay.GetResult("resultcode");		//결과코드 성공이면 '00' 실패 '01'
-            INISYSRESULT.resultmsg = INIpay.GetResult("resultmsg");		//결과메세지 
-            INISYSRESULT.rn_value = INIpay.GetResult("rn");				// 암호화 결과값
-            INISYSRESULT.return_enc = INIpay.GetResult("return_enc");		// 암호화 결과값
-            INISYSRESULT.ini_certid = INIpay.GetResult("ini_certid");		// 암호화 결과값
-            INISYSRESULT.ini_encfield = INISYSRESULT.return_enc;
-
-            //###############################################################################
-            //7. RN 값 세션에 저장 #
-            //###############################################################################
-            Session["INI_RN"] = INISYSRESULT.rn_value; //	//RN값 => 결제 처리 페이지에서 체크 하기 위해 세션에 저장 (또는 DB에 저장)하여 다음 결제 처리 페이지 에서 체크)
-            Session["INI_PRICE"] = "1004"; //결제 금액 =>  결제 처리 페이지에서 체크 하기 위해 세션에 저장 (또는 DB에 저장)하여 다음 결제 처리 페이지 에서
-
-            //###############################################################################
-            //# 8. 인스턴스 해제 #
-            //###############################################################################
-            INIpay.Destory();
-            INIpay = null;
-
-            //###############################################################################
-            //# 9. 결제 페이지 생성 성공 유무에 대한 처리  #
-            //###############################################################################
-            if (!INISYSRESULT.resultcode.Equals("00"))
-            {
-                INISYSRESULT.err_msg = "결제 페이지 생성에 문제 발생<BR> ERR:" + INISYSRESULT.resultmsg;
-            }
-
-            return View(INISYSRESULT);
+            return View();
         }
         
-        private INISYSPAY_MODEL GetIniPayInitialize(string payprice)
-        {
-            INISYSPAY_MODEL INISYSRESULT = new INISYSPAY_MODEL();
-
-            //###############################################################################
-            //# 1. 객체 생성 #
-            //################
-            IINIpay INIpay = new IINIpay("50");
-
-            //###############################################################################
-            //# 2. 인스턴스 초기화 /  3. 체크 유형 설정 #
-            //######################
-            //
-            INIpay.Initialize("chkfake");
-
-            INIpay.SetPath(_inipay_setpath);			// 이니페이 설치 디렉토리 C:\\INIpayNet50
-
-            //###############################################################################
-            //# 5. 암호화 처리 필드 세팅        #
-            //###################################
-            INIpay.SetField("mid", _inipay_mid);		// 상점 아이디 
-            INIpay.SetField("admin", _inipay_admin);			// 상점 키패스워드
-            INIpay.SetField("price", payprice);			// 결제 금액
-            INIpay.SetField("nointerest", "no");		// 무이자 설정 세팅 
-            INIpay.SetField("quotabase", "lumpsum:00:02:03:04:05:06:07:08:09:10:11:");//할부 개월 및 카드사별 무이자 세팅
-            INIpay.SetField("currency", "WON");			// 통화단위
-            INIpay.SetField("debug", _inipay_debug);			// 로그모드("true"로 설정하면 상세한 로그를 남김)
-
-            //INIpay.SetField("test", "true");			 //Test
-
-            //###############################################################################
-            //# 5. 체크 처리를 위한 암호화 처리 #
-            //###################################
-            INIpay.StartAction();
-
-            //###############################################################################
-            //6. 암호화  결과 #
-            //###############################################################################
-            INISYSRESULT.resultcode = INIpay.GetResult("resultcode");		//결과코드 성공이면 '00' 실패 '01'
-            INISYSRESULT.resultmsg = INIpay.GetResult("resultmsg");		//결과메세지 
-            INISYSRESULT.rn_value = INIpay.GetResult("rn");				// 암호화 결과값
-            INISYSRESULT.return_enc = INIpay.GetResult("return_enc");		// 암호화 결과값
-            INISYSRESULT.ini_certid = INIpay.GetResult("ini_certid");		// 암호화 결과값
-            INISYSRESULT.ini_encfield = INISYSRESULT.return_enc;
-
-            //###############################################################################
-            //7. RN 값 세션에 저장 #
-            //###############################################################################
-            Session["INI_RN"] = INISYSRESULT.rn_value; //	//RN값 => 결제 처리 페이지에서 체크 하기 위해 세션에 저장 (또는 DB에 저장)하여 다음 결제 처리 페이지 에서 체크)
-            Session["INI_PRICE"] = payprice; //결제 금액 =>  결제 처리 페이지에서 체크 하기 위해 세션에 저장 (또는 DB에 저장)하여 다음 결제 처리 페이지 에서
-
-            //###############################################################################
-            //# 8. 인스턴스 해제 #
-            //###############################################################################
-            INIpay.Destory();
-            INIpay = null;
-
-            //###############################################################################
-            //# 9. 결제 페이지 생성 성공 유무에 대한 처리  #
-            //###############################################################################
-            if (!INISYSRESULT.resultcode.Equals("00"))
-            {
-                INISYSRESULT.err_msg = "결제 페이지 생성에 문제 발생<BR> ERR:" + INISYSRESULT.resultmsg;
-            }
-
-            return INISYSRESULT;
-        }
-
         //이니시스 결제 취소
         private INIPAYRESULT InipayCancelProcess(string Tid, string errMsg, string oid)
         {
@@ -843,7 +765,9 @@ namespace AboutMe.Web.Mobile.Controllers
             return Content(SBuilder.ToString());
         }
 
-        public ActionResult OrderResult(OrderResult result) {
+        
+        public ActionResult OrderResult(OrderResult result)
+        {
             ORDER_STEP2_MODEL M = new ORDER_STEP2_MODEL();
             M.OrderResult = result;
             M.UserProfile = _user_profile;
@@ -985,5 +909,326 @@ namespace AboutMe.Web.Mobile.Controllers
             }
             
         }
+
+
+        public SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result SaveOrderDB(string CallFunction, INIPAYMOBILE_CALL_RETURN DataList)
+        {
+            string log = "";
+            log = log + Newtonsoft.Json.JsonConvert.SerializeObject(DataList);
+            filelog(CallFunction + "> SaveOrderDB  :  DataList = " + log, false);
+            SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result returnVal = new SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result();
+
+            //이니시스에서 noti 페이지를 여러번 호출하기 때문에 중복 저장을 막기위해 old_order_idx로 저장된 결제건이 있는지 체크
+            returnVal = _orderservice.OrderGetOrderCodeByOldOrderIdx(Convert.ToInt32(DataList.P_OID));
+            if (string.IsNullOrEmpty(returnVal.ORDER_CODE))
+            {
+                ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
+                Param.ORDER_IDX = Convert.ToInt32(DataList.P_OID);
+
+                if (DataList.P_TYPE == "VBANK")
+                {
+                    Param.PAY_GBN = "3";  //가상계좌
+                }
+                else 
+                {
+                    Param.PAY_GBN = "1";  //CARD, ISP ...
+                }
+
+                string INSTLMT_AT = "0"; //할부여부 ("0", "")
+
+                if (!string.IsNullOrEmpty(DataList.P_RMESG2)) //할부개월수
+                {
+                    INSTLMT_AT = Convert.ToString(Convert.ToInt32(DataList.P_RMESG2));
+                }
+
+                Param.CARD_GBN = DataList.P_FN_CD1;
+                Param.INSTLMT_AT = INSTLMT_AT; //할부여부
+                Param.PAT_TID = DataList.P_TID;
+                Param.REAL_ACCOUNT_AT = "0"; //실시간계좌 사용여부
+                Param.BANK_CODE = DataList.P_CARD_PURCHASE_CODE; //은행코드
+
+                Param.CASHRECEIPT_SE_CODE = "0";//현금영수증 발행
+                Param.CASHRECEIPT_RESULT_CODE = "0";
+
+                Param.HTTP_USER_AGENT = Request.UserAgent;
+                Param.PAT_GUBUN = "Mobile";
+                Param.SVR_DOMAIN = Request.Url.Authority;
+
+                if (DataList.P_TYPE == "VBANK")
+                {
+                    Param.VACT_Num = DataList.P_VACT_NUM;
+                    Param.VACT_BankCode = DataList.P_VACT_BANK_CODE;
+                    Param.VACT_Name = DataList.P_VACT_NAME;
+                    Param.VACT_Date = DataList.P_VACT_DATE;
+                    Param.VACT_Time = DataList.P_VACT_TIME;
+                }
+                else
+                {
+                    Param.VACT_Num = "";
+                    Param.VACT_BankCode = "";
+                    Param.VACT_Name = "";
+                    Param.VACT_Date = "";
+                    Param.VACT_Time = "";
+                }
+
+                //로그남기기
+                string save_param = String.Format("ORDER_IDX={17},PAY_GBN={0},CARD_GBN={1},INSTLMT_AT={2},BANK_CODE ={3},PAT_TID={4},REAL_ACCOUNT_AT={5},CASHRECEIPT_SE_CODE={6},CASHRECEIPT_RESULT_CODE={7},HTTP_USER_AGENT={8},PAT_GUBUN={9},SVR_DOMAIN={10},VACT_Num={11},VACT_BankCode={12},VACT_Name={13},VACT_InputName={14},VACT_Date={15},VACT_Time={16}"
+                    , Param.PAY_GBN
+                    , Param.CARD_GBN
+                    , Param.INSTLMT_AT
+                    , Param.BANK_CODE
+                    , Param.PAT_TID
+                    , Param.REAL_ACCOUNT_AT
+                    , Param.CASHRECEIPT_SE_CODE
+                    , Param.CASHRECEIPT_RESULT_CODE
+                    , Param.HTTP_USER_AGENT
+                    , Param.PAT_GUBUN
+                    , Param.SVR_DOMAIN
+                    , Param.VACT_Num
+                    , Param.VACT_BankCode
+                    , Param.VACT_Name
+                    , Param.VACT_InputName
+                    , Param.VACT_Date
+                    , Param.VACT_Time
+                    , Convert.ToString(Param.ORDER_IDX));
+                filelog(CallFunction + "> SaveOrderDB : save_param : " + save_param, false);
+
+                string order_code = "";
+                //DB 저장
+                order_code = _orderservice.OrderPaySave(Param);
+
+                //실행결과
+                OrderResult orderResult = new OrderResult();
+
+                orderResult.Resultcode = "00";
+                orderResult.ResultMsg = "";
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = Param.ORDER_IDX;
+                orderResult.PAY_GBN = Param.PAY_GBN;
+                orderResult.ORDER_CODE = order_code;
+
+                //로그남기기
+                filelog(CallFunction + "> SaveOrderDB : Complete... order_code : " + order_code, false);
+
+                //저장후 저장한 값을 리턴해주기위해 다시구한다.
+                returnVal = _orderservice.OrderGetOrderCodeByOldOrderIdx(Convert.ToInt32(DataList.P_OID));
+
+                //메일발송
+                SendOrderResultMail(order_code);
+
+            }
+            else
+            {
+                //로그남기기
+                filelog(CallFunction + "> SaveOrderDB : 이미 저장된 주문 : ORDER_CODE=" + returnVal.ORDER_CODE, false);
+            }
+
+            return returnVal;
+
+        }
+
+        // 2 Transction 방식시 : 사용자의 인증이 완료될 때 이 Url 로 인증결과를 전달합니다. 
+        // card, isp, vbank (가상계좌) 시 호출
+        public ActionResult InipayNext(INIPAYMOBILE_NEXT_RETURN inipay_param)
+        {
+            string log = "";
+            log = log + Newtonsoft.Json.JsonConvert.SerializeObject(inipay_param);
+            log = log + "\nquerystring : " + Request.QueryString;
+            string[] keys = Request.Form.AllKeys;
+            for (int i = 0; i < keys.Length; i++)
+            {
+                log = log + "\n" + keys[i] + ": " + Request.Form[keys[i]];
+            }
+
+            filelog("InipayNext 1 : ini_param : " + log);
+
+            if (inipay_param.P_STATUS == "00") //성공시
+            {
+                string URL = inipay_param.P_REQ_URL;
+
+                //이니시스에서 알려준 P_REQ_URL로 승인받았다고 소켓으로 알려주고 최종 결제 결과를 받아옴.
+                System.Net.WebRequest webRequest = System.Net.WebRequest.Create(URL);
+                webRequest.Method = "POST";
+                webRequest.ContentType = "application/x-www-form-urlencoded";
+                Stream reqStream = webRequest.GetRequestStream();
+                string postData = "P_MID=" + _inipay_mid + "&P_TID=" + inipay_param.P_TID;
+                byte[] postArray = Encoding.ASCII.GetBytes(postData);
+                reqStream.Write(postArray, 0, postArray.Length);
+                reqStream.Close();
+                StreamReader sr = new StreamReader(webRequest.GetResponse().GetResponseStream(), Encoding.Default, true);
+                string Result = sr.ReadToEnd();
+
+                if (reqStream != null)
+                {
+                    reqStream.Close();
+                }
+
+                string[] MyArray = Result.Split('&');
+                string ReturnStr = "";
+                foreach (var item in MyArray)
+                {
+                    string[] paramArr = item.Split('=');
+                    if (ReturnStr != "")
+                    {
+                        ReturnStr = ReturnStr + ", ";
+                    }
+
+                    if (paramArr[1].ToString() == "null")
+                    {
+                        paramArr[1] = "";
+                    }
+
+                    ReturnStr = ReturnStr + String.Format("\"{0}\":\"{1}\"", paramArr[0].ToString(), paramArr[1].ToString());
+                }
+                //로그남기기
+                filelog("InipayNext 2 : ReturnStr Value : " + ReturnStr, false);
+                
+                
+
+                OrderResult orderResult = new OrderResult();
+                orderResult.Resultcode = "";
+                orderResult.ResultMsg = "";
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = 0;
+                orderResult.PAY_GBN = "";
+                orderResult.ORDER_CODE = "";
+
+                if (!string.IsNullOrEmpty(ReturnStr))
+                {
+                    //DB저장
+                    ReturnStr = "{" + ReturnStr + "}";
+                    INIPAYMOBILE_CALL_RETURN DataList = JsonConvert.DeserializeObject<INIPAYMOBILE_CALL_RETURN>(ReturnStr);
+                    if (DataList.P_STATUS == "00")
+                    {
+                        SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result GetMasterInfo = SaveOrderDB("InipayNext 3", DataList);
+                        orderResult.Resultcode = "00";
+                        orderResult.ResultMsg = "";
+                        orderResult.ResultErrorCode = "";
+                        orderResult.ORDER_IDX = Convert.ToInt32(GetMasterInfo.ORDER_IDX);
+                        orderResult.PAY_GBN = GetMasterInfo.PAY_GBN;
+                        orderResult.ORDER_CODE = GetMasterInfo.ORDER_CODE;
+                    }
+                    else
+                    {
+                        orderResult.Resultcode = DataList.P_STATUS;
+                        orderResult.ResultMsg = "P_REQ_URL 호출 결과 에러발생 : " + ReturnStr;
+
+                        filelog("InipayNext 4 : P_REQ_URL 호출 결과 에러발생 : " + ReturnStr, false);
+                    }
+                }
+                else
+                {
+                    orderResult.Resultcode = "08";
+                    orderResult.ResultMsg = "P_REQ_URL 호출시 리턴값 없음. " + postData;
+                    filelog("InipayNext 5 : Error : " + orderResult.ResultMsg, false);
+                }
+
+                StringBuilder SBuilder = new StringBuilder();
+                SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", orderResult.ORDER_IDX.ToString());
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", orderResult.ResultErrorCode);
+                SBuilder.Append("</form>\n");
+                SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+                return Content(SBuilder.ToString());
+            }
+            else
+            {
+                StringBuilder SBuilder = new StringBuilder();
+                SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", inipay_param.P_NOTI.ToString());
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", inipay_param.P_STATUS);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", inipay_param.P_RMESG1);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", inipay_param.P_STATUS);
+                SBuilder.Append("</form>\n");
+                SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+                return Content(SBuilder.ToString());
+
+            }
+
+        }
+
+        // (신용카드, 실시간계좌이체, 가상계좌 모두에서 여러번 호출됨.)
+        //OK가 올때까지 24시간정도 10분간격으로 호출
+        public string InipayNoti(INIPAYMOBILE_CALL_RETURN DataList)
+        {
+            string log = "";
+            log = log + Newtonsoft.Json.JsonConvert.SerializeObject(DataList);
+            log = log + "\nquerystring : " + Request.QueryString;
+            string[] keys = Request.Form.AllKeys;
+            for (int i = 0; i < keys.Length; i++)
+            {
+                log = log + "\n" + keys[i] + ": " + Request.Form[keys[i]];
+            }
+            
+            filelog("InipayNoti 1 : " + log);
+            //가상계좌의 입금통보일경우 주문 상태 입금대기->결제완료로 변경
+            if (DataList.P_TYPE == "VBANK") //결제수단이 가상계좌이며	
+            {
+                if (DataList.P_STATUS == "02")	//입금통보 "02" 
+                {
+                    return "OK";
+                }
+            }
+
+            if (DataList.P_STATUS.Equals("00"))
+            {
+                ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
+
+                SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result GetMasterInfo = SaveOrderDB("InipayNoti 2", DataList);
+
+                return "OK";
+            }
+            else
+            {
+                return "OK";
+            }
+        }
+
+        //실시간계좌 이체시 호출됨
+        //ORDER_IDX : 임시테이블 IDX
+        public ActionResult OrderReturn(int ORDER_IDX)
+        {
+            string log = "";
+            log = log + "ORDER_IDX="+Convert.ToString(ORDER_IDX);
+            filelog("OrderReturn : " + log);
+
+            SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result returnVal = new SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result();
+            returnVal = _orderservice.OrderGetOrderCodeByOldOrderIdx(ORDER_IDX);
+
+            OrderResult orderResult = new OrderResult();
+            orderResult.Resultcode = "01";
+            orderResult.ResultMsg = "";
+            orderResult.ResultErrorCode = "";
+            orderResult.ORDER_IDX = 0;
+            orderResult.PAY_GBN = "";
+            orderResult.ORDER_CODE = "";
+
+            if (!string.IsNullOrEmpty(returnVal.ORDER_CODE))
+            {
+                orderResult.Resultcode = "00";
+                orderResult.ResultMsg = "";
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = Convert.ToInt32(returnVal.ORDER_IDX);
+                orderResult.PAY_GBN = returnVal.PAY_GBN;
+                orderResult.ORDER_CODE = returnVal.ORDER_CODE;
+            }
+
+            StringBuilder SBuilder = new StringBuilder();
+            SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", orderResult.ORDER_IDX.ToString());
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);
+            SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", orderResult.ResultErrorCode);
+            SBuilder.Append("</form>\n");
+            SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+            return Content(SBuilder.ToString());
+        }
+        
     }
 }

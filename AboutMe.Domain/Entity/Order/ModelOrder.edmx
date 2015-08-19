@@ -51,6 +51,9 @@
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OLD_ORDER_IDX" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ORDER_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
@@ -351,6 +354,9 @@
             <Parameter Name="REG_ID" Mode="In" Type="String" />
             <Parameter Name="REG_IP" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" ReturnType="Collection(AboutMeModel4.SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result)">
+          <Parameter Name="OLD_ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
@@ -625,6 +631,11 @@
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_CNT_Result" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result">
+          <Property Type="String" Name="ORDER_CODE" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="ORDER_IDX" Nullable="true" />
+          <Property Type="String" Name="PAY_GBN" Nullable="true" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -978,6 +989,15 @@
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_MASTER_STATUS_CHANGE" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_PART_CANCEL_INSERT" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_PART_CANCEL_INSERT" />
+          <FunctionImportMapping FunctionImportName="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" FunctionName="AboutMeModel4.Store.SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result">
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -41,7 +41,7 @@
   <ItemGroup>
     <Reference Include="INIpayNet, Version=5.0.3.3, Culture=neutral, PublicKeyToken=baf9dc2e190f803c, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\AboutMe.Web.Admin\bin\INIpayNet.dll</HintPath>
+      <HintPath>bin\INIpayNet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -238,7 +238,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DisplayViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -496,20 +495,13 @@
     <Content Include="aboutCom\fonts\OpenSans-Bold-subset.eot" />
     <Content Include="aboutCom\fonts\OpenSans-Bold-subset.ttf" />
     <Content Include="aboutCom\fonts\OpenSans-Bold-subset.woff" />
-    <Content Include="aboutCom\images\aboutme\Thumbs.db" />
-    <Content Include="aboutCom\images\cart\Thumbs.db" />
-    <Content Include="aboutCom\images\common\Thumbs.db" />
-    <Content Include="aboutCom\images\customer\Thumbs.db" />
-    <Content Include="aboutCom\images\membership\Thumbs.db" />
-    <Content Include="aboutCom\images\mypage\Thumbs.db" />
-    <Content Include="aboutCom\images\review\Thumbs.db" />
-    <Content Include="aboutCom\images\shopping\Thumbs.db" />
     <Content Include="WURFL AGPL License.txt" />
     <Content Include="Introspector\Introspector.pdf" />
     <Content Include="Introspector\Introspector.ashx" />
     <Content Include="App_Readme\WURFL-v.1.6.1.0.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <None Include="Properties\PublishProfiles\publish mobile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -604,6 +596,11 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Shared\_AboutMeLayoutB.cshtml" />
     <Content Include="Views\Order\Step1.cshtml" />
+    <Content Include="Views\Order\Step1ProductList.cshtml" />
+    <Content Include="Views\Order\Step1DiscountInfo.cshtml" />
+    <Content Include="Views\Order\Step1PriceInfo.cshtml" />
+    <Content Include="Views\Order\Step1AddressInfo.cshtml" />
+    <Content Include="Views\Order\Step1PayInfo.cshtml" />
     <Content Include="Views\ChildActionPromotion\ProductDetailSalePrice.cshtml" />
     <Content Include="Views\Review\Product.cshtml" />
     <Content Include="Views\Home\Test01.cshtml" />
@@ -612,6 +609,11 @@
     <Content Include="Views\MyReview\Ready.cshtml" />
     <Content Include="Views\MyReview\Write.cshtml" />
     <Content Include="Views\MyReview\Complete.cshtml" />
+    <Content Include="Views\ChildActionDisplayer\CartBanner.cshtml" />
+    <Content Include="Views\ChildActionDisplayer\CartRelatePorducts.cshtml" />
+    <Content Include="Views\Order\InipayTest.cshtml" />
+    <Content Include="Views\MyReview\Update.cshtml" />
+    <Content Include="Views\Order\OrderResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseMobile\" />

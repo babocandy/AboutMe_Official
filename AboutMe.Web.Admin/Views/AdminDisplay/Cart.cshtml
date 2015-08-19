@@ -1,9 +1,10 @@
-﻿@model AboutMe.Web.Admin.Models.AdminDisplayCartViewModel
+﻿@model AboutMe.Domain.Entity.AdminDisplay.AdminDisplayCartViewModel
 @using AboutMe.Common.Data
-
+@using AboutMe.Web.Admin.Controllers
 @{
     ViewBag.Title = "Point";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myctrl = ViewContext.Controller as AdminDisplayController;
 }
 @section Left {
 
@@ -39,7 +40,12 @@
                       {
 
                         <h4 class="">웹-1080*150 </h4>
-                        <img src="" alt="" /><span class="tac"> @Model.Web.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
+                        if(Model.Web.IMG != null)
+                        {
+                            <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.Web.IMG)" alt="" style="width:500px"/>
+                        }
+
+                          <span class="tac"> @Model.Web.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
                         
                          <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                         <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.Web.URL">
@@ -64,7 +70,11 @@
                         {
 
                         <h4>모바일-280*250 </h4>
-                        <img src="" alt="" /><span class="tac"> @Model.Mobile.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
+                            if (Model.Web.IMG != null)
+                            {
+                                <img src="@string.Format("{0}{1}", myctrl._img_path_display, Model.Mobile.IMG)" alt="" style="width:500px" />
+                            }
+                            <span class="tac"> @Model.Mobile.IMG <a href="#" class="btn btn-info small" onclick="removeDisplayer(this.parentElement.parentElement); return false;">삭제</a></span>
 
                         <input type="file" name="IMG_FILE" style="width:80%; margin-left:35px;">
                         <span> URL : </span><input type="text" name="URL" class="input-sm mt5" style="width:80%" value="@Model.Mobile.URL">
@@ -92,7 +102,7 @@
                     <td class="brnone">
                         @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
                         {
-                            <img src="@Model.CommonDisplay10.P_MAIN_IMG" alt="" /><br><p class="tac mt5">@Model.CommonDisplay10.P_NAME</p><br><br>
+                            <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.CommonDisplay10.P_MAIN_IMG)" alt="" /><br><p class="tac mt5">@Model.CommonDisplay10.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.CommonDisplay10.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.CommonDisplay10.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.CART_PRODUCT_DISPLAY" />
@@ -104,7 +114,7 @@
                     <td>
                         @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
                         {
-                            <img src="@Model.CommonDisplay11.P_MAIN_IMG" alt="" /><br><p class="tac mt5">@Model.CommonDisplay11.P_NAME</p><br><br>
+                            <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.CommonDisplay11.P_MAIN_IMG)" alt="" /><br><p class="tac mt5">@Model.CommonDisplay11.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.CommonDisplay11.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.CommonDisplay11.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.CART_PRODUCT_DISPLAY" />
@@ -116,7 +126,7 @@
                     <td>
                         @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
                         {
-                            <img src="@Model.CommonDisplay12.P_MAIN_IMG" alt="" /><br><p class="tac mt5">@Model.CommonDisplay12.P_NAME</p><br><br>
+                            <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.CommonDisplay12.P_MAIN_IMG)" alt="" /><br><p class="tac mt5">@Model.CommonDisplay12.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.CommonDisplay12.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.CommonDisplay12.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.CART_PRODUCT_DISPLAY" />
@@ -126,9 +136,9 @@
                         }
                     </td>
                     <td class="brnone">
-                        @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
-                        {
-                            <img src="@Model.CommonDisplay13.P_MAIN_IMG" alt="" /><br><p class="tac mt5">@Model.CommonDisplay13.P_NAME</p><br><br>
+                                                @using (Html.BeginForm("SaveProductTypeDisplayer", "AdminDisplay", FormMethod.Post))
+                                                {
+                                                    <img src="@string.Format("{0}R270_{1}", myctrl._img_path_product, Model.CommonDisplay13.P_MAIN_IMG)" alt="" /><br><p class="tac mt5">@Model.CommonDisplay13.P_NAME</p><br><br>
                             <span>상품코드 :</span><input type="text" name="P_CODE" class="input-sm mt5" style="width:80%" value="@Model.CommonDisplay13.P_CODE" maxlength="10">
                             <input type="hidden" name="IDX" value="@Model.CommonDisplay13.IDX" />
                             <input type="hidden" name="KIND" value="@DisplayerCode.CART_PRODUCT_DISPLAY" />
