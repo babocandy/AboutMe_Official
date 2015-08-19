@@ -190,19 +190,30 @@
             }
 
             var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
+            var escrowYn = $(':radio[name="PAY_GBN"]:checked').attr("data-escrow")
+            alert(escrowYn);
+            $("#P_NOTI").val(escrowYn);
+
+            if (escrowYn == "Y") {
+                $("#P_RESERVED").val("twotrs_isp=Y&block_isp=N&app_scheme=http&apprun_check=Y&useescrow=Y");
+            }
+            else {
+                $("#P_RESERVED").val("twotrs_isp=Y&block_isp=N&app_scheme=http&apprun_check=Y&useescrow=N");
+            }
+
             if (paygbn == "1") {
                 document.ini.action = "https://mobile.inicis.com/smart/wcard/";
             }
             else if (paygbn == "2") //실시간계좌이체
             {
                 document.ini.action = "https://mobile.inicis.com/smart/bank/";
-
             }
+            /*
             else if (paygbn == "3") //무통장(가상계좌)
             {
                 document.ini.action = "https://mobile.inicis.com/smart/vbank/";
             }
-
+            */
             var email = $("#SENDER_EMAIL1").val().trim() + "@@" + $("#SENDER_EMAIL2").val().trim();
             $("#P_EMAIL").val(email);
 
@@ -234,7 +245,7 @@
             openwin.focus();
     }
 </script>
-@Model.P_NEXT_URL
+
 <!-- 결제 정보 -->
 <form id="ini" name="ini" method="post" action="" accept-charset="euc-kr">
     <input type="hidden" id="P_GOODS" name="P_GOODS" value="@Model.GoodName">
@@ -243,7 +254,7 @@
     <input type="hidden" id="P_OID" name="P_OID" value="@Model.OrderIdx">
     <input type="hidden" id="P_MNAME" name="P_MNAME" value="AboutMe Mall">
     
-    <input type="hidden" id="P_NOTI" name="P_NOTI" value="@Model.OrderIdx">
+    <input type="hidden" id="P_NOTI" name="P_NOTI" value="">
 
     <input type="hidden" id="P_EMAIL" name="P_EMAIL" value="">
     <input type="hidden" id="P_UNAME" name="P_UNAME" value="">
@@ -252,16 +263,16 @@
     <input type="hidden" id="P_NOTI_URL" name="P_NOTI_URL" value="@Model.P_NOTI_URL">
     <input type="hidden" id="P_RETURN_URL" name="P_RETURN_URL" value="@Model.P_RETURN_URL">
 
-    <input type="hidden" name="P_RESERVED" value="twotrs_isp=Y&block_isp=N&app_scheme=http&apprun_check=Y " /> 
+    <input type="hidden" id="P_RESERVED" name="P_RESERVED" value="twotrs_isp=Y&block_isp=N&app_scheme=http&apprun_check=Y" /> 
     <input type="hidden" id="clickcontrol" name="clickcontrol">
 
     <!--결제정보-->
     <div class="boxtypec pay">
         <h3>결제정보</h3>
         <div class="radio_area">
-            <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" value="1"  checked="checked" title="" /> <span class="txt">신용카드</span></label>
-            <label class="racon" style="width:42%"><input type="radio" name="PAY_GBN" value="2" title="" /> <span class="txt">실시간 계좌이체</span></label>
-            <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" value="3" title="" /> <span class="txt">가상계좌</span></label>
+            <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" data-escrow="N" value="1" checked="checked" title="" /> <span class="txt">신용카드</span></label>
+            <label class="racon" style="width:35%" id="rdoRealtime"><input type="radio" name="PAY_GBN" data-escrow="N" value="2" title="" /> <span class="txt">실시간계좌</span></label>
+            <label class="racon" style="width:36%"><input type="radio" name="PAY_GBN" data-escrow="Y" value="2" title="" /> <span class="txt">실시간계좌(에스크로)</span></label>
         </div>
 @if (Model.UserProfile.IS_LOGIN == false)
 {
@@ -318,3 +329,13 @@
     </div>
     <!--//버튼영역-->
 </form>
+
+
+<script language="javascript">
+    var paytotal = "@Model.PriceInfo.TOTAL_PAY_PRICE";
+    if (paytotal != "") {
+        if (parseInt(paytotal) >= 300000) {
+            $("#rdoRealtime").attr("style", "display:none");
+        }
+    }
+</script>

@@ -84,6 +84,7 @@
           <Parameter Name="VACT_InputName" Type="varchar" Mode="In" />
           <Parameter Name="VACT_Date" Type="varchar" Mode="In" />
           <Parameter Name="VACT_Time" Type="varchar" Mode="In" />
+          <Parameter Name="ESCROW_YN" Type="char" Mode="In" />
         </Function>
         <Function Name="SP_ORDER_RESULT_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
@@ -205,6 +206,7 @@
             <Parameter Name="VACT_InputName" Mode="In" Type="String" />
             <Parameter Name="VACT_Date" Mode="In" Type="String" />
             <Parameter Name="VACT_Time" Mode="In" Type="String" />
+            <Parameter Name="ESCROW_YN" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_STEP1" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />

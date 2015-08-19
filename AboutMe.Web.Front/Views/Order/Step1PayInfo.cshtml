@@ -8,15 +8,19 @@
     function payConfirm() {
         var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
         if (paygbn == "1") {
-            $("#gopaymethod").val("Card");
+            $("#gopaymethod").val("onlycard");
+            $("#acceptmethod").val("VERIFY(1056313):SKIN(ORIGINAL):HPP(2):");
         }
         else if (paygbn == "2") //실시간계좌이체
         {
             $("#gopaymethod").val("onlydbank");
+            $("#acceptmethod").val("VERIFY(1056313):SKIN(ORIGINAL):HPP(2):");
         }
-        else if (paygbn == "3") //무통장(가상계좌)
+        else if (paygbn == "20") //실시간계좌이체(에스크로)
         {
-            $("#gopaymethod").val("VBank");
+            $("#gopaymethod").val("onlydbank");
+            $("#acceptmethod").val("VERIFY(1056313):SKIN(ORIGINAL):HPP(2):useescrow:");
+            //가상계좌 $("#gopaymethod").val("VBank");
         }
 
         if ($("#SENDER_NAME").val().trim() == "") {
@@ -275,7 +279,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         DateTime dt = DateTime.Now.AddDays(3); 
         string vbankDate = dt.ToString("yyyyMMdd");
     }
-    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):va_receipt:Vbank(@vbankDate):useescrow:">
+    <input type="hidden" id="acceptmethod" name="acceptmethod" value="VERIFY(1056313):SKIN(ORIGINAL):HPP(2):">
     <input type="hidden" id="oid" name="oid" size="40" value="@Model.OrderIdx">
     <input type="hidden" id="INIregno" name="INIregno" size="40">
 
@@ -302,9 +306,9 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <label id="rdoCredit" class="racon racon_on">
                 <input type="radio" name="PAY_GBN" value="1" title="신용카드" checked /> <span class="txt">신용카드</span>
             </label><label id="rdoRealtime" class="racon">
-                <input type="radio" name="PAY_GBN" value="2" title="실시간 계좌이체" /> <span class="txt">실시간 계좌이체</span>
-            </label><label id="rdoVirtual" class="racon">
-                <input type="radio" name="PAY_GBN" value="3" title="가상계좌" /> <span class="txt">가상계좌</span>
+                 <input type="radio" name="PAY_GBN" value="2" title="실시간계좌" /> <span class="txt">실시간계좌</span>
+            </label><label id="rdoRealtimeEscrow" class="racon">
+                <input type="radio" name="PAY_GBN" value="20" title="실시간계좌(에스크로)" /> <span class="txt">실시간계좌(에스크로)</span>
             </label>
             @if (Model.UserProfile.IS_LOGIN == true)
             {
@@ -382,3 +386,13 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
     </div>
 </form>
 <!-- //결제 정보 -->
+<script language="javascript">
+    var paytotal = "@Model.PriceInfo.TOTAL_PAY_PRICE";
+    if (paytotal != "")
+    {
+        if (parseInt(paytotal) >= 300000)
+        {
+            $("#rdoRealtime").attr("style","display:none");
+        }
+    }
+</script>

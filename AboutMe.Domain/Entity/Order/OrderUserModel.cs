@@ -296,6 +296,7 @@ namespace AboutMe.Domain.Entity.Order
         public string VACT_InputName { get; set; } // 가상계좌결제관련 - 송금자명
         public string VACT_Date { get; set; } // 가상계좌결제관련 - 송금일자
         public string VACT_Time { get; set; } // 가상계좌결제관련 - 송금시각
+        public string ESCROW_YN { get; set; } //에스크로여부
     }
 
     //주문결과 페이지 모델
@@ -350,7 +351,8 @@ namespace AboutMe.Domain.Entity.Order
         public string P_RMESG2 { get; set; }   //신용카드 할부 여부
         public string P_CARD_PURCHASE_CODE { get; set; }   //신용카드 발급사 코드 
         public string P_FN_CD1 { get; set; }    //신용카드 발급사 코드 
-        
+        public string P_NOTI { get; set; }    //임시변수 (에스크로여부저장)
+
         public string P_VACT_NUM { get; set; }
         public string P_VACT_DATE { get; set; }
         public string P_VACT_TIME { get; set; }
