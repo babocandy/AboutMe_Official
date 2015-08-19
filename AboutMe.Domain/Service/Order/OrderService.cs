@@ -182,7 +182,7 @@ namespace AboutMe.Domain.Service.Order
             SP_ORDER_PAY_Result result = new SP_ORDER_PAY_Result();
             using (OrderEntities EfContext = new OrderEntities())
             {
-               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN, Param.VACT_Num, Param.VACT_BankCode, Param.VACT_Name, Param.VACT_InputName, Param.VACT_Date, Param.VACT_Time, Param.ESCROW_YN).FirstOrDefault(); 
+               result = EfContext.SP_ORDER_PAY(Param.ORDER_IDX, Param.PAY_GBN, Param.CARD_GBN, Param.INSTLMT_AT, Param.BANK_CODE, Param.PAT_TID, Param.REAL_ACCOUNT_AT, Param.CASHRECEIPT_SE_CODE, Param.CASHRECEIPT_RESULT_CODE, Param.HTTP_USER_AGENT, Param.PAT_GUBUN, Param.SVR_DOMAIN, Param.VACT_Num, Param.VACT_BankCode, Param.VACT_Name, Param.VACT_InputName, Param.VACT_Date, Param.VACT_Time, Param.ESCROW_YN, Param.ORDER_STATUS_VALUE).FirstOrDefault(); 
             }
             return result.ORDER_CODE;
         }
@@ -222,6 +222,40 @@ namespace AboutMe.Domain.Service.Order
                 info = EfContext.SP_ORDER_NOMEMBER_LOGIN(ORDER_CODE, NOMEMBER_PASS).FirstOrDefault();
             }
             return info.ORDER_CODE;
+        }
+        #endregion
+
+        #region My Order 메인의 주문 상태정보
+        public SP_MYPAGE_MAIN_STATUS_Result MyPageMainInfo(string Mid)
+        {
+            SP_MYPAGE_MAIN_STATUS_Result result = new SP_MYPAGE_MAIN_STATUS_Result();
+            SP_MYPAGE_MAIN_STATUS_Result defaultresult = new SP_MYPAGE_MAIN_STATUS_Result
+            {
+                QNA_END = 0
+                ,
+                QNA_ING = 0
+                ,
+                RECALL_END = 0
+                ,
+                RECALL_ING = 0
+                ,
+                STATUS_10 = 0
+                ,
+                STATUS_20 = 0
+                ,
+                STATUS_30 = 0
+                ,
+                STATUS_40 = 0
+                ,
+                STATUS_50 = 0
+                ,
+                STATUS_ALL = 0
+            };
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                result = EfContext.SP_MYPAGE_MAIN_STATUS(Mid).DefaultIfEmpty(defaultresult).FirstOrDefault();
+            }
+            return result;
         }
         #endregion
 

@@ -1,0 +1,63 @@
+﻿@model AboutMe.Domain.Entity.Notice.NoticeUserModel
+@{
+    ViewBag.Title = "공지사항 - ABOUT ME";
+    ViewBag.TopClass = "notice";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <!-- cs_top -->
+        <div class="cs_top">
+            <!-- h2_area -->
+            @{
+                ViewBag.MenuTitle = "공지사항";
+                ViewBag.MenuGbn = "notice";
+                Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
+            }
+        </div>
+        <!-- //cs_top -->
+        <!-- notice_list -->
+        <div class="board_list tabletypeb mt40">
+            <table summary="번호, 제목, 등록일">
+                <caption>공지사항 표</caption>
+                <colgroup>
+                    <col width="95" />
+                    <col width="*" />
+                    <col width="160" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>등록일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model.NoticeList)
+                    {
+                        string linkStr = string.Format("/Customer/NoticeView?IDX={0}&Page={1}&SearchCol={2}&SearchKeyword={3}", item.IDX, Model.searchOption.Page, Model.searchOption.SearchCol, Model.searchOption.SearchKeyword);
+                    <tr>
+                        <td>@item.IDX</td>
+                        <td class="tit"><a href="@linkStr">@item.TITLE</a></td>
+                        <td>@item.REG_DATE.ToString().Substring(0, 10)</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- //notice_list -->
+        <!-- paging -->
+        @{
+            string Querystr = string.Format("SearchCol={0}&SearchKeyword={1}", Model.searchOption.SearchCol, Model.searchOption.SearchKeyword);
+
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.NoticeCnt, RecordPerPage = Model.searchOption.PageSize, PagePerBlock = 10, CurrentPage = Model.searchOption.Page, QueryStr = @Querystr });
+        }
+        <!-- //paging -->
+    </div>
+</div>
+<!--//container-->

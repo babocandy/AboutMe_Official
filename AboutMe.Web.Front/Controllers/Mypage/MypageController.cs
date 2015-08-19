@@ -11,6 +11,8 @@ using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
 using AboutMe.Domain.Entity.Common;
 
+using AboutMe.Domain.Service.Order;
+using AboutMe.Domain.Entity.Order;
 
 using AboutMe.Domain.Service.Coupon;
 using AboutMe.Domain.Entity.AdminCoupon;
@@ -31,11 +33,13 @@ namespace AboutMe.Web.Front.Controllers
     {
         private IMemberService _MemberService;
         private ICouponService _CouponService;
+        private IOrderService _orderservice;
 
-        public MypageController(IMemberService _memberService,ICouponService _couponService)
+        public MypageController(IMemberService _memberService, ICouponService _couponService, IOrderService _orderservice)
         {
             this._MemberService = _memberService;
             this._CouponService = _couponService;
+            this._orderservice = _orderservice;
         }
 
 
@@ -76,10 +80,9 @@ namespace AboutMe.Web.Front.Controllers
            
             #endregion 
 
+            SP_MYPAGE_MAIN_STATUS_Result M = _orderservice.MyPageMainInfo(_user_profile.M_ID);
 
-
-
-            return View();
+            return View(M);
         }
 
         [CustomAuthorize]  //마이페이지 -회원탈퇴-폼

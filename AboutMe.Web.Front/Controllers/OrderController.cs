@@ -793,7 +793,7 @@ namespace AboutMe.Web.Front.Controllers
                 Param.VACT_Name = PayResult.VACT_Name;
                 Param.VACT_Date = PayResult.VACT_Date;
                 Param.VACT_Time = PayResult.VACT_Time;
-
+                Param.ORDER_STATUS_VALUE = "20"; //결제완료
                 try
                 {
                     //DB 저장
