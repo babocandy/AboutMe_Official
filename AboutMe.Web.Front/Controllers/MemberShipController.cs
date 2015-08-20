@@ -226,12 +226,16 @@ namespace AboutMe.Web.Front.Controllers
 
                 //https 제거 처리 start------------- SSL적용후 테스트 필요--------------------------
                 
-                if (RedirectUrl != "")
+                if (RedirectUrl!="")
                 {
-                    if (RedirectUrl.Substring(0, 8) == "https://")
+                    if (RedirectUrl.Length > 8)
                     {
-                        RedirectUrl = "http://" + RedirectUrl.Substring(8);
+                        if (RedirectUrl.Substring(0, 8) == "https://")
+                        {
+                            RedirectUrl = "http://" + RedirectUrl.Substring(8);
+                        }
                     }
+
                     if (RedirectUrl.Substring(0, 1) == "/")
                     {
                         RedirectUrl = strHTTP_DOMAIN + RedirectUrl;
