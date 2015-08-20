@@ -42,7 +42,10 @@ namespace AboutMe.Web.Front.Controllers
 
             foreach (var item in masterlist)
 	        {
-                var tp = new Tuple<SP_REVIEW_MY_EXP_MASTER_SEL_Result, SP_PRODUCT_DETAIL_VIEW_Result>(item, _service_p.ViewProduct(item.P_CODE));
+                var pdt = _service_p.ViewProduct(item.P_CODE);
+                if (pdt == null) pdt = new SP_PRODUCT_DETAIL_VIEW_Result();
+
+                var tp = new Tuple<SP_REVIEW_MY_EXP_MASTER_SEL_Result, SP_PRODUCT_DETAIL_VIEW_Result>(item, pdt);
                 tplist.Add(tp);
 	        }
 
@@ -72,21 +75,14 @@ namespace AboutMe.Web.Front.Controllers
 
             if (ModelState.IsValid)
             {
-                /*
-                MyReviewExpParamOnSaveToDb p = new MyReviewExpParamOnSaveToDb();
 
-                p.M_ID = _user_profile.M_ID;                
-                p.EXP_MASTER_IDX = model.EXP_MASTER_IDX;
-                p.TITLE = model.TITLE;
-                p.SKIN_TYPE = model.SKIN_TYPE;
-                p.P_CODE = model.P_CODE;
-                p.COMMENT = model.COMMENT;
-                p.TAG = model.TAG;
+                var uploader = new ImagePlainUpload();
 
-                p.SUB_IMG_1 = model.SUB_IMG_1;
-                p.SUB_IMG_2 = model.SUB_IMG_2;
-                p.SUB_IMG_3 = model.SUB_IMG_3;
-                */
+                if (model.SUB_IMG_1 != null) uploader.SaveImageByFileName(_img_path_review, model.SUB_IMG_1);
+                if (model.SUB_IMG_2 != null) uploader.SaveImageByFileName(_img_path_review, model.SUB_IMG_2);
+                if (model.SUB_IMG_3 != null) uploader.SaveImageByFileName(_img_path_review, model.SUB_IMG_3);
+
+
                 model.M_ID = _user_profile.M_ID;
 
                 Tuple<string, string> ret = _service.InsertMyReviewExp(model);
@@ -119,6 +115,8 @@ namespace AboutMe.Web.Front.Controllers
             model.SUB_IMG_2 = detail.SUB_IMG_2;
             model.SUB_IMG_3 = detail.SUB_IMG_3;
             model.COMMENT = detail.COMMENT;
+
+
 
             model.ProductInfo = _service.GetProductInfo(P_CODE);
 
@@ -157,6 +155,12 @@ namespace AboutMe.Web.Front.Controllers
                 p.SUB_IMG_3 = model.SUB_IMG_3;
 
                  */
+
+                var uploader = new ImagePlainUpload();
+                if (model.SUB_IMG_1 != null) uploader.SaveImageByFileName(_img_path_review, model.SUB_IMG_1);
+                if (model.SUB_IMG_2 != null) uploader.SaveImageByFileName(_img_path_review, model.SUB_IMG_2);
+                if (model.SUB_IMG_3 != null) uploader.SaveImageByFileName(_img_path_review, model.SUB_IMG_3);
+
                 model.M_ID = _user_profile.M_ID;
 
                 Tuple<string, string> ret = _service.UpdateMyReviewExp(model);

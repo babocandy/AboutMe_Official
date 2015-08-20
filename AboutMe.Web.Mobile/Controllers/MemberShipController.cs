@@ -226,9 +226,12 @@ namespace AboutMe.Web.Mobile.Controllers
 
                 if (RedirectUrl != "")
                 {
-                    if (RedirectUrl.Substring(0, 8) == "https://")
+                    if (RedirectUrl.Length > 8)
                     {
-                        RedirectUrl = "http://" + RedirectUrl.Substring(8);
+                        if (RedirectUrl.Substring(0, 8) == "https://")
+                        {
+                            RedirectUrl = "http://" + RedirectUrl.Substring(8);
+                        }
                     }
                     if (RedirectUrl.Substring(0, 1) == "/")
                     {

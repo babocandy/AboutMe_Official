@@ -497,6 +497,8 @@
         <div class="panel" style="overflow:hidden;">    
 @using (Html.BeginForm("CategoryOneUpdate", "AdminProduct", FormMethod.Post, new { id = "bform1", name = "bform1" }))
 {
+    <input type="hidden" name="depth1_code" value="@ViewBag.depth1_code">
+    <input type="hidden" name="depth2_code" value="@ViewBag.depth2_code">
             <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
@@ -534,6 +536,8 @@
 }    
 @using (Html.BeginForm("CategoryTwoUpdate", "AdminProduct", FormMethod.Post, new { id = "bform2", name = "bform2" }))
 {
+    <input type="hidden" name="depth1_code" value="@ViewBag.depth1_code">
+    <input type="hidden" name="depth2_code" value="@ViewBag.depth2_code">
             <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
@@ -571,6 +575,8 @@
             { <text>
 @using (Html.BeginForm("CategoryThreeUpdate", "AdminProduct", FormMethod.Post, new { id = "bform3", name = "bform3" }))
 {
+    <input type="hidden" name="depth1_code" value="@ViewBag.depth1_code">
+    <input type="hidden" name="depth2_code" value="@ViewBag.depth2_code">
             <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
@@ -603,12 +609,14 @@
             </text>}
 @using (Html.BeginForm("CategoryTwoUpdate", "AdminProduct", FormMethod.Post, new { id = "bform4", name = "bform4" }))
 {
+    <input type="hidden" name="depth1_code" value="@ViewBag.depth1_code">
+    <input type="hidden" name="depth2_code" value="@ViewBag.depth2_code">
             <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
                     <tr>
                         <th>
-                            <a class="btn btn-default small" href="#" onclick="formChk5();">SKIN_TYPE<br />일괄수정</a>
+                            <a class="btn btn-default small" href="#" onclick="formChk4();">SKIN_TYPE<br />일괄수정</a>
                         </th>
                         <th>순서</th>
                         <th>노출</th>
@@ -635,12 +643,14 @@
 }
 @using (Html.BeginForm("CategoryTwoUpdate", "AdminProduct", FormMethod.Post, new { id = "bform5", name = "bform5" }))
 {
+    <input type="hidden" name="depth1_code" value="@ViewBag.depth1_code">
+    <input type="hidden" name="depth2_code" value="@ViewBag.depth2_code">
             <table class="table table_col addtable" style="min-width:250px; width:250px; float:left; margin-right:20px;">
                 <colgroup><col width="*" /><col width="23%" /><col width="23%" /></colgroup>
                 <thead>
                     <tr>
                         <th>
-                            <a class="btn btn-default small" href="#" onclick="formChk4();">LINE_TYPE<br />일괄수정</a>
+                            <a class="btn btn-default small" href="#" onclick="formChk5();">LINE_TYPE<br />일괄수정</a>
                         </th>
                         <th>순서</th>
                         <th>노출</th>
