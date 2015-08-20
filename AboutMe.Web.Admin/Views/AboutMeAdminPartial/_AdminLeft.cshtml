@@ -83,10 +83,15 @@
     {
         strControl = "Order";
     }
-
+    
     if (strControl == "Event" || strControl == "Exhibit")
     {
         strControl = "AdminPromotion";
+    }
+    
+    if (strControl == "Magazine" || strControl == "Shopinfo")
+    {
+        strControl = "AdminContents";
     }
     
     switch (strControl)
@@ -171,6 +176,8 @@
                     <li @fLeftMenuCSSOn("ReviewExp")>
                         <a href="@Url.Action("Index", "AdminReviewExp")" class="menu ">체험리뷰관리</a>
                     </li>
+                    <li @fLeftMenuCSSOn("Index,New,Edit", "Magazine")><a href="/Magazine/" class="menu">매거진</a></li>
+                    <li @fLeftMenuCSSOn("Index,New,Edit", "Shopinfo")><a href="/Shopinfo/" class="menu">매장안내</a></li>
                 </ul>
             break;
        case "Order":  //주문, 취소반품요청

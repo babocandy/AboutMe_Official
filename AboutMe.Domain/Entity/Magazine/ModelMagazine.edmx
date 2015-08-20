@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel10.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_MAGAZINE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MAGAZINE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="CONTENT_GBN" Type="char" Mode="In" />
+          <Parameter Name="THUMB_IMG_PATH" Type="varchar" Mode="In" />
+          <Parameter Name="IMG_PATH" Type="varchar" Mode="In" />
+          <Parameter Name="MOVIE_URL" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_ORDER" Type="int" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_MAGAZINE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MAGAZINE_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="SUB_TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="CONTENT_GBN" Type="char" Mode="In" />
+          <Parameter Name="THUMB_IMG_PATH" Type="varchar" Mode="In" />
+          <Parameter Name="IMG_PATH" Type="varchar" Mode="In" />
+          <Parameter Name="MOVIE_URL" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_ORDER" Type="int" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_MAGAZINE_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_MAGAZINE_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_MAGAZINE_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="AboutMeModel10StoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MagazineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MagazineEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_MAGAZINE_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MAGAZINE_INS">
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="CONTENT_GBN" Mode="In" Type="String" />
+            <Parameter Name="THUMB_IMG_PATH" Mode="In" Type="String" />
+            <Parameter Name="IMG_PATH" Mode="In" Type="String" />
+            <Parameter Name="MOVIE_URL" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_ORDER" Mode="In" Type="Int32" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MAGAZINE_SEL" ReturnType="Collection(MagazineModel.SP_ADMIN_MAGAZINE_SEL_Result)">
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MAGAZINE_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SUB_TITLE" Mode="In" Type="String" />
+            <Parameter Name="CONTENT_GBN" Mode="In" Type="String" />
+            <Parameter Name="THUMB_IMG_PATH" Mode="In" Type="String" />
+            <Parameter Name="IMG_PATH" Mode="In" Type="String" />
+            <Parameter Name="MOVIE_URL" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_ORDER" Mode="In" Type="Int32" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_MAGAZINE_VIEW" ReturnType="Collection(MagazineModel.SP_ADMIN_MAGAZINE_VIEW_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MAGAZINE_LIST" ReturnType="Collection(MagazineModel.SP_MAGAZINE_LIST_Result)" />
+          <FunctionImport Name="SP_MAGAZINE_VIEW" ReturnType="Collection(MagazineModel.SP_MAGAZINE_VIEW_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_ADMIN_MAGAZINE_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CONTENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="IMG_PATH" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MOVIE_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="String" Name="THUMB_IMG_PATH" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="SP_MAGAZINE_LIST_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CONTENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="IMG_PATH" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MOVIE_URL" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="SP_MAGAZINE_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CONTENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="IMG_PATH" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MOVIE_URL" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_MAGAZINE_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CONTENT_GBN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="IMG_PATH" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MOVIE_URL" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="THUMB_IMG_PATH" Nullable="true" MaxLength="200" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel10StoreContainer" CdmEntityContainer="MagazineEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MAGAZINE_CNT" FunctionName="AboutMeModel10.Store.SP_ADMIN_MAGAZINE_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MAGAZINE_INS" FunctionName="AboutMeModel10.Store.SP_ADMIN_MAGAZINE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MAGAZINE_SEL" FunctionName="AboutMeModel10.Store.SP_ADMIN_MAGAZINE_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MagazineModel.SP_ADMIN_MAGAZINE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SUB_TITLE" ColumnName="SUB_TITLE" />
+                <ScalarProperty Name="CONTENT_GBN" ColumnName="CONTENT_GBN" />
+                <ScalarProperty Name="IMG_PATH" ColumnName="IMG_PATH" />
+                <ScalarProperty Name="MOVIE_URL" ColumnName="MOVIE_URL" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="THUMB_IMG_PATH" ColumnName="THUMB_IMG_PATH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MAGAZINE_UPD" FunctionName="AboutMeModel10.Store.SP_ADMIN_MAGAZINE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_MAGAZINE_VIEW" FunctionName="AboutMeModel10.Store.SP_ADMIN_MAGAZINE_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MagazineModel.SP_ADMIN_MAGAZINE_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SUB_TITLE" ColumnName="SUB_TITLE" />
+                <ScalarProperty Name="CONTENT_GBN" ColumnName="CONTENT_GBN" />
+                <ScalarProperty Name="IMG_PATH" ColumnName="IMG_PATH" />
+                <ScalarProperty Name="MOVIE_URL" ColumnName="MOVIE_URL" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="THUMB_IMG_PATH" ColumnName="THUMB_IMG_PATH" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MAGAZINE_LIST" FunctionName="AboutMeModel10.Store.SP_MAGAZINE_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MagazineModel.SP_MAGAZINE_LIST_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SUB_TITLE" ColumnName="SUB_TITLE" />
+                <ScalarProperty Name="CONTENT_GBN" ColumnName="CONTENT_GBN" />
+                <ScalarProperty Name="IMG_PATH" ColumnName="IMG_PATH" />
+                <ScalarProperty Name="MOVIE_URL" ColumnName="MOVIE_URL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MAGAZINE_VIEW" FunctionName="AboutMeModel10.Store.SP_MAGAZINE_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MagazineModel.SP_MAGAZINE_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="SUB_TITLE" ColumnName="SUB_TITLE" />
+                <ScalarProperty Name="CONTENT_GBN" ColumnName="CONTENT_GBN" />
+                <ScalarProperty Name="IMG_PATH" ColumnName="IMG_PATH" />
+                <ScalarProperty Name="MOVIE_URL" ColumnName="MOVIE_URL" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

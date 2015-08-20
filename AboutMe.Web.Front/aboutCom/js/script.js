@@ -46,7 +46,8 @@ $(function(){
 			$(".depth2 .list").slideUp("fast", function(){
 				$(".depth2").slideUp("fast")
 			});
-		}else if(e.pageY < 50 || e.pageY >330){
+		} 
+		if(e.pageY < 50 || e.pageY >330){
 			$(".depth1_2").fadeOut("fast");
 		}
 	})
@@ -348,27 +349,53 @@ $(function(){
 		$(".event_banner .nav").append("<li><a href='#'><img src='/aboutCom/images/common/nav_ban.png' /></a></li> ");
 	});
 	$(".event_banner .nav li").eq(0).addClass("cnt");
-
-	$(".event_banner .nav a").on("click", function(e){
-		e.preventDefault();
-		eventbnrIdx = $(this).parent().index();
-		$(".event_banner .slide").animate({"margin-left": -(eventbnrWidth*eventbnrIdx)},300,"easeInExpo");
-		$(".event_banner .nav li").removeClass("cnt");
-		$(".event_banner .nav li:eq("+eventbnrIdx+")").addClass("cnt");
-	});
-	//자동슬라이드
-	var eventbnrBannerSlideTime = setInterval(function(){
-		eventbnrIdx++;
-		if (eventbnrIdx==eventbnrLength){
-			eventbnrIdx=0;
-			$(".event_banner .slide li:eq(0)").clone().insertAfter($(".event_banner .slide li:eq("+(eventbnrLength-1)+")")); //eq는 0부터 시작. length는 1부터 시작해서 5가 나오기때문에 -1을 줘야 4번째 eq나옴
-			$(".event_banner .slide").animate({"margin-left": +(-(eventbnrWidth*eventbnrLength)) },300,"easeInExpo", function(){
-				$(".event_banner .slide").css({"margin-left":0});
-				$(".event_banner .slide li:eq("+(eventbnrLength)+")").remove();
-			});
+	
+	if(eventbnrLength==1){
+		$(".event_banner .navwrap").css({"display":"none"});
+	}else {
+		var eventbnrBannerSlideTime;
+		
+		$(".event_banner .nav a").on("click", function(e){
+			e.preventDefault();
+			eventbnrIdx = $(this).parent().index();
+			$(".event_banner .slide").animate({"margin-left": -(eventbnrWidth*eventbnrIdx)},300,"easeInExpo");
+			$(".event_banner .nav li").removeClass("cnt");
+			$(".event_banner .nav li:eq("+eventbnrIdx+")").addClass("cnt");
+		});
+		//자동슬라이드
+		function eventbnrStart(){
+			eventbnrBannerSlideTime = setInterval(function(){
+				eventbnrIdx++;
+				if (eventbnrIdx==eventbnrLength){
+					eventbnrIdx=0;
+					$(".event_banner .slide li:eq(0)").clone().insertAfter($(".event_banner .slide li:eq("+(eventbnrLength-1)+")")); 
+					$(".event_banner .slide").animate({"margin-left": +(-(eventbnrWidth*eventbnrLength)) },300,"easeInExpo", function(){
+						$(".event_banner .slide").css({"margin-left":0});
+						$(".event_banner .slide li:eq("+(eventbnrLength)+")").remove();
+					});
+				}
+				$(".event_banner .nav li:eq("+eventbnrIdx+") a").click();
+			},4000);
+		}eventbnrStart();
+		function eventbnrEnd(){
+			eventbnrBannerSlideTime != undefined && clearInterval(eventbnrBannerSlideTime);
 		}
-		$(".event_banner .nav li:eq("+eventbnrIdx+") a").click();
-	},4000);
+		$(".event_banner .btn_playstop .play").click(function(e){
+			e.preventDefault();
+			eventbnrStart();
+			$(this).css({"display":"none"});
+			$(".event_banner .btn_playstop .stop").css({"display":"block"});
+		});
+		$(".event_banner .btn_playstop .stop").click(function(e){
+			e.preventDefault();
+			eventbnrEnd();
+			$(this).css({"display":"none"});
+			$(".event_banner .btn_playstop .play").css({"display":"block"});
+		});
+
+	}
+	
+
 
 	/*숫자up&down*/
 	$(".counttypea").on("click",".btn_updown .up",function(e){
@@ -617,7 +644,7 @@ $(function(){
 			$(".magazin_list .listwrap li").removeClass("cnt");
 			$(this).parents("li").addClass("cnt");
 			magazinImgUrl = $(this).parent().find("img").data("pic");
-			$(".viewarea .bigimg img").attr("src", magazinImgUrl);
+			$(".viewarea .bigimg_item img").attr("src", magazinImgUrl);
 		}
 		magazinImgTitle = $(this).parent().find("img").data("title");
 		$(".viewarea .magazin_tit").html(magazinImgTitle);

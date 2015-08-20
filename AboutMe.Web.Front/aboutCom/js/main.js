@@ -1,4 +1,7 @@
 $(function(){
+	if( $("*").is(".txtdotdot") ){
+		$(".txtdotdot").dotdotdot();
+	}
 	/*main 슬라이드*/
 	var mainbnrIdx =0;
 	var mainbnrLength = $(".mainvisual_banner .slider li").length;
@@ -8,31 +11,51 @@ $(function(){
 		$(".mainvisual_banner .nav").append("<li><a href='#'><img src='/aboutCom/images/common/nav_ban.png' /></a></li> ");
 	});
 	$(".mainvisual_banner .nav li").eq(0).addClass("cnt");
+	
+	if(mainbnrLength==1){
+		$(".navwrap").css({"display":"none"});
+	}else{
+		function mainBannerSlidestart(){
+			mainBannerSlideTime = setInterval(function(){
+					mainbnrIdx++;
+					if (mainbnrIdx==mainbnrLength){
+						mainbnrIdx=0;
+					}
+					$(".mainvisual_banner .nav li:eq("+mainbnrIdx+") a").click();
+				},5000);
+		}
+		function mainBannerSlideclearIntvals(){
+			mainBannerSlideTime != undefined && clearInterval(mainBannerSlideTime);
+		}
+		$(".mainvisual_banner .btn_playstop .play").click(function(e){
+			e.preventDefault();
+			mainBannerSlideclearIntvals();
+			$(this).css({"display":"none"});
+			$(".mainvisual_banner .btn_playstop .stop").css({"display":"block"});
+		});
+		$(".mainvisual_banner .btn_playstop .stop").click(function(e){
+			e.preventDefault();
+			mainBannerSlidestart();
+			$(this).css({"display":"none"});
+			$(".mainvisual_banner .btn_playstop .play").css({"display":"block"});
+		});
+		var mainBannerSlideTime;
+		 mainBannerSlidestart();
+		$(".mainvisual_banner .nav li a").on("click", function(e){
+			mainBannerSlideclearIntvals();
+			e.preventDefault();
+			mainbnrIdx = $(this).parent().index();
+			$(".mainvisual_banner .slider li").fadeOut(500);
+			$(".mainvisual_banner .slider li:eq("+mainbnrIdx+")").fadeIn(500);
+			$(".mainvisual_banner .nav li").removeClass("cnt");
+			$(".mainvisual_banner .nav li:eq("+mainbnrIdx+")").addClass("cnt");
+			mainBannerSlidestart();
+		});
+	}
+	
+
 		
-	var mainBannerSlideTime;
-	 mainBannerSlidestart();
-	$(".mainvisual_banner .nav li a").on("click", function(e){
-		mainBannerSlideclearIntvals();
-		e.preventDefault();
-		mainbnrIdx = $(this).parent().index();
-		$(".mainvisual_banner .slider li").fadeOut(500);
-		$(".mainvisual_banner .slider li:eq("+mainbnrIdx+")").fadeIn(500);
-		$(".mainvisual_banner .nav li").removeClass("cnt");
-		$(".mainvisual_banner .nav li:eq("+mainbnrIdx+")").addClass("cnt");
-		mainBannerSlidestart();
-	});
-	function mainBannerSlidestart(){
-		mainBannerSlideTime = setInterval(function(){
-				mainbnrIdx++;
-				if (mainbnrIdx==mainbnrLength){
-					mainbnrIdx=0;
-				}
-				$(".mainvisual_banner .nav li:eq("+mainbnrIdx+") a").click();
-			},10000);
-	}
-	function mainBannerSlideclearIntvals(){
-		mainBannerSlideTime != undefined && clearInterval(mainBannerSlideTime);
-	}
+		
 
 
 	/*타임세일*/

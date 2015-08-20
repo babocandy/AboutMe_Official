@@ -10,6 +10,11 @@
 .mainbnr .timearea strong {display:inline-block; font-family:"OpenSansBold"; font-size:20px; padding:1px 5px 2px ; background-color:#000;color:#fff;}
 .mainbnr .tcolon {display:inline-block; font-size:0; line-height:20px; vertical-align:top; margin:0 3px; margin-top:10px; width:4px; height:12px; background:url("/aboutCom/images/common/bg_tcolone.png") 0 0 no-repeat; background-size:cover;}
 
+.main .event_timesale {position:relative;margin:0 15px 10px 15px ;  border-bottom:1px solid #d9d4d3; overflow:hidden;}
+.main .event_timesale img {width:100%;}
+.main .event_timesale .remain_time {position:absolute;top:10%;left:7%;}
+.main .event_timesale .remain_time strong {display:inline-block;padding:3px 3px 2px;background-color:#000;color:#fff;}
+
 .mainbnr .nav {position:absolute; bottom:15px; left:50%; overflow:hidden; z-index:1}
 .mainbnr .nav li {float:left; margin-left:2px; } 
 .mainbnr .nav li:first-child {margin-left:0;}
@@ -20,19 +25,22 @@
 
 @media only screen and (min-width:320px){
 	.mainbnr .timearea strong {font-size:20px;}
+	.main .event_timesale .remain_time {font-size:11px;}
 }
 @media only screen and (min-width:360px){
 	.mainbnr .timearea strong {font-size:20px;}
+	.main .event_timesale .remain_time {font-size:14px;}
 }
 @media only screen and (min-width:480px){
 	.mainbnr .timearea strong {font-size:35px;}
 	.mainbnr .tcolon {margin-top:20px}
+	.main .event_timesale .remain_time {font-size:16px;}
 }
 @media only screen and (min-width:640px){
 	.mainbnr .timearea strong {font-size:40px;}
 	.mainbnr .tcolon {margin-top:25px}
+	.main .event_timesale .remain_time {font-size:24px;}
 }
-
 
 .mainevent {margin-top:10px; background:#fff; padding:0 15px; border-bottom:1px solid #d9d4d3; text-align:center;}
 .mainevent h2 {display:inline-block; padding-top:13px; margin-bottom:13px;  font-weight:normal; font-size:14px; color:#1b1818; text-align:center; border-bottom:1px solid #1b1818;}

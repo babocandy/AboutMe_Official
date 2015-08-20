@@ -1,0 +1,161 @@
+﻿@using AboutMe.Common.Data
+@model AboutMe.Domain.Entity.Magazine.MAGAZINE_ADMIN_EDIT
+@{
+    ViewBag.Title = "매거진관리";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string modeDesc = "수정";
+    if (@Model.Mode == "NEW")
+    {
+        modeDesc = "등록";
+    }
+}
+@section Scripts{
+    <script language="javascript">
+
+    function frmCheck() {
+
+        var f = document.iform;
+        
+        if (!$("#ContentGbnI")[0].checked && !$("#ContentGbnM")[0].checked) {
+            alert("매거진 구분을 선택해 주세요.");
+            return false;
+        }
+
+        if ($("#TITLE").val().trim() == "") {
+            alert("타이틀을 입력해 주세요.");
+            return false;
+        }
+        if ($("#SUB_TITLE").val().trim() == "") {
+            alert("서브 타이틀을 입력해 주세요.");
+            return false;
+        }
+
+        if (f.MODE.value == "NEW") {
+
+            if (f.THUMB_IMG_FILE.value == "") {
+                alert("썸네일 이미지파일을 선택해주세요.");
+                return false;
+            }
+        }
+
+        if (!$("#UseYnY")[0].checked && !$("#UseYnN")[0].checked) {
+            alert("전시여부를 선택해 주세요.");
+            return false;
+        }
+        
+        if (confirm("매거진를 @modeDesc 하시겠습니까?"))
+        {
+            f.submit();
+        }
+
+
+    }
+
+    </script>
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>매거진 관리</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3>매거진 @modeDesc</h3>
+        </div>
+        @using (Html.BeginForm("EditProcess", "Magazine", FormMethod.Post, new { id = "iform", name = "iform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+            @Html.Hidden("IDX", Model.IDX)
+            @Html.Hidden("MODE", Model.Mode)
+
+            <div class="panel">
+                <table class="table table_row">
+                    <colgroup><col width="20%" /><col width="*" /></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>구분</th>
+                            <td>
+                                <label for="ContentGbnI">@Html.RadioButton("CONTENT_GBN", "I", Model == null ? false : (Model.ViewInfo.CONTENT_GBN == "I" ? true : false), new { id = "ContentGbnI" })<span class="txt mr5">잡지</span></label>
+                                <label for="ContentGbnM">@Html.RadioButton("CONTENT_GBN", "M", Model == null ? false : (Model.ViewInfo.CONTENT_GBN == "M" ? true : false), new { id = "ContentGbnM" })<span class="txt mr5">영상</span></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>타이틀</th>
+                            <td><input type="text" class="input-sm" style="width:80%" name="TITLE" id="TITLE" value="@Model.ViewInfo.TITLE"></td>
+                        </tr>
+                        <tr>
+                            <th>서브 타이틀</th>
+                            <td><input type="text" class="input-sm" style="width:80%" name="SUB_TITLE" id="SUB_TITLE" value="@Model.ViewInfo.SUB_TITLE"></td>
+                        </tr>
+                        <tr>
+                            <th>썸네일 이미지</th>
+                            <td>
+                                @if (!string.IsNullOrEmpty(Model.ViewInfo.THUMB_IMG_PATH))
+                                {
+                                    <p>
+                                        <img src="@Model.ViewInfo.THUMB_IMG_PATH">
+                                        <!--input type="checkbox" name="THUMB_IMG_PATH_DEL" value="Y">삭제 <br /><br />-->
+                                    </p>
+                                }
+                                @Html.Hidden("OLD_THUMB_IMG_PATH", Model.ViewInfo.THUMB_IMG_PATH)
+                                <input type="file" name="THUMB_IMG_FILE" id="THUMB_IMG_FILE" />
+                            </td>
+                        </tr>
+                         <tr>
+                            <th>잡지이미지</th>
+                            <td>
+                                @if (!string.IsNullOrEmpty(Model.ViewInfo.IMG_PATH))
+                                {
+                                    <p>
+                                        <img src="@Model.ViewInfo.IMG_PATH"> 
+                                        <input type="checkbox" name="IMG_PATH_DEL" value="Y">삭제 <br /><br />
+                                    </p>
+                                }
+                                @Html.Hidden("OLD_IMG_PATH", Model.ViewInfo.IMG_PATH)
+                                <input type="file" name="IMG_FILE" id="IMG_FILE" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>동영상URL</th>
+                            <td><input type="text" class="input-sm" style="width:80%" name="MOVIE_URL" id="MOVIE_URL" value="@Model.ViewInfo.MOVIE_URL"></td>
+                        </tr>
+                        <tr>
+                            <th>전시여부</th>
+                            <td>
+                                <label for="UseYnY">@Html.RadioButton("USE_YN", "Y", Model == null ? false : (Model.ViewInfo.USE_YN == "Y" ? true : false), new { id = "UseYnY" })<span class="txt mr5">전시</span></label>
+                                <label for="UseYnN">@Html.RadioButton("USE_YN", "N", Model == null ? false : (Model.ViewInfo.USE_YN == "N" ? true : false), new { id = "UseYnN" })<span class="txt mr5">비전시</span></label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                                    
+            <div class="panel tac">
+                @if (Model.Mode == "NEW")
+                {
+                    <a style="width:100px" class="btn btn-default middium" href="#none" onclick="frmCheck();">등록</a>
+                }
+                else if (Model.Mode == "EDIT")
+                {
+                    <a style="width:100px" class="btn btn-success middium" href="#none" onclick="frmCheck();">수정</a>
+                }
+                @Html.ActionLink("취소", "", @Model.SearchOption, new { @class = "btn btn-primary  middium", style = "width:100px" })
+
+            </div>
+        }
+
+
+
+    </div>
+    <!--//content-->
+}
