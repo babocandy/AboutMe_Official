@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "매거진 - ABOUT ME";
+    ViewBag.TopClass = "magazin";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    string MagazineUploadPath = AboutMe.Common.Helper.Config.GetConfigValue("MagazineUploadPath");
+}
+@section Scripts {
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <h2><img src="/aboutCom/images/aboutme/h2_magazin.png" alt="MAGAZIN 매거진" /></h2>
+        <div class="magazin_area">
+            <!--
+                작은이미지, 큰이미지 한벌당 이미지 두장 생성하였고, 큰이미지에는 "_big" 붙인 상태로 올리시면
+                작은 이미지 클릭 시 큰 이미지가 보여집니다. 작은 썸네일의 기본크기는 118X56입니다.
+                큰이미지 기본크기는 1054x708입니다.
+            -->
+            <!--매거진썸네일리스트-->
+            <div class="magazin_list">
+                <div class="listwrap">
+                    <ul>
+                        <!--
+                            영상 일 때 .movie class 사용합니다.
+                            만일 data-title에 "" 이 들어 갈 경우 테그가 깨지므로 '' 로 바꿔주세요~
+                        -->
+                        <li class="cnt"><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156.jpg" data-title="젤리처럼 탱글탱글한 피부로1!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_2.jpg" data-title="젤리처럼 탱글탱글한 피부로2!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_2_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_3.jpg" data-title="젤리처럼 탱글탱글한 피부로3!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_3_big.jpg" alt="" /></a><i></i></li>
+                        <li class="movie"><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_4.jpg" data-title="젤리처럼 탱글탱글한 피부로4!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="https://www.youtube.com/embed/x9-TIy7WPQI?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_5.jpg" data-title="젤리처럼 탱글탱글한 피부로5!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_5_big.jpg" alt="" /></a><i></i></li>
+                        <li class="movie"><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_4.jpg" data-title="젤리처럼 탱글탱글한 피부로6!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="https://www.youtube.com/embed/x9-TIy7WPQI?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_6.jpg" data-title="젤리처럼 탱글탱글한 피부로7!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_6_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_7.jpg" data-title="젤리처럼 탱글탱글한 피부로8!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_7_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156.jpg" data-title="젤리처럼 탱글탱글한 피부로9!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_2.jpg" data-title="젤리처럼 탱글탱글한 피부로10!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_2_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_3.jpg" data-title="젤리처럼 탱글탱글한 피부로11!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_3_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_4.jpg" data-title="젤리처럼 탱글탱글한 피부로12!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_4_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_5.jpg" data-title="젤리처럼 탱글탱글한 피부로13!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_5_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_6.jpg" data-title="젤리처럼 탱글탱글한 피부로14!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_6_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_7.jpg" data-title="젤리처럼 탱글탱글한 피부로15!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_7_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156.jpg" data-title="젤리처럼 탱글탱글한 피부로16!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_2.jpg" data-title="젤리처럼 탱글탱글한 피부로17!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_2_big.jpg" alt="" /></a><i></i></li>
+                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_3.jpg" data-title="젤리처럼 탱글탱글한 피부로18!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_3_big.jpg" alt="" /></a><i></i></li>
+                    </ul>
+                </div>
+            </div>
+            <!--//매거진썸네일리스트-->
+            <!--매거진 뷰-->
+            <div class="magazin_view">
+                <div class="btn_area">
+                    <a href="#" class="prev">이전</a>
+                    <a href="#" class="next">다음</a>
+                </div>
+                <div class="viewarea">
+                    <div class="magazin_tit">
+                        젤리처럼 탱글탱글한 피부로1!
+                        <strong>어바웃미 IN & OUT 프로젝트</strong>
+                    </div>
+                    <!--이미지일 때-->
+                    <div class="bigimg">
+                        <img src="/aboutCom/images/aboutme/mazinthumb_cover.jpg" alt="" />
+                        <span class="bigimg_item"><img src="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></span>
+                        <i></i>
+                    </div>
+                    <!--//이미지일 때-->
+                    <!--영상일 때-->
+                    <div class="moviearea">
+                        <div class="movie">
+                            <iframe width="854" height="510" src="https://www.youtube.com/embed/bhFjdi-J57Q?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <!--//영상일 때-->
+                </div>
+            </div>
+            <!--//매거진 뷰-->
+        </div>
+    </div>
+</div>
+<!--//container-->

@@ -4,6 +4,7 @@
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
     string img_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+    string DeliveryUrl = AboutMe.Common.Helper.Config.GetConfigValue("Order.DeliveryUrl");
 }
 @section Scripts{
     <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
@@ -178,6 +179,14 @@
                 f.action = "/Order/OrderMasterStatusUpdate";
                 f.submit();
             }
+        }
+
+        //배송조회
+        function DeliverySearch(delivery_num) {
+            var DeliveryUrl = "@DeliveryUrl";
+            DeliveryUrl = DeliveryUrl + "&pTdNo=" + delivery_num;
+            window.open(DeliveryUrl, "deliveryPop", "width=800,height=500,left=1,top=1");
+
         }
     </script>
 }
@@ -403,7 +412,7 @@
 
                     @if (!string.IsNullOrEmpty(item.DELIVERY_NUM))
                     { 
-					    <a class="btn btn-info small mt5" href="#none">배송추적</a>
+					    <a class="btn btn-info small mt5" href="#none" onclick="DeliverySearch('@item.DELIVERY_NUM')">배송추적</a>
                     }
 				</td>
 				<td>

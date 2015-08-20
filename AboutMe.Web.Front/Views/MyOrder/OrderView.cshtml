@@ -11,6 +11,7 @@
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 
     string ProductPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+    string DeliveryUrl = AboutMe.Common.Helper.Config.GetConfigValue("Order.DeliveryUrl");
 
     string container_class = "";
     if (Model.UserProfile.IS_LOGIN == false)
@@ -36,7 +37,9 @@
         //배송조회
         function DeliverySearch(delivery_num)
         {
-            alert(delivery_num + '조회!');
+            var DeliveryUrl = "@DeliveryUrl";
+            DeliveryUrl = DeliveryUrl + "&pTdNo=" + delivery_num;
+            window.open(DeliveryUrl, "deliveryPop", "width=800,height=500,left=1,top=1");
         }
 
         //구매확정
