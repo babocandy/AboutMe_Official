@@ -330,6 +330,13 @@
             var f = document.bform;
             var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
 
+            $('#ajaxPCateCode2').html('');
+            $('#ajaxPCateCode3').html('');
+
+            if (DEPTH1_CODE == '') {
+                return;
+            }
+
             if (DEPTH1_CODE == '101') { //뷰티만 라인별 타입이 있음
                 $("#cs_category1").show(); //피부 고민별(SKIN_TYPE) show
                 $("#cs_category2").show(); //라인별(LINE_TYPE) show
@@ -377,6 +384,12 @@
             var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
             //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
             //var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val();
+
+            $('#ajaxPCateCode3').html('');
+            if ((DEPTH1_CODE == '') || (DEPTH2_CODE == '')) {
+                return;
+            }
+
             $.ajax({
                 url: '/AdminProduct/CategoryListJavascript',
                 type: 'POST',

@@ -71,7 +71,7 @@
         <!--//util-->
 
         <div class="h_search">
-            <span class="ipt_hearch"><input type="text" id="h_search_keyword" name="h_search_keyword" value="입력하세요" onclick="this.value=''" /><a href="javascript:goSearch();" class="btn_hsearch"><img src="/aboutCom/images/common/btn_search2.gif" alt="" /></a></span>
+            <span class="ipt_hearch"><input type="text" id="h_search_keyword" name="h_search_keyword" value="입력하세요" onkeydown="javascript: if (event.keyCode == 13) { goSearch(); return false; }" onclick="this.value=''" /><a href="javascript:goSearch();" class="btn_hsearch"><img src="/aboutCom/images/common/btn_search2.gif" alt="" /></a></span>
         </div>
         
         <!--쇼핑백-->
@@ -97,8 +97,16 @@
 <script language="javascript">
     function goSearch() {
         var param = document.getElementById("h_search_keyword").value
+        if (param.length == 0)
+        {
+            alert("검색어를 입력해 주세요");
+            document.getElementById("h_search_keyword").focus();
+            return;
+        }
         location.href = "/Search/Index?SEARCH_KEWWORD=" + param;
     }
+
+
 
     function FlyCartLoad(page) {
         if (page < 0)
