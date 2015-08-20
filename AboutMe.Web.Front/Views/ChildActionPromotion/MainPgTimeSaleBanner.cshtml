@@ -1,0 +1,84 @@
+﻿@model List<AboutMe.Domain.Entity.AdminPromotion.SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>
+
+@{
+    Layout = null;
+}
+
+@{
+    string FromYYYY = "", FromMM = "", FromDD = "", FromHH = "", FromMin = "", FromSS = "";
+    string ToYYYY = "", ToMM = "", ToDD = "", ToHH = "", ToMin = "", ToSS = "";
+
+    if(Model.Count > 0)
+    {
+        FromYYYY = Model[0].PMO_PRODUCT_DATE_FROM.Value.Year.ToString();
+        FromMM = Model[0].PMO_PRODUCT_DATE_FROM.Value.Month.ToString().PadLeft(2, '0');
+        FromDD = Model[0].PMO_PRODUCT_DATE_FROM.Value.Day.ToString().PadLeft(2, '0');
+        FromHH = Model[0].PMO_PRODUCT_DATE_FROM.Value.Hour.ToString().PadLeft(2, '0');
+        FromMin = Model[0].PMO_PRODUCT_DATE_FROM.Value.Minute.ToString().PadLeft(2, '0');
+        FromSS = Model[0].PMO_PRODUCT_DATE_FROM.Value.Second.ToString().PadLeft(2, '0');
+
+        ToYYYY = Model[0].PMO_PRODUCT_DATE_TO.Value.Year.ToString();
+        ToMM = Model[0].PMO_PRODUCT_DATE_TO.Value.Month.ToString().PadLeft(2, '0');
+        ToDD = Model[0].PMO_PRODUCT_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
+        ToHH = Model[0].PMO_PRODUCT_DATE_TO.Value.Hour.ToString().PadLeft(2, '0');
+        ToMin = Model[0].PMO_PRODUCT_DATE_TO.Value.Minute.ToString().PadLeft(2, '0');
+        ToSS = Model[0].PMO_PRODUCT_DATE_TO.Value.Second.ToString().PadLeft(2, '0');
+    }
+}
+
+<div class="timesale">
+    @if(Model.Count > 0)
+    {
+        <p class="tit"><img src="/aboutCom/images/common/txt_timesale.png" alt="TIME SALE" /></p>
+        <p id="timesale" class="remain_time"></p>
+        <p class="item"><!--<img src="/aboutCom/images/common/timesale_item.png" alt="" />--><img src="@ViewBag.PromotionPhotoPath@Model[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG" alt="" /></p>
+        <div class="lytimesale">
+            <a href="#" class="laytime_close" id="btnClose"><img src="/aboutCom/images/common/laytime_close.gif" alt="" /></a>
+            <!--이미지 사이즈 268 x 468-->
+            <!--<img src="/aboutCom/images/common/timesale268468.jpg" class="lyitem_img" alt="늦가을 자외선으로부터 내 피부를 보호하자" />-->
+            <img src="@ViewBag.PromotionPhotoPath@Model[0].PMO_PRODUCT_PC_MAINPG_IMG" class=" lyitem_img" alt="늦가을 자외선으로부터 내 피부를 보호하자" />
+           
+            <p id="ly_timesale" class="lyremain_time"></p>
+        </div>
+        <script type="text/javascript">
+            /**
+                          $(function () {
+                                //타임세일 현재날짜와 종료날짜를 입력해주세요.
+                                $('#timesale').countdown({
+                                    starttimestamp: "2014,07,12,12,00,00",	//현재날짜
+                                    endtimestamp: "2014,07,13,10,20,30",	//종료날짜
+                                    callback: function (m) {
+                                        $('#timesale').html(m);
+                                    }
+                                });
+                                //레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
+                                $('#ly_timesale').countdown({
+                                    starttimestamp: "2014,07,12,12,00,00",	//현재날짜
+                                    endtimestamp: "2014,07,13,10,20,30",	//종료날짜
+                                    callback: function (m) {
+                                        $('#ly_timesale').html(m);
+                                    }
+                                });
+                            });
+                **/
+            $(function () {
+                //타임세일 현재날짜와 종료날짜를 입력해주세요.
+                $('#timesale').countdown({
+                    starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
+                    endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
+                    callback: function (m) {
+                        $('#timesale').html(m);
+                    }
+                });
+                //레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
+                $('#ly_timesale').countdown({
+                    starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
+                    endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
+                    callback: function (m) {
+                        $('#ly_timesale').html(m);
+                    }
+                });
+            });
+        </script>
+    }
+</div>

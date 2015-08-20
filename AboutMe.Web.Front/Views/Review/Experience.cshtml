@@ -150,11 +150,11 @@
 
                 if (item.SUB_IMG_1 != null)
                 {
-                    html += "<img src='"+ img_path_review +item.SUB_IMG_1+"' alt='' /><br />";
+                    html += "<img src='"+ img_path_review +"R308_"+item.SUB_IMG_1+"' alt='' /><br />";
                 }
                 if (item.SUB_IMG_2 != null)
                 {
-                    html += "<img src='"+ img_path_review +item.SUB_IMG_2+"' alt='' /><br />";
+                    html += "<img src='"+ img_path_review +"R308_"+item.SUB_IMG_2+"' alt='' /><br />";
                 }
 
                 html += "   </div>";
@@ -290,12 +290,12 @@
 
                                     @if (item.SUB_IMG_1 != null)
                                     {
-                                        <img src="@string.Format("{0}{1}", myController._img_path_review, item.SUB_IMG_1)" alt="" /><br />
+                                        <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.SUB_IMG_1)" alt="" /><br />
                                     }
                                    
                                     @if (item.SUB_IMG_2 != null)
                                     {
-                                        <img src="@string.Format("{0}{1}", myController._img_path_review, item.SUB_IMG_2)" alt="" /><br />
+                                        <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.SUB_IMG_2)" alt="" /><br />
                                     }
                                     
                                 </div>
@@ -424,7 +424,7 @@
                                     
                                     $(".reviewpop_bottom .reviewtxt").html( item.COMMENT );
 
-                                    $(".reviewpop_bottom .pro_info .photo img").attr("src", img_path_product + item.P_MAIN_IMG );
+                                    $(".reviewpop_bottom .pro_info .photo img").attr("src", img_path_product + "R120_" +item.P_MAIN_IMG );
                                     $(".reviewpop_bottom .pro_info .detail tit").text(item.P_NAME);
                                     $(".reviewpop_bottom .pro_info .detail stit").text(item.P_SUB_TITLE);
 

@@ -187,5 +187,14 @@ namespace AboutMe.Domain.Entity.Cart
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TB_WISHLIST_LIST_Result>("SP_TB_WISHLIST_LIST", m_IDParameter, pAGEParameter, pAGESIZEParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> SP_TB_CART_PCODE_CNT(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_TB_CART_PCODE_CNT", p_CODEParameter);
+        }
     }
 }

@@ -163,6 +163,7 @@
                                         <input type="hidden" name="orgin_date_to" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO" />
                                         <input type="hidden" name="OLD_PRODUCT_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG">
     <input type="hidden" name="OLD_PMO_PRODUCT_PC_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG">
+    <input type="hidden" name="OLD_PMO_PRODUCT_PC_MAINPG_SMALL_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG">
     <input type="hidden" name="OLD_PMO_PRODUCT_PC_EVENT_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG">
     <input type="hidden" name="OLD_PMO_PRODUCT_MOBILE_MAIN_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG">
     <input type="hidden" name="OLD_PMO_PRODUCT_MOBILE_MAINPG_IMG" value="@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG">
@@ -181,22 +182,26 @@
 
                                                 </tr>
                                                 @{
-                string front_url = "";
-                string mobile_front_url = "";
+                                                    string url = "";
+                                                    string front_url = "";
+                                                    string mobile_front_url = "";
                                                 }
                                                 @if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "01") //세트상품
                                                 {
-                                                    front_url = "http://aboutme-dev.cstone.co.kr/Event/SetPromotion";
+                                                    url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "/Event/SetPromotion";
+                                                    front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
                                                     mobile_front_url = "";
                                                 }
                                                 else if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "03") //타임세일
                                                 {
-                                                    front_url = "http://aboutme-dev.cstone.co.kr/Event/TimeSale";
+                                                    url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "/Event/TimeSale";
+                                                    front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
                                                     mobile_front_url = "";
                                                 }
                                                 else if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "05") //아웃렛
                                                 {
-                                                    front_url = "http://aboutme-dev.cstone.co.kr";
+                                                    url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "Event/Outlet";
+                                                    front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
                                                     mobile_front_url = "";
                                                 }
 
@@ -206,8 +211,8 @@
                                                     <tr>
                                                         <th>FRONT URL  </th>
                                                         <td>
-                                                            PC :      <text> @front_url</text> <br />
-                                                            MOBILE :  <text> @mobile_front_url</text>
+                                                            PC :     @Html.Raw(front_url) <br />
+                                                            MOBILE : @Html.Raw(mobile_front_url)
 
                                                         </td>
 
@@ -372,6 +377,17 @@
                                                         {
                                                             <br />
                                                             <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>PC-메인 페이지 SMALL 이미지</th>
+                                                    <td>
+                                                        <input type="file" id="PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE" maxlength="100" value="" />
+                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG))
+                                                        {
+                                                            <br />
+                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
                                                         }
                                                     </td>
                                                 </tr>

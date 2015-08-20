@@ -31,5 +31,6 @@ namespace AboutMe.Domain.Service.Exhibit
         
         SP_EXHIBIT_VIEW_Result ExhibitView(int IDX);
         List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> ExhibitTabProductList(int TAB_IDX);
+        List<SP_EXHIBIT_PCODE_LINK_ALL_Result> ExhibitProductLinkAll(string P_CODE);
     }
 }

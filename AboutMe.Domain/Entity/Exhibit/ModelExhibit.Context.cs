@@ -385,5 +385,14 @@ namespace AboutMe.Domain.Entity.Exhibit
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EXHIBIT_TAB_PRODUCT_LIST_Result>("SP_EXHIBIT_TAB_PRODUCT_LIST", tAB_IDXParameter);
         }
+    
+        public virtual ObjectResult<SP_EXHIBIT_PCODE_LINK_ALL_Result> SP_EXHIBIT_PCODE_LINK_ALL(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EXHIBIT_PCODE_LINK_ALL_Result>("SP_EXHIBIT_PCODE_LINK_ALL", p_CODEParameter);
+        }
     }
 }

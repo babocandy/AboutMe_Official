@@ -23,14 +23,7 @@
         <div class="container100per mainvisual">
             <div class="inner">
                 <!--영상-->
-                <div class="mv_area">
-                    <a href="#" class="btn_mv"><img src="/aboutCom/images/common/btn_mainmv.png" alt="영상보기" /></a>
-                    <div class="lymv">
-                        <span class="movie_close"><img src="/aboutCom/images/common/btn_movieclose.png" alt="영상닫기" /></span>
-
-                        @(Html.Action("MovieInMain", "ChildActionDisplayer"))
-                    </div>
-                </div>
+                @(Html.Action("MovieInMain", "ChildActionDisplayer"))
                 <!--//영상-->
                 <!--mainvisual_banner-->
                 <div class="mainvisual_banner">
@@ -52,38 +45,9 @@
                     timesale, beauty  둘 중 하나 사용
                 -->
                 <!--timesale-->
-                <div class="timesale">
-                    <p class="tit"><img src="/aboutCom/images/common/txt_timesale.png" alt="TIME SALE" /></p>
-                    <p id="timesale" class="remain_time"></p>
-                    <p class="item"><img src="/aboutCom/images/common/timesale_item.png" alt="" /></p>
-                    <div class="lytimesale">
-                        <a href="#" class="laytime_close" id="btnClose"><img src="/aboutCom/images/common/laytime_close.gif" alt="" /></a>
-                        <!--이미지 사이즈 268 x 468-->
-                        <img src="/aboutCom/images/common/timesale268468.jpg" class="lyitem_img" alt="늦가을 자외선으로부터 내 피부를 보호하자" />
-                        <p id="ly_timesale" class="lyremain_time"></p>
-                    </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            //타임세일 현재날짜와 종료날짜를 입력해주세요.
-                            $('#timesale').countdown({
-                                starttimestamp: "2014,07,12,12,00,00",	//현재날짜
-                                endtimestamp: "2014,07,13,10,20,30",	//종료날짜
-                                callback: function (m) {
-                                    $('#timesale').html(m);
-                                }
-                            });
-                            //레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
-                            $('#ly_timesale').countdown({
-                                starttimestamp: "2014,07,12,12,00,00",	//현재날짜
-                                endtimestamp: "2014,07,13,10,20,30",	//종료날짜
-                                callback: function (m) {
-                                    $('#ly_timesale').html(m);
-                                }
-                            });
-                        });
-                    </script>
-                </div>
+                @*@{Html.RenderAction("MainPgTimeSaleBanner", "ChildActionPromotion");}*@
                 <!--//timesale-->
+                
                 <!--beauty
                 <div class="beauty">
                     <a href="#" class="btn_beauty"><img src="/aboutCom/images/common/btn_beauty.gif" alt="" /></a>

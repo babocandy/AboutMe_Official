@@ -243,8 +243,8 @@
                         <!--//상품해당아이콘-->
                         <div class="pro_tit">
                             <!--각각 2줄씩 제한-->
-                            <p class="tit">@(new HtmlString(Model.P_SUB_TITLE))</p>
-                            <p class="stit">@(new HtmlString(Model.P_NAME))</p>
+                            <p class="tit">@(new HtmlString(Model.P_NAME))</p>
+                            <p class="stit">@(new HtmlString(Model.P_SUB_TITLE))</p>
                         </div>
                         <div class="pro_info">
                             <ul>
@@ -289,7 +289,7 @@
                     <div class="ly cartinfo boxtypee">
                         <div class="top"></div>
                         <div class="middle">
-                            <p class="txt"><em>8</em>명 고객님이<br />쇼핑백에 담았습니다.</p>
+                            <p class="txt"><em>@(Html.Action("ProductofCartCnt", "Cart", new { p_code = @ViewBag.P_CODE }))</em>명 고객님이<br />쇼핑백에 담았습니다.</p>
                             <a href="javascript:void(0)" class="ly_close"></a>
                         </div>
                         <div class="bottom"></div>
@@ -440,7 +440,7 @@
                        @* @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}*@
                         <!--오른쪽영역 : 상품상세의 right 프로모션-->
                         
-                                @{Html.RenderAction("EventInProductDetail", "Event");}
+                                @{Html.RenderAction("EventInProductDetail", "Event", new {p_code = @ViewBag.P_CODE });}
                             
                         <!--오른쪽영역 : 상품상세의 right 프로모션-->
                         <!--세트상품 ssw --2015.8.8 ssw 수정 CD_PROMOTION_PRODUCT 추가-->
