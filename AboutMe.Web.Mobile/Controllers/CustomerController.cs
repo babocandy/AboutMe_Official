@@ -9,11 +9,11 @@ using AboutMe.Domain.Service.Faq;
 using AboutMe.Domain.Entity.Faq;
 using AboutMe.Domain.Service.Notice;
 using AboutMe.Domain.Entity.Notice;
-using AboutMe.Web.Front.Common.Filters;
+using AboutMe.Web.Mobile.Common.Filters;
 
-namespace AboutMe.Web.Front.Controllers
+namespace AboutMe.Web.Mobile.Controllers
 {
-    public class CustomerController : BaseFrontController
+    public class CustomerController : BaseMobileController
     {
         private IFaqService _faqservice;
         private INoticeService _noticeservice;
