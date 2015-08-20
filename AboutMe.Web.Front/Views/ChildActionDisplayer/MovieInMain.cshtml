@@ -29,10 +29,10 @@
                         {
                             <li>
                                 <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})">
-                                    <span class="photo"><img src="@string.Format("{0}R64_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></span>
+                                    <span class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></span>
                                     <span class="detail">
-                                        <em class="title">@item.P_NAME</em>
-                                        <em class="stit">@item.P_SUB_TITLE</em>
+                                        <em class="title txtdotdot">@item.P_NAME</em>
+                                        <em class="stit ">@item.P_SUB_TITLE</em>
                                         <em class="price"><strong>@string.Format("{0:#,##0}", item.SELLING_PRICE)</strong>원</em>
                                     </span>
                                 </a>
