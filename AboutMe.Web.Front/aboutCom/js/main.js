@@ -78,6 +78,7 @@ $(function(){
 		$(".mv_area .lymv").show();
 		$(".mv_area .lymv").animate({"width":"1080px", "height":"540px"});
 		$(".btn_mv").hide();
+		$(".txtdotdot").dotdotdot();
 	});
 	$(".mv_area .lymv .movie_close").click(function(e){
 		e.preventDefault();

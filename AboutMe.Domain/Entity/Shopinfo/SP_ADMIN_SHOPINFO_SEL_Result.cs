@@ -7,20 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AboutMe.Domain.Entity.Magazine
+namespace AboutMe.Domain.Entity.Shopinfo
 {
     using System;
     
-    public partial class SP_MAGAZINE_LIST_Result
+    public partial class SP_ADMIN_SHOPINFO_SEL_Result
     {
         public int IDX { get; set; }
-        public string TITLE { get; set; }
-        public string SUB_TITLE { get; set; }
-        public string CONTENT_GBN { get; set; }
-        public string IMG_PATH { get; set; }
-        public string MOVIE_URL { get; set; }
-        public string THUMB_IMG_PATH { get; set; }
+        public string SHOP_NAME { get; set; }
+        public string TEL_NUM { get; set; }
+        public string POST { get; set; }
+        public string ADDR1 { get; set; }
+        public string ADDR2 { get; set; }
+        public string LOCATION_INFO { get; set; }
+        public string LATITUDE { get; set; }
+        public string LONGITUDE { get; set; }
         public int DISPLAY_ORDER { get; set; }
+        public string USE_YN { get; set; }
+        public string ADM_ID { get; set; }
         public System.DateTime REG_DATE { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 
 using AboutMe.Domain.Service.Magazine;
 using AboutMe.Domain.Entity.Magazine;
+using AboutMe.Domain.Service.Shopinfo;
+using AboutMe.Domain.Entity.Shopinfo;
 using AboutMe.Web.Front.Common.Filters;
 
 namespace AboutMe.Web.Front.Controllers
@@ -14,11 +16,13 @@ namespace AboutMe.Web.Front.Controllers
     public class BrandController : BaseFrontController
     {
         private IMagazineService _magazineservice;
+        private IShopinfoService _shopinfoservice;
         private string _magazineUploadPath = AboutMe.Common.Helper.Config.GetConfigValue("MagazineUploadPath");
 
-        public BrandController(IMagazineService _magazineservice)
+        public BrandController(IMagazineService _magazineservice, IShopinfoService _shopinfoservice)
         {
             this._magazineservice = _magazineservice;
+            this._shopinfoservice = _shopinfoservice;
         }
         // GET: Brand 소개
         public ActionResult Index()
@@ -28,8 +32,17 @@ namespace AboutMe.Web.Front.Controllers
 
         public ActionResult Magazine()
         {
-            //_magazineservice.
-            return View();
+            List<SP_MAGAZINE_LIST_Result> list = new List<SP_MAGAZINE_LIST_Result>();
+            list = _magazineservice.MagazineList();
+            return View(list);
+        }
+
+
+        public ActionResult Shopinfo()
+        {
+            List<SP_SHOPINFO_LIST_Result> list = new List<SP_SHOPINFO_LIST_Result>();
+            list = _shopinfoservice.ShopinfoList();
+            return View(list);
         }
     }
 }

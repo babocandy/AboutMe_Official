@@ -1,7 +1,7 @@
-﻿@model AboutMe.Domain.Entity.Magazine.MAGAZINE_ADMIN_INDEX
+﻿@model AboutMe.Domain.Entity.Shopinfo.SHOPINFO_ADMIN_INDEX
 
 @{
-    ViewBag.Title = "매거진관리";
+    ViewBag.Title = "매장안내";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 
     //paging 파라메터
@@ -13,7 +13,7 @@
 }
 @section Scripts{
     <script language="javascript">
-    
+
     function onFormReset() {
         $("#sform")[0].reset();
     }
@@ -40,20 +40,20 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>매거진 관리</strong>
+            <a href="/">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>매장안내 관리</strong>
         </div>
         <!--//path-->
         <div class="panel">
-            <h3>매거진 관리</h3>
+            <h3>매장안내 관리</h3>
         </div>
 
         <div class="tar mb10">
-            @Html.ActionLink("매거진등록", "New", @Model.SearchOption, new { @class = "btn btn-success middium btn_add_table", style = "width:100px" })
+            @Html.ActionLink("매장안내등록", "New", @Model.SearchOption, new { @class = "btn btn-success middium btn_add_table", style = "width:100px" })
         </div>
 
         <div class="panel">
             <table class="table table_row">
-                @using (Html.BeginForm("", "Magazine", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+                @using (Html.BeginForm("", "Shopinfo", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
                 {
 
                     @Html.Hidden("PAGE", "1")
@@ -73,9 +73,10 @@
                         </tr>
                         <tr>
                             <th>검색</th>
-                            <td >
-
-                                <label for="SearchCol1">@Html.RadioButton("SearchCol", "TITLE", Model == null ? false : (Model.SearchOption.SearchCol == "TITLE" || Model.SearchOption.SearchCol == "" ? true : false), new { id = "SearchCol1" })<span class="txt mr5">제목</span></label>
+                            <td>
+                                <label for="SearchCol1">@Html.RadioButton("SearchCol", "SHOP_NAME", Model == null ? false : (Model.SearchOption.SearchCol == "SHOP_NAME" || Model.SearchOption.SearchCol == "" ? true : false), new { id = "SearchCol1" })<span class="txt mr5">매장명</span></label>
+                                <label for="SearchCol2">@Html.RadioButton("SearchCol", "ADDR1", Model == null ? false : (Model.SearchOption.SearchCol == "ADDR1" ? true : false), new { id = "SearchCol2" })<span class="txt mr5">주소1</span></label>
+                                <label for="SearchCol3">@Html.RadioButton("SearchCol", "ADDR2", Model == null ? false : (Model.SearchOption.SearchCol == "ADDR2" ? true : false), new { id = "SearchCol3" })<span class="txt mr5">상세주소</span></label>
 
                                 @(Html.Kendo().TextBox()
                                     .Name("SearchKeyword")
@@ -98,9 +99,9 @@
                 <thead>
                     <tr>
                         <th width="50">No.</th>
-                        <th width="150">구분</th>
-                        <th width="150">썸네일</th>
-                        <th width="*">제목</th>
+                        <th width="400">매장명</th>
+                        <th width="200">전화번호</th>
+                        <th width="*">위치</th>
                         <th width="150">전시여부</th>
                         <th width="300">등록일</th>
                     </tr>
@@ -109,7 +110,7 @@
                     @if (Model.ListCnt == 0)
                     {
                         <tr>
-                            <td colspan="6">등록된 매거진이 없습니다.</td>
+                            <td colspan="6">등록된 매장정보가 없습니다.</td>
                         </tr>
                     }
                     else
@@ -118,22 +119,11 @@
                         {
                             <tr>
                                 <td>@item.IDX</td>
-                                <td>@{ 
-                                       if (item.CONTENT_GBN == "I") { 
-                                           @Html.Raw("잡지");
-                                       }
-                                       else if (item.CONTENT_GBN == "M")
-                                       {
-                                           @Html.Raw("영상");
-                                       }
-                                       else
-                                       {
-                                           @Html.Raw(item.CONTENT_GBN);
-                                       }
-                                    }
+                                <td>
+                                    <a href="/Shopinfo/Edit?IDX=@item.IDX&@PagingParam">@Html.Raw(item.SHOP_NAME)</a>
                                 </td>
-                                <td><a href="/Magazine/Edit?IDX=@item.IDX&@PagingParam"><img src="@item.THUMB_IMG_PATH" width="80" height="100" /></a></td>
-                                <td><a href="/Magazine/Edit?IDX=@item.IDX&@PagingParam">@item.TITLE</a></td>
+                                <td>@item.TEL_NUM</td>
+                                <td>@item.ADDR1 @item.ADDR2 </td>
                                 <td>@item.USE_YN</td>
                                 <td>@item.REG_DATE</td>
                             </tr>

@@ -1,0 +1,126 @@
+﻿@model List<AboutMe.Domain.Entity.Shopinfo.SP_SHOPINFO_LIST_Result>
+@{
+    ViewBag.Title = "매장안내 - ABOUT ME";
+    ViewBag.TopClass = "store";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    string NaverMapKey = AboutMe.Common.Helper.Config.GetConfigValue("NaverMapKey");
+
+}
+@section Scripts {
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+    <script src="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&key=@NaverMapKey" type="text/javascript"></script>
+
+}
+
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <h2><img src="/aboutCom/images/aboutme/h2_store.png" alt="STORE 매장안내" /></h2>
+
+        <!--매장안내-->
+        <div class="store_area">
+            <!--어바웃미 매장-->
+            <div class="store_list">
+                <ul>
+                @foreach (var item in Model)
+                { 
+                    
+                    <li>
+                        <a href="#none" class="shoplist" id="shop_@item.IDX" onclick="loadShop(this)">
+                            <span class="name">@Html.Raw(item.SHOP_NAME)</span>
+                            <span class="addres">@item.ADDR1 @item.ADDR2</span>
+                            <span class="tel">@item.TEL_NUM</span>
+                            <span class="location_info" style="display:none">@item.LOCATION_INFO</span>
+                            <span class="lat" style="display:none">@item.LATITUDE</span>
+                            <span class="lng" style="display:none">@item.LONGITUDE</span>
+                        </a>
+                    </li>
+                    
+                }
+                </ul>
+            </div>
+            <!--어바웃미 매장-->
+            @if (Model != null)
+            {
+                if (Model.Count() > 0)
+                { 
+                    <div class="map_area">
+                        <div class="map_info" style="z-index:2">
+                            <p class="tit"></p>
+                            <p class="address" id="shopAddress">
+                            
+                            </p>
+                        </div>
+                        <div class="mapapi" id="naverMap" style="position: relative;z-index:1"></div>
+                    </div>
+                }
+            }
+        </div>
+        <!--//매장안내-->
+    </div>
+</div>
+<!--//container-->
+<script type="text/javascript">
+    function loadShop(s) {
+        $("#naverMap").empty();
+        
+        //주소 레이어정보
+        var shop_name = $(s).find(".name").html();
+        $(".map_info .tit").html(shop_name);
+        var address = $(s).find(".addres").html();
+        var location_info = $(s).find(".location_info").html();
+        if (location_info != "")
+        {
+            address = address + "<br />" + location_info;
+        }
+        $(".map_info .address").html(address);
+
+
+        var lat = $(s).find(".lat").html();
+        var lng = $(s).find(".lng").html();
+        //지도정보
+        var oCenterPoint = new nhn.api.map.LatLng(lat, lng);
+        nhn.api.map.setDefaultPoint('LatLng');
+        oMap = new nhn.api.map.Map('naverMap', {
+            point: oCenterPoint,
+            zoom: 12, // - 초기 줌 레벨은 10으로 둔다.
+            enableWheelZoom: false,
+            enableDragPan: true,
+            enableDblClickZoom: false,
+            mapMode: 0,
+            activateTrafficMap: false,
+            activateBicycleMap: false,
+            minMaxLevel: [1, 14],
+            size: new nhn.api.map.Size(1078, 448)
+        });
+
+        var mapZoom = new nhn.api.map.ZoomControl(); // - 줌 컨트롤 선언
+        mapZoom.setPosition({ left: 1010, bottom: 20 }); // - 줌 컨트롤 위치 지정
+        oMap.addControl(mapZoom); // - 줌 컨트롤 추가.
+
+        var oSize = new nhn.api.map.Size(28, 37);
+        var oOffset = new nhn.api.map.Size(14, 37);
+        var oIcon = new nhn.api.map.Icon('http://static.naver.com/maps2/icons/pin_spot3.png', oSize, oOffset);
+
+        /*
+         * 초기 중심좌표 사용
+         */
+        var marker = new nhn.api.map.Marker(oIcon);
+        marker.setPoint(oCenterPoint);
+        oMap.addOverlay(marker);
+    }
+   
+
+
+</script>
+<script language="javascript">
+    //첫번째주소호출
+    var thumb = $(".shoplist");
+    if (thumb.length > 0) {
+        setTimeout(function () {
+            $(thumb[0]).trigger("click");
+        }, 1000);
+
+    }
+</script>

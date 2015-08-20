@@ -45,8 +45,13 @@ namespace AboutMe.Web.Front.Controllers
         // GET: Main
         public ActionResult Index()
         {
+            List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> timesaleList = new List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>();
+
+            //타임세일 프로모션 정보중 유효한 TOP 1 가져오기 
+            timesaleList = _PromotionService.GetPromotionByProductTop1_Info("03").ToList();
             EVENT_MAIN_INDEX M = new EVENT_MAIN_INDEX
             {
+                TimeSaleCnt = timesaleList.Count(),
                 MainInfo = _eventservice.EventMainView(),
                 IngListInfo = _eventservice.EventMainIngList(),
                 EndListInfo = _eventservice.EventMainEndList()

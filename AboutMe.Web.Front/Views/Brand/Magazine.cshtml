@@ -1,4 +1,4 @@
-﻿
+﻿@model List<AboutMe.Domain.Entity.Magazine.SP_MAGAZINE_LIST_Result>
 @{
     ViewBag.Title = "매거진 - ABOUT ME";
     ViewBag.TopClass = "magazin";
@@ -28,25 +28,44 @@
                         <!--
                             영상 일 때 .movie class 사용합니다.
                             만일 data-title에 "" 이 들어 갈 경우 테그가 깨지므로 '' 로 바꿔주세요~
-                        -->
-                        <li class="cnt"><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156.jpg" data-title="젤리처럼 탱글탱글한 피부로1!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_2.jpg" data-title="젤리처럼 탱글탱글한 피부로2!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_2_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_3.jpg" data-title="젤리처럼 탱글탱글한 피부로3!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_3_big.jpg" alt="" /></a><i></i></li>
-                        <li class="movie"><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_4.jpg" data-title="젤리처럼 탱글탱글한 피부로4!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="https://www.youtube.com/embed/x9-TIy7WPQI?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_5.jpg" data-title="젤리처럼 탱글탱글한 피부로5!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_5_big.jpg" alt="" /></a><i></i></li>
-                        <li class="movie"><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_4.jpg" data-title="젤리처럼 탱글탱글한 피부로6!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="https://www.youtube.com/embed/x9-TIy7WPQI?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_6.jpg" data-title="젤리처럼 탱글탱글한 피부로7!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_6_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_7.jpg" data-title="젤리처럼 탱글탱글한 피부로8!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_7_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156.jpg" data-title="젤리처럼 탱글탱글한 피부로9!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_2.jpg" data-title="젤리처럼 탱글탱글한 피부로10!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_2_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_3.jpg" data-title="젤리처럼 탱글탱글한 피부로11!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_3_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_4.jpg" data-title="젤리처럼 탱글탱글한 피부로12!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_4_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_5.jpg" data-title="젤리처럼 탱글탱글한 피부로13!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_5_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_6.jpg" data-title="젤리처럼 탱글탱글한 피부로14!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_6_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_7.jpg" data-title="젤리처럼 탱글탱글한 피부로15!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_7_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156.jpg" data-title="젤리처럼 탱글탱글한 피부로16!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_2.jpg" data-title="젤리처럼 탱글탱글한 피부로17!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_2_big.jpg" alt="" /></a><i></i></li>
-                        <li><a href="#"><img src="/aboutCom/images/aboutme/mazinthum118156_3.jpg" data-title="젤리처럼 탱글탱글한 피부로18!><strong>어바웃미 IN & OUT 프로젝트</strong>" data-pic="/aboutCom/images/aboutme/mazinthum118156_3_big.jpg" alt="" /></a><i></i></li>
+                        -->                        
+                        @{
+                            int cnt = 0;
+                            foreach (var item in Model)
+                            {
+                                string cnt_str = "";
+                                string dataPath = "";
+                                string moveclass = "";
+                                string class_str = "";
+
+                                if (cnt == 0)
+                                {
+                                    cnt_str = "cnt";
+                                }
+                                else
+                                {
+                                    cnt_str = "";
+                                }
+
+                                if (item.CONTENT_GBN == "M") //영상
+                                {
+                                    dataPath = item.MOVIE_URL;
+                                    moveclass = "movie";
+                                }
+                                else
+                                {
+                                    dataPath = item.IMG_PATH;
+                                    moveclass = "";
+                                }
+
+                                class_str = cnt_str + " " + moveclass;
+                            
+                                <li class="@Html.Raw(class_str)"><a href="#"><img src="@item.THUMB_IMG_PATH" data-title="@item.SUB_TITLE" data-subtitle="@item.TITLE" data-pic="@dataPath" alt="" /></a><i></i></li>
+
+
+                                cnt++;
+                            }
+                        }
                     </ul>
                 </div>
             </div>
@@ -59,20 +78,21 @@
                 </div>
                 <div class="viewarea">
                     <div class="magazin_tit">
-                        젤리처럼 탱글탱글한 피부로1!
-                        <strong>어바웃미 IN & OUT 프로젝트</strong>
+                        <span class="tit"></span>
+                        <strong class="stit"></strong>
+
                     </div>
                     <!--이미지일 때-->
                     <div class="bigimg">
-                        <img src="/aboutCom/images/aboutme/mazinthumb_cover.jpg" alt="" />
-                        <span class="bigimg_item"><img src="/aboutCom/images/aboutme/mazinthum118156_big.jpg" alt="" /></span>
+                        
+                        <span class="bigimg_item"><img src="/aboutCom/images/aboutme/mazinthumb_cover.jpg" alt="" /></span>
                         <i></i>
                     </div>
                     <!--//이미지일 때-->
                     <!--영상일 때-->
                     <div class="moviearea">
                         <div class="movie">
-                            <iframe width="854" height="510" src="https://www.youtube.com/embed/bhFjdi-J57Q?autoplay=1&amp;showinfo=0&amp;rel=0&amp;vq=hd720&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+                            <iframe width="854" height="510" src="" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>
                     <!--//영상일 때-->
@@ -83,3 +103,15 @@
     </div>
 </div>
 <!--//container-->
+<script language="javascript">
+    //첫번째매거진호출
+    var thumb = $(".magazin_list .listwrap li i");
+    if (thumb.length > 0)
+    {
+        setTimeout(function () {
+            $(thumb[0]).trigger("click");
+        }, 1000);
+
+    }
+</script>
+

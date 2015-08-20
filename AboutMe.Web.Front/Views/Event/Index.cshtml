@@ -95,7 +95,20 @@
                             </a>
                         </li>
                     }
+                    
+                    @if (Model.TimeSaleCnt == 0)
+                    { 
+                        if (!string.IsNullOrEmpty(Model.MainInfo.MIDDLE_IMG4))
+                        {
+                            <li>
+                                <a href="@Model.MainInfo.MIDDLE_URL4">
+                                    <img src="@Model.MainInfo.MIDDLE_IMG4" alt="" width=" 426" height="284" />
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
+
                 <!-- time sale-->
                 @{Html.RenderAction("EventPgTimeSaleBanner", "ChildActionPromotion");}
                 <!-- time sale-->
