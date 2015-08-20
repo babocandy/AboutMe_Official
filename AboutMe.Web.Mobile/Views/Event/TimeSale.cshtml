@@ -1,0 +1,218 @@
+﻿@model  AboutMe.Web.Mobile.Controllers.EventController.MyMultiModelForPromotionProduct
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+    <link href="/aboutCom/css/shopping.css" rel="stylesheet" />
+}
+
+
+<!--header-->
+@section Header{
+
+}
+<!--//header-->
+@section Scripts{
+
+   <script type="text/javascript">
+       $(function () {
+           //타임세일 현재날짜와 종료날짜를 입력해주세요.
+           $('#timesale').countdown({
+               starttimestamp: "2014,07,12,12,00,00",	//현재날짜
+               endtimestamp: "2014,07,13,10,20,30",	//종료날짜
+               callback: function (m) {
+                   $('#timesale').html(m);
+               }
+           });
+       });
+  </script>
+
+
+<script language="javascript">
+
+    $(function () {
+        //ajaxSelectCateCodeJavascriptInit();
+    });
+
+    function bsearch() {
+        var f = document.bform;
+        //alert('ok');
+        f.target = "";
+        f.PAGE.value = 1;
+        f.submit();
+    }
+
+    function pCateCode(code) {
+        //alert(code);
+        var f = document.bform;
+        f.P_CATE_CODE.value = code;
+        bsearch();
+    }
+
+    function cCateCode(code) {
+        var f = document.bform;
+        f.C_CATE_CODE.value = code;
+        bsearch();
+    }
+
+    function lCateCode(code) {
+        var f = document.bform;
+        f.L_CATE_CODE.value = code;
+        bsearch();
+    }
+
+    function sortGbn(code) {
+        var f = document.bform;
+        f.SORT_GBN.value = code;
+        bsearch();
+    }
+
+    function rePageSize() {
+        var f = document.aform;
+
+        f.target = "";
+        f.page.value = 1;
+        f.submit();
+    }
+
+</script>
+
+
+<script language="javascript">
+
+    //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+    /**
+     function AddCartClick(b) {
+         var arrP = new Array;
+         var obj = new Object();
+         obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+         obj.p_count = $(b).attr('data-pcount');
+         arrP.push(obj);
+         Cart_Input(arrP);
+     }
+     **/
+</script>
+
+
+<script language="javascript">
+
+
+
+
+    //div_total , discount , result
+
+    //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+    function AddCartClick() {
+
+
+        var arrP = new Array;
+
+
+        var frmobj = document.frm001;
+        var pcode = "";
+
+
+        for (var i = 0; frmobj.ChkCalPrice.length > i ; i++) {
+            if (frmobj.ChkCalPrice[i].checked == true) {
+                alert(frmobj.ChkCalPrice[i].checked);
+
+                var obj = new Object();
+                cur_arr = frmobj.ChkCalPrice[i].value.split('$');
+                pcode = cur_arr[0];
+
+                /**
+                obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+                obj.p_count = $(b).attr('data-pcount');
+                **/
+
+                obj.p_code = pcode;//f.opt_p_code.value//P_CODE
+                obj.p_count = 1;
+                arrP.push(obj);
+            }
+
+            //alert(total_discount_price);
+        }
+
+
+
+        if (arrP.length > 0) {
+            Cart_Input(arrP);
+        }
+        else {
+            alert("쇼핑백에 담을 상품을 선택해주세요!");
+        }
+
+
+
+    }
+
+
+    //장바구니----아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+    /**
+    function AddCartClick(b) {
+        var arrP = new Array;
+        var obj = new Object();
+        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+        obj.p_count = $(b).attr('data-pcount');
+        arrP.push(obj);
+        Cart_Input(arrP);
+    }
+
+    **/
+
+</script>
+
+}
+
+@{
+    string FromYYYY = "", FromMM = "", FromDD = "", FromHH = "", FromMin = "", FromSS = "";
+    string ToYYYY = "", ToMM = "", ToDD = "", ToHH = "", ToMin = "", ToSS = "";
+
+    FromYYYY = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Year.ToString();
+    FromMM = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Month.ToString().PadLeft(2, '0');
+    FromDD = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Day.ToString().PadLeft(2, '0');
+    FromHH = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Hour.ToString().PadLeft(2, '0');
+    FromMin = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Minute.ToString().PadLeft(2, '0');
+    FromSS = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_FROM.Value.Second.ToString().PadLeft(2, '0');
+
+    ToYYYY = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Year.ToString();
+    ToMM = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Month.ToString().PadLeft(2, '0');
+    ToDD = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
+    ToHH = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Hour.ToString().PadLeft(2, '0');
+    ToMin = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Minute.ToString().PadLeft(2, '0');
+    ToSS = Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_DATE_TO.Value.Second.ToString().PadLeft(2, '0');
+}
+
+<!--container-->
+@section Body{
+
+    <div class="wrap display">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <!--container-->
+        <div class="container">
+            <div class="h2_area">
+                <h2>기획전</h2>
+            </div>
+            <div class="timesale_area">
+                <p id="timesale" class="timesale"></p>
+                <div class="timebnr">
+                   <!-- <img src="/aboutCom/images/sample/timesale.jpg" alt="" />-->
+                    <img src="@ViewBag.PromotionPhotoPath@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG" alt="" />
+                </div>
+                <div class="btn_area">
+                    <a href="#" class="btn btn_brown_h40 mr5" style="width:142px;">바로구매</a><a href="#" class="btn btn_white_h40 cart" style="width:142px;">쇼핑백</a>
+                </div>
+            </div>
+        </div>
+        <!--//container-->
+
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
+    </div>
+}
+<!--footer-->
+@section Footer{
+
+}
+<!--//footer-->
