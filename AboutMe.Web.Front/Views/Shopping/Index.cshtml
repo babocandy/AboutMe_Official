@@ -336,7 +336,6 @@ i++;
                         PagingParam = PagingParam + "&L_CATE_CODE=" + ViewBag.L_CATE_CODE;
                         PagingParam = PagingParam + "&P_CATE_CODE_3DEPTH=" + ViewBag.P_CATE_CODE_3DEPTH;
                         PagingParam = PagingParam + "&DEPTH_NAME3=" + ViewBag.DEPTH_NAME3;
-             
                     }
                     @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = PagingParam });}
                     <!--//페이징-->
