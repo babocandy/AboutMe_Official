@@ -250,7 +250,10 @@
                             <ul>
                                 <li class="price">
                                     <strong>판매가</strong>
-                                    <del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del><span class="curprice"><em>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</em>원</span>
+@if (Model.SELLING_PRICE != Model.RESULT_PRICE)
+{
+                                    <del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del>
+}<span class="curprice"><em>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</em>원</span>
                                 </li>
                                 <!--쿠폰, 임직원가, 포인트 -->
                                 @{Html.RenderAction("ProductDetailSalePrice", "ChildActionPromotion", new { UsableDeviceGbn = "P", P_CODE = @ViewBag.P_CODE, ResultPrice = @Model.RESULT_PRICE });}
