@@ -770,7 +770,7 @@ namespace AboutMe.Web.Front.Controllers
                 {
                     Param.REAL_ACCOUNT_AT = "0";
                     Param.BANK_CODE = PayResult.CARD_BankCode; //은행코드
-                    Param.ESCROW_YN = "Y";
+                    Param.ESCROW_YN = "N";
                     PAY_GBN = "1";
                 }
 
@@ -793,6 +793,7 @@ namespace AboutMe.Web.Front.Controllers
                 Param.VACT_Name = PayResult.VACT_Name;
                 Param.VACT_Date = PayResult.VACT_Date;
                 Param.VACT_Time = PayResult.VACT_Time;
+                Param.PAY_GBN = PAY_GBN;
                 Param.ORDER_STATUS_VALUE = "20"; //결제완료
                 try
                 {
