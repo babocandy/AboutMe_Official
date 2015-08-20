@@ -12,7 +12,9 @@ body { min-width:1080px;}
 #header #header_inner {position:relative; width:1080px; margin:0 auto;}
 #header h1 {padding-top:33px;}
 #header .util {position:absolute; right:0; top:20px;}
-#header .util ul {overflow:hidden;}
+#header .util span.username {display:inline-block; margin-top:-2px; margin-right:17px;  font-size:12px; vertical-align:top; }
+#header .util span.username em {font-weight:bold;}
+#header .util ul {display:inline-block; overflow:hidden; vertical-align:top;}
 #header .util ul li {float:left; padding-left:10px; margin-right:10px; background:url("/aboutCom/images/common/bg_bar.gif") 0 1px no-repeat; }
 #header .util ul li:first-child {padding-left:0; background:none;}
 #header .cart {position:absolute; right:0; top:70px;}
@@ -126,9 +128,9 @@ body { min-width:1080px;}
 .main .mv_area .lymv .relative ul  li a {display:block;}
 .main .mv_area .lymv .relative ul  li .photo {float:left; width:96px;}
 .main .mv_area .lymv .relative ul  li .detail {float:left; margin-left:14px; width:116px;}
-.main .mv_area .lymv .relative ul  li .detail .title {display:block; margin-top:7px; font-size:14px; color:#1b1818;}
-.main .mv_area .lymv .relative ul  li .detail .stit {display:block; margin-top:2px; font-size:11px; font-family:"Dotum"; color:#bbb5b4;}
-.main .mv_area .lymv .relative ul  li .detail .price {display:block; margin-top:30px; font-size:16px; color:#1b1818}
+.main .mv_area .lymv .relative ul  li .detail .title {display:block; margin-top:7px; height:22px; font-size:14px; color:#1b1818;}
+.main .mv_area .lymv .relative ul  li .detail .stit {display:block; margin-top:2px; height:29px; overflow:hidden;font-size:11px; font-family:"Dotum"; color:#bbb5b4;}
+.main .mv_area .lymv .relative ul  li .detail .price {display:block; margin-top:16px; font-size:16px; color:#1b1818}
  
 
 
@@ -172,11 +174,13 @@ body { min-width:1080px;}
 .middle_bnr .bnr_list {float:left; width:810px;}
 .middle_bnr .bnr_list:after {display:block; clear:both; content:'';}
 .middle_bnr .bnr_list li {float:left; width:270px; text-align:center;}
+.middle_bnr .bnr_list li a {display:block; width:200px; margin:0 auto;}
 .middle_bnr .bnr_list li .photo {display:block; margin-top:20px;}
-.middle_bnr .bnr_list li .tit {display:block; margin-top:18px; font-size:16px; color:#1b1818; font-weight:bold;}
-.middle_bnr .bnr_list li .stit {display:block; margin-top:5px; font-size:11px; color:#bbb5b4; font-family:"Dotum"; letter-spacing:-1px;}
+.middle_bnr .bnr_list li .photo img {width:200px; height:200px;}
+.middle_bnr .bnr_list li .tit {display:block; margin-top:18px; height:30px; font-size:16px; color:#1b1818; font-weight:bold;}
+.middle_bnr .bnr_list li .stit {display:block; margin-top:5px; height:28px; font-size:11px; color:#bbb5b4; font-family:"Dotum"; letter-spacing:-1px;}
 .middle_bnr .bnr_list li .price {display:block;  margin-top:16px; color:#1b1818; font-size:16px;}
-.middle_bnr .bnr_list li .price em {font-size:18px}
+.middle_bnr .bnr_list li .price em {font-size:18px; font-weight:bold}
 
 .beauty_banner {width:1080px; height:352px; background:url("/aboutCom/images/common/bg_beauty_bnr.gif") 0 0 no-repeat; box-sizing:border-box}
 .health_banner {margin-top:10px; width:1080px; height:352px; background:url("/aboutCom/images/common/bg_health_bnr.gif") 0 0 no-repeat; box-sizing:border-box}
