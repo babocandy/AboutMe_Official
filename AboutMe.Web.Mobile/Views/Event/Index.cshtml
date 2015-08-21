@@ -1,0 +1,90 @@
+﻿@model AboutMe.Domain.Entity.Event.EVENT_MAIN_INDEX
+@{
+    ViewBag.Title = "이벤트 - ABOUT ME";
+    ViewBag.TopClass = "event";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+<link href="/aboutCom/css/event.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <h2>이벤트</h2>
+    </div>
+
+    <!--tabs-->
+    <div class="eventtabs">
+        <ul class="tabs tabtypeb ea2">
+            <li class="cnt"><a href="#eventCon1">진행중 이벤트</a></li>
+            <li><a href="#eventCon2">종료 이벤트</a></li>
+        </ul>
+    </div>
+    <!--//tabs-->
+    <!--진행중 기획전/이벤트-->
+    <div id="eventCon1" class="tab_content eventcon">
+        <!--타임세일-->
+        <div class="event_timesale">
+            <a href="#link"><img class="lazyload" data-original="/aboutCom/images/sample/event_ban1.jpg" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></a>
+            <p id="timesale" class="remain_time ffOS"></p>
+        </div>
+        <!--//타임세일-->
+
+        <div class="event_plan">
+            <ul>
+                @if (Model.IngListInfo != null)
+                { 
+                    foreach (var item in Model.IngListInfo)
+                    {
+
+                        string urlPath = "";
+                        if (item.GBN == "EVENT")
+                        {
+                            urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
+                        }
+                        else
+                        {
+                            urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
+                        }
+
+                        <li><a href="@urlPath"><img class="lazyload" data-original="@item.MOBILE_BANNER" alt="@item.NAME @item.FROM_DATE ~ @item.TO_DATE" /></a></li>
+                    }
+                }
+            </ul>
+        </div>
+
+    </div>
+    <!--//진행중 이벤트-->
+    <!--종료 이벤트-->
+    <div id="eventCon2" class="tab_content eventcon">
+        <!--기획전/이벤트-->
+        <div class="event_plan">
+            <ul>
+            @if (Model.EndListInfo != null)
+            {
+                foreach (var item in Model.EndListInfo)
+                {
+
+                    string urlPath = "";
+                    if (item.GBN == "EVENT")
+                    {
+                        urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
+                    }
+                    else
+                    {
+                        urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
+                    }
+
+                    <li><a href="@urlPath"><img class="lazyload" data-original="@item.MOBILE_BANNER" alt="@item.NAME @item.FROM_DATE ~ @item.TO_DATE" /></a></li>
+                }
+            }
+            </ul>
+        </div>
+        <!--//기획전-->
+    </div>
+    <!--//종료 이벤트-->
+
+</div>
+<!--//container-->
