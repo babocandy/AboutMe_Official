@@ -124,5 +124,18 @@ namespace AboutMe.Domain.Service.Cart
             return result;
         }
         #endregion
+
+
+        #region 상품상세의 특정상품의 쇼핑백에 담긴수
+        public Int32 ProductofCartCnt(string p_code)
+        {
+            Int32 result = 0;
+            using (CartEntities EfContext = new CartEntities())
+            {
+                result = EfContext.SP_TB_CART_PCODE_CNT(p_code).DefaultIfEmpty(0).FirstOrDefault().Value ;
+            }
+            return result;
+        }
+        #endregion
     }
 }

@@ -101,8 +101,8 @@
 							<div class="gnb_banner moveslider">
 								<ul class="slide moveslidercon">
 									<li><img src="/aboutCom/images/common/temp_gnbbanner1_260228.jpg" alt="" /></li>
-									<li><img src="/aboutCom/images/common/temp_gnbbanner1_260228_2.jpg" alt="" /></li>
-									<li><img src="/aboutCom/images/common/temp_gnbbanner1_260228_3.jpg" alt="" /></li>
+									<li><img src="/aboutCom/images/common/temp_gnbbanner1_260228.jpg" alt="" /></li>
+									<li><img src="/aboutCom/images/common/temp_gnbbanner1_260228.jpg" alt="" /></li>
 								</ul>
 								<ul class="nav moveslidernav">
 									
@@ -132,6 +132,7 @@
 
 		<!--util-->
 		<div class="util">
+			<span class="username"><em>정재연</em>님</span>
 			<ul>
 				<li><a href="/membership/login.asp"><img src="/aboutCom/images/common/util_login.gif" alt="LOGIN" /></a></li>
 				<li><a href="/membership/joinstep1.asp"><img src="/aboutCom/images/common/util_joinus.gif" alt="JOIN US" /></a></li>
@@ -142,7 +143,7 @@
 
 		<!--2015-07-23 추가 : 검색-->
 		<div class="h_search">
-			<span class="ipt_hearch"><input type="text" value="입력하세요" onclick="this.value=''" /><a href="#" class="btn_hsearch"><img src="/aboutCom/images/common/btn_search2.gif" alt="" /></a></span>
+			<span class="ipt_hearch"><input type="text" value="입력하세요" onclick="this.value=''" /><a href="/search/search.asp" class="btn_hsearch"><img src="/aboutCom/images/common/btn_search2.gif" alt="" /></a></span>
 		</div>
 		<!--//2015-07-23 추가 : 검색-->
 		
@@ -162,14 +163,14 @@
 				
 				<!--2015-07-23 수정-->
 				<!--쇼핑백 상품이 없을 때-->
-				<div class="noitem">
+				<div class="noitem" style="display:none">
 					<img src="/aboutCom/images/common/ico_cart.gif" alt="" />
 					<p class="txt">상품이 비어있습니다.</p>
 				</div>
 				<!--//쇼핑백 상품이 없을 때-->
 
 				<!--쇼핑백 상품이 있을 때-->
-				<div class="haveitem" style="display:none">
+				<div class="haveitem">
 					<ul>
 						<li>
 							<!--이미지 96X96 사이즈 들어갑니다.-->

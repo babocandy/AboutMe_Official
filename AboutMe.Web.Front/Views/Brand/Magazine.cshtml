@@ -1,0 +1,117 @@
+﻿@model List<AboutMe.Domain.Entity.Magazine.SP_MAGAZINE_LIST_Result>
+@{
+    ViewBag.Title = "매거진 - ABOUT ME";
+    ViewBag.TopClass = "magazin";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+    string MagazineUploadPath = AboutMe.Common.Helper.Config.GetConfigValue("MagazineUploadPath");
+}
+@section Scripts {
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <h2><img src="/aboutCom/images/aboutme/h2_magazin.png" alt="MAGAZIN 매거진" /></h2>
+        <div class="magazin_area">
+            <!--
+                작은이미지, 큰이미지 한벌당 이미지 두장 생성하였고, 큰이미지에는 "_big" 붙인 상태로 올리시면
+                작은 이미지 클릭 시 큰 이미지가 보여집니다. 작은 썸네일의 기본크기는 118X56입니다.
+                큰이미지 기본크기는 1054x708입니다.
+            -->
+            <!--매거진썸네일리스트-->
+            <div class="magazin_list">
+                <div class="listwrap">
+                    <ul>
+                        <!--
+                            영상 일 때 .movie class 사용합니다.
+                            만일 data-title에 "" 이 들어 갈 경우 테그가 깨지므로 '' 로 바꿔주세요~
+                        -->                        
+                        @{
+                            int cnt = 0;
+                            foreach (var item in Model)
+                            {
+                                string cnt_str = "";
+                                string dataPath = "";
+                                string moveclass = "";
+                                string class_str = "";
+
+                                if (cnt == 0)
+                                {
+                                    cnt_str = "cnt";
+                                }
+                                else
+                                {
+                                    cnt_str = "";
+                                }
+
+                                if (item.CONTENT_GBN == "M") //영상
+                                {
+                                    dataPath = item.MOVIE_URL;
+                                    moveclass = "movie";
+                                }
+                                else
+                                {
+                                    dataPath = item.IMG_PATH;
+                                    moveclass = "";
+                                }
+
+                                class_str = cnt_str + " " + moveclass;
+                            
+                                <li class="@Html.Raw(class_str)"><a href="#"><img src="@item.THUMB_IMG_PATH" data-title="@item.SUB_TITLE" data-subtitle="@item.TITLE" data-pic="@dataPath" alt="" /></a><i></i></li>
+
+
+                                cnt++;
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <!--//매거진썸네일리스트-->
+            <!--매거진 뷰-->
+            <div class="magazin_view">
+                <div class="btn_area">
+                    <a href="#" class="prev">이전</a>
+                    <a href="#" class="next">다음</a>
+                </div>
+                <div class="viewarea">
+                    <div class="magazin_tit">
+                        <span class="tit"></span>
+                        <strong class="stit"></strong>
+
+                    </div>
+                    <!--이미지일 때-->
+                    <div class="bigimg">
+                        
+                        <span class="bigimg_item"><img src="/aboutCom/images/aboutme/mazinthumb_cover.jpg" alt="" /></span>
+                        <i></i>
+                    </div>
+                    <!--//이미지일 때-->
+                    <!--영상일 때-->
+                    <div class="moviearea">
+                        <div class="movie">
+                            <iframe width="854" height="510" src="" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <!--//영상일 때-->
+                </div>
+            </div>
+            <!--//매거진 뷰-->
+        </div>
+    </div>
+</div>
+<!--//container-->
+<script language="javascript">
+    //첫번째매거진호출
+    var thumb = $(".magazin_list .listwrap li i");
+    if (thumb.length > 0)
+    {
+        setTimeout(function () {
+            $(thumb[0]).trigger("click");
+        }, 1000);
+
+    }
+</script>
+

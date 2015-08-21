@@ -28,6 +28,8 @@ namespace AboutMe.Domain.Service.Order
         List<SP_ORDER_RESULT_PRODUCT_LIST_Result> OrderResultProductList(string ORDER_CODE, string M_ID, string SESSION_ID);
         SP_ORDER_RESULT_DETAIL_Result OrderResultDetailInfo(string ORDER_CODE, string M_ID, string SESSION_ID);
         string OrderNomeberLoginChk(string ORDER_CODE, string NOMEMBER_PASS);
+        
+        SP_MYPAGE_MAIN_STATUS_Result MyPageMainInfo(string Mid);
         List<SP_MYPAGE_ORDERLIST_Result> MyOrderList(string OrderCode, string Mid, string FromDate, string ToDate, int? Page, int PageSize);
         int MyOrderListCount(string OrderCode, string Mid, string FromDate, string ToDate);
         List<SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result> MyOrderDetailProductList(string OrderCode, string Mid);
@@ -35,6 +37,7 @@ namespace AboutMe.Domain.Service.Order
         void MyOrderMasterStatusChange(int OrderIdx, string TobeStatus, string Mid);
         void MyOrderDetailStatusChange(int OrderDetailIdx, string TobeStatus, string Mid);
         void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP);
+        
         SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result OrderGetOrderCodeByOldOrderIdx(Int32 OldOrderIdx);
     }
 }

@@ -95,32 +95,24 @@
                             </a>
                         </li>
                     }
+                    
+                    @if (Model.TimeSaleCnt == 0)
+                    { 
+                        if (!string.IsNullOrEmpty(Model.MainInfo.MIDDLE_IMG4))
+                        {
+                            <li>
+                                <a href="@Model.MainInfo.MIDDLE_URL4">
+                                    <img src="@Model.MainInfo.MIDDLE_IMG4" alt="" width=" 426" height="284" />
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
-                <div class="timesale" style="background-color:gray;">
-                    <a href="/event/timesale.asp"><img src="/aboutCom/images/sample/event_timesale.jpg" width="426" height="284" alt="Time Sale 늦가을 자외선으로부터 내 피부를 보호하자 굿나이트 모이스처 앰플 23,000원" /></a>
-                    <!-- 타임세일 -->
-                    <p id="timesale" class="remain_time"></p>
-                    <script type="text/javascript">
-                        $(function () {
-                            //타임세일 현재날짜와 종료날짜를 입력해주세요.
-                            $('#timesale').countdown({
-                                starttimestamp: "2014,07,12,12,00,00",	//현재날짜
-                                endtimestamp: "2014,07,13,10,20,30",	//종료날짜
-                                callback: function (m) {
-                                    $('#timesale').html(m);
-                                }
-                            });
-                            //레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
-                            $('#ly_timesale').countdown({
-                                starttimestamp: "2014,07,12,12,00,00",	//현재날짜
-                                endtimestamp: "2014,07,13,10,20,30",	//종료날짜
-                                callback: function (m) {
-                                    $('#ly_timesale').html(m);
-                                }
-                            });
-                        });
-                    </script>
-                </div>
+
+                <!-- time sale-->
+                @{Html.RenderAction("EventPgTimeSaleBanner", "ChildActionPromotion");}
+                <!-- time sale-->
+     
             </div>
         </div>
         <div class="container100per">

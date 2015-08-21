@@ -309,7 +309,10 @@ i++;
                                                     <em class="product_name">@(new HtmlString(item.P_NAME))</em>
                                                 </span>
                                                 <em class="price">
-                                                    <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                                                    @if (item.SELLING_PRICE != item.RESULT_PRICE)
+                                                    { 
+                                                        <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                                                    }
                                                     <strong>@string.Format("{0:#,##0}", item.RESULT_PRICE)원</strong>
                                                 </em>
                                             </span>
@@ -333,7 +336,6 @@ i++;
                         PagingParam = PagingParam + "&L_CATE_CODE=" + ViewBag.L_CATE_CODE;
                         PagingParam = PagingParam + "&P_CATE_CODE_3DEPTH=" + ViewBag.P_CATE_CODE_3DEPTH;
                         PagingParam = PagingParam + "&DEPTH_NAME3=" + ViewBag.DEPTH_NAME3;
-             
                     }
                     @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = PagingParam });}
                     <!--//페이징-->

@@ -311,6 +311,7 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult PrdCreate(HttpPostedFileBase PMO_PRODUCT_MAIN_IMG_FILE
             , HttpPostedFileBase PMO_PRODUCT_PC_MAINPG_IMG_FILE
             , HttpPostedFileBase PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE
+            , HttpPostedFileBase PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE
             , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAIN_IMG_FILE
             , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE
             , HttpPostedFileBase PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE
@@ -397,6 +398,36 @@ namespace AboutMe.Web.Admin.Controllers
                             {
                                 //ViewBag.Error = imageResult.ErrorMessage;
                                 tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = "";
+                            }
+                        }
+
+                        //[2-2]  
+                        if (PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE != null)
+                        {
+
+                            int imgWidth = 0;
+
+                            var ImgObject = new Bitmap(PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE.InputStream);
+                            if (ImgObject != null)
+                            {
+                                imgWidth = ImgObject.Width;
+                            }
+
+                            //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                            //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                            ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                            // rename, resize, and upload
+                            //return object that contains {bool Success,string ErrorMessage,string ImageName}
+                            ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE);
+                            if (imageResult.Success)
+                            {
+                                tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_SMALL_IMG = imageResult.ImageName;
+                            }
+                            else
+                            {
+                                //ViewBag.Error = imageResult.ErrorMessage;
+                                tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_SMALL_IMG = "";
                             }
                         }
 
@@ -590,6 +621,8 @@ namespace AboutMe.Web.Admin.Controllers
             , String OLD_PMO_PRODUCT_PC_MAINPG_IMG
             , HttpPostedFileBase PMO_PRODUCT_PC_MAINPG_IMG_FILE
             , String OLD_PMO_PRODUCT_PC_EVENT_MAINPG_IMG
+            , HttpPostedFileBase PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE
+            , String OLD_PMO_PRODUCT_PC_MAINPG_SMALL_IMG
             , HttpPostedFileBase PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE
             , String OLD_PMO_PRODUCT_MOBILE_MAIN_IMG
             , HttpPostedFileBase PMO_PRODUCT_MOBILE_MAIN_IMG_FILE
@@ -720,6 +753,39 @@ namespace AboutMe.Web.Admin.Controllers
                                     {
                                         tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_IMG = OLD_PMO_PRODUCT_PC_MAINPG_IMG;
                                     }
+
+                                    //[2-1] PC 메인페이지 작은 이미지
+                                    if (PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE != null)
+                                    {
+
+                                        int imgWidth = 0;
+
+                                        var ImgObject = new Bitmap(PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE.InputStream);
+                                        if (ImgObject != null)
+                                        {
+                                            imgWidth = ImgObject.Width;
+                                        }
+
+                                        //MAIN_IMG.SaveAs(Server.MapPath(Product_path) + MAIN_IMG.FileName);
+                                        //ImageUpload imageUpload = new ImageUpload { Width = 600, UploadPath = Product_path, addMobileImage = true, fileType="file"};
+                                        ImageUpload imageUpload = new ImageUpload { Width = imgWidth, UploadPath = Promotion_photo_path, addMobileImage = true };
+
+                                        //ImageUpload imageUpload = new ImageUpload {Width=458, UploadPath = Promotion_photo_path, addMobileImage = true };
+                                        ImageResult imageResult = imageUpload.RenameUploadFile(PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE);
+                                        if (imageResult.Success)
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_SMALL_IMG = imageResult.ImageName;
+                                        }
+                                        else
+                                        {
+                                            tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_SMALL_IMG = OLD_PMO_PRODUCT_PC_MAINPG_SMALL_IMG;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tb_promotion_by_product.PMO_PRODUCT_PC_MAINPG_SMALL_IMG = OLD_PMO_PRODUCT_PC_MAINPG_SMALL_IMG;
+                                    }
+
 
 
 

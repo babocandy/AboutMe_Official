@@ -29,6 +29,9 @@
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
           <Parameter Name="REG_IP" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_MYPAGE_MAIN_STATUS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_MYPAGE_ORDERLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
@@ -85,6 +88,7 @@
           <Parameter Name="VACT_Date" Type="varchar" Mode="In" />
           <Parameter Name="VACT_Time" Type="varchar" Mode="In" />
           <Parameter Name="ESCROW_YN" Type="char" Mode="In" />
+          <Parameter Name="ORDER_STATUS_VALUE" Type="char" Mode="In" />
         </Function>
         <Function Name="SP_ORDER_RESULT_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
@@ -207,6 +211,7 @@
             <Parameter Name="VACT_Date" Mode="In" Type="String" />
             <Parameter Name="VACT_Time" Mode="In" Type="String" />
             <Parameter Name="ESCROW_YN" Mode="In" Type="String" />
+            <Parameter Name="ORDER_STATUS_VALUE" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_STEP1" ReturnType="Collection(AboutMeModel4.SP_ORDER_STEP2_Result)">
             <Parameter Name="M_ID" Mode="In" Type="String" />
@@ -358,6 +363,9 @@
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" ReturnType="Collection(AboutMeModel4.SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result)">
           <Parameter Name="OLD_ORDER_IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_MYPAGE_MAIN_STATUS" ReturnType="Collection(AboutMeModel4.SP_MYPAGE_MAIN_STATUS_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
@@ -638,6 +646,18 @@
           <Property Type="String" Name="ORDER_CODE" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="ORDER_IDX" Nullable="true" />
           <Property Type="String" Name="PAY_GBN" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_MYPAGE_MAIN_STATUS_Result">
+          <Property Type="Int32" Name="STATUS_ALL" Nullable="true" />
+          <Property Type="Int32" Name="STATUS_10" Nullable="true" />
+          <Property Type="Int32" Name="STATUS_20" Nullable="true" />
+          <Property Type="Int32" Name="STATUS_30" Nullable="true" />
+          <Property Type="Int32" Name="STATUS_40" Nullable="true" />
+          <Property Type="Int32" Name="STATUS_50" Nullable="true" />
+          <Property Type="Int32" Name="QNA_ING" Nullable="true" />
+          <Property Type="Int32" Name="QNA_END" Nullable="true" />
+          <Property Type="Int32" Name="RECALL_ING" Nullable="true" />
+          <Property Type="Int32" Name="RECALL_END" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -997,6 +1017,22 @@
                 <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
                 <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
                 <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_MYPAGE_MAIN_STATUS" FunctionName="AboutMeModel4.Store.SP_MYPAGE_MAIN_STATUS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel4.SP_MYPAGE_MAIN_STATUS_Result">
+                <ScalarProperty Name="STATUS_ALL" ColumnName="STATUS_ALL" />
+                <ScalarProperty Name="STATUS_10" ColumnName="STATUS_10" />
+                <ScalarProperty Name="STATUS_20" ColumnName="STATUS_20" />
+                <ScalarProperty Name="STATUS_30" ColumnName="STATUS_30" />
+                <ScalarProperty Name="STATUS_40" ColumnName="STATUS_40" />
+                <ScalarProperty Name="STATUS_50" ColumnName="STATUS_50" />
+                <ScalarProperty Name="QNA_ING" ColumnName="QNA_ING" />
+                <ScalarProperty Name="QNA_END" ColumnName="QNA_END" />
+                <ScalarProperty Name="RECALL_ING" ColumnName="RECALL_ING" />
+                <ScalarProperty Name="RECALL_END" ColumnName="RECALL_END" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

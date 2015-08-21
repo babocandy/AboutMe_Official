@@ -4,6 +4,7 @@
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
     string img_path = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+    string DeliveryUrl = AboutMe.Common.Helper.Config.GetConfigValue("Order.DeliveryUrl");
 }
 @section Scripts{
     <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
@@ -179,6 +180,14 @@
                 f.submit();
             }
         }
+
+        //배송조회
+        function DeliverySearch(delivery_num) {
+            var DeliveryUrl = "@DeliveryUrl";
+            DeliveryUrl = DeliveryUrl + "&pTdNo=" + delivery_num;
+            window.open(DeliveryUrl, "deliveryPop", "width=800,height=500,left=1,top=1");
+
+        }
     </script>
 }
 @section Left {
@@ -228,7 +237,9 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("RECEIVER_POST_TXT").value = data.postcode; //6자리 우편번호 사용
+
+                // document.getElementById("RECEIVER_POST_TXT").value = data.postcode; //6자리 우편번호 사용
+                document.getElementById("RECEIVER_POST_TXT").value = data.zonecode; //5자리 기초구역번호 사용
 
                 document.getElementById('RECEIVER_ADDR1_TXT').value = fullAddr;
 
@@ -403,7 +414,7 @@
 
                     @if (!string.IsNullOrEmpty(item.DELIVERY_NUM))
                     { 
-					    <a class="btn btn-info small mt5" href="#none">배송추적</a>
+					    <a class="btn btn-info small mt5" href="#none" onclick="DeliverySearch('@item.DELIVERY_NUM')">배송추적</a>
                     }
 				</td>
 				<td>

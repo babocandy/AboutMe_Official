@@ -82,6 +82,7 @@
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_ONE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DEPTH1_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_ONE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_ADMIN_CATEGORY_ONE_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -89,23 +90,27 @@
           <Parameter Name="DEPTH1_NAME" Type="varchar" Mode="In" />
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
           <Parameter Name="RE_SORT" Type="int" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_THREE_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CATE_GBN" Type="varchar" Mode="In" />
           <Parameter Name="DEPTH1_CODE" Type="varchar" Mode="In" />
           <Parameter Name="DEPTH2_CODE" Type="varchar" Mode="In" />
           <Parameter Name="DEPTH3_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_THREE_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="DEPTH2_NAME" Type="varchar" Mode="In" />
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
           <Parameter Name="RE_SORT" Type="int" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_TWO_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CATE_GBN" Type="varchar" Mode="In" />
           <Parameter Name="DEPTH1_CODE" Type="varchar" Mode="In" />
           <Parameter Name="DEPTH2_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_TWO_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CATE_GBN" Type="varchar" Mode="In" />
@@ -116,6 +121,7 @@
           <Parameter Name="DEPTH2_NAME" Type="varchar" Mode="In" />
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
           <Parameter Name="RE_SORT" Type="int" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_CATEGORY_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
@@ -135,6 +141,7 @@
           <Parameter Name="END_PRICE" Type="int" Mode="In" />
           <Parameter Name="GIFT_IMG" Type="varchar" Mode="In" />
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_GIFT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
@@ -149,6 +156,7 @@
           <Parameter Name="GIFT_COUNT" Type="int" Mode="In" />
           <Parameter Name="GIFT_IMG" Type="varchar" Mode="In" />
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
@@ -166,6 +174,7 @@
           <Parameter Name="DISPLAY_YN" Type="varchar" Mode="In" />
           <Parameter Name="SOLDOUT_YN" Type="varchar" Mode="In" />
           <Parameter Name="P_OUTLET_YN" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
@@ -185,11 +194,14 @@
         <Function Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="RE_SORT" Type="int" Mode="In" />
+          <Parameter Name="P_CATE_CODE" Type="char" Mode="In" />
           <Parameter Name="CLICKCHK" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_IMG_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CODE" Type="varchar" Mode="In" />
           <Parameter Name="imgColumName" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="P_CATE_CODE" Type="char" Mode="In" />
@@ -223,6 +235,7 @@
           <Parameter Name="SELLING_PRICE" Type="int" Mode="In" />
           <Parameter Name="DISCOUNT_PRICE" Type="int" Mode="In" />
           <Parameter Name="DISCOUNT_RATE" Type="int" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_ADMIN_PRODUCT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PAGE" Type="int" Mode="In" />
@@ -270,6 +283,7 @@
           <Parameter Name="CALLBACK_NO" Type="varchar" Mode="In" />
           <Parameter Name="TITLE" Type="varchar" Mode="In" />
           <Parameter Name="SEND_MSG" Type="varchar" Mode="In" />
+          <Parameter Name="INTRESULT" Type="int" Mode="InOut" />
         </Function>
         <Function Name="SP_USER_LOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
@@ -315,13 +329,6 @@
           <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_DEL">
           <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result)" />
-          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_UPD">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_CATEGORY_TWO_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_CATEGORY_TWO_SEL_Result)">
             <Parameter Name="CATE_GBN" Mode="In" Type="String" />
             <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
@@ -338,32 +345,6 @@
             <Parameter Name="CATE_GBN" Mode="In" Type="String" />
             <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
             <Parameter Name="DEPTH2_CODE" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_THREE_UPD">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="DEPTH2_NAME" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_TWO_UPD">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="DEPTH2_NAME" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_INS">
-          <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_THREE_INS">
-            <Parameter Name="CATE_GBN" Mode="In" Type="String" />
-            <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
-            <Parameter Name="DEPTH2_CODE" Mode="In" Type="String" />
-            <Parameter Name="DEPTH3_NAME" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_CATEGORY_TWO_INS">
-            <Parameter Name="CATE_GBN" Mode="In" Type="String" />
-            <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
-            <Parameter Name="DEPTH2_NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_USER_LOG_INS">
             <Parameter Name="uid" Mode="In" Type="String" />
@@ -397,23 +378,8 @@
           <FunctionImport Name="SP_ADMIN_PRODUCT_DETAIL_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_PRODUCT_DETAIL_VIEW_Result)">
           <Parameter Name="P_CODE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
-            <Parameter Name="CLICKCHK" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PRODUCT_IMG_DEL">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
-            <Parameter Name="imgColumName" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PRODUCT_PCODE_CHK" ReturnType="Collection(Int32)">
           <Parameter Name="P_CODE" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PRODUCT_PRICE_UPD">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
-            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PRODUCT_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_PRODUCT_LIST_Result)">
             <Parameter Name="PAGE" Mode="In" Type="Int32" />
@@ -429,14 +395,6 @@
             <Parameter Name="FROM_DATE" Mode="In" Type="String" />
             <Parameter Name="TO_DATE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_PRODUCT_BATCH_UPD">
-            <Parameter Name="P_CODE" Mode="In" Type="String" />
-            <Parameter Name="ICON_BATCH_CHK" Mode="In" Type="String" />
-            <Parameter Name="ICON_YN" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
-            <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_ADMIN_GIFT_CNT" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_GIFT_CNT_Result)">
             <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
             <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
@@ -451,29 +409,6 @@
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_GIFT_DETAIL_VIEW" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_GIFT_DETAIL_VIEW_Result)">
           <Parameter Name="IDX" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_GIFT_INS">
-            <Parameter Name="GIFT_NAME" Mode="In" Type="String" />
-            <Parameter Name="GIFT_COUNT" Mode="In" Type="Int32" />
-            <Parameter Name="START_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="END_PRICE" Mode="In" Type="Int32" />
-            <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_GIFT_UPD">
-            <Parameter Name="IDX" Mode="In" Type="Int32" />
-            <Parameter Name="GIFT_NAME" Mode="In" Type="String" />
-            <Parameter Name="GIFT_COUNT" Mode="In" Type="Int32" />
-            <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
-            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ADMIN_SMS_INS">
-            <Parameter Name="SMS_FLAG" Mode="In" Type="String" />
-            <Parameter Name="SEND_TIME" Mode="In" Type="String" />
-            <Parameter Name="HANDPHONE" Mode="In" Type="String" />
-            <Parameter Name="CALLBACK_NO" Mode="In" Type="String" />
-            <Parameter Name="TITLE" Mode="In" Type="String" />
-            <Parameter Name="SEND_MSG" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_PRODUCT_UPD">
             <Parameter Name="IDX" Mode="In" Type="Int32" />
@@ -524,6 +459,99 @@
             <Parameter Name="WITH_PRODUCT_LIST" Mode="In" Type="String" />
             <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_INS">
+            <Parameter Name="GIFT_NAME" Mode="In" Type="String" />
+            <Parameter Name="GIFT_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="START_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="END_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_GIFT_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="GIFT_NAME" Mode="In" Type="String" />
+            <Parameter Name="GIFT_COUNT" Mode="In" Type="Int32" />
+            <Parameter Name="GIFT_IMG" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_INS">
+            <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="DEPTH1_NAME" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_THREE_INS">
+            <Parameter Name="CATE_GBN" Mode="In" Type="String" />
+            <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
+            <Parameter Name="DEPTH2_CODE" Mode="In" Type="String" />
+            <Parameter Name="DEPTH3_NAME" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_THREE_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="DEPTH2_NAME" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_TWO_INS">
+            <Parameter Name="CATE_GBN" Mode="In" Type="String" />
+            <Parameter Name="DEPTH1_CODE" Mode="In" Type="String" />
+            <Parameter Name="DEPTH2_NAME" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_TWO_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="DEPTH2_NAME" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_CATEGORY_ONE_SEL" ReturnType="Collection(ModelAdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result)" />
+          <FunctionImport Name="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RE_SORT" Mode="In" Type="Int32" />
+            <Parameter Name="P_CATE_CODE" Mode="In" Type="String" />
+            <Parameter Name="CLICKCHK" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_BATCH_UPD">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="ICON_BATCH_CHK" Mode="In" Type="String" />
+            <Parameter Name="ICON_YN" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="SOLDOUT_YN" Mode="In" Type="String" />
+            <Parameter Name="P_OUTLET_YN" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_PRICE_UPD">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="SELLING_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_PRICE" Mode="In" Type="Int32" />
+            <Parameter Name="DISCOUNT_RATE" Mode="In" Type="Int32" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_SMS_INS">
+            <Parameter Name="SMS_FLAG" Mode="In" Type="String" />
+            <Parameter Name="SEND_TIME" Mode="In" Type="String" />
+            <Parameter Name="HANDPHONE" Mode="In" Type="String" />
+            <Parameter Name="CALLBACK_NO" Mode="In" Type="String" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="SEND_MSG" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PRODUCT_IMG_DEL">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
+            <Parameter Name="imgColumName" Mode="In" Type="String" />
+            <Parameter Name="INTRESULT" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_CATEGORY_NAME_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -533,21 +561,6 @@
           <Property Type="String" Name="REGDATE" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
           <Property Type="Int32" Name="RE_SORT" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_ADMIN_CATEGORY_ONE_SEL_Result">
-          <Property Type="Int32" Name="IDX" Nullable="false" />
-          <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CATE_CODE" Nullable="true" MaxLength="9" />
-          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
-          <Property Type="String" Name="DEPTH1_CODE" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="DEPTH1_NAME" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DEPTH2_CODE" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="DEPTH2_NAME" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DEPTH3_CODE" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="DEPTH3_NAME" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DEPTH_FLAG" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="REGDATE" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_CATEGORY_TWO_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -748,6 +761,21 @@
         <ComplexType Name="SP_ADMIN_GIFT_CNT_Result">
           <Property Type="Int32" Name="COUNT" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="SP_ADMIN_CATEGORY_ONE_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CATE_CODE" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="RE_SORT" Nullable="true" />
+          <Property Type="String" Name="DEPTH1_CODE" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DEPTH1_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH2_CODE" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DEPTH2_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH3_CODE" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DEPTH3_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DEPTH_FLAG" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="REGDATE" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -788,26 +816,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_DEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_DEL" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_SEL">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result">
-                <ScalarProperty Name="IDX" ColumnName="IDX" />
-                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
-                <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
-                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
-                <ScalarProperty Name="DEPTH1_CODE" ColumnName="DEPTH1_CODE" />
-                <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
-                <ScalarProperty Name="DEPTH2_CODE" ColumnName="DEPTH2_CODE" />
-                <ScalarProperty Name="DEPTH2_NAME" ColumnName="DEPTH2_NAME" />
-                <ScalarProperty Name="DEPTH3_CODE" ColumnName="DEPTH3_CODE" />
-                <ScalarProperty Name="DEPTH3_NAME" ColumnName="DEPTH3_NAME" />
-                <ScalarProperty Name="DEPTH_FLAG" ColumnName="DEPTH_FLAG" />
-                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
-                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_SEL">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_CATEGORY_TWO_SEL_Result">
@@ -881,11 +889,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_THREE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_THREE_UPD" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_UPD" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_INS" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_THREE_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_THREE_INS" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_INS" />
           <FunctionImportMapping FunctionImportName="SP_USER_LOG_INS" FunctionName="ModelAdminProduct.Store.SP_USER_LOG_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_LOG_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_LOG_INS" />
           <EntitySetMapping Name="TB_PRODUCT_INFO">
@@ -965,10 +968,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_IMG_DEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_IMG_DEL" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PCODE_CHK" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PCODE_CHK" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PRICE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PRICE_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_SEL" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_PRODUCT_LIST_Result">
@@ -1002,7 +1002,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_CNT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_CNT" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_GIFT_CNT_Result">
@@ -1040,11 +1039,40 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_INS" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_UPD" />
-          <FunctionImportMapping FunctionImportName="SP_ADMIN_SMS_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_SMS_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_UPD" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_GIFT_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_GIFT_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_THREE_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_THREE_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_THREE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_THREE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_TWO_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_TWO_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_CATEGORY_ONE_SEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_CATEGORY_ONE_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminProduct.SP_ADMIN_CATEGORY_ONE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+                <ScalarProperty Name="CATE_CODE" ColumnName="CATE_CODE" />
+                <ScalarProperty Name="RE_SORT" ColumnName="RE_SORT" />
+                <ScalarProperty Name="DEPTH1_CODE" ColumnName="DEPTH1_CODE" />
+                <ScalarProperty Name="DEPTH1_NAME" ColumnName="DEPTH1_NAME" />
+                <ScalarProperty Name="DEPTH2_CODE" ColumnName="DEPTH2_CODE" />
+                <ScalarProperty Name="DEPTH2_NAME" ColumnName="DEPTH2_NAME" />
+                <ScalarProperty Name="DEPTH3_CODE" ColumnName="DEPTH3_CODE" />
+                <ScalarProperty Name="DEPTH3_NAME" ColumnName="DEPTH3_NAME" />
+                <ScalarProperty Name="DEPTH_FLAG" ColumnName="DEPTH_FLAG" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="REGDATE" ColumnName="REGDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_DISPLAY_RE_SORT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_BATCH_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_BATCH_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_PRICE_UPD" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_PRICE_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SMS_INS" FunctionName="ModelAdminProduct.Store.SP_ADMIN_SMS_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PRODUCT_IMG_DEL" FunctionName="ModelAdminProduct.Store.SP_ADMIN_PRODUCT_IMG_DEL" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

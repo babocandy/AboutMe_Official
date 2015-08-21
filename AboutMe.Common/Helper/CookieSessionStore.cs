@@ -37,7 +37,10 @@ namespace AboutMe.Common.Helper
                 var cookieOld = HttpContext.Current.Request.Cookies[key];
                 //cookieOld.Expires = DateTime.Now.Add(expires);
                 if (expire_days != 99999)
-                    cookieOld.Expires.AddDays(expire_days);
+                {
+                   // cookieOld.Expires.AddDays(expire_days); 
+                    cookieOld.Expires = DateTime.UtcNow.AddDays(30);
+                }
 
                 cookieOld.Value = encodedCookie.Value;
                 HttpContext.Current.Response.Cookies.Add(cookieOld);
@@ -46,7 +49,10 @@ namespace AboutMe.Common.Helper
             {
                 //encodedCookie.Expires = DateTime.Now.Add(expires);
                 if (expire_days != 99999)
-                    encodedCookie.Expires.AddDays(expire_days);
+                {
+                    // encodedCookie.Expires.AddDays(expire_days);
+                    encodedCookie.Expires = DateTime.UtcNow.AddDays(30);
+                }
 
                 HttpContext.Current.Response.Cookies.Add(encodedCookie);
             }

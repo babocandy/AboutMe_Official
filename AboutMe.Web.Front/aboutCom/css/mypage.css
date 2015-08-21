@@ -79,12 +79,13 @@
 .recommendation_goods .list li a {display:block;}
 .recommendation_goods .list li a:after {display:block; clear:both; content:'';}
 .recommendation_goods .list li a .photo {float:left; width:240px;}
+.recommendation_goods .list li a .photo img {width:240px;}
 .recommendation_goods .list li a .detail {position:relative; float:left; width:220px; margin-left:40px; padding-top:14px;}
 .recommendation_goods .list li a .detail .ico{position:absolute; left:0; top:14px;}
-.recommendation_goods .list li a .detail .tit{display:block; margin-top:34px; font-size:20px; color:#1b1818}
+.recommendation_goods .list li a .detail .tit{display:block; margin-top:34px; height:50px; font-size:20px; color:#1b1818}
 .recommendation_goods .list li a .detail .stit{display:block; margin-top:15px; font-size:14px; color:#696361;}
-.recommendation_goods .list li a .detail .price{display:block; margin-top:48px; font-size:20px; color:#1b1818}
-.recommendation_goods .list li a .detail .price del {display:block; margin-bottom:4px; font-size:15px; color:#696361;}
+.recommendation_goods .list li a .detail .price{display:block; position:relative; margin-top:48px; padding-top:19px; font-size:20px; color:#1b1818}
+.recommendation_goods .list li a .detail .price del {display:block; position:absolute; left:0; top:0; margin-bottom:4px; font-size:15px; color:#696361;}
 .skinsetting_popwrap {display:none; position:fixed; left:0; top:0; width:100%; height:100%; z-index:20 }
 .skinsetting_popwrap .dimd {position:fixed; left:0; top:0; width:100%; height:100%; background:#000; opacity:0.5; filter: alpha(opacity=50);}
 .skinsetting_popwrap .skinsetting_pop {position:absolute; left:50%; top:50%; margin-left:-362px; margin-top:-295px; padding:40px; width:725px; height:590px; background:#fff; box-sizing:border-box;-}
@@ -527,6 +528,9 @@
 .mypage .expreview .h2_area h2 {padding-top:42px;}
 .mypage .expreview .userread {background-position:30px 54px; padding:60px 0 60px 106px;}
 .mypage .expreview .btn_review_write {text-align:right; margin-bottom:20px;:}
+
+/*검색결과 없음*/
+.mypage .no_data {background:#fff}
 
 /* IE8 only */
 @media \0screen {

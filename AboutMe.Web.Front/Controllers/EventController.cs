@@ -45,8 +45,13 @@ namespace AboutMe.Web.Front.Controllers
         // GET: Main
         public ActionResult Index()
         {
+            List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> timesaleList = new List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>();
+
+            //타임세일 프로모션 정보중 유효한 TOP 1 가져오기 
+            timesaleList = _PromotionService.GetPromotionByProductTop1_Info("03").ToList();
             EVENT_MAIN_INDEX M = new EVENT_MAIN_INDEX
             {
+                TimeSaleCnt = timesaleList.Count(),
                 MainInfo = _eventservice.EventMainView(),
                 IngListInfo = _eventservice.EventMainIngList(),
                 EndListInfo = _eventservice.EventMainEndList()
@@ -87,9 +92,9 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         //상품상세 : 우측하단의 이벤트/기획전 목록
-        public ActionResult EventInProductDetail()
+        public ActionResult EventInProductDetail(string p_code)
         {
-            List<SP_EVENT_ING_LIST_Result> M = _eventservice.EventMainIngList();
+            List<SP_EXHIBIT_PCODE_LINK_ALL_Result> M = _exhibitservice.ExhibitProductLinkAll(p_code);
             return PartialView(M);
         }
         #endregion
@@ -143,7 +148,7 @@ namespace AboutMe.Web.Front.Controllers
         //타임세일
         public ActionResult TimeSale()
         {
-            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
+            ViewBag.PromotionPhotoPath = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //이미지디렉토리경로
 
             var mMyMultiModelForPromotionProduct = new MyMultiModelForPromotionProduct
             {

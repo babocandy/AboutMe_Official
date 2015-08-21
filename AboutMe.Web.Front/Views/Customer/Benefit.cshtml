@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "회원혜택 - ABOUT ME";
+    ViewBag.TopClass = "benefit";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+<!--container-->
+<div id="container">
+    <div class="container1080 pb20">
+        <!-- cs_top -->
+        <div class="cs_top">
+            <!-- h2_area -->            
+            @{
+                ViewBag.MenuTitle = "회원혜택";
+                ViewBag.MenuGbn = "benefit";
+                Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
+            }
+        </div>
+        <!-- //cs_top -->
+        <!-- grade_table -->
+        <div class="grade_table mt40">
+            <table summary="고객등급, 회원자격, 포인트적립율, 혜택">
+                <caption>회원등급 표</caption>
+                <colgroup>
+                    <col width="156" />
+                    <col width="245" />
+                    <col width="216" />
+                    <col width="216" />
+                    <col width="245" />
+                </colgroup>
+                <tbody>
+                    <tr class="grade">
+                        <th>고객등급</th>
+                        <td class="pl">
+                            <i class="bronze"></i><br />
+                            <strong>BRONZE</strong>
+                        </td>
+                        <td>
+                            <i class="silver"></i><br />
+                            <strong>SILVER</strong>
+                        </td>
+                        <td>
+                            <i class="gold"></i><br />
+                            <strong>GOLD</strong>
+                        </td>
+                        <td class="pr">
+                            <i class="vip"></i><br />
+                            <strong>VIP</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>회원자격</th>
+                        <td class="pl">
+                            연간 <strong>10만원 미만</strong> 구매
+                        </td>
+                        <td>
+                            연간 <strong>
+                                10만원이상 ~<br />
+                                30만원 미만
+                            </strong> 구매
+                        </td>
+                        <td>
+                            연간 <strong>30만원 이상</strong> 구매
+                        </td>
+                        <td class="pr">
+                            연간 <strong>80만원 이상</strong> 구매
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>포인트적립율</th>
+                        <td class="pl">2%</td>
+                        <td>2%</td>
+                        <td>3%</td>
+                        <td class="pr">5%</td>
+                    </tr>
+                    <tr class="cp">
+                        <th rowspan="4" class="last">혜택</th>
+                        <td class="pl">
+                            <i></i><br />
+                            회원가입 시<br />
+                            <strong>10,000원 할인쿠폰</strong>
+                        </td>
+                        <td>
+                            <i></i><br />
+                            회원가입 시<br />
+                            <strong>10,000원 할인쿠폰</strong>
+                        </td>
+                        <td>
+                            <i></i><br />
+                            회원가입 시<br />
+                            <strong>10,000원 할인쿠폰</strong>
+                        </td>
+                        <td class="pr">
+                            <i></i><br />
+                            회원가입 시<br />
+                            <strong>10,000원 할인쿠폰</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pl">생일쿠폰</td>
+                        <td>생일쿠폰</td>
+                        <td>생일쿠폰</td>
+                        <td>생일쿠폰</td>
+                    </tr>
+                    <tr>
+                        <td class="pl">구매금액별 <strong>사은품 지급</strong></td>
+                        <td>구매금액별 <strong>사은품 지급</strong></td>
+                        <td>구매금액별 <strong>사은품 지급</strong></td>
+                        <td class="pr">구매금액별 <strong>사은품 지급</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="last pl"></td>
+                        <td class="last"></td>
+                        <td class="last">
+                            무료배송 쿠폰<br />
+                            (월 기준)
+                        </td>
+                        <td class="last pr">
+                            무료배송 쿠폰<br />
+                            (월 기준)<br />
+                            <strong>+ 추가 5% 할인</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- //grade_table -->
+    </div>
+    <div class="container100per">
+        <div class="inner">
+            <div class="attention boxtyped">
+                <i></i>
+                <ul>
+                    <li>- 매월 1일 1년간 구매금액에 따라 등급 조정이 있습니다.</li>
+                    <li>- 생일쿠폰은 본인인증 시에 생년월일에 맞춰 발급 됩니다.</li>
+                    <li>- 쿠폰확인은 마이페이지>나의 쿠폰에서 확인하실 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//container-->

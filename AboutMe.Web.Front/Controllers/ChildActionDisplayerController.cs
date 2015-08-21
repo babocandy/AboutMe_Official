@@ -24,11 +24,46 @@ namespace AboutMe.Web.Front.Controllers
             _service_pdt = p;
         }
 
+        /**
+         * 
+         * 상품상세배너
+         */
         [ChildActionOnly]
         public ActionResult BannerInProductDetail()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
             model.List = _service.GetListDisplay(DisplayerCode.PDT_DETAIL_WEB);
+            return View(model);
+        }
+
+        /**
+         * 동영상
+         */
+        [ChildActionOnly]
+        public ActionResult MovieInMain()
+        {
+            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_MOVIE_LINK));
+
+            /*var tmpPdtList = _service.GetListDisplay(DisplayerCode.WEB_MAIN_MOVIE_PRODUCT);
+
+            
+            //최신 상품 정보를 가져오기
+            List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
+            foreach (var item in tmpPdtList)
+            {
+                if (_service_pdt.ViewProduct(item.P_CODE) != null)
+                {
+                    plist.Add(_service_pdt.ViewProduct(item.P_CODE));
+                }
+
+            }
+
+            model.PdtList = plist;
+            */
+            model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_MOVIE_PRODUCT);
+
+
             return View(model);
         }
 
@@ -51,7 +86,19 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult MiddleBannerInMain()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.WEB_MAIN_MIDDLE_BANNER);
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_MIDDLE_BANNER) );
+            return View(model);
+        }
+
+
+        /*
+         * 사이드 중간 배너
+         */
+        [ChildActionOnly]
+        public ActionResult SideBannerInMain()
+        {
+            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.WEB_MAIN_SIDE_BANNER) );
             return View(model);
         }
 

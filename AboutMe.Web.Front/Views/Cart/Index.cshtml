@@ -278,25 +278,31 @@
         <div class="info @gradeclass">
             @Model.UserProfile.M_NAME @if (@Model.UserProfile.M_GBN == "S")
             { @Html.Raw("[임직원]") } 님은<br /><a href="#" class="grade">@Model.UserProfile.M_GRADE_NAME.ToString().ToUpper() 클래스</a>입니다.
-            <a class="benefitview" href="#">회원혜택 보기<i></i></a>
+            <a class="benefitview" href="/Customer/Benefit">회원혜택 보기<i></i></a>
         </div>
         <div class="userbenefit">
             <ul>
-                <li class="downcoupon">
-                    <span class="ico"></span>
-                    <span class="num">@Model.DownloadCouponCnt</span>
-                    <span class="tit">다운로드 가능 쿠폰</span>
-                </li>
-                <li class="havecoupon">
-                    <span class="ico"></span>
-                    <span class="num">@Model.DownloadedCouponCnt</span>
-                    <span class="tit">보유 쿠폰</span>
-                </li>
-                <li class="downpoint">
-                    <span class="ico"></span>
-                    <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
-                    <span class="tit">포인트</span>
-                </li>
+                <a href="/MyPage/MyCoupon">
+                    <li class="downcoupon">
+                        <span class="ico"></span>
+                        <span class="num">@Model.DownloadCouponCnt</span>
+                        <span class="tit">다운로드 가능 쿠폰</span>
+                    </li>
+                </a>
+                <a href="/Mypage/MyCoupon/Availablelist">
+                    <li class="havecoupon">
+                        <span class="ico"></span>
+                        <span class="num">@Model.DownloadedCouponCnt</span>
+                        <span class="tit">보유 쿠폰</span>
+                    </li>
+                </a>
+                <a href="/MyPage/MyPoint">
+                    <li class="downpoint">
+                        <span class="ico"></span>
+                        <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
+                        <span class="tit">포인트</span>
+                    </li>
+                </a>
             </ul>
         </div>
     </div>
@@ -340,7 +346,7 @@
 @*같이구매하면 좋은 상품*@
 @helper BuyAsGoods()
 {
-   @* @(Html.Action("CartRelatePorducts", "ChildActionDisplayer")) *@
+    @(Html.Action("CartRelatePorducts", "ChildActionDisplayer")) 
 }
 
 <div id="container">

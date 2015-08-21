@@ -39,6 +39,10 @@ namespace AboutMe.Web.Admin.Controllers
             //웹 메인 중간 배너
             model.WebMiddleBanner = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MIDDLE_BANNER }));
 
+
+            //웹 메인 중간 배너
+            model.WebSideBanner = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_SIDE_BANNER }));
+
             //상품전시 그룹 1
             model.WebProductDisplay10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ= 1 }));
             model.WebProductDisplay11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_10, SEQ= 2 }));
@@ -51,6 +55,25 @@ namespace AboutMe.Web.Admin.Controllers
             model.WebProductDisplay22 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_20, SEQ=3} ));
             model.WebProductDisplay23 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND =DisplayerCode.WEB_MAIN_PRODUCT_DISPLAY, SUB_KIND= DisplayerCode.SUB_KIND_20, SEQ=4} ));
  
+            return View(model);
+        }
+
+        /**
+         * 동영상 관리
+         */
+        [CustomAuthorize]
+        public ActionResult Movie()
+        {
+            AdminDisplayMovieViewModel model = new AdminDisplayMovieViewModel();
+
+            model.Movie = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MOVIE_LINK }));
+
+            model.Product10 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MOVIE_PRODUCT, SUB_KIND = DisplayerCode.SUB_KIND_10, SEQ = 1 }));
+            model.Product11 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MOVIE_PRODUCT, SUB_KIND = DisplayerCode.SUB_KIND_10, SEQ = 2 }));
+            model.Product12 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MOVIE_PRODUCT, SUB_KIND = DisplayerCode.SUB_KIND_10, SEQ = 3 }));
+            model.Product13 = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.WEB_MAIN_MOVIE_PRODUCT, SUB_KIND = DisplayerCode.SUB_KIND_10, SEQ = 4 }));
+
+
             return View(model);
         }
 
@@ -136,6 +159,9 @@ namespace AboutMe.Web.Admin.Controllers
             return View(model);
         }
 
+        /**
+         * 한개짜리만 가져오기
+         */
         [ChildActionOnly]
         private SP_ADMIN_DISPLAY_SEL_Result GetOneDisplayResult(List<SP_ADMIN_DISPLAY_SEL_Result> list)
         {

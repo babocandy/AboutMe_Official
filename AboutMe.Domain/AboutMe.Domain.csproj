@@ -622,6 +622,7 @@
     <Compile Include="Entity\Display\SP_POPUP_WEB_SEL_Result.cs">
       <DependentUpon>ModelDisplay.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Magazine\MagazineUserModel.cs" />
     <Compile Include="Entity\Event\ModelEvent.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -699,6 +700,9 @@
     <Compile Include="Entity\Exhibit\SP_ADMIN_EXHIBIT_VIEW_Result.cs">
       <DependentUpon>ModelExhibit.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Exhibit\SP_EXHIBIT_PCODE_LINK_ALL_Result.cs">
+      <DependentUpon>ModelExhibit.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Exhibit\SP_EXHIBIT_TAB_PRODUCT_LIST_Result.cs">
       <DependentUpon>ModelExhibit.tt</DependentUpon>
     </Compile>
@@ -733,6 +737,33 @@
     </Compile>
     <Compile Include="Entity\Faq\TB_FAQ.cs">
       <DependentUpon>ModelFaq.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\ModelMagazine.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMagazine.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\ModelMagazine.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMagazine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\ModelMagazine.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelMagazine.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\SP_ADMIN_MAGAZINE_SEL_Result.cs">
+      <DependentUpon>ModelMagazine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\SP_ADMIN_MAGAZINE_VIEW_Result.cs">
+      <DependentUpon>ModelMagazine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\SP_MAGAZINE_LIST_Result.cs">
+      <DependentUpon>ModelMagazine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Magazine\SP_MAGAZINE_VIEW_Result.cs">
+      <DependentUpon>ModelMagazine.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Member\ModelMember.Context.cs">
       <AutoGen>True</AutoGen>
@@ -799,6 +830,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelOrder.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Order\SP_MYPAGE_MAIN_STATUS_Result.cs">
+      <DependentUpon>ModelOrder.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Order\SP_MYPAGE_ORDERLIST_CNT_Result.cs">
       <DependentUpon>ModelOrder.tt</DependentUpon>
@@ -1066,6 +1100,31 @@
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Shopinfo\ModelShopinfo.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelShopinfo.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\ModelShopinfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\ModelShopinfo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\ShopinfoUserModel.cs" />
+    <Compile Include="Entity\Shopinfo\SP_ADMIN_SHOPINFO_SEL_Result.cs">
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\SP_ADMIN_SHOPINFO_VIEW_Result.cs">
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\SP_SHOPINFO_LIST_Result.cs">
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
@@ -1099,6 +1158,8 @@
     <Compile Include="Service\Event\EventService.cs" />
     <Compile Include="Service\Exhibit\ExhibitService.cs" />
     <Compile Include="Service\Exhibit\IExhibitService.cs" />
+    <Compile Include="Service\Magazine\MagazineService.cs" />
+    <Compile Include="Service\Magazine\IMagazineService.cs" />
     <Compile Include="Service\Member\IMemberService.cs" />
     <Compile Include="Service\Member\MemberService.cs" />
     <Compile Include="Service\Notice\NoticeService.cs" />
@@ -1120,6 +1181,8 @@
     <Compile Include="Service\Recallbbs\IRecallbssService.cs" />
     <Compile Include="Service\Review\IReviewService.cs" />
     <Compile Include="Service\Review\ReviewService.cs" />
+    <Compile Include="Service\Shopinfo\IShopinfoService.cs" />
+    <Compile Include="Service\Shopinfo\ShopinfoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\Etc\" />
@@ -1373,6 +1436,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelMember.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Magazine\ModelMagazine.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelMagazine.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Magazine\ModelMagazine.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelMagazine.edmx</DependentUpon>
+      <LastGenOutput>ModelMagazine.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Magazine\ModelMagazine.edmx.diagram">
+      <DependentUpon>ModelMagazine.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Magazine\ModelMagazine.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelMagazine.edmx</DependentUpon>
+      <LastGenOutput>ModelMagazine.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Member\ModelMember.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelMember.edmx</DependentUpon>
@@ -1500,6 +1580,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelReview.edmx</DependentUpon>
       <LastGenOutput>ModelReview.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Shopinfo\ModelShopinfo.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelShopinfo.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Shopinfo\ModelShopinfo.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+      <LastGenOutput>ModelShopinfo.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Shopinfo\ModelShopinfo.edmx.diagram">
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Shopinfo\ModelShopinfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+      <LastGenOutput>ModelShopinfo.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

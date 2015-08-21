@@ -1,0 +1,232 @@
+﻿@using AboutMe.Common.Data
+@model AboutMe.Domain.Entity.Shopinfo.SHOPINFO_ADMIN_EDIT
+@{
+    ViewBag.Title = "매장안내";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string modeDesc = "수정";
+    if (@Model.Mode == "NEW")
+    {
+        modeDesc = "등록";
+    }
+}
+@section Scripts{
+    <script language="javascript">
+
+    function frmCheck() {
+
+        var f = document.iform;
+
+
+        if ($("#SHOP_NAME").val().trim() == "") {
+            alert("매장명을 입력해 주세요.");
+            return false;
+        }
+        if ($("#TEL_NUM").val().trim() == "") {
+            alert("전화번호를 입력해 주세요.");
+            return false;
+        }
+
+        if ($("#POST").val().trim() == "") {
+            alert("우편번호를 입력해 주세요.");
+            return false;
+        }
+        if ($("#ADDR1").val().trim() == "") {
+            alert("주소1을 입력해 주세요.");
+            return false;
+        }
+        if ($("#ADDR2").val().trim() == "") {
+            alert("상세주소를 입력해 주세요.");
+            return false;
+        }
+        if ($("#LATITUDE").val().trim() == "") {
+            alert("위도값(lat)를 입력해 주세요.");
+            return false;
+        }
+        if ($("#LONGITUDE").val().trim() == "") {
+            alert("경도값(lng) 입력해 주세요.");
+            return false;
+        }
+        
+        if (!$("#UseYnY")[0].checked && !$("#UseYnN")[0].checked) {
+            alert("전시여부를 선택해 주세요.");
+            return false;
+        }
+
+        if (confirm("매장를 @modeDesc 하시겠습니까?"))
+        {
+            f.submit();
+        }
+
+
+    }
+
+    </script>
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <!-- 다음 우편번호 검색-->
+    <div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+        <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+    </div>
+
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script language="javascript">
+        // 우편번호 찾기 화면을 넣을 element
+        var element_layer = document.getElementById('layerPOST');
+
+        function closeDaumPostcode() {
+            // iframe을 넣은 element를 안보이게 한다.
+            element_layer.style.display = 'none';
+        }
+
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var fullAddr = data.address; // 최종 주소 변수
+                    var extraAddr = ''; // 조합형 주소 변수
+
+                    // 기본 주소가 도로명 타입일때 조합한다.
+                    if (data.addressType === 'R') {
+                        //법정동명이 있을 경우 추가한다.
+                        if (data.bname !== '') {
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있을 경우 추가한다.
+                        if (data.buildingName !== '') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                        fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById("POST").value = data.zonecode; //5자리 기초구역번호 사용
+
+                    document.getElementById('ADDR1').value = fullAddr;
+
+                    // iframe을 넣은 element를 안보이게 한다.
+                    element_layer.style.display = 'none';
+                },
+                width: '100%',
+                height: '100%'
+            }).embed(element_layer);
+
+            // iframe을 넣은 element를 보이게 한다.
+            element_layer.style.display = 'block';
+
+            // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+            initLayerPosition();
+        }
+
+        // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+        // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+        // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+        function initLayerPosition() {
+            var width = 300; //우편번호서비스가 들어갈 element의 width
+            var height = 460; //우편번호서비스가 들어갈 element의 height
+            var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+            // 위에서 선언한 값들을 실제 element에 넣는다.
+            element_layer.style.width = width + 'px';
+            element_layer.style.height = height + 'px';
+            element_layer.style.border = borderWidth + 'px solid';
+            // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+            element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+            element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+        }
+
+    </script>
+    <!-- 다음 우편번호 검색-->
+
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>매장안내 관리</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3>매장 @modeDesc</h3>
+        </div>
+        @using (Html.BeginForm("EditProcess", "Shopinfo", FormMethod.Post, new { id = "iform", name = "iform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+            @Html.Hidden("IDX", Model.IDX)
+            @Html.Hidden("MODE", Model.Mode)
+
+                                    <div class="panel">
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th>매장명</th>
+                                                    <td><input type="text" class="input-sm" style="width:80%" name="SHOP_NAME" id="SHOP_NAME" value="@Model.ViewInfo.SHOP_NAME"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>전화번호</th>
+                                                    <td><input type="text" class="input-sm" style="width:80%" name="TEL_NUM" id="TEL_NUM" value="@Model.ViewInfo.TEL_NUM"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>주소</th>
+                                                    <td>
+                                                        <input type="text" class="input-sm mb10" style="width:20%" title="우편번호 입력" readonly name="POST" id="POST" value="@Model.ViewInfo.POST" />
+                                                        <a href="#" class="btn btn-info small mb10" style="width:100px" onclick="javascript:execDaumPostcode();">우편번호 찾기</a><br />
+                                                        <input type="text" class="input-sm" style="width:40%" title="주소입력" name="ADDR1" id="ADDR1" value="@Model.ViewInfo.ADDR1" readonly />
+                                                        <input type="text" class="input-sm" style="width:40%" title="상세주소입력" name="ADDR2" id="ADDR2" value="@Model.ViewInfo.ADDR2" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>오시는길</th>
+                                                    <td><input type="text" class="input-sm" style="width:80%" name="LOCATION_INFO" id="LOCATION_INFO" value="@Model.ViewInfo.LOCATION_INFO"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>위도(Lat) (ex)37.12345687)</th>
+                                                    <td><input type="text" class="input-sm" style="width:50%" name="LATITUDE" id="LATITUDE" value="@Model.ViewInfo.LATITUDE">(네이버지도에서 주소입력 검색후 주소창의 lat변수값을 넣어주세요.)</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>경도(Lng) (ex)122.12345678)</th>
+                                                    <td><input type="text" class="input-sm" style="width:50%" name="LONGITUDE" id="LONGITUDE" value="@Model.ViewInfo.LONGITUDE">(네이버지도에서 주소입력 검색후 주소창의 lng변수값을 넣어주세요.)</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>전시여부</th>
+                                                    <td>
+                                                        <label for="UseYnY">@Html.RadioButton("USE_YN", "Y", Model == null ? false : (Model.ViewInfo.USE_YN == "Y" ? true : false), new { id = "UseYnY" })<span class="txt mr5">전시</span></label>
+                                                        <label for="UseYnN">@Html.RadioButton("USE_YN", "N", Model == null ? false : (Model.ViewInfo.USE_YN == "N" ? true : false), new { id = "UseYnN" })<span class="txt mr5">비전시</span></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="panel tac">
+                                        @if (Model.Mode == "NEW")
+                                        {
+                                            <a style="width:100px" class="btn btn-default middium" href="#none" onclick="frmCheck();">등록</a>
+                                        }
+                                        else if (Model.Mode == "EDIT")
+                                        {
+                                            <a style="width:100px" class="btn btn-success middium" href="#none" onclick="frmCheck();">수정</a>
+                                        }
+                                        @Html.ActionLink("취소", "", @Model.SearchOption, new { @class = "btn btn-primary  middium", style = "width:100px" })
+
+                                    </div>
+        }
+
+
+
+    </div>
+    <!--//content-->
+}

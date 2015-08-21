@@ -1,0 +1,32 @@
+﻿@model AboutMe.Domain.Entity.Notice.NoticeUserView
+@{
+    ViewBag.Title = "공지사항 - ABOUT ME";
+    ViewBag.TopClass = "customer";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts{
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="#none" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>공지사항</h2>
+    </div>
+
+    <!--공지사항 내용-->
+    <div class="bbs_view">
+        <h3 class="view_ti">
+            @Model.Notice.TITLE
+            <span class="txt_date">@Model.Notice.REG_DATE.ToString().Substring(0, 10)</span>
+        </h3>
+        <div class="view_content">
+            @(new HtmlString(HttpUtility.HtmlDecode(Model.Notice.CONTENTS)))
+        </div>
+    </div>
+    <!--공지사항 내용-->
+
+</div>
+<!--//container-->

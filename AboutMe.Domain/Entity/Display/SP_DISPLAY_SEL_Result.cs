@@ -25,5 +25,6 @@ namespace AboutMe.Domain.Entity.Display
         public string P_SUB_TITLE { get; set; }
         public Nullable<int> SELLING_PRICE { get; set; }
         public Nullable<int> DISCOUNT_PRICE { get; set; }
+        public Nullable<System.DateTime> INS_DATE { get; set; }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model AboutMe.Domain.Entity.Notice.NoticeUserModel
+@{
+    ViewBag.Title = "공지사항 - ABOUT ME";
+    ViewBag.TopClass = "customer";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts{
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="#none" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>공지사항</h2>
+    </div>
+
+    <!--공지사항 리스트-->
+    <div class="bbs_list">
+        <ul>
+        @foreach(var item in Model.NoticeList)
+        {
+            string linkStr = string.Format("/Customer/NoticeView?IDX={0}&Page={1}&SearchCol={2}&SearchKeyword={3}", item.IDX, Model.searchOption.Page, Model.searchOption.SearchCol, Model.searchOption.SearchKeyword);
+            
+            <li><a href="@linkStr">@item.TITLE<span class="txt_date">@item.REG_DATE.ToString().Substring(0, 10)</span></a></li>
+        }
+        </ul>
+    </div>
+    <!--공지사항 리스트-->
+    <!--페이징-->
+    @{
+        string Querystr = string.Format("SearchCol={0}&SearchKeyword={1}", Model.searchOption.SearchCol, Model.searchOption.SearchKeyword);
+
+        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.NoticeCnt, RecordPerPage = Model.searchOption.PageSize, PagePerBlock = 10, CurrentPage = Model.searchOption.Page, QueryStr = @Querystr });
+    }
+    <!--//페이징-->
+
+</div>
+<!--//container-->

@@ -1,0 +1,128 @@
+﻿@model AboutMe.Domain.Entity.Faq.FaqUserModel
+@{
+    ViewBag.Title = "Faq - ABOUT ME";
+    ViewBag.TopClass = "cscenter";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+   <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+
+    <script language="javascript">
+
+    function goFaqSearch(isCategory, categoryName) {
+        var f = document.frm;
+        //카테고리검색
+        if (isCategory) {
+            f.CategorySearch.value = true;
+            f.SearchCol.value = "CATEGORY";
+            if (categoryName == "") //전체
+            {
+                f.SearchKeyword.value = "";
+            }
+            else {
+                f.SearchKeyword.value = categoryName;
+            }
+        }
+        else {
+            //키워드 검색
+            f.CategorySearch.value = false;
+            f.SearchCol.value = "ALL";
+            f.SearchKeyword.value = f.Keyword.value;
+        }
+        f.submit();
+    }
+
+    </script>
+} 
+
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <!-- cs_top -->
+        <div class="cs_top">
+            <!-- h2_area -->
+            @{
+                ViewBag.MenuTitle = "FAQ";
+                ViewBag.MenuGbn = "faq"; 
+                Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
+            }
+        </div>
+        <!-- //cs_top -->
+        <!-- FAQ -->
+        <div class="contypea faqwrap">
+            <h3>FAQ</h3>
+            <!-- FAQ Search bar -->
+            <div class="faq_search">
+                @using (Html.BeginForm("Faq", "Customer", FormMethod.Get, new { id = "frm", name = "frm" }))
+                {
+                    <input type="hidden" name="Page" value="1" />
+                    <input type="hidden" name="CategorySearch" value="" />
+                    <input type="hidden" name="SearchCol" value="" />
+                    <input type="hidden" name="SearchKeyword" value="" />
+                    
+                    <fieldset>
+                        <legend>FAQ 검색어 입력</legend>
+                        <!-- [desc] 기본 FAQ
+                        <h3 class="ti">FAQ</h3><span class="rslttxt"><strong>50개</strong> 있습니다.</span>
+                        -->
+                        <!-- [desc] 검색 결과 FAQ -->
+                        <h3 class="ti">FAQ</h3>
+                        @if (Model.searchOption.SearchKeyword != "")
+                        { 
+                            <span class="rslttxt">"@Model.searchOption.SearchKeyword"과 연관 FAQ가 <strong>@Model.faqCnt 개</strong> 있습니다.<a href="javascript:void(0)" class="reset" onclick="document.frm.reset(); document.frm.submit();"><img src="/aboutCom/images/customer/bl_resetfaq.gif" alt="" /></a></span>
+                        }
+                        <div class="searchin mt15">
+                            <input type="text" class="ipttypec" style="width:480px" title="검색어 입력" name="Keyword" id="Keyword" value="@Model.searchOption.SearchKeyword" /><a href="#none" class="btn_brown_w96h38 ml5" onclick="goFaqSearch(false, '')">검색</a>
+                        </div>
+                        <span class="info"><i></i>찾으시는 FAQ 답변이 없을 경우 1:1문의를 이용해 주세요.</span>
+                        <!-- [desc] 선택된 버튼은 "cnt" 클래스를 추가해 줍니다. (예시로 회원 버튼에 추가) -->
+                        <div class="btn_category mt40">
+                            <a href="javascript:void(0)" @{ if (Model.searchOption.SearchKeyword == "") { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '')" >전체</a>
+                            <a href="javascript:void(0)" @{ if ((Model.searchOption.SearchKeyword == "상품") && (Model.searchOption.CategorySearch == true)) { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '상품')">상품</a>
+                            <a href="javascript:void(0)" @{ if ((Model.searchOption.SearchKeyword == "주문/결제/영수증") && (Model.searchOption.CategorySearch == true)) { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '주문/결제/영수증')">주문/결제/영수증</a>
+                            <a href="javascript:void(0)" @{ if ((Model.searchOption.SearchKeyword == "배송") && (Model.searchOption.CategorySearch == true)) { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '배송')">배송</a>
+                            <a href="javascript:void(0)" @{ if ((Model.searchOption.SearchKeyword == "쿠폰/적립금") && (Model.searchOption.CategorySearch == true)) { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '쿠폰/적립금')">쿠폰/적립금</a>
+                            <a href="javascript:void(0)" @{ if ((Model.searchOption.SearchKeyword == "취소/교환/반품") && (Model.searchOption.CategorySearch == true)) { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '취소/교환/반품')">취소/교환/반품</a>
+                            <a href="javascript:void(0)" @{ if ((Model.searchOption.SearchKeyword == "회원") && (Model.searchOption.CategorySearch == true)) { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '회원')">회원</a>
+                            <a href="javascript:void(0)" @{ if (Model.searchOption.SearchKeyword == "기타") { @Html.Raw(" class='cnt'");} } onclick="goFaqSearch(true, '기타')">기타</a>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+            <!-- //FAQ Search bar -->
+            <!-- FAQ List -->
+            <div class="faq_list accordion mt20">
+                <ul>
+                    @foreach(var item in Model.faqList)
+                    { 
+                        <li class="accordcont">
+                            <div class="accordsubject">
+                                <a href="javascript:void(0)">
+                                    <span class="category">@item.CATEGORY</span>
+                                    <span class="title">@(new HtmlString(HttpUtility.HtmlDecode(item.QUESTION)))</span>
+                                    <i>열기</i>
+                                </a>
+                            </div>
+                            <div class="accordtxt">
+                                <span class="desc">
+                                    @(new HtmlString(HttpUtility.HtmlDecode(item.ANSWER)))
+                                </span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!-- //FAQ List -->
+            <!-- paging -->
+            @{
+                string Querystr = string.Format("CategorySearch={0}&SearchCol={1}&SearchKeyword={2}", Model.searchOption.CategorySearch, Model.searchOption.SearchCol, Model.searchOption.SearchKeyword);
+                    
+                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.faqCnt, RecordPerPage = Model.searchOption.PageSize, PagePerBlock = 10, CurrentPage = Model.searchOption.Page, QueryStr = @Querystr });
+            }
+            <!-- //paging -->
+        </div>
+        <!-- //FAQ -->
+    </div>
+</div>
+<!--//container-->

@@ -219,5 +219,18 @@ namespace AboutMe.Domain.Service.Exhibit
             return lst;
         }
         #endregion
+
+
+        #region User 상품상세페이지의 해당상품관련 기획전모음
+        public List<SP_EXHIBIT_PCODE_LINK_ALL_Result> ExhibitProductLinkAll(string P_CODE)
+        {
+            List<SP_EXHIBIT_PCODE_LINK_ALL_Result> lst = new List<SP_EXHIBIT_PCODE_LINK_ALL_Result>();
+            using (ExhibitEntities EfContext = new ExhibitEntities())
+            {
+                lst = EfContext.SP_EXHIBIT_PCODE_LINK_ALL(P_CODE).ToList();
+            }
+            return lst;
+        }
+        #endregion
     }
 }

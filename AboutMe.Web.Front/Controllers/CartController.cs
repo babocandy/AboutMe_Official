@@ -207,6 +207,11 @@ namespace AboutMe.Web.Front.Controllers
             var cart_list = lst.Skip((page - 1) * PageSize).Take(PageSize);
             int cartCnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
             int totalPage = cartCnt / PageSize;
+            int pageMerge = cartCnt % PageSize;
+            if (pageMerge > 0)
+            {
+                totalPage++;
+            }
 
             CART_FLYING_MODEL viewModel = new CART_FLYING_MODEL();
             viewModel.CurrentPage = page;
@@ -230,6 +235,13 @@ namespace AboutMe.Web.Front.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
+
+        [ChildActionOnly]
+        public string ProductofCartCnt(string p_code)
+        {
+            return string.Format("{0:#,##0}", _cartservice.ProductofCartCnt(p_code));
+        }
+
 
 
     }

@@ -31,6 +31,8 @@ namespace AboutMe.Domain.Entity.AdminProduct
         public string FROM_DATE { get; set; }
         public string TO_DATE { get; set; }
         public string searchStatus { get; set; }
+        public string IconBatchChk { get; set; } //Y:icon 일괄배치 작업진행
+
         
         [DefaultValue(1)]
         public int Page { get; set; }

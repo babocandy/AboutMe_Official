@@ -36,7 +36,8 @@ namespace AboutMe.Domain.Entity.AdminDisplay
     {
         public List<SP_ADMIN_DISPLAY_SEL_Result> WebMainBannerList { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result WebMiddleBanner { get; set; }
-
+        public SP_ADMIN_DISPLAY_SEL_Result WebSideBanner { get; set; }
+        
         public SP_ADMIN_DISPLAY_SEL_Result WebProductDisplay10 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result WebProductDisplay11 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result WebProductDisplay12 { get; set; }
@@ -46,6 +47,19 @@ namespace AboutMe.Domain.Entity.AdminDisplay
         public SP_ADMIN_DISPLAY_SEL_Result WebProductDisplay21 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result WebProductDisplay22 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result WebProductDisplay23 { get; set; }
+    }
+
+    /**
+     * 관리자 동영상 관리
+     */
+    public class AdminDisplayMovieViewModel
+    {
+        public SP_ADMIN_DISPLAY_SEL_Result Movie { get; set; }
+        public SP_ADMIN_DISPLAY_SEL_Result Product10 { get; set; }
+        public SP_ADMIN_DISPLAY_SEL_Result Product11 { get; set; }
+        public SP_ADMIN_DISPLAY_SEL_Result Product12 { get; set; }
+        public SP_ADMIN_DISPLAY_SEL_Result Product13 { get; set; }
+
     }
 
     /**

@@ -1,0 +1,85 @@
+﻿@model List<AboutMe.Domain.Entity.Shopinfo.SP_SHOPINFO_LIST_Result>
+@{
+    ViewBag.Title = "매장안내 - ABOUT ME";
+    ViewBag.TopClass = "store";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    string NaverMapKey = AboutMe.Common.Helper.Config.GetConfigValue("NaverMapKey");
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+    <script src="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&key=@NaverMapKey" type="text/javascript"></script> 
+
+    <script language="javascript">
+        function loadShop(idx, lat, lng) {
+            var mapdiv = "Mapdiv_" + idx;
+            $("#"+mapdiv).empty();
+
+            //지도정보
+            var oCenterPoint = new nhn.api.map.LatLng(lat, lng);
+            nhn.api.map.setDefaultPoint('LatLng');
+            oMap = new nhn.api.map.Map(mapdiv, {
+                point: oCenterPoint,
+                zoom: 12, // - 초기 줌 레벨은 10으로 둔다.
+                enableWheelZoom: false,
+                enableDragPan: true,
+                enableDblClickZoom: false,
+                mapMode: 0,
+                activateTrafficMap: false,
+                activateBicycleMap: false,
+                minMaxLevel: [1, 14],
+                size: new nhn.api.map.Size(500, 450)
+            });
+
+            var mapZoom = new nhn.api.map.ZoomControl(); // - 줌 컨트롤 선언
+            mapZoom.setPosition({ left: 1010, bottom: 20 }); // - 줌 컨트롤 위치 지정
+            oMap.addControl(mapZoom); // - 줌 컨트롤 추가.
+
+            var oSize = new nhn.api.map.Size(28, 37);
+            var oOffset = new nhn.api.map.Size(14, 37);
+            var oIcon = new nhn.api.map.Icon('http://static.naver.com/maps2/icons/pin_spot3.png', oSize, oOffset);
+
+            /*
+             * 초기 중심좌표 사용
+             */
+            var marker = new nhn.api.map.Marker(oIcon);
+            marker.setPoint(oCenterPoint);
+            oMap.addOverlay(marker);
+        }
+    </script>
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>매장안내</h2>
+    </div>
+
+    <!--매장안내-->
+    <div class="store_area">
+        <h2 class="title"><img src="/aboutCom/images/aboutme/tit_store.gif" alt="STORE 매장안내" /></h2>
+        <div class="store_list">
+            <p class="area_name">매장안내</p>
+            <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="branch_info">
+                        <p class="name">@Html.Raw(item.SHOP_NAME)</p>
+                        <p class="address">@item.ADDR1 @item.ADDR2</p>
+                        <p class="tel"><a href="tel:@item.TEL_NUM">@item.TEL_NUM</a></p>
+                        <a href="#none" class="btn_mapview" onclick="loadShop('@item.IDX', '@item.LATITUDE','@item.LONGITUDE')">지도보기</a>
+                    </div>
+                    <div class="map" id="Mapdiv_@item.IDX">
+                    </div>
+                </li>
+            }
+
+            </ul>
+        </div>
+
+    </div>
+    <!--매장안내-->
+</div>
+<!--//container-->

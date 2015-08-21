@@ -1,0 +1,150 @@
+﻿@model AboutMe.Domain.Entity.Magazine.MAGAZINE_ADMIN_INDEX
+
+@{
+    ViewBag.Title = "매거진관리";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    //paging 파라메터
+    string PagingParam = "";
+    PagingParam = PagingParam + "&UseYn=" + Model.SearchOption.UseYn;
+    PagingParam = PagingParam + "&SearchCol=" + Model.SearchOption.SearchCol;
+    PagingParam = PagingParam + "&SearchKeyword=" + Model.SearchOption.SearchKeyword;
+
+}
+@section Scripts{
+    <script language="javascript">
+    
+    function onFormReset() {
+        $("#sform")[0].reset();
+    }
+
+    function frmCheck() {
+        alert('');
+        var f = document.sform;
+        f.PAGE.value = 1;
+
+        return true;
+    }
+
+    </script>
+
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">컨텐츠관리</a> &gt; <strong>매거진 관리</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3>매거진 관리</h3>
+        </div>
+
+        <div class="tar mb10">
+            @Html.ActionLink("매거진등록", "New", @Model.SearchOption, new { @class = "btn btn-success middium btn_add_table", style = "width:100px" })
+        </div>
+
+        <div class="panel">
+            <table class="table table_row">
+                @using (Html.BeginForm("", "Magazine", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+                {
+
+                    @Html.Hidden("PAGE", "1")
+
+                    <colgroup><col width="150"><col width=""><col width="200"></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>전시여부</th>
+                            <td>
+                                <label for="UseYnA">@Html.RadioButton("UseYn", "A", Model == null ? false : (Model.SearchOption.UseYn == "A" ? true : false), new { id = "UseYnA" })<span class="txt mr5">전체</span></label>
+                                <label for="UseYnY">@Html.RadioButton("UseYn", "Y", Model == null ? false : (Model.SearchOption.UseYn == "Y" ? true : false), new { id = "UseYnY" })<span class="txt mr5">전시</span></label>
+                                <label for="UseYnN">@Html.RadioButton("UseYn", "N", Model == null ? false : (Model.SearchOption.UseYn == "N" ? true : false), new { id = "UseYnN" })<span class="txt mr5">비전시</span></label>
+                            </td>
+                            <td rowspan="2">
+                                <a style="height:120px; line-height:90px;" class="btn btn-default large btn_search" href="#none" onclick="document.sform.submit();">검색</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>검색</th>
+                            <td >
+
+                                <label for="SearchCol1">@Html.RadioButton("SearchCol", "TITLE", Model == null ? false : (Model.SearchOption.SearchCol == "TITLE" || Model.SearchOption.SearchCol == "" ? true : false), new { id = "SearchCol1" })<span class="txt mr5">제목</span></label>
+
+                                @(Html.Kendo().TextBox()
+                                    .Name("SearchKeyword")
+                                    .Value(Model.SearchOption.SearchKeyword)
+                                    .HtmlAttributes(new { @style = "width:300px" })
+                                )
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                <!--//end form-->
+                }
+            </table>
+        </div>
+
+        <div class="panel">
+            <h4>총 검색 : @Model.ListCnt 개</h4>
+            <table class="table table_col">
+                <thead>
+                    <tr>
+                        <th width="50">No.</th>
+                        <th width="150">구분</th>
+                        <th width="150">썸네일</th>
+                        <th width="*">제목</th>
+                        <th width="150">전시여부</th>
+                        <th width="300">등록일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListCnt == 0)
+                    {
+                        <tr>
+                            <td colspan="6">등록된 매거진이 없습니다.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.ListInfo)
+                        {
+                            <tr>
+                                <td>@item.IDX</td>
+                                <td>@{ 
+                                       if (item.CONTENT_GBN == "I") { 
+                                           @Html.Raw("잡지");
+                                       }
+                                       else if (item.CONTENT_GBN == "M")
+                                       {
+                                           @Html.Raw("영상");
+                                       }
+                                       else
+                                       {
+                                           @Html.Raw(item.CONTENT_GBN);
+                                       }
+                                    }
+                                </td>
+                                <td><a href="/Magazine/Edit?IDX=@item.IDX&@PagingParam"><img src="@item.THUMB_IMG_PATH" width="80" height="100" /></a></td>
+                                <td><a href="/Magazine/Edit?IDX=@item.IDX&@PagingParam">@item.TITLE</a></td>
+                                <td>@item.USE_YN</td>
+                                <td>@item.REG_DATE</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.ListCnt, RecordPerPage = Model.SearchOption.PageSize, PagePerBlock = 10, CurrentPage = Model.SearchOption.Page, QueryStr = PagingParam });}
+
+
+    </div>
+    <!--//content-->
+}

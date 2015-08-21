@@ -8,11 +8,37 @@
     <script language="javascript">
 
         function frmCheck() {
-           var f = document.frm01;
+            var f = document.bform;
+            var DEPTH1_CODE = $("#DEPTH1_CODE option:selected").val();
+            var DEPTH2_CODE = $("#DEPTH2_CODE option:selected").val();
+            var CATE_GBN = $(':radio[name="CATE_GBN"]:checked').val();;
+            //alert("DEPTH1_CODE:" + DEPTH1_CODE + "DEPTH2_CODE:" + DEPTH2_CODE + "CATE_GBN:" + CATE_GBN);
+
+            if ($("input:radio[id='CATE_GBN']").is(":checked") == false) {
+                alert("카테고리 타입을 선택해주세요.");
+                return false;
+            }
+
+            if ((CATE_GBN != 'PRODUCT_TYPE') && (DEPTH1_CODE == '')) {
+                alert("부모 카테고리를 선택해주세요.");
+                return false;
+            }
+
+            //if ((CATE_GBN != 'PRODUCT_TYPE') && (DEPTH1_CODE != '') && (DEPTH2_CODE != '')) {
+            //    alert("피부타입이나 라인타입 추가시에는 2DEPTH를 '선택'으로 변경해주세요");
+            //    return false;
+            //}
+
+            //if ((CATE_GBN == 'PRODUCT_TYPE') && (DEPTH1_CODE != '') && (DEPTH1_CODE != '101') && (DEPTH2_CODE != '')) {
+            //    alert("뷰티이외에는 3depth 카테고리를 만들수 없습니다. 2DEPTH를 '선택'으로 변경해주세요");
+            //    return false;
+            //}
+
            if (f.DEPTH_NAME.value == '') {
                 alert("카테고리 이름을 입력하세요.");
                 return false;
-            }
+           }
+           document.bform.submit();
         }
 
 
@@ -57,8 +83,12 @@
 
             var f = document.bform;
             var DEPTH1_CODE = $("#DEPTH1_CODE option:selected").val();
-
+            var CATE_GBN = $(':radio[name="CATE_GBN"]:checked').val();;
             $('#ajaxPCateCode2').html('');
+            //카테고리 타입이 "상품타입"이 부모카테고리가 "뷰티"인 경우만 2depth 셀렉트 박스 활성화한다.
+            if ((DEPTH1_CODE != '101') || (CATE_GBN != 'PRODUCT_TYPE')) {
+                return;
+            }
             
             $.ajax({
                 url: '/AdminProduct/CategoryListJavascript',
@@ -112,7 +142,7 @@
         <div class="panel">
             <h3 class="sub-header">카테고리 등록 @ViewBag.resultVal</h3>
 
-            @using (Html.BeginForm("Create", "AdminProduct", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
+            @using (Html.BeginForm("Create", "AdminProduct", FormMethod.Post, new { id = "bform", name = "bform", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
 
@@ -123,8 +153,8 @@
                                         <th class="c">카테고리 타입 선택</th>
                                         <td class="radio_area">
                                             <label><input type="radio" value="PRODUCT_TYPE" id="CATE_GBN" name="CATE_GBN" /> 상품타입 </label>
-                                            <label><input type="radio" value="SKIN_TYPE" id="CATE_GBN" name="CATE_GBN" /> 피부타입 </label>
-                                            <label><input type="radio" value="LINE_TYPE" id="CATE_GBN" name="CATE_GBN" /> 라인타입 </label>
+                                            <label><input type="radio" value="SKIN_TYPE" id="CATE_GBN" name="CATE_GBN" onclick="$('#ajaxPCateCode2').html('');"/> 피부타입 </label>
+                                            <label><input type="radio" value="LINE_TYPE" id="CATE_GBN" name="CATE_GBN" onclick="$('#ajaxPCateCode2').html('');" /> 라인타입 </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -138,12 +168,6 @@
                                         <th>카테고리이름</th>
                                         <td><input type="text" class="input-sm text-left" name="DEPTH_NAME" ID="DEPTH_NAME" /></td>
                                     </tr>
-                                    <tr>
-                                        <th>저장</th>
-                                        <td>
-                                            <input type="submit" value="저장" class="btn btn-default middium" />
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
 
@@ -151,10 +175,10 @@
         </div>
 
         <div class="btn_area">
+            <a class="btn btn-default small" href="#" onclick="javascript:frmCheck();">등록</a>
             <a class="btn btn-primary small" href="/AdminProduct/Index">목록</a>
         </div>
-
-
+        
     </div>
 }
 

@@ -297,6 +297,7 @@ namespace AboutMe.Domain.Entity.Order
         public string VACT_Date { get; set; } // 가상계좌결제관련 - 송금일자
         public string VACT_Time { get; set; } // 가상계좌결제관련 - 송금시각
         public string ESCROW_YN { get; set; } //에스크로여부
+        public string ORDER_STATUS_VALUE { get; set; } //모바일 실시간 계좌이체일경우 비동기방식이어서 입금대기로 상태를 주는경우 사용
     }
 
     //주문결과 페이지 모델

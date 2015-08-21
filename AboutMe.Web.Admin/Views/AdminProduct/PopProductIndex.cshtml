@@ -67,9 +67,12 @@
 
         //카테고리 3depth seleted value값
         function selectCateValue(d) {
-            //alert(d.value);
             var f = document.bform;
-            f.cateCode.value = d.value;
+            if (d.value != '') {
+                f.cateCode.value = d.value;
+            } else {
+                f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
+            }
         }
 
 
@@ -164,17 +167,20 @@
             });
         }
 
-        //카테고리 유형별(PRODUCT_TYPE) ProductType 2
+        //카테고리 유형별(PRODUCT_TYPE) ProductType 3
         function ajaxSelectCateCodeJavascriptProductType2() {
 
             var f = document.bform;
-            f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
             var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val().substring(0, 3);
             var DEPTH2_CODE = $("#P_CATE_CODE2 option:selected").val().substring(3, 6);
 
+            $('#ajaxPCateCode3').html('');
+            //alert("DEPTH1_CODE:" + DEPTH1_CODE + "DEPTH2_CODE:" + DEPTH2_CODE);
             if ((DEPTH1_CODE == '') || (DEPTH2_CODE == '')) {
+                f.cateCode.value = $("#P_CATE_CODE1 option:selected").val();
                 return;
             }
+            f.cateCode.value = $("#P_CATE_CODE2 option:selected").val();
 
 
             //var DEPTH1_CODE = $("#P_CATE_CODE1 option:selected").val();
@@ -306,7 +312,7 @@
 
                     <div class="">
                         <table class="table table_row">
-                            <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="20%" /></colgroup>
+                            <colgroup><col width="15%" /><col width="*" /><col width="8%" /><col width="9%" /><col width="10%" /></colgroup>
                             <tfoot>
                             </tfoot>
                             <tbody>
@@ -330,8 +336,8 @@
                                         <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
                                         <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
                                     </td>
-                                    <th rowspan="5">검색조건</th>
-                                    <td rowspan="5" class="condition_seacth">
+                                    <th rowspan="4">검색조건</th>
+                                    <td rowspan="4" class="condition_seacth">
                                         <select name="SearchKey" style="width:170px;">
                                             <option value="P_CODE" @if (Model.productSearch_Entity.SearchKey == "P_CODE")
                                                                    { <text> selected</text> }>상품품번</option>
@@ -339,8 +345,10 @@
                                                                    { <text> selected</text> }>상품명</option>
                                         </select><br />
                                         <input type="text" value="@Model.productSearch_Entity.SearchKeyword" placeholder="다중검색" class="input-sm mt10" name="SearchKeyword" id="SearchKeyword" style="width:170px; height:125px;">
-                                        <a href="javascript:frmCheck();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
                                     </td>
+									<td rowspan="4">
+										<a href="javascript:frmCheck();" class="btn btn-default large btn_search" style="height:150px; line-height:120px;">검색</a>
+									</td>
                                 </tr>
 
                                 <tr>

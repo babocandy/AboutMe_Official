@@ -33,7 +33,8 @@ namespace AboutMe.Web.Front.Controllers
         {
 
             #region 초기화작업
-            product_front_search_entity.P_CATE_CODE_3DEPTH = Request.Form["P_CATE_CODE_3DEPTH"];
+            //product_front_search_entity.P_CATE_CODE_3DEPTH = Request.Form["P_CATE_CODE_3DEPTH"];
+            product_front_search_entity.P_CATE_CODE_3DEPTH = Request["P_CATE_CODE_3DEPTH"];
             if (!string.IsNullOrEmpty(product_front_search_entity.P_CATE_CODE_3DEPTH))  //다중검색 3depth 할경우 넣어준다
             {
                 product_front_search_entity.P_CATE_CODE_3DEPTH = product_front_search_entity.P_CATE_CODE_3DEPTH;
