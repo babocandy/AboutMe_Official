@@ -210,6 +210,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Common\Filters\CustomAuthorizeAttr.cs" />
+    <Compile Include="Common\Filters\NoMemberAuthorizeAttribute.cs" />
     <Compile Include="Common\MemberInfo.cs" />
     <Compile Include="Common\UserLog.cs" />
     <Compile Include="Controllers\AboutMeController.cs" />
@@ -225,10 +226,14 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberShipController.cs" />
     <Compile Include="Controllers\MyCouponController.cs" />
+    <Compile Include="Controllers\MyPage\MyOrderController.cs" />
     <Compile Include="Controllers\MyPage\MyPageController.cs" />
     <Compile Include="Controllers\MyPage\MyPointController.cs" />
     <Compile Include="Controllers\MyPage\MyProductController.cs" />
     <Compile Include="Controllers\MyPage\MyReviewController.cs" />
+    <Compile Include="Controllers\MyPage\MyWishController.cs" />
+    <Compile Include="Controllers\MyPage\QnaController.cs" />
+    <Compile Include="Controllers\MyPage\RecallController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -615,6 +620,8 @@
     <Content Include="Views\Order\InipayTest.cshtml" />
     <Content Include="Views\MyReview\Update.cshtml" />
     <Content Include="Views\Order\OrderResult.cshtml" />
+    <Content Include="Views\MyOrder\Index.cshtml" />
+    <Content Include="Views\MyOrder\OrderView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseMobile\" />
