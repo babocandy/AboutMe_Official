@@ -184,7 +184,8 @@
 							</span>
 							<span class="pro_control">
 								<a href="#" class="del"></a>
-								<input type="text" class="ipttypeb" value="2"  />
+								<span class="laycart_num">2</span>
+								<!-- <input type="text" class="ipttypeb" value="2"  /> -->
 							</span>
 						</li>
 						<li>
@@ -199,7 +200,8 @@
 							</span>
 							<span class="pro_control">
 								<a href="#" class="del"></a>
-								<input type="text" class="ipttypeb" value="1"  />
+								<span class="laycart_num">1</span>
+								<!-- <input type="text" class="ipttypeb" value="1"  /> -->
 							</span>
 						</li>
 						<li>
@@ -214,7 +216,8 @@
 							</span>
 							<span class="pro_control">
 								<a href="#" class="del"></a>
-								<input type="text" class="ipttypeb" value="2"  />
+								<span class="laycart_num">2</span>
+								<!-- <input type="text" class="ipttypeb" value="2"  /> -->
 							</span>
 						</li>
 					</ul>

@@ -17,8 +17,6 @@ namespace AboutMe.Domain.Entity.Order
         public string M_NAME { get; set; }
         public string M_ADDR1 { get; set; }
         public string M_ADDR2 { get; set; }
-        public string M_ZIPCODE1 { get; set; }
-        public string M_ZIPCODE2 { get; set; }
         public string M_PHONE1 { get; set; }
         public string M_PHONE2 { get; set; }
         public string M_PHONE3 { get; set; }
@@ -27,5 +25,6 @@ namespace AboutMe.Domain.Entity.Order
         public string M_MOBILE3 { get; set; }
         public string M_EMAIL1 { get; set; }
         public string M_EMAIL2 { get; set; }
+        public string M_ZIPCODE { get; set; }
     }
 }

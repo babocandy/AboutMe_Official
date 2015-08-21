@@ -207,7 +207,7 @@
         element_layer.style.display = 'none';
     }
 
-    function sample2_execDaumPostcode(zip1, zip2, addr1) {
+    function sample2_execDaumPostcode(zip, addr1) {
         new daum.Postcode({
             oncomplete: function (data) {
                 // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -230,13 +230,9 @@
                     // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
                     fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
                 }
-                var postsplit = data.postcode.split('-');
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById(zip1).value = postsplit[0]; //6자리 우편번호 사용
-                document.getElementById(zip2).value = postsplit[1]; //6자리 우편번호 사용
-                //document.getElementById("sample2_postcode").value = data.zonecode; //5자리 기초구역번호 사용
+                document.getElementById(zip).value = data.zonecode; //5자리 우편번호 사용
                 document.getElementById(addr1).value = fullAddr;
-                // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
 
                 // iframe을 넣은 element를 안보이게 한다.
                 element_layer.style.display = 'none';

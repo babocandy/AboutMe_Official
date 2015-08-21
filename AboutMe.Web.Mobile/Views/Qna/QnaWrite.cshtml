@@ -1,0 +1,94 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_INDEX
+@{
+    ViewBag.Title = "1:1문의 - ABOUT ME";
+    ViewBag.TopClass = "myquestion";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    if (Model.QnaView == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+
+}
+@section Scripts{
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script language="javascript">
+       function goSave() {
+           var frm = document.frm;
+           if ($("#category").val() == "") { alert("구분을 선택해주세요."); return false; }
+           if ($.trim($("#title").val()) == "") { alert("제목을 입력해주세요."); $("#title").focus(); return false; }
+           if ($.trim($("#question").val()) == "") { alert("내용을 입력해주세요."); $("#question").focus(); return false; }
+           if (confirm("저장하시겠습니까?") == true) {
+               frm.submit();
+           }
+       }
+    </script>
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>1:1문의</h2>
+    </div>
+    <!-- 꼭 읽어주세요 -->
+    <div class="bullistb boxtypeb pb20">
+        <h3 class="info_sti">꼭 읽어주세요</h3>
+        <p>
+            주문하신 상품에 대한 교환/반품신청 신청은 “교환/반품 신청” 메뉴를
+            이용하여 주시기 바랍니다.고객 문의가 많아 답변이 지연될 수 있는 점은
+            양해 바라며, 빠른 처리를 위해 노력하겠습니다.<br />
+            “고객센터 >FAQ” 메뉴를 통해 더 많은 정보를 확인 하실 수 있습니다.
+        </p>
+    </div>
+    <!-- //꼭 읽어주세요 -->
+    <!-- 1:1문의 등록 -->
+    <div class="mywrite_form boxtypea">
+        @using (Html.BeginForm("QnaAction", "Qna", FormMethod.Post, new { id = "frm", name = "frm", onsubmit = "return;" })){
+            @Html.Hidden("idx", @Model.QnaView.IDX)
+            @Html.Hidden("status", "1")
+            @Html.Hidden("mode", @Model.mode)
+            <fieldset>
+                <legend>1:1문의 등록</legend>
+                <ul>
+                    <li>
+                        <dl>
+                            <dt>구분</dt>
+                            <dd class="frm_sel100per">
+                                <span class="selbox select_a">
+                                    <select title="신청분류 선택" id="category" name="category">
+                                        <option value="">선택</option>
+                                        <option selected=@(Model.QnaView.CATEGORY =="1") value="1">상품문의</option>
+                                        <option selected=@(Model.QnaView.CATEGORY =="2") value="2">배송관련</option>
+                                        <option selected=@(Model.QnaView.CATEGORY =="3") value="3">구매관련</option>
+                                        <option selected=@(Model.QnaView.CATEGORY =="4") value="4">반품관련</option>
+                                        <option selected=@(Model.QnaView.CATEGORY =="5") value="5">기타</option>
+                                    </select>
+                                </span>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>제목</dt>
+                            <dd class="frm_ipt100per"><input type="text" class="ipttypea" title="제목 입력" id="title" name="title" value="@Model.QnaView.TITLE" /></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>신청내용</dt>
+                            <dd><textarea class="textarea" style="height:61px;" id="question" name="question">@Model.QnaView.QUESTION</textarea></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="btn_group">
+                    @if(Model.mode =="NEW"){<a href="#none" onclick="goSave();" class="btn btn_brown_h40">문의</a>}
+                    @if(Model.mode =="EDIT"){<a href="#none" onclick="goSave();" class="btn btn_brown_h40">수정</a>}
+                    <a href="#none" onclick="history.back();" class="btn btn_white_h40 v2">취소</a>
+                </div>
+            </fieldset>
+        }
+    </div>
+    <!-- 1:1문의 등록 -->
+</div>
+<!--//container-->

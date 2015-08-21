@@ -1,0 +1,108 @@
+﻿@model AboutMe.Domain.Entity.Recallbbs.RECALL_VIEW
+@{
+    
+    if (Model.Bbsview == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
+    ViewBag.Title = "교환/반품신청 - ABOUT ME";
+    ViewBag.TopClass = "myreturn";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+}
+@section Scripts {
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script language="javascript">
+    </script>
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>교환/반품신청 등록</h2>
+    </div>
+    <!-- 꼭 읽어주세요 -->
+    <div class="boxtypeb pb20">
+        <p class="bullista">
+            주문취소는 배송 시작 전 단계에서만 기능합니다.<br />
+            주문내역에서 취소 가능합니다. 이후에는 반품으로 진행되며,
+            단순변심으로 인한 반품일 경우 반품배송비가 추가 발생할 수
+            있습니다. 주문내역에서 선택 후 교환/반품 신청 가능합니다.
+        </p>
+    </div>
+    <!-- //꼭 읽어주세요 -->
+    <!-- 반품신청 등록 상세 -->
+    <div class="myreturn_view boxtypea">
+        <table>
+            <colgroup>
+                <col width="25.5%" />
+                <col width="*" />
+            </colgroup>
+            <tbody>
+                <!-- [Desc] "처리중"일 경우 두번 째 두번째 <td>태그 "ing" 클래스 입력 / "처리완료"될 경우 삭제 -->
+                <tr>
+                    <th>주문번호</th>
+                    <td>@Model.Bbsview.ORDER_CODE</td>
+                </tr>
+                <tr>
+                    <th>신청분류</th>
+                    @if (Model.Bbsview.GUBUN == 1)
+                    {
+                        <td>취소신청</td>
+                    }
+                    else if (Model.Bbsview.GUBUN == 2)
+                    {
+                        <td>반품신청</td>
+                    }
+                    else if (Model.Bbsview.GUBUN == 3)
+                    {
+                        <td>교환신청</td>
+                    }
+                </tr>
+                <tr>
+                    <th>작성일</th>
+                    <td>@Model.Bbsview.REG_DATE</td>
+                </tr>
+                <tr>
+                    <th>처리상태</th>
+                    @if (Model.Bbsview.STATUS == 1)
+                    {
+                        <td class="ing">처리중</td>
+                    }
+                    else if (Model.Bbsview.STATUS == 2)
+                    {
+                        <td>처리완료</td>
+                    }
+                </tr>
+                <tr>
+                    <th>제목</th>
+                    <td>@Model.Bbsview.TITLE</td>
+                </tr>
+                <tr>
+                    <th>신청내용</th>
+                    <td>@Html.Raw(Model.Bbsview.CONTENTS.Replace("\n", "<br />"))</td>
+                </tr>
+                @if (Model.Bbsview.STATUS == 2)
+                {
+                <tr>
+                    <th>처리내용</th>
+                    <td>@Html.Raw(HttpUtility.HtmlDecode(Model.Bbsview.CONFIRM_CONTENTS))</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <div class="btn_group">
+            <a href="/Mypage/Recall/?dateType=@Model.SearchParam.dateType&page=@Model.SearchParam.page" class="btn btn_brown_h40">목록</a>
+            @if (Model.Bbsview.STATUS == 1)
+            {
+                <a href="/Mypage/Recall/RecallEdit?IDX=@Model.Bbsview.IDX&dateType=@Model.SearchParam.dateType&page=@Model.SearchParam.page" class="btn btn_gray_h40">수정</a>
+                <!--a href="#none" class="btn btn_white_h40 v3">삭제</a-->
+            }
+        </div>
+    </div>
+    <!-- //반품신청 등록 상세 -->
+</div>
+<!--//container-->

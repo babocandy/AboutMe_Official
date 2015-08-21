@@ -179,19 +179,15 @@ namespace AboutMe.Domain.Entity.Order
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_STEP2_RECENTADDR_INFO_Result>("SP_ORDER_STEP2_RECENTADDR_INFO", m_IDParameter);
         }
     
-        public virtual int SP_ORDER_STEP2_ADDR_SAVE(string m_ID, string sENDER_POST1, string sENDER_POST2, string sENDER_ADDR1, string sENDER_ADDR2, string sENDER_TEL1, string sENDER_TEL2, string sENDER_TEL3, string sENDER_HP1, string sENDER_HP2, string sENDER_HP3, string sENDER_EMAIL1, string sENDER_EMAIL2)
+        public virtual int SP_ORDER_STEP2_ADDR_SAVE(string m_ID, string sENDER_POST, string sENDER_ADDR1, string sENDER_ADDR2, string sENDER_TEL1, string sENDER_TEL2, string sENDER_TEL3, string sENDER_HP1, string sENDER_HP2, string sENDER_HP3, string sENDER_EMAIL1, string sENDER_EMAIL2)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
                 new ObjectParameter("M_ID", typeof(string));
     
-            var sENDER_POST1Parameter = sENDER_POST1 != null ?
-                new ObjectParameter("SENDER_POST1", sENDER_POST1) :
-                new ObjectParameter("SENDER_POST1", typeof(string));
-    
-            var sENDER_POST2Parameter = sENDER_POST2 != null ?
-                new ObjectParameter("SENDER_POST2", sENDER_POST2) :
-                new ObjectParameter("SENDER_POST2", typeof(string));
+            var sENDER_POSTParameter = sENDER_POST != null ?
+                new ObjectParameter("SENDER_POST", sENDER_POST) :
+                new ObjectParameter("SENDER_POST", typeof(string));
     
             var sENDER_ADDR1Parameter = sENDER_ADDR1 != null ?
                 new ObjectParameter("SENDER_ADDR1", sENDER_ADDR1) :
@@ -233,7 +229,7 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("SENDER_EMAIL2", sENDER_EMAIL2) :
                 new ObjectParameter("SENDER_EMAIL2", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_ADDR_SAVE", m_IDParameter, sENDER_POST1Parameter, sENDER_POST2Parameter, sENDER_ADDR1Parameter, sENDER_ADDR2Parameter, sENDER_TEL1Parameter, sENDER_TEL2Parameter, sENDER_TEL3Parameter, sENDER_HP1Parameter, sENDER_HP2Parameter, sENDER_HP3Parameter, sENDER_EMAIL1Parameter, sENDER_EMAIL2Parameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_ADDR_SAVE", m_IDParameter, sENDER_POSTParameter, sENDER_ADDR1Parameter, sENDER_ADDR2Parameter, sENDER_TEL1Parameter, sENDER_TEL2Parameter, sENDER_TEL3Parameter, sENDER_HP1Parameter, sENDER_HP2Parameter, sENDER_HP3Parameter, sENDER_EMAIL1Parameter, sENDER_EMAIL2Parameter);
         }
     
         public virtual ObjectResult<SP_ORDER_STEP2_COUPON_SEARCH_Result> SP_ORDER_STEP2_COUPON_SEARCH(string m_ID, string p_CODE, string dEVICE_GBN)
@@ -313,7 +309,7 @@ namespace AboutMe.Domain.Entity.Order
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_TRANSCOUPON_APPLY", m_IDParameter, oRDER_IDXParameter, iDX_COUPON_NUMBERParameter);
         }
     
-        public virtual int SP_ORDER_STEP2_SENDER_RECEIVER_SAVE(Nullable<int> oRDER_IDX, string sENDER_NAME, string sENDER_POST1, string sENDER_POST2, string sENDER_ADDR1, string sENDER_ADDR2, string sENDER_TEL1, string sENDER_TEL2, string sENDER_TEL3, string sENDER_HP1, string sENDER_HP2, string sENDER_HP3, string sENDER_EMAIL1, string sENDER_EMAIL2, string rECEIVER_NAME, string rECEIVER_POST1, string rECEIVER_POST2, string rECEIVER_ADDR1, string rECEIVER_ADDR2, string rECEIVER_TEL1, string rECEIVER_TEL2, string rECEIVER_TEL3, string rECEIVER_HP1, string rECEIVER_HP2, string rECEIVER_HP3, string oRDER_MEMO, string nOMEMBER_PASS)
+        public virtual int SP_ORDER_STEP2_SENDER_RECEIVER_SAVE(Nullable<int> oRDER_IDX, string sENDER_NAME, string sENDER_POST, string sENDER_ADDR1, string sENDER_ADDR2, string sENDER_TEL1, string sENDER_TEL2, string sENDER_TEL3, string sENDER_HP1, string sENDER_HP2, string sENDER_HP3, string sENDER_EMAIL1, string sENDER_EMAIL2, string rECEIVER_NAME, string rECEIVER_POST, string rECEIVER_ADDR1, string rECEIVER_ADDR2, string rECEIVER_TEL1, string rECEIVER_TEL2, string rECEIVER_TEL3, string rECEIVER_HP1, string rECEIVER_HP2, string rECEIVER_HP3, string oRDER_MEMO, string nOMEMBER_PASS)
         {
             var oRDER_IDXParameter = oRDER_IDX.HasValue ?
                 new ObjectParameter("ORDER_IDX", oRDER_IDX) :
@@ -323,13 +319,9 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("SENDER_NAME", sENDER_NAME) :
                 new ObjectParameter("SENDER_NAME", typeof(string));
     
-            var sENDER_POST1Parameter = sENDER_POST1 != null ?
-                new ObjectParameter("SENDER_POST1", sENDER_POST1) :
-                new ObjectParameter("SENDER_POST1", typeof(string));
-    
-            var sENDER_POST2Parameter = sENDER_POST2 != null ?
-                new ObjectParameter("SENDER_POST2", sENDER_POST2) :
-                new ObjectParameter("SENDER_POST2", typeof(string));
+            var sENDER_POSTParameter = sENDER_POST != null ?
+                new ObjectParameter("SENDER_POST", sENDER_POST) :
+                new ObjectParameter("SENDER_POST", typeof(string));
     
             var sENDER_ADDR1Parameter = sENDER_ADDR1 != null ?
                 new ObjectParameter("SENDER_ADDR1", sENDER_ADDR1) :
@@ -375,13 +367,9 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("RECEIVER_NAME", rECEIVER_NAME) :
                 new ObjectParameter("RECEIVER_NAME", typeof(string));
     
-            var rECEIVER_POST1Parameter = rECEIVER_POST1 != null ?
-                new ObjectParameter("RECEIVER_POST1", rECEIVER_POST1) :
-                new ObjectParameter("RECEIVER_POST1", typeof(string));
-    
-            var rECEIVER_POST2Parameter = rECEIVER_POST2 != null ?
-                new ObjectParameter("RECEIVER_POST2", rECEIVER_POST2) :
-                new ObjectParameter("RECEIVER_POST2", typeof(string));
+            var rECEIVER_POSTParameter = rECEIVER_POST != null ?
+                new ObjectParameter("RECEIVER_POST", rECEIVER_POST) :
+                new ObjectParameter("RECEIVER_POST", typeof(string));
     
             var rECEIVER_ADDR1Parameter = rECEIVER_ADDR1 != null ?
                 new ObjectParameter("RECEIVER_ADDR1", rECEIVER_ADDR1) :
@@ -423,7 +411,7 @@ namespace AboutMe.Domain.Entity.Order
                 new ObjectParameter("NOMEMBER_PASS", nOMEMBER_PASS) :
                 new ObjectParameter("NOMEMBER_PASS", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_SENDER_RECEIVER_SAVE", oRDER_IDXParameter, sENDER_NAMEParameter, sENDER_POST1Parameter, sENDER_POST2Parameter, sENDER_ADDR1Parameter, sENDER_ADDR2Parameter, sENDER_TEL1Parameter, sENDER_TEL2Parameter, sENDER_TEL3Parameter, sENDER_HP1Parameter, sENDER_HP2Parameter, sENDER_HP3Parameter, sENDER_EMAIL1Parameter, sENDER_EMAIL2Parameter, rECEIVER_NAMEParameter, rECEIVER_POST1Parameter, rECEIVER_POST2Parameter, rECEIVER_ADDR1Parameter, rECEIVER_ADDR2Parameter, rECEIVER_TEL1Parameter, rECEIVER_TEL2Parameter, rECEIVER_TEL3Parameter, rECEIVER_HP1Parameter, rECEIVER_HP2Parameter, rECEIVER_HP3Parameter, oRDER_MEMOParameter, nOMEMBER_PASSParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_STEP2_SENDER_RECEIVER_SAVE", oRDER_IDXParameter, sENDER_NAMEParameter, sENDER_POSTParameter, sENDER_ADDR1Parameter, sENDER_ADDR2Parameter, sENDER_TEL1Parameter, sENDER_TEL2Parameter, sENDER_TEL3Parameter, sENDER_HP1Parameter, sENDER_HP2Parameter, sENDER_HP3Parameter, sENDER_EMAIL1Parameter, sENDER_EMAIL2Parameter, rECEIVER_NAMEParameter, rECEIVER_POSTParameter, rECEIVER_ADDR1Parameter, rECEIVER_ADDR2Parameter, rECEIVER_TEL1Parameter, rECEIVER_TEL2Parameter, rECEIVER_TEL3Parameter, rECEIVER_HP1Parameter, rECEIVER_HP2Parameter, rECEIVER_HP3Parameter, oRDER_MEMOParameter, nOMEMBER_PASSParameter);
         }
     
         public virtual ObjectResult<SP_ORDER_RESULT_DETAIL_Result> SP_ORDER_RESULT_DETAIL(string oRDER_CODE, string m_ID, string sESSION_ID)

@@ -78,8 +78,7 @@ namespace AboutMe.Domain.Entity.Order
     public class SENDER_RECEIVER_SAVE_Param
     {  
         public string SENDER_NAME { get; set; }      
-        public string SENDER_POST1 { get; set; }     
-        public string SENDER_POST2 { get; set; }    
+        public string SENDER_POST { get; set; }     
         public string SENDER_ADDR1 { get; set; }    
         public string SENDER_ADDR2 { get; set; }    
         public string SENDER_TEL1 { get; set; }     
@@ -92,8 +91,7 @@ namespace AboutMe.Domain.Entity.Order
         public string SENDER_EMAIL2 { get; set; }  
 
         public string RECEIVER_NAME { get; set; }  
-        public string RECEIVER_POST1 { get; set; } 
-        public string RECEIVER_POST2 { get; set; }
+        public string RECEIVER_POST { get; set; } 
         public string RECEIVER_ADDR1 { get; set; }
         public string RECEIVER_ADDR2 { get; set; }
         public string RECEIVER_TEL1 { get; set; } 
