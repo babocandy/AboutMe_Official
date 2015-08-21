@@ -857,5 +857,68 @@ $(function(){
 		$(".tab_content_wrap .slider").animate({"margin-left": -(brandWidth*brand_idx)},300,"easeInExpo");
 	});
 	
+	/*타임세일 이벤트 슬라이드*/
+	var timebnrWidth=$(window).width();
+	$(".eventtime_bnr").css({"width":timebnrWidth});
+	$(".eventtime_bnr li").css({"width":timebnrWidth});
+	$(window).resize(function(){
+		timebnrWidth=$(window).width();
+		$(".eventtime_bnr").css({"width":timebnrWidth});
+		$(".eventtime_bnr li").css({"width":timebnrWidth});
+	});
+	var timebnr_idx=0; //idx값
+	var timebnrTotal_length = $(".eventtime_bnr .slider li").length; //총 li갯수
+	function timebnrSlide(){
+		$(".eventtime_bnr .slider").animate({"margin-left": -((timebnrWidth)*timebnr_idx)},300,"easeInExpo");
+	}
+	if(timebnrTotal_length==1){
+		$(".eventtime_bnr .btn_prevnext").css({"display":"none"});
+	}else{
+		$(".eventtime_bnr .btn_prevnext .btn_prev").click(function(e){
+			e.preventDefault();
+			timebnr_idx--;
+			if(timebnr_idx=-1){
+				timebnr_idx = timebnrTotal_length-1;
+				$(".eventtime_bnr .slider li:eq("+(timebnrTotal_length-1)+")").clone().insertBefore($(".eventtime_bnr .slider li:eq(0)"));
+				$(".eventtime_bnr .slider").css({"margin-left":-(timebnrWidth)});
+				$(".eventtime_bnr .slider").animate({"margin-left":0},300,"easeInExpo", function(){
+					$(".eventtime_bnr .slider").css({"margin-left":-((timebnrWidth)*(timebnr_idx))});
+					$(".eventtime_bnr .slider li:eq(0)").remove();
+				});
+			}else{
+				timebnrSlide();
+			}
+		});
+		$(".eventtime_bnr .btn_prevnext .btn_next").click(function(e){
+			e.preventDefault();
+			timebnr_idx++;
+			if(timebnr_idx==timebnrTotal_length){
+				timebnr_idx=0;
+				$(".eventtime_bnr .slider li:eq(0)").clone().insertAfter($(".eventtime_bnr .slider li:eq("+(timebnrTotal_length-1)+")")); 
+				$(".eventtime_bnr .slider").animate({"margin-left": +(-((timebnrWidth)*timebnrTotal_length)) },300,"easeInExpo", function(){
+					$(".eventtime_bnr .slider").css({"margin-left":0});
+					$(".eventtime_bnr .slider li:eq("+(timebnrTotal_length)+")").remove();
+				});
+			}else{
+				timebnrSlide();
+			}
+		});
+		//손꾸락 //swipeleft, swiperight, swipeup, swipedown
+		$(".eventtime_bnr .slider").on('swipeleft', function(e) {
+			$(".eventtime_bnr .btn_prevnext .btn_next").click();
+		}).on('swiperight', function(e) {
+			$(".eventtime_bnr .btn_prevnext .btn_prev").click();
+		}).on('movestart', function(e) {
+			if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+				e.preventDefault();
+				return;
+			}
+		}).on('move', function(e) {
+			if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+				e.preventDefault();
+				return;
+			}
+		});
+	}
 
 });

@@ -14,18 +14,41 @@
 
 /*타임세일*/
 .timesale_area {position:relative; margin-bottom:30px;}
-.timesale_area .timesale {position:absolute;top:7%;left:6%;}
+.timesale_area .timesale {position:absolute;top:4%;left:6%;}
 .timesale_area .timesale strong {display:inline-block; font-family:"OpenSansBold"; font-size:20px; padding:1px 5px 2px ; background-color:#000;color:#fff;}
 .timesale_area .timesale .tcolon {display:inline-block; font-size:0; line-height:20px; vertical-align:top; margin:0 3px; margin-top:10px; width:4px; height:12px; background:url("/aboutCom/images/common/bg_tcolone.png") 0 0 no-repeat; background-size:cover;}
 .timebnr {width:100%; background:#fff;}
 .timebnr img {width:100%; }
-.timesale_area .btn_area {width:100%; position:absolute; bottom:15px; left:0; text-align:center;}
+/* .timesale_area .btn_area {width:100%; position:absolute; bottom:15px; left:0; text-align:center;} */
+.eventtime_bnr {position:relative; width:100%; overflow:hidden; border-top:1px solid #d9d4d3;  box-sizing:border-box;}
+.eventtime_bnr ul {width:999999px;}
+.eventtime_bnr ul:after {display:block; clear:both; content:'';}
+.eventtime_bnr li {float:left;}
+.eventtime_bnr li .probnr {position:relative; padding:15px 15px 27px 15px; text-align:left; }
+.eventtime_bnr li .probnr .photo {position:absolute; left:15px; top:15px; width:109px;}
+.eventtime_bnr li .probnr .photo img {width:100%;}
+.eventtime_bnr li .probnr .detail { padding-left:124px;}
+.eventtime_bnr li .probnr .detail .ico {}
+.eventtime_bnr li .probnr .detail .tit {display:block; margin-top:7px; font-size:12px; color:#1b1818; font-weight:normal; height:15px; -webkit-text-stroke-width:0.5px; display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:1;-webkit-box-orient:vertical;}
+.eventtime_bnr li .probnr .detail .stit {display:block; margin-top:3px; font-size:10px; color:#a3a3a3; } 
+.eventtime_bnr li .probnr .detail .price {display:block;margin-top:25px; font-size:13px; color:#1b1818; }
+.eventtime_bnr li .probnr .detail .price del {display:block; font-weight:normal; font-size:10px; color:#696361; margin-bottom:4px; }
+.eventtime_bnr .btn_prevnext {}
+.eventtime_bnr .btn_prevnext a {display:block; z-index:1; width:15px; height:23px; background:url("/aboutCom/images/common/bul30.png") 0 0 no-repeat; background-size:cover;}
+.eventtime_bnr .btn_prevnext .btn_prev {position:absolute; left:10px; top:81px; background-position:0 -550px; background-size:cover;}
+.eventtime_bnr .btn_prevnext .btn_next {position:absolute; right:10px; top:81px; background-position:0 -599px; background-size:cover;}
+.eventtime_bnr .btn_area {width:100%;text-align:center;}
 
 /*상세*/
-.detailbnr {width:100%;}
-.detailbnr img {width:100%;}
-.totalnum_txt {padding:19px 15px 16px 15px; font-size:12px; color:#1c1c1c;}
-.btn_allcheck {border-bottom:1px solid #dddad9; padding:10px 15px;}
+.detail .detailbnr {width:100%;}
+.detail .detailbnr img {width:100%;}
+.detail .product_wrap .list_tit{position:relative;padding:0 20px;background-color:#e4dedd;font-size:12px;line-height:50px;color:#1c1c1c;}
+.detail .product_wrap .list_tit:before{content:"";display:inline-block;position:absolute;top:20px;left:10px;width:6px;height:10px;background:url("/aboutCom/images/common/bl_subtit.png") 0 0 no-repeat;background-size:cover;}
+.detail .product_wrap .product_list{padding:0;}
+.detail .product_wrap .product_list li{padding-left:15px;padding-right:15px;}
+.detail .totalnum_txt {padding:19px 15px 16px 15px; font-size:12px; color:#1c1c1c;}
+.detail .btn_allcheck {border-bottom:1px solid #dddad9; padding:10px 15px;}
+.btn_application {margin-top:20px; margin-bottom:20px; text-align:center}
 
 /*product_list*/
 .product_list {padding:0 15px;}
@@ -42,6 +65,7 @@
 .product_list li .btn_cart {display: block;position: absolute; right: 20px; bottom: 22px; width: 19px; height: 18px; background: url("/aboutCom/images/cart/btn_cart.gif") no-repeat  0 0; background-size: cover ;}
 
 .setgoods .product_list li:last-child {border-bottom:none}
+
 
 .buy_product {position:fixed; bottom:0; left:0; width:100%; background:#fff; z-index:10}
 .buy_product .dim {display:none; width:100%; height:100%; position:fixed; left:0; bottom:220px; background:#000; opacity:0.2; }
