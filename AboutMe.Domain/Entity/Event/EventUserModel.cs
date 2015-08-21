@@ -184,6 +184,7 @@ namespace AboutMe.Domain.Entity.Event
 
     public class EVENT_MAIN_INDEX
     {
+        public int TimeSaleCnt { get; set; }
         public SP_EVENT_MAIN_VIEW_Result MainInfo { get; set; }
         public List<SP_EVENT_ING_LIST_Result> IngListInfo { get; set; }
         public List<SP_EVENT_END_LIST_Result> EndListInfo { get; set; }

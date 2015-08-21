@@ -19,5 +19,8 @@ namespace AboutMe.Domain.Entity.Magazine
         public string CONTENT_GBN { get; set; }
         public string IMG_PATH { get; set; }
         public string MOVIE_URL { get; set; }
+        public string THUMB_IMG_PATH { get; set; }
+        public int DISPLAY_ORDER { get; set; }
+        public System.DateTime REG_DATE { get; set; }
     }
 }

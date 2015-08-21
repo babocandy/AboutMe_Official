@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "회원혜택 - ABOUT ME";
+    ViewBag.TopClass = "customer";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts{
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="#none" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>회원혜택</h2>
+    </div>
+
+    <!--회원등급안내-->
+    <h3 class="benefit_sti">회원등급안내</h3>
+    <div class="tbl_tya">
+        <table>
+            <caption>회원등급안내</caption>
+            <colgroup>
+                <col width="20%" />
+                <col width="28%" />
+                <col width="*" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">등급</th>
+                    <th scope="col">회원자격</th>
+                    <th scope="col">포인트 적립률/혜택</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">
+                        <span class="ico_bronze">BRONZE</span>
+                    </td>
+                    <td rowspan="2">연간 10만원<br />미만 구매</td>
+                    <td>포인트 적립률 2%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul class="benefit_ls">
+                            <li>회원가입 시 10,000원 할인쿠폰</li>
+                            <li>구매금액별 사은품 지급</li>
+                            <li>생일쿠폰</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <span class="ico_siver">SILVER</span>
+                    </td>
+                    <td rowspan="2">연간 10만원 ~<br />30만원 미만 구매</td>
+                    <td>포인트 적립률 2%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul class="benefit_ls">
+                            <li>회원가입 시 10,000원 할인쿠폰</li>
+                            <li>구매금액별 사은품 지급</li>
+                            <li>생일쿠폰</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <span class="ico_gold">GOLD</span>
+                    </td>
+                    <td rowspan="2">연간 30만원<br />이상 구매</td>
+                    <td>포인트 적립률 3%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul class="benefit_ls">
+                            <li>회원가입 시 10,000원 할인쿠폰</li>
+                            <li>구매금액별 사은품 지급</li>
+                            <li>생일쿠폰</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <span class="ico_vip">VIP</span>
+                    </td>
+                    <td rowspan="2">연간 80만원<br />이상 구매</td>
+                    <td>포인트 적립률 5%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul class="benefit_ls">
+                            <li>회원가입 시 10,000원 할인쿠폰</li>
+                            <li>구매금액별 사은품 지급</li>t
+                            <li>생일쿠폰</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--//회원등급안내-->
+    <!--info-->
+    <div class="bullistb boxtypeb">
+        <h4 class="info_sti gray">알려드립니다</h4>
+        <ul>
+            <li>매월 1일 1년간 구매금액에 따라 등급 조정이 있습니다.</li>
+            <li>생일쿠폰은 본인인증 시에 생년월일에 맞춰 발급 됩니다.</li>
+            <li>쿠폰확인은 마이페이지>나의 쿠폰에서 확인하실 수 있습니다.</li>
+        </ul>
+    </div>
+    <!--//info-->
+
+</div>
+<!--//container-->

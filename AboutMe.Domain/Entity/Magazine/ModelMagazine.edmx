@@ -116,6 +116,9 @@
           <Property Type="String" Name="CONTENT_GBN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="IMG_PATH" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="MOVIE_URL" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="THUMB_IMG_PATH" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="SP_MAGAZINE_VIEW_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -189,6 +192,9 @@
                 <ScalarProperty Name="CONTENT_GBN" ColumnName="CONTENT_GBN" />
                 <ScalarProperty Name="IMG_PATH" ColumnName="IMG_PATH" />
                 <ScalarProperty Name="MOVIE_URL" ColumnName="MOVIE_URL" />
+                <ScalarProperty Name="THUMB_IMG_PATH" ColumnName="THUMB_IMG_PATH" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

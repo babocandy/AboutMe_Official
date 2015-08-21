@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "브랜드소개 - ABOUT ME";
+    ViewBag.TopClass = "brand";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+}
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>브랜드소개</h2>
+    </div>
+
+    <!--브랜드스토리-->
+    <div class="brandstroy">
+        <!--상단 비주얼-->
+        <div class="visual">
+            <img src="/aboutCom/images/aboutme/img_brand.jpg" alt="ABOUTME Story 아름다움의 본질에 주목하는 이름,나를 사랑하는 나를 위한 뷰티 브랜드, 어바웃미입니다. 브랜드 스토리" />
+            <a href="#none"><img src="/aboutCom/images/aboutme/txt_brandstroy.gif" class="txt_brandstroy" alt="" /></a>
+        </div>
+        <!--//상단 비주얼-->
+        <!--탭메뉴-->
+        <div class="brand_tab">
+            <ul>
+                <li class="brand1 cnt"><a href="#none">01 브랜드 스토리</a></li>
+                <li class="brand2"><a href="#none">02 원료과학 스토리</a></li>
+                <li class="brand3"><a href="#none">03 어바웃미 BI</a></li>
+            </ul>
+        </div>
+        <!--//탭메뉴-->
+
+        <div class="tab_content_wrap">
+            <div class="btn_prevnext">
+                <a href="#" class="prev"></a>
+                <a href="#" class="next"></a>
+            </div>
+            <img src="/aboutCom/images/aboutme/img_brand2.jpg" class="bg" alt="" />
+
+            <div id="brand1" class="tab_content">
+                <ul class="subject_slider">
+                    <li><img src="/aboutCom/images/aboutme/brand_sb1.png" alt="About ABOUT ME" /></li>
+                    <li><img src="/aboutCom/images/aboutme/brand_sb2.png" alt="BRAND CONCEPT" /></li>
+                    <li><img src="/aboutCom/images/aboutme/brand_sb3.png" alt="원료과학스토리" /></li>
+                    <li><img src="/aboutCom/images/aboutme/brand_sb4.png" alt="ABOUT ME SPECIALIST" /></li>
+                    <li><img src="/aboutCom/images/aboutme/brand_sb5.png" alt="BRAND NAME" /></li>
+                    <li><img src="/aboutCom/images/aboutme/brand_sb6.png" alt="BRAND LOGO" /></li>
+                </ul>
+                <ul class="slider">
+                    <!--01 브랜드스토리-->
+                    <!-- About ABOUT ME-->
+                    <li>
+                        <img src="/aboutCom/images/aboutme/branditem1.png" alt="아름다움의 본질에 주목하는 이름,나를 사랑하는 나를 위한 뷰티 브랜드,어바웃미입니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/branditem2.png" alt="우리 몸은 거짓말을 하지 않습니다.피부도 신체의 일부이므로 신체가 건강하지 못하면 자연히 피부 건강도 나빠질 것이고 올바른 영양소 섭취를 통해 신체가 건강해지면 자연히 피부 건강도 회복될 것입니다.어바웃미는 우리 몸의 안과 밖의 문제를 동시에 고민, 화장품과 건강기능식품의 균형을 제시하는 브랜드로 진정한 아름다움을 선사하기 위해 탄생되었습니다. 어바웃미의 뷰티 기술과 삼양의 90년 원료 노하우가 집약된 ‘더 좋은’ 원료 과학이 구현해내는 극대화된 효능을 통해 당신의 아름다움은 놀라운 가치를 갖게 되며 더욱 소중한나를 경험하게 될 것입니다." />
+                    </li>
+                    <!-- //About ABOUT ME-->
+                    <!--BRAND CONCEPT-->
+                    <li>
+                        <img src="/aboutCom/images/aboutme/branditem3.png" alt="누구나 부러워하는 피부로 다시 태어나는 것, 한결 같은 젊음을 지켜내는 것, 당신의 꿈, 어바웃미에게는 꼭 이뤄내야 할 목표입니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/branditem4.png" alt="시간 보존 비법(Time Capsule Technology) 원료가 지닌 탁월한 효능의 활성 성분을 통해 피부 나이를 되돌리는 어바웃미의 ‘더 좋은’ 원료의 힘을 경험하세요. 각 분야 원료 전문 스페셜리스트들이 만들어내는 어바웃미의 원료 기술로 빚어낸 뷰티 에너지의 힘으로 당신이 가장 아름다웠던 그때처럼,가장 아름다운 오늘을 만나보세요.어바웃미와 함께 당신의 가장 아름다운 순간을 만나세요." />
+                    </li>
+                    <!--BRAND CONCEPT-->
+                    <!--//01 브랜드스토리-->
+                    <!-- 02 원료과학 스토리-->
+                    <!--원료과학스토리-->
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem1.png" alt="좋은 원료는 누구나 사용할 수 있지만 ‘더 좋은’ 원료는 누구를 만나느냐에 따라 그 가치가 달라집니다.아름다움을 위해 좋다 하는 원료들은 끝없이 발견되지만 과연, 피부에서도 그 성분 그대로를 지켜내고 있는지...건강을 위해 좋다 하는 원료들은 무수히 많지만 과연, 몸 속에서도 그 효능을 제대로 발휘하고 있는지...원료전문가 어바웃미는 좋은 원료가 훨씬 ‘더 좋은’ 원료가될 수 있도록 고민합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem2.png" alt="원료전문가 어바웃미는 우후죽순 내세우는 좋은 원료가 ‘왜 나에게는 기대만큼의 효능을 발휘하지 못했을까’ 하는 소비자들의 고민을 해결하고자 탄생되었습니다.똑 같은 과일이라도 제철에 난 과일이 더 맛있고 몸에 좋은 것처럼 어바웃미의 모든 원료는 최상의 효과를 발휘할 수 있는 상태와 시기 등에 맞춰 까다롭게 선별되며, 똑 같은 채소라도 각 영양소를 최대한 보존할 수 있는 조리방법이 다른 것처럼각각의 원료들에 최적화된 방법을 통해 유효성분을 활성화 하며,똑 같은 약초라도 독이 되고 약이 될 수 있는 것처럼원료들이 안정적으로 효능을 보일 수 있는 방법을 개발하며," />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem3.png" alt="이 모든 연구 결과가 집약된 좋은 원료가 ‘더 좋은’ 원료로써 피부와 몸 속에 흡수되고 전달 되어 아름다움의 가치를 높이는 것,이것이 어바웃미가 원료과학에 대해 끊임없이 고민하는 이유입니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem4.png" alt="아무나 쉽게 모방할 수 없는 식품 기업 삼양의 90년 역사에 기반한 기술집약적 노하우를 고스란히 담아낸 어바웃미만의 원칙이 당신에게 극대화된 효능을 선사, 진정한 아름다움을 경험하게 할 것입니다. 시간을 거슬러서라도 지켜내고 싶은 변치 않는당신만의 아름다움, 소중한 당신을 위해 어바웃미가 ‘더 좋은’ 원료를 통해 그 해답을 제시합니다." />
+                    </li>
+                    <!--원료과학스토리-->
+                    <!--ABOUT ME SPECIALIST-->
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem5.png" alt="어바웃미만의 ‘더 좋은’ 원료가 담긴 제품이 다른 제품들과 달리 더 과학적인 효능을 전달할 수 있는 비결을 공개합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem6.png" alt="자연 상태의 원료들이 까다로운 과정을 거쳐 완전한 제품이 되기까지 어바웃미만의 각 단계별 전문가가 모여, 아름다움의 가치를 높여주는 어바웃미의 원료과학을 완성합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem7.png" alt="추출:최상의 효과를 내는 시기에 원료 추출, 활성:발효, 숙성, 배양 등 유효성분 활성화, 배합:복합 원료의 시너지를 이끌어내는 이상적인 조합과 비율로 원료배합, 안정화:보관시에도 균일한 효능이 발현 되도록 안정적인 포뮬러 개발, 전달:유효성분의 피부/체네 흡수 촉진" />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem8.png" alt="고르고 또 골라 최고의 원료만 선별해내는 SPECIAL SELECTOR 좋은 원료 중에서도 더 좋은 원료만 선별하기 위해 각 원료가 최상의 효과를 내는 시기 및 부위, 그에 맞는 추출법을 각각 달리 적용해 원료 선별에서부터 효능의 극대화를 위해 노력합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem9.png" alt="원료들에 최대의 힘을 불어넣는 SPECIAL ACTIVATOR 일차적으로 까다롭게 선별된 좋은 원료들이 각자 가지고 있는 유효성분들의 활성화를 위해 발효, 숙성, 배양 등의 다양한 방법을 통해 효능의 극대화를 고민합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem10.png" alt="가장 이상적인 원료 조합으로 시너지를 이끌어내는 SPECIAL COMBINATOR 극대화된 유효성분들이 서로 최적의 조화로 시너지를 발휘할 수 있도록 가장 이상적인 조합과 비율을 찾아내는 과정을 통해 효능의 극대화를 연구합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem11.png" alt="원료의 안정성과 효능이 끝까지 유지되도록 하는 SPECIAL PROTECTOR 좋은 원료들이 제품화가 되어 유통, 사용, 보관되는 과정에서도 유효성분의 변형이나 파괴 없이 효능을 안정되게 유지할 수 있도록 각각의 원료에 맞는 안정적인 포뮬러를 개발, 효능의 극대화를 유지합니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/metaitem12.png" alt="원료의 흡수력을 높여 효능 극대화를 실현시키는 SPECIAL REALIZER 최적의 상태로 선별되고, 최상의 체형과 사용법을 통해 개발된 각각의 원료가 체내 및 피부 깊숙한 곳까지 즉각적이고 효과적으로 흡수, 도달될 수 있도록 효능 전달의 극대화를 실현합니다." />
+                    </li>
+                    <!--//ABOUT ME SPECIALIST-->
+                    <!--//02 원료과학 스토리-->
+                    <!-- 03 어바웃미 BI-->
+                    <!--brand name-->
+                    <li>
+                        <img src="/aboutCom/images/aboutme/bi1.png" alt="어바웃미는 누군가를 위한 것이 아닌 나를 위한 Beauty Care 브랜드로 나 자신의 인생을 스스로 가꾸어 나가는 능동적인 내가 선택한 현명한 뷰티 솔루션의 의미를 담은 브랜드 네임입니다." />
+                    </li>
+                    <!--//brand name-->
+                    <!--brand logo-->
+                    <li>
+                        <img src="/aboutCom/images/aboutme/bi2.png" alt="활력의 청록색, 대지의 생명력을 상징하는 다크브라운의 두가지 색상과 신체 내면의 건강과 외면의 아름다움의 균형과 조화를 나타내는 = 라인을 적용하여 나를 위한 Beauty & Health 브랜드를 표현하였습니다." />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/bi3.png" alt="영문_워드마크 조합 응용형 조합 국문_국문형조합" />
+                    </li>
+                    <li>
+                        <img src="/aboutCom/images/aboutme/bi4.png" alt="브랜드 네임에서부터 브랜드 로고에 이르기 까지 어바웃미는 누구보다 소중한 ‘당신’에 집중합니다." />
+                    </li>
+                    <!--//brand logo-->
+                    <!--//03 어바웃미 BI-->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!--//브랜드스토리-->
+</div>
+<!--//container-->

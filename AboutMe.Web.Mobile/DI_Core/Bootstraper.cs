@@ -33,6 +33,14 @@ namespace AboutMe.Web.Mobile.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Point.IPointService, AboutMe.Domain.Service.Point.PointService>(); //포인트
             container.RegisterType<AboutMe.Domain.Service.Display.IDisplayService, AboutMe.Domain.Service.Display.DisplayService>(); //전시,배너,팝업
 
+            container.RegisterType<AboutMe.Domain.Service.Notice.INoticeService, AboutMe.Domain.Service.Notice.NoticeService>(); //Notice
+            container.RegisterType<AboutMe.Domain.Service.Faq.IFaqService, AboutMe.Domain.Service.Faq.FaqService>(); //Faq
+            container.RegisterType<AboutMe.Domain.Service.Qna.IQnaService, AboutMe.Domain.Service.Qna.QnaService>(); //1:1문의
+            container.RegisterType<AboutMe.Domain.Service.Event.IEventService, AboutMe.Domain.Service.Event.EventService>(); //이벤트
+            container.RegisterType<AboutMe.Domain.Service.Exhibit.IExhibitService, AboutMe.Domain.Service.Exhibit.ExhibitService>(); //기획전
+            container.RegisterType<AboutMe.Domain.Service.Magazine.IMagazineService, AboutMe.Domain.Service.Magazine.MagazineService>(); //매거진
+            container.RegisterType<AboutMe.Domain.Service.Shopinfo.IShopinfoService, AboutMe.Domain.Service.Shopinfo.ShopinfoService>(); //매장안내
+
             container.RegisterType<AboutMe.Domain.Service.Promotion.IPromotionService, AboutMe.Domain.Service.Promotion.PromotionService>(); //프로모션
             container.RegisterType<AboutMe.Domain.Service.Coupon.ICouponService, AboutMe.Domain.Service.Coupon.CouponService>(); //쿠폰
             container.RegisterType<AboutMe.Domain.Service.BizPromotion.IBizPromotion, AboutMe.Domain.Service.BizPromotion.BizPromotion>(); //비즈니스로직..쿠폰,프로모션을 같이 이용하는... 

@@ -157,10 +157,5 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
-        //매장안내
-        public ActionResult Store()
-        {
-            return View();
-        }
     }
 }

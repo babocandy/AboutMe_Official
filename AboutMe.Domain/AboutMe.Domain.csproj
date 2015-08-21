@@ -1100,6 +1100,31 @@
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Shopinfo\ModelShopinfo.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelShopinfo.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\ModelShopinfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\ModelShopinfo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\ShopinfoUserModel.cs" />
+    <Compile Include="Entity\Shopinfo\SP_ADMIN_SHOPINFO_SEL_Result.cs">
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\SP_ADMIN_SHOPINFO_VIEW_Result.cs">
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shopinfo\SP_SHOPINFO_LIST_Result.cs">
+      <DependentUpon>ModelShopinfo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
@@ -1156,6 +1181,8 @@
     <Compile Include="Service\Recallbbs\IRecallbssService.cs" />
     <Compile Include="Service\Review\IReviewService.cs" />
     <Compile Include="Service\Review\ReviewService.cs" />
+    <Compile Include="Service\Shopinfo\IShopinfoService.cs" />
+    <Compile Include="Service\Shopinfo\ShopinfoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\Etc\" />
@@ -1553,6 +1580,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelReview.edmx</DependentUpon>
       <LastGenOutput>ModelReview.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Shopinfo\ModelShopinfo.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelShopinfo.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Shopinfo\ModelShopinfo.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+      <LastGenOutput>ModelShopinfo.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Shopinfo\ModelShopinfo.edmx.diagram">
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Shopinfo\ModelShopinfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelShopinfo.edmx</DependentUpon>
+      <LastGenOutput>ModelShopinfo.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

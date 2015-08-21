@@ -42,6 +42,7 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Event.IEventService, AboutMe.Domain.Service.Event.EventService>(); //이벤트
             container.RegisterType<AboutMe.Domain.Service.Exhibit.IExhibitService, AboutMe.Domain.Service.Exhibit.ExhibitService>(); //기획전
             container.RegisterType<AboutMe.Domain.Service.Magazine.IMagazineService, AboutMe.Domain.Service.Magazine.MagazineService>(); //매거진
+            container.RegisterType<AboutMe.Domain.Service.Shopinfo.IShopinfoService, AboutMe.Domain.Service.Shopinfo.ShopinfoService>(); //매장안내
             /**
             container.RegisterInstance<IFilterProvider>("FilterProvider", new FilterProvider(container));
             container.RegisterInstance<IActionFilter>("LogActionFilter", new TraceActionFilter());

@@ -74,19 +74,8 @@
                         <tr>
                             <th>검색</th>
                             <td >
-                                @(Html.Kendo().DropDownList()
-                                    .Name("SearchCol")
-                                    .DataTextField("Text")
-                                    .DataValueField("Value")
-                                    .HtmlAttributes(new { style = "width:150px" })
-                                    .BindTo(new List<SelectListItem>() {
-                                        new SelectListItem() {
-                                            Text = "매거진명",
-                                            Value = "MAGAZINE_NAME"
-                                        }
-                                    })
-                                    .Value(Model.SearchOption.SearchCol)
-                                )
+
+                                <label for="SearchCol1">@Html.RadioButton("SearchCol", "TITLE", Model == null ? false : (Model.SearchOption.SearchCol == "TITLE" || Model.SearchOption.SearchCol == "" ? true : false), new { id = "SearchCol1" })<span class="txt mr5">제목</span></label>
 
                                 @(Html.Kendo().TextBox()
                                     .Name("SearchKeyword")
@@ -143,7 +132,7 @@
                                        }
                                     }
                                 </td>
-                                <td><img src="@item.THUMB_IMG_PATH" width="80" height="100" /></td>
+                                <td><a href="/Magazine/Edit?IDX=@item.IDX&@PagingParam"><img src="@item.THUMB_IMG_PATH" width="80" height="100" /></a></td>
                                 <td><a href="/Magazine/Edit?IDX=@item.IDX&@PagingParam">@item.TITLE</a></td>
                                 <td>@item.USE_YN</td>
                                 <td>@item.REG_DATE</td>

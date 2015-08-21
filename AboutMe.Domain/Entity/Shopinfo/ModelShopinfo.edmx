@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AboutMeModel10.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_SHOPINFO_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_SHOPINFO_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SHOP_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="TEL_NUM" Type="varchar" Mode="In" />
+          <Parameter Name="POST" Type="varchar" Mode="In" />
+          <Parameter Name="ADDR1" Type="varchar" Mode="In" />
+          <Parameter Name="ADDR2" Type="varchar" Mode="In" />
+          <Parameter Name="LOCATION_INFO" Type="varchar" Mode="In" />
+          <Parameter Name="LATITUDE" Type="varchar" Mode="In" />
+          <Parameter Name="LONGITUDE" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_ORDER" Type="int" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+          <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_SHOPINFO_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_SHOPINFO_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="SHOP_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="TEL_NUM" Type="varchar" Mode="In" />
+          <Parameter Name="POST" Type="varchar" Mode="In" />
+          <Parameter Name="ADDR1" Type="varchar" Mode="In" />
+          <Parameter Name="ADDR2" Type="varchar" Mode="In" />
+          <Parameter Name="LOCATION_INFO" Type="varchar" Mode="In" />
+          <Parameter Name="LATITUDE" Type="varchar" Mode="In" />
+          <Parameter Name="LONGITUDE" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_ORDER" Type="int" Mode="In" />
+          <Parameter Name="USE_YN" Type="char" Mode="In" />
+          <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_SHOPINFO_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_SHOPINFO_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="AboutMeModel10StoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AboutMeModel10" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ShopinfoEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_SHOPINFO_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_SHOPINFO_INS">
+            <Parameter Name="SHOP_NAME" Mode="In" Type="String" />
+            <Parameter Name="TEL_NUM" Mode="In" Type="String" />
+            <Parameter Name="POST" Mode="In" Type="String" />
+            <Parameter Name="ADDR1" Mode="In" Type="String" />
+            <Parameter Name="ADDR2" Mode="In" Type="String" />
+            <Parameter Name="LOCATION_INFO" Mode="In" Type="String" />
+            <Parameter Name="LATITUDE" Mode="In" Type="String" />
+            <Parameter Name="LONGITUDE" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_ORDER" Mode="In" Type="Int32" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+            <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_SHOPINFO_SEL" ReturnType="Collection(AboutMeModel10.SP_ADMIN_SHOPINFO_SEL_Result)">
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_SHOPINFO_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="SHOP_NAME" Mode="In" Type="String" />
+            <Parameter Name="TEL_NUM" Mode="In" Type="String" />
+            <Parameter Name="POST" Mode="In" Type="String" />
+            <Parameter Name="ADDR1" Mode="In" Type="String" />
+            <Parameter Name="ADDR2" Mode="In" Type="String" />
+            <Parameter Name="LOCATION_INFO" Mode="In" Type="String" />
+            <Parameter Name="LATITUDE" Mode="In" Type="String" />
+            <Parameter Name="LONGITUDE" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_ORDER" Mode="In" Type="Int32" />
+            <Parameter Name="USE_YN" Mode="In" Type="String" />
+            <Parameter Name="ADM_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SHOPINFO_LIST" ReturnType="Collection(AboutMeModel10.SP_SHOPINFO_LIST_Result)" />
+          <FunctionImport Name="SP_ADMIN_SHOPINFO_VIEW" ReturnType="Collection(AboutMeModel10.SP_ADMIN_SHOPINFO_VIEW_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_SHOPINFO_LIST_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="SHOP_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TEL_NUM" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="POST" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="ADDR1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ADDR2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LOCATION_INFO" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LATITUDE" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="LONGITUDE" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_SHOPINFO_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="SHOP_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TEL_NUM" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="POST" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="ADDR1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ADDR2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LOCATION_INFO" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LATITUDE" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="LONGITUDE" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_SHOPINFO_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="SHOP_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TEL_NUM" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="POST" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="ADDR1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ADDR2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LOCATION_INFO" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LATITUDE" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="LONGITUDE" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="DISPLAY_ORDER" Nullable="false" />
+          <Property Type="String" Name="USE_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="ADM_ID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AboutMeModel10StoreContainer" CdmEntityContainer="ShopinfoEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SHOPINFO_CNT" FunctionName="AboutMeModel10.Store.SP_ADMIN_SHOPINFO_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SHOPINFO_INS" FunctionName="AboutMeModel10.Store.SP_ADMIN_SHOPINFO_INS" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SHOPINFO_SEL" FunctionName="AboutMeModel10.Store.SP_ADMIN_SHOPINFO_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel10.SP_ADMIN_SHOPINFO_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="SHOP_NAME" ColumnName="SHOP_NAME" />
+                <ScalarProperty Name="TEL_NUM" ColumnName="TEL_NUM" />
+                <ScalarProperty Name="POST" ColumnName="POST" />
+                <ScalarProperty Name="ADDR1" ColumnName="ADDR1" />
+                <ScalarProperty Name="ADDR2" ColumnName="ADDR2" />
+                <ScalarProperty Name="LOCATION_INFO" ColumnName="LOCATION_INFO" />
+                <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+                <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SHOPINFO_UPD" FunctionName="AboutMeModel10.Store.SP_ADMIN_SHOPINFO_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_SHOPINFO_LIST" FunctionName="AboutMeModel10.Store.SP_SHOPINFO_LIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel10.SP_SHOPINFO_LIST_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="SHOP_NAME" ColumnName="SHOP_NAME" />
+                <ScalarProperty Name="TEL_NUM" ColumnName="TEL_NUM" />
+                <ScalarProperty Name="POST" ColumnName="POST" />
+                <ScalarProperty Name="ADDR1" ColumnName="ADDR1" />
+                <ScalarProperty Name="ADDR2" ColumnName="ADDR2" />
+                <ScalarProperty Name="LOCATION_INFO" ColumnName="LOCATION_INFO" />
+                <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+                <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_SHOPINFO_VIEW" FunctionName="AboutMeModel10.Store.SP_ADMIN_SHOPINFO_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel10.SP_ADMIN_SHOPINFO_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="SHOP_NAME" ColumnName="SHOP_NAME" />
+                <ScalarProperty Name="TEL_NUM" ColumnName="TEL_NUM" />
+                <ScalarProperty Name="POST" ColumnName="POST" />
+                <ScalarProperty Name="ADDR1" ColumnName="ADDR1" />
+                <ScalarProperty Name="ADDR2" ColumnName="ADDR2" />
+                <ScalarProperty Name="LOCATION_INFO" ColumnName="LOCATION_INFO" />
+                <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+                <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+                <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+                <ScalarProperty Name="USE_YN" ColumnName="USE_YN" />
+                <ScalarProperty Name="ADM_ID" ColumnName="ADM_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

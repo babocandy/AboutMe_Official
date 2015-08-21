@@ -1,0 +1,29 @@
+﻿@model AboutMe.Domain.Entity.Event.EVENT_VIEW
+@{
+        
+    if (Model.EventInfo == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
+    ViewBag.Title = "이벤트 - ABOUT ME";
+    ViewBag.TopClass = "";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/event.css" rel="stylesheet" />
+}
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <h2>@Model.EventInfo.EVENT_NAME (@Model.EventInfo.FROM_DATE ~ @Model.EventInfo.TO_DATE)</h2>
+    </div>
+    <!--상세배너-->
+    <div class="detailbnr">
+        <a href="#none"><img src="@Model.EventInfo.MOBILE_FILE" alt="" /></a>
+    </div>
+    <!--//상세배너-->
+</div>
+<!--//container-->

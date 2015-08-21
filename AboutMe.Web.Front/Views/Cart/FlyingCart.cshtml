@@ -38,13 +38,14 @@ else
             </span>
             <span class="pro_control">
                 <a href="#none" class="del" onclick="FlyCartDelete('@item.CART_IDX')"></a>
-                <input type="text" class="ipttypeb" value="@item.P_COUNT" readonly />
+                <span class="laycart_num">@item.P_COUNT</span>
+
+                <!--input type="text" class="ipttypeb" value="0" readonly /-->
             </span>
         </li>
 
     }
         </ul>
-
         <div class="pagearea">
             @if (@Model.CartCnt > 0)
             {

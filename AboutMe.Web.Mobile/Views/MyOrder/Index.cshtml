@@ -1,0 +1,128 @@
+﻿@model AboutMe.Domain.Entity.Order.MyORDER_INDEX
+@{
+    ViewBag.Title = "주문배송조회 - ABOUT ME";
+    ViewBag.TopClass = "myorder";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts{
+<link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+<script language="javascript">
+    function ChangeDate(d) {
+        var from_date, to_date;
+
+        if (d == "1") //1개월
+        {
+            from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+
+        }
+        else if (d == "3") {
+            from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (d == "6") {
+            from_date = '@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (d == "12") {
+            from_date = '@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else//  전체기간
+        {
+            from_date = '';
+            to_date = '';
+        }
+
+        $("#FromDate").val(from_date);
+        $("#ToDate").val(to_date);
+        $("#TermGbn").val(d);
+
+        onSearch();
+    }
+
+    function onSearch()
+    {
+        document.searchFrm.submit();
+    }
+</script>
+}
+@ViewBag.TermGbn
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>배송/주문 조회</h2>
+    </div>
+    <!-- 조회기간 -->
+    <div class="mypage_top boxtypeb">
+        <h3>조회기간</h3>
+        <form name="searchFrm" method="post" action="">
+            <ul class="periodsel tabs">
+                <li @{ if (@ViewBag.TermGbn == "3") { @Html.Raw("class='cnt'"); } } >
+                    <a href="#none" onclick="ChangeDate('3')">3개월</a></li>
+                <li @{ if (@ViewBag.TermGbn == "6") { @Html.Raw("class='cnt'"); } }>
+                    <a href="#none" onclick="ChangeDate('6')">6개월</a>
+                </li>
+                <li @{ if (@ViewBag.TermGbn == "12") { @Html.Raw("class='cnt'"); } }>
+                    <a href="#none" onclick="ChangeDate('12')">1년</a>
+                </li>
+                <input type="hidden" id="FromDate" name="FromDate" class="" style="width:120px" value="@Model.FromDate">
+                <input type="hidden" id="ToDate" name="ToDate" class="" style="width:120px" value="@Model.ToDate">
+                <input type="hidden" id="TermGbn" name="TermGbn" class="" style="width:120px" value="@ViewBag.TermGbn">
+                <!-- 삭제 -->
+                <!-- <li>
+                <a href="#none">기간선택</a>
+                <div class="periodin">
+                    <form action="">
+                        <fieldset>
+                            <label><input type="text" value="2014.06.03" disabled /><a href="#none"><i class="ico_calendar"></i></a></label><span class="hypen">-</span><label><input type="text" value="2014.07.03" disabled /><a href="#none"><i class="ico_calendar"></i></a></label><a href="#none" class="btn btn_brown_h25">조회</a>
+                        </fieldset>
+                    </form>
+                </div>
+            </li> -->
+            </ul>
+        </form>
+            <p class="bullista mt10">웹사이트를 통해 최근 1년이전의 주문내역을 확인하실 수 있습니다.</p>
+</div>
+    <!-- //조회기간 -->
+    <!-- 주문상품 리스트 -->
+    <div class="myorder_con boxtypea">
+        <h3>주문상품 리스트</h3>
+        <p class="total_count">총 <strong>@Model.OrderCnt</strong>건이 조회되었습니다.</p>
+        <ul>
+            @foreach(var item in Model.OrderList)
+            {
+            <li>
+                <dl>
+                    <dt>주문번호 @item.ORDER_CODE</dt>
+                    <dd>
+                        <div class="photo_info">
+                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="detail">
+                                <span class="ordergoods"><strong>@item.P_NAME</strong> </span>
+                                <span class="price">결제금액 @String.Format("{0:#,#0.}", @item.TOTAL_PAY_PRICE)원</span>
+                                <span class="orderdate">주문일자 <em>@String.Format("{0:yyyy-MM-dd}", @item.ORDER_DATE)</em></span>
+                            </div>
+                        </div>
+                        <div class="state_info">
+                            <span class="state"><i></i>@item.ORDER_STATUS_NM</span>
+                            <a href="/MyPage/MyOrder/OrderView?OrderCode=@item.ORDER_CODE&FromDate=@Model.FromDate&ToDate=@Model.ToDate&page=@Model.Page%TermGbn=@ViewBag.TermGbn" class="btn btn_white_h30">상세조회</a>
+                        </div>
+                    </dd>
+                </dl>
+            </li>
+            }
+        </ul>
+
+        <!--페이징-->
+        @{
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.OrderCnt, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = "FromDate=" + @Model.FromDate + "&ToDate=" + @Model.ToDate + "&TermGbn=" + @ViewBag.TermGbn });
+        }
+        <!--//페이징-->
+    </div>
+    <!-- //주문상품 리스트 -->
+</div>
+<!--//container-->

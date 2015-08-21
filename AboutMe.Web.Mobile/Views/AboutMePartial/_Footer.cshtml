@@ -3,35 +3,35 @@
     <div class="buy_product">
         <div class="dim"></div>
         <div class="slidedown">
-            <a href="#" class="btn btn_brown_h40" style="width:198px">바로구매<span class="num">8</span></a>
+            <a href="#" class="btn btn_brown_h40" style="width:198px">바로구매<span class="num" id="pmo_set_selected_cnt"></span></a>
         </div>
         <div class="slideup" style="display:none">
             <p class="tip"><span>쇼핑 TIP!</span> 세트상품은 N개이상 구매하셔야 할인혜택이 적용됩니다</p>
             <div class="paylist">
-                <p class="total_select">총 8개 상품을 선택하셨습니다.</p>
+                <p class="total_select">총 <strong id="pmo_set_selected_cnt_02">0</strong>개 상품을 선택하셨습니다.</p>
                 <ul>
                     <li>
                         <dl>
                             <dt>총 구매금액</dt>
-                            <dd><strong>153,000</strong>원</dd>
+                            <dd><strong id="total_price">0</strong>원</dd>
                         </dl>
                     </li>
                     <li class="discount">
                         <dl>
                             <dt>할인금액</dt>
-                            <dd><strong>53,000</strong>원</dd>
+                            <dd><strong id="dc_price">0</strong>원</dd>
                         </dl>
                     </li>
                     <li class="totalpay">
                         <dl>
                             <dt>총 결제금액</dt>
-                            <dd><strong>100,000</strong>원</dd>
+                            <dd><strong id="result_price">0/strong>원</dd>
                         </dl>
                     </li>
                 </ul>
             </div>
             <div class="btn_group">
-                <a href="#" class="btn btn_brown_h40 mr5" style="width:142px;">바로구매</a><a href="#" class="btn btn_white_h40 cart" style="width:142px;">쇼핑백</a>
+                <a href="javascript:NowOrderPluralInput();" class="btn btn_brown_h40 mr5" style="width:142px;">바로구매</a><a href="javascript:AddCartClick();" class="btn btn_white_h40 cart" style="width:142px;">쇼핑백</a>
             </div>
         </div>
     </div>
