@@ -66,6 +66,7 @@ namespace AboutMe.Common.Helper
             //smtp 준비
             SmtpClient client = new SmtpClient();
             client.EnableSsl = true;
+            //client.EnableSsl = false;
             client.Host = this.sender_smtp_server;
             client.Port = this.sender_smtp_port; // = 587;  //465 or 587
             client.DeliveryMethod = SmtpDeliveryMethod.Network;

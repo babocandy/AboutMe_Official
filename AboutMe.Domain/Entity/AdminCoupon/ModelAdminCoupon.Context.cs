@@ -781,5 +781,18 @@ namespace AboutMe.Domain.Entity.AdminCoupon
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_COUPON_COMMON_CNT_Result>("SP_COUPON_CLOSED_LIST_COUNT", m_IDParameter, uSABLE_DEVICE_GBNParameter, pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
         }
+    
+        public virtual int SP_ADMIN_COUPON_USABLE_CHANGE_UPT(Nullable<int> iDX_COUPONNUMBER, string uSABLE_TF)
+        {
+            var iDX_COUPONNUMBERParameter = iDX_COUPONNUMBER.HasValue ?
+                new ObjectParameter("IDX_COUPONNUMBER", iDX_COUPONNUMBER) :
+                new ObjectParameter("IDX_COUPONNUMBER", typeof(int));
+    
+            var uSABLE_TFParameter = uSABLE_TF != null ?
+                new ObjectParameter("USABLE_TF", uSABLE_TF) :
+                new ObjectParameter("USABLE_TF", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_COUPON_USABLE_CHANGE_UPT", iDX_COUPONNUMBERParameter, uSABLE_TFParameter);
+        }
     }
 }

@@ -62,40 +62,66 @@ namespace AboutMe.Domain.Service.Coupon
         {
             int ResulstCode = 1;
 
-            List<SP_COUPON_MASTER_INFO_SEL_Result> lst1 = GetCouponMasterInfo(M_Id, IdxCouponNumber);
 
-            if (lst1.Count > 0)
+            if (UpdateMethod != "A") // 개별다운로드일때 
             {
-                if (lst1[0].COUPON_NUM_CHECK_TF == "Y") //번호를 확인해야 하는 쿠폰이면 , 번호 인증후 다운로드 해야함
+                List<SP_COUPON_MASTER_INFO_SEL_Result> lst1 = GetCouponMasterInfo(M_Id, IdxCouponNumber);
+
+                if (lst1.Count > 0)
                 {
-                    ResulstCode = -2; 
+                    if (lst1[0].COUPON_NUM_CHECK_TF == "Y") //번호를 확인해야 하는 쿠폰이면 , 번호 인증후 다운로드 해야함
+                    {
+                        ResulstCode = -2;
+                    }
+                    else
+                    {
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            try
+                            {
+                                using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                                {
+                                    AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
+                                }
+                                scope.Complete();
+                            }
+                            catch (Exception ex)
+                            {
+                                Transaction.Current.Rollback();
+                                scope.Dispose();
+                                ResulstCode = -1;
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        try
-                        {
-                            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
-                            {
-                                //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
-                                AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
-                                //NewCdPromotionProduct = objOutParam.Value.ToString();
-                            }
-                            scope.Complete();
-                        }
-                        catch (Exception ex)
-                        {
-                            Transaction.Current.Rollback();
-                            scope.Dispose();
-                            ResulstCode = -1;
-                        }
-                    }
-                }  
+                    ResulstCode = -3; //존재하지 않는 쿠폰  
+                }
             }
-            else
+            else if (UpdateMethod == "A") // 모두 다운로드하려 할때   --- 번호인증을 해야하는 쿠폰은 SP에서 다운로드처리 못하게 되어있음
             {
-                ResulstCode = -3; //존재하지 않는 쿠폰  
+                
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    try
+                    {
+                        using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                        {
+                            AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
+                        }
+                        scope.Complete();
+                    }
+                    catch (Exception ex)
+                    {
+                        Transaction.Current.Rollback();
+                        scope.Dispose();
+                        ResulstCode = -1;
+                    }
+                }
+                   
+
+
             }
 
             return ResulstCode;

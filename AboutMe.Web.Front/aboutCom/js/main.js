@@ -59,9 +59,13 @@ $(function(){
 
 
 	/*타임세일*/
-	$(".timesale").click(function(e){
+	$(".timesale .item").click(function(e){
 		e.preventDefault();
 		$(".lytimesale").show();
+	});
+	$(".laytime_close").click(function(e){
+		e.preventDefault();
+		$(".lytimesale").hide();
 	});
 	$(".beauty").click(function(e){
 		e.preventDefault();
