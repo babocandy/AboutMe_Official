@@ -1,13 +1,12 @@
-﻿@model AboutMe.Domain.Entity.Notice.NoticeUserView
+﻿@model AboutMe.Domain.Entity.Winner.WinnerUserView
 @{
-    
-    if (Model.Notice == null)
+    if (Model.WinnerInfo == null)
     {
         Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
         Response.End();
     }
     
-    ViewBag.Title = "공지사항 - ABOUT ME";
+    ViewBag.Title = "당첨자발표 - ABOUT ME";
     ViewBag.TopClass = "customer";
 
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
@@ -15,22 +14,21 @@
 @section Scripts{
     <link href="/aboutCom/css/customer.css" rel="stylesheet" />
 }
-
 <!--container-->
 <div class="container">
     <div class="h2_area">
         <a href="#none" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
-        <h2>공지사항</h2>
+        <h2>당첨자발표</h2>
     </div>
 
     <!--공지사항 내용-->
     <div class="bbs_view">
         <h3 class="view_ti">
-            @Model.Notice.TITLE
-            <span class="txt_date">@Model.Notice.REG_DATE.ToString().Substring(0, 10)</span>
+            @Model.WinnerInfo.TITLE
+            <span class="txt_date">@Model.WinnerInfo.REG_DATE.ToString().Substring(0,10)</span>
         </h3>
         <div class="view_content">
-            @(new HtmlString(HttpUtility.HtmlDecode(Model.Notice.CONTENTS)))
+           @(new HtmlString(HttpUtility.HtmlDecode(Model.WinnerInfo.CONTENTS)))
         </div>
     </div>
     <!--공지사항 내용-->

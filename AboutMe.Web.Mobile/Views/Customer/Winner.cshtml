@@ -1,0 +1,40 @@
+﻿@model AboutMe.Domain.Entity.Winner.WINNER_INDEX
+@{
+    ViewBag.Title = "당첨자발표 - ABOUT ME";
+    ViewBag.TopClass = "customer";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts{
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="#none" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>당첨자발표</h2>
+    </div>
+
+    <!--당첨자발표 리스트-->
+    <div class="bbs_list">
+        <ul>
+            @foreach (var item in Model.WinnerList)
+            {
+                string linkStr = string.Format("/Customer/WinnerView?IDX={0}&Page={1}", item.IDX, Model.SearchParam.Page);
+
+                <li><a href="@linkStr">@item.TITLE<span class="txt_date">@item.REG_DATE.ToString().Substring(0, 10)</span></a></li>
+            }
+
+        </ul>
+    </div>
+    <!--당첨자발표 리스트-->
+    <!--페이징-->
+    @{
+
+        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.WinnerCount, RecordPerPage = Model.SearchParam.PageSize, PagePerBlock = 10, CurrentPage = Model.SearchParam.Page, QueryStr = "" });
+    }
+    <!--//페이징-->
+
+</div>
+<!--//container-->
+

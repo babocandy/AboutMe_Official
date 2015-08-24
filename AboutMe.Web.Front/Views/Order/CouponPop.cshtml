@@ -113,6 +113,10 @@
             {
                 saleprice = "0";
             }
+            if (totalPrice < 0)
+            {
+                totalPrice = "0";
+            }
             $("#COUPON_PRICE_" + pcode).html(formatnumber(totalPrice));
             $("#COUPON_PRICE_" + pcode).attr("data-couponprice", totalPrice);
             $("#COUPON_AMT_" + pcode).html(formatnumber(saleprice));

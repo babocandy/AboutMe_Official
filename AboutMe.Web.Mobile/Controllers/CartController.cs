@@ -16,10 +16,12 @@ namespace AboutMe.Web.Mobile.Controllers
     public class CartController : BaseMobileController
     {
         private ICartService _cartservice;
+        private ICouponService _CouponService;
 
-        public CartController(ICartService _cartservice)
+        public CartController(ICartService _cartservice, ICouponService _couponservice)
         {
             this._cartservice = _cartservice;
+            this._CouponService = _couponservice;
         }
 
         // GET: Cart
@@ -35,6 +37,23 @@ namespace AboutMe.Web.Mobile.Controllers
             viewModel.CartList = lst;
             viewModel.SumPoint = (lst.Count() < 1) ? 0 : lst.Sum(x => x.P_POINT);
             viewModel.SumPrice = (lst.Count() < 1) ? 0 : lst.Sum(x => x.ORDER_PRICE);
+            //다운로드 가능한 쿠폰 수량 가져오기  
+            if (_user_profile.IS_LOGIN == true)
+            {
+                List<SP_ADMIN_COUPON_COMMON_CNT_Result> cpnlst = _CouponService.GetDownloadableCouponCnt(_user_profile.M_ID);
+                if (cpnlst.Count > 0)
+                    viewModel.DownloadCouponCnt = cpnlst[0].CNT;
+                else
+                    viewModel.DownloadCouponCnt = 0;
+
+                //사용가능한 쿠폰 수량 가져오기
+                viewModel.DownloadedCouponCnt = _CouponService.GettCouponAvailableListCnt(_user_profile.M_ID, "", "");
+            }
+            else
+            {
+                viewModel.DownloadCouponCnt = 0;
+                viewModel.DownloadedCouponCnt = 0;
+            }
 
             return View(viewModel);
         }
