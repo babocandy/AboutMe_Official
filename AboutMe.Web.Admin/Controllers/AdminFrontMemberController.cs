@@ -10,6 +10,8 @@ using AboutMe.Web.Admin.Common;
 
 using AboutMe.Domain.Service.AdminFrontMember;
 using AboutMe.Domain.Entity.AdminFrontMember;
+using AboutMe.Domain.Service.AdminOrder;
+using AboutMe.Domain.Entity.AdminOrder;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -26,13 +28,13 @@ namespace AboutMe.Web.Admin.Controllers
     public class AdminFrontMemberController : BaseAdminController
     {
         private IAdminFrontMemberService _AdminFrontMemberService;
+        private IAdminOrderService _adminorderservice;
 
-        public AdminFrontMemberController(IAdminFrontMemberService _adminFrontMemberService)
+        public AdminFrontMemberController(IAdminFrontMemberService _adminFrontMemberService, IAdminOrderService _adminorderservice)
         {
             this._AdminFrontMemberService = _adminFrontMemberService;
+            this._adminorderservice = _adminorderservice;
         }
-
-
 
         //관리자 - 회원 목록
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
@@ -68,7 +70,6 @@ namespace AboutMe.Web.Admin.Controllers
         public ActionResult Edit(string SEL_M_ID = "", string SEL_DATE_FROM = "", string SEL_DATE_TO = "", string SEL_GRADE_LIST = "", string SEL_GBN = "", string SEL_IS_RETIRE = "", string SEARCH_COL = "", string SEARCH_KEYWORD = "", string SORT_COL = "M_CREDATE", string SORT_DIR = "DESC", int PAGE = 1, int PAGESIZE = 10)
         {
             //return View();
-
             this.ViewBag.SEL_DATE_FROM = SEL_DATE_FROM;
             this.ViewBag.SEL_DATE_TO = SEL_DATE_TO;
             this.ViewBag.SEL_GRADE_LIST = SEL_GRADE_LIST;
@@ -86,10 +87,11 @@ namespace AboutMe.Web.Admin.Controllers
 
 
             //회원 써머리 정보  : 초기화
-            this.ViewBag.TOTAL_ORDER_CNT = 0; //총구매건수
-            this.ViewBag.TOTAL_ORDER_PRICE = 0; //총 구매액
+            SP_ADMIN_ORDER_MEMBER_STATUS_Result orderResult = _adminorderservice.OrderMemberStatus(SEL_M_ID);
+            this.ViewBag.TOTAL_ORDER_CNT = orderResult.ORDER_CNT; //총구매건수
+            this.ViewBag.TOTAL_ORDER_PRICE = orderResult.ORDER_PRICE; //총 구매액
             this.ViewBag.TOTAL_COUPON_CNT = 0; //보유쿠폰
-            this.ViewBag.TOTAL_QNA_CNT = 0; //1:1문의
+            this.ViewBag.TOTAL_QNA_CNT = orderResult.QNA_CNT; //1:1문의
 
             return View(_AdminFrontMemberService.GetAdminFrontMemberView(SEL_M_ID));
         }

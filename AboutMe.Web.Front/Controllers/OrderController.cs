@@ -46,7 +46,7 @@ namespace AboutMe.Web.Front.Controllers
         private string _inipay_mid = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mid");
         private string _inipay_admin = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Admin");
         private string _inipay_debug = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Debug");
-
+        
 		//**** 지불수단별로 PGID를 다르게 표시한다 (2003.12.19: ts@inicis.com)        *
 		//***************************************************************************
 		//*** 하단의 Code_PayMethod 함수는 지불수단별로 TID를 별도로 표시하도록 하며,***

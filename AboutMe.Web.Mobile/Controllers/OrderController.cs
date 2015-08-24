@@ -897,10 +897,6 @@ namespace AboutMe.Web.Mobile.Controllers
                 orderResult.PAY_GBN = returnVal.PAY_GBN;
                 orderResult.ORDER_CODE = returnVal.ORDER_CODE;
             }
-            else //주문정보가 없을경우 '입금대기'로 저장후 Noti_URL 에서 결제완료로 변경해줌.
-            { 
-            
-            }
 
             StringBuilder SBuilder = new StringBuilder();
             SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");

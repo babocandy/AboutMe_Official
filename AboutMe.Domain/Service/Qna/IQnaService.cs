@@ -24,5 +24,8 @@ namespace AboutMe.Domain.Service.Qna
         int QnaAdminCount(QNA_ADMIN_SEARCH param);
         void QnaAdminUpdate(int Idx, string Answer);
         SP_ADMIN_QNA_VIEW_Result QnaAdminView(int Idx);
+
+        List<SP_ADMIN_QNA_MEMBER_SEL_Result> QnaAdminMemberList(string M_ID, int Page, int PageSize);
+        int QnaAdminMemberCount(string M_ID);
     }
 }

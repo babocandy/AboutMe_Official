@@ -29,6 +29,11 @@ namespace AboutMe.Domain.Service.AdminOrder
         SP_ADMIN_ORDER_PART_CANCEL_TOP_SELECT_Result OrderPartCancelTopSelect(int ORDER_IDX);
         void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP);
         List<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result> OrderDeliveryExcelList(string OrderIdxStr);
+        string OrderFindPatgbn(string PAT_ID);
+        SP_ADMIN_ORDER_MEMBER_STATUS_Result OrderMemberStatus(string M_ID);
+        List<SP_ADMIN_ORDER_LIST_Result> OrderMemberList(string M_ID, int Page = 1, int PageSize = 10);
+        int OrderMemberListCount(string M_ID);
+
     }
 
 

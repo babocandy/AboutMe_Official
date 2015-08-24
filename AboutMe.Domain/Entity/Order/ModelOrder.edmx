@@ -579,6 +579,7 @@
           <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="PAT_GUBUN" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -630,6 +631,7 @@
           <Property Type="String" Name="DELIVERY_NUM" Nullable="true" MaxLength="40" />
           <Property Type="Int32" Name="P_COUNT" Nullable="true" />
           <Property Type="Int32" Name="ACCML_POINT" Nullable="false" />
+          <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_CNT_Result" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -902,6 +904,7 @@
                 <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
                 <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
                 <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
+                <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

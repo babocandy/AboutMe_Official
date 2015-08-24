@@ -15,6 +15,9 @@
           <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_ORDER_FIND_PAT_GBN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAT_TID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_ORDER_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
           <Parameter Name="TO_DATE" Type="varchar" Mode="In" />
@@ -75,6 +78,17 @@
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
           <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MEMBER_LIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MEMBER_STATUS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ADMIN_ORDER_PART_CANCEL_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
@@ -285,7 +299,21 @@
           <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_ADMIN_ORDER_TO_DELIVERYEXCEL" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result)">
-            <Parameter Name="ORDER_IDX_LIST" Mode="In" Type="String" />
+          <Parameter Name="ORDER_IDX_LIST" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_FIND_PAT_GBN" ReturnType="Collection(String)">
+          <Parameter Name="PAT_TID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MEMBER_STATUS" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_MEMBER_STATUS_Result)">
+          <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MEMBER_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MEMBER_LIST" ReturnType="Collection(AdminOrderModel.SP_ADMIN_ORDER_LIST_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_BODY_Result">
@@ -294,7 +322,7 @@
           <Property Type="DateTime" Name="ORDER_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="ORDER_STATUS" Nullable="false" MaxLength="2" />
           <Property Type="String" Name="ORDER_STATUS_NM" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="24" />
           <Property Type="String" Name="PAT_TID" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="SENDER_EMAIL" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="ORDER_NAME" Nullable="true" MaxLength="30" />
@@ -332,6 +360,8 @@
           <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
           <Property Type="String" Name="VACT_Time" Nullable="true" MaxLength="6" />
           <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ESCROW_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="PAT_GUBUN" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDERLIST_DETAIL_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -442,6 +472,11 @@
           <Property Type="String" Name="FREEGIFT_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="DELIVERY_NUM" Nullable="true" MaxLength="40" />
         </ComplexType>
+        <ComplexType Name="SP_ADMIN_ORDER_MEMBER_STATUS_Result">
+          <Property Type="Int32" Name="ORDER_CNT" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="QNA_CNT" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -536,6 +571,8 @@
                 <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
                 <ScalarProperty Name="VACT_Time" ColumnName="VACT_Time" />
                 <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
+                <ScalarProperty Name="ESCROW_YN" ColumnName="ESCROW_YN" />
+                <ScalarProperty Name="PAT_GUBUN" ColumnName="PAT_GUBUN" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -638,6 +675,37 @@
                 <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
                 <ScalarProperty Name="FREEGIFT_NAME" ColumnName="FREEGIFT_NAME" />
                 <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_FIND_PAT_GBN" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_FIND_PAT_GBN" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MEMBER_STATUS" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MEMBER_STATUS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_MEMBER_STATUS_Result">
+                <ScalarProperty Name="ORDER_CNT" ColumnName="ORDER_CNT" />
+                <ScalarProperty Name="ORDER_PRICE" ColumnName="ORDER_PRICE" />
+                <ScalarProperty Name="QNA_CNT" ColumnName="QNA_CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MEMBER_CNT" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MEMBER_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MEMBER_LIST" FunctionName="AdminOrderModel.Store.SP_ADMIN_ORDER_MEMBER_LIST" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminOrderModel.SP_ADMIN_ORDER_LIST_Result">
+                <ScalarProperty Name="ORDER_IDX" ColumnName="ORDER_IDX" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="PAT_GUBUN" ColumnName="PAT_GUBUN" />
+                <ScalarProperty Name="ORDER_STATUS" ColumnName="ORDER_STATUS" />
+                <ScalarProperty Name="ORDER_STATUS_NM" ColumnName="ORDER_STATUS_NM" />
+                <ScalarProperty Name="ORDER_NAME" ColumnName="ORDER_NAME" />
+                <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+                <ScalarProperty Name="SENDER_HP" ColumnName="SENDER_HP" />
+                <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
+                <ScalarProperty Name="ACCML_POINT" ColumnName="ACCML_POINT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

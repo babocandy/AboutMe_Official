@@ -28,6 +28,16 @@
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
           <Parameter Name="STATUS_YN" Type="char" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_QNA_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_QNA_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_QNA_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
           <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
@@ -148,6 +158,16 @@
           <FunctionImport Name="SP_ADMIN_QNA_VIEW" ReturnType="Collection(Qna.SP_ADMIN_QNA_VIEW_Result)">
           <Parameter Name="IDX" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_QNA_MEMBER_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_QNA_MEMBER_SEL" ReturnType="Collection(Qna.SP_ADMIN_QNA_MEMBER_SEL_Result)">
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_TB_QNA_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -203,6 +223,20 @@
         </ComplexType>
         <ComplexType Name="SP_ADMIN_QNA_CNT_Result" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_QNA_MEMBER_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="CATEGORY" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="CATEGORY_NM" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="QUESTION" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="ANSWER" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="STATUS" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="STATUS_NM" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ANS_DATE" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -297,6 +331,25 @@
                 <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="ANS_DATE" ColumnName="ANS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_QNA_MEMBER_CNT" FunctionName="Qna.Store.SP_ADMIN_QNA_MEMBER_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_QNA_MEMBER_SEL" FunctionName="Qna.Store.SP_ADMIN_QNA_MEMBER_SEL" >
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="Qna.SP_ADMIN_QNA_MEMBER_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
+                <ScalarProperty Name="CATEGORY_NM" ColumnName="CATEGORY_NM" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="QUESTION" ColumnName="QUESTION" />
+                <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="STATUS_NM" ColumnName="STATUS_NM" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
                 <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
                 <ScalarProperty Name="ANS_DATE" ColumnName="ANS_DATE" />
               </ComplexTypeMapping>

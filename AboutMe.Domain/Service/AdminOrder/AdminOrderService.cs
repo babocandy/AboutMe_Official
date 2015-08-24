@@ -189,5 +189,68 @@ namespace AboutMe.Domain.Service.AdminOrder
             return lst;
         }
         #endregion
+
+        #region pat_gbn 구하기
+        public string OrderFindPatgbn(string PAT_ID)
+        {
+            string result = "";
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                result = EfContext.SP_ADMIN_ORDER_FIND_PAT_GBN(PAT_ID).DefaultIfEmpty("").FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region 
+        public SP_ADMIN_ORDER_MEMBER_STATUS_Result OrderMemberStatus(string M_ID)
+        {
+            SP_ADMIN_ORDER_MEMBER_STATUS_Result result = new SP_ADMIN_ORDER_MEMBER_STATUS_Result();
+            SP_ADMIN_ORDER_MEMBER_STATUS_Result defaultval = new SP_ADMIN_ORDER_MEMBER_STATUS_Result
+            {
+                ORDER_CNT = 0,
+                ORDER_PRICE = 0,
+                QNA_CNT = 0
+            };
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                result = EfContext.SP_ADMIN_ORDER_MEMBER_STATUS(M_ID).DefaultIfEmpty(defaultval).FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
+
+        #region  회원정보 > 주문내역 
+        public List<SP_ADMIN_ORDER_LIST_Result> OrderMemberList(string M_ID, int Page = 1, int PageSize= 10)
+        {
+            List<SP_ADMIN_ORDER_LIST_Result> lst = new List<SP_ADMIN_ORDER_LIST_Result>();
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                lst = EfContext.SP_ADMIN_ORDER_MEMBER_LIST(M_ID, Page, PageSize).ToList();
+            }
+            return lst;
+        }
+        #endregion
+
+        #region 회원정보 > 주문내역 개수
+        public int OrderMemberListCount(string M_ID)
+        {
+            int? result = 0;
+            using (AdminOrderEntities EfContext = new AdminOrderEntities())
+            {
+                result = EfContext.SP_ADMIN_ORDER_MEMBER_CNT(M_ID).DefaultIfEmpty(0).FirstOrDefault();
+            }
+
+            if (!result.HasValue)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt16(result);
+            }
+        }
+        #endregion
     }
 }

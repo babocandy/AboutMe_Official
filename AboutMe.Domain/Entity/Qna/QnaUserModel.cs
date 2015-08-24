@@ -102,4 +102,15 @@ namespace AboutMe.Domain.Entity.Qna
         public SP_ADMIN_QNA_VIEW_Result QnaInfo { get; set; }
     }
 
+
+    public class QNA_ADMIN_MEMBER
+    {
+        public int Page {get; set;}
+        public int PageSize { get; set; }
+        public string M_ID { get; set; }
+        public int QnaCount { get; set; }
+        public List<SP_ADMIN_QNA_MEMBER_SEL_Result> QnaList { get; set; }
+        
+    }
+
 }
