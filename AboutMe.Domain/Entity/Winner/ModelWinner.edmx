@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WinnerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_WINNER">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TITLE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CONTENTS" Type="text" Nullable="false" />
+          <Property Name="VIEW_CNT" Type="int" Nullable="false" />
+          <Property Name="DISPLAY_YN" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="M_ID" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="REG_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Function Name="SP_TB_WINNER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="char" Mode="In" />
+        </Function>
+        <Function Name="SP_TB_WINNER_DEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_TB_WINNER_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="CONTENTS" Type="text" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="char" Mode="In" />
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="NEW_IDX" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_TB_WINNER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="char" Mode="In" />
+          <Parameter Name="SORT_COL" Type="varchar" Mode="In" />
+          <Parameter Name="SORT_DIR" Type="varchar" Mode="In" />
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_TB_WINNER_UPD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="CONTENTS" Type="text" Mode="In" />
+          <Parameter Name="DISPLAY_YN" Type="char" Mode="In" />
+          <Parameter Name="M_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_CODE" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_TB_WINNER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="WinnerModelStoreContainer">
+          <EntitySet Name="TB_WINNER" EntityType="Self.TB_WINNER" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WinnerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WinnerEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_TB_WINNER_CNT" ReturnType="Collection(Int32)">
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WINNER_DEL">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WINNER_INS">
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="CONTENTS" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="NEW_IDX" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WINNER_SEL" ReturnType="Collection(WinnerModel.SP_TB_WINNER_SEL_Result)">
+            <Parameter Name="SEARCH_COL" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="SORT_COL" Mode="In" Type="String" />
+            <Parameter Name="SORT_DIR" Mode="In" Type="String" />
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WINNER_UPD">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TITLE" Mode="In" Type="String" />
+            <Parameter Name="CONTENTS" Mode="In" Type="String" />
+            <Parameter Name="DISPLAY_YN" Mode="In" Type="String" />
+            <Parameter Name="M_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_CODE" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TB_WINNER_VIEW" ReturnType="Collection(WinnerModel.SP_TB_WINNER_VIEW_Result)">
+          <Parameter Name="IDX" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TB_WINNER" EntityType="WinnerModel.TB_WINNER" />
+        </EntityContainer>
+        <ComplexType Name="SP_TB_WINNER_VIEW_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CONTENTS" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="VIEW_CNT" Nullable="false" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_TB_WINNER_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="TITLE" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CONTENTS" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="VIEW_CNT" Nullable="false" />
+          <Property Type="String" Name="DISPLAY_YN" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="DateTime" Name="REG_DATE" Nullable="false" Precision="23" />
+        </ComplexType>
+        <EntityType Name="TB_WINNER">
+          <Key>
+            <PropertyRef Name="IDX" />
+          </Key>
+          <Property Name="IDX" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CONTENTS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VIEW_CNT" Type="Int32" Nullable="false" />
+          <Property Name="DISPLAY_YN" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="M_ID" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="REG_DATE" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WinnerModelStoreContainer" CdmEntityContainer="WinnerEntities" >
+          <FunctionImportMapping FunctionImportName="SP_TB_WINNER_CNT" FunctionName="WinnerModel.Store.SP_TB_WINNER_CNT" />
+          <FunctionImportMapping FunctionImportName="SP_TB_WINNER_DEL" FunctionName="WinnerModel.Store.SP_TB_WINNER_DEL" />
+          <FunctionImportMapping FunctionImportName="SP_TB_WINNER_INS" FunctionName="WinnerModel.Store.SP_TB_WINNER_INS" />
+          <FunctionImportMapping FunctionImportName="SP_TB_WINNER_SEL" FunctionName="WinnerModel.Store.SP_TB_WINNER_SEL" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WinnerModel.SP_TB_WINNER_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="CONTENTS" ColumnName="CONTENTS" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_TB_WINNER_UPD" FunctionName="WinnerModel.Store.SP_TB_WINNER_UPD" />
+          <FunctionImportMapping FunctionImportName="SP_TB_WINNER_VIEW" FunctionName="WinnerModel.Store.SP_TB_WINNER_VIEW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WinnerModel.SP_TB_WINNER_VIEW_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="CONTENTS" ColumnName="CONTENTS" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TB_WINNER">
+            <EntityTypeMapping TypeName="WinnerModel.TB_WINNER">
+              <MappingFragment StoreEntitySet="TB_WINNER">
+                <ScalarProperty Name="REG_DATE" ColumnName="REG_DATE" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="DISPLAY_YN" ColumnName="DISPLAY_YN" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="CONTENTS" ColumnName="CONTENTS" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

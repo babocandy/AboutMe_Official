@@ -296,13 +296,11 @@
                         <span class="tit">보유 쿠폰</span>
                     </li>
                 </a>
-                <a href="/MyPage/MyPoint">
-                    <li class="downpoint">
-                        <span class="ico"></span>
-                        <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
-                        <span class="tit">포인트</span>
-                    </li>
-                </a>
+                <li class="downpoint">
+                    <span class="ico"></span>
+                    <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
+                    <span class="tit">포인트</span>
+                </li>
             </ul>
         </div>
     </div>

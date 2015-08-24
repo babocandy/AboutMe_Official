@@ -1159,6 +1159,31 @@
     <Compile Include="Entity\Shopinfo\SP_SHOPINFO_LIST_Result.cs">
       <DependentUpon>ModelShopinfo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Winner\ModelWinner.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWinner.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Winner\ModelWinner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWinner.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Winner\ModelWinner.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWinner.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Winner\TB_WINNER.cs">
+      <DependentUpon>ModelWinner.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Winner\WinnerUserModel.cs" />
+    <Compile Include="Entity\Winner\SP_TB_WINNER_SEL_Result.cs">
+      <DependentUpon>ModelWinner.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Winner\SP_TB_WINNER_VIEW_Result.cs">
+      <DependentUpon>ModelWinner.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AdminCoupon\AdminCouponService.cs" />
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
@@ -1219,6 +1244,8 @@
     <Compile Include="Service\Review\ReviewService.cs" />
     <Compile Include="Service\Shopinfo\IShopinfoService.cs" />
     <Compile Include="Service\Shopinfo\ShopinfoService.cs" />
+    <Compile Include="Service\Winner\IWinnerService.cs" />
+    <Compile Include="Service\Winner\WinnerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entity\Etc\" />
@@ -1650,6 +1677,23 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelShopinfo.edmx</DependentUpon>
       <LastGenOutput>ModelShopinfo.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entity\Winner\ModelWinner.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelWinner.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Winner\ModelWinner.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelWinner.edmx</DependentUpon>
+      <LastGenOutput>ModelWinner.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Winner\ModelWinner.edmx.diagram">
+      <DependentUpon>ModelWinner.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Winner\ModelWinner.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelWinner.edmx</DependentUpon>
+      <LastGenOutput>ModelWinner.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

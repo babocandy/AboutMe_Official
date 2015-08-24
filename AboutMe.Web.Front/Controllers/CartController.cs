@@ -33,7 +33,7 @@ namespace AboutMe.Web.Front.Controllers
 
             CART_INDEX_MODEL viewModel = new CART_INDEX_MODEL();
             viewModel.UserProfile = _user_profile;
-            viewModel.BannerUrl = "/aboutCom/images/sample/thum_banner.jpg";
+            viewModel.BannerUrl = "";
             viewModel.CartCnt = _cartservice.CartListCount(_user_profile.M_ID, _user_profile.SESSION_ID);
             viewModel.CartList = lst;
             viewModel.SumPoint = (lst.Count() < 1) ? 0 : lst.Sum(x => x.P_POINT);

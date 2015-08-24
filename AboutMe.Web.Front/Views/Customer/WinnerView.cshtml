@@ -1,13 +1,12 @@
-﻿@model AboutMe.Domain.Entity.Notice.NoticeUserView
+﻿@model AboutMe.Domain.Entity.Winner.WinnerUserView
 @{
     
-    if (Model.Notice == null)
+    if (Model.WinnerInfo == null)
     {
         Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
         Response.End();
     }
-    
-    ViewBag.Title = "공지사항 - ABOUT ME";
+    ViewBag.Title = "당첨자발표 - ABOUT ME";
     ViewBag.TopClass = "notice";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
 }
@@ -22,26 +21,26 @@
         <!-- cs_top -->
         <div class="cs_top">
             @{
-                ViewBag.MenuTitle = "공지사항";
+                ViewBag.MenuTitle = "당첨자발표";
                 ViewBag.MenuGbn = "notice";
                 Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
             }
         </div>
         <!-- //cs_top -->
-        <!-- notice_view -->
+        <!-- prizewinner_view -->
         <div class="board_view mt40">
             <p class="subject">
-                <span class="num">@Model.Notice.IDX</span>
-                <span class="tit">@Model.Notice.TITLE</span>
-                <span class="date">@Model.Notice.REG_DATE.ToString().Substring(0, 10)</span>
+                <span class="num">@Model.WinnerInfo.IDX</span>
+                <span class="tit">@Model.WinnerInfo.TITLE</span>
+                <span class="date">@Model.WinnerInfo.REG_DATE.ToString().Substring(0,10)</span>
             </p>
-            <div class="txt">
-                @(new HtmlString(HttpUtility.HtmlDecode(Model.Notice.CONTENTS)))
-            </div>
+            <p class="txt">
+                @(new HtmlString(HttpUtility.HtmlDecode(Model.WinnerInfo.CONTENTS)))
+            </p>
         </div>
-        @Html.ActionLink("목록", "Notice", Model.searchOption, new { @class = "btn_golist btn_brown_w96h38" })
-        
-        <!-- //notice_view -->
+
+        @Html.ActionLink("목록", "Winner", Model.SearchParam, new { @class = "btn_golist btn_brown_w96h38" })
+        <!-- //prizewinner_view -->
     </div>
 </div>
 <!--//container-->
