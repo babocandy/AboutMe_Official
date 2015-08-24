@@ -204,6 +204,8 @@ namespace AboutMe.Domain.Service.Member
 
                 if (nERR_CODE == 10)
                     strERR_MSG = "회원가입 오류.\\n 이미 존재하는 ID입니다.";
+                if (nERR_CODE == 11)
+                    strERR_MSG = "회원가입 오류.\\n 이미 존재하는 메일계정 입니다.";
 
 
                 /** }catch()
@@ -371,6 +373,8 @@ namespace AboutMe.Domain.Service.Member
 
                 if (nERR_CODE == 10)
                     strERR_MSG = "회원 정보수정 회원 찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                if (nERR_CODE == 11)
+                    strERR_MSG = "회원 정보수정 메일계정 오류.\\n 이미 사용중인 메일계정입니다..";
 
                 /** }catch()
                  {
