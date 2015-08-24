@@ -50,7 +50,7 @@ namespace AboutMe.Common.Helper
             }
 
             //메세지 준비
-            MailAddress fromAddress = new MailAddress(this.sender);
+            MailAddress fromAddress = new MailAddress(this.sender,"ABOUT ME");
             MailAddress toAddress = new MailAddress(this.receiver);
 
             MailMessage mailMessage = new MailMessage(fromAddress.Address, toAddress.Address);
@@ -65,8 +65,8 @@ namespace AboutMe.Common.Helper
 
             //smtp 준비
             SmtpClient client = new SmtpClient();
-            client.EnableSsl = true;
-            //client.EnableSsl = false;
+            //client.EnableSsl = true;
+            client.EnableSsl = false;
             client.Host = this.sender_smtp_server;
             client.Port = this.sender_smtp_port; // = 587;  //465 or 587
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
