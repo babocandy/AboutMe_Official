@@ -44,11 +44,18 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.M_ID = MemberInfo.GetMemberId();  //로그인 계정
             this.ViewBag.M_NAME = MemberInfo.GetMemberName();
 
-           // this.ViewBag.RedirectUrl_HEADER = HttpContext.Request.Url.Authority;
-            this.ViewBag.RedirectUrl_HEADER = "/";
-            string strRedirectUrl_HEADER = HttpContext.Request.Url.OriginalString;
-            if (!strRedirectUrl_HEADER.Contains("/MemberShip/Login"))
-                this.ViewBag.RedirectUrl_HEADER = HttpContext.Request.Url.OriginalString;
+            // this.ViewBag.RedirectUrl_HEADER = Server.UrlEncode(HttpContext.Request.Url.Authority);
+            this.ViewBag.RedirectUrl_HEADER = ""; //기본:메인페이지
+            string strRedirectUrl_HEADER = Server.UrlEncode(HttpContext.Request.Url.OriginalString);
+            if (strRedirectUrl_HEADER.Length > 1)
+            {
+                string strRedirectUrl_HEADER_LOWER = strRedirectUrl_HEADER.ToLower(); //thanswk qusghks
+                if (!strRedirectUrl_HEADER_LOWER.Contains("/membership"))  // 로그인/회원가입.. =>메인페이지로
+                    this.ViewBag.RedirectUrl_HEADER = strRedirectUrl_HEADER;
+                if (strRedirectUrl_HEADER_LOWER.Contains("/order"))  //주문서 작성중 에서 로그인  ->Cart 로 이동 :지젠협의 OK
+                    this.ViewBag.RedirectUrl_HEADER = "/Cart";
+            }
+
 
             return View();
         }
