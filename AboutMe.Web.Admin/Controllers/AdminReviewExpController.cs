@@ -225,6 +225,7 @@ namespace AboutMe.Web.Admin.Controllers
             int? masterIdx = Convert.ToInt32(Request.Form["IDX"]);
             string ids = Request.Form["IDS"];
 
+            var msg = "";
             if (masterIdx != null && ids != null)
             {
                 string[] arr = ids.Split(',');
@@ -235,9 +236,17 @@ namespace AboutMe.Web.Admin.Controllers
                     AdminReviewExpMemberParamToInputDB p = new AdminReviewExpMemberParamToInputDB();
                     p.MASTER_IDX = masterIdx;
                     p.M_ID = memberId;
-                    _service.ReviewExpMemberInsert(p);
+                    
+                    var tp = _service.ReviewExpMemberInsert(p);
+
+                    if (tp.Item1 != "0")
+                    {
+                        msg += tp.Item2 + "<br />";
+                    }
                 }
             }
+
+            TempData["msg"] = msg;
 
             return Redirect(Request.UrlReferrer.ToString());
         }
@@ -248,7 +257,9 @@ namespace AboutMe.Web.Admin.Controllers
         {
             int? masterIdx = Convert.ToInt32(Request.Form["IDX"]);
             string ids = Request.Form["IDS"];
-            Debug.WriteLine("ids: " + ids);
+           // Debug.WriteLine("ids: " + ids);
+
+            var msg = "";
             if ( masterIdx != null && ids != null)
             {
                 string[] arr = ids.Split(',');
@@ -260,9 +271,16 @@ namespace AboutMe.Web.Admin.Controllers
                     Debug.WriteLine(memberId);
 
 
-                    _service.ReviewExpMemberDelete(memberId, masterIdx);
+                    var tp = _service.ReviewExpMemberDelete(memberId, masterIdx);
+
+                    if (tp.Item1 != "0")
+                    {
+                        msg += tp.Item2 + "<br />";
+                    }
                 }
             }
+
+            TempData["msg"] = msg;
 
             return Redirect(Request.UrlReferrer.ToString());
         }

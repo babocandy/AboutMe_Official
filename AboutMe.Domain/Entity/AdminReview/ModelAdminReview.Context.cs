@@ -154,7 +154,7 @@ namespace AboutMe.Domain.Entity.AdminReview
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MASTER_INS", p_CODEParameter, fROM_DATEParameter, tO_DATEParameter, iS_AUTHParameter, mASTER_IDX);
         }
     
-        public virtual int SP_ADMIN_REVIEW_EXP_MEMBER_INS(Nullable<int> eXP_MASTER_IDX, string m_ID, string m_NAME)
+        public virtual int SP_ADMIN_REVIEW_EXP_MEMBER_INS(Nullable<int> eXP_MASTER_IDX, string m_ID, string m_NAME, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var eXP_MASTER_IDXParameter = eXP_MASTER_IDX.HasValue ?
                 new ObjectParameter("EXP_MASTER_IDX", eXP_MASTER_IDX) :
@@ -168,7 +168,7 @@ namespace AboutMe.Domain.Entity.AdminReview
                 new ObjectParameter("M_NAME", m_NAME) :
                 new ObjectParameter("M_NAME", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_INS", eXP_MASTER_IDXParameter, m_IDParameter, m_NAMEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_INS", eXP_MASTER_IDXParameter, m_IDParameter, m_NAMEParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_MASTER_SEL_Result> SP_ADMIN_REVIEW_EXP_MASTER_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_VALUE, string fROM_DATE, string tO_DATE, string iS_STATE_10, string iS_STATE_20, string iS_STATE_30, string iS_AUTH_Y, string iS_AUTH_N, ObjectParameter tOTAL)
@@ -250,7 +250,7 @@ namespace AboutMe.Domain.Entity.AdminReview
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_EXP_MASTER_DETAIL_Result>("SP_ADMIN_REVIEW_EXP_MASTER_DETAIL", iDXParameter);
         }
     
-        public virtual int SP_ADMIN_REVIEW_EXP_MEMBER_DEL(string m_ID, Nullable<int> eXP_MASTER_IDX)
+        public virtual int SP_ADMIN_REVIEW_EXP_MEMBER_DEL(string m_ID, Nullable<int> eXP_MASTER_IDX, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var m_IDParameter = m_ID != null ?
                 new ObjectParameter("M_ID", m_ID) :
@@ -260,7 +260,7 @@ namespace AboutMe.Domain.Entity.AdminReview
                 new ObjectParameter("EXP_MASTER_IDX", eXP_MASTER_IDX) :
                 new ObjectParameter("EXP_MASTER_IDX", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_DEL", m_IDParameter, eXP_MASTER_IDXParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_EXP_MEMBER_DEL", m_IDParameter, eXP_MASTER_IDXParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<SP_ADMIN_REVIEW_EXP_MEMBER_SEL_Result> SP_ADMIN_REVIEW_EXP_MEMBER_SEL(Nullable<int> eXP_MASTER_IDX)

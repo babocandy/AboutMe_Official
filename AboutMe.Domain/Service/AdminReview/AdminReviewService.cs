@@ -203,25 +203,33 @@ namespace AboutMe.Domain.Service.AdminReview
         /**
          * 체험단리뷰 회원 저장
          */
-        public void ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p)
+        public Tuple<string, string> ReviewExpMemberInsert(AdminReviewExpMemberParamToInputDB p)
         {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                context.SP_ADMIN_REVIEW_EXP_MEMBER_INS(p.MASTER_IDX, p.M_ID, p.M_NAME);
+                context.SP_ADMIN_REVIEW_EXP_MEMBER_INS(p.MASTER_IDX, p.M_ID, p.M_NAME, retNum, retMsg);
             }
+
+            return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
         }
 
         /**
          * 체험단리뷰 회원 삭제
          */
-        public void ReviewExpMemberDelete(string memId, int? masterIdx)
+        public Tuple<string, string> ReviewExpMemberDelete(string memId, int? masterIdx)
         {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
 
             using (AdminReviewEntities context = new AdminReviewEntities())
             {
-                context.SP_ADMIN_REVIEW_EXP_MEMBER_DEL(memId, masterIdx);
+                context.SP_ADMIN_REVIEW_EXP_MEMBER_DEL(memId, masterIdx, retNum, retMsg);
             }
+
+            return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
         }
 
 
