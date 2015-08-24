@@ -579,6 +579,23 @@ namespace AboutMe.Web.Admin.Controllers
                 return RedirectToAction("IssueExcute", new { CdCoupon = CdCoupon });
 
         }
+
+
+
+        //쿠폰- 발행된 쿠폰의 사용상태 변경 
+ 
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult ChangeIssuedCouponUsable(int IdxCouponNumber, string UsableTf , string CdCoupon)
+        {
+
+            // UpdateCouponUsableTf(int IdxCouponNumber , string UsableTf )
+
+            _AdminCouponService.UpdateCouponUsableTf(IdxCouponNumber, UsableTf);
+
+            return RedirectToAction("IssuedCouponList", new { CdCoupon = CdCoupon });
+          
+        }
+        
         
 
     }
