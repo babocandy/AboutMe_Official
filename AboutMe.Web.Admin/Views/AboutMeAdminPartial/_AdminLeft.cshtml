@@ -84,7 +84,7 @@
         strControl = "Order";
     }
 
-    if (strControl == "Event" || strControl == "Exhibit")
+    if (strControl == "Event" || strControl == "Exhibit" || strControl == "Sample")
     {
         strControl = "AdminPromotion";
     }
@@ -258,7 +258,7 @@
                     <li @fLeftMenuCSSOn("Main", "Event")><a href="/Event/Main">이벤트메인관리</a></li>
                     <li @fLeftMenuCSSOn("Index,Edit,New", "Event")><a href="/Event/">이벤트관리</a></li>
                     <li @fLeftMenuCSSOn("Index,Edit,New", "Exhibit")><a href="/Exhibit/">기획전관리</a></li>
-                    <li><a href="/cmsManager/promotion/testerapply.html">샘플/체험단 신청</a></li>
+                    <li @fLeftMenuCSSOn("Index,Edit,New", "Sample")><a href="/Sample/">샘플/체험단 신청</a></li>
                 </ul>
             </li>
 

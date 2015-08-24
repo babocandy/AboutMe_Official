@@ -13,6 +13,7 @@
     PagingParam = PagingParam + "&SearchCol=" + Model.SearchOption.SearchCol;
     PagingParam = PagingParam + "&SearchKeyword=" + Model.SearchOption.SearchKeyword;
 
+    string FrontUrl = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
 }
 @section Scripts{
 <script language="javascript">
@@ -198,7 +199,7 @@
                             <td><a href="/Event/Edit?IDX=@item.IDX&@PagingParam">@item.EVENT_NAME</a></td>
                             <td>@item.FROM_DATE~@item.TO_DATE</td>
                             <td>
-                                <a href="http://www.aboutme.com/Event/EventView?IDX=@item.IDX" target="_blank">/Event/EventView?IDX=@item.IDX</a><br />
+                                <a href="@FrontUrl/Event/EventView?IDX=@item.IDX" target="_blank">/Event/EventView?IDX=@item.IDX</a><br />
                             </td>
                             <td>진행</td>
                             <td>@item.USE_YN</td>
