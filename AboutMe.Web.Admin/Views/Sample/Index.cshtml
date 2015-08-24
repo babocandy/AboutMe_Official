@@ -1,7 +1,7 @@
-﻿@model AboutMe.Domain.Entity.Exhibit.EXHIBIT_ADMIN_INDEX
+﻿@model AboutMe.Domain.Entity.Sample.SAMPLE_ADMIN_INDEX
 
 @{
-    ViewBag.Title = "기획전 관리";
+    ViewBag.Title = "샘플/체험단 신청 관리";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
 
     //paging 파라메터
@@ -14,6 +14,7 @@
     PagingParam = PagingParam + "&SearchKeyword=" + Model.SearchOption.SearchKeyword;
 
     string FrontUrl = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
+
 }
 @section Scripts{
     <script language="javascript">
@@ -74,20 +75,20 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>기획전 관리</strong>
+            <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>샘플/체험단 신청 관리</strong>
         </div>
         <!--//path-->
         <div class="panel">
-            <h3>기획전 관리</h3>
+            <h3>샘플/체험단 신청 관리</h3>
         </div>
 
         <div class="tar mb10">
-            @Html.ActionLink("기획전 등록", "New", @Model.SearchOption, new { @class = "btn btn-success middium btn_add_table", style = "width:100px" })
+            @Html.ActionLink("샘플/체험단 신청 등록", "New", @Model.SearchOption, new { @class = "btn btn-success middium btn_add_table", style = "width:150px" })
         </div>
 
         <div class="panel">
             <table class="table table_row">
-                @using (Html.BeginForm("", "Exhibit", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+                @using (Html.BeginForm("", "Sample", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
                 {
 
                     @Html.Hidden("PAGE", "1")
@@ -143,11 +144,11 @@
                             .HtmlAttributes(new { style = "width:150px" })
                             .BindTo(new List<SelectListItem>() {
                                 new SelectListItem() {
-                                    Text = "기획전명",
-                                    Value = "EXHIBIT_NAME"
+                                    Text = "샘플/체험단 신청명",
+                                    Value = "SAMPLE_NAME"
                                 },
                                 new SelectListItem() {
-                                    Text = "기획전내용",
+                                    Text = "샘플/체험단 신청내용",
                                     Value = "WEB_CONTENTS"
                                 }
                             })
@@ -175,7 +176,7 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>기획전명</th>
+                        <th>샘플/체험단 신청명</th>
                         <th>기간</th>
                         <th>URL</th>
                         <th>진행상태</th>
@@ -188,7 +189,7 @@
                     @if (Model.ListCnt == 0)
                     { 
                     <tr>
-                        <td colspan="8">등록된 기획전이 없습니다.</td>
+                        <td colspan="8">등록된 샘플/체험단 신청이 없습니다.</td>
                     </tr>
                     }
                     else
@@ -197,17 +198,16 @@
                         {
                             <tr>
                                 <td>@item.IDX</td>
-                                <td><a href="/Exhibit/Edit?IDX=@item.IDX&@PagingParam">@item.EXHIBIT_NAME</a></td>
+                                <td><a href="/Sample/Edit?IDX=@item.IDX&@PagingParam">@item.SAMPLE_NAME</a></td>
                                 <td>@item.FROM_DATE~@item.TO_DATE</td>
                                 <td>
-                                    <a href="@FrontUrl/Event/ExhibitView?IDX=@item.IDX" target="_blank">/Event/ExhibitView?IDX=@item.IDX</a><br />
+                                    <a href="@FrontUrl/Event/SampleView?IDX=@item.IDX&@PagingParam" target="_blank">/Event/SampleView?IDX=@item.IDX</a><br />
                                 </td>
                                 <td>진행</td>
                                 <td>@item.USE_YN</td>
                                 <td>@item.REG_DATE</td>
                                 <td>
-                                    <a class="btn btn-success small" href="/Exhibit/Edit?IDX=@item.IDX&@PagingParam">커버수정</a><br>
-                                    <a class="btn btn-primary small mt5" href="/Exhibit/ProductEdit?IDX=@item.IDX&@PagingParam">상품전시관리</a>
+                                    <a class="btn btn-primary small mt5" href="/Sample/MemberList?IDX=@item.IDX">신청자목록보기</a>
                                 </td>
                             </tr>
                         }

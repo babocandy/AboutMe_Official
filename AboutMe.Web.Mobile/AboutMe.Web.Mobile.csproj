@@ -29,9 +29,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment> 
-	  <ExcludeFoldersFromDeployment></ExcludeFoldersFromDeployment> 
-
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>
+    </ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -606,6 +606,7 @@
     <Content Include="Views\Recall\Index.cshtml" />
     <Content Include="Views\Recall\RecallView.cshtml" />
     <Content Include="Views\Recall\RecallWrite.cshtml" />
+    <Content Include="Views\Event\SampleView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseMobile\" />
