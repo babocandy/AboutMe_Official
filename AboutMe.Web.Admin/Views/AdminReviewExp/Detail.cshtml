@@ -83,7 +83,12 @@
     <span> ID 추가( 공백없이 구분자 콤마 , )</span><br />
     <input type="hidden" name="IDX" value="@Model.IDX" />
     <input type="text" class="input-sm" style="width:30%" name="IDS"> 
-    <a href="#" onclick="add(); return false;" class="btn btn-default small">추가</a> <br /><br />
+    <a href="#" onclick="add(); return false;" class="btn btn-default small">추가</a> 
+    
+    <br />
+    
+    @Html.Raw(TempData["msg"]);
+    <br />
 }
 
 @using (Html.BeginForm("DelIds", "AdminReviewExp", Model.RouteParam, FormMethod.Post, new { name = "frmDelIds" }))
@@ -92,6 +97,9 @@
     <input type="hidden" name="IDX" value="@Model.IDX" />
     <input type="text" class="input-sm" style="width:30%" name="IDS">    
     <a href="#" onclick="del(); return false;"  class="btn btn-default small" >삭제</a> <br />
+    
+    @Html.Raw(TempData["msg"]);
+    <br />
 }
                     <table class="table table_col mt10" style="min-width:260px; width:260px">
                         <colgroup><col width="20%" /><col width="*" /></colgroup>
