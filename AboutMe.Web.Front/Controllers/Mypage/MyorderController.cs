@@ -36,6 +36,9 @@ namespace AboutMe.Web.Front.Controllers
         private string _inipay_setpath = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.SetPath");
         private string _inipay_mid = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mid");
         private string _inipay_admin = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Admin");
+
+        private string _inipay_mobile_mid = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mobile.Mid");
+        private string _inipay_mobile_admin = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mobile.Admin");
         private string _inipay_debug = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Debug");
 
         public ActionResult Index(string FromDate, string ToDate, int? page = 1)
@@ -86,8 +89,8 @@ namespace AboutMe.Web.Front.Controllers
         ///  이미 승인된 지불을 취소한다.
         ///  무통장입금 거래인 경우 상점 고객이 발급된 가상계좌로 결제 금액을 입금한 이후에는 결제 취소가 이 취소 모듈로 불가능합니다.  
         ///  상점에서 직접 환불 처리 하셔야 합니다. 
-        
-        private INIPAYRESULT InipayCancelProcess(string Tid, string errMsg)
+        /// pat_gbn 결제구분 (Web : 웹결제, MObile : 모바일결제)
+        private INIPAYRESULT InipayCancelProcess(string Tid, string errMsg, string pat_gbn)
         {
             INIPAYRESULT cancel = new INIPAYRESULT();
             //###############################################################################
@@ -104,8 +107,16 @@ namespace AboutMe.Web.Front.Controllers
             //# 4. 정보 설정 #
             //################
             INIpayCancel.SetPath(_inipay_setpath);
-            INIpayCancel.SetField("mid", _inipay_mid);	               			// 상점아이디
-            INIpayCancel.SetField("admin", _inipay_admin);						// 키패스워드(상점아이디에 따라 변경)
+            if (pat_gbn.ToUpper() == "MOBILE")
+            {
+                INIpayCancel.SetField("mid", _inipay_mobile_mid);	               			// 상점아이디
+                INIpayCancel.SetField("admin", _inipay_mobile_admin);						// 키패스워드(상점아이디에 따라 변경)
+            }
+            else
+            {
+                INIpayCancel.SetField("mid", _inipay_mid);	               			// 상점아이디
+                INIpayCancel.SetField("admin", _inipay_admin);						// 키패스워드(상점아이디에 따라 변경)
+            }
             INIpayCancel.SetField("tid", Tid);								    // 취소할 거래번호
             INIpayCancel.SetField("CancelMsg", errMsg);			                // 취소 사유
             INIpayCancel.SetField("debug", _inipay_debug);						// 로그모드(실서비스시에는 "false"로)
@@ -157,7 +168,8 @@ namespace AboutMe.Web.Front.Controllers
             //이니시스 결제 취소
             if ((info.PAY_GBN == "1" || info.PAY_GBN == "2" || info.PAY_GBN == "3") && (!string.IsNullOrEmpty(info.PAT_TID)))  //1:신용카드 2:실시간계좌이체 3:가상계좌, 4:포인트결제
             {
-                INIPAYRESULT InipayResult = InipayCancelProcess(info.PAT_TID, "주문자직접취소");
+
+                INIPAYRESULT InipayResult = InipayCancelProcess(info.PAT_TID, "주문자직접취소", info.PAT_GUBUN.ToUpper());
                 if (InipayResult.Resultcode != "00")
                 {
                     SBuilder.AppendFormat("<script language='javascript'>alert(\"PG사(이니시스) 결제 취소중 에러가 발생했습니다.\\n에러메시지:{0} \\n관리자에게 문의하시기 바랍니다.\");history.go(-1);</script>", InipayResult.ResultMsg);

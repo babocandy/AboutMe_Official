@@ -331,6 +331,9 @@
     <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_LIST_Result.cs">
       <DependentUpon>ModelAdminOrder.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_MEMBER_STATUS_Result.cs">
+      <DependentUpon>ModelAdminOrder.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminOrder\SP_ADMIN_ORDER_PART_CANCEL_SELECT_Result.cs">
       <DependentUpon>ModelAdminOrder.tt</DependentUpon>
     </Compile>
@@ -622,6 +625,22 @@
     <Compile Include="Entity\Display\SP_POPUP_WEB_SEL_Result.cs">
       <DependentUpon>ModelDisplay.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Sample\ModelSample.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelSample.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Sample\ModelSample.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelSample.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Sample\ModelSample.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelSample.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Sample\SampleUserModel.cs" />
     <Compile Include="Entity\Magazine\MagazineUserModel.cs" />
     <Compile Include="Entity\Event\ModelEvent.Context.cs">
       <AutoGen>True</AutoGen>
@@ -987,6 +1006,9 @@
     <Compile Include="Entity\Qna\SP_ADMIN_QNA_CNT_Result.cs">
       <DependentUpon>QnaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Qna\SP_ADMIN_QNA_MEMBER_SEL_Result.cs">
+      <DependentUpon>QnaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Qna\SP_ADMIN_QNA_SEL_Result.cs">
       <DependentUpon>QnaModel.tt</DependentUpon>
     </Compile>
@@ -1100,6 +1122,18 @@
     <Compile Include="Entity\Review\SP_REVIEW_PRODUCT_SEL_Result.cs">
       <DependentUpon>ModelReview.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Sample\SP_ADMIN_SAMPLE_MEMBER_SEL_Result.cs">
+      <DependentUpon>ModelSample.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Sample\SP_ADMIN_SAMPLE_SEL_Result.cs">
+      <DependentUpon>ModelSample.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Sample\SP_ADMIN_SAMPLE_VIEW_Result.cs">
+      <DependentUpon>ModelSample.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Sample\SP_SAMPLE_VIEW_Result.cs">
+      <DependentUpon>ModelSample.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Shopinfo\ModelShopinfo.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1154,6 +1188,8 @@
     <Compile Include="Service\Coupon\ICouponService.cs" />
     <Compile Include="Service\Display\IDisplayService.cs" />
     <Compile Include="Service\Display\DisplayService.cs" />
+    <Compile Include="Service\Sample\SampleService.cs" />
+    <Compile Include="Service\Sample\ISampleService.cs" />
     <Compile Include="Service\Event\IEventService.cs" />
     <Compile Include="Service\Event\EventService.cs" />
     <Compile Include="Service\Exhibit\ExhibitService.cs" />
@@ -1585,6 +1621,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelShopinfo.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Entity\Sample\ModelSample.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelSample.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\Sample\ModelSample.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelSample.edmx</DependentUpon>
+      <LastGenOutput>ModelSample.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entity\Sample\ModelSample.edmx.diagram">
+      <DependentUpon>ModelSample.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\Sample\ModelSample.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelSample.edmx</DependentUpon>
+      <LastGenOutput>ModelSample.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Shopinfo\ModelShopinfo.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelShopinfo.edmx</DependentUpon>

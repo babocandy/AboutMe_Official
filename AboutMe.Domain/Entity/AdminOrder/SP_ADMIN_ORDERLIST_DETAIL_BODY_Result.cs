@@ -56,5 +56,7 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string VACT_Date { get; set; }
         public string VACT_Time { get; set; }
         public string VACT_BankName { get; set; }
+        public string ESCROW_YN { get; set; }
+        public string PAT_GUBUN { get; set; }
     }
 }

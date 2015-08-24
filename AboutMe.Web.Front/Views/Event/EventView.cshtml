@@ -19,8 +19,17 @@
         function goEvent(s)
         {
             var idx = s.value;
+            var gubun = $(s).find("option:selected").attr("gubun")
             if (idx != "") {
-                location.href = "/Event/EventView?IDX=" + idx;
+                if (gubun == "EVENT") {
+                    location.href = "/Event/EventView?IDX=" + idx;
+                }
+                else if (gubun == "EXHIBIT") {
+                    location.href = "/Event/ExhibitView?IDX=" + idx;
+                }
+                else if (gubun == "SAMPLE") {
+                    location.href = "/Event/SampleView?IDX=" + idx;
+                }
             }
         }
     </script>
@@ -37,9 +46,9 @@
                     <option selected="selected" value="">다른 이벤트 보기</option>
                     @foreach (var item in Model.IngListInfo)
                     {
-                        if (item.GBN == "EVENT" && item.IDX != Model.EventInfo.IDX)
-                        { 
-                            @Html.Raw("<option value='"+Convert.ToString(item.IDX)+"'>"+item.NAME+"</option>");
+                        if (item.GBN != "EVENT" && item.IDX != Model.EventInfo.IDX)
+                        {
+                            @Html.Raw("<option value='" + Convert.ToString(item.IDX) + "' gubun='" + item.GBN + "'>" + item.NAME + "</option>");
                         }
                     }
                 </select>

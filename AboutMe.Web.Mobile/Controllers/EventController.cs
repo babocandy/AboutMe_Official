@@ -11,6 +11,8 @@ using AboutMe.Domain.Service.Event;
 using AboutMe.Domain.Entity.Event;
 using AboutMe.Domain.Service.Exhibit;
 using AboutMe.Domain.Entity.Exhibit;
+using AboutMe.Domain.Service.Sample;
+using AboutMe.Domain.Entity.Sample;
 
 using System.Data.Entity.Core.Objects;
 using AboutMe.Common.Data;
@@ -28,12 +30,14 @@ namespace AboutMe.Web.Mobile.Controllers
         private IPromotionService _PromotionService;
         private IEventService _eventservice;
         private IExhibitService _exhibitservice;
+        private ISampleService _sampleservice;
 
-        public EventController(PromotionService _PromotionService, IEventService _eventservice, IExhibitService _exhibitservice)
+        public EventController(PromotionService _PromotionService, IEventService _eventservice, IExhibitService _exhibitservice, ISampleService _sampleservice)
         {
             this._PromotionService = _PromotionService;
             this._eventservice = _eventservice;
             this._exhibitservice = _exhibitservice;
+            this._sampleservice = _sampleservice;
         }
 
         protected override void HandleUnknownAction(string actionName)
@@ -108,6 +112,38 @@ namespace AboutMe.Web.Mobile.Controllers
         {
             List<SP_EXHIBIT_PCODE_LINK_ALL_Result> M = _exhibitservice.ExhibitProductLinkAll(p_code);
             return PartialView(M);
+        }
+
+        //샘플.체험단 신청
+        public ActionResult SampleView(int IDX)
+        {
+            SAMPLE_VIEW M = new SAMPLE_VIEW
+            {
+                SampleInfo = _sampleservice.SampleView(IDX),
+                IngListInfo = _eventservice.EventMainIngList()
+            };
+            return View(M);
+        }
+        // 샘플/체험단 신청
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult RegistSample(int IDX)
+        {
+            try
+            {
+                _sampleservice.SampleRequest(IDX, _user_profile.M_ID);
+
+                var jsonData = new { result = "true" };
+
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                var jsonData = new { result = "false", msg = e.InnerException.Message };
+
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+
         }
         #endregion
 

@@ -140,5 +140,45 @@ namespace AboutMe.Domain.Service.Qna
             return view;
         }
         #endregion
+
+
+        #region 회원정보 > 1:1문의내역
+        public List<SP_ADMIN_QNA_MEMBER_SEL_Result> QnaAdminMemberList(string M_ID, int Page, int PageSize)
+        {
+            if (Page == 0)
+                Page = 1;
+            if (PageSize == 0)
+                PageSize = 10;
+
+            List<SP_ADMIN_QNA_MEMBER_SEL_Result> lst = new List<SP_ADMIN_QNA_MEMBER_SEL_Result>();
+            using (QnaEntities EfContext = new QnaEntities())
+            {
+                lst = EfContext.SP_ADMIN_QNA_MEMBER_SEL(M_ID, "IDX", "DESC", Page, PageSize).ToList();
+            }
+
+            return lst;
+
+        }
+        #endregion
+
+        #region 회원정보 > 1:1문의내역 개수
+        public int QnaAdminMemberCount(string M_ID)
+        {
+            int? result = 0;
+            using (QnaEntities EfContext = new QnaEntities())
+            {
+                result = EfContext.SP_ADMIN_QNA_MEMBER_CNT(M_ID).DefaultIfEmpty(0).FirstOrDefault();
+            }
+            if (!result.HasValue)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt16(result);
+            }
+        }
+        #endregion
+
     }
 }

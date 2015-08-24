@@ -1,0 +1,223 @@
+﻿@model AboutMe.Domain.Entity.Sample.SAMPLE_ADMIN_INDEX
+
+@{
+    ViewBag.Title = "샘플/체험단 신청 관리";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    //paging 파라메터
+    string PagingParam = "";
+    PagingParam = PagingParam + "&FromDate=" + Model.SearchOption.FromDate;
+    PagingParam = PagingParam + "&ToDate=" + Model.SearchOption.ToDate;
+    PagingParam = PagingParam + "&IngGbn=" + Model.SearchOption.IngGbn;
+    PagingParam = PagingParam + "&UseYn=" + Model.SearchOption.UseYn;
+    PagingParam = PagingParam + "&SearchCol=" + Model.SearchOption.SearchCol;
+    PagingParam = PagingParam + "&SearchKeyword=" + Model.SearchOption.SearchKeyword;
+
+    string FrontUrl = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
+
+}
+@section Scripts{
+    <script language="javascript">
+        function ChangeDate(d) {
+            var from_date, to_date;
+
+            if (d == "1") //오늘
+            {
+                from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "7") {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "15") {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "31") {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $("#FROM_DATE").val(from_date);
+            $("#TO_DATE").val(to_date);
+
+        }
+
+        function onFormReset() {
+            $("#sform")[0].reset();
+        }
+
+        function frmCheck() {
+            alert('');
+            var f = document.sform;
+            f.PAGE.value = 1;
+
+            return true;
+        }
+
+    </script>
+
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>샘플/체험단 신청 관리</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3>샘플/체험단 신청 관리</h3>
+        </div>
+
+        <div class="tar mb10">
+            @Html.ActionLink("샘플/체험단 신청 등록", "New", @Model.SearchOption, new { @class = "btn btn-success middium btn_add_table", style = "width:150px" })
+        </div>
+
+        <div class="panel">
+            <table class="table table_row">
+                @using (Html.BeginForm("", "Sample", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+                {
+
+                    @Html.Hidden("PAGE", "1")
+
+                    <colgroup><col width=""><col width=""><col width=""><col width=""><col width=""></colgroup>
+                    <tbody>
+                        <tr>
+                            <th>기간</th>
+                            <td colspan="3">
+                                @(Html.Kendo().DatePicker()
+                              .Name("FromDate")
+                              .Value(Model.SearchOption.FromDate)
+                              .HtmlAttributes(new { style = "width:120px" })
+                                )
+                                ~
+                                @(Html.Kendo().DatePicker()
+                              .Name("ToDate")
+                              .Value(Model.SearchOption.ToDate)
+                              .HtmlAttributes(new { style = "width:120px" })
+                                )
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('')">전체</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('1')">오늘</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('7')">7일</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
+                                <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
+                            </td>
+                            <td rowspan="3">
+                                <a style="height:120px; line-height:90px;" class="btn btn-default large btn_search" href="#none" onclick="document.sform.submit();">검색</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>진행상태</th>
+                            <td>
+                                <label for="IngGbn0">@Html.RadioButton("IngGbn", "0", Model == null ? false : (Model.SearchOption.IngGbn == "0" ? true : false), new { id = "IngGbn0" }) <span class="txt mr5">전체</span></label>
+                                <label for="IngGbn1">@Html.RadioButton("IngGbn", "1", Model == null ? false : (Model.SearchOption.IngGbn == "1" ? true : false), new { id = "IngGbn1" }) <span class="txt mr5">예약</span></label>
+                                <label for="IngGbn2">@Html.RadioButton("IngGbn", "2", Model == null ? false : (Model.SearchOption.IngGbn == "2" ? true : false), new { id = "IngGbn2" })<span class="txt mr5">진행</span></label>
+                                <label for="IngGbn3">@Html.RadioButton("IngGbn", "3", Model == null ? false : (Model.SearchOption.IngGbn == "3" ? true : false), new { id = "IngGbn3" })<span class="txt mr5">종료</span></label>
+                            </td>
+                            <th>전시여부</th>
+                            <td>
+                                <label for="UseYnA">@Html.RadioButton("UseYn", "A", Model == null ? false : (Model.SearchOption.UseYn == "A" ? true : false), new { id = "UseYnA" })<span class="txt mr5">전체</span></label>
+                                <label for="UseYnY">@Html.RadioButton("UseYn", "Y", Model == null ? false : (Model.SearchOption.UseYn == "Y" ? true : false), new { id = "UseYnY" })<span class="txt mr5">전시</span></label>
+                                <label for="UseYnN">@Html.RadioButton("UseYn", "N", Model == null ? false : (Model.SearchOption.UseYn == "N" ? true : false), new { id = "UseYnN" })<span class="txt mr5">비전시</span></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>검색</th>
+                            <td colspan="3">
+                                @(Html.Kendo().DropDownList()
+                            .Name("SearchCol")
+                            .DataTextField("Text")
+                            .DataValueField("Value")
+                            .HtmlAttributes(new { style = "width:150px" })
+                            .BindTo(new List<SelectListItem>() {
+                                new SelectListItem() {
+                                    Text = "샘플/체험단 신청명",
+                                    Value = "SAMPLE_NAME"
+                                },
+                                new SelectListItem() {
+                                    Text = "샘플/체험단 신청내용",
+                                    Value = "WEB_CONTENTS"
+                                }
+                            })
+                            .Value(Model.SearchOption.SearchCol)
+                                )
+
+                                @(Html.Kendo().TextBox()
+                            .Name("SearchKeyword")
+                            .Value(Model.SearchOption.SearchKeyword)
+                            .HtmlAttributes(new { @style = "width:300px" })
+                                )
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                <!--//end form-->
+                }
+            </table>
+        </div>
+
+        <div class="panel">
+            <h4>총 검색 : @Model.ListCnt 개</h4>
+            <table class="table table_col">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>샘플/체험단 신청명</th>
+                        <th>기간</th>
+                        <th>URL</th>
+                        <th>진행상태</th>
+                        <th>전시여부</th>
+                        <th>등록일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListCnt == 0)
+                    { 
+                    <tr>
+                        <td colspan="8">등록된 샘플/체험단 신청이 없습니다.</td>
+                    </tr>
+                    }
+                    else
+                    { 
+                        foreach (var item in Model.ListInfo)
+                        {
+                            <tr>
+                                <td>@item.IDX</td>
+                                <td><a href="/Sample/Edit?IDX=@item.IDX&@PagingParam">@item.SAMPLE_NAME</a></td>
+                                <td>@item.FROM_DATE~@item.TO_DATE</td>
+                                <td>
+                                    <a href="@FrontUrl/Event/SampleView?IDX=@item.IDX&@PagingParam" target="_blank">/Event/SampleView?IDX=@item.IDX</a><br />
+                                </td>
+                                <td>진행</td>
+                                <td>@item.USE_YN</td>
+                                <td>@item.REG_DATE</td>
+                                <td>
+                                    <a class="btn btn-primary small mt5" href="/Sample/MemberList?IDX=@item.IDX">신청자목록보기</a>
+                                </td>
+                            </tr>
+                        }
+                    }    
+                </tbody>
+            </table>
+        </div>
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.ListCnt, RecordPerPage = Model.SearchOption.PageSize, PagePerBlock = 10, CurrentPage = Model.SearchOption.Page, QueryStr = PagingParam });}
+
+
+    </div>
+    <!--//content-->
+}

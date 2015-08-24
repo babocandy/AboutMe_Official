@@ -1,0 +1,83 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_ADMIN_MEMBER
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/cmsManager/aboutCom/css/bootstrap.css" rel="stylesheet">
+    <link href="/cmsManager/aboutCom/css/style.css" rel="stylesheet">
+    <script src="/cmsManager/aboutCom/js/jquery-1.11.3.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/bootstrap.min.js"></script>
+    <script src="/cmsManager/aboutCom/js/script.js"></script>
+    <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+    <title>ABOUT ME</title>
+    <script language="javascript">
+        function titleClick(IDX) {
+            opener.name = "opener_name";
+            opener.location.href = "/Qna/Edit?IDX=" + IDX;
+           // self.close();
+            //전송한뒤 자식창을 닫아버린다.
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!--container-->
+            <div class="col-md-12 popcontainer">
+                <h1>활동내역</h1>
+                <br />
+                <!-- tabs -->
+                <ul class="nav nav-tabs">
+                    <li><a href="/Order/OrderMemberList?M_ID=@Model.M_ID">주문 내역</a></li>
+                    <li><a href="/AdminPoint/MyPointHistory?M_ID=@Model.M_ID">포인트 내역</a></li>
+                    <li><a href="/AdminCoupon/">쿠폰 내역</a></li>
+                    <li class="active"><a href="#none">1:1 문의 내역</a></li>
+                    <li><a href="/AdminFrontMember/PopMemberInfo?M_ID=@Model.M_ID">기본정보</a></li>
+                </ul>
+                <!-- //tabs -->
+                <br />
+               
+                <table class="table table_col">
+                    <colgroup><col width="10%" /><col width="15%" /><col width="*" /><col width="20%" /><col width="20%" /></colgroup>
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">구분</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">상태</th>
+                            <th scope="col">등록일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.QnaList)
+                        {
+                            <tr>
+                                <td class="text-success">@item.IDX</td>
+                                <td class="">@item.CATEGORY_NM</td>
+                                <td><a href="#none" onclick="titleClick('@item.IDX')">@item.TITLE</a></td>
+                                <td>@item.STATUS_NM</td>
+                                <td>@item.REG_DATE</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+                @{
+                    Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.QnaCount, RecordPerPage = 10, PagePerBlock = Model.PageSize, CurrentPage = Model.Page, QueryStr = "M_ID=" + Model.M_ID });
+                }
+
+            </div>
+            <!--//container-->
+        </div>
+    </div>
+</body>
+</html>

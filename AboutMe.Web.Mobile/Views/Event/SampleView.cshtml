@@ -1,0 +1,98 @@
+﻿@model AboutMe.Domain.Entity.Sample.SAMPLE_VIEW
+@using AboutMe.Web.Mobile.Common;
+@{
+
+    if (Model.SampleInfo == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+
+    ViewBag.Title = "샘플/체험단신청 - ABOUT ME";
+    ViewBag.TopClass = "";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    bool IS_LOGIN = MemberInfo.IsMemberLogin();
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/event.css" rel="stylesheet" />
+<script language="javascript">
+    function goEvent(s)
+    {
+        var idx = s.value;
+        var gubun = $(s).find("option:selected").attr("gubun")
+        if (idx != "") {
+            if (gubun == "EVENT")
+            {
+                location.href = "/Event/EventView?IDX=" + idx;
+            }
+            else if (gubun == "EXHIBIT") {
+                location.href = "/Event/ExhibitView?IDX=" + idx;
+            }
+            else if (gubun == "SAMPLE") {
+                location.href = "/Event/SampleView?IDX=" + idx;
+            }
+        }
+    }
+
+    function isLogin() {
+        if (confirm('로그인 후 신청할 수 있습니다.\n로그인페이지로 이동하시겠습니까?')) {
+            location.href = '/MemberShip/Login';
+            return;
+        }
+    }
+
+    function RegistSample()
+    {
+        var islogin = "@IS_LOGIN";
+
+        if (islogin == "True") {
+
+            if (confirm("신청하시겠습니까?")) {
+                var src_url = "/Event/RegistSample";
+                var param = "IDX=@Model.SampleInfo.IDX";
+
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: src_url,
+                    data: param,
+                    success: function (data) {
+                        if (data.result == "true") {
+                            alert("체험단 신청을 완료하였습니다.");
+                        }
+                        else {
+                            if (data.msg != "") {
+                                alert(data.msg);
+                            }
+                        }
+                    },
+                    complete: function (jqXHR, textStatus) {
+                    }
+                });
+            }
+        }
+        else
+        {
+            isLogin();
+        }
+    }
+</script>
+}
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <h2>@Model.SampleInfo.SAMPLE_NAME (@Model.SampleInfo.FROM_DATE ~ @Model.SampleInfo.TO_DATE)</h2>
+    </div>
+    <!--상세배너-->
+    <div class="detailbnr">
+        <a href="#none"><img src="@Model.SampleInfo.MOBILE_FILE" alt="" /></a>
+    </div>
+    <!--//상세배너-->    
+    <!--신청하기-->
+    <div class="btn_application">
+        <a href="#none" class="btn btn_brown_h40" onclick="RegistSample();">신청하기</a>
+    </div>
+
+</div>
+<!--//container-->

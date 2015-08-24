@@ -1,0 +1,110 @@
+﻿@model AboutMe.Domain.Entity.Sample.SAMPLE_MEMBER_INDEX
+
+@{
+    ViewBag.Title = "샘플/체험단 신청자";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    //paging 파라메터
+    string PagingParam = "";
+    PagingParam = PagingParam + "&IDX=" + Model.IDX;
+
+
+}
+@section Scripts{
+    <script language="javascript">
+       
+
+    </script>
+
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+@section Body{
+
+
+    <!--content-->
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong>샘플/체험단 신청 관리</strong>
+    </div>
+    <!--//path-->
+    <div class="panel">
+        <h3>샘플/체험단 신청</h3>
+        <div class="tar mb10">
+            <a class="btn btn-default middium" href="/Sample/ExcelDownload?IDX=@Model.IDX">EXCEL 다운로드</a>
+        </div>
+        <div class="alert alert-info">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="tit fcblack fs12"><strong>· 제목 : </strong>@Model.SampleInfo.SAMPLE_NAME</span>
+                </div>
+                <div class="col-md-6">
+                    <span class="date fcblack fs12"><strong>· 기간 : </strong>@Model.SampleInfo.FROM_DATE ~ @Model.SampleInfo.TO_DATE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <table class="table table_col">
+            <colgroup><col width="8%" /><col width="13%" /><col width="8%" /><col width="8%" /><col width="18%" /><col width="15%" /><col width="*" /></colgroup>
+            <thead>
+                <tr>
+                    <th scope="col" class="brnone">No.</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">성명</th>
+                    <th scope="col">등급</th>
+                    <th scope="col">이메일</th>
+                    <th scope="col">핸드폰번호</th>
+                    <th scope="col" class="brnone">주소</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListInfo)
+                {
+                    string grade_str = "";
+
+                    if (item.M_GRADE == "B")
+                    {
+                        grade_str = "<td class=\"text-muted\">브론즈</td>";
+                    }
+                    else if (item.M_GRADE == "G")
+                    {
+                        grade_str = "<td class=\"text-success\">골드</td>";
+                    }
+                    else if (item.M_GRADE == "S")
+                    {
+                        grade_str = "<td class=\"text-primary\">실버</td>";
+                    }
+                    else if (item.M_GRADE == "V")
+                    {
+                        grade_str = "<td class=\"text-warning\">VIP</td>";
+                    }
+                    
+                    <tr>
+                        <td class="brnone">@item.IDX</td>
+                        <td>@item.M_ID</td>
+                        <td>@item.M_NAME</td>
+                        @Html.Raw(grade_str)
+                        <td>@item.M_EMAIL</td>
+                        <td>@item.M_MOBILE</td>
+                        <td class="brnone">@item.M_ADDR</td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.ListCnt, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = PagingParam });}
+
+
+</div>
+<!--//content-->
+
+
+}

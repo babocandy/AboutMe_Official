@@ -47,6 +47,10 @@ namespace AboutMe.Domain.Service.AdminCoupon
        
         //새로운 상품 등록시 , '상품적용범위' 가 전체상품인 쿠폰마스터에 이 상품을 추가
         int InsAdminCouponProductCreateOnAddingPrd(string P_Code);
+
+
+        //발행된 쿠폰의 사용상태 변경 
+        void UpdateCouponUsableTf(int IdxCouponNumber , string UsableTf );
         #endregion
 
     }

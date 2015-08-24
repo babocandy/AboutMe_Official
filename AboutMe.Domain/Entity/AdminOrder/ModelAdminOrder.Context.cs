@@ -534,5 +534,49 @@ namespace AboutMe.Domain.Entity.AdminOrder
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_TO_DELIVERYEXCEL_Result>("SP_ADMIN_ORDER_TO_DELIVERYEXCEL", oRDER_IDX_LISTParameter);
         }
+    
+        public virtual ObjectResult<string> SP_ADMIN_ORDER_FIND_PAT_GBN(string pAT_TID)
+        {
+            var pAT_TIDParameter = pAT_TID != null ?
+                new ObjectParameter("PAT_TID", pAT_TID) :
+                new ObjectParameter("PAT_TID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_ADMIN_ORDER_FIND_PAT_GBN", pAT_TIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ORDER_MEMBER_STATUS_Result> SP_ADMIN_ORDER_MEMBER_STATUS(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_MEMBER_STATUS_Result>("SP_ADMIN_ORDER_MEMBER_STATUS", m_IDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_ADMIN_ORDER_MEMBER_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_ORDER_MEMBER_CNT", m_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_ORDER_LIST_Result> SP_ADMIN_ORDER_MEMBER_LIST(string m_ID, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_LIST_Result>("SP_ADMIN_ORDER_MEMBER_LIST", m_IDParameter, pAGEParameter, pAGESIZEParameter);
+        }
     }
 }

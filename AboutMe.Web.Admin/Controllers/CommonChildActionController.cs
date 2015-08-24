@@ -8,6 +8,8 @@ using AboutMe.Common.Data;
 
 using AboutMe.Domain.Service.AdminFrontMember;
 using AboutMe.Domain.Entity.AdminFrontMember;
+using AboutMe.Domain.Service.AdminOrder;
+using AboutMe.Domain.Entity.AdminOrder;
 
 namespace AboutMe.Web.Admin.Controllers
 {
@@ -15,10 +17,12 @@ namespace AboutMe.Web.Admin.Controllers
     {
 
         private IAdminFrontMemberService _AdminFrontMemberService;
+        private IAdminOrderService _adminorderservice;
 
-        public CommonChildActionController(IAdminFrontMemberService _adminFrontMemberService)
+        public CommonChildActionController(IAdminFrontMemberService _adminFrontMemberService, IAdminOrderService _adminorderservice)
         {
             this._AdminFrontMemberService = _adminFrontMemberService;
+            this._adminorderservice = _adminorderservice;
         }
 
 
@@ -46,12 +50,12 @@ namespace AboutMe.Web.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ChildFrontMemberInfo(string M_ID="")
         {
-
+            SP_ADMIN_ORDER_MEMBER_STATUS_Result orderResult = _adminorderservice.OrderMemberStatus(M_ID);
             //회원 써머리 정보  : 초기화
-            this.ViewBag.TOTAL_ORDER_CNT = 0; //총구매건수
-            this.ViewBag.TOTAL_ORDER_PRICE = 0; //총 구매액
+            this.ViewBag.TOTAL_ORDER_CNT = orderResult.ORDER_CNT; //총구매건수
+            this.ViewBag.TOTAL_ORDER_PRICE = orderResult.ORDER_PRICE; //총 구매액
             this.ViewBag.TOTAL_COUPON_CNT = 0; //보유쿠폰
-            this.ViewBag.TOTAL_QNA_CNT = 0; //1:1문의
+            this.ViewBag.TOTAL_QNA_CNT = orderResult.QNA_CNT; //1:1문의
 
             return View(_AdminFrontMemberService.GetAdminFrontMemberView(M_ID));
         }
