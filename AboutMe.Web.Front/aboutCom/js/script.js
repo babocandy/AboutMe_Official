@@ -293,59 +293,67 @@ $(function(){
 
 	/*rolling*/
 	if( $("*").is(".rolling") ){
-		var rollingControl = false;
-		var list = $(".rolling ul");
-		var itemWidth = list.children(":first").outerWidth();
+		var rollingControl = false,
+			list = $(".rolling ul"),
+			rollingBtn = $(".rolling .sbtn"),
+			itemWidth = list.children(":first").outerWidth();
+
 		list.css("width",(itemWidth*list.find("li").length)+"px");
-		$(".rolling").each(function(){
-			list.append(list.html());
-		});
+		if(list.find("li").length > 1){
+			// rolling item >= 2
+			$(".rolling").each(function(){
+				list.append(list.html());
+			});
 
-		$(".rolling").on("click",".btn_right",function(e){
-			e.preventDefault();
-			if(rollingControl) return;
-			rollingControl = true;
+			$(".rolling").on("click",".btn_right",function(e){
+				e.preventDefault();
+				if(rollingControl) return;
+				rollingControl = true;
 
-			if( $("*").is(".event") ){
-				list.stop().animate({"opacity":"0"},600);
-				setTimeout(function(){
-					list.css("margin-left",-itemWidth).children(":last").after(list.children(":first"));
-					list.css("margin-left",0);
-					list.stop().animate({"opacity":"1"},400);
-					rollingControl = false;
-				},350);
-			} else if( $("*").is(".timesale") ){
-				list.stop().animate({
-					marginLeft:-itemWidth
-				}, 1000, "easeOutExpo", function(){
-					$(this).children(":last").after($(this).children(":first"));
-					$(this).css("margin-left","0");
-					rollingControl = false;
-				});
-			}
-		});
+				if( $("*").is(".event") ){
+					list.stop().animate({"opacity":"0"},600);
+					setTimeout(function(){
+						list.css("margin-left",-itemWidth).children(":last").after(list.children(":first"));
+						list.css("margin-left",0);
+						list.stop().animate({"opacity":"1"},400);
+						rollingControl = false;
+					},350);
+				} else if( $("*").is(".timesale") ){
+					list.stop().animate({
+						marginLeft:-itemWidth
+					}, 1000, "easeOutExpo", function(){
+						$(this).children(":last").after($(this).children(":first"));
+						$(this).css("margin-left","0");
+						rollingControl = false;
+					});
+				}
+			});
 
-		$(".rolling").on("click",".btn_left",function(e){
-			e.preventDefault();
-			if(rollingControl) return;
-			rollingControl = true;
-			list.children(":first").before(list.children(":last"));
-			list.css("margin-left",-itemWidth);
-			if( $("*").is(".event") ){
-				list.stop().animate({"opacity":"0"},600);
-				setTimeout(function(){
-					list.css("margin-left",0);
-					list.stop().animate({"opacity":"1"},400);
-					rollingControl = false;
-				},350);
-			} else if( $("*").is(".timesale") ){
-				list.stop().animate({
-					marginLeft:0
-				}, 1000, "easeOutExpo", function(){
-					rollingControl = false;
-				});
-			}
-		});
+			$(".rolling").on("click",".btn_left",function(e){
+				e.preventDefault();
+				if(rollingControl) return;
+				rollingControl = true;
+				list.children(":first").before(list.children(":last"));
+				list.css("margin-left",-itemWidth);
+				if( $("*").is(".event") ){
+					list.stop().animate({"opacity":"0"},600);
+					setTimeout(function(){
+						list.css("margin-left",0);
+						list.stop().animate({"opacity":"1"},400);
+						rollingControl = false;
+					},350);
+				} else if( $("*").is(".timesale") ){
+					list.stop().animate({
+						marginLeft:0
+					}, 1000, "easeOutExpo", function(){
+						rollingControl = false;
+					});
+				}
+			});
+		} else{
+			// rolling item <= 1
+			rollingBtn.css("display","none");
+		}
 	}
 
 	/*상세 이벤트 배너롤링*/
