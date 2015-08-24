@@ -281,12 +281,12 @@
                 </li>
                 <li>. 발행가능기간 : @MasterFromDate.ToString() ~ @MasterToDate.ToString() </li>
                 <li>
-                    . 사용가능매체 : @{ if (CouponGbn == "P")
+                    . 사용가능매체 : @{ if (UsableDeviceGbn == "P")
                      {<text>PC,모바일</text>}
                      else
                      {<text>모바일전용</text>}}
                 </li>
-                <li>. 금액   :  @CouponDiscountMoney   . 할인율 : @CouponDiscountRate</li>
+                <li>. 금액   :  @CouponDiscountMoney 원 / 할인율 : @CouponDiscountRate %</li>
                 <li>
                     . 발행방법 : @{ if (IssueMethodGbn == "A")
                      {<text>자동발행 </text>}
@@ -398,7 +398,7 @@
                                                     <tr>
                                                         <th>쿠폰 할인율(%) </th>
                                                         <td>
-                                                            @Html.TextBoxFor(model => model.COUPON_MONEY, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.COUPON_MONEY)</font>
+                                                            @Html.TextBoxFor(model => model.COUPON_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.COUPON_DISCOUNT_RATE)</font>
                                                         </td>
                                                     </tr>
                                                     }
@@ -407,7 +407,7 @@
                                                     <tr>
                                                         <th>쿠폰 할인금액 </th>
                                                         <td>
-                                                            @Html.TextBoxFor(model => model.COUPON_DISCOUNT_RATE, new { cssClass = "input-sm text-left", disabled = MoneyDisabled })  <font color="red">@Html.ValidationMessageFor(model => model.COUPON_DISCOUNT_RATE)</font>
+                                                            @Html.TextBoxFor(model => model.COUPON_MONEY, new { cssClass = "input-sm text-left", disabled = MoneyDisabled })  <font color="red">@Html.ValidationMessageFor(model => model.COUPON_MONEY)</font>
                                                         </td>
                                                     </tr>
                                                      }

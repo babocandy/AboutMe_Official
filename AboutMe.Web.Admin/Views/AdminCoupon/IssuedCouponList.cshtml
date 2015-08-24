@@ -85,12 +85,12 @@
                                               }  
                     </li>
                     <li>. 발행가능기간 : @MasterFromDate.ToString() ~ @MasterToDate.ToString() </li>
-                    <li>. 사용가능매체 : @{ if (IssueMethodGbn == "P")
+                    <li>. 사용가능매체 : @{ if (UsableDeviceGbn == "P")
                      {<text>PC,모바일</text>}
                      else
                      {<text>모바일전용</text>}}
                      </li>
-                     <li>. 금액   :  @CouponDiscountMoney   . 할인율 : @CouponDiscountRate</li>
+                    <li>. 금액   :  @CouponDiscountMoney 원 / 할인율 : @CouponDiscountRate %</li>
                     <li>
                         . 발행방법 : @{ if (IssueMethodGbn == "A")
                          {<text>자동발행 </text>}
@@ -155,19 +155,20 @@
             <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
             <table class="table table_col">
                 <colgroup>
-                    <col width="5%" />
+                    <col width="4%" />
                     <col width="8%" />
-                    <col width="6%" />
-                    <col width="6%" />
+                    <col width="5%" />
+                    <col width="5%" />
+                    <col width="5%" />
                     <col width="*" />
-                    <col width="6%" />
-                    <col width="6%" />
-                    <col width="6%" />
-                    <col width="6%" />
-                    <col width="6%" />
-                    <col width="6%" />
-                    <col width="6%" />
+                    <col width="5%" />
+                    <col width="5%" />
+                    <col width="5%" />
+                    <col width="5%" />
+                    <col width="7%" />
+                    <col width="5%" />
 
+                    <col width="6%" />
                     <col width="6%" />
                     <col width="6%" />
                     <col width="6%" />
@@ -193,7 +194,9 @@
                         <th scope="col">주문취소여부</th>
                         <th scope="col">재발행쿠폰_YN / 일자</th>
                         <th scope="col">발행구분</th>
+                        <th scope="col">MEMO</th>
                         <th scope="col">사용가능YN</th>
+                     
                         <th scope="col">사용가능변경</th>
                     </tr>
                 </thead>
@@ -208,7 +211,7 @@
                             <td>@item.COUPON_MONEY </td>
                             <td>@item.COUPON_DISCOUNT_RATE</td>
                             <td>@if (item.USE_STATUS == "1")
-                                    {<text>발행(다운로드가능)=</text> }
+                                    {<text>발행(다운로드가능)</text> }
                                 else if (item.USE_STATUS == "5")
                                     {<text>사용가능(인증,다운로드완료)</text>}
                                 else if (item.USE_STATUS == "10")
@@ -229,7 +232,20 @@
                             else if (item.ISSUED_GBN == "B")
                             {<text>개별발행</text>}</td>
                             <td>@item.ISSUED_MEMO</td>
-                            <td>@Html.ActionLink("변경", "ChangeCouponUsable", new { IdxCouponNumber = item.IDX_COUPON_NUMBER }); </td>
+                            <td>@item.USABLE_TF</td>
+                            <td>
+                               
+                                @if(item.USABLE_TF.ToString() == "N")
+                                {
+                                    @Html.ActionLink("[변경]", "ChangeIssuedCouponUsable", new { IdxCouponNumber = item.IDX_COUPON_NUMBER , UsableTf="Y" , CdCoupon=Request["CdCoupon"] })                                                                                                ;
+                                }
+                                else if (item.USABLE_TF.ToString() == "Y")
+                                {
+                                    <!--<a href="/AdminCoupon/ChangeIssuedCouponUsable?IdxCouponNumber=@item.IDX_COUPON_NUMBER.ToString()&UsableTf=N&CdCoupon=@Request["cdcoupon"]">[변경]</a>-->
+                                    @Html.ActionLink("[변경]", "ChangeIssuedCouponUsable", new { IdxCouponNumber = item.IDX_COUPON_NUMBER, UsableTf = "N", CdCoupon = Request["CdCoupon"] }) ;
+                                  }
+
+                            </td>
                        </tr>
                     }
                 </tbody>
