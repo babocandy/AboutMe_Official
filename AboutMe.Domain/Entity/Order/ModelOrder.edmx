@@ -108,8 +108,7 @@
         </Function>
         <Function Name="SP_ORDER_STEP2_ADDR_SAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
-          <Parameter Name="SENDER_POST1" Type="varchar" Mode="In" />
-          <Parameter Name="SENDER_POST2" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_POST" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_ADDR1" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_ADDR2" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_TEL1" Type="varchar" Mode="In" />
@@ -154,8 +153,7 @@
         <Function Name="SP_ORDER_STEP2_SENDER_RECEIVER_SAVE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
           <Parameter Name="SENDER_NAME" Type="varchar" Mode="In" />
-          <Parameter Name="SENDER_POST1" Type="varchar" Mode="In" />
-          <Parameter Name="SENDER_POST2" Type="varchar" Mode="In" />
+          <Parameter Name="SENDER_POST" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_ADDR1" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_ADDR2" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_TEL1" Type="varchar" Mode="In" />
@@ -167,8 +165,7 @@
           <Parameter Name="SENDER_EMAIL1" Type="varchar" Mode="In" />
           <Parameter Name="SENDER_EMAIL2" Type="varchar" Mode="In" />
           <Parameter Name="RECEIVER_NAME" Type="varchar" Mode="In" />
-          <Parameter Name="RECEIVER_POST1" Type="varchar" Mode="In" />
-          <Parameter Name="RECEIVER_POST2" Type="varchar" Mode="In" />
+          <Parameter Name="RECEIVER_POST" Type="varchar" Mode="In" />
           <Parameter Name="RECEIVER_ADDR1" Type="varchar" Mode="In" />
           <Parameter Name="RECEIVER_ADDR2" Type="varchar" Mode="In" />
           <Parameter Name="RECEIVER_TEL1" Type="varchar" Mode="In" />
@@ -236,8 +233,7 @@
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_STEP2_ADDR_SAVE">
             <Parameter Name="M_ID" Mode="In" Type="String" />
-            <Parameter Name="SENDER_POST1" Mode="In" Type="String" />
-            <Parameter Name="SENDER_POST2" Mode="In" Type="String" />
+            <Parameter Name="SENDER_POST" Mode="In" Type="String" />
             <Parameter Name="SENDER_ADDR1" Mode="In" Type="String" />
             <Parameter Name="SENDER_ADDR2" Mode="In" Type="String" />
             <Parameter Name="SENDER_TEL1" Mode="In" Type="String" />
@@ -275,8 +271,7 @@
           <FunctionImport Name="SP_ORDER_STEP2_SENDER_RECEIVER_SAVE">
             <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
             <Parameter Name="SENDER_NAME" Mode="In" Type="String" />
-            <Parameter Name="SENDER_POST1" Mode="In" Type="String" />
-            <Parameter Name="SENDER_POST2" Mode="In" Type="String" />
+            <Parameter Name="SENDER_POST" Mode="In" Type="String" />
             <Parameter Name="SENDER_ADDR1" Mode="In" Type="String" />
             <Parameter Name="SENDER_ADDR2" Mode="In" Type="String" />
             <Parameter Name="SENDER_TEL1" Mode="In" Type="String" />
@@ -288,8 +283,7 @@
             <Parameter Name="SENDER_EMAIL1" Mode="In" Type="String" />
             <Parameter Name="SENDER_EMAIL2" Mode="In" Type="String" />
             <Parameter Name="RECEIVER_NAME" Mode="In" Type="String" />
-            <Parameter Name="RECEIVER_POST1" Mode="In" Type="String" />
-            <Parameter Name="RECEIVER_POST2" Mode="In" Type="String" />
+            <Parameter Name="RECEIVER_POST" Mode="In" Type="String" />
             <Parameter Name="RECEIVER_ADDR1" Mode="In" Type="String" />
             <Parameter Name="RECEIVER_ADDR2" Mode="In" Type="String" />
             <Parameter Name="RECEIVER_TEL1" Mode="In" Type="String" />
@@ -365,7 +359,7 @@
           <Parameter Name="OLD_ORDER_IDX" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_MYPAGE_MAIN_STATUS" ReturnType="Collection(AboutMeModel4.SP_MYPAGE_MAIN_STATUS_Result)">
-            <Parameter Name="M_ID" Mode="In" Type="String" />
+          <Parameter Name="M_ID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
@@ -373,8 +367,6 @@
           <Property Type="String" Name="M_NAME" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="M_ADDR1" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="M_ADDR2" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="M_ZIPCODE1" Nullable="false" MaxLength="128" />
-          <Property Type="String" Name="M_ZIPCODE2" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="M_PHONE1" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="M_PHONE2" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="M_PHONE3" Nullable="false" MaxLength="128" />
@@ -383,6 +375,7 @@
           <Property Type="String" Name="M_MOBILE3" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="M_EMAIL1" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="M_EMAIL2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="M_ZIPCODE" Nullable="true" MaxLength="7" />
           </ComplexType>
         <ComplexType Name="SP_ORDER_STEP2_DISCOUNT_INFO_Result">
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -441,14 +434,13 @@
           <Property Type="String" Name="RECEIVER_NAME" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="RECEIVER_ADDR1" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="RECEIVER_ADDR2" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="RECEIVER_POST1" Nullable="false" MaxLength="128" />
-          <Property Type="String" Name="RECEIVER_POST2" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="RECEIVER_TEL1" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="RECEIVER_TEL2" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="RECEIVER_TEL3" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="RECEIVER_HP1" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="RECEIVER_HP2" Nullable="false" MaxLength="128" />
           <Property Type="String" Name="RECEIVER_HP3" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="RECEIVER_POST" Nullable="true" MaxLength="7" />
           </ComplexType>
         <ComplexType Name="SP_ORDER_STEP2_Result" >
           <Property Type="Int32" Name="ORDER_IDX" Nullable="false" />
@@ -686,8 +678,6 @@
                 <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
                 <ScalarProperty Name="M_ADDR1" ColumnName="M_ADDR1" />
                 <ScalarProperty Name="M_ADDR2" ColumnName="M_ADDR2" />
-                <ScalarProperty Name="M_ZIPCODE1" ColumnName="M_ZIPCODE1" />
-                <ScalarProperty Name="M_ZIPCODE2" ColumnName="M_ZIPCODE2" />
                 <ScalarProperty Name="M_PHONE1" ColumnName="M_PHONE1" />
                 <ScalarProperty Name="M_PHONE2" ColumnName="M_PHONE2" />
                 <ScalarProperty Name="M_PHONE3" ColumnName="M_PHONE3" />
@@ -696,6 +686,7 @@
                 <ScalarProperty Name="M_MOBILE3" ColumnName="M_MOBILE3" />
                 <ScalarProperty Name="M_EMAIL1" ColumnName="M_EMAIL1" />
                 <ScalarProperty Name="M_EMAIL2" ColumnName="M_EMAIL2" />
+                <ScalarProperty Name="M_ZIPCODE" ColumnName="M_ZIPCODE" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -770,14 +761,13 @@
                 <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
                 <ScalarProperty Name="RECEIVER_ADDR1" ColumnName="RECEIVER_ADDR1" />
                 <ScalarProperty Name="RECEIVER_ADDR2" ColumnName="RECEIVER_ADDR2" />
-                <ScalarProperty Name="RECEIVER_POST1" ColumnName="RECEIVER_POST1" />
-                <ScalarProperty Name="RECEIVER_POST2" ColumnName="RECEIVER_POST2" />
                 <ScalarProperty Name="RECEIVER_TEL1" ColumnName="RECEIVER_TEL1" />
                 <ScalarProperty Name="RECEIVER_TEL2" ColumnName="RECEIVER_TEL2" />
                 <ScalarProperty Name="RECEIVER_TEL3" ColumnName="RECEIVER_TEL3" />
                 <ScalarProperty Name="RECEIVER_HP1" ColumnName="RECEIVER_HP1" />
                 <ScalarProperty Name="RECEIVER_HP2" ColumnName="RECEIVER_HP2" />
                 <ScalarProperty Name="RECEIVER_HP3" ColumnName="RECEIVER_HP3" />
+                <ScalarProperty Name="RECEIVER_POST" ColumnName="RECEIVER_POST" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

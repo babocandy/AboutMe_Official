@@ -11,6 +11,9 @@ using AboutMe.Domain.Service.Member;
 using AboutMe.Domain.Entity.Member;
 using AboutMe.Domain.Entity.Common;
 
+using AboutMe.Domain.Service.Order;
+using AboutMe.Domain.Entity.Order;
+
 using System.Text;
 using System.Web.UI.WebControls;
 using System.IO;
@@ -24,10 +27,12 @@ namespace AboutMe.Web.Mobile.Controllers.MyPage
     public class MyPageController : BaseMobileController
     {
         private IMemberService _MemberService;
+        private IOrderService _orderservice;
 
-        public MyPageController(IMemberService _memberService)
+        public MyPageController(IMemberService _memberService, IOrderService _orderservice)
         {
             this._MemberService = _memberService;
+            this._orderservice = _orderservice;
         }
 
 
@@ -55,8 +60,9 @@ namespace AboutMe.Web.Mobile.Controllers.MyPage
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName();
             this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피부고민코드
 
+            SP_MYPAGE_MAIN_STATUS_Result M = _orderservice.MyPageMainInfo(_user_profile.M_ID);
 
-            return View();
+            return View(M);
         }
 
 

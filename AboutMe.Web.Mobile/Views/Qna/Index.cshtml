@@ -1,0 +1,106 @@
+﻿@model AboutMe.Domain.Entity.Qna.QNA_INDEX
+@{
+    ViewBag.Title = "1:1문의 - ABOUT ME";
+    ViewBag.TopClass = "myquestion";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+   
+}
+@section Scripts{
+    <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+    <script language="javascript">
+        function deleteQna(IDX) {
+            if (confirm("삭제 하시겠습니까?") == true)
+                location.href = "/Mypage/Qna/QnaDelete?IDX=" + IDX;
+        }
+    </script>
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>1:1문의</h2>
+    </div>
+    <!-- 꼭 읽어주세요 -->
+    <div class="bullistb boxtypeb pb20">
+        <h3 class="info_sti">꼭 읽어주세요</h3>
+        <p>
+            주문하신 상품에 대한 교환/반품신청 신청은 “교환/반품 신청” 메뉴를
+            이용하여 주시기 바랍니다.고객 문의가 많아 답변이 지연될 수 있는 점은
+            양해 바라며, 빠른 처리를 위해 노력하겠습니다.<br />
+            “고객센터 >FAQ” 메뉴를 통해 더 많은 정보를 확인 하실 수 있습니다.
+        </p>
+    </div>
+    <!-- //꼭 읽어주세요 -->
+    <!-- 1:1문의 리스트 -->
+    <div class="question_list">
+        <h3>1:1문의 내역</h3>
+        <div class="btn_group">
+            <a href="/Mypage/Qna/QnaWrite?IDX=0&mode=NEW" class="btn btn_brown_h30 fs13">문의하기</a>
+        </div>
+        <ul class="toggle_box v2">
+            <!-- [Desc] "접수"일 경우 해당 <span> 태그에 class="ing" 추가 / "완료" 되면 삭제. -->
+@if (Model.QnaList != null)
+{
+    foreach (var item in Model.QnaList)
+    {
+            <li>
+                <a href="javascript:" class="toggle_ti">
+                    <strong>@item.TITLE</strong>
+                    <span class="txt_fdiv">
+                    @switch (item.CATEGORY)
+                    {
+                        case "1": @Html.Raw("상품문의"); break;
+                        case "2": @Html.Raw("배송문의"); break;
+                        case "3": @Html.Raw("구매문의"); break;
+                        case "4": @Html.Raw("반품문의"); break;
+                        case "5": @Html.Raw("기타문의"); break;
+                    }   <em class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</em></span>
+                    <span class="state ing">
+                        @if (item.STATUS == "1")
+                        {
+                            @Html.Raw("접수");
+                        }
+                        else
+                        {
+                            @Html.Raw("완료");
+                        }
+                    </span>
+                </a>
+                <div class="toggle_con faq_a">
+                    <p class="txt_q">
+                        <strong>@item.TITLE</strong>
+                        <span>
+                            @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
+                        </span>
+                    </p>
+                    @if (item.STATUS =="1")
+                    {
+                        <div class="btn_group">
+                            <a href="/Mypage/Qna/QnaWrite?IDX=@item.IDX&mode=EDIT" class="btn btn_gray_h30">수정</a><a href="#none" class="btn btn_white_h30" onclick="deleteQna(@item.IDX);">삭제</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="txt_a">
+                            @Html.Raw(HttpUtility.HtmlDecode(item.ANSWER))
+                        </p>
+                        <span class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</span>
+
+                    }
+                </div>
+            </li>
+    }
+}
+        </ul>
+    </div>
+    <!-- 1:1문의 리스트 -->
+    <!--페이징-->
+    <div class="paging">
+        <a href="#" class="prev"></a>
+        <strong>1</strong> / 50
+        <a href="#" class="next"></a>
+    </div>
+    <!--//페이징-->
+</div>
+<!--//container-->

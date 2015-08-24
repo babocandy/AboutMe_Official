@@ -29,6 +29,8 @@ namespace AboutMe.Common.Data
         public int StartPage { get; set; } //현재블럭에서 Numbering의 첫페이지 번호 
         public int EndPage { get; set; } //현재블럭에서 Numbering의 끝페이지 번호 
 
+        public int NextPage { get; set; }    //다음페이지 (모바일일경우 다음페이지를 알아야함)
+        public int BeforePage { get; set; }  //이전페이지 (모바일일경우 사용)
 
         /**
         private int totalNumOfBlock = 1; //블럭의 갯수 
@@ -46,6 +48,8 @@ namespace AboutMe.Common.Data
             this.CurrentPage  = pCurrentPage ;
             this.PagePerBlock = pPagePerBlock ;
             this.QStr = qStr;
+            this.NextPage = 1;
+            this.BeforePage = 0;
             
             this.TotalNumOfPage = (int)Math.Ceiling((double)TotalRecord / RecordPerPage); // 전체 페이지의 갯수
             this.TotalNumOfBlock = (int)Math.Ceiling((double)TotalNumOfPage / pPagePerBlock); // 전체 블럭 갯수
@@ -61,6 +65,22 @@ namespace AboutMe.Common.Data
                 StartPage = 1;
                 EndPage = 1;
                 TotalNumOfPage = 1;
+                this.NextPage = 1;
+                this.BeforePage = 0;
+            }
+
+            if (pCurrentPage == EndPage)
+            {
+                NextPage = pCurrentPage;
+            }
+            else
+            {
+                NextPage = pCurrentPage + 1;
+            }
+
+            if (pCurrentPage > 0)
+            {
+                BeforePage = pCurrentPage - 1;
             }
 
 

@@ -1,0 +1,165 @@
+﻿@model AboutMe.Domain.Entity.Cart.MYPAGE_WISHLIST_MODEL
+@{
+    ViewBag.Title = "찜한상품 - ABOUT ME";
+    ViewBag.TopClass = "wishlist";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+
+    if (Model == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+
+    string ProductPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");     
+
+}
+@section Scripts{
+<link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+
+<script language="javascript">
+    
+    function CheckAllBox(c) {
+        var ischecked = c.checked;
+        $(".wishchk").each(function () {
+          //  debugger
+            if ($(this).find("input:checkbox[name='gridchk']").length > 0)
+            {
+                var chkbox = $(this).find("input:checkbox[name='gridchk']");
+                $(chkbox[0]).prop("checked", ischecked);
+
+                if (ischecked == true)
+                {
+                    $(this).addClass("chkcon_on");
+                }
+                else
+                {
+                    $(this).removeClass("chkcon_on");
+                }
+            }
+        });
+
+    }
+
+    //한개삭제
+    function WishDeleteClick(wishidx)
+    {
+        if (confirm("상품을 찜목록에서 삭제하시겠습니까?")) {
+            var arrP = new Array;
+            arrP.push(wishidx);
+            Wish_Delete(arrP);
+            location.href = "/MyPage/MyWish";
+        }
+    }
+
+    //선택 모두 삭제
+    function CheckAllDelete() {
+        var cnt = 0;
+        var arrP = new Array;
+
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            if (this.checked) {
+                cnt++;
+                arrP.push($(this).attr('data-wishidx'));
+            }
+        });
+
+        if (cnt == 0) {
+            alert("삭제할 상품을 선택해주세요.");
+            return false;
+        }
+
+        if (confirm(cnt + "개의 상품을 찜목록에서 삭제하시겠습니까?")) {
+            Wish_Delete(arrP);
+            location.href = "/MyPage/MyWish";
+        }
+    }
+
+    //선택 장바구니 담기
+    function CheckAllCart() {
+        var cnt = 0;
+        var arrP = new Array;
+
+        $("input:checkbox[name='gridchk']").each(function (idx) {
+            if (this.checked) {
+                cnt++;
+                var obj = new Object();
+                obj.p_code = $(this).val();
+                obj.p_count = 1;
+                arrP.push(obj);
+            }
+        });
+
+        if (cnt == 0) {
+            alert("장바구니에 담을 상품을 선택해주세요.");
+            return false;
+        }
+
+        Cart_Input(arrP);
+    }
+</script>
+}
+
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>찜목록</h2>
+    </div>
+    <!-- 찜목록 상단 -->
+    <div class="mypage_top boxtypeb">
+        <p class="count"><i class="bl_wish"></i> 찜목록 <em>@Model.WishCnt</em>개</p>
+        <div class="cmd">
+            <label class="chkcon v2"><input type="checkbox" name="" title="" onclick="CheckAllBox(this);" /></label>
+            <div class="btn_group">
+                <a href="#none" class="btn btn_white_h30" onclick="CheckAllDelete();">선택삭제</a><a href="#none" class="btn btn_white_h30 v2 cart" onclick="CheckAllCart();">쇼핑백</a>
+            </div>
+        </div>
+    </div>
+    <!-- //찜목록 상단 -->
+    <!-- 찜목록 -->
+    <div class="product_list">
+        <h3>찜목록</h3>
+        <ul>
+        @foreach (var item in Model.WishList)
+        {
+            string img1 = ProductPath + "R270_" + item.MAIN_IMG;
+                
+            <li>
+                <label class="chkcon v2 wishchk"><input type="checkbox" class="chkbox" name="gridchk" title="" value="@item.P_CODE" data-wishidx="@item.IDX" /></label>
+                <a href="#none" class="del_ico" onclick="WishDeleteClick('@item.IDX')"></a>
+                <ul class="product_info">
+                    <li class="photo_info">
+                        <div class="photo"><img src="@img1" alt="" /></div>
+                        <div class="detail">
+                            @if (item.SOLDOUT_YN == "Y")
+                            {
+                                <span class="ico ico_best">SOLD OUT</span>
+                            }
+                            <span class="tit">@item.P_NAME</span>
+                            <span class="price">
+                            @if (item.DISCOUNT_PRICE != item.SELLING_PRICE)
+                            { 
+                                <del>@String.Format("{0:#,#0.}", @item.SELLING_PRICE)원</del>
+                            }
+                            @String.Format("{0:#,#0.}", @item.DISCOUNT_PRICE)원</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="btn_group">
+                    <a href="#none" class="btn btn_brown_h40 " onclick="NowOrderInput('@item.P_CODE', '1')">바로구매</a>
+                    <a href="#none" class="btn btn_white_h40 v2 cart" onclick="Cart_Product_Input('@item.P_CODE', '1')">쇼핑백</a>
+                </div>
+            </li>
+        }
+        </ul>
+
+        <!--페이징-->
+        @{
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.WishCnt, RecordPerPage = Model.PageCnt, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = "" });
+        }
+        <!--//페이징-->
+    </div>
+    <!-- //찜목록 -->
+</div>
+<!--//container-->

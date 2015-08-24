@@ -8,7 +8,7 @@
 }
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
-    <link href="/aboutCom/css/shopping.css" rel="stylesheet" />
+    <link href="/aboutCom/css/event.css" rel="stylesheet" />
 }
 
 
@@ -83,162 +83,115 @@
     </script>
 
 
-<script language="javascript">
+    <script language="javascript">
 
-    var pmo_set_discount_cnt = @Model.inst_PROMOTION_TOP_1_Result[0].PMO_SET_DISCOUNT_CNT;
+        var pmo_set_discount_cnt = @Model.inst_PROMOTION_TOP_1_Result[0].PMO_SET_DISCOUNT_CNT;
 
-    function CalTotalChk(chkObj)
-    {
-        var frmobj = document.frm001;
-
-        if(chkObj.checked == true)
+        function CalTotalChk(chkObj)
         {
+            var frmobj = document.frm001;
+
+            if(chkObj.checked == true)
+            {
+                for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+                {
+                    frmobj.ChkCalPrice[i].checked = true;
+                }
+
+                //alert(1);
+            }
+            else
+            {
+                for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+                {
+                    frmobj.ChkCalPrice[i].checked = false;
+                }
+                //alert(0);
+            }
+
+            Calprice();
+        }
+
+
+
+        function Calprice()
+        {
+            /**
+            document.getElementById("div_total_price").innerHTML = "";
+            document.getElementById("div_dc_price").innerHTML = "";
+            document.getElementById("div_result_price").innerHTML = "";
+            **/
+
+            var frmobj = document.frm001;
+            var sel_price = 0;
+            var sel_pmo_price = 0;
+
+            var total_price = 0 ;
+            var total_discount_price = 0 ;
+            var minus_price = 0 ;
+            var total_result_price = 0
+
+            var sel_arr , cur_arr ;
+            var pmo_set_selected_cnt = 0 ;
+
+            //alert(frmobj.ChkCalPrice.length);
+
             for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
             {
-                frmobj.ChkCalPrice[i].checked = true;
+                if(frmobj.ChkCalPrice[i].checked == true)
+                {
+                    //alert(frmobj.ChkCalPrice[i].value)
+                    cur_arr= frmobj.ChkCalPrice[i].value.split('$');
+                    //alert(cur_arr[1]);
+                    total_price = parseInt(total_price) + parseInt(cur_arr[1]) ;
+                    //alert(total_price);
+                    total_discount_price =  parseInt(total_discount_price) +  parseInt(cur_arr[2]);
+
+
+                    minus_price = minus_price - ( parseInt(cur_arr[1]) - parseInt(cur_arr[2]));
+                    pmo_set_selected_cnt++;
+
+                }
+
+                //alert(total_discount_price);
             }
 
-            alert(1);
-        }
-        else
-        {
-            for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+            if(pmo_set_selected_cnt >= pmo_set_discount_cnt )
             {
-                frmobj.ChkCalPrice[i].checked = false;
+                total_result_price = total_discount_price  ;
             }
-            alert(0);
-        }
-        
-        Calprice();
-    }
-
-
-
-    function Calprice()
-    {
-        /**
-        document.getElementById("div_total_price").innerHTML = "";
-        document.getElementById("div_dc_price").innerHTML = "";
-        document.getElementById("div_result_price").innerHTML = "";
-        **/
-
-        var frmobj = document.frm001;
-        var sel_price = 0;
-        var sel_pmo_price = 0;
-
-        var total_price = 0 ;
-        var total_discount_price = 0 ;
-        var minus_price = 0 ;
-        var total_result_price = 0
-
-        var sel_arr , cur_arr ;
-        var pmo_set_selected_cnt = 0 ;
-
-        //alert(frmobj.ChkCalPrice.length);
-
-        for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
-        {
-            if(frmobj.ChkCalPrice[i].checked == true)
+            else
             {
-                //alert(frmobj.ChkCalPrice[i].value)
-                cur_arr= frmobj.ChkCalPrice[i].value.split('$');
-                //alert(cur_arr[1]);
-                total_price = parseInt(total_price) + parseInt(cur_arr[1]) ;
-                //alert(total_price);
-                total_discount_price =  parseInt(total_discount_price) +  parseInt(cur_arr[2]);
-
-
-                minus_price = minus_price - ( parseInt(cur_arr[1]) - parseInt(cur_arr[2]));
-                pmo_set_selected_cnt++;
-
+                minus_price = 0;
+                total_result_price = total_price;
             }
 
-            //alert(total_discount_price);
+            document.getElementById("pmo_set_selected_cnt").innerHTML = pmo_set_selected_cnt;
+            document.getElementById("pmo_set_selected_cnt_02").innerHTML = pmo_set_selected_cnt;
+            document.getElementById("total_price").innerHTML = AddComma(total_price);
+            document.getElementById("dc_price").innerHTML = AddComma(minus_price);
+            document.getElementById("result_price").innerHTML = AddComma(total_result_price);
+
         }
 
-        if(pmo_set_selected_cnt >= pmo_set_discount_cnt )
-        {
-            total_result_price = total_discount_price  ;
-        }
-        else
-        {
-            minus_price = 0;
-            total_result_price = total_price;
-        }
+        function AddComma(data_value) {
+            //data_value.toLocaleString();
+            //Number(data_value).toLocaleString('en').split(".")[0] ===> 소숫점이 붙을 경우에는 이렇게 처리
+            var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+            data_value += '';                          // 숫자를 문자열로 변환
 
-        document.getElementById("pmo_set_selected_cnt").innerHTML = pmo_set_selected_cnt;
-        document.getElementById("pmo_set_selected_cnt_02").innerHTML = pmo_set_selected_cnt;
-        document.getElementById("total_price").innerHTML = AddComma(total_price);
-        document.getElementById("dc_price").innerHTML = AddComma(minus_price);
-        document.getElementById("result_price").innerHTML = AddComma(total_result_price);
+            while (reg.test(data_value))
+                data_value = data_value.replace(reg, '$1' + ',' + '$2');
 
-    }
-
-    function AddComma(data_value) {
-        //data_value.toLocaleString();
-        //Number(data_value).toLocaleString('en').split(".")[0] ===> 소숫점이 붙을 경우에는 이렇게 처리
-        var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
-        data_value += '';                          // 숫자를 문자열로 변환
-
-        while (reg.test(data_value))
-            data_value = data_value.replace(reg, '$1' + ',' + '$2');
-
-        return data_value;
-    }
-
-
-    //div_total , discount , result
-
-    //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
-    function AddCartClick() {
-
-
-        var arrP = new Array;
-
-
-        var frmobj = document.frm001 ;
-        var pcode = "" ;
-
-
-        for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
-        {
-            if(frmobj.ChkCalPrice[i].checked == true)
-            {
-                //alert(frmobj.ChkCalPrice[i].checked );
-
-                var obj = new Object();
-                cur_arr= frmobj.ChkCalPrice[i].value.split('$');
-                pcode = cur_arr[0] ;
-
-                /**
-                obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
-                obj.p_count = $(b).attr('data-pcount');
-                **/
-
-                obj.p_code = pcode;//f.opt_p_code.value//P_CODE
-                obj.p_count = 1;
-                arrP.push(obj);
-            }
-
-            //alert(total_discount_price);
+            return data_value;
         }
 
 
+        //div_total , discount , result
 
-        if(arrP.length > 0)
-        {
-            Cart_Input(arrP);
-        }
-        else
-        {
-            alert("쇼핑백에 담을 상품을 선택해주세요!");
-        }
+        //아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+        function AddCartClick() {
 
-    }
-
-    //여러개의 상품을 장바구니에 넣고, 바로구매 하기 (ToDo)
-    function NowOrderPluralInput() {
-        if (confirm('바로구매하시겠습니까?')) {
 
             var arrP = new Array;
 
@@ -251,7 +204,7 @@
             {
                 if(frmobj.ChkCalPrice[i].checked == true)
                 {
-                    //alert(frmobj.ChkCalPrice[i].checked );
+                    alert(frmobj.ChkCalPrice[i].checked );
 
                     var obj = new Object();
                     cur_arr= frmobj.ChkCalPrice[i].value.split('$');
@@ -274,46 +227,93 @@
 
             if(arrP.length > 0)
             {
-                //Cart_Input(arrP);
-
-                var jobj = JSON.stringify(arrP);
-                var f = document.nowOrderform;
-                f.OrderList.value = jobj;
-                var islogin = '@MemberInfo.IsMemberLogin()';
-
-                if (islogin == 'True') {
-                    f.action = '/Order/InsertOrderStep1';
-                }
-                else {
-                    f.action = '/MemberShip/Login';
-                }
-                f.submit();
+                Cart_Input(arrP);
             }
             else
             {
-                alert("구매할 상품을 선택해주세요!");
+                alert("쇼핑백에 담을 상품을 선택해주세요!");
             }
 
         }
-    }
+
+        //여러개의 상품을 장바구니에 넣고, 바로구매 하기 (ToDo)
+        function NowOrderPluralInput() {
+            if (confirm('바로구매하시겠습니까?')) {
+
+                var arrP = new Array;
 
 
-    //장바구니----아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
-    /**
-    function AddCartClick(b) {
-        var arrP = new Array;
-        var obj = new Object();
-        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
-        obj.p_count = $(b).attr('data-pcount');
-        arrP.push(obj);
-        Cart_Input(arrP);
-    }
-
-    **/
+                var frmobj = document.frm001 ;
+                var pcode = "" ;
 
 
+                for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
+                {
+                    if(frmobj.ChkCalPrice[i].checked == true)
+                    {
+                        //alert(frmobj.ChkCalPrice[i].checked );
 
-</script>
+                        var obj = new Object();
+                        cur_arr= frmobj.ChkCalPrice[i].value.split('$');
+                        pcode = cur_arr[0] ;
+
+                        /**
+                        obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+                        obj.p_count = $(b).attr('data-pcount');
+                        **/
+
+                        obj.p_code = pcode;//f.opt_p_code.value//P_CODE
+                        obj.p_count = 1;
+                        arrP.push(obj);
+                    }
+
+                    //alert(total_discount_price);
+                }
+
+
+
+                if(arrP.length > 0)
+                {
+                    //Cart_Input(arrP);
+
+                    var jobj = JSON.stringify(arrP);
+                    var f = document.nowOrderform;
+                    f.OrderList.value = jobj;
+                    var islogin = '@MemberInfo.IsMemberLogin()';
+
+                    if (islogin == 'True') {
+                        f.action = '/Order/InsertOrderStep1';
+                    }
+                    else {
+                        f.action = '/MemberShip/Login';
+                    }
+                    f.submit();
+                }
+                else
+                {
+                    alert("구매할 상품을 선택해주세요!");
+                }
+
+            }
+        }
+
+
+        //장바구니----아래 펑션을 변형해서 한번에 여러개를 넣으면 된다
+        /**
+        function AddCartClick(b) {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
+            obj.p_count = $(b).attr('data-pcount');
+            arrP.push(obj);
+            Cart_Input(arrP);
+        }
+
+        **/
+
+
+
+    </script>
 
 }
 
@@ -342,81 +342,81 @@
 
 @section Body{
 
-   <div class="wrap detail setgood">
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
-    <!--container-->
-    <div class="container setgoods">
-        <div class="h2_area">
-            <h2>세트상품</h2>
-        </div>
-        <!--상세배너-->
-        <div class="detailbnr">
-            <a href="#"><img src="/aboutCom/images/sample/event_bnr640_2.jpg" alt="" /></a>
-        </div>
-        <!--//상세배너-->
-        <!--상세리스트-->
-@using (Html.BeginForm("i", "test", FormMethod.Post, new { id = "frm001", name = "frm001" }))
-{
-        <p class="btn_allcheck"><label class="chkcon v2"><input type="checkbox" name="ChkTotal" id="ChkTotal" onclick="CalTotalChk(this);"><span class="txt">전체선택</span></label></p>
-        <ul class="product_list">
-           @foreach (var item in Model.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)
-           {
-             string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
-             <li>
-                <label class="chkcon v2"><input type="checkbox" name="ChkCalPrice" id="ChkCalPrice" value="@item.P_CODE$@item.DISCOUNT_PRICE$@item.RESULT_PRICE" title="" onclick="Calprice();" /></label>
-                 <a href="/Shopping/Detail?pcode=@item.P_CODE" class="list">
-                     <span class="photo"><img src="@imgUrl1" class="item" alt="" /></span>
-                     <span class="detail">
-                         <!--
-                            .ico_best
-                            .ico_coupon
-                            .ico_time
-                            .ico_soldout
-                            .ico_set
-                            -->
-                         @if (!string.IsNullOrEmpty(item.ICON_YN))
-                         {
-                             if (item.ICON_YN.IndexOf('B') != -1)
-                             { <text> <span class="ico_best">BEST</span></text> }
-                             if (item.ICON_YN.IndexOf('S') != -1)
-                             { <text> <span class="ico_soldout">SOLD OUT</span></text> }
-                             if (item.ICON_YN.IndexOf('N') != -1)
-                             { <text> <span class="ico_new">NEW</span></text> }
-                             if (item.ICON_YN.IndexOf('C') != -1)
-                             { <text> <span class="ico_custom ">커스텀</span></text> }
-                         }
-                         @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
-                         {
-                             if (item.PMO_PRODUCT_CATEGORY == "01")
-                             { <text> <span class="ico_set">SET</span></text> }
-                             if (item.PMO_PRODUCT_CATEGORY == "02")
-                             { <text> <span class="ico_1_1">1+1</span></text> }
-                             if (item.PMO_PRODUCT_CATEGORY == "03")
-                             { <text> <span class="ico_time">TIME</span></text> }
-                         }
-                         @if (!string.IsNullOrEmpty(item.COUPON_CODE))
-                         {
-                             <text> <span class="ico_coupon">COUPON</span></text>
-                         }
-                         
-                         <span class="tit">@(new HtmlString(item.P_NAME))</span>
-                         <span class="stit">@(new HtmlString(item.P_SUB_TITLE))<</span>
-                         <span class="price"><del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@String.Format("{0:#,##0}", item.DISCOUNT_PRICE)</strong>원</span>
-                     </span>
-                 </a>
-                 <a href="javascript:Cart_Product_Input('@item.P_CODE', 1);" class="btn_cart"></a>
-            </li>
-           }
-      
-        </ul>
-}
-        <!--//상세리스트-->
+    <div class="wrap detail setgood">
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
+        <!--container-->
+        <div class="container setgoods">
+            <div class="h2_area">
+                <h2>세트상품</h2>
+            </div>
+            <!--상세배너-->
+            <div class="detailbnr">
+                <a href="#"><img src="/aboutCom/images/sample/event_bnr640_2.jpg" alt="" /></a>
+            </div>
+            <!--//상세배너-->
+            <!--상세리스트-->
+            @using (Html.BeginForm("i", "test", FormMethod.Post, new { id = "frm001", name = "frm001" }))
+            {
+                <p class="btn_allcheck"><label class="chkcon v2"><input type="checkbox" name="ChkTotal" id="ChkTotal" onclick="CalTotalChk(this);"><span class="txt">전체선택</span></label></p>
+                <ul class="product_list">
+                    @foreach (var item in Model.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)
+                    {
+                        string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                        <li>
+                            <label class="chkcon v2"><input type="checkbox" name="ChkCalPrice" id="ChkCalPrice" value="@item.P_CODE$@item.DISCOUNT_PRICE$@item.RESULT_PRICE" title="" onclick="Calprice();" /></label>
+                            <a href="/Shopping/Detail?pcode=@item.P_CODE" class="list">
+                                <span class="photo"><img src="@imgUrl1" class="item" alt="" /></span>
+                                <span class="detail">
+                                    <!--
+                                       .ico_best
+                                       .ico_coupon
+                                       .ico_time
+                                       .ico_soldout
+                                       .ico_set
+                                       -->
+                                    @if (!string.IsNullOrEmpty(item.ICON_YN))
+                                    {
+                                        if (item.ICON_YN.IndexOf('B') != -1)
+                                        { <text> <span class="ico_best">BEST</span></text> }
+                                        if (item.ICON_YN.IndexOf('S') != -1)
+                                        { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                        if (item.ICON_YN.IndexOf('N') != -1)
+                                        { <text> <span class="ico_new">NEW</span></text> }
+                                        if (item.ICON_YN.IndexOf('C') != -1)
+                                        { <text> <span class="ico_custom ">커스텀</span></text> }
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                                    {
+                                        if (item.PMO_PRODUCT_CATEGORY == "01")
+                                        { <text> <span class="ico_set">SET</span></text> }
+                                        if (item.PMO_PRODUCT_CATEGORY == "02")
+                                        { <text> <span class="ico_1_1">1+1</span></text> }
+                                        if (item.PMO_PRODUCT_CATEGORY == "03")
+                                        { <text> <span class="ico_time">TIME</span></text> }
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                                    {
+                                        <text> <span class="ico_coupon">COUPON</span></text>
+                                    }
+
+                                    <span class="tit">@(new HtmlString(item.P_NAME))</span>
+                                    <span class="stit">@(new HtmlString(item.P_SUB_TITLE))<</span>
+                                    <span class="price"><del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@String.Format("{0:#,##0}", item.DISCOUNT_PRICE)</strong>원</span>
+                                </span>
+                            </a>
+                            <a href="javascript:Cart_Product_Input('@item.P_CODE', 1);" class="btn_cart"></a>
+                        </li>
+                    }
+
+                </ul>
+            }
+            <!--//상세리스트-->
 
 
+        </div>
+        <!--//container-->
+        @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
     </div>
-    <!--//container-->
-    @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
-</div>
 }
 <!--footer-->
 @section Footer{

@@ -4,8 +4,7 @@
         if (gbn == 1) //기본배송지
         {
             $("#SENDER_NAME").val('@Model.BaseAddrInfo.M_NAME');
-            $("#SENDER_POST1").val('@Model.BaseAddrInfo.M_ZIPCODE1');
-            //$("#SENDER_POST2").val('@Model.BaseAddrInfo.M_ZIPCODE2');
+            $("#SENDER_POST").val('@Model.BaseAddrInfo.M_ZIPCODE');
             $("#SENDER_ADDR1").val('@Model.BaseAddrInfo.M_ADDR1');
             $("#SENDER_ADDR2").val('@Model.BaseAddrInfo.M_ADDR2');
             $("#SENDER_TEL1").val('@Model.BaseAddrInfo.M_PHONE1');
@@ -22,8 +21,7 @@
         else if (gbn == 2) //신규
         {
             $("#SENDER_NAME").val('');
-            $("#SENDER_POST1").val('');
-            //$("#SENDER_POST2").val('');
+            $("#SENDER_POST").val('');
             $("#SENDER_ADDR1").val('');
             $("#SENDER_ADDR2").val('');
             $("#SENDER_TEL1").val('');
@@ -43,8 +41,7 @@
         if (gbn == 1) //기본배송지
         {
             $("#RECEIVER_NAME").val('@Model.BaseAddrInfo.M_NAME');
-            $("#RECEIVER_POST1").val('@Model.BaseAddrInfo.M_ZIPCODE1');
-           // $("#RECEIVER_POST2").val('@Model.BaseAddrInfo.M_ZIPCODE2');
+            $("#RECEIVER_POST").val('@Model.BaseAddrInfo.M_ZIPCODE');
             $("#RECEIVER_ADDR1").val('@Model.BaseAddrInfo.M_ADDR1');
             $("#RECEIVER_ADDR2").val('@Model.BaseAddrInfo.M_ADDR2');
             $("#RECEIVER_TEL1").val('@Model.BaseAddrInfo.M_PHONE1');
@@ -58,8 +55,7 @@
         else if (gbn == 2) //최근배송지
         {
             $("#RECEIVER_NAME").val('@Model.RecentAddrInfo.RECEIVER_NAME');
-            $("#RECEIVER_POST1").val('@Model.RecentAddrInfo.RECEIVER_POST1');
-            //$("#RECEIVER_POST2").val('@Model.RecentAddrInfo.RECEIVER_POST2');
+            $("#RECEIVER_POST").val('@Model.RecentAddrInfo.RECEIVER_POST');
             $("#RECEIVER_ADDR1").val('@Model.RecentAddrInfo.RECEIVER_ADDR1');
             $("#RECEIVER_ADDR2").val('@Model.RecentAddrInfo.RECEIVER_ADDR2');
             $("#RECEIVER_TEL1").val('@Model.RecentAddrInfo.RECEIVER_TEL1');
@@ -72,10 +68,9 @@
         else if (gbn == 3) //신규
         {
             $("#RECEIVER_NAME").val('');
-            $("#RECEIVER_POST1").val('');
-            //$("#RECEIVER_POST2").val('');
+            $("#RECEIVER_POST").val('');
             $("#RECEIVER_ADDR1").val('');
-            //$("#RECEIVER_ADDR2").val('');
+            $("#RECEIVER_ADDR2").val('');
             $("#RECEIVER_TEL1").val('');
             $("#RECEIVER_TEL2").val('');
             $("#RECEIVER_TEL3").val('');
@@ -87,8 +82,7 @@
 
     function setSameSenderAddr() {
         $("#RECEIVER_NAME").val($("#SENDER_NAME").val());
-        $("#RECEIVER_POST1").val($("#SENDER_POST1").val());
-        //$("#RECEIVER_POST2").val($("#SENDER_POST2").val());
+        $("#RECEIVER_POST").val($("#SENDER_POST").val());
         $("#RECEIVER_ADDR1").val($("#SENDER_ADDR1").val());
         $("#RECEIVER_ADDR2").val($("#SENDER_ADDR2").val());
         $("#RECEIVER_TEL1").val($("#SENDER_TEL1").val());
@@ -181,7 +175,7 @@
                 <dl>
                     <dt class="essential">주소</dt>
                     <dd class="frm_address">
-                        <input type="text" title="우편번호 입력" class="ipttypea" name="SENDER_POST1" id="SENDER_POST1" value="@Model.BaseAddrInfo.M_ZIPCODE1"><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('SENDER_POST1', 'SENDER_POST2', 'SENDER_ADDR1');">우편번호</a>
+                        <input type="text" title="우편번호 입력" class="ipttypea" name="SENDER_POST" id="SENDER_POST" value="@Model.BaseAddrInfo.M_ZIPCODE"><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('SENDER_POST', 'SENDER_ADDR1');">우편번호</a>
                         <input type="text" title="주소입력" class="ipttypea mt5 wper100" name="SENDER_ADDR1" id="SENDER_ADDR1" value="@Model.BaseAddrInfo.M_ADDR1">
                         <input type="text" title="주소상세입력" class="ipttypea mt5 wper100" name="SENDER_ADDR2" id="SENDER_ADDR2" value="@Model.BaseAddrInfo.M_ADDR2">
                     </dd>
@@ -300,7 +294,7 @@
                 <dl>
                     <dt class="essential">주소</dt>
                     <dd class="frm_address">
-                        <input type="text" title="우편번호 입력" class="ipttypea" name="RECEIVER_POST1" id="RECEIVER_POST1" /><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('RECEIVER_POST1', 'RECEIVER_POST2', 'RECEIVER_ADDR1');">우편번호</a>
+                        <input type="text" title="우편번호 입력" class="ipttypea" name="RECEIVER_POST" id="RECEIVER_POST" /><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('RECEIVER_POST', 'RECEIVER_ADDR1');">우편번호</a>
                         <input type="text" title="주소입력" class="ipttypea mt5 wper100" name="RECEIVER_ADDR1" id="RECEIVER_ADDR1" />
                         <input type="text" title="주소상세입력" class="ipttypea mt5 wper100" name="RECEIVER_ADDR2" id="RECEIVER_ADDR2" />
                     </dd>

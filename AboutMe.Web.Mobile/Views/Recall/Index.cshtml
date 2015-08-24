@@ -1,0 +1,120 @@
+﻿@model AboutMe.Domain.Entity.Recallbbs.RECALL_INDEX
+@{
+    ViewBag.Title = "교환/반품신청 - ABOUT ME";
+    ViewBag.TopClass = "myreturn";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+
+}
+@section Scripts {
+<link href="/aboutCom/css/mypage.css" rel="stylesheet" />
+<script language="javascript">
+    function ChgDateType(d) {
+        var from_date, to_date;
+
+        if (d == "3") {
+            from_date = '@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (d == "6") {
+            from_date = '@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else if (d == "12") {
+            from_date = '@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")';
+            to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+        }
+        else//  전체기간
+        {
+            from_date = '';
+            to_date = '';
+        }
+
+        $("#start_date").val(from_date);
+        $("#end_date").val(to_date);
+        $("#dateType").val(d);
+        document.frm.submit();
+    }
+
+</script>
+}
+<!--container-->
+<div class="container">
+    <div class="h2_area">
+        <a href="javascript:void(0)" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+        <h2>교환/반품신청</h2>
+    </div>
+    <!-- 조회기간 -->
+    <div class="mypage_top boxtypeb">
+        <h3>조회기간</h3>
+@using (Html.BeginForm("Index", "Recall", FormMethod.Get, new { id = "frm", name = "frm" })) 
+{
+    <input type="hidden" name="dateType" id="dateType" value="@Model.SearchParam.dateType" />
+    <input type="hidden" name="start_date" id="start_date" value="@Model.SearchParam.start_date" />
+    <input type="hidden" name="end_date" id="end_date" value="@Model.SearchParam.end_date" />
+        <ul class="periodsel tabs">
+            <li @{ if (@Model.SearchParam.dateType == "3") { @Html.Raw("class='cnt'") ; } }><a href="#none" onclick="ChgDateType(3);">3개월</a></li>
+            <li @{ if (@Model.SearchParam.dateType == "6") { @Html.Raw("class='cnt'")  ; } }><a href="#none" onclick="ChgDateType(6);">6개월</a></li>
+            <li @{ if (@Model.SearchParam.dateType == "12") { @Html.Raw("class='cnt'")  ; } }><a href="#none" onclick="ChgDateType(12);">1년</a></li>
+        </ul>
+}    
+        <p class="bullista mt10">
+            주문취소는 배송 시작 전 단계에서만 기능합니다.<br />
+            주문내역에서 취소 가능합니다. 이후에는 반품으로 진행되며,
+            단순변심으로 인한 반품일 경우 반품배송비가 추가 발생할 수
+            있습니다. 주문내역에서 선택 후 교환/반품 신청 가능합니다.
+        </p>
+    </div>
+    <!-- //조회기간 -->
+    <!-- 반품신청 리스트 -->
+    <div class="myreturn_con">
+        <table>
+            <caption>반품신청 리스트</caption>
+            <colgroup>
+                <col width="*" />
+                <col width="28.5%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>주문번호/날짜/제목</th>
+                    <th>진행상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- [Desc] "처리중"일 경우 두번 째 두번째 <td>태그 "ing" 클래스 입력 / "처리완료"될 경우 삭제 -->
+            @if (Model.BbsList.Count < 1)
+            {
+                <tr><td colspan="2">데이터가 없습니다.</td></tr>
+            }
+            
+            @foreach (var item in Model.BbsList)
+            {
+                <tr>
+                    <td>
+                        <a href="/Mypage/Recall/RecallView?IDX=@item.IDX&dateType=@Model.SearchParam.dateType&page=@Model.SearchParam.page">
+                            <span class="ordernum">주문번호 @item.ORDER_CODE <span class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</span></span>
+                            <span class="ordertit">@item.TITLE</span>
+                        </a>
+                    </td>
+                @if (item.STATUS == 2)
+                {
+                    <td>처리완료</td>
+                }
+                else
+                {
+                    <td class="ing">처리중</td>
+                }
+                </tr>
+            }
+                  
+            </tbody>
+        </table>
+
+        <!--페이징-->
+        @{
+            Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.BbsCount, RecordPerPage = Model.SearchParam.pagesize, PagePerBlock = 10, CurrentPage = Model.SearchParam.page, QueryStr = "dateType="+Model.SearchParam.dateType });
+        }
+        <!--//페이징-->
+    </div>
+    <!-- //반품신청 리스트 -->
+</div>
+<!--//container-->

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AboutMe.Domain.Entity.Order.SP_MYPAGE_MAIN_STATUS_Result
+@{
     ViewBag.Title = "Mobile-Login";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
@@ -117,21 +118,21 @@
                 <h3>진행중인 주문/배송현황</h3>
                 <div class="deliveryflow">
                     <ul>
-                        <li class="cnt"><span class="bg_d0">진행중<br /><strong>02</strong>건</span><span class="hidden">-현재위치</span></li>
-                        <li><i class="ico_d1"></i>입금대기<br /><strong>01</strong>건</li>
-                        <li><i class="ico_d2"></i>결제완료<br /><strong>00</strong>건</li>
-                        <li><i class="ico_d3"></i>상품준비중<br /><strong>00</strong>건</li>
-                        <li><i class="ico_d4"></i>배송중<br /><strong>00</strong>건</li>
-                        <li><i class="ico_d5"></i>배송완료<br /><strong>01</strong>건</li>
+                        <li class="cnt"><span class="bg_d0">진행중<br /><strong>@Model.STATUS_ALL</strong>건</span><span class="hidden">-현재위치</span></li>
+                        <li><i class="ico_d1"></i>입금대기<br /><strong>@Model.STATUS_10</strong>건</li>
+                        <li><i class="ico_d2"></i>결제완료<br /><strong>@Model.STATUS_20</strong>건</li>
+                        <li><i class="ico_d3"></i>상품준비중<br /><strong>@Model.STATUS_30</strong>건</li>
+                        <li><i class="ico_d4"></i>배송중<br /><strong>@Model.STATUS_40</strong>건</li>
+                        <li><i class="ico_d5"></i>배송완료<br /><strong>@Model.STATUS_50</strong>건</li>
                     </ul>
                 </div>
                 <div class="myinfo_list">
                     <ul>
-                        <li><a href="#link"><span>배송/주문 조회 <em>진행 중 <strong>02</strong>건</em></span><i class="arrow_right"></i></a></li>
+                        <li><a href="/MyPage/MyOrder"><span>배송/주문 조회 <em>진행 중 <strong>@Model.STATUS_ALL</strong>건</em></span><i class="arrow_right"></i></a></li>
                         <li>
-                            <a href="#link"><span>교환/반품 신청 <em>진행 중 <strong>0</strong>건</em></span><i class="arrow_right"></i></a>
+                            <a href="/MyPage/Recall"><span>교환/반품 신청 <em>진행 중 <strong>@Model.RECALL_ING</strong>건</em></span><i class="arrow_right"></i></a>
                             <div class="btn_group">
-                                <a href="#none" class="btn btn_white_h30">쿠폰북</a><a href="#none" class="btn btn_white_h30">1:1문의</a><a href="#none" class="btn btn_white_h30">찜목록</a>
+                                <a href="#none" class="btn btn_white_h30">쿠폰북</a><a href="/MyPage/Qna" class="btn btn_white_h30">1:1문의</a><a href="/Mypage/MyWish" class="btn btn_white_h30">찜목록</a>
                             </div>
                             <div class="concerns">
                                 <p class="ctit">내 피부고민 설정<a href="/MyPage/Pop_SkinTrouble" onclick="window.open(this.href);return false;" class="btn_set" ><i class="bl_set"></i></a></p>
