@@ -23,23 +23,23 @@
                     <ul class="slist">
                         @if (!string.IsNullOrEmpty(Model.MainInfo.MAIN_IMG1))
                         {
-                            <li><a href="@Model.MainInfo.MAIN_URL1"><img src="@Model.MainInfo.MAIN_IMG1" width="862" height="400" alt="" /></a></li>
+                            <li><a href="@Model.MainInfo.MAIN_URL1"><img src="@Model.MainInfo.MAIN_IMG1"  alt="" /></a></li>
                         }
                         @if (!string.IsNullOrEmpty(Model.MainInfo.MAIN_IMG2))
                         {
-                            <li><a href="@Model.MainInfo.MAIN_URL2"><img src="@Model.MainInfo.MAIN_IMG2" width="862" height="400" alt="" /></a></li>
+                            <li><a href="@Model.MainInfo.MAIN_URL2"><img src="@Model.MainInfo.MAIN_IMG2" alt="" /></a></li>
                         }
                         @if (!string.IsNullOrEmpty(Model.MainInfo.MAIN_IMG3))
                         {
-                            <li><a href="@Model.MainInfo.MAIN_URL3"><img src="@Model.MainInfo.MAIN_IMG3" width="862" height="400" alt="" /></a></li>
+                            <li><a href="@Model.MainInfo.MAIN_URL3"><img src="@Model.MainInfo.MAIN_IMG3" alt="" /></a></li>
                         }
                         @if (!string.IsNullOrEmpty(Model.MainInfo.MAIN_IMG4))
                         {
-                            <li><a href="@Model.MainInfo.MAIN_URL4"><img src="@Model.MainInfo.MAIN_IMG4" width="862" height="400" alt="" /></a></li>
+                            <li><a href="@Model.MainInfo.MAIN_URL4"><img src="@Model.MainInfo.MAIN_IMG4" alt="" /></a></li>
                         }
                         @if (!string.IsNullOrEmpty(Model.MainInfo.MAIN_IMG5))
                         {
-                            <li><a href="@Model.MainInfo.MAIN_URL5"><img src="@Model.MainInfo.MAIN_IMG5" width="862" height="400" alt="" /></a></li>
+                            <li><a href="@Model.MainInfo.MAIN_URL5"><img src="@Model.MainInfo.MAIN_IMG5" alt="" /></a></li>
                         }
                         
                         <!--li><a href="#"><img src="/aboutCom/images/sample/event_slide1.jpg" width="862" height="400" alt="" /></a></li>
@@ -54,7 +54,7 @@
                     <!-- 테스트 -->
                     @if (!string.IsNullOrEmpty(Model.MainInfo.RIGHT_IMG))
                     {
-                        <li><a href="@Model.MainInfo.RIGHT_URL"><img src="@Model.MainInfo.RIGHT_IMG" width="208" height="400" alt="" /></a></li>
+                        <li><a href="@Model.MainInfo.RIGHT_URL"><img src="@Model.MainInfo.RIGHT_IMG"  alt="" /></a></li>
                     }
                     <!--a href="#"><img src="/aboutCom/images/sample/event_beautytest.jpg" width="208" height="400" alt="" /></a-->
                 </div>
@@ -67,7 +67,7 @@
                     <li>
                         <a href="@Model.MainInfo.MIDDLE_URL1">
                             <!--img src="/aboutCom/images/sample/event_thum1.jpg" width="208" height="208" alt="" /-->
-                            <img src="@Model.MainInfo.MIDDLE_IMG1" width=" 208" height="208" alt="" />
+                            <img src="@Model.MainInfo.MIDDLE_IMG1" alt="" />
                             <strong>@Model.MainInfo.MIDDLE_TITLE1</strong>
                             <span>@Model.MainInfo.MIDDLE_DESC1</span>
                         </a>
@@ -78,7 +78,7 @@
                     {
                     <li>
                         <a href="@Model.MainInfo.MIDDLE_URL2">
-                            <img src="@Model.MainInfo.MIDDLE_IMG2" alt="" width="208" height="208" />
+                            <img src="@Model.MainInfo.MIDDLE_IMG2" alt="" />
                             <strong>@Model.MainInfo.MIDDLE_TITLE2 </strong>
                             <span>@Model.MainInfo.MIDDLE_DESC2</span>
                         </a>
@@ -89,7 +89,7 @@
                     {
                         <li>
                             <a href="@Model.MainInfo.MIDDLE_URL3">
-                                <img src="@Model.MainInfo.MIDDLE_IMG3" alt="" width="208" height="208" />
+                                <img src="@Model.MainInfo.MIDDLE_IMG3" alt="" />
                                 <strong>@Model.MainInfo.MIDDLE_TITLE3 </strong>
                                 <span>@Model.MainInfo.MIDDLE_DESC3</span>
                             </a>
@@ -102,7 +102,7 @@
                         {
                             <li>
                                 <a href="@Model.MainInfo.MIDDLE_URL4">
-                                    <img src="@Model.MainInfo.MIDDLE_IMG4" alt="" width=" 426" height="284" />
+                                    <img src="@Model.MainInfo.MIDDLE_IMG4" alt="" />
                                 </a>
                             </li>
                         }
@@ -133,15 +133,19 @@
                             {
                                 urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
                             }
-                            else
+                            else if (item.GBN == "EXHIBIT")
                             {
                                 urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
+                            }
+                            else if (item.GBN == "SAMPLE")
+                            {
+                                urlPath = "/Event/SampleView?IDX=" + Convert.ToString(item.IDX);
                             }
                               
                             
                             <li>
                                 <a href="@urlPath">
-                                    <img src="@item.WEB_BANNER" alt="" width="255" height="255" />
+                                    <img src="@item.WEB_BANNER" alt=""  />
                                     <span class="edate"><em>@item.FROM_DATE</em>~<em>@item.TO_DATE</em></span>
                                     <strong>@item.NAME</strong>
                                 </a>
@@ -162,15 +166,19 @@
                             {
                                 urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
                             }
-                            else
+                            else if (item.GBN == "EXHIBIT")
                             {
                                 urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
+                            }
+                            else if (item.GBN == "SAMPLE")
+                            {
+                                urlPath = "/Event/SampleView?IDX=" + Convert.ToString(item.IDX);
                             }
 
 
                             <li>
                                 <a href="@urlPath">
-                                    <img src="@item.WEB_BANNER" alt="" width="255" height="255" />
+                                    <img src="@item.WEB_BANNER" alt="" />
                                     <span class="edate"><em>@item.FROM_DATE</em>~<em>@item.TO_DATE</em></span>
                                     <strong>@item.NAME</strong>
                                 </a>

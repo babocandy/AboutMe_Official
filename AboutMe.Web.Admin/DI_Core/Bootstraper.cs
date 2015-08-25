@@ -39,6 +39,8 @@ namespace AboutMe.Web.Admin.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Magazine.IMagazineService, AboutMe.Domain.Service.Magazine.MagazineService>(); //매거진
             container.RegisterType<AboutMe.Domain.Service.Shopinfo.IShopinfoService, AboutMe.Domain.Service.Shopinfo.ShopinfoService>(); //매장안내
             container.RegisterType<AboutMe.Domain.Service.Recallbbs.IRecallbbsService, AboutMe.Domain.Service.Recallbbs.RecallbbsService>(); //취소/반품게시판
+            container.RegisterType<AboutMe.Domain.Service.Sample.ISampleService, AboutMe.Domain.Service.Sample.SampleService>(); //샘플/체험단 신청
+            container.RegisterType<AboutMe.Domain.Service.Winner.IWinnerService, AboutMe.Domain.Service.Winner.WinnerService>(); //당첨자발표
             container.RegisterType<AboutMe.Domain.Service.AdminPoint.IAdminPointService, AboutMe.Domain.Service.AdminPoint.AdminPointService>(); //관리자 포인트
             container.RegisterType<AboutMe.Domain.Service.AdminPromotion.IAdminPromotionService, AboutMe.Domain.Service.AdminPromotion.AdminPromotionService>(); //프로모션관리
 

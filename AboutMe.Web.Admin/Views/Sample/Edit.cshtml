@@ -1,0 +1,449 @@
+﻿@using AboutMe.Common.Data
+@model AboutMe.Domain.Entity.Sample.SAMPLE_ADMIN_EDIT
+@{
+    ViewBag.Title = " 샘플/체험단신청관리";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string modeDesc = "수정";
+    if (@Model.Mode == "NEW")
+    {
+        modeDesc = "등록";
+    }
+}
+@section Scripts{
+    <script language="javascript">
+
+    function frmCheck() {
+
+        var f = document.iform;
+
+        if ($("#SAMPLE_NAME").val().trim() == "") {
+            alert(" 샘플/체험단신청명을 입력해 주세요.");
+            return false;
+        }
+
+        if (f.FROM_DATE.value == "") {
+            alert("시작일자를 입력해 주세요.");
+            return false;
+        }
+
+        if (f.TO_DATE.value == "") {
+            alert(" 샘플/체험단신청 종료일자를 입력해 주세요.");
+            return false;
+        }
+
+        if (!$("#UseYnY")[0].checked && !$("#UseYnN")[0].checked) {
+            alert("전시여부를 선택해 주세요.");
+            return false;
+        }
+
+        oEditors.getById["WEB_CONTENTS"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+
+        if (f.WEB_CONTENTS.value == "<p>&nbsp;</p>") {
+            alert(" 샘플/체험단신청 내용을 입력해 주세요!");
+            return false;
+        }
+        
+        if (f.MODE.value == "NEW")
+        { 
+
+            if (f.MOBILE_FILE.value == "") {
+                alert(" 샘플/체험단신청 모바일 이미지파일을 선택해주세요.");
+                return false;
+            }
+
+            if (f.WEB_BANNER.value == "") {
+                alert("웹배너 이미지파일을 선택해주세요.");
+                return false;
+            }
+            if (f.MOBILE_BANNER.value == "") {
+                alert("모바일배너 이미지파일을 선택해주세요.");
+                return false;
+            }
+        }
+
+        if (confirm(" 샘플/체험단신청을 @modeDesc 하시겠습니까?"))
+        {
+            f.submit();
+        }
+
+
+    }
+
+    </script>
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <strong> 샘플/체험단신청 관리</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3> 샘플/체험단신청 커버 @modeDesc</h3>
+        </div>
+        @using (Html.BeginForm("EditProcess", "Sample", FormMethod.Post, new { id = "iform", name = "iform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+            @Html.Hidden("IDX", Model.IDX)
+            @Html.Hidden("MODE", Model.Mode)
+
+                                    <div class="panel">
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th> 샘플/체험단신청명</th>
+                                                    <td><input type="text" class="input-sm" style="width:80%" name="SAMPLE_NAME" id="SAMPLE_NAME" value="@Model.SampleInfo.SAMPLE_NAME"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th> 샘플/체험단신청기간</th>
+                                                    <td>
+                                                        시작일
+                            @(Html.Kendo().DatePicker()
+                              .Name("FROM_DATE")
+                              .Value(Model.SampleInfo.FROM_DATE)
+                              .HtmlAttributes(new { style = "width:120px" })
+                            )
+                            @(Html.Kendo().DropDownList()
+                                .Name("FROM_TIME")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .HtmlAttributes(new { style = "width:60px" })
+                                .BindTo(new List<SelectListItem>() {
+                                    new SelectListItem() {
+                                        Text = "00시",
+                                        Value = "00"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "01시",
+                                        Value = "01"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "02시",
+                                        Value = "02"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "03시",
+                                        Value = "03"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "04시",
+                                        Value = "04"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "05시",
+                                        Value = "05"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "06시",
+                                        Value = "06"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "07시",
+                                        Value = "07"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "08시",
+                                        Value = "08"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "09시",
+                                        Value = "09"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "10시",
+                                        Value = "10"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "11시",
+                                        Value = "11"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "12시",
+                                        Value = "12"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "13시",
+                                        Value = "13"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "14시",
+                                        Value = "14"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "15시",
+                                        Value = "15"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "16시",
+                                        Value = "16"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "17시",
+                                        Value = "17"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "18시",
+                                        Value = "18"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "19시",
+                                        Value = "19"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "20시",
+                                        Value = "20"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "21시",
+                                        Value = "21"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "22시",
+                                        Value = "22"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "23시",
+                                        Value = "23"
+                                    }
+                                })
+                                .Value(Model.SampleInfo.FROM_TIME)
+                            )
+                            ~
+                            종료일
+                            @(Html.Kendo().DatePicker()
+                              .Name("TO_DATE")
+                              .Value(Model.SampleInfo.TO_DATE)
+                              .HtmlAttributes(new { style = "width:120px" })
+                            )
+                            @(Html.Kendo().DropDownList()
+                                .Name("TO_TIME")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .HtmlAttributes(new { style = "width:60px" })
+                                .BindTo(new List<SelectListItem>() {
+                                    new SelectListItem() {
+                                        Text = "00시",
+                                        Value = "00"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "01시",
+                                        Value = "01"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "02시",
+                                        Value = "02"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "03시",
+                                        Value = "03"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "04시",
+                                        Value = "04"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "05시",
+                                        Value = "05"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "06시",
+                                        Value = "06"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "07시",
+                                        Value = "07"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "08시",
+                                        Value = "08"
+                                    }
+                                    ,
+                                    new SelectListItem() {
+                                        Text = "09시",
+                                        Value = "09"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "10시",
+                                        Value = "10"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "11시",
+                                        Value = "11"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "12시",
+                                        Value = "12"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "13시",
+                                        Value = "13"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "14시",
+                                        Value = "14"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "15시",
+                                        Value = "15"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "16시",
+                                        Value = "16"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "17시",
+                                        Value = "17"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "18시",
+                                        Value = "18"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "19시",
+                                        Value = "19"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "20시",
+                                        Value = "20"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "21시",
+                                        Value = "21"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "22시",
+                                        Value = "22"
+                                    },
+                                    new SelectListItem() {
+                                        Text = "23시",
+                                        Value = "23"
+                                    }
+                                })
+                                .Value(Model.SampleInfo.TO_TIME)
+                            )
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th> 샘플/체험단신청 상세<br />(웹)<br />사이즈 : 00*00 jpg</th>
+                                                    <td>
+        @{
+            Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
+            {
+                width = 800 //에디터 width 값
+                ,
+                height = 200 //에디터 height 값
+                ,
+                tfID = "WEB_CONTENTS" //에디터 id 혹은 name
+                ,
+                memo = @Model.SampleInfo.WEB_CONTENTS //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+                ,
+                uploadPath = "~/Upload/Sample/" //업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
+            });
+       }
+
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th> 샘플/체험단신청 상세<br />(모바일)<br />사이즈 : 00*00 jpg</th>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(Model.SampleInfo.MOBILE_FILE))
+                                                        {
+                                                            <p>
+                                                                <img src="@Model.SampleInfo.MOBILE_FILE"> @Model.SampleInfo.MOBILE_FILE
+                                                                <input type="checkbox" name="MOBILE_FILE_DEL" value="Y">삭제 <br /><br />
+                                                            </p>
+                                                        }
+                                                        @Html.Hidden("OLD_MOBILE_FILE", Model.SampleInfo.MOBILE_FILE)
+                                                        <input type="file" name="MOBILE_FILE" id="MOBILE_FILE" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>전시여부</th>
+                                                    <td>
+                                                        <label for="UseYnY">@Html.RadioButton("USE_YN", "Y", Model == null ? false : (Model.SampleInfo.USE_YN == "Y" ? true : false), new { id = "UseYnY" })<span class="txt mr5">전시</span></label>
+                                                        <label for="UseYnN">@Html.RadioButton("USE_YN", "N", Model == null ? false : (Model.SampleInfo.USE_YN == "N" ? true : false), new { id = "UseYnN" })<span class="txt mr5">비전시</span></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="panel">
+                                        <h4> 샘플/체험단신청 목록 배너</h4>
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="30%" /><col width="20%" /><col width="30%" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th>웹배너<br />사이즈 : 00*00 jpg</th>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(Model.SampleInfo.WEB_BANNER))
+                                                        {
+                                                            <p>
+                                                                <img src="@Model.SampleInfo.WEB_BANNER"> @Model.SampleInfo.WEB_BANNER
+                                                                <input type="checkbox" name="WEB_BANNER_DEL" value="Y">삭제 <br /><br />
+                                                            </p>
+                                                        }
+                                                        @Html.Hidden("OLD_WEB_BANNER", Model.SampleInfo.WEB_BANNER)
+                                                        <input type="file" name="WEB_BANNER" id="WEB_BANNER" />
+                                                    </td>
+                                                    <th>모바일배너<br />사이즈 : 00*00 jpg</th>
+                                                    <td>
+                                                        @if (!string.IsNullOrEmpty(Model.SampleInfo.MOBILE_BANNER))
+                                                        {
+                                                            <p>
+                                                                <img src="@Model.SampleInfo.MOBILE_BANNER"> @Model.SampleInfo.MOBILE_BANNER
+                                                                <input type="checkbox" name="MOBILE_BANNER_DEL" value="Y">삭제 <br /><br />
+                                                            </p>
+                                                        }
+                                                        @Html.Hidden("OLD_MOBILE_BANNER", Model.SampleInfo.MOBILE_BANNER)
+                                                        <input type="file" name="MOBILE_BANNER" id="MOBILE_BANNER" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel tac">
+                                        @if (Model.Mode == "NEW")
+                                        {
+                                            <a style="width:100px" class="btn btn-default middium" href="#none" onclick="frmCheck();">등록</a>
+                                        }
+                                        else if (Model.Mode == "EDIT")
+                                        {
+                                            <a style="width:100px" class="btn btn-success middium" href="#none" onclick="frmCheck();">수정</a>
+                                        }
+                                        @Html.ActionLink("취소", "", @Model.SearchOption, new { @class = "btn btn-primary  middium", style = "width:100px" })
+
+                                    </div>
+        }
+
+
+
+    </div>
+    <!--//content-->
+}

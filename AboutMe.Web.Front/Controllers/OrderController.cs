@@ -46,7 +46,7 @@ namespace AboutMe.Web.Front.Controllers
         private string _inipay_mid = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Mid");
         private string _inipay_admin = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Admin");
         private string _inipay_debug = AboutMe.Common.Helper.Config.GetConfigValue("INIpay.Debug");
-
+        
 		//**** 지불수단별로 PGID를 다르게 표시한다 (2003.12.19: ts@inicis.com)        *
 		//***************************************************************************
 		//*** 하단의 Code_PayMethod 함수는 지불수단별로 TID를 별도로 표시하도록 하며,***
@@ -187,11 +187,11 @@ namespace AboutMe.Web.Front.Controllers
             return PartialView(M);
         }
 
-        public ActionResult SaveMemberAddress(string SENDER_POST1, string SENDER_POST2, string SENDER_ADDR1, string SENDER_ADDR2, 
+        public ActionResult SaveMemberAddress(string SENDER_POST, string SENDER_ADDR1, string SENDER_ADDR2, 
             string SENDER_TEL1, string SENDER_TEL2, string SENDER_TEL3, string SENDER_HP1, string SENDER_HP2, string SENDER_HP3,
             string SENDER_EMAIL1, string SENDER_EMAIL2)
         {
-            _orderservice.OrderStep1SaveMemberInfo(_user_profile.M_ID, SENDER_POST1, SENDER_POST2, SENDER_ADDR1, SENDER_ADDR2, SENDER_TEL1, SENDER_TEL2, SENDER_TEL3, SENDER_HP1, SENDER_HP2, SENDER_HP3, SENDER_EMAIL1, SENDER_EMAIL2);
+            _orderservice.OrderStep1SaveMemberInfo(_user_profile.M_ID, SENDER_POST, SENDER_ADDR1, SENDER_ADDR2, SENDER_TEL1, SENDER_TEL2, SENDER_TEL3, SENDER_HP1, SENDER_HP2, SENDER_HP3, SENDER_EMAIL1, SENDER_EMAIL2);
             var jsonData = new { result = "true" };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
@@ -303,8 +303,7 @@ namespace AboutMe.Web.Front.Controllers
             
             Param.ORDER_MEMO = TagStrip(Param.ORDER_MEMO);
             Param.SENDER_NAME = TagStrip(Param.SENDER_NAME);
-            Param.SENDER_POST1 = TagStrip(Param.SENDER_POST1);
-            Param.SENDER_POST2 = TagStrip(Param.SENDER_POST2);
+            Param.SENDER_POST = TagStrip(Param.SENDER_POST);
             Param.SENDER_ADDR1 = TagStrip(Param.SENDER_ADDR1);
             Param.SENDER_ADDR2 = TagStrip(Param.SENDER_ADDR2);
             Param.SENDER_TEL1 = TagStrip(Param.SENDER_TEL1);
@@ -317,8 +316,7 @@ namespace AboutMe.Web.Front.Controllers
             Param.SENDER_EMAIL2 = TagStrip(Param.SENDER_EMAIL2);
 
             Param.RECEIVER_NAME = TagStrip(Param.RECEIVER_NAME);
-            Param.RECEIVER_POST1 = TagStrip(Param.RECEIVER_POST1);
-            Param.RECEIVER_POST2 = TagStrip(Param.RECEIVER_POST2);
+            Param.RECEIVER_POST = TagStrip(Param.RECEIVER_POST);
             Param.RECEIVER_ADDR1 = TagStrip(Param.RECEIVER_ADDR1);
             Param.RECEIVER_ADDR2 = TagStrip(Param.RECEIVER_ADDR2);
             Param.RECEIVER_TEL1 = TagStrip(Param.RECEIVER_TEL1);

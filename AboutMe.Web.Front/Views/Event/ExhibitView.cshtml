@@ -20,8 +20,17 @@
         function goEvent(s)
         {
             var idx = s.value;
+            var gubun = $(s).find("option:selected").attr("gubun")
             if (idx != "") {
-                location.href = "/Event/ExhibitView?IDX=" + idx;
+                if (gubun == "EVENT") {
+                    location.href = "/Event/EventView?IDX=" + idx;
+                }
+                else if (gubun == "EXHIBIT") {
+                    location.href = "/Event/ExhibitView?IDX=" + idx;
+                }
+                else if (gubun == "SAMPLE") {
+                    location.href = "/Event/SampleView?IDX=" + idx;
+                }
             }
         }
     </script>
@@ -35,10 +44,10 @@
                 <h3>@Model.ExhibitInfo.EXHIBIT_NAME</h3>
                 <p class="edate"><em>@Model.ExhibitInfo.FROM_DATE</em>~<em>@Model.ExhibitInfo.TO_DATE</em></p>
                 <select class="selectstyleb" title="" onchange="goEvent(this)">
-                    <option selected="selected" value="">다른 기획전 보기</option>
+                    <option selected="selected" value="">다른 이벤트 보기</option>
                     @foreach (var item in Model.IngList)
                     {
-                        if (item.GBN == "EXHIBIT" && item.IDX != Model.ExhibitInfo.IDX)
+                        if (item.GBN != "EXHIBIT" && item.IDX != Model.ExhibitInfo.IDX)
                         {
                             @Html.Raw("<option value='" + Convert.ToString(item.IDX) + "'>" + item.NAME + "</option>");
                         }

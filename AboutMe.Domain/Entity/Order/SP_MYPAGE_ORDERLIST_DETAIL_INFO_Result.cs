@@ -52,5 +52,6 @@ namespace AboutMe.Domain.Entity.Order
         public string VACT_BankName { get; set; }
         public string VACT_Name { get; set; }
         public string VACT_Date { get; set; }
+        public string PAT_GUBUN { get; set; }
     }
 }

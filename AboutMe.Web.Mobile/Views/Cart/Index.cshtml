@@ -188,27 +188,33 @@
     <!--사용가능쿠폰, 포인트-->
     <div class="userhave">
         <ul>
-            <li class="downcpn">
-                <div>
-                    <span class="ico"></span>
-                    <span class="num">123,455</span>
-                    <span class="txt">다운로드 가능 쿠폰</span>
-                </div>
-            </li>
-            <li class="hascpn">
-                <div>
-                    <span class="ico"></span>
-                    <span class="num">123,455</span>
-                    <span class="txt">보유쿠폰</span>
-                </div>
-            </li>
-            <li class="point">
-                <div>
-                    <span class="ico"></span>
-                    <span class="num">123,455</span>
-                    <span class="txt">포인트</span>
-                </div>
-            </li>
+            <a href="/MyPage/MyCoupon">
+                <li class="downcpn">
+                    <div>
+                        <span class="ico"></span>
+                        <span class="num">@Model.DownloadCouponCnt</span>
+                        <span class="txt">다운로드 가능 쿠폰</span>
+                    </div>
+                </li>
+            </a>
+            <a href="/Mypage/MyCoupon/Availablelist">
+                <li class="hascpn">
+                    <div>
+                        <span class="ico"></span>
+                        <span class="num">@Model.DownloadedCouponCnt</span>
+                        <span class="txt">보유쿠폰</span>
+                    </div>
+                </li>
+            </a>
+            <a href="/MyPage/MyPoint">
+                <li class="point">
+                    <div>
+                        <span class="ico"></span>
+                        <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
+                        <span class="txt">포인트</span>
+                    </div>
+                </li>
+            </a>
         </ul>
     </div>
     <!--//사용가능쿠폰, 포인트-->

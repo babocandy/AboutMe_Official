@@ -4,6 +4,8 @@
     ViewBag.TopClass = "myorder";
 
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+
 }
 @section Scripts{
 <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
@@ -95,12 +97,14 @@
         <ul>
             @foreach(var item in Model.OrderList)
             {
+                string imgUrl1 = productImgPath + "R120_" + item.P_IMG1_S;
+                
             <li>
                 <dl>
-                    <dt>주문번호 @item.ORDER_CODE</dt>
+                    <dt><a href="/MyPage/MyOrder/OrderView?OrderCode=@item.ORDER_CODE&FromDate=@Model.FromDate&ToDate=@Model.ToDate&page=@Model.Page%TermGbn=@ViewBag.TermGbn">주문번호 @item.ORDER_CODE</a></dt>
                     <dd>
                         <div class="photo_info">
-                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
+                            <div class="photo"><img src="@imgUrl1" alt="" /></div>
                             <div class="detail">
                                 <span class="ordergoods"><strong>@item.P_NAME</strong> </span>
                                 <span class="price">결제금액 @String.Format("{0:#,#0.}", @item.TOTAL_PAY_PRICE)원</span>

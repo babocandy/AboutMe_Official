@@ -177,4 +177,15 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string FREEGIFT_NAME { set; get; }
         public string DELIVERY_NUM { set; get; }   
     }
+
+
+    public class ORDER_MEMBER_MODEL
+    {
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public string M_ID { get; set; }
+        public int OrderCount { get; set; }
+        public List<SP_ADMIN_ORDER_LIST_Result> OrderList { get; set; }
+    }
+
 }

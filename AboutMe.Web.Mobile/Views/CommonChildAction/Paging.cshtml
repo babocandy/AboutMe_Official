@@ -2,30 +2,24 @@
 
 <div class="paging">
 
-    @if (Model.HasPreviousBlock)
-    {
-        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.GoPageOfPrevBlock + "&" + Model.QStr))" class="prev"></a>
-    }
-    else
+    @if (Model.BeforePage == 0)
     {
         <a href="#" class="prev"></a>
     }
-
-    @for (var i = Model.StartPage; i <= Model.EndPage; i++)
+    else
     {
-        if (i == Model.CurrentPage)
-        {
-            <strong>@Model.CurrentPage</strong> @(Html.Raw("/")) @Model.TotalNumOfPage
-        }
+        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.BeforePage + "&" + Model.QStr))" class="prev"></a>
     }
 
-    @if (Model.HasNextBlock)
+    <strong>@Model.CurrentPage</strong> @(Html.Raw("/")) @Model.TotalNumOfPage
+    
+    @if (Model.NextPage == Model.CurrentPage)
     {
-        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.GoPageOfNextBlock + "&" + Model.QStr))" class="next"></a>
+        <a href="#" class="next"></a>
     }
     else
     {
-        <a href="#" class="next"></a>
+        <a href="@(Html.Raw(Request.Url.LocalPath + "?" + "page=" + Model.NextPage + "&" + Model.QStr))" class="next"></a>
     }
 </div>
 

@@ -1,0 +1,46 @@
+﻿@model AboutMe.Domain.Entity.Winner.WinnerUserView
+@{
+    
+    if (Model.WinnerInfo == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    ViewBag.Title = "당첨자발표 - ABOUT ME";
+    ViewBag.TopClass = "notice";
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+
+@section Scripts {
+    <link href="/aboutCom/css/customer.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div id="container">
+    <div class="container1080">
+        <!-- cs_top -->
+        <div class="cs_top">
+            @{
+                ViewBag.MenuTitle = "당첨자발표";
+                ViewBag.MenuGbn = "notice";
+                Html.RenderPartial("~/Views/AboutMePartial/_CustomerSubMenu.cshtml");
+            }
+        </div>
+        <!-- //cs_top -->
+        <!-- prizewinner_view -->
+        <div class="board_view mt40">
+            <p class="subject">
+                <span class="num">@Model.WinnerInfo.IDX</span>
+                <span class="tit">@Model.WinnerInfo.TITLE</span>
+                <span class="date">@Model.WinnerInfo.REG_DATE.ToString().Substring(0,10)</span>
+            </p>
+            <p class="txt">
+                @(new HtmlString(HttpUtility.HtmlDecode(Model.WinnerInfo.CONTENTS)))
+            </p>
+        </div>
+
+        @Html.ActionLink("목록", "Winner", Model.SearchParam, new { @class = "btn_golist btn_brown_w96h38" })
+        <!-- //prizewinner_view -->
+    </div>
+</div>
+<!--//container-->

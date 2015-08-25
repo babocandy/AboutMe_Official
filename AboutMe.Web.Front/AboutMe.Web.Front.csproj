@@ -30,6 +30,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,6 +40,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="INIpayNet, Version=5.0.4.0, Culture=neutral, PublicKeyToken=baf9dc2e190f803c">
@@ -384,13 +388,15 @@
     <Content Include="aboutCom\images\common\f_link3.gif" />
     <Content Include="aboutCom\images\common\f_link4.gif" />
     <Content Include="aboutCom\images\common\f_logo.gif" />
-    <Content Include="aboutCom\images\common\f_payico.gif" />
+    <Content Include="aboutCom\images\common\f_payico1.gif" />
+    <Content Include="aboutCom\images\common\f_payico2.gif" />
     <Content Include="aboutCom\images\common\h3_cscenter.gif" />
     <Content Include="aboutCom\images\common\h3_letsfritnd.gif" />
     <Content Include="aboutCom\images\common\h3_mobileshop.gif" />
     <Content Include="aboutCom\images\common\h3_news.gif" />
     <Content Include="aboutCom\images\common\h_cart.gif" />
     <Content Include="aboutCom\images\common\h_logo.jpg" />
+    <Content Include="aboutCom\images\common\icon_home.ico" />
     <Content Include="aboutCom\images\common\ico_1p1.gif" />
     <Content Include="aboutCom\images\common\ico_arrow.png" />
     <Content Include="aboutCom\images\common\ico_cart.gif" />
@@ -408,6 +414,7 @@
     <Content Include="aboutCom\images\common\ico_main.gif" />
     <Content Include="aboutCom\images\common\ico_nodata.gif" />
     <Content Include="aboutCom\images\common\ico_nodata2.gif" />
+    <Content Include="aboutCom\images\common\ico_nodata3.gif" />
     <Content Include="aboutCom\images\common\img_aboutbeauty.gif" />
     <Content Include="aboutCom\images\common\img_qrcode.gif" />
     <Content Include="aboutCom\images\common\laytime_close.gif" />
@@ -462,6 +469,7 @@
     <Content Include="aboutCom\images\customer\ico_notice.png" />
     <Content Include="aboutCom\images\customer\storeinfo.jpg" />
     <Content Include="aboutCom\images\customer\Untitled-3.png" />
+    <Content Include="aboutCom\images\etc\contact.jpg" />
     <Content Include="aboutCom\images\event\bg_limitqty30per.png" />
     <Content Include="aboutCom\images\event\bg_limitqty50per.png" />
     <Content Include="aboutCom\images\event\bg_limitqty70per.png" />
@@ -778,12 +786,7 @@
     <Content Include="aboutCom\images\aboutme\Thumbs.db" />
     <Content Include="aboutCom\images\brand\Thumbs.db" />
     <Content Include="aboutCom\images\cart\Thumbs.db" />
-    <Content Include="aboutCom\images\membership\Thumbs.db" />
-    <Content Include="aboutCom\images\sample\Thumbs.db" />
-    <Content Include="aboutCom\images\shopping\Thumbs.db" />
     <Content Include="Content\child.html" />
-    <Content Include="aboutCom\images\mypage\Thumbs.db" />
-    <Content Include="aboutCom\images\review\Thumbs.db" />
     <Content Include="aboutCom\smarteditor\photo_uploader\popup\file_uploader.php" />
     <Content Include="aboutCom\smarteditor\photo_uploader\popup\file_uploader_html5.php" />
     <Content Include="aboutCom\smarteditor\sample.php" />
@@ -793,7 +796,8 @@
     <Content Include="App_Readme\WURFL-v.1.6.1.0.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
-    <None Include="Properties\PublishProfiles\AboutMeWebFront.pubxml" />
+    <Content Include="aboutCom\images\etc\Thumbs.db" />
+    <None Include="Properties\PublishProfiles\aboutme-dev.cstone.co.kr.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -959,6 +963,9 @@
     <Content Include="Views\Brand\Index.cshtml" />
     <Content Include="Views\Brand\Magazine.cshtml" />
     <Content Include="Views\Brand\Shopinfo.cshtml" />
+    <Content Include="Views\Event\SampleView.cshtml" />
+    <Content Include="Views\Customer\Winner.cshtml" />
+    <Content Include="Views\Customer\WinnerView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Upload\Product\" />

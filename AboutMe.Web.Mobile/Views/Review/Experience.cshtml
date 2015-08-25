@@ -55,10 +55,10 @@
         @{Html.RenderPartial("~/Views/AboutMePartial/_Header.cshtml");}
 
         <!--container-->
-        <div class="container pro">
+        <div class="container exp">
             <div class="h2_area">
                 <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
-                <h2>상품리뷰</h2>
+                <h2>체험단리뷰</h2>
             </div>
             <!-- 리뷰 목록 -->
             <!-- 항목 선택 -->
@@ -90,8 +90,8 @@
 
 
                                 </select>
-                            </span><!--
-                           --><span class="selbox select_a">
+                        </span><!--
+                     --><span class="selbox select_a">
                                 <select title="정렬" onchange="selOrder(this); return false;">
                                     <option value="@(ReviewExpListViewModel.SORT_LASTEST)" @(Model.MobileParam.SORT == ReviewExpListViewModel.SORT_LASTEST ? "selected" : "")>최신순</option>
                                     <option value="@(ReviewExpListViewModel.SORT_LIKE)" @(Model.MobileParam.SORT == ReviewExpListViewModel.SORT_LIKE ? "selected" : "")>인기순</option>
@@ -99,7 +99,7 @@
                             </span>
                         </fieldset>
                     </form>
-                    <span class="information">리뷰 등록하면 <strong>500P</strong>,<br /> 포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
+                    <a class="information">어바웃미 <strong>1기 체험단</strong> 모집<br>2015.06.01-2015.06.30</a>
                     <p class="count">총 <strong>@Model.Total</strong>개 상품이 있습니다.</p>
                 </div>
                 <ul class="review_list">
@@ -109,7 +109,7 @@
 					<!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
                         <li class="product_info">
                             <div class="photo_info">
-                                <div class="photo"><img src="@string.Format("{0}{1}", mycontrl._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
+                                <div class="photo"><img src="@string.Format("{0}R120_{1}", mycontrl._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
                                 <div class="detail">
                                     <span class="tit">@item.P_NAME</span>
                                 </div>
@@ -122,8 +122,8 @@
                                     <!-- 해시태그 -->
                                     <ul class="hash">
                                         <!--<li>#각질제거</li>
-                                        <li>#미백</li>
-                                        <li>#스페셜케어</li>-->
+                                    <li>#미백</li>
+                                    <li>#스페셜케어</li>-->
                                         @item.TAG
                                     </ul>
                                     <!-- //해시태그 -->
@@ -137,11 +137,11 @@
                                 </div>
                             </div>
                             @{
-                                 var param = new ReviewExpDetailParam();
-                                 param.ARTICLE_IDX = item.IDX;
-                                 param.P_CODE = item.P_CODE;
+                        var param = new ReviewExpDetailParam();
+                        param.ARTICLE_IDX = item.IDX;
+                        param.P_CODE = item.P_CODE;
                             }
-                            <a href="#" onclick="winddow.open(@(Url.Action("ExperienceDetail", "Review", param))); return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            <a href="#" onclick="window.open('@(Url.Action("ExperienceDetail", "Review", param))'); return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
                         </li>
                     }
 
@@ -154,20 +154,21 @@
                         var prev = Model.MobileParam;
                         prev.PAGE = Model.PrevPage;
                     }
-                    <a href="@(Url.Action("Product", "Review", prev))" class="prev"></a>
+                    <a href="@(Url.Action("Experience", "Review", prev))" class="prev"></a>
                     <strong>@Model.MobileParam.PAGE</strong> / @Model.Pages
 
                     @{
                         var next = Model.MobileParam;
                         next.PAGE = Model.NextPage;
                     }
-                    <a href="@(Url.Action("Product", "Review", next))" class="next"></a>
+                    <a href="@(Url.Action("Experience", "Review", next))" class="next"></a>
                 </div>
                 <!--//페이징-->
             </div>
             <!-- //뷰티 -->
             <!-- 리뷰 목록 -->
         </div>
+
         <!--//container-->
         @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
     </div>

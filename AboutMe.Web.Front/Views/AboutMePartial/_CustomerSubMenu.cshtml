@@ -1,12 +1,12 @@
 ﻿
 <div class="h2_area">
-    <h2>@ViewBag.MenuTitle<i></i></h2>
+    <h2>@Html.Raw(ViewBag.MenuTitle)<i></i></h2>
     <!-- cs_menu -->
     <div class="smenu">
         <ul>
             <li @{ if (ViewBag.MenuGbn == "main") { @Html.Raw("class='cnt'")  ; } }><a href="/Customer">고객센터</a></li>
             <li @{ if (ViewBag.MenuGbn == "notice") { @Html.Raw("class='cnt'") ; } }><a href="/Customer/Notice">공지사항</a></li>
-            <li ><a href="/Customer/prizewinner_list.asp">당첨자 발표</a></li>
+            <li @{ if (ViewBag.MenuGbn == "winner") { @Html.Raw("class='cnt'")  ; } }><a href="/Customer/Winner">당첨자 발표</a></li>
             <li @{ if (ViewBag.MenuGbn == "faq") { @Html.Raw("class='cnt'"); } } ><a href="/Customer/Faq">FAQ</a></li>
             <li @{ if (ViewBag.MenuGbn == "benefit") { @Html.Raw("class='cnt'") ; } }><a href="/Customer/Benefit">회원혜택</a></li>
         </ul>
@@ -21,9 +21,9 @@
         <li class="sublist_d1"><a href="/MyPage/MyOrder"><span class="icon_d1"></span>배송조회</a></li>
         <li class="sublist_d2"><a href="/MyPage/Recall"><span class="icon_d2"></span>교환/반품</a></li>
         <li class="sublist_d3"><a href="/MyPage/Qna"><span class="icon_d3"></span>1:1문의</a></li>
-        <li class="sublist_d4"><a href="/Customer/prizewinner_list.asp"><span class="icon_d4"></span>당첨자발표</a></li>
+        <li class="sublist_d4"><a href="/Customer/Winner"><span class="icon_d4"></span>당첨자발표</a></li>
         <li class="sublist_d5"><a href="/Customer/Benefit"><span class="icon_d5"></span>회원혜택</a></li>
-        <li class="sublist_d6"><a href="/Customer/store.asp"><span class="icon_d6"></span>매장안내</a></li>
+        <li class="sublist_d6"><a href="/Brand/Shopinfo"><span class="icon_d6"></span>매장안내</a></li>
     </ul>
     <!-- //cslink -->
 </div>

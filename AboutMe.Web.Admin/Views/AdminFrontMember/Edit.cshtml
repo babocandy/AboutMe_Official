@@ -725,11 +725,11 @@
                         <input type="button" value="회원기본정보" onclick="javascript: fPopPersonalDetail('MEMBER_INFO');" />                    
                     </td>
                     <th>총구매건수</th>
-                    <td>(담당자구현필요)@ViewBag.TOTAL_ORDER_CNT.ToString("#,##0")
+                    <td>@ViewBag.TOTAL_ORDER_CNT.ToString("#,##0")
                         <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('ORDER');" />
                     </td>
                     <th>총구매액</th>
-                    <td>(담당자구현필요)@ViewBag.TOTAL_ORDER_PRICE.ToString("#,##0")
+                    <td>@ViewBag.TOTAL_ORDER_PRICE.ToString("#,##0")
                         <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('ORDER');" />
                     </td>
                 </tr>
@@ -744,7 +744,7 @@
                     
                     </td>
                     <th>1:1문의</th>
-                    <td>(담당자구현필요)@ViewBag.TOTAL_QNA_CNT.ToString("#,##0")
+                    <td>@ViewBag.TOTAL_QNA_CNT.ToString("#,##0")
                         <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('QNA');" />
                     </td>
                 </tr>

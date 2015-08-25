@@ -190,11 +190,11 @@
                         진행중인<br />주문/배송현황이<br /><span>@Model.STATUS_ALL</span>건 입니다.
                     </p>
                     <ul class="delilist">
-                        <li class="status1"> <span class="num">@Model.STATUS_10</span><span class="statustxt">입금대기</span></li>
-                        <li class="status2"><span class="num">@Model.STATUS_20</span><span class="statustxt">결제완료</span></li>
-                        <li class="status3"><span class="num">@Model.STATUS_30</span><span class="statustxt">상품준비중</span></li>
-                        <li class="status4"><span class="num">@Model.STATUS_40</span><span class="statustxt">배송중</span></li>
-                        <li class="status5"><span class="num">@Model.STATUS_50</span><span class="statustxt">배송완료</span></li>
+                        <li class="status1 @{ if(@Model.STATUS_10 > 0) {@Html.Raw("cnt");} }"> <span class="num">@Model.STATUS_10</span><span class="statustxt">입금대기</span></li>
+                        <li class="status2 @{ if (@Model.STATUS_20 > 0) { @Html.Raw("cnt") ; } }"><span class="num">@Model.STATUS_20</span><span class="statustxt">결제완료</span></li>
+                        <li class="status3 @{ if (@Model.STATUS_30 > 0) { @Html.Raw("cnt") ; } }"><span class="num">@Model.STATUS_30</span><span class="statustxt">상품준비중</span></li>
+                        <li class="status4 @{ if (@Model.STATUS_40 > 0) { @Html.Raw("cnt") ; } }"><span class="num">@Model.STATUS_40</span><span class="statustxt">배송중</span></li>
+                        <li class="status5 @{ if (@Model.STATUS_50 > 0) { @Html.Raw("cnt") ; } }"><span class="num">@Model.STATUS_50</span><span class="statustxt">배송완료</span></li>
                     </ul>
                 </div>
             </div>

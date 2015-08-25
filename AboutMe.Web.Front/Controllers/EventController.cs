@@ -11,6 +11,10 @@ using AboutMe.Domain.Service.Event;
 using AboutMe.Domain.Entity.Event;
 using AboutMe.Domain.Service.Exhibit;
 using AboutMe.Domain.Entity.Exhibit;
+using AboutMe.Domain.Service.Sample;
+using AboutMe.Domain.Entity.Sample;
+
+using AboutMe.Web.Front.Common.Filters;
 
 namespace AboutMe.Web.Front.Controllers
 {
@@ -19,12 +23,14 @@ namespace AboutMe.Web.Front.Controllers
         private IPromotionService _PromotionService;
         private IEventService _eventservice;
         private IExhibitService _exhibitservice;
+        private ISampleService _sampleservice;
 
-        public EventController(PromotionService _PromotionService, IEventService _eventservice, IExhibitService _exhibitservice)
+        public EventController(PromotionService _PromotionService, IEventService _eventservice, IExhibitService _exhibitservice, ISampleService _sampleservice)
         {
             this._PromotionService = _PromotionService;
             this._eventservice = _eventservice;
             this._exhibitservice = _exhibitservice;
+            this._sampleservice = _sampleservice;
         }
 
         protected override void HandleUnknownAction(string actionName)
@@ -75,7 +81,8 @@ namespace AboutMe.Web.Front.Controllers
             List<EXHIBIT_TAB_PRODUCT> TabProduct = new List<EXHIBIT_TAB_PRODUCT>();
             foreach (SP_ADMIN_EXHIBIT_TAB_SEL_Result item in Tablist)
             {
-                EXHIBIT_TAB_PRODUCT tp = new EXHIBIT_TAB_PRODUCT { 
+                EXHIBIT_TAB_PRODUCT tp = new EXHIBIT_TAB_PRODUCT
+                {
                     Tabinfo = item,
                     ProductList = _exhibitservice.ExhibitTabProductList(item.IDX)
                 };
@@ -91,11 +98,44 @@ namespace AboutMe.Web.Front.Controllers
             return View(M);
         }
 
+        //샘플.체험단 신청
+        public ActionResult SampleView(int IDX)
+        {
+            SAMPLE_VIEW M = new SAMPLE_VIEW
+            {
+                SampleInfo = _sampleservice.SampleView(IDX),
+                IngListInfo = _eventservice.EventMainIngList()
+            };
+            return View(M);
+        }
+
         //상품상세 : 우측하단의 이벤트/기획전 목록
         public ActionResult EventInProductDetail(string p_code)
         {
             List<SP_EXHIBIT_PCODE_LINK_ALL_Result> M = _exhibitservice.ExhibitProductLinkAll(p_code);
             return PartialView(M);
+        }
+
+        // 샘플/체험단 신청
+        [HttpPost]
+        [CustomAuthorize]
+        public ActionResult RegistSample(int IDX)
+        {
+            try
+            {
+                _sampleservice.SampleRequest(IDX, _user_profile.M_ID);
+
+                var jsonData = new { result = "true" };
+
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                var jsonData = new { result = "false", msg = e.InnerException.Message };
+
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+            
         }
         #endregion
 

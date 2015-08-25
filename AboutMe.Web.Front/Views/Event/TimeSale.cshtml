@@ -86,7 +86,7 @@
 
     <script language="javascript">
 
-     
+
 
 
         //div_total , discount , result
@@ -98,19 +98,17 @@
             var arrP = new Array;
 
 
-            var frmobj = document.frm001 ;
-            var pcode = "" ;
+            var frmobj = document.frm001;
+            var pcode = "";
 
 
-            for(var i=0; frmobj.ChkCalPrice.length > i ; i++)
-            {
-                if(frmobj.ChkCalPrice[i].checked == true)
-                {
-                    alert(frmobj.ChkCalPrice[i].checked );
+            for (var i = 0; frmobj.ChkCalPrice.length > i ; i++) {
+                if (frmobj.ChkCalPrice[i].checked == true) {
+                    alert(frmobj.ChkCalPrice[i].checked);
 
                     var obj = new Object();
-                    cur_arr= frmobj.ChkCalPrice[i].value.split('$');
-                    pcode = cur_arr[0] ;
+                    cur_arr = frmobj.ChkCalPrice[i].value.split('$');
+                    pcode = cur_arr[0];
 
                     /**
                     obj.p_code = $(b).attr('data-pcode');//f.opt_p_code.value//P_CODE
@@ -127,12 +125,10 @@
 
 
 
-            if(arrP.length > 0)
-            {
+            if (arrP.length > 0) {
                 Cart_Input(arrP);
             }
-            else
-            {
+            else {
                 alert("쇼핑백에 담을 상품을 선택해주세요!");
             }
 
@@ -196,18 +192,18 @@
                 <div class="tcont mt40">
                     <div class="time">
                         <!--<img src="/aboutCom/images/sample/event_timesale2.jpg" alt="긴긴 연휴 끝 나에게 필요한건? 이건 꼭 사야해! 최대 30% 할인" />-->
-                        
+
                         <img src="@ViewBag.PromotionPhotoPath@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_IMG" alt="긴긴 연휴 끝 나에게 필요한건? 이건 꼭 사야해! 최대 30% 할인" />
-                       
+
                         <p class="tdate"><em>@FromYYYY. @FromMM.  @FromDD</em> ~ <em>@ToYYYY. @ToMM.  @ToDD</em></p>
                         <p id="timesale" class="remain_time"></p>
                         <script type="text/javascript">
-                            $(function(){
+                            $(function () {
                                 //타임세일 현재날짜와 종료날짜를 입력해주세요.
                                 $('#timesale').countdown({
                                     starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
                                     endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
-                                    callback	: function(m){
+                                    callback: function (m) {
                                         $('#timesale').html(m);
                                     }
                                 });
@@ -215,28 +211,29 @@
                                 $('#ly_timesale').countdown({
                                     starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
                                     endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
-                                    callback	: function(m){
+                                    callback: function (m) {
                                         $('#ly_timesale').html(m);
                                     }
                                 });
                             });
                         </script>
                     </div>
-              <div class="product rolling">
+                    <div class="product rolling">
                         <ul class="slist">
-                           @foreach (var item in Model.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)
-                           {
-                            <li>
-                                <p class="tit">단 한 방울 만으로도 놀라운 촉촉함을<br />전달하는 초보습 앰플</p>
-                                <img src="/aboutCom/images/sample/thum_event1.jpg" alt="" />
-                                <p class="price"><del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del><span><strong>@String.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span></p>
-                                <div class="prolink">
-                                    <a href="/shopping/detail?pcode=@item.P_CODE" class="btn_white_w130h60">
-                                        상세보기
-                                    </a><a href="javascript:Cart_Product_Input('@item.P_CODE', 1);" class="btn_blue_w185h60"><img src="/aboutCom/images/event/ico_cart.png" class="cartimg" alt="" />쇼핑백
-</a><a href="javascript:NowOrderInput('@item.P_CODE',1);" class="btn_brown_w185h60">바로 구매</a>
-                                </div>
-                            </li>
+                            @foreach (var item in Model.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)
+                            {
+                                <li>
+                                    <p class="tit">@(new HtmlString(item.P_NAME))</p>
+                                    <img src="/aboutCom/images/sample/thum_event1.jpg" alt="" />
+                                    <p class="price"><del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del><span><strong>@String.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span></p>
+                                    <div class="prolink">
+                                        <a href="/shopping/detail?pcode=@item.P_CODE" class="btn_white_w130h60">
+                                            상세보기
+                                        </a><a href="javascript:Cart_Product_Input('@item.P_CODE', 1);" class="btn_blue_w185h60">
+                                            <img src="/aboutCom/images/event/ico_cart.png" class="cartimg" alt="" />쇼핑백
+                                        </a><a href="javascript:NowOrderInput('@item.P_CODE',1);" class="btn_brown_w185h60">바로 구매</a>
+                                    </div>
+                                </li>
                             }
                             <!--
                             <li>

@@ -78,8 +78,8 @@ i{display:inline-block;vertical-align:middle;}
 .cart .prolist ul li{float:left;padding:16px 0 25px;width:270px;text-align:center;}
 .cart .prolist ul li .tag{display:block;margin:10px 0 0 -3px;}
 .cart .prolist ul li .tag span{margin-left:3px;}
-.cart .prolist ul li .ptit{display:block;margin-top:12px;padding:0 25px;font-size:14px;color:#1b1818;}
-.cart .prolist ul li .pdesc{margin-top:6px;padding:0 25px;font-family:"Dotum";font-size:11px;letter-spacing:-1px;color:#bbb5b4;}
+.cart .prolist ul li .ptit{display:block;margin-top:12px;padding:0 25px;height:21px;font-size:14px;color:#1b1818;}
+.cart .prolist ul li .pdesc{margin-top:1px;padding:0 25px;height:13px;font-family:"Dotum";font-size:11px;letter-spacing:-1px;color:#bbb5b4;}
 .cart .prolist ul li .pprice{margin-top:14px;padding:0 25px;font-size:16px;line-height:1;color:#1b1818;}
 .cart .prolist ul li .pprice del{margin-right:8px;font-size:13px;line-height:19px;color:#696361;}
 .cart.nonmb .user_area{height:198px;box-sizing:border-box;}
@@ -158,12 +158,12 @@ i{display:inline-block;vertical-align:middle;}
 .order .orderform .orderwrap .saleapply ul li p.tot .tit{margin-top:12px;font-size:16px;color:#1b1818;}
 .order .orderform .orderwrap .saleapply ul li p.tot .price{font-size:22px;color:#1b1818;}
 .order .orderform .orderwrap .saleapply ul li p.tot .price strong{font-size:30px;}
-.order .orderform .orderwrap .addrinfo .tabletypea table{border-top:0;}
+.order .orderform .orderwrap .addrinfo .tabletypea table{border-top:0;table-layout:fixed;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr th{font-size:14px;color:#1b1818;font-weight:normal;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr th .txtcnt{font-size:12px;color:#696361;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td input, .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td .outSelB a{font-weight:bold;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td.opt{padding:0;height:54px;}
-.order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td.addr{font-size:14px;}
+.order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td.addr{font-size:14px;word-break:break-all;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td.addr .btn_white_w96h38{float:right;width:135px;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td.phone .outSelB{width:90px;}
 .order .orderform .orderwrap .addrinfo .tabletypea table tbody tr td.email .outSelB{margin-left:9px;width:135px;}
@@ -209,10 +209,10 @@ i{display:inline-block;vertical-align:middle;}
 .order.end .tabletypea table th, .order.end .tabletypea table td{padding:15px 0;}
 .order.end .orderform .orderwrap .payinfo .tit_h4{border-bottom:0;}
 .order.end .orderform .orderwrap .payinfo .payview:after{content:"";display:block;clear:both;}
-.order.end .orderform .orderwrap .payinfo .payview li{float:left;margin-left:1px;padding:29px 0 26px;width:333px;background-color:#faf7f6;text-align:center;}
+.order.end .orderform .orderwrap .payinfo .payview li{float:left;display:table-row;margin-left:1px;width:333px;height:74px;background-color:#faf7f6;overflow:hidden;}
 .order.end .orderform .orderwrap .payinfo .payview li:first-child{margin-left:0;width:332px;}
-.order.end .orderform .orderwrap .payinfo .payview li em{font-size:14px;color:#1b1818;vertical-align:middle;}
-.order.end .orderform .orderwrap .payinfo .payview li span{margin-left:8px;font-size:13px;color:#696361;}
+.order.end .orderform .orderwrap .payinfo .payview li em{display:table-cell;padding-top:29px;width:130px;height:74px;font-size:14px;color:#1b1818;text-align:right;box-sizing:border-box;}
+.order.end .orderform .orderwrap .payinfo .payview li span{display:table-cell;margin-left:8px;padding-left:10px;width:203px;height:74px;font-size:13px;color:#696361;vertical-align:middle;word-break:break-all;box-sizing:border-box;}
 .order.end .orderform .orderwrap .payinfo .payview.ea4  {margin-top:1px;}
 .order.end .orderform .orderwrap .payinfo .payview.ea4 li{width:249px;}
 
@@ -237,6 +237,8 @@ i{display:inline-block;vertical-align:middle;}
 .order.end.nonmb .orderform .orderwrap .payinfo .payview li{width:249px;}
 .order.end.nonmb .orderform .orderwrap .payinfo .payview li:first-child{width:250px;}
 
+/*우편번호api z-index*/
+#layerPOST {z-index:30 !important;}
 
 @media \0screen {
 	.orderwrap .saleapply ul li p.tot .price strong {display:inline-block; padding-top:2px;}

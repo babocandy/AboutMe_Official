@@ -16,8 +16,9 @@
 @section Scripts {
     <link href="/aboutCom/css/event.css" rel="stylesheet" />
 }
+
 <!--container-->
-<div class="container">
+<div class="container detail">
     <div class="h2_area">
         <h2>@Model.ExhibitInfo.EXHIBIT_NAME (@Model.ExhibitInfo.FROM_DATE ~ @Model.ExhibitInfo.TO_DATE)</h2>
     </div>
@@ -27,70 +28,72 @@
     </div>
     <!--//상세배너-->
     <!--상세리스트-->
-    <p class="totalnum_txt">총 <strong>@Model.TabProductList.Count()</strong>개 상품이 있습니다.</p>
-    <ul class="product_list">
+@foreach (var item in Model.TabProductList)
+{
 
-        <li>
-            <a href="#">
-                <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
-                <span class="detail">
-                    <!--
-                .ico_best
-                .ico_coupon
-                .ico_time
-                .ico_soldout
-                .ico_set
-                -->
-                    <span class="ico_best">BEST</span>
-                    <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
-                    <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
-                    <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
-                </span>
-            </a>
-            <a href="#" class="btn_cart"></a>
-        </li>
+    <div class="product_wrap">
+        <p class="list_tit">@item.Tabinfo.TAB_NAME</p>
+        <ul class="product_list">
+        
+        @foreach (var productInfo in item.ProductList)
+        {
+            string imgUrl1 = productImgPath + "R270_" + productInfo.MAIN_IMG;
 
-        <li>
-            <a href="#">
-                <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
-                <span class="detail">
-                    <!--
-                .ico_best
-                .ico_coupon
-                .ico_time
-                .ico_soldout
-                .ico_set
-                -->
-                    <span class="ico_best">BEST</span>
-                    <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
-                    <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
-                    <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
-                </span>
-            </a>
-            <a href="#" class="btn_cart"></a>
-        </li>
+            <li>
+                <a href="/shopping/detail?pcode=@productInfo.P_CODE">
+                    <span class="photo"><img src="@imgUrl1" alt="" /></span>
+                    <span class="detail">
+                       @if (!string.IsNullOrEmpty(productInfo.ICON_YN))
+                        {
+                            if (productInfo.ICON_YN.IndexOf('B') != -1)
+                            { <text> <span class="ico_best">BEST</span></text> }
+                            if (productInfo.ICON_YN.IndexOf('S') != -1)
+                            { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                            if (productInfo.ICON_YN.IndexOf('N') != -1)
+                            { <text> <span class="ico_new">NEW</span></text> }
+                            if (productInfo.ICON_YN.IndexOf('C') != -1)
+                            { <text> <span class="ico_custom ">커스텀</span></text> }
+                        }
+                        @if (!string.IsNullOrEmpty(productInfo.PMO_PRODUCT_CATEGORY))
+                        {
+                            if (productInfo.PMO_PRODUCT_CATEGORY == "01")
+                            { <text> <span class="ico_set">SET</span></text> }
+                            if (productInfo.PMO_PRODUCT_CATEGORY == "02")
+                            { <text> <span class="ico_1_1">1+1</span></text> }
+                            if (productInfo.PMO_PRODUCT_CATEGORY == "03")
+                            { <text> <span class="ico_time">TIME</span></text> }
+                        }
+                        @if (!string.IsNullOrEmpty(productInfo.COUPON_CODE))
+                        {
+                              <text> <span class="ico_coupon">COUPON</span></text>
+                        }
+                        <span class="tit">@(new HtmlString(productInfo.P_NAME))</span>
+                        <span class="stit">@(new HtmlString(productInfo.P_SUB_TITLE))</span>
+                        <span class="price">
+                            @if (productInfo.SELLING_PRICE != productInfo.DISCOUNT_PRICE)
+                            {
+                                <del>@String.Format("{0:#,#0.}", productInfo.SELLING_PRICE)원</del>
+                            }
+                            <strong>@String.Format("{0:#,#0.}", productInfo.DISCOUNT_PRICE)원</strong>
+                        </span>
+                    </span>
+                </a>
+                <a href="#none" class="btn_cart" onclick="javascript:Cart_Product_Input('@productInfo.P_CODE','1');"></a>
+            </li>
+        }
+        </ul>
+        <!--//상세리스트-->
+    </div>
+}
 
-        <li>
-            <a href="#">
-                <span class="photo"><img src="/aboutCom/images/sample/thumb218.jpg" alt="" /></span>
-                <span class="detail">
-                    <!--
-                .ico_best
-                .ico_coupon
-                .ico_time
-                .ico_soldout
-                .ico_set
-                -->
-                    <span class="ico_best">BEST</span>
-                    <span class="tit">멀티 사인즈 에이트 올 데이 브라이트</span>
-                    <span class="stit">청정 제주 참마 유래 성분이<br />맑고 환한 피부로 가꿔주는 미백기능성 토너</span>
-                    <span class="price"><del>32,000원</del><strong>25,000</strong>원</span>
-                </span>
-            </a>
-            <a href="#" class="btn_cart"></a>
-        </li>
-
-    </ul>
-    <!--//상세리스트-->
 </div>
 <!--//container-->
+
+
+
+
+
+
+
+
+

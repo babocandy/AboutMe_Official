@@ -29,6 +29,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,9 +39,11 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="INIpayNet, Version=5.0.3.3, Culture=neutral, PublicKeyToken=baf9dc2e190f803c, processorArchitecture=AMD64">
+    <Reference Include="INIpayNet, Version=5.0.4.0, Culture=neutral, PublicKeyToken=baf9dc2e190f803c">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\INIpayNet.dll</HintPath>
     </Reference>
@@ -463,7 +467,6 @@
     <Content Include="aboutCom\include\footer.asp" />
     <Content Include="aboutCom\include\head.asp" />
     <Content Include="aboutCom\include\header.asp" />
-    <Content Include="aboutCom\js\common_member.js" />
     <Content Include="aboutCom\js\lib\jquery-1.8.3.min.js" />
     <Content Include="aboutCom\js\lib\jquery.countdown.js" />
     <Content Include="aboutCom\js\lib\jquery.easing-1.3.min.js" />
@@ -487,7 +490,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="INIpayNet.dll" />
     <Content Include="RealName\hp\hs_cnfrm_popup1.aspx" />
     <Content Include="RealName\hp\hs_cnfrm_popup2.aspx" />
     <Content Include="RealName\hp\hs_cnfrm_popup3.aspx" />
@@ -510,6 +512,7 @@
     <Content Include="App_Readme\WURFL-v.1.6.1.0.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <None Include="Properties\PublishProfiles\aboutme-devmobile.cstone.co.kr.pubxml" />
     <None Include="Properties\PublishProfiles\publish mobile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -638,6 +641,15 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\EventView.cshtml" />
     <Content Include="Views\Event\ExhibitView.cshtml" />
+    <Content Include="Views\MyWish\Index.cshtml" />
+    <Content Include="Views\Qna\Index.cshtml" />
+    <Content Include="Views\Qna\QnaWrite.cshtml" />
+    <Content Include="Views\Recall\Index.cshtml" />
+    <Content Include="Views\Recall\RecallView.cshtml" />
+    <Content Include="Views\Recall\RecallWrite.cshtml" />
+    <Content Include="Views\Event\SampleView.cshtml" />
+    <Content Include="Views\Customer\Winner.cshtml" />
+    <Content Include="Views\Customer\WinnerView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseMobile\" />

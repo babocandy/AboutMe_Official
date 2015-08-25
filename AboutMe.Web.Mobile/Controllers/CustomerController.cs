@@ -9,6 +9,8 @@ using AboutMe.Domain.Service.Faq;
 using AboutMe.Domain.Entity.Faq;
 using AboutMe.Domain.Service.Notice;
 using AboutMe.Domain.Entity.Notice;
+using AboutMe.Domain.Service.Winner;
+using AboutMe.Domain.Entity.Winner;
 using AboutMe.Web.Mobile.Common.Filters;
 
 namespace AboutMe.Web.Mobile.Controllers
@@ -17,12 +19,14 @@ namespace AboutMe.Web.Mobile.Controllers
     {
         private IFaqService _faqservice;
         private INoticeService _noticeservice;
+        private IWinnerService _winnerservice;
 
 
-        public CustomerController(IFaqService _faqservice, INoticeService _noticeservice)
+        public CustomerController(IFaqService _faqservice, INoticeService _noticeservice, IWinnerService _winnerservice)
         {
             this._faqservice = _faqservice;
             this._noticeservice = _noticeservice;
+            this._winnerservice = _winnerservice;
         }
 
         //고객센터메인
@@ -157,5 +161,41 @@ namespace AboutMe.Web.Mobile.Controllers
             return View();
         }
 
+        //당첨자발표
+        public ActionResult Winner(WINNER_SEARCH search)
+        {
+            if (search.Page == 0)
+            {
+                search.Page = 1;
+            }
+
+            search.PageSize = 10;
+
+            int total_count = 0;
+            total_count = _winnerservice.WinnerCount(search);
+            List<SP_TB_WINNER_SEL_Result> lst = new List<SP_TB_WINNER_SEL_Result>();
+            lst = _winnerservice.WinnerList(search);
+
+            WINNER_INDEX M = new WINNER_INDEX
+            {
+                SearchParam = search,
+                WinnerCount = total_count,
+                WinnerList = lst
+            };
+
+            return View(M);
+        }
+
+        //당첨자발표 상세
+        public ActionResult WinnerView(int IDX, WINNER_SEARCH searchModel)
+        {
+            WinnerUserView M = new WinnerUserView
+            {
+                IDX = IDX,
+                SearchParam = searchModel,
+                WinnerInfo = _winnerservice.WinnerView(IDX)
+            };
+            return View(M);
+        }
     }
 }

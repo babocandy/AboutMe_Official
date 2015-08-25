@@ -44,9 +44,13 @@
                         {
                             urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
                         }
-                        else
+                        else if (item.GBN == "EXHIBIT")
                         {
                             urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
+                        }
+                        else if (item.GBN == "SAMPLE")
+                        {
+                            urlPath = "/Event/SampleView?IDX=" + Convert.ToString(item.IDX);
                         }
 
                         <li><a href="@urlPath"><img class="lazyload" data-original="@item.MOBILE_BANNER" alt="@item.NAME @item.FROM_DATE ~ @item.TO_DATE" /></a></li>
@@ -72,11 +76,14 @@
                     {
                         urlPath = "/Event/EventView?IDX=" + Convert.ToString(item.IDX);
                     }
-                    else
+                    else if (item.GBN == "EXHIBIT")
                     {
                         urlPath = "/Event/ExhibitView?IDX=" + Convert.ToString(item.IDX);
                     }
-
+                    else if (item.GBN == "SAMPLE")
+                    {
+                        urlPath = "/Event/SampleView?IDX=" + Convert.ToString(item.IDX);
+                    }
                     <li><a href="@urlPath"><img class="lazyload" data-original="@item.MOBILE_BANNER" alt="@item.NAME @item.FROM_DATE ~ @item.TO_DATE" /></a></li>
                 }
             }

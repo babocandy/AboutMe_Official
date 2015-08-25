@@ -202,5 +202,39 @@ namespace AboutMe.Domain.Entity.Qna
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_QNA_VIEW_Result>("SP_ADMIN_QNA_VIEW", iDXParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> SP_ADMIN_QNA_MEMBER_CNT(string m_ID)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ADMIN_QNA_MEMBER_CNT", m_IDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_QNA_MEMBER_SEL_Result> SP_ADMIN_QNA_MEMBER_SEL(string m_ID, string sORT_COL, string sORT_DIR, Nullable<int> pAGE, Nullable<int> pAGESIZE)
+        {
+            var m_IDParameter = m_ID != null ?
+                new ObjectParameter("M_ID", m_ID) :
+                new ObjectParameter("M_ID", typeof(string));
+    
+            var sORT_COLParameter = sORT_COL != null ?
+                new ObjectParameter("SORT_COL", sORT_COL) :
+                new ObjectParameter("SORT_COL", typeof(string));
+    
+            var sORT_DIRParameter = sORT_DIR != null ?
+                new ObjectParameter("SORT_DIR", sORT_DIR) :
+                new ObjectParameter("SORT_DIR", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_QNA_MEMBER_SEL_Result>("SP_ADMIN_QNA_MEMBER_SEL", m_IDParameter, sORT_COLParameter, sORT_DIRParameter, pAGEParameter, pAGESIZEParameter);
+        }
     }
 }

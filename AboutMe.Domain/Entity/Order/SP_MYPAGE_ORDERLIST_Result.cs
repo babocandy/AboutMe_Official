@@ -25,5 +25,6 @@ namespace AboutMe.Domain.Entity.Order
         public string DELIVERY_NUM { get; set; }
         public Nullable<int> P_COUNT { get; set; }
         public int ACCML_POINT { get; set; }
+        public string P_IMG1_S { get; set; }
     }
 }

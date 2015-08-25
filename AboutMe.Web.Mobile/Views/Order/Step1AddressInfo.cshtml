@@ -4,8 +4,7 @@
         if (gbn == 1) //기본배송지
         {
             $("#SENDER_NAME").val('@Model.BaseAddrInfo.M_NAME');
-            $("#SENDER_POST1").val('@Model.BaseAddrInfo.M_ZIPCODE1');
-            //$("#SENDER_POST2").val('@Model.BaseAddrInfo.M_ZIPCODE2');
+            $("#SENDER_POST").val('@Model.BaseAddrInfo.M_ZIPCODE');
             $("#SENDER_ADDR1").val('@Model.BaseAddrInfo.M_ADDR1');
             $("#SENDER_ADDR2").val('@Model.BaseAddrInfo.M_ADDR2');
             $("#SENDER_TEL1").val('@Model.BaseAddrInfo.M_PHONE1');
@@ -22,8 +21,7 @@
         else if (gbn == 2) //신규
         {
             $("#SENDER_NAME").val('');
-            $("#SENDER_POST1").val('');
-            //$("#SENDER_POST2").val('');
+            $("#SENDER_POST").val('');
             $("#SENDER_ADDR1").val('');
             $("#SENDER_ADDR2").val('');
             $("#SENDER_TEL1").val('');
@@ -43,8 +41,7 @@
         if (gbn == 1) //기본배송지
         {
             $("#RECEIVER_NAME").val('@Model.BaseAddrInfo.M_NAME');
-            $("#RECEIVER_POST1").val('@Model.BaseAddrInfo.M_ZIPCODE1');
-           // $("#RECEIVER_POST2").val('@Model.BaseAddrInfo.M_ZIPCODE2');
+            $("#RECEIVER_POST").val('@Model.BaseAddrInfo.M_ZIPCODE');
             $("#RECEIVER_ADDR1").val('@Model.BaseAddrInfo.M_ADDR1');
             $("#RECEIVER_ADDR2").val('@Model.BaseAddrInfo.M_ADDR2');
             $("#RECEIVER_TEL1").val('@Model.BaseAddrInfo.M_PHONE1');
@@ -58,8 +55,7 @@
         else if (gbn == 2) //최근배송지
         {
             $("#RECEIVER_NAME").val('@Model.RecentAddrInfo.RECEIVER_NAME');
-            $("#RECEIVER_POST1").val('@Model.RecentAddrInfo.RECEIVER_POST1');
-            //$("#RECEIVER_POST2").val('@Model.RecentAddrInfo.RECEIVER_POST2');
+            $("#RECEIVER_POST").val('@Model.RecentAddrInfo.RECEIVER_POST');
             $("#RECEIVER_ADDR1").val('@Model.RecentAddrInfo.RECEIVER_ADDR1');
             $("#RECEIVER_ADDR2").val('@Model.RecentAddrInfo.RECEIVER_ADDR2');
             $("#RECEIVER_TEL1").val('@Model.RecentAddrInfo.RECEIVER_TEL1');
@@ -72,10 +68,9 @@
         else if (gbn == 3) //신규
         {
             $("#RECEIVER_NAME").val('');
-            $("#RECEIVER_POST1").val('');
-            //$("#RECEIVER_POST2").val('');
+            $("#RECEIVER_POST").val('');
             $("#RECEIVER_ADDR1").val('');
-            //$("#RECEIVER_ADDR2").val('');
+            $("#RECEIVER_ADDR2").val('');
             $("#RECEIVER_TEL1").val('');
             $("#RECEIVER_TEL2").val('');
             $("#RECEIVER_TEL3").val('');
@@ -87,8 +82,7 @@
 
     function setSameSenderAddr() {
         $("#RECEIVER_NAME").val($("#SENDER_NAME").val());
-        $("#RECEIVER_POST1").val($("#SENDER_POST1").val());
-        //$("#RECEIVER_POST2").val($("#SENDER_POST2").val());
+        $("#RECEIVER_POST").val($("#SENDER_POST").val());
         $("#RECEIVER_ADDR1").val($("#SENDER_ADDR1").val());
         $("#RECEIVER_ADDR2").val($("#SENDER_ADDR2").val());
         $("#RECEIVER_TEL1").val($("#SENDER_TEL1").val());
@@ -160,6 +154,85 @@
         });
     }
 </script>
+
+<!-- 다음 우편번호 검색-->
+<div id="layerPOST" style="display:none;position:fixed;overflow:hidden;z-index:9999;-webkit-overflow-scrolling:touch;">
+    <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script language="javascript">
+    // 우편번호 찾기 화면을 넣을 element
+    var element_layer = document.getElementById('layerPOST');
+
+    function closeDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_layer.style.display = 'none';
+    }
+
+    function sample2_execDaumPostcode(postbox, addrbox) {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if (data.addressType === 'R') {
+                    //법정동명이 있을 경우 추가한다.
+                    if (data.bname !== '') {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if (data.buildingName !== '') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                // document.getElementById("M_ZIPCODE").value = data.postcode; //6자리 우편번호 사용
+                $("#" + postbox).val(data.zonecode); //5자리 기초구역번호 사용
+                $("#" + addrbox).val(fullAddr);
+                // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
+
+                // iframe을 넣은 element를 안보이게 한다.
+                element_layer.style.display = 'none';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(element_layer);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_layer.style.display = 'block';
+
+        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+        initLayerPosition();
+    }
+
+    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+    function initLayerPosition() {
+        var width = 300; //우편번호서비스가 들어갈 element의 width
+        var height = 460; //우편번호서비스가 들어갈 element의 height
+        var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + 'px';
+    }
+</script>
+<!-- 다음 우편번호 검색-->
+
 <div class="boxtypec">
     <h3 class="sliderh3_tit">주문자 정보</h3>
     <div class="sliderh3_con">
@@ -181,7 +254,7 @@
                 <dl>
                     <dt class="essential">주소</dt>
                     <dd class="frm_address">
-                        <input type="text" title="우편번호 입력" class="ipttypea" name="SENDER_POST1" id="SENDER_POST1" value="@Model.BaseAddrInfo.M_ZIPCODE1"><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('SENDER_POST1', 'SENDER_POST2', 'SENDER_ADDR1');">우편번호</a>
+                        <input type="text" title="우편번호 입력" class="ipttypea" name="SENDER_POST" id="SENDER_POST" value="@Model.BaseAddrInfo.M_ZIPCODE"><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('SENDER_POST', 'SENDER_ADDR1');">우편번호</a>
                         <input type="text" title="주소입력" class="ipttypea mt5 wper100" name="SENDER_ADDR1" id="SENDER_ADDR1" value="@Model.BaseAddrInfo.M_ADDR1">
                         <input type="text" title="주소상세입력" class="ipttypea mt5 wper100" name="SENDER_ADDR2" id="SENDER_ADDR2" value="@Model.BaseAddrInfo.M_ADDR2">
                     </dd>
@@ -300,7 +373,7 @@
                 <dl>
                     <dt class="essential">주소</dt>
                     <dd class="frm_address">
-                        <input type="text" title="우편번호 입력" class="ipttypea" name="RECEIVER_POST1" id="RECEIVER_POST1" /><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('RECEIVER_POST1', 'RECEIVER_POST2', 'RECEIVER_ADDR1');">우편번호</a>
+                        <input type="text" title="우편번호 입력" class="ipttypea" name="RECEIVER_POST" id="RECEIVER_POST" /><a class="btn btn_white_h30 btn_zip vam" href="#none" onclick="sample2_execDaumPostcode('RECEIVER_POST', 'RECEIVER_ADDR1');">우편번호</a>
                         <input type="text" title="주소입력" class="ipttypea mt5 wper100" name="RECEIVER_ADDR1" id="RECEIVER_ADDR1" />
                         <input type="text" title="주소상세입력" class="ipttypea mt5 wper100" name="RECEIVER_ADDR2" id="RECEIVER_ADDR2" />
                     </dd>

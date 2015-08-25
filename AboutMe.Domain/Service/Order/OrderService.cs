@@ -83,8 +83,7 @@ namespace AboutMe.Domain.Service.Order
                 RECEIVER_HP1 = "",
                 RECEIVER_HP2 = "",
                 RECEIVER_HP3 = "",
-                RECEIVER_POST1 = "",
-                RECEIVER_POST2 = "",
+                RECEIVER_POST = "",
                 RECEIVER_TEL1 = "",
                 RECEIVER_TEL2= "",
                 RECEIVER_TEL3 =""
@@ -111,11 +110,11 @@ namespace AboutMe.Domain.Service.Order
         #endregion
 
         #region Step1 Order 회원 주소 저장
-        public void OrderStep1SaveMemberInfo(string M_ID, string POST1, string POST2, string ADDR1, string ADDR2, string TEL1, string TEL2, string TEL3, string HP1, string HP2, string HP3, string EMAIL1, string EMAIL2)
+        public void OrderStep1SaveMemberInfo(string M_ID, string POST, string ADDR1, string ADDR2, string TEL1, string TEL2, string TEL3, string HP1, string HP2, string HP3, string EMAIL1, string EMAIL2)
         {
             using (OrderEntities EfContext = new OrderEntities())
             {
-                EfContext.SP_ORDER_STEP2_ADDR_SAVE(M_ID, POST1, POST2, ADDR1, ADDR2, TEL1, TEL2, TEL3, HP1, HP2, HP3, EMAIL1, EMAIL2);
+                EfContext.SP_ORDER_STEP2_ADDR_SAVE(M_ID, POST, ADDR1, ADDR2, TEL1, TEL2, TEL3, HP1, HP2, HP3, EMAIL1, EMAIL2);
             }
         }
         #endregion
@@ -167,9 +166,9 @@ namespace AboutMe.Domain.Service.Order
         {
             using (OrderEntities EfContext = new OrderEntities())
             {
-                EfContext.SP_ORDER_STEP2_SENDER_RECEIVER_SAVE(ORDER_IDX, Param.SENDER_NAME, Param.SENDER_POST1, Param.SENDER_POST2, Param.SENDER_ADDR1,
+                EfContext.SP_ORDER_STEP2_SENDER_RECEIVER_SAVE(ORDER_IDX, Param.SENDER_NAME, Param.SENDER_POST, Param.SENDER_ADDR1,
                     Param.SENDER_ADDR2, Param.SENDER_TEL1, Param.SENDER_TEL2, Param.SENDER_TEL3, Param.SENDER_HP1, Param.SENDER_HP2, Param.SENDER_HP3,
-                    Param.SENDER_EMAIL1, Param.SENDER_EMAIL2, Param.RECEIVER_NAME, Param.RECEIVER_POST1, Param.RECEIVER_POST2, Param.RECEIVER_ADDR1,
+                    Param.SENDER_EMAIL1, Param.SENDER_EMAIL2, Param.RECEIVER_NAME, Param.RECEIVER_POST, Param.RECEIVER_ADDR1,
                     Param.RECEIVER_ADDR2, Param.RECEIVER_TEL1, Param.RECEIVER_TEL2, Param.RECEIVER_TEL3, Param.RECEIVER_HP1, Param.RECEIVER_HP2,
                     Param.RECEIVER_HP3, Param.ORDER_MEMO, Param.NOMEMBER_PASS);
             }

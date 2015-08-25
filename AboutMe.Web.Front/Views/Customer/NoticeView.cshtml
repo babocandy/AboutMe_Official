@@ -1,5 +1,12 @@
 ﻿@model AboutMe.Domain.Entity.Notice.NoticeUserView
 @{
+    
+    if (Model.Notice == null)
+    {
+        Response.Write("<script>alert('존재하지 않은 게시물입니다.'); history.go(-1);</script>");
+        Response.End();
+    }
+    
     ViewBag.Title = "공지사항 - ABOUT ME";
     ViewBag.TopClass = "notice";
     Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";

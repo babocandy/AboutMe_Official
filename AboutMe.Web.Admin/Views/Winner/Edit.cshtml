@@ -1,0 +1,132 @@
+﻿@using AboutMe.Common.Data
+@model AboutMe.Domain.Entity.Winner.WINNER_ADMIN_EDIT
+@{
+    ViewBag.Title = "당첨자발표";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+
+    string modeDesc = "수정";
+    if (@Model.Mode == "NEW")
+    {
+        modeDesc = "등록";
+    }
+}
+@section Scripts{
+    <script language="javascript">
+
+    function frmCheck() {
+
+        var f = document.iform;
+
+        if ($("#TITLE").val().trim() == "") {
+            alert("제목을 입력해 주세요.");
+            return false;
+        }
+
+        if (!$("#DisplayYnY")[0].checked && !$("#DisplayYnN")[0].checked) {
+            alert("전시여부를 선택해 주세요.");
+            return false;
+        }
+
+        oEditors.getById["CONTENTS"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+
+        //alert(f.P_INFO_DETAIL_WEB.value);
+        if (f.CONTENTS.value == "<p>&nbsp;</p>") {
+            alert("내용을 입력해 주세요!");
+            return false;
+        }
+
+
+        if (confirm("당첨자를 @modeDesc 하시겠습니까?"))
+        {
+            f.submit();
+        }
+
+
+    }
+
+    </script>
+}
+@section Left {
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+    <!--content-->
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/">HOME</a> &gt; <a href="#">C/S관리</a> &gt; <strong>당첨자발표</strong>
+        </div>
+        <!--//path-->
+        <div class="panel">
+            <h3>당첨자발표 @modeDesc</h3>
+        </div>
+        @using (Html.BeginForm("WinnerAction", "Winner", FormMethod.Post, new { id = "iform", name = "iform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+            @Html.Hidden("IDX", Model.IDX)
+            @Html.Hidden("MODE", Model.Mode)
+
+
+                                    <div class="panel">
+                                        <table class="table table_row">
+                                            <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th>제목</th>
+                                                    <td><input type="text" class="input-sm" style="width:80%" name="TITLE" id="TITLE" value="@Model.WinnerInfo.TITLE"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>내용</th>
+                                                    <td>
+                                                        @{
+                                                            Html.RenderAction("InstallEditor", "SmartEditor", new SmartEditorConfig()
+                                                            {
+                                                                width = 800 //에디터 width 값
+                                                                ,
+                                                                height = 200 //에디터 height 값
+                                                                ,
+                                                                tfID = "CONTENTS" //에디터 id 혹은 name
+                                                                ,
+                                                                memo = @Model.WinnerInfo.CONTENTS //수정모드에서는 값입력, 쓰기모드는 memo 생략가능
+                                                                ,
+                                                                uploadPath = "~/Upload/Winner/" //업로드 폴더 지정. 지저안하면 ~/Upload/ 로 설정
+                                                            });
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <th>전시여부</th>
+                                                    <td>
+                                                        <label for="DisplayYnY">@Html.RadioButton("DISPLAY_YN", "Y", Model == null ? false : (Model.WinnerInfo.DISPLAY_YN == "Y" ? true : false), new { id = "DisplayYnY" })<span class="txt mr5">전시</span></label>
+                                                        <label for="DisplayYnN">@Html.RadioButton("DISPLAY_YN", "N", Model == null ? false : (Model.WinnerInfo.DISPLAY_YN == "N" ? true : false), new { id = "DisplayYnN" })<span class="txt mr5">비전시</span></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="panel tac">
+                                        @if (Model.Mode == "NEW")
+                                        {
+                                            <a style="width:100px" class="btn btn-default middium" href="#none" onclick="frmCheck();">등록</a>
+                                        }
+                                        else if (Model.Mode == "EDIT")
+                                        {
+                                            <a style="width:100px" class="btn btn-success middium" href="#none" onclick="frmCheck();">수정</a>
+                                        }
+                                        @Html.ActionLink("취소", "", @Model.SearchParam, new { @class = "btn btn-primary  middium", style = "width:100px" })
+
+                                    </div>
+        }
+
+
+
+    </div>
+    <!--//content-->
+}

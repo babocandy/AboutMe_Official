@@ -80,5 +80,21 @@ namespace AboutMe.Web.Admin.Controllers.ContentsManager
             return View("Edit", M);
 
         }
+
+        //회원정보 > 1:1문의내역
+        public ActionResult QnaMemberList(string M_ID, int Page=1)
+        {
+            int PageSize = 10;
+
+            QNA_ADMIN_MEMBER M = new QNA_ADMIN_MEMBER
+            {
+                Page = Page,
+                PageSize = PageSize,
+                M_ID = M_ID,
+                QnaCount = _qnaservice.QnaAdminMemberCount(M_ID),
+                QnaList =  _qnaservice.QnaAdminMemberList(M_ID, Page, PageSize)
+            };
+            return View(M);
+        }
     }
 }

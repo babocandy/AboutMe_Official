@@ -29,9 +29,9 @@
             return false;
         }
 
-        if ($("#SENDER_POST1").val().trim() == "" || $("#SENDER_POST2").val().trim() == "") {
+        if ($("#SENDER_POST").val().trim() == "") {
             alert('우편번호를 입력해주세요.');
-            $("#SENDER_POST1").setfocus();
+            $("#SENDER_POST").setfocus();
             return false;
         }
         if ($("#SENDER_ADDR1").val().trim() == "") {
@@ -69,9 +69,9 @@
             return false;
         }
 
-        if ($("#RECEIVER_POST1").val().trim() == "" || $("#RECEIVER_POST2").val().trim() == "") {
+        if ($("#RECEIVER_POST").val().trim() == "") {
             alert('우편번호를 입력해주세요.');
-            $("#RECEIVER_POST1").setfocus();
+            $("#RECEIVER_POST").setfocus();
             return false;
         }
         if ($("#RECEIVER_ADDR1").val().trim() == "") {
@@ -137,8 +137,7 @@
         var src_url = "/Order/SaveReceiverAddress";
         var param = "ORDER_IDX=@Model.OrderIdx" 
         param += "&SENDER_NAME=" + $("#SENDER_NAME").val().trim();
-        param += "&SENDER_POST1=" + $("#SENDER_POST1").val().trim();
-        param += "&SENDER_POST2=" + $("#SENDER_POST2").val().trim();
+        param += "&SENDER_POST=" + $("#SENDER_POST").val().trim();
         param += "&SENDER_ADDR1=" + $("#SENDER_ADDR1").val().trim();
         param += "&SENDER_ADDR2=" + $("#SENDER_ADDR2").val().trim();
         param += "&SENDER_TEL1=" + $("#SENDER_TEL1").val().trim();
@@ -151,8 +150,7 @@
         param += "&SENDER_EMAIL2=" + $("#SENDER_EMAIL2").val().trim();
 
         param += "&RECEIVER_NAME=" + $("#RECEIVER_NAME").val().trim();
-        param += "&RECEIVER_POST1=" + $("#RECEIVER_POST1").val().trim();
-        param += "&RECEIVER_POST2=" + $("#RECEIVER_POST1").val().trim();
+        param += "&RECEIVER_POST=" + $("#RECEIVER_POST").val().trim();
         param += "&RECEIVER_ADDR1=" + $("#RECEIVER_ADDR1").val().trim();
         param += "&RECEIVER_ADDR2=" + $("#RECEIVER_ADDR2").val().trim();
         param += "&RECEIVER_TEL1=" + $("#RECEIVER_TEL1").val().trim();
