@@ -1,0 +1,229 @@
+﻿@model AboutMe.Domain.Entity.OrderStat.OrderStatIndex
+
+
+@{
+    ViewBag.Title = "Report_OrderStat_Daily";
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+    <script language="javascript">
+        function StatusAllClick1(c) {
+            $(".mem_check").each(function (idx) {
+                if (c.checked) {
+                    $(this).prop('checked', true);
+                }
+                else {
+                    $(this).prop('checked', false);
+                }
+            });
+
+            if (!c.checked) {
+                $("#MEMBER_GBN1").prop('checked', true);
+            }
+
+        }
+
+        function StatusAllClick2(c) {
+            $(".pat_check").each(function (idx) {
+                if (c.checked) {
+                    $(this).prop('checked', true);
+                }
+                else {
+                    $(this).prop('checked', false);
+                }
+            });
+
+            if (!c.checked) {
+                $("#PAT_GUBUN1").prop('checked', true);
+            }
+
+        }
+
+        function ChangeDate(d) {
+            var from_date, to_date;
+
+            if (d == "1") //오늘
+            {
+                from_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "7") {
+                from_date = '@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "15") {
+                from_date = '@DateTime.Now.AddDays(-15).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else if (d == "31") {
+                from_date = '@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")';
+                to_date = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            }
+            else//  전체기간
+            {
+                from_date = '';
+                to_date = '';
+            }
+
+            $("#FROM_DATE").val(from_date);
+            $("#TO_DATE").val(to_date);
+
+        }
+
+    </script>
+}
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+
+    @using (Html.BeginForm("Index", "OrderStat", FormMethod.Post, new { id = "sform", name = "sform", onsubmit = "return frmCheck();" }))
+    {
+        <div class="content">
+            <!--path-->
+            <div class="path">
+                <a href="/">HOME</a> &gt; <a href="#">통계</a> &gt; <a href="#">주문통계</a> &gt; <strong>일별 주문현황</strong>
+            </div>
+            <!--//path-->
+
+            <div class="panel">
+                <h3 class="sub-header">일별 주문현황</h3>
+                <div class="">
+
+                    <table class="table table_row">
+                        <colgroup></colgroup>
+                        <tbody>
+                            <tr>
+                                <th>주문일자</th>
+                                <td colspan="3">
+                                    @(Html.Kendo().DatePicker()
+                          .Name("FROM_DATE")
+                          .Value(Model.searchParam.FROM_DATE)
+                          .HtmlAttributes(new { style = "width:120px" })
+                                    )
+                                    ~
+                                    @(Html.Kendo().DatePicker()
+                          .Name("TO_DATE")
+                          .Value(Model.searchParam.TO_DATE)
+                          .HtmlAttributes(new { style = "width:120px" })
+                                    )
+                                    <a href="#" class="btn btn-primary small" onclick="ChangeDate('1')">오늘</a>
+                                    <a href="#" class="btn btn-primary small" onclick="ChangeDate('7')">7일</a>
+                                    <a href="#" class="btn btn-primary small" onclick="ChangeDate('15')">15일</a>
+                                    <a href="#" class="btn btn-primary small" onclick="ChangeDate('31')">1개월</a><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>회원구분</th>
+                                <td>
+                                    <label for="MEMBER_GBN_All"> @Html.CheckBox("MEMBER_GBN_All", Model == null ? false : true, new { @value = "true", @onclick = "StatusAllClick1(this)" }) <span class="txt mr5">전체</span> </label>
+                                    <label for="MEMBER_GBN1"> @Html.CheckBox("MEMBER_GBN1", Model == null ? true : (Model.searchParam.MEMBER_GBN1 == true ? true : false), new { @value = "true", @class = "mem_check" }) <span class="txt mr5">일반회원</span> </label>
+                                    <label for="MEMBER_GBN2"> @Html.CheckBox("MEMBER_GBN2", Model == null ? true : (Model.searchParam.MEMBER_GBN2 == true ? true : false), new { @value = "true", @class = "mem_check" }) <span class="txt mr5">임직원</span> </label>
+                                    <label for="MEMBER_GBN3"> @Html.CheckBox("MEMBER_GBN3", Model == null ? true : (Model.searchParam.MEMBER_GBN3 == true ? true : false), new { @value = "true", @class = "mem_check" }) <span class="txt mr5">비회원</span> </label>
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th>주문구분</th>
+                                <td colspan="3">
+                                    <label for="PAT_GBN_All"> @Html.CheckBox("PAT_GBN_All", Model == null ? false : true, new { @value = "true", @onclick = "StatusAllClick2(this)" }) <span class="txt mr5">전체</span> </label>
+                                    <label for="PAT_GUBUN1"> @Html.CheckBox("PAT_GUBUN1", Model == null ? true : (Model.searchParam.PAT_GUBUN1 == true ? true : false), new { @value = "true", @class = "pat_check" }) <span class="txt mr5">Web</span> </label>
+                                    <label for="PAT_GUBUN2"> @Html.CheckBox("PAT_GUBUN2", Model == null ? true : (Model.searchParam.PAT_GUBUN2 == true ? true : false), new { @value = "true", @class = "pat_check" }) <span class="txt mr5">Mobile</span> </label>
+                                    @(Html.Kendo().Button()
+                        .Name("submitbtn")
+                        .HtmlAttributes(new { type = "submit", @class = "k-primary", @style = "width:100px" })
+                        .Content("검색"))
+                                    @*
+                                        @(Html.Kendo().Button()
+                                        .Name("resetform")
+                                        .HtmlAttributes(new { type = "button", @class = "k-primary", @style = "width:100px" })
+                                        .Events(ev => ev.Click("onFormReset"))
+                                        .Content("초기화"))
+                                    *@
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+                        <!--//end form-->
+    }
+
+    <div class="panel">
+        
+        <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+        <table class="table table_col" style="min-width:1400px;">
+            <colgroup><col /><col /><col /><col /></colgroup>
+            <thead>
+                <tr>
+                    <th scope="col" rowspan="2">날짜</th>
+                    <th scope="col" colspan="3">주문매출</th>
+                    <th scope="col" rowspan="2">포인트 사용금액</th>
+                    <th scope="col" rowspan="2">쿠폰 사용금액</th>
+                    <th scope="col" rowspan="2">등급 할인금액</th>
+                    <th scope="col" rowspan="2">임직원 할인금액</th>
+                    <th scope="col" colspan="2">배송비</th>
+                    <th scope="col" rowspan="2">총 결제금액</th>
+                    <th scope="col" colspan="2">취소</th>
+                    <th scope="col" colspan="2">교환</th>
+                    <th scope="col" colspan="2">반품</th>
+
+                </tr>
+                <tr>
+                    <th scope="col" >건수</th>
+                    <th scope="col" >수량</th>
+                    <th scope="col" >금액</th>
+                    <th scope="col" >건수</th>
+                    <th scope="col" >금액</th>
+                    <th scope="col">건수</th>
+                    <th scope="col">금액</th>
+                    <th scope="col">건수</th>
+                    <th scope="col">금액</th>
+                    <th scope="col">건수</th>
+                    <th scope="col">금액</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderStatDayList)
+                {
+                    <tr>
+                        <td>@String.Format("{0:yyyy-MM-dd}", @item.ORDER_DATE)</td>
+                        <td>@Convert.ToInt64(item.ORDER_CNT).ToString("#,#0.")건</td>
+                        <td>@Convert.ToInt64(item.ORDER_PCNT).ToString("#,#0.")개</td>
+                        <td>@Convert.ToInt64(item.ORDER_PRICE).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.POINT_USE_PRICE).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.COUPON_DISCOUNT_AMT).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.GRADE_DISCOUNT_AMT).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.EMP_DISCOUNT_AMT).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.TRANS_CNT).ToString("#,#0.")건</td>
+                        <td>@Convert.ToInt64(item.TRANS_PRICE).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.TOTAL_PAY_PRICE).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.CANCEL_CNT).ToString("#,#0.")건</td>
+                        <td>@Convert.ToInt64(item.CANCEL_PRICE).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.CHANGE_CNT).ToString("#,#0.")건</td>
+                        <td>@Convert.ToInt64(item.CHANGE_PRICE).ToString("#,#0.")원</td>
+                        <td>@Convert.ToInt64(item.RETURN_CNT).ToString("#,#0.")건</td>
+                        <td>@Convert.ToInt64(item.RETURN_PRICE).ToString("#,#0.")원</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+}

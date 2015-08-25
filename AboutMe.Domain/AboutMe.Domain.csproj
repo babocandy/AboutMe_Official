@@ -68,6 +68,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Json">
       <HintPath>..\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.dll</HintPath>
     </Reference>
@@ -834,6 +835,13 @@
     <Compile Include="Entity\Notice\TB_NOTICE.cs">
       <DependentUpon>ModelNotice.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\OrderStat\OrderStatUserModel.cs" />
+    <Compile Include="Entity\OrderStat\SP_ADMIN_STAT_ORDER_CATEGORY_Result.cs">
+      <DependentUpon>ModelOrderStat.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\OrderStat\SP_ADMIN_STAT_ORDER_DAY_Result.cs">
+      <DependentUpon>ModelOrderStat.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Order\OrderUserModel.cs" />
     <Compile Include="Entity\Order\ModelOrder.Context.cs">
       <AutoGen>True</AutoGen>
@@ -1159,15 +1167,30 @@
     <Compile Include="Entity\Shopinfo\SP_SHOPINFO_LIST_Result.cs">
       <DependentUpon>ModelShopinfo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\OrderStat\ModelOrderStat.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOrderStat.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Winner\ModelWinner.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelWinner.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\OrderStat\ModelOrderStat.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOrderStat.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Winner\ModelWinner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelWinner.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\OrderStat\ModelOrderStat.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelOrderStat.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entity\Winner\ModelWinner.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1228,6 +1251,8 @@
     <Compile Include="Service\Faq\FaqService.cs" />
     <Compile Include="Service\Faq\IFaqService.cs" />
     <Compile Include="Entity\Common\USER_PROFILE.cs" />
+    <Compile Include="Service\OrderStat\IOrderStatService.cs" />
+    <Compile Include="Service\OrderStat\OrderStatService.cs" />
     <Compile Include="Service\Order\OrderService.cs" />
     <Compile Include="Service\Order\IOrderService.cs" />
     <Compile Include="Service\Point\IPointService.cs" />
@@ -1678,17 +1703,34 @@
       <DependentUpon>ModelShopinfo.edmx</DependentUpon>
       <LastGenOutput>ModelShopinfo.cs</LastGenOutput>
     </None>
+    <EntityDeploy Include="Entity\OrderStat\ModelOrderStat.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelOrderStat.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <EntityDeploy Include="Entity\Winner\ModelWinner.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelWinner.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Entity\OrderStat\ModelOrderStat.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelOrderStat.edmx</DependentUpon>
+      <LastGenOutput>ModelOrderStat.Context.cs</LastGenOutput>
+    </None>
     <None Include="Entity\Winner\ModelWinner.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelWinner.edmx</DependentUpon>
       <LastGenOutput>ModelWinner.Context.cs</LastGenOutput>
     </None>
+    <None Include="Entity\OrderStat\ModelOrderStat.edmx.diagram">
+      <DependentUpon>ModelOrderStat.edmx</DependentUpon>
+    </None>
     <None Include="Entity\Winner\ModelWinner.edmx.diagram">
       <DependentUpon>ModelWinner.edmx</DependentUpon>
+    </None>
+    <None Include="Entity\OrderStat\ModelOrderStat.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelOrderStat.edmx</DependentUpon>
+      <LastGenOutput>ModelOrderStat.cs</LastGenOutput>
     </None>
     <None Include="Entity\Winner\ModelWinner.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
