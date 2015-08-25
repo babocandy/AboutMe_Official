@@ -641,5 +641,14 @@ namespace AboutMe.Domain.Entity.Order
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_MYPAGE_MAIN_STATUS_Result>("SP_MYPAGE_MAIN_STATUS", m_IDParameter);
         }
+    
+        public virtual ObjectResult<string> SP_ORDER_CONFIG_CHECK(Nullable<int> oRDER_IDX)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_ORDER_CONFIG_CHECK", oRDER_IDXParameter);
+        }
     }
 }

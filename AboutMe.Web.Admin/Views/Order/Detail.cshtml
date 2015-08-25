@@ -475,8 +475,8 @@
         @Html.ActionLink("주문목록", "Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
     </div>	
     <div class="mt10 tar">
-        <a class="btn btn-default middium" href="#">포인트 수동 관리</a>
-        @if (Model.BodyInfo.PAY_GBN == "1") //신용카드일경우에만
+        <a class="btn btn-default middium" href="/AdminPoint" target="_blank">포인트 수동 관리</a>
+        @if (Model.BodyInfo.PAY_GBN != "4" && Model.BodyInfo.ESCROW_YN == "N") 
         { 
             <a class="btn btn-default middium" href="#none" onclick="order_part_cancel();">PG사부분취소</a>
         }
@@ -484,7 +484,7 @@
         {
             <a class="btn btn-default middium" href="#none" onclick="order_cancel();">PG사&주문전체취소</a>
         }
-        <a class="btn btn-default middium" href="#">주문전체반품</a>
+
     </div>
 </div>
 

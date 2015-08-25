@@ -247,7 +247,15 @@
                         <li class="total">
                             <p class="tot"><span class="tit">총 결제 금액</span><span class="price"><strong>@String.Format("{0:#,#0.}", Model.DetailInfo.TOTAL_PAY_PRICE)</strong>원</span></p>
                             <p><span class="tit">예상 적립포인트</span><span class="price point"><i></i><strong>@String.Format("{0:#,#0.}", Model.DetailInfo.ACCML_POINT)</strong></span></p>
-                            <p><span class="info"><i></i>최종 결제금액 기준으로 포인트 적립됩니다.</span></p>
+                            @if (Model.UserProfile.IS_LOGIN == true)
+                            {
+                                <p><span class="info"><i></i>최종 결제금액 기준으로 포인트 적립됩니다.</span></p>
+                            }
+                            else
+                            {
+                                <p><span class="info"><i></i>회원만 적립 가능합니다.</span></p>
+                            }
+                            
                         </li>
                     </ul>
 
