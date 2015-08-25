@@ -251,14 +251,13 @@ namespace AboutMe.Web.Mobile.Controllers
                 goodname = goodname + "외 " + Convert.ToString(OrderList.Count() - 1) + "건";
             }
 
-            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; 
-            string strHTTP_DOMAIN = "http://" + Request.Url.Authority;
+            string strHTTP_DOMAIN = AboutMe.Common.Helper.Config.GetConfigValue("MobileUrl"); ; 
 
-            string localurl = Request.Url.Authority;
-            string schema = Request.Url.Scheme;
-            string p_next_url = strHTTPS_DOMAIN + "/Order/InipayNext";      //2 Transaction 방식 (신용카드)
-            string p_noti_url = strHTTPS_DOMAIN + "/Order/InipayNoti";      //1 Transaction 방식 (가상계좌, 실시간계좌)
-            string p_return_url = strHTTPS_DOMAIN + "/Order/OrderReturn?ORDER_IDX=" + Convert.ToString(OrderIdx);  //1 Transaction 방식 (가상계좌, 실시간계좌)
+            //string localurl = Request.Url.Authority;
+            //string schema = Request.Url.Scheme;
+            string p_next_url = strHTTP_DOMAIN + "/Order/InipayNext";      //2 Transaction 방식 (신용카드)
+            string p_noti_url = strHTTP_DOMAIN + "/Order/InipayNoti";      //1 Transaction 방식 (가상계좌, 실시간계좌)
+            string p_return_url = strHTTP_DOMAIN + "/Order/OrderReturn?ORDER_IDX=" + Convert.ToString(OrderIdx);  //1 Transaction 방식 (가상계좌, 실시간계좌)
             
             ORDER_STEP1_MOBILE_PAYINFO M = new ORDER_STEP1_MOBILE_PAYINFO
             {
@@ -454,7 +453,7 @@ namespace AboutMe.Web.Mobile.Controllers
             if (DetailInfo != null)
             {
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
-                string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+                string cur_domain = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl"); // HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
                 string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_orderend.html");  
                 skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
                 skin_body = skin_body.Replace("$$ORDER_NAME$$", DetailInfo.ORDER_NAME);

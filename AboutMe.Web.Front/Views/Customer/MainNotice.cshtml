@@ -1,0 +1,27 @@
+﻿@model AboutMe.Domain.Entity.Notice.NoticeUserModel
+<div class="news">
+    <h3><a href="/Customer/Notice"><img src="/aboutCom/images/common/h3_news.gif" alt="NEWS" /></a></h3>
+    <ul>
+        @if (Model.NoticeCnt == 0)
+        {
+            <li>
+                <span class="subject txtdotdot">
+                    공지사항이 없습니다.
+                </span>
+            </li>
+        }
+        else
+        {
+            foreach(var item in Model.NoticeList)
+            { 
+            <li>
+                <span class="subject txtdotdot">
+                    <a href="/Customer/NoticeView?IDX=@item.IDX">@item.TITLE</a>
+                </span>
+                <span class="date">@item.REG_DATE.ToShortDateString()</span>
+            </li>
+            } 
+        }
+    </ul>
+</div>
+

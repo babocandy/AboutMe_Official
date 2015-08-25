@@ -62,10 +62,12 @@
                             <td>@item.IDX</td>  
                             @switch (item.CATEGORY){
                                 case "1": <td> 상품문의</td> break;
-                                case "2": <td> 배송문의</td> break;
-                                case "3": <td> 구매문의</td> break;
-                                case "4": <td> 반품문의</td> break;
-                                case "5": <td> 기타문의</td> break;
+                                case "2": <td> 배송관련</td> break;
+                                case "3": <td> 구매관련</td> break;
+                                case "4": <td> 반품관련</td> break;
+                                case "5": <td> 회원관련</td> break;
+                                case "6": <td> 이용문의</td> break;
+                                case "7": <td> 기타</td> break;   
                             }  
                             <td class="subj"><a href="#">@item.TITLE</a></td>
                             <td>@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</td>

@@ -51,7 +51,6 @@
     }
 </script>
 }
-@ViewBag.TermGbn
 <!--container-->
 <div class="container">
     <div class="h2_area">
@@ -63,7 +62,7 @@
         <h3>조회기간</h3>
         <form name="searchFrm" method="post" action="">
             <ul class="periodsel tabs">
-                <li @{ if (@ViewBag.TermGbn == "3") { @Html.Raw("class='cnt'"); } } >
+                <li @{ if (@ViewBag.TermGbn == "3" || @ViewBag.TermGbn == null) { @Html.Raw("class='cnt'"); } } >
                     <a href="#none" onclick="ChangeDate('3')">3개월</a></li>
                 <li @{ if (@ViewBag.TermGbn == "6") { @Html.Raw("class='cnt'"); } }>
                     <a href="#none" onclick="ChangeDate('6')">6개월</a>

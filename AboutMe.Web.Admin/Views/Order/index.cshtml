@@ -576,7 +576,7 @@
 					<th scope="col"><input type="checkbox" onclick="chkAll(this);"/></th>
 					<th scope="col">주문일시</th>
 					<th scope="col">주문번호</th>
-					<th scope="col">주문구분</th>
+					<th scope="col">결제구분</th>
 					<th scope="col">주문상태<br />(상태만 변경)</th>
 					<th scope="col">주문자<br />이름(ID)</th>
 					<th scope="col">받는분<br />이름</th>
@@ -607,7 +607,7 @@
 					<td><input type="checkbox" class="chkclass" value="@item.ORDER_IDX" /></td>
 					<td>@item.ORDER_DATE</td>
 					<td>@Html.ActionLink(@item.ORDER_CODE, "Detail", param)</td>
-					<td>WEB</td>
+					<td>@item.PAT_GUBUN</td>
 					<td>
                         @(Html.Kendo().DropDownList()
                         .Name("ORDER_STATUS_"+@item.ORDER_IDX)

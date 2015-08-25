@@ -188,7 +188,7 @@
 
         xurl = "/AdminOrder/Index?M_ID=" + strM_ID;  //default
         if (argKIND == "ORDER") {
-            xurl = "/AdminOrder/Index?M_ID=" + strM_ID;
+            xurl = "/Order/OrderMemberList?M_ID=" + strM_ID;
         }
         else if (argKIND == "POINT") {
             xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
@@ -197,7 +197,7 @@
             xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
         }
         else if (argKIND == "QNA") {
-            xurl = "/AdminQna/Index?M_ID=" + strM_ID;
+            xurl = "/Qna/QnaMemberList?M_ID=" + strM_ID;
         }
         else if (argKIND == "MEMBER_INFO") {
             xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;

@@ -113,7 +113,7 @@ namespace AboutMe.Web.Front.Controllers
             string SortCol = "IDX";
             string SortDir = "DESC";
             int? Page = searchModel.Page;
-            int? PageSize = 5;
+            int? PageSize = 10;
             searchModel.PageSize = PageSize;
             searchModel.DisplayYn = "Y";
 
@@ -132,6 +132,34 @@ namespace AboutMe.Web.Front.Controllers
             return View(M);
         }
 
+        //Main 공지사항 (top 3개만 노출)
+        public ActionResult MainNotice()
+        {
+            string SortCol = "IDX";
+            string SortDir = "DESC";
+            NoticeSearchModel searchModel = new NoticeSearchModel
+            {
+                DisplayYn = "Y"
+                ,Page = 1
+                ,PageSize = 3
+                ,SearchCol = ""
+                ,SearchKeyword = ""
+            };
+
+            int total_count = 0;
+            total_count = _noticeservice.NoticeListCount(searchModel.SearchCol, searchModel.SearchKeyword, searchModel.DisplayYn);
+
+            List<SP_TB_NOTICE_SEL_Result> lst = new List<SP_TB_NOTICE_SEL_Result>();
+            lst = _noticeservice.NoticeList(searchModel.SearchCol, searchModel.SearchKeyword, searchModel.DisplayYn, SortCol, SortDir, searchModel.Page, searchModel.PageSize);
+
+            NoticeUserModel M = new NoticeUserModel
+            {
+                searchOption = searchModel,
+                NoticeCnt = total_count,
+                NoticeList = lst
+            };
+            return PartialView(M);
+        }
 
         //공지사항 상세
         public ActionResult NoticeView(int IDX, NoticeSearchModel searchModel)

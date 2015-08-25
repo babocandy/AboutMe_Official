@@ -25,7 +25,7 @@ else
         string imgUrl1 = productImgPath + "R120_" + item.MAIN_IMG;
         
         <li>
-            <span class="photo"><img src="@imgUrl1" alt="" /></span>
+            <span class="photo"><a href="/shopping/detail?pcode=@item.P_CODE"><img src="@imgUrl1" alt="" /></a></span>
             <span class="pro_detail">
                 <em class="pro_tit">@(new HtmlString(item.P_NAME))</em>
                 <em class="price">

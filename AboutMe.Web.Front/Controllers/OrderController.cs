@@ -522,6 +522,8 @@ namespace AboutMe.Web.Front.Controllers
             OrderResult orderResult = new OrderResult();
             HashData();
 
+            string frontUrl = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
+
             FrmData.goodname = TagStrip(FrmData.goodname);
             FrmData.buyername = TagStrip(FrmData.buyername);
             FrmData.buyertel = TagStrip(FrmData.buyertel);
@@ -573,7 +575,7 @@ namespace AboutMe.Web.Front.Controllers
             INIpay.SetField("paymethod", FrmData.paymethod);	// 지불방법
             INIpay.SetField("encrypted", FrmData.encrypted);	// 암호문
             INIpay.SetField("sessionkey", FrmData.sessionkey);	// 암호문
-            INIpay.SetField("url", "http://www.aboutme.com");	// 홈페이지 주소
+            INIpay.SetField("url", frontUrl);	// 홈페이지 주소
             INIpay.SetField("debug", _inipay_debug);			// 로그모드(실서비스시에는 "false"로)
             INIpay.SetField("merchantreserved1", "예비1");	    // 예비필드1
             INIpay.SetField("merchantreserved2", "예비2");	    // 예비필드2  
@@ -882,7 +884,7 @@ namespace AboutMe.Web.Front.Controllers
             if (DetailInfo != null)
             {
                 string mail_skin_path = System.AppDomain.CurrentDomain.BaseDirectory + "aboutCom\\MailSkin\\"; //메일스킨 경로
-                string cur_domain = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
+                string cur_domain = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl"); // HttpContext.Request.Url.GetLeftPart(UriPartial.Authority);  //도메인 ex http://www.aaa.co.kr:1234
                 string skin_body = Utility01.GetTextResourceFile(mail_skin_path + "mail_orderend.html");  
                 skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
                 skin_body = skin_body.Replace("$$ORDER_NAME$$", DetailInfo.ORDER_NAME);

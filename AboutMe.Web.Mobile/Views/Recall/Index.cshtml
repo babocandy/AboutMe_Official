@@ -52,7 +52,7 @@
     <input type="hidden" name="start_date" id="start_date" value="@Model.SearchParam.start_date" />
     <input type="hidden" name="end_date" id="end_date" value="@Model.SearchParam.end_date" />
         <ul class="periodsel tabs">
-            <li @{ if (@Model.SearchParam.dateType == "3") { @Html.Raw("class='cnt'") ; } }><a href="#none" onclick="ChgDateType(3);">3개월</a></li>
+            <li @{ if (@Model.SearchParam.dateType == "3" || @Model.SearchParam.dateType == null|| @Model.SearchParam.dateType == "") { @Html.Raw("class='cnt'") ; } }><a href="#none" onclick="ChgDateType(3);">3개월</a></li>
             <li @{ if (@Model.SearchParam.dateType == "6") { @Html.Raw("class='cnt'")  ; } }><a href="#none" onclick="ChgDateType(6);">6개월</a></li>
             <li @{ if (@Model.SearchParam.dateType == "12") { @Html.Raw("class='cnt'")  ; } }><a href="#none" onclick="ChgDateType(12);">1년</a></li>
         </ul>

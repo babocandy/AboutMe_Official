@@ -11,10 +11,20 @@
     <script src="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&key=@NaverMapKey" type="text/javascript"></script> 
 
     <script language="javascript">
-        function loadShop(idx, lat, lng) {
-            var mapdiv = "Mapdiv_" + idx;
-            $("#"+mapdiv).empty();
 
+        $(document).ready(function () {
+            $(window).resize(function () {
+                w = $(window).width() - 95;
+                h = $(window).height() - 50;
+            //    oMap.setSize(new nhn.api.map.Size(w, h));
+            });
+        });
+
+        function loadShop(idx, lat, lng, w, h) {
+            var mapdiv = "Mapdiv_" + idx;
+            $("#" + mapdiv).empty();
+            var w = $(window).width()-30;
+            var h = 400;
             //지도정보
             var oCenterPoint = new nhn.api.map.LatLng(lat, lng);
             nhn.api.map.setDefaultPoint('LatLng');
@@ -28,7 +38,7 @@
                 activateTrafficMap: false,
                 activateBicycleMap: false,
                 minMaxLevel: [1, 14],
-                size: new nhn.api.map.Size(500, 450)
+                size: new nhn.api.map.Size(w, h)
             });
 
             var mapZoom = new nhn.api.map.ZoomControl(); // - 줌 컨트롤 선언

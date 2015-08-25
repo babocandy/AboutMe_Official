@@ -54,6 +54,9 @@
           <Parameter Name="ORDER_CODE" Type="varchar" Mode="In" />
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ORDER_CONFIG_CHECK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OLD_ORDER_IDX" Type="int" Mode="In" />
         </Function>
@@ -360,6 +363,9 @@
           </FunctionImport>
           <FunctionImport Name="SP_MYPAGE_MAIN_STATUS" ReturnType="Collection(AboutMeModel4.SP_MYPAGE_MAIN_STATUS_Result)">
           <Parameter Name="M_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_CONFIG_CHECK" ReturnType="Collection(String)">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
@@ -1028,6 +1034,8 @@
                 <ScalarProperty Name="RECALL_END" ColumnName="RECALL_END" />
               </ComplexTypeMapping>
             </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_CONFIG_CHECK" FunctionName="AboutMeModel4.Store.SP_ORDER_CONFIG_CHECK">
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

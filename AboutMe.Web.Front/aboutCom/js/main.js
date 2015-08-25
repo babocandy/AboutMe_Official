@@ -2,6 +2,10 @@ $(function(){
 	if( $("*").is(".txtdotdot") ){
 		$(".txtdotdot").dotdotdot();
 	}
+	if( $("*").is(".main") ){
+		console.log("dd");
+		$("body").css({"min-width":"1320px"});
+	}
 	/*main 슬라이드*/
 	var mainbnrIdx =0;
 	var mainbnrLength = $(".mainvisual_banner .slider li").length;
@@ -14,7 +18,9 @@ $(function(){
 	
 	if(mainbnrLength==1){
 		$(".navwrap").css({"display":"none"});
+		$(".navwrap .nav").css({"display":"none"});
 	}else{
+		$(".navwrap .nav").css({"display":"block"});
 		function mainBannerSlidestart(){
 			mainBannerSlideTime = setInterval(function(){
 					mainbnrIdx++;
