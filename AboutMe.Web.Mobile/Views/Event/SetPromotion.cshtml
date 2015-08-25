@@ -20,17 +20,24 @@
 @section Scripts{
 
     <script type="text/javascript">
-        $(function () {
-            //타임세일 현재날짜와 종료날짜를 입력해주세요.
-            $('#timesale').countdown({
-                starttimestamp: "2014,07,12,12,00,00",	//현재날짜
-                endtimestamp: "2014,07,13,10,20,30",	//종료날짜
-                callback: function (m) {
-                    $('#timesale').html(m);
-                }
-            });
+    $(function(){
+        $(".all_check").change(function() {
+            var chkbox = $(".chkbox");
+            var is_check = $(this).is(":checked");
+            if(is_check){
+                $(".chkbox").prop("checked", is_check);
+                chkbox.parent().addClass("chkcon_on")
+            }else{
+                $(".chkbox").prop("checked", is_check);
+                chkbox.parent().removeClass("chkcon_on")
+            }
         });
-    </script>
+    });
+</script>
+
+
+
+
 
 
     <script language="javascript">
@@ -357,13 +364,13 @@
             <!--상세리스트-->
             @using (Html.BeginForm("i", "test", FormMethod.Post, new { id = "frm001", name = "frm001" }))
             {
-                <p class="btn_allcheck"><label class="chkcon v2"><input type="checkbox" name="ChkTotal" id="ChkTotal" onclick="CalTotalChk(this);"><span class="txt">전체선택</span></label></p>
+                <p class="btn_allcheck"><label class="chkcon v2"><input type="checkbox" class="all_check" name="ChkTotal" id="ChkTotal" onclick="CalTotalChk(this);"><span class="txt">전체선택</span></label></p>
                 <ul class="product_list">
                     @foreach (var item in Model.inst_PROMOTION_BY_PRODUCT_PRICE_SEL_Result)
                     {
                         string imgUrl1 = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
                         <li>
-                            <label class="chkcon v2"><input type="checkbox" name="ChkCalPrice" id="ChkCalPrice" value="@item.P_CODE$@item.DISCOUNT_PRICE$@item.RESULT_PRICE" title="" onclick="Calprice();" /></label>
+                            <label class="chkcon v2"><input type="checkbox" class="chkbox" name="ChkCalPrice" id="ChkCalPrice" value="@item.P_CODE$@item.DISCOUNT_PRICE$@item.RESULT_PRICE" title="" onclick="Calprice();" /></label>
                             <a href="/Shopping/Detail?pcode=@item.P_CODE" class="list">
                                 <span class="photo"><img src="@imgUrl1" class="item" alt="" /></span>
                                 <span class="detail">
