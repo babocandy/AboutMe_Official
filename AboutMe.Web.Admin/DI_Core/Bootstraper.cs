@@ -47,6 +47,7 @@ namespace AboutMe.Web.Admin.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Order.IOrderService, AboutMe.Domain.Service.Order.OrderService>(); //Order
             container.RegisterType<AboutMe.Domain.Service.AdminDisplay.IAdminDisplayService, AboutMe.Domain.Service.AdminDisplay.AdminDisplayService>(); //Display관리
             container.RegisterType<AboutMe.Domain.Service.AdminReview.IAdminReviewService, AboutMe.Domain.Service.AdminReview.AdminReviewService>(); //리뷰 관리
+            container.RegisterType<AboutMe.Domain.Service.OrderStat.IOrderStatService, AboutMe.Domain.Service.OrderStat.OrderStatService>(); //주문통계
 
           
             container.RegisterType<AboutMe.Domain.Service.BizPromotion.IBizPromotion, AboutMe.Domain.Service.BizPromotion.BizPromotion>(); //비즈니스로직..쿠폰,프로모션을 같이 이용하는... 
