@@ -45,6 +45,22 @@
         }
     }
 
+
+    function ChkOrderLogin() {
+        var f = document.frmNoMemLOGIN;
+        if ($("#orderNum").val().trim() == "") {
+            alert("주문번호를 입력하세요");
+            return false;
+        }
+        if ($("#orderPwd").val().trim() == "") {
+            alert("비회원 주문 비밀번호를 입력하세요");
+            return false;
+        }
+        //f.action = "/MemberShip/LoginProc/";
+        f.action = "/MemberShip/NoMemOrderLoginProc/";
+        f.submit();
+    }
+
 </script> 
 }
 
@@ -107,7 +123,7 @@
                 <div id="login_tab2" class="loginform tab_content">
 @using (Html.BeginForm("NoMemLoginProc", "MemberShip", FormMethod.Post, new { id = "frmNoMemLOGIN", name = "frmNoMemLOGIN" }))
 {
-                        <input type="hidden" name="RedirectUrl" value="@ViewBag.RedirectUrl"><!--로그인 성공후 이동할 페이지-->
+                        <input type="hidden" name="RedirectUrl" value="/MyPage/MyOrder"><!--로그인 성공후 이동할 페이지-->
                         <fieldset>
                             <legend>비회원 주문/배송 조회 폼</legend>
                             <h3 class="hidden">비회원 주문/배송 조회 입력</h3>

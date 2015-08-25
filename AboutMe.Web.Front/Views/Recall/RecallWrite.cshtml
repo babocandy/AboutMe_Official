@@ -15,10 +15,24 @@
     <link href="/aboutCom/css/mypage.css" rel="stylesheet" />
     <script src="/aboutCom/js/lib/jquery-ui.js"></script>
     <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
-    <script> 
-         
+    <script language="javascript">
+        function frmCheck() {
+            if ($("#gubun").val().trim() == "") {
+                alert("구분을 선택해주세요.");
+                return false;
+            }
+            if ($("#title").val().trim() == "") {
+                alert("제목을 입력해주세요.");
+                return false;
+            }
+
+            if ($("#contents").val().trim() == "") {
+                alert("신청내용을 입력해주세요.");
+                return false;
+            }
+            document.frm.submit();
+        }
     </script>
-   
 }
 <!--container-->
 <div id="container" class="return">
@@ -92,8 +106,8 @@
                 }
             </div>
             <div class="btngroup mt20"> 
-                @if(Model.Mode.Equals("NEW")){<a href="#none" onclick="document.frm.submit();" class="btn_brown_w96h38">신청</a>}
-                @if(Model.Mode.Equals("EDIT")){<a href="#none" onclick="document.frm.submit();" class="btn_brown_w96h38">수정</a>} 
+                @if(Model.Mode.Equals("NEW")){<a href="#none" onclick="frmCheck();" class="btn_brown_w96h38">신청</a>}
+                @if(Model.Mode.Equals("EDIT")){<a href="#none" onclick="frmCheck();" class="btn_brown_w96h38">수정</a>} 
                 <a href="/Mypage/Recall/?dateType=@Model.SearchParam.dateType&start_date=@Model.SearchParam.start_date&end_date=@Model.SearchParam.end_date&page=@Model.SearchParam.page" class="btn_white_w96h38 typeb">취소</a>
             </div>
         </div>

@@ -295,11 +295,7 @@ namespace AboutMe.Web.Front.Controllers
                 //비회원 주문 코드 세팅
                 CookieSessionStore cookiesession = new CookieSessionStore();
                 cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", OrderCode);  //비회원주문 ORDER_CODE
-                
-                if (RedirectUrl != "")
-                    return Content("<script language='javascript' type='text/javascript'>location.href='" + RedirectUrl + "';</script>");
-                else
-                    return RedirectToAction("", "MyPage/MyOrder");
+                return RedirectToAction("", "MyPage/MyOrder");
                 
             }
         }

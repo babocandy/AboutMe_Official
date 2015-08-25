@@ -14,7 +14,7 @@ namespace AboutMe.Domain.Entity.Recallbbs
             this.end_date = "";
             this.reg_id = "";
             this.order_code = "";
-            this.dateType = "5";    //기간 검색 OR 전체
+            this.dateType = "3";    //기간 검색 OR 전체
             this.now_date = DateTime.Now.ToString("yyyy-MM-dd");
         }
         public string now_date { get; set; }
