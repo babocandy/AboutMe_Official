@@ -93,7 +93,12 @@
     {
         strControl = "AdminContents";
     }
-    
+
+    if (strControl == "AdminReport" || strControl == "OrderStat")
+    {
+        strControl = "AdminReport";
+    }
+       
     switch (strControl)
     {
         case "AdminUser":  //관리자 관리
@@ -325,8 +330,14 @@
                 <li @fLeftMenuCSSOn("MemberMonthly")><a href="/AdminReport/MemberMonthly">회원-가입/탈퇴 현황</a></li>
             </ul>
         </li>
-
-    </ul>
+        <li @fLeftMenuCSSOn("OrderStat")>
+            <a href="#" class="menu">주문통계</a>
+            <ul class="depth2">
+                <li @fLeftMenuCSSOn("Index")><a href="/OrderStat/Index">일별 주문통계</a></li>
+                <li @fLeftMenuCSSOn("OrderStatCate")><a href="/OrderStat/OrderStatCate">카테고리별 매출 통계</a></li>
+            </ul>
+        </li>
+</ul>
             break;
 
     } //switch

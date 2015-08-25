@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OrderStatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_STAT_ORDER_CATEGORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="PAT_GUBUN1" Type="bit" Mode="In" />
+          <Parameter Name="PAT_GUBUN2" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GBN1" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GBN2" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GBN3" Type="bit" Mode="In" />
+          <Parameter Name="cateCode" Type="char" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_STAT_ORDER_DAY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FROM_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="TO_DATE" Type="varchar" Mode="In" />
+          <Parameter Name="PAT_GUBUN1" Type="bit" Mode="In" />
+          <Parameter Name="PAT_GUBUN2" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GBN1" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GBN2" Type="bit" Mode="In" />
+          <Parameter Name="MEMBER_GBN3" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="OrderStatModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OrderStatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OrderStatEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_ADMIN_STAT_ORDER_CATEGORY" ReturnType="Collection(OrderStatModel.SP_ADMIN_STAT_ORDER_CATEGORY_Result)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="PAT_GUBUN1" Mode="In" Type="Boolean" />
+            <Parameter Name="PAT_GUBUN2" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GBN1" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GBN2" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GBN3" Mode="In" Type="Boolean" />
+            <Parameter Name="cateCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_STAT_ORDER_DAY" ReturnType="Collection(OrderStatModel.SP_ADMIN_STAT_ORDER_DAY_Result)">
+            <Parameter Name="FROM_DATE" Mode="In" Type="String" />
+            <Parameter Name="TO_DATE" Mode="In" Type="String" />
+            <Parameter Name="PAT_GUBUN1" Mode="In" Type="Boolean" />
+            <Parameter Name="PAT_GUBUN2" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GBN1" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GBN2" Mode="In" Type="Boolean" />
+            <Parameter Name="MEMBER_GBN3" Mode="In" Type="Boolean" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_ADMIN_STAT_ORDER_DAY_Result">
+          <Property Type="String" Name="ORDER_DATE" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="ORDER_CNT" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_PCNT" Nullable="false" />
+          <Property Type="Int32" Name="ORDER_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="POINT_USE_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_DISCOUNT_AMT" Nullable="true" />
+          <Property Type="Int32" Name="GRADE_DISCOUNT_AMT" Nullable="true" />
+          <Property Type="Int32" Name="EMP_DISCOUNT_AMT" Nullable="true" />
+          <Property Type="Int32" Name="TRANS_CNT" Nullable="true" />
+          <Property Type="Int32" Name="TRANS_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="TOTAL_PAY_PRICE" Nullable="true" />
+          <Property Type="Int32" Name="CANCEL_CNT" Nullable="false" />
+          <Property Type="Int32" Name="CANCEL_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="RETURN_CNT" Nullable="false" />
+          <Property Type="Int32" Name="RETURN_PRICE" Nullable="false" />
+          <Property Type="Int32" Name="CHANGE_CNT" Nullable="false" />
+          <Property Type="Int32" Name="CHANGE_PRICE" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_STAT_ORDER_CATEGORY_Result">
+          <Property Type="Int32" Name="ORD" Nullable="false" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="P_NAME" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="P_IMG1_S" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ORDER_CNT" Nullable="true" />
+          <Property Type="Int32" Name="P_COUNT" Nullable="true" />
+          <Property Type="Int32" Name="REAL_PAY_PRICE" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OrderStatModelStoreContainer" CdmEntityContainer="OrderStatEntities" >
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_STAT_ORDER_CATEGORY" FunctionName="OrderStatModel.Store.SP_ADMIN_STAT_ORDER_CATEGORY" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrderStatModel.SP_ADMIN_STAT_ORDER_CATEGORY_Result">
+                <ScalarProperty Name="ORD" ColumnName="ORD" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_IMG1_S" ColumnName="P_IMG1_S" />
+                <ScalarProperty Name="ORDER_CNT" ColumnName="ORDER_CNT" />
+                <ScalarProperty Name="P_COUNT" ColumnName="P_COUNT" />
+                <ScalarProperty Name="REAL_PAY_PRICE" ColumnName="REAL_PAY_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_STAT_ORDER_DAY" FunctionName="OrderStatModel.Store.SP_ADMIN_STAT_ORDER_DAY" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrderStatModel.SP_ADMIN_STAT_ORDER_DAY_Result">
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="ORDER_CNT" ColumnName="ORDER_CNT" />
+                <ScalarProperty Name="ORDER_PCNT" ColumnName="ORDER_PCNT" />
+                <ScalarProperty Name="ORDER_PRICE" ColumnName="ORDER_PRICE" />
+                <ScalarProperty Name="POINT_USE_PRICE" ColumnName="POINT_USE_PRICE" />
+                <ScalarProperty Name="COUPON_DISCOUNT_AMT" ColumnName="COUPON_DISCOUNT_AMT" />
+                <ScalarProperty Name="GRADE_DISCOUNT_AMT" ColumnName="GRADE_DISCOUNT_AMT" />
+                <ScalarProperty Name="EMP_DISCOUNT_AMT" ColumnName="EMP_DISCOUNT_AMT" />
+                <ScalarProperty Name="TRANS_CNT" ColumnName="TRANS_CNT" />
+                <ScalarProperty Name="TRANS_PRICE" ColumnName="TRANS_PRICE" />
+                <ScalarProperty Name="TOTAL_PAY_PRICE" ColumnName="TOTAL_PAY_PRICE" />
+                <ScalarProperty Name="CANCEL_CNT" ColumnName="CANCEL_CNT" />
+                <ScalarProperty Name="CANCEL_PRICE" ColumnName="CANCEL_PRICE" />
+                <ScalarProperty Name="RETURN_CNT" ColumnName="RETURN_CNT" />
+                <ScalarProperty Name="RETURN_PRICE" ColumnName="RETURN_PRICE" />
+                <ScalarProperty Name="CHANGE_CNT" ColumnName="CHANGE_CNT" />
+                <ScalarProperty Name="CHANGE_PRICE" ColumnName="CHANGE_PRICE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

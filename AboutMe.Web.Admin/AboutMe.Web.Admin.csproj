@@ -29,6 +29,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\;\Kendo\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +39,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\;\Kendo\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="INIpayNet, Version=5.0.3.3, Culture=neutral, PublicKeyToken=baf9dc2e190f803c, processorArchitecture=AMD64">
@@ -216,6 +220,7 @@
     <Compile Include="Controllers\ContentsManager\QnaController.cs" />
     <Compile Include="Controllers\ContentsManager\FaqController.cs" />
     <Compile Include="Controllers\ContentsManager\NoticeController.cs" />
+    <Compile Include="Controllers\Order\OrderStatController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\ShopinfoController.cs" />
     <Compile Include="Controllers\MagazineController.cs" />
@@ -662,6 +667,7 @@
     <Content Include="cmsManager\aboutCom\smarteditor\photo_uploader\popup\file_uploader_html5.php" />
     <Content Include="cmsManager\aboutCom\smarteditor\sample.php" />
     <Content Include="Content\FileTempleate\STAFF_SAMPLE.xlsx" />
+    <None Include="Properties\PublishProfiles\aboutme-devadmin.cstone.co.kr.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1308,18 +1314,6 @@
     <Content Include="Scripts\kendo\2015.1.318\kendo.autocomplete.min.js.map" />
     <Content Include="Scripts\kendo\2015.1.318\kendo.angular.min.js.map" />
     <Content Include="Scripts\kendo\2015.1.318\jquery.min.map" />
-    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
     <Content Include="Views\AdminUser\Login.cshtml" />
     <Content Include="Views\AdminUser\Insert.cshtml" />
     <Content Include="Views\AdminUser\Edit.cshtml" />
@@ -1413,6 +1407,8 @@
     <Content Include="Views\Magazine\Edit.cshtml" />
     <Content Include="Views\Shopinfo\Index.cshtml" />
     <Content Include="Views\Shopinfo\Edit.cshtml" />
+    <Content Include="Views\OrderStat\Index.cshtml" />
+    <Content Include="Views\OrderStat\OrderStatCate.cshtml" />
     <Content Include="Views\Qna\QnaMemberList.cshtml" />
     <Content Include="Views\Order\OrderMemberList.cshtml" />
     <Content Include="Views\Sample\Edit.cshtml" />
@@ -1428,6 +1424,7 @@
     <Folder Include="Upload\Staff\" />
     <Folder Include="Upload\Temp\" />
     <Folder Include="Views\BaseAdmin\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

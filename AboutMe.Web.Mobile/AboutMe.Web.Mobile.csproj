@@ -30,8 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
-    <ExcludeFoldersFromDeployment>
-    </ExcludeFoldersFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +39,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeFilesFromDeployment>Web.config</ExcludeFilesFromDeployment>
+    <ExcludeFoldersFromDeployment>Upload\</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="INIpayNet, Version=5.0.4.0, Culture=neutral, PublicKeyToken=baf9dc2e190f803c">
@@ -511,6 +512,7 @@
     <Content Include="App_Readme\WURFL-v.1.6.1.0.chm" />
     <Content Include="App_Readme\WURFL Quick Guide_v1_5.pdf" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <None Include="Properties\PublishProfiles\aboutme-devmobile.cstone.co.kr.pubxml" />
     <None Include="Properties\PublishProfiles\publish mobile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
