@@ -5,7 +5,6 @@
         @Model.memo;
     }
 </textarea>
-<div>@Model.uploadPath</div>
 <script type="text/javascript" src="/cmsManager/aboutCom/smarteditor/js/HuskyEZCreator.js" charset="utf8"></script>
 <script type="text/javascript">
     var oEditors = [];
@@ -14,7 +13,7 @@
         elPlaceHolder: "@Model.tfID",
         sSkinURI: "/cmsManager/aboutCom/smarteditor/SmartEditor2Skin.html",
         fCreator: "createSEditor2",
-        htParams: { uploadPath: "@(Model.uploadPath)" }
+        htParams: { uploadPath: "@(Model.uploadPath)", fOnBeforeUnload : function(){}}
 
     });
 </script>

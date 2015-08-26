@@ -155,6 +155,10 @@ namespace AboutMe.Web.Mobile.Controllers
             model.Reviews = _ReviewService.GetMyReviewCompleteList(_user_profile.M_ID, page);
             model.Total = _ReviewService.GetMyReviewCompleteCnt(_user_profile.M_ID);
 
+            model.Pages = (int)Math.Ceiling( (float)model.Total / (float)model.PageSize );
+            model.PrevPage = page - 1 < 1 ? 1 : page - 1;
+            model.NextPage = page + 1 > model.Pages ? model.Pages : page + 1;
+
             return View(model);
         }
 

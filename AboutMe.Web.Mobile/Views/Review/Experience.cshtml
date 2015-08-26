@@ -102,68 +102,79 @@
                     <a class="information">어바웃미 <strong>1기 체험단</strong> 모집<br>2015.06.01-2015.06.30</a>
                     <p class="count">총 <strong>@Model.Total</strong>개 상품이 있습니다.</p>
                 </div>
-                <ul class="review_list">
-                    <!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
-                    @foreach (var item in Model.ReviewsMobile)
-                    {
+                @if (true)
+                {
+                    <ul class="review_list">
+                        <!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
+                        @foreach (var item in Model.ReviewsMobile)
+                        {
 					<!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
-                        <li class="product_info">
-                            <div class="photo_info">
-                                <div class="photo"><img src="@string.Format("{0}R120_{1}", mycontrl._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
-                                <div class="detail">
-                                    <span class="tit">@item.P_NAME</span>
+                            <li class="product_info">
+                                <div class="photo_info">
+                                    <div class="photo"><img src="@string.Format("{0}R120_{1}", mycontrl._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
+                                    <div class="detail">
+                                        <span class="tit">@item.P_NAME</span>
+                                        <span class="stit">@item.P_SUB_TITLE</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="review_info">
-                                <div class="rinfo_top">
-                                    <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong><span class="hit">조회수 @item.VIEW_CNT</span></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <!-- 해시태그 -->
-                                    <ul class="hash">
-                                        <!--<li>#각질제거</li>
-                                    <li>#미백</li>
-                                    <li>#스페셜케어</li>-->
-                                        @item.TAG
-                                    </ul>
-                                    <!-- //해시태그 -->
-                                    <div class="review_view">
-                                        <div class="photo"><img src="@string.Format("{0}{1}", mycontrl._img_path_review, item.SUB_IMG_1)" alt="" /></div>
-                                        <div class="detail">
-                                            <p class="tit">@item.TITLE</p>
-                                            <p class="txt">@item.COMMENT_TEXT</p>
+                                <div class="review_info">
+                                    <div class="rinfo_top">
+                                        <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong><span class="hit">조회수 @item.VIEW_CNT</span></p>
+                                    </div>
+                                    <div class="rinfo_con">
+                                        <!-- 해시태그 -->
+                                        <ul class="hash">
+                                            <!--<li>#각질제거</li>
+                                            <li>#미백</li>
+                                            <li>#스페셜케어</li>-->
+                                            @item.TAG
+                                        </ul>
+                                        <!-- //해시태그 -->
+                                        <div class="review_view">
+                                            <div class="photo"><img src="@string.Format("{0}{1}", mycontrl._img_path_review, item.SUB_IMG_1)" alt="" /></div>
+                                            <div class="detail">
+                                                <p class="tit">@item.TITLE</p>
+                                                <p class="txt">@item.COMMENT_TEXT</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            @{
-                        var param = new ReviewExpDetailParam();
-                        param.ARTICLE_IDX = item.IDX;
-                        param.P_CODE = item.P_CODE;
-                            }
-                            <a href="#" onclick="window.open('@(Url.Action("ExperienceDetail", "Review", param))'); return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                        </li>
-                    }
+                                @{
+                                    var param = new ReviewExpDetailParam();
+                                    param.ARTICLE_IDX = item.IDX;
+                                    param.P_CODE = item.P_CODE;
+                                }
+                                <a href="#" onclick="window.open('@(Url.Action("ExperienceDetail", "Review", param))'); return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
+                            </li>
+                        }
 
 
-                </ul>
+                    </ul>
 
                 <!--페이징-->
-                <div class="paging">
-                    @{
+                    <div class="paging">
+                        @{
                         var prev = Model.MobileParam;
                         prev.PAGE = Model.PrevPage;
-                    }
-                    <a href="@(Url.Action("Experience", "Review", prev))" class="prev"></a>
-                    <strong>@Model.MobileParam.PAGE</strong> / @Model.Pages
+                        }
+                        <a href="@(Url.Action("Experience", "Review", prev))" class="prev"></a>
+                        <strong>@Model.MobileParam.PAGE</strong> / @Model.Pages
 
-                    @{
+                        @{
                         var next = Model.MobileParam;
                         next.PAGE = Model.NextPage;
-                    }
-                    <a href="@(Url.Action("Experience", "Review", next))" class="next"></a>
-                </div>
+                        }
+                        <a href="@(Url.Action("Experience", "Review", next))" class="next"></a>
+                    </div>
                 <!--//페이징-->
+                }
+                else
+                {
+                    <div class="datanone nobg">
+                        <p class="txt_none">체험단리뷰가  없습니다.</p>
+                    </div>
+                }
+
             </div>
             <!-- //뷰티 -->
             <!-- 리뷰 목록 -->

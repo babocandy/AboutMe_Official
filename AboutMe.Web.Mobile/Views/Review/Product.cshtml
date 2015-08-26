@@ -105,62 +105,73 @@
                 <span class="information">리뷰 등록하면 <strong>500P</strong>,<br /> 포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
                 <p class="count">총 <strong>@Model.Total</strong>개 상품이 있습니다.</p>
             </div>
-            <ul class="review_list">
-                <!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
 
-                @foreach (var item in Model.ReviewsMobile)
-                {
-                    <li class="product_info @(item.IS_BEST == "Y"? "best":"")">
-                        <div class="photo_info">
-                            <div class="photo"><img src="/aboutCom/images/sample/thumb120.gif" alt="" /></div>
-                            <div class="detail">
-                                <span class="tit">@item.P_NAME</span>
+            @if (true)
+            {
+                <ul class="review_list">
+                    <!-- [Desc] Best 상품평은 li에 best클래스를 추가 -->
+                    @foreach (var item in Model.ReviewsMobile)
+                    {
+                        <li class="product_info @(item.IS_BEST == "Y"? "best":"")">
+                            <div class="photo_info">
+                                <div class="photo"><img src="@string.Format("{0}R120_{1}", mycontrl._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
+                                <div class="detail">
+                                    <span class="tit">@item.P_NAME</span>
+                                    <span class="stit">@item.P_SUB_TITLE</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="review_info">
-                            <div class="rinfo_top">
-                                <p class="winfo"><span class="type dry"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
-                            </div>
-                            <div class="rinfo_con">
-                                <p class="txtbox">@item.COMMENT</p>
+                            <div class="review_info">
+                                <div class="rinfo_top">
+                                    <p class="winfo"><span class="type dry"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
+                                </div>
+                                <div class="rinfo_con">
+                                    <p class="txtbox">@item.COMMENT</p>
 
-@if (item.IS_PHOTO == "Y")
-{
-                                <div class="imgbox"><img src="@(string.Format("{0}{1}", mycontrl._img_path_review, item.ADD_IMAGE))" alt="" /></div>
+                                    @if (item.IS_PHOTO == "Y")
+                                    {
+                                        <div class="imgbox"><img src="@(string.Format("{0}{1}", mycontrl._img_path_review, item.ADD_IMAGE))" alt="" /></div>
                                 <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
 
 
-                                    <div class="morebox">
-                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                        <span class="photo_review"><i></i>포토리뷰</span>
-                                        <a href="#none" class="btn_more"><i></i></a>
-                                    </div>
-                                }
+                                        <div class="morebox">
+                                            <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                            <span class="photo_review"><i></i>포토리뷰</span>
+                                            <a href="#none" class="btn_more"><i></i></a>
+                                        </div>
+                                    }
 
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                }
+                        </li>
+                    }
 
 
-            </ul>
+                </ul>
 
-            <!--페이징-->
-            <div class="paging">
-                @{
+                <!--페이징-->
+                <div class="paging">
+                    @{
                     var prev = Model.MobileParam;
                     prev.PAGE = Model.PrevPage;
-                }
-                <a href="@(Url.Action("Product", "Review", prev))" class="prev"></a>
-                <strong>@Model.MobileParam.PAGE</strong> / @Model.Pages
+                    }
+                    <a href="@(Url.Action("Product", "Review", prev))" class="prev"></a>
+                    <strong>@Model.MobileParam.PAGE</strong> / @Model.Pages
 
-                @{
+                    @{
                     var next = Model.MobileParam;
                     next.PAGE = Model.NextPage;
-                }
-                <a href="@(Url.Action("Product", "Review", next))" class="next"></a>
-            </div>
-            <!--//페이징-->
+                    }
+                    <a href="@(Url.Action("Product", "Review", next))" class="next"></a>
+                </div>
+                <!--//페이징-->
+            }
+            else
+            {
+                <div class="datanone nobg">
+                    <p class="txt_none">상품리뷰가 없습니다.</p>
+                </div>
+            }
+
         </div>
         <!-- //뷰티 -->
      

@@ -78,9 +78,12 @@
             </div>
             <!--//리뷰 슬라이드-->
 
+            <div class="datanone nobg" style="text-align:center;display:@(Model.Reviews.Count > 0 ? "none":"block")">
+                <p class="txt_none">상품리뷰가 없습니다.</p>
+            </div>
 
             <!--페이징-->
-            <div class="paging">
+            <div class="paging" >
 
             </div>
             <!--//페이징-->
@@ -97,6 +100,10 @@
                 <ul>
 
                 </ul>
+            </div>
+
+            <div class="datanone nobg" style="display:none;text-align:center" >
+                <p class="txt_none">체험단리뷰가 없습니다.</p>
             </div>
             <!--//체험단리뷰-->
             <!--리뷰상세팝업-->
@@ -171,7 +178,7 @@
                 }
             </script>
             <!--페이징-->
-            <div class="paging">
+            <div class="paging" >
                 
             </div>
             <!--//페이징-->
@@ -180,6 +187,8 @@
 </div>
 
 <script>
+
+    window.review = {};
 
     var img_path_product = "@myController._img_path_product";
     var img_path_review = "@myController._img_path_review";
@@ -191,7 +200,7 @@
         //console.log($(this).index());
         if ($(this).index() == 1 && !exp_first) {
 
-            getReviewExpListByPageNo(1);
+            review.getReviewExpListByPageNo(1);
 
             exp_first = true;
         }
@@ -214,7 +223,10 @@
     $(function(){
 
         //상품리뷰 페이징 초기화
-        paging(pageNo, pageSize, blockSize, total, $("#review1 .paging"), "getReviewProducListByPageNo" );
+        if(total > 0){
+            paging(pageNo, pageSize, blockSize, total, $("#review1 .paging"), "review.getReviewProducListByPageNo" );
+        }
+        
     });
 
         /**
@@ -290,7 +302,7 @@
         /**
             상품리뷰 데이타 로드
         */
-    function getReviewProducListByPageNo(no) {
+    review.getReviewProducListByPageNo = function(no) {
 
         $.ajax({
             url: "@(Url.Action("GetReviewProductListInShopping", "Review"))",
@@ -302,20 +314,23 @@
             },
             success: function (data) {
 
-                console.log(data);
-
                 if (data.Success) {
+                    if(data.Reviews.length > 0){
+                        buildList(data.Reviews);
+                        paging(no, pageSize, blockSize, data.Total, $("#review1 .paging"), "review.getReviewProducListByPageNo" );
+                    }else{
+                        
+                    }
+                    
 
-                    buildList(data.Reviews)
-
-                    paging(no, pageSize, blockSize, data.Total, $("#review1 .paging"), "getReviewProducListByPageNo" );
+                    
                 }else{
 
 
                 }
             },
             error: function (e) {
-                console.log(e);
+               // console.log(e);
             }
         });
     }//end func
@@ -330,7 +345,7 @@
 
 
         for (var i = 0; i < dd.length; i++) {
-            var d = dd[i];
+            var item = dd[i];
 
             var html = "";
             var cssClassName = "";
@@ -346,29 +361,38 @@
             }
 
             html = "<div class='cont accordcont "+cssClassName +" "+ selectContent+"'>";
+
             html += "<div class='subj accordsubject'>";
-            html += "<div class='writer'>";
-            html += "<span class='date'>"+"날짜"+"</span>";
 
-            if(d.IS_PHOTO)  html += "<span class='ico_photo'>포토리뷰</span>";
+            html += "   <div class='writer'>";
+            html += "      <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+"'></em><em class='age'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
+            html += "        <span class='id'>"+item.M_ID_LBL+"</span>";
+            html += "     </div>";
 
-            html += "<span class='userage'>"+d.M_BIRTHDAY+","+ d.M_SEX+"<em class='skin "+d.SKIN_TYPE+"'></em></span>";
-            html += "</div>";
 
-            html += "<p class='txtdotdot' style=''>";
-            html += d.COMMENT;
-            html +=  "</p>";
-            html += "</div>";
-            html += "<div class='contxt accordtxt'>";
-            html += "<div class='writer'>";
-            html += "<span class='userage'>"+d.M_BIRTHDAY+", "+d.M_SEX+"<em class='skin "+d.SKIN_TYPE+"'></em></span>";
-            html += "</div>";
-            html +=  d.COMMENT;
-            if(d.IS_PHOTO ){
-                html += "<img src='"+img_path_review+d.ADD_IMAGE+"' alt='' />";
+            html += "     <p class='txtdotdot' style=''>";
+            html +=      item.COMMENT;
+            html += "                </p>";
+
+                            if (item.IS_PHOTO == 'Y')
+            {
+                                html += "     <span class='ico_photo'>포토리뷰</span>";
             }
+                            html += "</div>";
+                            html += " <div class='contxt accordtxt'>";
+                            html += "  <div class='writer'>";
+                            html += "                <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+"'></em><em class='age'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
+                            html += "                <span class='id'>"+item.M_ID_LBL+"</span>";
+                            html += "          </div>";
 
-            html += "</div>";
+                            html += item.COMMENT.replace('\r\n','<br/>');
+            if (item.IS_PHOTO == "Y")
+            {
+                                html += "          <img src='"+img_path_review+item.ADD_IMAGE+"' alt='' />";
+                                }
+                            html += "       </div>";
+
+
 
             html += "</div>";
 
@@ -398,7 +422,7 @@
         /**
             체험단 리뷰 데이타
         */
-    function getReviewExpListByPageNo(no) {
+    review.getReviewExpListByPageNo = function(no) {
 
         $.ajax({
             url: "@(Url.Action("GetReviewExpListInShopping", "Review"))",
@@ -410,22 +434,31 @@
             },
             success: function (data) {
 
-                console.log(data);
-
                 if (data.Success) {
 
 
+                    if(data.Reviews.length > 0){
+                        buildList2(data.Reviews);
 
-                    buildList2(data.Reviews)
+                        $("#review2 .datanone").hide();
 
-                    paging(no, pageSize, blockSize, data.Total, $("#review2 .paging"), "getReviewExpListByPageNo" );
+
+                        paging(no, pageSize, blockSize, data.Total, $("#review2 .paging"), "review.getReviewExpListByPageNo" );
+
+                    }else {
+                        $("#review2 .datanone").show();
+                       
+                    }
+
+
+
                 }else{
 
 
                 }
             },
             error: function (e) {
-                console.log(e);
+              //  console.log(e);
             }
         });
     }//end func
@@ -474,7 +507,7 @@
             html += "        </div>";
             html += "        <div class='detail'>";
             html += "            <div class='tag'>";
-            html +=                 item.TAG;
+            html +=                 "<span>"+item.TAG+"</span>"
             html += "            </div>";
             html += "            <div class='reviewtxt'>";
             html += "                <p class='tit'>"+ item.TITLE +"</p>";
@@ -495,7 +528,7 @@
 
         //리뷰팝업
     window.reviewpop_view = function(aidx,pcode, my) {
-        console.log(aidx, pcode);
+       // console.log(aidx, pcode);
         $.ajax({
             url: "@(Url.Action("GetReviewExpDetail", "Review"))",
             type: "POST",
@@ -505,7 +538,7 @@
             },
             success: function (data) {
                 //alert(data.success);
-                console.log(data);
+                //console.log(data);
 
                 if (data.Success) {
 
@@ -514,7 +547,7 @@
                     //console.log(item.TITLE);
 
                     $(".reviewpop_wrap .title_area .title").text( item.TITLE );
-                    $(".reviewpop_wrap .title_area .tag").text( item.TAG );
+                    $(".reviewpop_wrap .title_area .tag").html("<span>"+ item.TAG + "</span>" );
 
                     $(".reviewpop_wrap .writer .skin").removeClass();
 

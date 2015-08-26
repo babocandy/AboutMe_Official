@@ -164,6 +164,7 @@ namespace AboutMe.Web.Front.Controllers
             model.Total = tp.Item2;
             model.PageNo = 1;
             model.Pcode = P_CODE;
+            model.PageSize = p.PAGE_SIZE??0;
 
             return View(model);
         }
