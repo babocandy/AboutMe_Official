@@ -131,7 +131,7 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
         <li>
             <span class="tit">즉시할인</span>
             <span class="pos_right coupon">
-                <strong>>@ViewBag.Login_Coupon_Discount_Rate@StrUnit</strong>쿠폰
+                <strong>>@StrDC@StrUnit</strong>쿠폰
                 <a href="javascript:execCouponDownload(@ViewBag.Login_Coupon_Idx_Coupon_Number,'@ViewBag.Login_Coupon_USE_STATUS','@ViewBag.Login_Coupon_COUPON_NUM_CHECK_TF');"  class=" btn btn_gray_h25 cupondown2 ml10">쿠폰 다운로드</a>
             </span>
         </li>
