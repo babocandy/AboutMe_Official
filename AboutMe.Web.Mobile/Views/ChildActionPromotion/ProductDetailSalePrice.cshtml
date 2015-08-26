@@ -107,7 +107,7 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
         {
             <li>
                 <span class="tit">VIP할인가</span>
-                <span class="pos_right"><strong>@ViewBag.Login_Promotion_03_result_price</strong>원</span>
+                <span class="pos_right"><strong>@string.Format("{0:#,##0}",ViewBag.Login_Promotion_03_result_price)</strong>원</span>
             </li>
         }
    // }
@@ -125,7 +125,7 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
             }
             else
             {
-            StrDC = ViewBag.Login_Coupon_Discount_Money;
+             StrDC = string.Format("{0:#,##0}",ViewBag.Login_Coupon_Discount_Money);
             StrUnit = "원";
             }
         <li>
