@@ -152,7 +152,7 @@
 			<a href="#" class="viewcart">
 				<img src="/aboutCom/images/common/h_cart.gif" alt="" />
 				<!--몇개 들어갔는지 여기에 들어갑니다-->
-				<span class="num">2</span>
+				<span class="num">22</span>
 				<!--//몇개 들어갔는지 여기에 들어갑니다-->
 			</a>
 
