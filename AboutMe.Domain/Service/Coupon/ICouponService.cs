@@ -18,8 +18,8 @@ namespace AboutMe.Domain.Service.Coupon
         //다운로드 가능 쿠폰리스트 - PC버전 
         List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponList(string M_Id);
 
-        //다운로드 가능한 쿠폰 수량 가져오기  - pc버전 , 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
-        List<SP_ADMIN_COUPON_COMMON_CNT_Result> GetDownloadableCouponCnt(string M_Id);
+        //다운로드 가능한 쿠폰 수량 가져오기  - 모바일버전 ---------- 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        List<SP_ADMIN_COUPON_COMMON_CNT_Result> GetDownloadableCouponMobileCnt(string M_Id, string SearchCol, string SearchKeyword);
 
         //다운로드 처리  - pc버전 , 번호 인증 필요없는 쿠폰
         int UpdateCouponDownload_Pc_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod);
@@ -63,9 +63,25 @@ namespace AboutMe.Domain.Service.Coupon
 
         #region 모바일 버전 - 마이페이지 
 
-        //다운로드 처리  - pc버전 , 번호 인증 필요없는 쿠폰
+        //다운로드 처리  - 모바일기기에서 다운로드할때 , 쿠폰번호 인증이 필요없는 쿠폰
+        //M_id =회원아이디, IdxCouponNumber = 쿠폰일련번호 , UpdateMethod = 'S' : 하나만 업데이트 할때 , 'A' = 모든 쿠폰을 다운로드 할 때
         int UpdateCouponDownload_Mobile_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod);
 
+
+        
+        //다운로드 가능한 쿠폰 수량 가져오기  - pc버전 , 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        List<SP_ADMIN_COUPON_COMMON_CNT_Result> GetDownloadableCouponCnt(string M_Id);
+
+        //다운로드 가능한 쿠폰 - 모바일 버전 ---------번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponMobileList(string M_Id, string SearchCol, string SearchKeyword, int Page, int PageSize);
+
+   
+         //사용가능한 쿠폰 리스트 가져오기- 모바일기기에서 
+        List<SP_COUPON_ISSUED_DETAIL_SEL_Result> GetCouponAvailableOnMobileList(string M_ID, string SearchCol, string SearchKeyword, int Page, int PageSize);
+        
+        //사용가능한 쿠폰리스트 COUNT 가져오기-모바일기기에서 
+        int GettCouponAvailableOnMobileListCnt(string M_ID, string SearchCol, string SearchKeyword);
+       
 
         #endregion 
 

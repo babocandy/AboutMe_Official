@@ -246,5 +246,10 @@ namespace AboutMe.Domain.Entity.AdminEtc
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ADMIN_LOGIN_Result>("SP_ADMIN_ADMIN_LOGIN", aDM_IDParameter);
         }
+    
+        public virtual ObjectResult<Nullable<System.DateTime>> sp_song_test()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("sp_song_test");
+        }
     }
 }

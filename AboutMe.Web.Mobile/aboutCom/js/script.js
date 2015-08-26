@@ -684,13 +684,26 @@ $(function(){
 	});
 
 	/*상품상세*/
-	var ProInfoHeight = $("#proInfo").height();
-	$("#proInfo").css({"height":"610px", "overflow":"hidden"});
+	/*
+		var ProInfoHeight = $("#proInfo").height();
+		$("#proInfo").css({"height":"610px", "overflow":"hidden"});
+		$(".btnmore").click(function(e){
+			e.preventDefault();
+			$("#proInfo").css({"height":ProInfoHeight});
+			$(".btnmore").hide();
+		});
+	*/
+	imagesLoaded( '#proInfo', function() {
+		ProInfoHeight = $("#proInfo").height();
+		//alert(ProInfoHeight);
+		$("#proInfo").css({"height":"610px", "overflow":"hidden"});
+	});
 	$(".btnmore").click(function(e){
 		e.preventDefault();
 		$("#proInfo").css({"height":ProInfoHeight});
 		$(".btnmore").hide();
 	});
+	
 	
 	/*브랜드소개*/
 	var scrollYval = $(".visual").height();

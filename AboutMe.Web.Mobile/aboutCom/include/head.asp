@@ -14,4 +14,5 @@
 	<script src="/aboutCom/js/lib/jquery.event.move.js" type="text/javascript"></script>
 	<script src="/aboutCom/js/lib/jquery.event.swipe.js" type="text/javascript"></script>
 	<script src="/aboutCom/js/lib/jquery.lazyload.min.js" type="text/javascript"></script>
+	<script src="/aboutCom/js/lib/imagesloaded.pkgd.min.js" type="text/javascript"></script>
 	<script src="/aboutCom/js/script.js" type="text/javascript"></script>
