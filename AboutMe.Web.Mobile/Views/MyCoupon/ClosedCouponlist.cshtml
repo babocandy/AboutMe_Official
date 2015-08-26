@@ -57,8 +57,8 @@
                     </ul>
                 </div>
                 <!-- 다운로드가능 쿠폰 -->
-                <div id="down" class="coupon_list tab_content" style="display:block">
-                    <h3>다운로드가능 쿠폰</h3>
+                <div id="pass" class="coupon_list">
+                    <h3>지난 쿠폰</h3>
                     <div class="coupon_top pt10 pb25">
                         <span class="count">총 <strong>@ViewBag.TotalRecord</strong>개 쿠폰이있습니다</span>
                     </div>
@@ -115,19 +115,19 @@
                             DwToDD = item.DOWNLOAD_DATE_TO.Value.Day.ToString().PadLeft(2, '0');
                             <li>
                                 <!--
-                                couponimg type1(%), couponimg type2(원), couponimg type3(무료배송)
-                                세가지 타입이 있습니다.
-                                -->
+                    couponimg type1(%), couponimg type2(원), couponimg type3(무료배송)
+                    세가지 타입이 있습니다.
+                    -->
                                 <div class="@cssType">@Html.Raw(couponTitle)</div>
                                 <div class="detail">
                                     <p class="tit">
                                         @Html.Raw(item.COUPON_AD_MSG)
                                         <!--
-                                        쇼핑지원금 10,000원<br />
-                                        상품금액 3만원 이상 ~ 7만원 이하<br />
+                            쇼핑지원금 10,000원<br />
+                            상품금액 3만원 이상 ~ 7만원 이하<br />
 
-                                        모바일 전용
-                                        -->
+                            모바일 전용
+                            -->
                                     </p>
                                     <p class="peorid">
                                         사용가능 기간 : @FromYYYY.@FromMM.@FromDD~@ToMM.@ToDD<br />
