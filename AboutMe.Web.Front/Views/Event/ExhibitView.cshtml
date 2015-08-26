@@ -54,8 +54,8 @@
                     }
                 </select>
             </div>
-            <div class="econt">
-                <img src="@Model.ExhibitInfo.WEB_BANNER" width="1080" alt="" />
+            <div class="econt" width="1080">
+                @Html.Raw(Model.ExhibitInfo.WEB_CONTENTS)
             </div>
             <!--상품리스트1-->
             @foreach (var item in Model.TabProductList)

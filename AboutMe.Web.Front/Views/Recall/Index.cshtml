@@ -25,15 +25,15 @@
                     $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
                     $("#dateType").val("1");
                     break;
-            case 2: $("#start_date").val('@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")');
+            case 3: $("#start_date").val('@DateTime.Now.AddMonths(-3).ToString("yyyy-MM-dd")');
                     $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
                     $("#dateType").val("2");
                     break;
-            case 3: $("#start_date").val('@DateTime.Now.AddMonths(-4).ToString("yyyy-MM-dd")');
+            case 4: $("#start_date").val('@DateTime.Now.AddMonths(-4).ToString("yyyy-MM-dd")');
                     $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
                     $("#dateType").val("3");
                     break;
-            case 4: $("#start_date").val('@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")');
+            case 12: $("#start_date").val('@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")');
                     $("#end_date").val('@DateTime.Now.ToString("yyyy-MM-dd")');
                     $("#dateType").val("4");
                     break;
@@ -94,26 +94,26 @@
                        else{
                            <li ><a href="javascript:" onclick="ChgDateType(1);">1개월</a></li>
                        }                         
-                       @if (Model.SearchParam.dateType.Equals("2"))
-                       {
-                            <li class="cnt"><a href="javascript:" onclick="ChgDateType(2);">3개월</a></li>}
-                       else
-                       {
-                            <li><a href="javascript:" onclick="ChgDateType(2);">3개월</a></li>
-                       } 
                        @if (Model.SearchParam.dateType.Equals("3"))
                        {
-                            <li class="cnt"><a href="javascript:" onclick="ChgDateType(3);">4개월</a></li>}
+                            <li class="cnt"><a href="javascript:" onclick="ChgDateType(3);">3개월</a></li>}
                        else
                        {
-                            <li><a href="javascript:" onclick="ChgDateType(3);">4개월</a></li>
-                       }     
+                            <li><a href="javascript:" onclick="ChgDateType(3);">3개월</a></li>
+                       } 
                        @if (Model.SearchParam.dateType.Equals("4"))
                        {
-                        <li class="cnt"><a href="javascript:" onclick="ChgDateType(4);">1년</a></li>}
+                            <li class="cnt"><a href="javascript:" onclick="ChgDateType(4);">4개월</a></li>}
                        else
                        {
-                        <li><a href="javascript:" onclick="ChgDateType(4);">1년</a></li>
+                            <li><a href="javascript:" onclick="ChgDateType(4);">4개월</a></li>
+                       }     
+                       @if (Model.SearchParam.dateType.Equals("12"))
+                       {
+                        <li class="cnt"><a href="javascript:" onclick="ChgDateType(12);">1년</a></li>}
+                       else
+                       {
+                        <li><a href="javascript:" onclick="ChgDateType(12);">1년</a></li>
                        }        
                        @if (Model.SearchParam.dateType.Equals("5"))
                        {

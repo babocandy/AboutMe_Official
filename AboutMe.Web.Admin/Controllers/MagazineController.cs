@@ -117,7 +117,7 @@ namespace AboutMe.Web.Admin.Controllers
             //썸네일 이미지 파일 업로드
             if (SaveParam.THUMB_IMG_FILE != null)
             {
-                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath };
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath, Tag = "T" };
                 ImageResult imageResult = imageUpload.RenameUploadFile(SaveParam.THUMB_IMG_FILE);
 
                 if (imageResult.Success)
@@ -145,7 +145,7 @@ namespace AboutMe.Web.Admin.Controllers
                 IMG_PATH_Name = "";
                 IMG_PATH_FullName = "";
 
-                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath };
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath, Tag = "A" };
                 ImageResult imageResult = imageUpload.RenameUploadFile(SaveParam.IMG_FILE);
 
                 if (imageResult.Success)

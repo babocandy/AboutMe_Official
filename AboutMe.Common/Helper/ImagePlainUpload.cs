@@ -26,6 +26,7 @@ namespace AboutMe.Common.Helper
             fileMaxSize = 5000000; //파일 max size 5MB
             //Width = 500; //이미지 기본 사이즈
             IsThumbNail = false;
+            Tag = "A";
         }
 
         // set default size here
@@ -38,6 +39,7 @@ namespace AboutMe.Common.Helper
         public int DefaultWidth { get; set; }
         public int DefaultHeight { get; set; }
         public bool IsThumbNail { get; set; }
+        public string Tag { get; set; }
 
         //고유한 이미지네임으로 변경
         public ImageResult RenameUploadFile(HttpPostedFileBase file, Int32 counter = 0)
@@ -318,7 +320,7 @@ namespace AboutMe.Common.Helper
             Random rand = new Random((int)DateTime.Now.Ticks);
             string RandomNumber;
             RandomNumber = rand.Next(100, 999).ToString();
-            string UniqueKey = "A" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomNumber;
+            string UniqueKey = Tag + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomNumber;
 
             return UniqueKey;
         }
