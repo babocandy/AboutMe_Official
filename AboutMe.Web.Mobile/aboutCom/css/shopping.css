@@ -33,8 +33,9 @@
 .product_list li .price del {font-size:10px; color:#696361; margin-right:4px;} */
 
 /*product_list*/
-.product_list {padding:0 15px;}
-.product_list li {position:relative; padding: 15px 0 18px 0; border-bottom:1px solid #dddad9}
+.product_list {}
+.product_list li {position:relative; padding: 15px 15px 18px 15px; border-bottom:1px solid #dddad9}
+.product_list li a {display:table; width:100%;}
 .product_list li label {position:absolute; left:0; top:15px;}
 .product_list li .photo {position:relative; width:125px; display:table-cell;}
 .product_list li .photo .ranking {position:absolute; left:0; top:0; font-size:15px; width:15px; text-align:center; color:#1b1818;font-weight:normal;-webkit-text-stroke-width:0.5px;}
@@ -45,7 +46,7 @@
 .product_list li .detail .stit {display:block; height:38px; overflow:hidden; font-size:10px; color:#bcbcbc; letter-spacing:-1px;}
 .product_list li .detail .price {display:block;  font-size:13px; color:#1b1818;}
 .product_list li .detail .price del {display:block;font-size:10px; color:#696361; }
-.product_list li .btn_cart {display: block; padding:10px; position: absolute; right: 10px; bottom: 12px; }
+.product_list li .btn_cart {display: block; padding:10px; position: absolute; right: 10px; bottom: 12px; width:19px;}
 .product_list li .btn_cart:after {display: block; content:''; width: 19px; height: 18px; background: url("/aboutCom/images/cart/btn_cart.gif") no-repeat  0 0; background-size: cover ;}
 
 .display_bnr {position:relative; padding:15px;}
@@ -61,6 +62,11 @@
 .display_bnr .slider img {width:100%}
 
 .best_sellers .imgtit {width:100%}
+
+.best_sellers .tab_content .btnmore {width:100%; background:#f7f3f2; padding:20px 15px; box-sizing:border-box;}
+.best_sellers .tab_content .btnmore a{width:100%;}
+.best_sellers .tab_content .btnmore a:after {display:inline-block;margin-left:5px;width:6px; height:9px; content:''; background:url("/aboutCom/images/common/bul12.png") 0 -43px; background-size:cover;}
+
 .top_bnr {position:relative; border-bottom:1px solid #dedad9;}
 .top_bnr img {width:100%;}
 .top_bnr .txt {position:absolute; left:15px; top:36px; overflow:hidden;color:#1b1818;}
