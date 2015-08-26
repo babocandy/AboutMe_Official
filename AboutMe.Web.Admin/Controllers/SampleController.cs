@@ -128,7 +128,7 @@ namespace AboutMe.Web.Admin.Controllers
             //모바일 이미지 파일 업로드
             if (SaveParam.MOBILE_FILE != null)
             {
-                ImageUpload imageUpload = new ImageUpload { UploadPath = basepath, addMobileImage = false };
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath };
                 ImageResult imageResult = imageUpload.RenameUploadFile(SaveParam.MOBILE_FILE);
 
                 if (imageResult.Success)
@@ -153,7 +153,7 @@ namespace AboutMe.Web.Admin.Controllers
             //모바일배너 파일 업로드
             if (SaveParam.MOBILE_BANNER != null)
             {
-                ImageUpload imageUpload = new ImageUpload { UploadPath = basepath, addMobileImage = false };
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath };
                 ImageResult imageResult = imageUpload.RenameUploadFile(SaveParam.MOBILE_BANNER);
 
                 if (imageResult.Success)
@@ -178,7 +178,7 @@ namespace AboutMe.Web.Admin.Controllers
             //웹배너 업로드
             if (SaveParam.WEB_BANNER != null)
             {
-                ImageUpload imageUpload = new ImageUpload { UploadPath = basepath, addMobileImage = false };
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = basepath };
                 ImageResult imageResult = imageUpload.RenameUploadFile(SaveParam.WEB_BANNER);
 
                 if (imageResult.Success)

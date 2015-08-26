@@ -512,345 +512,436 @@ namespace AboutMe.Web.Front.Controllers
             return cancel;
         }
 
+        //포인트 결제 저장
+        private OrderResult PointPayProcess(INISYSPAY_PARAM FrmData)
+        {
+            OrderResult orderResult = new OrderResult();
+            string order_code = "";
+
+            ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
+
+            Param.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+            Param.CARD_GBN = "";
+            Param.INSTLMT_AT = ""; //할부여부
+            Param.PAT_TID = "";
+            Param.REAL_ACCOUNT_AT = "0";
+            Param.BANK_CODE = "";
+            Param.ESCROW_YN = "N";
+            Param.PAY_GBN = "4";
+            Param.CASHRECEIPT_SE_CODE = "";
+            Param.CASHRECEIPT_RESULT_CODE = "";
+            Param.HTTP_USER_AGENT = Request.UserAgent;
+            Param.PAT_GUBUN = "Web";
+            Param.SVR_DOMAIN = HttpContext.Request.Url.Host;
+
+            Param.VACT_Num = "";
+            Param.VACT_BankCode = "";
+            Param.VACT_Name = "";
+            Param.VACT_Date = "";
+            Param.VACT_Time = "";
+            Param.ORDER_STATUS_VALUE = "20"; //결제완료
+
+            //주문전 포인트, 쿠폰, 가격등... 체크
+            string ok_str = "";
+            try
+            {
+                ok_str = _orderservice.OrderConfigCheck(Param.ORDER_IDX);
+            }
+            catch(Exception e)
+            {
+                //실행결과
+                orderResult.Resultcode = "01";
+                orderResult.ResultMsg = e.InnerException.Message;
+                orderResult.ResultErrorCode = "DB체크에러";
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                orderResult.PAY_GBN = "4";
+                orderResult.ORDER_CODE = order_code;
+
+                return orderResult;
+            }
+
+           try
+           {
+
+                //DB 저장
+                order_code = _orderservice.OrderPaySave(Param);
+
+                //실행결과
+                orderResult.Resultcode = "00";
+                orderResult.ResultMsg = "";
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                orderResult.PAY_GBN = "4";
+                orderResult.ORDER_CODE = order_code;
+
+                //메일발송
+                SendOrderResultMail(orderResult.ORDER_CODE);
+                return orderResult;
+            }
+            catch (Exception e)
+            {
+                //Rollback
+                orderResult.Resultcode = "01";
+                orderResult.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")"; ;
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                orderResult.PAY_GBN = "4";
+                orderResult.ORDER_CODE = order_code;
+                return orderResult;
+            }
+        }
+
+
         //결제완료
         [HttpPost, ValidateInput(false)]
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult OrderProcess(INISYSPAY_PARAM FrmData)
         {
-            INISYSPAY_RESULT PayResult = new INISYSPAY_RESULT();
-            INIPAYRESULT Result = new INIPAYRESULT();
             OrderResult orderResult = new OrderResult();
-            HashData();
-
-            string frontUrl = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
-
-            FrmData.goodname = TagStrip(FrmData.goodname);
-            FrmData.buyername = TagStrip(FrmData.buyername);
-            FrmData.buyertel = TagStrip(FrmData.buyertel);
-            FrmData.buyeremail = TagStrip(FrmData.buyeremail);
-            FrmData.goodname = TagStrip(FrmData.goodname);
-
-            //###############################################################################
-            //# 1. 객체 생성 #
-            //################
-            IINIpay INIpay = new IINIpay("50");
-
-            //###############################################################################
-            //# 2. 인스턴스 초기화  / 3.거래 유형 설정#
-            //######################
-            INIpay.Initialize("securepay");
-
-            //###############################################################################
-            //# 4. 지불 정보 설정 #
-            //###############################################################################
-
-            string strpaymethod = FrmData.paymethod;
-
-            if (hstCode_PayMethod.ContainsKey(strpaymethod))
-            {
-                strpaymethod = hstCode_PayMethod[strpaymethod].ToString();
-            }
-            string strprice = Session["INI_PRICE"].ToString();
-            INIpay.SetPath(_inipay_setpath);			                    // 이니페이 설치 디렉토리 C:\\INIpayNet50
-            INIpay.SetField("pgid", "INInet" + strpaymethod);				// PG ID (고정)
-            INIpay.SetField("spgip", "203.238.3.10");						// 예비 PG IP (고정)
-            INIpay.SetField("uid", FrmData.uid);					       // INIpay User ID(이니시스 내부변수 수정불가, 상점사용 user id 를 사용하지 마세요)
-            INIpay.SetField("mid", _inipay_mid);						    // 상점아이디
-            INIpay.SetField("rn", Session["INI_RN"].ToString());           // 결제 요청  페이지에서  세션에 저장 (또는 DB에 저장)한 것을 체크 하기 위해  결제 처리 페이지 에서 세팅)
-            INIpay.SetField("price", strprice);								// 가격
-
-            /**************************************************************************************************
-            '* admin 은 키패스워드 변수명입니다. 수정하시면 안됩니다. 1111의 부분만 수정해서 사용하시기 바랍니다.
-            '* 키패스워드는 상점관리자 페이지(https://iniweb.inicis.com)의 비밀번호가 아닙니다. 주의해 주시기 바랍니다.
-            '* 키패스워드는 숫자 4자리로만 구성됩니다. 이 값은 키파일 발급시 결정됩니다. 
-            '* 키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오.
-            '**************************************************************************************************/
-            INIpay.SetField("admin", _inipay_admin);			//키패스워드(상점아이디에 따라 변경)
-
-            INIpay.SetField("goodname", FrmData.goodname);		// 상품명
-            INIpay.SetField("currency", "WON");					// 화폐단위
-            INIpay.SetField("buyername", FrmData.buyername);	// 이용자 이름
-            INIpay.SetField("buyertel", FrmData.buyertel);		// 이용자 이동전화
-            INIpay.SetField("buyeremail", FrmData.buyeremail);	// 이용자 이메일
-            INIpay.SetField("paymethod", FrmData.paymethod);	// 지불방법
-            INIpay.SetField("encrypted", FrmData.encrypted);	// 암호문
-            INIpay.SetField("sessionkey", FrmData.sessionkey);	// 암호문
-            INIpay.SetField("url", frontUrl);	// 홈페이지 주소
-            INIpay.SetField("debug", _inipay_debug);			// 로그모드(실서비스시에는 "false"로)
-            INIpay.SetField("merchantreserved1", "예비1");	    // 예비필드1
-            INIpay.SetField("merchantreserved2", "예비2");	    // 예비필드2  
-            INIpay.SetField("merchantreserved3", "예비3");	    // 예비필드3
-
-            ////*-----------------------------------------------------------------*
-            // 수취인 정보 *                                                                    
-            //-----------------------------------------------------------------*
-            // 실물배송을 하는 상점의 경우에 사용되는 필드들이며       *
-            // 아래의 값들은 INIsecurepaystart.aspx 페이지에서 포스트 되도록  *
-            // 필드를 만들어 주도록 하십시요                          *
-            // 컨텐츠 제공업체의 경우 삭제하셔도 무방합니다           *
-            //-----------------------------------------------------------------*
-
-            //INIpay.SetField("recvname", Request.Params["recvname"]);		 //수취인명
-            //INIpay.SetField("recvtel", Request.Params["recvtel"]);			 //수취인 전화번호
-            //INIpay.SetField("recvaddr", Request.Params["recvaddr"]);		 //수취인 주소
-            //INIpay.SetField("recvpostnum", Request.Params["recvpostnum"]);	 //수취인 우편번호
-            //INIpay.SetField("recvmsg", Request.Params["recvmsg"]);			 //수취인 전달 메세지
-
-            //INIpay.SetField("tax", Request.Params["tax"]);		 //tax
-            //INIpay.SetField("taxfree", Request.Params["taxfree"]);		 //taxfree
-            //###############################################################################
-            //# 5. 지불 요청 #
-            //################
-            INIpay.StartAction();		                                      //지불처리
-
-
-            //###############################################################################
-            //6. 지불 결과 #
-            //###############################################################################
-            //-------------------------------------------------------------------------------
-            // 가.모든 결제 수단에 공통되는 결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.Tid = INIpay.GetResult("Tid");							// 거래번호
-            PayResult.Resultcode = INIpay.GetResult("Resultcode");				// 결과코드 ("00"이면 지불성공)
-            PayResult.ResultMsg = INIpay.GetResult("ResultMsg");				// 결과내용 : resultMsg 는 결제실패시 추적할수 있는 단서입니다. 반드시 결과페이지에 출력하시기 바랍니다.
-            PayResult.PayMethod = INIpay.GetResult("PayMethod");				// 지불방법 (매뉴얼 참조)
-            PayResult.Moid = INIpay.GetResult("Moid");	                        // 상점 사용 주문번호
-
-            //**********************************************************************************
-            //* 결제결과금액 =>원상품가격과  결제결과금액과 비교하여 금액이 동일하지 않다면  
-            //* 결제 금액의 위변조가 의심됨으로 정상적인 처리가 되지않도록 처리 바랍니다. (해당 거래 취소 처리) 
-            //**********************************************************************************
-            PayResult.GoodsPrice = INIpay.GetResult("TotPrice");                 //결제결과금액
-
-            //원결제금액
-            if (!strprice.Equals(PayResult.GoodsPrice))
-            {
-                // 결제금액 위변조가 된것입니다.
-                //Response.Write("결재 금액 위변조");
-                // 에러 처리 코드를 넣어 주시기 바랍니다.
-            }
-
-            //-------------------------------------------------------------------------------
-            // 나. 신용카드,ISP,핸드폰, 전화 결제, 은행계좌이체, OK CASH BAG Point 결제시에만 결제 결과 내용  (무통장입금 , 문화 상품권 , 네모 제외) 
-            //-------------------------------------------------------------------------------
-            PayResult.ApplDate = INIpay.GetResult("ApplDate");		//이니시스 승인날짜
-            PayResult.ApplTime = INIpay.GetResult("ApplTime");		//이니시스 승인시각
-
-            //-------------------------------------------------------------------------------
-            // 다. 신용카드  결제수단을 이용시에만  결제결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.ApplNum = INIpay.GetResult("ApplNum");			//신용카드 승인번호
-            PayResult.CARD_Quota = INIpay.GetResult("CARD_Quota");		//할부기간
-            PayResult.CARD_Interest = INIpay.GetResult("CARD_Interest");	//무이자할부 여부("1"이면 무이자할부)
-            PayResult.CARD_Num = INIpay.GetResult("CARD_Num");			//카드번호 12자리
-            PayResult.CARD_Code = INIpay.GetResult("CARD_Code");		//신용카드사 코드 메뉴얼이나 샘플폴더 안의 //카드사_은행_코드.txt// 파일을 참고하세요
-            PayResult.CARD_BankCode = INIpay.GetResult("CARD_BankCode");	//신용카드 발급사(은행) 코드 (매뉴얼 참조)
-            PayResult.CARD_AuthType = INIpay.GetResult("CARD_AuthType");	//본인인증 수행여부 ("00"이면 수행)
-            PayResult.EventCode = INIpay.GetResult("EventCode");		//각종 이벤트 적용 여부
-
-            //아래 내용은 "신용카드 및 OK CASH BAG 복합결제" 또는"신용카드 지불시에 OK CASH BAG적립"시에 추가되는 내용
-            PayResult.OCB_ApplTime = INIpay.GetResult("OCB_ApplTime");		//OK Cashbag 적립 승인번호
-            PayResult.OCB_SaveApplNum = INIpay.GetResult("OCB_SaveApplNum");	//OK Cashbag 적립 승인번호
-            PayResult.OCB_PayApplNum = INIpay.GetResult("OCB_PayApplNum");	//OK Cashbag 사용 승인번호
-            PayResult.OCB_ApplDate = INIpay.GetResult("OCB_ApplDate");		//OK Cashbag 승인일시
-            PayResult.OCB_Num = INIpay.GetResult("OCB_Num");			//OK Cashbag 번호
-            PayResult.CARD_ApplPrice = INIpay.GetResult("CARD_ApplPrice");	//OK Cashbag 복합결재시 신용카드 지불금액
-            PayResult.OCB_PayPrice = INIpay.GetResult("OCB_PayPrice");		//OK Cashbag 복합결재시 포인트 지불금액
-
-
-            //-------------------------------------------------------------------------------
-            // 라. 은행계좌이체 결제수단을 이용시에만  결제결과 내용
-            //	오직 은행계좌시에만 실시 현금 영수증 발행이 가능하며, 가상계좌는 상점관리자 화면이나, 독립적인 현금영수증 발행(이니시스 기술자료실) 모듈을 사용하세요
-            //-------------------------------------------------------------------------------
-            PayResult.ACCT_BankCode = INIpay.GetResult("ACCT_BankCode");	//은행코드
-            PayResult.rcash_rslt = INIpay.GetResult("rcash_rslt");		//현금영주증 결과코드 ("0000"이면 지불성공)
-            PayResult.ruseopt = INIpay.GetResult("ruseopt");			//현금영수증 발행구분코드 
-
-
-            //-------------------------------------------------------------------------------
-            // 마. 무통장 입금(가상계좌) 결제수단을 이용시 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.VACT_Num = INIpay.GetResult("VACT_Num"); 		// 입금 계좌 번호
-            PayResult.VACT_BankCode = INIpay.GetResult("VACT_BankCode"); 	// 입금 은행 코드
-            PayResult.VACT_Date = INIpay.GetResult("VACT_Date"); 		// 입금 예정 날짜
-            PayResult.VACT_Time = INIpay.GetResult("VACT_Time"); 		// 입금 예정 시간 [ 20061018 ]
-            PayResult.VACT_InputName = INIpay.GetResult("VACT_InputName"); 	// 송금자명
-            PayResult.VACT_Name = INIpay.GetResult("VACT_Name");		// 예금주명
-
-            //-------------------------------------------------------------------------------
-            // 바. 핸드폰, 전화결제시에만  결제 결과 내용 ( "실패 내역 자세히 보기"에서 필요 , 상점에서는 필요없는 정보임)
-            //-------------------------------------------------------------------------------
-            PayResult.HPP_GWCode = INIpay.GetResult("HPP_GWCode");		//핸드폰,전화결제시 gateway
-
-
-            //-------------------------------------------------------------------------------
-            // 사. 핸드폰 결제수단을 이용시에만  결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.HPP_Num = INIpay.GetResult("HPP_Num");			//핸드폰 결제에 사용된 휴대폰번호
-
-
-            //-------------------------------------------------------------------------------
-            // 아. ARS 전화 결제수단을 이용시에만  결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.ARSB_Num = INIpay.GetResult("ARSB_Num");			//전화결제에  사용된 전화번호
-
-            // 자. 받는 전화 결제수단을 이용시에만  결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.PHNB_Num = INIpay.GetResult("PHNB_Num");			//전화결제에  사용된 전화번호
-
-            //-------------------------------------------------------------------------------
-            // 차. 문화 상품권 결제수단을 이용시에만  결제 결과 내용	
-            //-------------------------------------------------------------------------------
-            PayResult.CULT_UserID = INIpay.GetResult("CULT_UserID");		//문화상품권 ID
-
-            //-------------------------------------------------------------------------------
-            // 카. 현금영수증 발급 결과코드 (은행계좌이체시에만 리턴);
-            //-------------------------------------------------------------------------------
-            PayResult.CSHR_ResultCode = INIpay.GetResult("CSHR_ResultCode");	// 결과코드
-            PayResult.CSHR_Type = INIpay.GetResult("CSHR_Type");		//발급구분코드
-
-            //-------------------------------------------------------------------------------
-            // 파. 틴캐시 결제수단을 이용시에만 결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.TEEN_Remains = INIpay.GetResult("TEEN_Remains");		//틴캐시 잔액
-            PayResult.TEEN_UserID = INIpay.GetResult("TEEN_UserID");		//틴캐시 ID
-
-            //-------------------------------------------------------------------------------
-            // 타.스마트문상(게임 문화 상품권) 결제수단을 이용시에만 결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.GAMG_Cnt = INIpay.GetResult("GAMG_Cnt");			//카드 사용 갯수
-
-            //-------------------------------------------------------------------------------
-            // 하. 도서문화 상품권 결제수단을 이용시에만 결제 결과 내용
-            //-------------------------------------------------------------------------------
-            PayResult.BCSH_UserID = INIpay.GetResult("BCSH_UserID");		//문화상품권 ID
-
-            //-------------------------------------------------------------------------------
-            // * . 모든 결제 수단에 대해 결제 실패시에만 결제 결과 데이터 				
-            //-------------------------------------------------------------------------------
-            PayResult.ResultErrorCode = INIpay.GetResult("ResultErrorCode");	//결제실패시 상세에러코드 
-
-            INIpay.Destory();
-            INIpay = null;
-
-            Result.Resultcode = PayResult.Resultcode;
-            Result.ResultMsg = PayResult.ResultMsg;
-            Result.ResultErrorCode = PayResult.ResultErrorCode;
-            
-            /*###############################################################################
-            # 지불결과 DB 연동 부분 #
-            # 지불결과를 디비처리하시고 디비처리시 실패가 나시면 이니시스에 취소요청을 합니다
-            ###############################################################################*/
             string PAY_GBN = "";
             string order_code = "";
-            // * 데이터베이스 처리부분 삽입
-            // * 처리 실패시 아래 주석부분을 풀면, 이니시스에 해당 거래를 취소요청합니다
-            if (PayResult.Resultcode == "00") //00성공
+
+            if (FrmData.PAY_GBN == "4")  //포인트/쿠폰 결제
             {
-                ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
-                Param.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                Param.CARD_GBN = PayResult.CARD_Code;
-                Param.INSTLMT_AT = PayResult.CARD_Interest; //할부여부
-                Param.PAT_TID = PayResult.Tid;
-                if (FrmData.PAY_GBN == "2") ///실시간계좌
-                {
-                    Param.REAL_ACCOUNT_AT = "1";
-                    Param.BANK_CODE = PayResult.ACCT_BankCode; //은행코드
-                    PAY_GBN = "2";
-                    Param.ESCROW_YN = "N";
-                }
-                else if (FrmData.PAY_GBN == "20") //실시간계좌이체 (에스크로)
-                {
-                    Param.REAL_ACCOUNT_AT = "1";
-                    Param.BANK_CODE = PayResult.ACCT_BankCode; //은행코드
-                    PAY_GBN = "2";
-                    Param.ESCROW_YN = "Y";
-                }
-                else //카드
-                {
-                    Param.REAL_ACCOUNT_AT = "0";
-                    Param.BANK_CODE = PayResult.CARD_BankCode; //은행코드
-                    Param.ESCROW_YN = "N";
-                    PAY_GBN = "1";
-                }
-
-                if (PayResult.rcash_rslt == "0000") //현금영수증 발행
-                {
-                    Param.CASHRECEIPT_SE_CODE = "1";
-                    Param.CASHRECEIPT_RESULT_CODE = PayResult.ruseopt;
-                }
-                else
-                {
-                    Param.CASHRECEIPT_SE_CODE = "0";
-                    Param.CASHRECEIPT_RESULT_CODE = "0";
-                }
-                Param.HTTP_USER_AGENT = Request.UserAgent;
-                Param.PAT_GUBUN = "Web";
-                Param.SVR_DOMAIN = HttpContext.Request.Url.Host;
-
-                Param.VACT_Num = PayResult.VACT_Num;
-                Param.VACT_BankCode = PayResult.VACT_BankCode;
-                Param.VACT_Name = PayResult.VACT_Name;
-                Param.VACT_Date = PayResult.VACT_Date;
-                Param.VACT_Time = PayResult.VACT_Time;
-                Param.PAY_GBN = PAY_GBN;
-                Param.ORDER_STATUS_VALUE = "20"; //결제완료
-                try
-                {
-                    //DB 저장
-                    order_code = _orderservice.OrderPaySave(Param);
-
-                    //실행결과
-                    orderResult.Resultcode = Result.Resultcode;
-                    orderResult.ResultMsg = Result.ResultMsg;
-                    orderResult.ResultErrorCode = Result.ResultErrorCode;
-                    orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                    orderResult.PAY_GBN = PAY_GBN;
-                    orderResult.ORDER_CODE = order_code;
-
-                    //메일발송
-                    if (PayResult.Resultcode == "00" && !string.IsNullOrEmpty(orderResult.ORDER_CODE))
-                    {
-                        SendOrderResultMail(orderResult.ORDER_CODE);
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    //Rollback
-
-                    string errMsg = "AboutMe DB 입력시 에러"; //취소사유
-                    INIPAYRESULT cancel = InipayCancelProcess(PayResult.Tid, errMsg, PayResult.Moid);
-                    if (cancel.Resultcode.Equals("00"))
-                    {
-                        Result.Resultcode = "01";
-                        Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")";
-                    }
-                    else
-                    {
-                        Result.Resultcode = "09";
-                        Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")로 Inisys 취소중 에러발생! ";
-                    }
-
-                    orderResult.Resultcode = Result.Resultcode;
-                    orderResult.ResultMsg = Result.ResultMsg;
-                    orderResult.ResultErrorCode = Result.ResultErrorCode;
-                    orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                    orderResult.PAY_GBN = PAY_GBN;
-                    orderResult.ORDER_CODE = order_code;
-                }
+                PAY_GBN = "4";
+                orderResult = PointPayProcess(FrmData);
             }
             else
             {
-                orderResult.Resultcode = Result.Resultcode;
-                orderResult.ResultMsg = Result.ResultMsg;
-                orderResult.ResultErrorCode = Result.ResultErrorCode;
-                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
-                orderResult.PAY_GBN = "";
-                orderResult.ORDER_CODE ="";
-            }
-            
-           
+                INISYSPAY_RESULT PayResult = new INISYSPAY_RESULT();
+                INIPAYRESULT Result = new INIPAYRESULT();
+                
+                HashData();
+
+                string frontUrl = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl");
+
+                FrmData.goodname = TagStrip(FrmData.goodname);
+                FrmData.buyername = TagStrip(FrmData.buyername);
+                FrmData.buyertel = TagStrip(FrmData.buyertel);
+                FrmData.buyeremail = TagStrip(FrmData.buyeremail);
+                FrmData.goodname = TagStrip(FrmData.goodname);
+
+                //###############################################################################
+                //# 1. 객체 생성 #
+                //################
+                IINIpay INIpay = new IINIpay("50");
+
+                //###############################################################################
+                //# 2. 인스턴스 초기화  / 3.거래 유형 설정#
+                //######################
+                INIpay.Initialize("securepay");
+
+                //###############################################################################
+                //# 4. 지불 정보 설정 #
+                //###############################################################################
+
+                string strpaymethod = FrmData.paymethod;
+
+                if (hstCode_PayMethod.ContainsKey(strpaymethod))
+                {
+                    strpaymethod = hstCode_PayMethod[strpaymethod].ToString();
+                }
+                string strprice = Session["INI_PRICE"].ToString();
+                INIpay.SetPath(_inipay_setpath);			                    // 이니페이 설치 디렉토리 C:\\INIpayNet50
+                INIpay.SetField("pgid", "INInet" + strpaymethod);				// PG ID (고정)
+                INIpay.SetField("spgip", "203.238.3.10");						// 예비 PG IP (고정)
+                INIpay.SetField("uid", FrmData.uid);					       // INIpay User ID(이니시스 내부변수 수정불가, 상점사용 user id 를 사용하지 마세요)
+                INIpay.SetField("mid", _inipay_mid);						    // 상점아이디
+                INIpay.SetField("rn", Session["INI_RN"].ToString());           // 결제 요청  페이지에서  세션에 저장 (또는 DB에 저장)한 것을 체크 하기 위해  결제 처리 페이지 에서 세팅)
+                INIpay.SetField("price", strprice);								// 가격
+
+                /**************************************************************************************************
+                '* admin 은 키패스워드 변수명입니다. 수정하시면 안됩니다. 1111의 부분만 수정해서 사용하시기 바랍니다.
+                '* 키패스워드는 상점관리자 페이지(https://iniweb.inicis.com)의 비밀번호가 아닙니다. 주의해 주시기 바랍니다.
+                '* 키패스워드는 숫자 4자리로만 구성됩니다. 이 값은 키파일 발급시 결정됩니다. 
+                '* 키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오.
+                '**************************************************************************************************/
+                INIpay.SetField("admin", _inipay_admin);			//키패스워드(상점아이디에 따라 변경)
+
+                INIpay.SetField("goodname", FrmData.goodname);		// 상품명
+                INIpay.SetField("currency", "WON");					// 화폐단위
+                INIpay.SetField("buyername", FrmData.buyername);	// 이용자 이름
+                INIpay.SetField("buyertel", FrmData.buyertel);		// 이용자 이동전화
+                INIpay.SetField("buyeremail", FrmData.buyeremail);	// 이용자 이메일
+                INIpay.SetField("paymethod", FrmData.paymethod);	// 지불방법
+                INIpay.SetField("encrypted", FrmData.encrypted);	// 암호문
+                INIpay.SetField("sessionkey", FrmData.sessionkey);	// 암호문
+                INIpay.SetField("url", frontUrl);	// 홈페이지 주소
+                INIpay.SetField("debug", _inipay_debug);			// 로그모드(실서비스시에는 "false"로)
+                INIpay.SetField("merchantreserved1", "예비1");	    // 예비필드1
+                INIpay.SetField("merchantreserved2", "예비2");	    // 예비필드2  
+                INIpay.SetField("merchantreserved3", "예비3");	    // 예비필드3
+
+                ////*-----------------------------------------------------------------*
+                // 수취인 정보 *                                                                    
+                //-----------------------------------------------------------------*
+                // 실물배송을 하는 상점의 경우에 사용되는 필드들이며       *
+                // 아래의 값들은 INIsecurepaystart.aspx 페이지에서 포스트 되도록  *
+                // 필드를 만들어 주도록 하십시요                          *
+                // 컨텐츠 제공업체의 경우 삭제하셔도 무방합니다           *
+                //-----------------------------------------------------------------*
+
+                //INIpay.SetField("recvname", Request.Params["recvname"]);		 //수취인명
+                //INIpay.SetField("recvtel", Request.Params["recvtel"]);			 //수취인 전화번호
+                //INIpay.SetField("recvaddr", Request.Params["recvaddr"]);		 //수취인 주소
+                //INIpay.SetField("recvpostnum", Request.Params["recvpostnum"]);	 //수취인 우편번호
+                //INIpay.SetField("recvmsg", Request.Params["recvmsg"]);			 //수취인 전달 메세지
+
+                //INIpay.SetField("tax", Request.Params["tax"]);		 //tax
+                //INIpay.SetField("taxfree", Request.Params["taxfree"]);		 //taxfree
+                //###############################################################################
+                //# 5. 지불 요청 #
+                //################
+                INIpay.StartAction();		                                      //지불처리
+
+
+                //###############################################################################
+                //6. 지불 결과 #
+                //###############################################################################
+                //-------------------------------------------------------------------------------
+                // 가.모든 결제 수단에 공통되는 결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.Tid = INIpay.GetResult("Tid");							// 거래번호
+                PayResult.Resultcode = INIpay.GetResult("Resultcode");				// 결과코드 ("00"이면 지불성공)
+                PayResult.ResultMsg = INIpay.GetResult("ResultMsg");				// 결과내용 : resultMsg 는 결제실패시 추적할수 있는 단서입니다. 반드시 결과페이지에 출력하시기 바랍니다.
+                PayResult.PayMethod = INIpay.GetResult("PayMethod");				// 지불방법 (매뉴얼 참조)
+                PayResult.Moid = INIpay.GetResult("Moid");	                        // 상점 사용 주문번호
+
+                //**********************************************************************************
+                //* 결제결과금액 =>원상품가격과  결제결과금액과 비교하여 금액이 동일하지 않다면  
+                //* 결제 금액의 위변조가 의심됨으로 정상적인 처리가 되지않도록 처리 바랍니다. (해당 거래 취소 처리) 
+                //**********************************************************************************
+                PayResult.GoodsPrice = INIpay.GetResult("TotPrice");                 //결제결과금액
+
+                //원결제금액
+                if (!strprice.Equals(PayResult.GoodsPrice))
+                {
+                    // 결제금액 위변조가 된것입니다.
+                    //Response.Write("결재 금액 위변조");
+                    // 에러 처리 코드를 넣어 주시기 바랍니다.
+                }
+
+                //-------------------------------------------------------------------------------
+                // 나. 신용카드,ISP,핸드폰, 전화 결제, 은행계좌이체, OK CASH BAG Point 결제시에만 결제 결과 내용  (무통장입금 , 문화 상품권 , 네모 제외) 
+                //-------------------------------------------------------------------------------
+                PayResult.ApplDate = INIpay.GetResult("ApplDate");		//이니시스 승인날짜
+                PayResult.ApplTime = INIpay.GetResult("ApplTime");		//이니시스 승인시각
+
+                //-------------------------------------------------------------------------------
+                // 다. 신용카드  결제수단을 이용시에만  결제결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.ApplNum = INIpay.GetResult("ApplNum");			//신용카드 승인번호
+                PayResult.CARD_Quota = INIpay.GetResult("CARD_Quota");		//할부기간
+                PayResult.CARD_Interest = INIpay.GetResult("CARD_Interest");	//무이자할부 여부("1"이면 무이자할부)
+                PayResult.CARD_Num = INIpay.GetResult("CARD_Num");			//카드번호 12자리
+                PayResult.CARD_Code = INIpay.GetResult("CARD_Code");		//신용카드사 코드 메뉴얼이나 샘플폴더 안의 //카드사_은행_코드.txt// 파일을 참고하세요
+                PayResult.CARD_BankCode = INIpay.GetResult("CARD_BankCode");	//신용카드 발급사(은행) 코드 (매뉴얼 참조)
+                PayResult.CARD_AuthType = INIpay.GetResult("CARD_AuthType");	//본인인증 수행여부 ("00"이면 수행)
+                PayResult.EventCode = INIpay.GetResult("EventCode");		//각종 이벤트 적용 여부
+
+                //아래 내용은 "신용카드 및 OK CASH BAG 복합결제" 또는"신용카드 지불시에 OK CASH BAG적립"시에 추가되는 내용
+                PayResult.OCB_ApplTime = INIpay.GetResult("OCB_ApplTime");		//OK Cashbag 적립 승인번호
+                PayResult.OCB_SaveApplNum = INIpay.GetResult("OCB_SaveApplNum");	//OK Cashbag 적립 승인번호
+                PayResult.OCB_PayApplNum = INIpay.GetResult("OCB_PayApplNum");	//OK Cashbag 사용 승인번호
+                PayResult.OCB_ApplDate = INIpay.GetResult("OCB_ApplDate");		//OK Cashbag 승인일시
+                PayResult.OCB_Num = INIpay.GetResult("OCB_Num");			//OK Cashbag 번호
+                PayResult.CARD_ApplPrice = INIpay.GetResult("CARD_ApplPrice");	//OK Cashbag 복합결재시 신용카드 지불금액
+                PayResult.OCB_PayPrice = INIpay.GetResult("OCB_PayPrice");		//OK Cashbag 복합결재시 포인트 지불금액
+
+
+                //-------------------------------------------------------------------------------
+                // 라. 은행계좌이체 결제수단을 이용시에만  결제결과 내용
+                //	오직 은행계좌시에만 실시 현금 영수증 발행이 가능하며, 가상계좌는 상점관리자 화면이나, 독립적인 현금영수증 발행(이니시스 기술자료실) 모듈을 사용하세요
+                //-------------------------------------------------------------------------------
+                PayResult.ACCT_BankCode = INIpay.GetResult("ACCT_BankCode");	//은행코드
+                PayResult.rcash_rslt = INIpay.GetResult("rcash_rslt");		//현금영주증 결과코드 ("0000"이면 지불성공)
+                PayResult.ruseopt = INIpay.GetResult("ruseopt");			//현금영수증 발행구분코드 
+
+
+                //-------------------------------------------------------------------------------
+                // 마. 무통장 입금(가상계좌) 결제수단을 이용시 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.VACT_Num = INIpay.GetResult("VACT_Num"); 		// 입금 계좌 번호
+                PayResult.VACT_BankCode = INIpay.GetResult("VACT_BankCode"); 	// 입금 은행 코드
+                PayResult.VACT_Date = INIpay.GetResult("VACT_Date"); 		// 입금 예정 날짜
+                PayResult.VACT_Time = INIpay.GetResult("VACT_Time"); 		// 입금 예정 시간 [ 20061018 ]
+                PayResult.VACT_InputName = INIpay.GetResult("VACT_InputName"); 	// 송금자명
+                PayResult.VACT_Name = INIpay.GetResult("VACT_Name");		// 예금주명
+
+                //-------------------------------------------------------------------------------
+                // 바. 핸드폰, 전화결제시에만  결제 결과 내용 ( "실패 내역 자세히 보기"에서 필요 , 상점에서는 필요없는 정보임)
+                //-------------------------------------------------------------------------------
+                PayResult.HPP_GWCode = INIpay.GetResult("HPP_GWCode");		//핸드폰,전화결제시 gateway
+
+
+                //-------------------------------------------------------------------------------
+                // 사. 핸드폰 결제수단을 이용시에만  결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.HPP_Num = INIpay.GetResult("HPP_Num");			//핸드폰 결제에 사용된 휴대폰번호
+
+
+                //-------------------------------------------------------------------------------
+                // 아. ARS 전화 결제수단을 이용시에만  결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.ARSB_Num = INIpay.GetResult("ARSB_Num");			//전화결제에  사용된 전화번호
+
+                // 자. 받는 전화 결제수단을 이용시에만  결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.PHNB_Num = INIpay.GetResult("PHNB_Num");			//전화결제에  사용된 전화번호
+
+                //-------------------------------------------------------------------------------
+                // 차. 문화 상품권 결제수단을 이용시에만  결제 결과 내용	
+                //-------------------------------------------------------------------------------
+                PayResult.CULT_UserID = INIpay.GetResult("CULT_UserID");		//문화상품권 ID
+
+                //-------------------------------------------------------------------------------
+                // 카. 현금영수증 발급 결과코드 (은행계좌이체시에만 리턴);
+                //-------------------------------------------------------------------------------
+                PayResult.CSHR_ResultCode = INIpay.GetResult("CSHR_ResultCode");	// 결과코드
+                PayResult.CSHR_Type = INIpay.GetResult("CSHR_Type");		//발급구분코드
+
+                //-------------------------------------------------------------------------------
+                // 파. 틴캐시 결제수단을 이용시에만 결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.TEEN_Remains = INIpay.GetResult("TEEN_Remains");		//틴캐시 잔액
+                PayResult.TEEN_UserID = INIpay.GetResult("TEEN_UserID");		//틴캐시 ID
+
+                //-------------------------------------------------------------------------------
+                // 타.스마트문상(게임 문화 상품권) 결제수단을 이용시에만 결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.GAMG_Cnt = INIpay.GetResult("GAMG_Cnt");			//카드 사용 갯수
+
+                //-------------------------------------------------------------------------------
+                // 하. 도서문화 상품권 결제수단을 이용시에만 결제 결과 내용
+                //-------------------------------------------------------------------------------
+                PayResult.BCSH_UserID = INIpay.GetResult("BCSH_UserID");		//문화상품권 ID
+
+                //-------------------------------------------------------------------------------
+                // * . 모든 결제 수단에 대해 결제 실패시에만 결제 결과 데이터 				
+                //-------------------------------------------------------------------------------
+                PayResult.ResultErrorCode = INIpay.GetResult("ResultErrorCode");	//결제실패시 상세에러코드 
+
+                INIpay.Destory();
+                INIpay = null;
+
+                Result.Resultcode = PayResult.Resultcode;
+                Result.ResultMsg = PayResult.ResultMsg;
+                Result.ResultErrorCode = PayResult.ResultErrorCode;
+
+                /*###############################################################################
+                # 지불결과 DB 연동 부분 #
+                # 지불결과를 디비처리하시고 디비처리시 실패가 나시면 이니시스에 취소요청을 합니다
+                ###############################################################################*/
+
+                // * 데이터베이스 처리부분 삽입
+                // * 처리 실패시 아래 주석부분을 풀면, 이니시스에 해당 거래를 취소요청합니다
+                if (PayResult.Resultcode == "00") //00성공
+                {
+                    ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
+                    Param.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                    Param.CARD_GBN = PayResult.CARD_Code;
+                    Param.INSTLMT_AT = PayResult.CARD_Interest; //할부여부
+                    Param.PAT_TID = PayResult.Tid;
+                    if (FrmData.PAY_GBN == "2") ///실시간계좌
+                    {
+                        Param.REAL_ACCOUNT_AT = "1";
+                        Param.BANK_CODE = PayResult.ACCT_BankCode; //은행코드
+                        PAY_GBN = "2";
+                        Param.ESCROW_YN = "N";
+                    }
+                    else if (FrmData.PAY_GBN == "20") //실시간계좌이체 (에스크로)
+                    {
+                        Param.REAL_ACCOUNT_AT = "1";
+                        Param.BANK_CODE = PayResult.ACCT_BankCode; //은행코드
+                        PAY_GBN = "2";
+                        Param.ESCROW_YN = "Y";
+                    }
+                    else //카드
+                    {
+                        Param.REAL_ACCOUNT_AT = "0";
+                        Param.BANK_CODE = PayResult.CARD_BankCode; //은행코드
+                        Param.ESCROW_YN = "N";
+                        PAY_GBN = "1";
+                    }
+
+                    if (PayResult.rcash_rslt == "0000") //현금영수증 발행
+                    {
+                        Param.CASHRECEIPT_SE_CODE = "1";
+                        Param.CASHRECEIPT_RESULT_CODE = PayResult.ruseopt;
+                    }
+                    else
+                    {
+                        Param.CASHRECEIPT_SE_CODE = "0";
+                        Param.CASHRECEIPT_RESULT_CODE = "0";
+                    }
+                    Param.HTTP_USER_AGENT = Request.UserAgent;
+                    Param.PAT_GUBUN = "Web";
+                    Param.SVR_DOMAIN = HttpContext.Request.Url.Host;
+
+                    Param.VACT_Num = PayResult.VACT_Num;
+                    Param.VACT_BankCode = PayResult.VACT_BankCode;
+                    Param.VACT_Name = PayResult.VACT_Name;
+                    Param.VACT_Date = PayResult.VACT_Date;
+                    Param.VACT_Time = PayResult.VACT_Time;
+                    Param.PAY_GBN = PAY_GBN;
+                    Param.ORDER_STATUS_VALUE = "20"; //결제완료
+                    try
+                    {
+                        //DB 저장
+                        order_code = _orderservice.OrderPaySave(Param);
+
+                        //실행결과
+                        orderResult.Resultcode = Result.Resultcode;
+                        orderResult.ResultMsg = Result.ResultMsg;
+                        orderResult.ResultErrorCode = Result.ResultErrorCode;
+                        orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                        orderResult.PAY_GBN = PAY_GBN;
+                        orderResult.ORDER_CODE = order_code;
+
+                        //메일발송
+                        if (PayResult.Resultcode == "00" && !string.IsNullOrEmpty(orderResult.ORDER_CODE))
+                        {
+                            SendOrderResultMail(orderResult.ORDER_CODE);
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        //Rollback
+
+                        string errMsg = "AboutMe DB 입력시 에러"; //취소사유
+                        INIPAYRESULT cancel = InipayCancelProcess(PayResult.Tid, errMsg, PayResult.Moid);
+                        if (cancel.Resultcode.Equals("00"))
+                        {
+                            Result.Resultcode = "01";
+                            Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")";
+                        }
+                        else
+                        {
+                            Result.Resultcode = "09";
+                            Result.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")로 Inisys 취소중 에러발생! ";
+                        }
+
+                        orderResult.Resultcode = Result.Resultcode;
+                        orderResult.ResultMsg = Result.ResultMsg;
+                        orderResult.ResultErrorCode = Result.ResultErrorCode;
+                        orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                        orderResult.PAY_GBN = PAY_GBN;
+                        orderResult.ORDER_CODE = order_code;
+                    }
+                }
+                else
+                {
+                    orderResult.Resultcode = Result.Resultcode;
+                    orderResult.ResultMsg = Result.ResultMsg;
+                    orderResult.ResultErrorCode = Result.ResultErrorCode;
+                    orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                    orderResult.PAY_GBN = "";
+                    orderResult.ORDER_CODE = "";
+                }
+
+
+            } //이니시스 결제 끝
 
             StringBuilder SBuilder = new StringBuilder();
             SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");

@@ -40,67 +40,79 @@
         </div>
         <ul class="toggle_box v2">
             <!-- [Desc] "접수"일 경우 해당 <span> 태그에 class="ing" 추가 / "완료" 되면 삭제. -->
-@if (Model.QnaList != null)
+
+@if (Model.QnaCount == 0)
 {
-    foreach (var item in Model.QnaList)
+            <!--데이터없음-->
+    <div class="datanone nobg">
+        <p class="txt_none">문의 내역이 없습니다.</p>
+    </div>
+            <!--//데이터없음-->
+
+}
+else
+{ 
+
+    if (Model.QnaList != null)
     {
-            <li>
-                <a href="javascript:" class="toggle_ti">
-                    <strong>@item.TITLE</strong>
-                    <span class="txt_fdiv">
-                    @switch (item.CATEGORY)
-                    {
-                        case "1": @Html.Raw("상품문의"); break;
-                        case "2": @Html.Raw("배송문의"); break;
-                        case "3": @Html.Raw("구매문의"); break;
-                        case "4": @Html.Raw("반품문의"); break;
-                        case "5": @Html.Raw("기타문의"); break;
-                    }   <em class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</em></span>
-                    <span class="state ing">
-                        @if (item.STATUS == "1")
+        foreach (var item in Model.QnaList)
+        {
+                <li>
+                    <a href="javascript:" class="toggle_ti">
+                        <strong>@item.TITLE</strong>
+                        <span class="txt_fdiv">
+                        @switch (item.CATEGORY)
                         {
-                            @Html.Raw("접수");
+                            case "1": @Html.Raw("상품문의"); break;
+                            case "2": @Html.Raw("배송문의"); break;
+                            case "3": @Html.Raw("구매문의"); break;
+                            case "4": @Html.Raw("반품문의"); break;
+                            case "5": @Html.Raw("기타문의"); break;
+                        }   <em class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</em></span>
+                        
+                            @if (item.STATUS == "1")
+                            {
+                                @Html.Raw("<span class='state ing'>접수</span>");
+                            }
+                            else
+                            {
+                                @Html.Raw("<span class='state'>완료</span>");
+                            }
+                       
+                    </a>
+                    <div class="toggle_con faq_a">
+                        <p class="txt_q">
+                            <strong>@item.TITLE</strong>
+                            <span>
+                                @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
+                            </span>
+                        </p>
+                        @if (item.STATUS =="1")
+                        {
+                            <div class="btn_group">
+                                <a href="/Mypage/Qna/QnaWrite?IDX=@item.IDX&mode=EDIT" class="btn btn_gray_h30">수정</a><a href="#none" class="btn btn_white_h30" onclick="deleteQna(@item.IDX);">삭제</a>
+                            </div>
                         }
                         else
                         {
-                            @Html.Raw("완료");
-                        }
-                    </span>
-                </a>
-                <div class="toggle_con faq_a">
-                    <p class="txt_q">
-                        <strong>@item.TITLE</strong>
-                        <span>
-                            @Html.Raw(item.QUESTION.Replace("\n", "<br />"))
-                        </span>
-                    </p>
-                    @if (item.STATUS =="1")
-                    {
-                        <div class="btn_group">
-                            <a href="/Mypage/Qna/QnaWrite?IDX=@item.IDX&mode=EDIT" class="btn btn_gray_h30">수정</a><a href="#none" class="btn btn_white_h30" onclick="deleteQna(@item.IDX);">삭제</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <p class="txt_a">
-                            @Html.Raw(HttpUtility.HtmlDecode(item.ANSWER))
-                        </p>
-                        <span class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</span>
+                            <p class="txt_a">
+                                @Html.Raw(HttpUtility.HtmlDecode(item.ANSWER))
+                            </p>
+                            <span class="date">@string.Format("{0:yyyy-MM-dd}", item.REG_DATE)</span>
 
-                    }
-                </div>
-            </li>
+                        }
+                    </div>
+                </li>
+        }
     }
 }
         </ul>
     </div>
     <!-- 1:1문의 리스트 -->
     <!--페이징-->
-    <div class="paging">
-        <a href="#" class="prev"></a>
-        <strong>1</strong> / 50
-        <a href="#" class="next"></a>
-    </div>
+    @{
+        Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.QnaCount, RecordPerPage = Model.SearchParam.pagesize, PagePerBlock = 10, CurrentPage = Model.SearchParam.page, QueryStr = "" });
+    }
     <!--//페이징-->
 </div>
 <!--//container-->
