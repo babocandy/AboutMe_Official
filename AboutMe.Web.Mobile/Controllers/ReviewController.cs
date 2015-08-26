@@ -59,8 +59,8 @@ namespace AboutMe.Web.Mobile.Controllers
             model.Pages = tp.Item2;
             model.Total = tp.Item3;
             model.MobileParam = p;
-            model.PrevPage = p.PAGE - 1 < 1 ? 1 : p.PAGE;
-            model.NextPage = p.PAGE + 1 > model.Pages ? model.Pages : p.PAGE;
+            model.PrevPage = p.PAGE - 1 < 1 ? 1 : p.PAGE -1;
+            model.NextPage = p.PAGE + 1 > model.Pages ? model.Pages : p.PAGE  +1;
 
             return View(model);
         }
@@ -85,15 +85,15 @@ namespace AboutMe.Web.Mobile.Controllers
             p.CATE_CODE = p.CATE_CODE == null ? CategoryCode.BEAUTY_DEFAULT : p.CATE_CODE;
             p.SORT = p.SORT == null ? ReviewExpListViewModel.SORT_LASTEST : p.SORT;
 
-            Debug.WriteLine("ReviewListMobileUrlParam " + p );
+           // Debug.WriteLine("ReviewListMobileUrlParam " + p );
 
             var tp = _ReviewService.GetReviewExpListMobile(p);
             model.ReviewsMobile = tp.Item1;
             model.Pages = tp.Item2;
             model.Total = tp.Item3;
             model.MobileParam = p;
-            model.PrevPage = p.PAGE - 1 < 1 ? 1 : p.PAGE;
-            model.NextPage = p.PAGE + 1 > model.Pages ? model.Pages : p.PAGE;
+            model.PrevPage = p.PAGE - 1 < 1 ? 1 : p.PAGE -1;
+            model.NextPage = p.PAGE + 1 > model.Pages ? model.Pages : p.PAGE +1;
 
             return View(model);
         }
@@ -109,8 +109,53 @@ namespace AboutMe.Web.Mobile.Controllers
             return View(model);
         }
 
+        /**
+         * 공통. 상품상세에서 상품, 체험단리뷰 함께. 상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
+         */
+        [ChildActionOnly]
+        public ActionResult ReviewInShoppingDetail(string P_CODE)
+        {
+            ReviewInProductDetailViewModel model = new ReviewInProductDetailViewModel();
 
+            ReviewListJsonParamInShopping p = new ReviewListJsonParamInShopping();
+            p.P_CODE = P_CODE;
+            
+            var tp = _ReviewService.GetReviewProductListByProductCode(p);
 
+            model.Reviews = tp.Item1;
+            model.Total = tp.Item2;
+            model.PageNo = 1;
+            model.Pcode = P_CODE;
+            model.PageSize = p.PAGE_SIZE?? 0;
+
+            return View(model);
+        }
+
+        /**
+         * 상품상세에서 상품리뷰 조회
+         */
+        [HttpPost]
+        public JsonResult GetReviewProductListInShopping(ReviewListJsonParamInShopping p)
+        {
+            var tp = _ReviewService.GetReviewProductListByProductCode(p);
+            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = p };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        /**
+         * 상품상세에서 체험단리뷰 조회
+         */
+        [HttpPost]
+        public JsonResult GetReviewExpListInShopping(ReviewListJsonParamInShopping p)
+        {
+            var tp = _ReviewService.GetReviewExpByProductCode(p);
+            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = p };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
 
     }
 }

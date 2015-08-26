@@ -62,57 +62,76 @@
             <!-- 작성 가능한 리뷰 -->
             <div id="tab_review1" class="tab_content" style="display:block">
                 <h3>작성 가능한 리뷰</h3>
-                <ul class="review_list">
 
-                    @foreach (var item in Model)
-                    {
-                        <li class="product_info">
-                            <div class="photo_info">
-                                <div class="photo"><img src="@string.Format("{0}{1}", myController._img_path_product, item.Item2.P_IMG1_S )" alt="" /></div>
-                                <div class="detail">
-                                    @if (!string.IsNullOrEmpty(item.Item1.ICON_YN))
-                                    {
-                                        if (item.Item1.ICON_YN.IndexOf('B') != -1)
-                                        { <text> <span class="ico ico_best">BEST</span></text> }
-                                        if (item.Item1.ICON_YN.IndexOf('S') != -1)
-                                        { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
-                                        if (item.Item1.ICON_YN.IndexOf('N') != -1)
-                                        { <text> <span class="ico ico_new">NEW</span></text> }
-                                        if (item.Item1.ICON_YN.IndexOf('C') != -1)
-                                        { <text> <span class="ico ico_custom ">커스텀</span></text> }
-                                    }
-                                    @if (!string.IsNullOrEmpty(item.Item1.PMO_PRODUCT_CATEGORY))
-                                    {
-                                        if (item.Item1.PMO_PRODUCT_CATEGORY == "01")
-                                        { <text> <span class="ico ico_set">SET</span></text> }
-                                        if (item.Item1.PMO_PRODUCT_CATEGORY == "02")
-                                        { <text> <span class="ico ico_1_1">1+1</span></text> }
-                                        if (item.Item1.PMO_PRODUCT_CATEGORY == "03")
-                                        { <text> <span class="ico ico_time">TIME</span></text> }
-                                    }
-                                    @if (!string.IsNullOrEmpty(item.Item1.COUPON_CODE))
-                                    {
-                                        <text> <span class="ico ico_coupon">COUPON</span></text>
-                                    }
-                                    <span class="tit">@item.Item2.P_NAME</span>
+                @if (Model.Count > 0)
+                {
+                    <ul class="review_list">
+
+                        @foreach (var item in Model)
+                        {
+                            <li class="product_info">
+                                <div class="photo_info">
+                                    <div class="photo"><img src="@string.Format("{0}{1}", myController._img_path_product, item.Item2.P_IMG1_S )" alt="" /></div>
+                                    <div class="detail">
+
+                                        @if (item.Item1 != null)
+                                        {
+                                            if (!string.IsNullOrEmpty(item.Item1.ICON_YN))
+                                            {
+                                                if (item.Item1.ICON_YN.IndexOf('B') != -1)
+                                                { <text> <span class="ico ico_best">BEST</span></text> }
+                                                if (item.Item1.ICON_YN.IndexOf('S') != -1)
+                                                { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                                if (item.Item1.ICON_YN.IndexOf('N') != -1)
+                                                { <text> <span class="ico ico_new">NEW</span></text> }
+                                                if (item.Item1.ICON_YN.IndexOf('C') != -1)
+                                                { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                            }
+                                            
+                                            if (!string.IsNullOrEmpty(item.Item1.PMO_PRODUCT_CATEGORY))
+                                            {
+                                                if (item.Item1.PMO_PRODUCT_CATEGORY == "01")
+                                                { <text> <span class="ico ico_set">SET</span></text> }
+                                                if (item.Item1.PMO_PRODUCT_CATEGORY == "02")
+                                                { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                                if (item.Item1.PMO_PRODUCT_CATEGORY == "03")
+                                                { <text> <span class="ico ico_time">TIME</span></text> }
+                                            }
+                                            
+                                            if (!string.IsNullOrEmpty(item.Item1.COUPON_CODE))
+                                            {
+                                                <text> <span class="ico ico_coupon">COUPON</span></text>
+                                            }
+                                        }
+       
+                                        <span class="tit">@item.Item2.P_NAME</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="count_info">
-                                <span class="tit">수량 <strong>@item.Item2.P_COUNT</strong>개</span>
+                                <div class="count_info">
+                                    <span class="tit">수량 <strong>@item.Item2.P_COUNT</strong>개</span>
 
-                                @{
-                                    MyReviewPdtInputParam p = new MyReviewPdtInputParam();
-                                    p.ORDER_DETAIL_IDX = item.Item2.ORDER_DETAIL_IDX;
-                                    p.P_CODE = item.Item2.P_CODE;
-                                }
-                                <a href="@(Url.Action("Write", "MyReview",p))" class="btn btn_gray_h30">리뷰쓰기</a>
-                            </div>
-                        </li>
-                    }
+                                    @{
+                                        MyReviewPdtInputParam p = new MyReviewPdtInputParam();
+                                        p.ORDER_DETAIL_IDX = item.Item2.ORDER_DETAIL_IDX;
+                                        p.P_CODE = item.Item2.P_CODE;
+                                    }
+                                    <a href="@(Url.Action("Write", "MyReview",p))" class="btn btn_gray_h30">리뷰쓰기</a>
+                                </div>
+                            </li>
+                        }
 
 
-                 
-                </ul>
+
+                    </ul>
+
+                }
+                else
+                {
+                    <div class="datanone nobg">
+                        <p class="txt_none">작성 가능한 리뷰가 없습니다. <br>구매확정 후 리뷰작성이 가능합니다.</p>
+                    </div>
+                }
+
 
             </div>
             <!-- //작성 가능한 리뷰 -->

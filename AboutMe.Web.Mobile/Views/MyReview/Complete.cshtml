@@ -61,45 +61,62 @@
             <!-- 작성한 리뷰 -->
             <div id="tab_review2" class="tab_content" style="display:block">
                 <h3>작성한 리뷰</h3>
-                <ul class="review_list">
+                @if (Model.Reviews.Count > 0)
+                {
+                    <ul class="review_list">
 
-                    @foreach (var item in Model.Reviews)
-                    {
-                        <li class="product_info">
-                            <div class="photo_info">
-                                <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
-                                <div class="detail">
-                                    <span class="tit">@item.P_NAME</span>
+                        @foreach (var item in Model.Reviews)
+                        {
+                            <li class="product_info">
+                                <div class="photo_info">
+                                    <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, item.P_MAIN_IMG)" alt="" /></div>
+                                    <div class="detail">
+                                        <span class="tit">@item.P_NAME</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="review_info">
-                                <div class="rinfo_top">
-                                    <p class="winfo"><span class="type oily"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <p class="txtbox">@item.COMMENT</p>
-                                    @if (item.IS_PHOTO == "Y")
-                                    {
-                                        <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" /></div>
+                                <div class="review_info">
+                                    <div class="rinfo_top">
+                                        <p class="winfo"><span class="type oily"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
+                                    </div>
+                                    <div class="rinfo_con">
+                                        <p class="txtbox">@item.COMMENT</p>
+                                        @if (item.IS_PHOTO == "Y")
+                                        {
+                                            <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" /></div>
                                     <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                        <div class="morebox">
-                                            <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                            <span class="photo_review"><i></i>포토리뷰</span>
-                                            <a href="#none" class="btn_more"><i></i></a>
-                                        </div>
-                                    }
+                                            <div class="morebox">
+                                                <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                                <span class="photo_review"><i></i>포토리뷰</span>
+                                                <a href="#none" class="btn_more"><i></i></a>
+                                            </div>
+                                        }
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="btn_group">
-                                <a class="btn btn_gray_h30" href="@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")">수정</a>
-                            </div>
-                        </li>
-                    }
+                                <div class="btn_group">
+                                    <a class="btn btn_gray_h30" href="@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")">수정</a>
+                                </div>
+                            </li>
+                        }
 
 
 
-                </ul>
+                    </ul>
+
+
+                    <div class="paging">
+                        <a href="@Url.Action("Complete", "MyReview", new { page = Model.PrevPage})" class="prev"></a>
+                        <strong>@Model.PageNo</strong> / @Model.Pages
+                        <a href="@Url.Action("Complete", "MyReview", new { page = Model.NextPage})" class="next"></a>
+                    </div>
+                }
+                else
+                {
+                    <div class="datanone nobg">
+                        <p class="txt_none">작성한 리뷰가 없습니다.</p>
+                    </div>
+                }
+
 
             </div>
             <!-- //작성 가능한 리뷰 -->
