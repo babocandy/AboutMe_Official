@@ -1,0 +1,120 @@
+﻿@model List<AboutMe.Domain.Entity.Exhibit.MOBILE_MAIN_EVENT_INFO>
+
+@if (Model.Count() > 0)
+{ 
+        
+    <div class="mainevent">
+        <h2>Event</h2>
+
+        @foreach (var item in Model)
+        {
+
+            string eventLink = "";
+
+            if (item.EventInfo.GBN.ToUpper() == "EXHIBIT")
+            {
+                eventLink = "/Event/ExhibitView?IDX="+item.EventInfo.IDX;
+            }
+            else if (item.EventInfo.GBN.ToUpper() == "EVENT")
+            {
+                eventLink = "/Event/EventView?IDX=" + item.EventInfo.IDX;
+            }
+            else if (item.EventInfo.GBN.ToUpper() == "SAMPLE")
+            {
+                eventLink = "/Event/SampleView?IDX=" + item.EventInfo.IDX;
+            }
+
+            <div class="imgbnr_wrap">
+                <div class="imgbnr">
+                    <a href="@eventLink"><img class="lazyload" data-original="@item.EventInfo.MOBILE_BANNER" alt="@item.EventInfo.NAME" /></a>
+
+                    @if (item.ProductList != null)
+                    {
+                        Html.Raw(item.ProductList.Count());
+                    }
+                </div>
+                
+
+                @if (item.EventInfo.GBN.ToUpper() == "EXHIBIT")
+                {
+                    string productImgPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath");
+                    if (item.ProductList.Count() == 1)
+                    {
+                        foreach (var pd in item.ProductList)
+                        {
+                            string imgUrl1 = productImgPath + "R270_" + pd.MAIN_IMG;
+
+                            <div class="probnr pb15">
+                                <div class="detail">
+                                    @if (!string.IsNullOrEmpty(pd.ICON_YN))
+                                    {
+                                        if (pd.ICON_YN.IndexOf('B') != -1)
+                                        {  <span class="ico ico_best">BEST</span> }
+                                        if (pd.ICON_YN.IndexOf('S') != -1)
+                                        {  <span class="ico ico_soldout">SOLD OUT</span> }
+                                        if (pd.ICON_YN.IndexOf('N') != -1)
+                                        {  <span class="ico ico_new">NEW</span> }
+                                        if (pd.ICON_YN.IndexOf('C') != -1)
+                                        {  <span class="ico ico_custom ">커스텀</span> }
+                                    }
+                                    @if (!string.IsNullOrEmpty(pd.PMO_PRODUCT_CATEGORY))
+                                    {
+                                        if (pd.PMO_PRODUCT_CATEGORY == "01")
+                                        {  <span class="ico ico_set">SET</span> }
+                                        if (pd.PMO_PRODUCT_CATEGORY == "02")
+                                        {  <span class="ico ico_1_1">1+1</span> }
+                                        if (pd.PMO_PRODUCT_CATEGORY == "03")
+                                        {  <span class="ico ico_time">TIME</span> }
+                                    }
+                                    @if (!string.IsNullOrEmpty(pd.COUPON_CODE))
+                                    {
+                                        <span class="ico ico_coupon">COUPON</span>
+                                    }
+                                    <span class="tit">@pd.P_NAME</span>
+                                    <span class="price">
+                                        @if (pd.SELLING_PRICE != pd.DISCOUNT_PRICE)
+                                        {
+                                            <del>@String.Format("{0:#,#0.}", pd.SELLING_PRICE)원</del>
+                                        }
+                                        <strong>@String.Format("{0:#,#0.}", pd.DISCOUNT_PRICE)원</strong>
+                                    </span>
+                                </div>
+                                <div class="photo"><a href="/shopping/detail?pcode=@pd.P_CODE"><img src="@imgUrl1" alt="" /></a></div>
+                            </div>
+                        }
+                    }
+                    else if (item.ProductList.Count() > 1)
+                    {
+
+                    <!--상품 리스트가 2개이상일 때 사용-->
+                        <div class="eventpro_bnr">
+                            <div class="btnarea">
+                                <a href="#" class="prev">이전</a>
+                                <a href="#" class="next">다음</a>
+                            </div>
+                            <ul class="slider">
+                                @foreach (var pd in item.ProductList)
+                                {
+                                string imgUrl1 = productImgPath + "R270_" + pd.MAIN_IMG;
+
+                                <li>
+                                    <span class="photo"><a href="/shopping/detail?pcode=@pd.P_CODE"><img src="@imgUrl1" alt="" /></a></span>
+                                    <span class="tit">@pd.P_NAME</span>
+                                    <span class="price">
+                                        @if (pd.SELLING_PRICE != pd.DISCOUNT_PRICE)
+                                        {
+                                            <del>@String.Format("{0:#,#0.}", pd.SELLING_PRICE)원</del>
+                                        }
+                                        <strong>@String.Format("{0:#,#0.}", pd.DISCOUNT_PRICE)원</strong>
+                                    </span>
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                }
+            </div>
+        }
+                <a href="/Event" class="btn_moreevent">이벤트 더보기</a>
+            </div>
+}

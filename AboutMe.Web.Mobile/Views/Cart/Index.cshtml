@@ -182,7 +182,7 @@
             { @Html.Raw("[임직원]으로") }<br />
             <span>@Model.UserProfile.M_GRADE_NAME.ToString().ToUpper() 클래스</span>입니다.
         </p>
-        <a href="#" class="btn btn_white_h30 btn_viwebf" style="width:102px">회원혜택보기</a>
+        <a href="/Customer/Benefit" class="btn btn_white_h30 btn_viwebf" style="width:102px">회원혜택보기</a>
     </div>
     <!--//회원정보-->
     <!--사용가능쿠폰, 포인트-->
@@ -206,7 +206,7 @@
                     </div>
                 </li>
             </a>
-            <a href="/MyPage/MyPoint">
+            <a href="/MyPage/">
                 <li class="point">
                     <div>
                         <span class="ico"></span>
@@ -229,7 +229,7 @@
 {
     <div class="joinsuggest">
         <a href="/MemberShip/JoinStep1" class="btn btn_brown_h30">회원가입</a>
-        <p>지금 어바웃미 회원가입하세요<br /><a href="#" class="btn_benefit">회원혜택 보기</a></p>
+        <p>지금 어바웃미 회원가입하세요<br /><a href="/Customer/Benefit" class="btn_benefit">회원혜택 보기</a></p>
         <div class="benefit_con">
             <p class="tit txt1"><img src="/aboutCom/images/cart/benefit_txt1.gif" alt="특별한 회원 혜택" /></p>
             <ul>
@@ -274,22 +274,24 @@
 
                 <!--카트에 담긴 상품-->
                 <div class="shopping_product">
+    @if (Model.CartCnt == 0)
+    {
+                    <!--데이터없음-->
+                    <div class="datanone nobg">
+                    <p class="txt_none">장바구니에 담긴 상품이 없습니다.</p>
+                    </div>
+                    <!--//데이터없음-->
+    }
+    else
+    {
                     <!--전체선택-->
                     <label class="chkcon v2 ml15"><input type="checkbox" name="" title="" onclick="GridCheckAll(this)" checked="true" /> <span class="txt">전체선택</span></label>
                     <!--//전체선택-->
                     <!--상품리스트-->
                     <div class="product_list">
                         <ul>
-                            @if (Model.CartCnt == 0)
-                            {
-                                <li>
-                                    장바구니가 비어있습니다.
-                                </li>
-
-                            }
-                            else
-                            {
-                                foreach (var item in @Model.CartList)
+                            
+                                @foreach (var item in @Model.CartList)
                                 {
                                     string imgUrl1 = productImgPath + "R120_" + item.MAIN_IMG;
 
@@ -384,34 +386,31 @@
                                         </div>
                                     </li>
                                 }
-                            }
+                            
                         </ul>
                     </div>
                     <!--//상품리스트-->
-                    @if (Model.CartCnt > 0)
-                    {
-
-                        <!--토탈 포인트, 총 결제금액-->
-                        <div class="total_paywrap">
-                            <div class="total_pay">
-                                <dl class="point">
-                                    <dt>예상적립포인트</dt>
-                                    <dd>ⓟ <span id="SumPointTxt">@String.Format("{0:#,#0.}", Model.SumPoint)</span></dd>
-                                </dl>
-                                <dl class="amount">
-                                    <dt>총 주문금액</dt>
-                                    <dd><span id="SumPriceTxt">@String.Format("{0:#,#0.}", Model.SumPrice)</span>원</dd>
-                                </dl>
-                            </div>
-                            <p class="pstxt">* 할인혜택을 더 적용할 경우 예상적립포인트가 달라질 수 있습니다.</p>
-                            <div class="btn_group mt15">
-                                <a href="#none" class="btn btn_blue_h50 mr5" style="width:142px" onclick="SelectNextStep(false);">선택상품주문</a>
-                                <a href="#none" class="btn btn_brown_h50" style="width:142px" onclick="SelectNextStep(true);">전체상품주문</a>
-                            </div>
+                    <!--토탈 포인트, 총 결제금액-->
+                    <div class="total_paywrap">
+                        <div class="total_pay">
+                            <dl class="point">
+                                <dt>예상적립포인트</dt>
+                                <dd>ⓟ <span id="SumPointTxt">@String.Format("{0:#,#0.}", Model.SumPoint)</span></dd>
+                            </dl>
+                            <dl class="amount">
+                                <dt>총 주문금액</dt>
+                                <dd><span id="SumPriceTxt">@String.Format("{0:#,#0.}", Model.SumPrice)</span>원</dd>
+                            </dl>
                         </div>
-                        <!--//토탈 포인트, 총 결제금액-->
+                        <p class="pstxt">* 할인혜택을 더 적용할 경우 예상적립포인트가 달라질 수 있습니다.</p>
+                        <div class="btn_group mt15">
+                            <a href="#none" class="btn btn_blue_h50 mr5" style="width:142px" onclick="SelectNextStep(false);">선택상품주문</a>
+                            <a href="#none" class="btn btn_brown_h50" style="width:142px" onclick="SelectNextStep(true);">전체상품주문</a>
+                        </div>
+                    </div>
+                    <!--//토탈 포인트, 총 결제금액-->
 
-                    }
+    }
                 </div>
                 <!--//카트에 담긴 상품-->
                 <!--회원가입권유-->

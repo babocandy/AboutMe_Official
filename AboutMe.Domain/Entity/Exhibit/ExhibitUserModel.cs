@@ -196,4 +196,10 @@ namespace AboutMe.Domain.Entity.Exhibit
         public List<EXHIBIT_TAB_PRODUCT> TabProductList { get; set; }
         public List<SP_EVENT_ING_LIST_Result> IngList { get; set; }
     }
+
+    public class MOBILE_MAIN_EVENT_INFO
+    {
+        public SP_EVENT_ING_LIST_Result EventInfo { get; set; }
+        public List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> ProductList { get; set; }
+    }
 }

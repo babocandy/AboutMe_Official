@@ -110,6 +110,7 @@
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_DUMMY_ADMIN_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_song_test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AdminEtcModelStoreContainer">
           <EntitySet Name="ADMIN_MEMBER" EntityType="Self.ADMIN_MEMBER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMIN_MEMBER_DEPT" EntityType="Self.ADMIN_MEMBER_DEPT" Schema="dbo" store:Type="Tables" />
@@ -206,6 +207,7 @@
           <FunctionImport Name="SP_ADMIN_ADMIN_LOGIN" ReturnType="Collection(AdminEtcModel.SP_ADMIN_ADMIN_LOGIN_Result)">
           <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_song_test" ReturnType="Collection(DateTime)" />
         </EntityContainer>
         <ComplexType Name="SP_ADM_ADMIN_MEMBER_CNT" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -442,6 +444,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_song_test" FunctionName="AdminEtcModel.Store.sp_song_test" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -456,8 +459,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

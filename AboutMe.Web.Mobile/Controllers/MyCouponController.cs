@@ -69,9 +69,6 @@ namespace AboutMe.Web.Mobile.Controllers
                     break;
             }
 
-
-
-
             var jsonData = new { ResultCode = _ResultCode, Msg = _Msg };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
@@ -79,6 +76,123 @@ namespace AboutMe.Web.Mobile.Controllers
 
             //return View(lst);
         }
+
+
+
+        // 다운로드가능한 쿠폰리스트가져오기 
+        [CustomAuthorize]
+        public ActionResult Downloadable(string SearchCol = "", string SearchKeyword = "", int Page = 1, int PageSize = 10)
+        {
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+
+            string M_Id = ""; //회원아이디
+            int TotalRecord = 0;
+
+            //M_Id = "aszx0505";
+            M_Id = _user_profile.M_ID.ToString();
+
+            TotalRecord = _CouponService.GettCouponAvailableListCnt(M_Id, SearchCol, SearchKeyword);
+            
+            this.ViewBag.TotalRecord = TotalRecord;
+            this.ViewBag.Page = Page;
+
+            //다운로드 가능한 쿠폰리스트
+            List<SP_COUPON_DOWNLOADABLE_LIST_Result> lst = _CouponService.GetDownloadableCouponMobileList(M_Id,SearchCol,SearchKeyword,Page,PageSize).ToList();
+
+            return View(lst);
+
+        }
+
+
+        //쿠폰 다운로드 버튼을 클릭했을 때 다운로드 처리 // PC버전, 번호인증 필요없는 쿠폰 
+        [CustomAuthorize(CustomRedirection = "/MyPage/MyCoupon/Downloadable")]
+        public ActionResult UpdateToUsable(int IdxCouponNumber = 0, string UpdateMethod = "")
+        {
+
+            string M_Id = ""; //회원아이디
+            int IsSuccess = 1;
+
+            //M_Id = "aszx0505";
+            M_Id = _user_profile.M_ID.ToString();
+            //세트상품 프로모션 정보중 유효한 TOP 1 가져오기 
+
+            /**
+            if (IdxCouponNumber == null)
+            {
+                IdxCouponNumber = 0;
+            }
+             * **/
+
+            IsSuccess = _CouponService.UpdateCouponDownload_Mobile_Ver_And_NoNumberChk_Ver(M_Id, IdxCouponNumber, UpdateMethod);
+
+            return RedirectToAction("Availablelist", "MyCoupon");
+            //return View(lst);
+        }
+
+
+        [CustomAuthorize]
+        public ActionResult Availablelist(string SearchCol = "", string SearchKeyword = "", int Page = 1, int PageSize = 10)
+        {
+
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            //this.ViewBag.SortCol = SortCol;
+           // this.ViewBag.SortDir = SortDir;
+
+
+
+            string M_Id = ""; //회원아이디
+
+            //M_Id = "aszx0505";
+            M_Id = _user_profile.M_ID.ToString(); //로그인정보에서 회원아이디 가져오기 
+
+
+            int TotalRecord = 0;
+            TotalRecord = _CouponService.GettCouponAvailableOnMobileListCnt(M_Id, SearchCol, SearchKeyword);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+            return View(_CouponService.GetCouponAvailableOnMobileList(M_Id, SearchCol, SearchKeyword, Page, PageSize).ToList());
+
+        }
+
+
+        //종료 혹은 사용완료된 쿠폰 리스트 
+        [CustomAuthorize]
+        public ActionResult ClosedCouponlist(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
+        {
+
+
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.SortCol = SortCol;
+            this.ViewBag.SortDir = SortDir;
+
+
+
+            string M_Id = ""; //회원아이디
+
+            //M_Id = "aszx0505";
+            M_Id = _user_profile.M_ID.ToString(); //로그인정보에서 회원아이디 가져오기 
+
+
+            int TotalRecord = 0;
+            TotalRecord = _CouponService.GetCouponClosedListCnt(M_Id, "M", SearchCol, SearchKeyword);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+            return View(_CouponService.GetCouponClosedList(M_Id, "M", SearchCol, SearchKeyword, Page, PageSize).ToList());
+
+        }
+
+
 
     }
 }

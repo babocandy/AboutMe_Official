@@ -38,13 +38,13 @@
     <!--container-->
         <div class="container">
             <div class="h2_area">
-                <a href="/Shopping/Index?SORT_GBN=@ViewBag.SORT_GBN&PAGE=@ViewBag.PAGE&P_CATE_CODE=@ViewBag.P_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
+                <a href="javascript:history.back();" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
                 <h2>상품상세</h2>
             </div>
 
             <!--sns-->
             <div class="sns_area">
-                <p><strong>564명</strong> 고객님이 쇼핑백에 담았습니다.</p>
+                <p><strong>@(Html.Action("ProductofCartCnt", "Cart", new { p_code = @ViewBag.P_CODE }))명</strong> 고객님이 쇼핑백에 담았습니다.</p>
                 <ul class="sns_list">
                     <li class="facebook"><a href="#"><img src="/aboutCom/images/shopping/sns_facebook.gif" alt="페이스북" /></a></li>
                     <li class="kastory"><a href="#"><img src="/aboutCom/images/shopping/sns_ks.gif" alt="카카오스토리" /></a></li>
@@ -175,289 +175,7 @@
                 </div>
                 <!--//상품정보-->
                 <!--리뷰-->
-                <div id="Review" class="tab_content">
-                    <div class="review_tab">
-                        <ul class="tabs tabtypeb">
-                            <li class="cnt"><a href="#proReview">상품리뷰</a></li>
-                            <li><a href="#expReview">체험단리뷰</a></li>
-                        </ul>
-                    </div>
-                    <!--제품리뷰-->
-                    <div style="display:block" class="tab_content" id="proReview">
-                        <div class="brnwrap">
-                            <a href="#" class="bnr">
-                                <span class="txt">리뷰등록하면 <strong>500P</strong>,<br />포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
-                            </a>
-                        </div>
-                        <ul class="review_list">
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                    <div class="morebox">
-                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                        <span class="photo_review"><i></i>포토리뷰</span>
-                                        <a href="#none" class="btn_more"><i></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                    <div class="morebox">
-                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                        <span class="photo_review"><i></i>포토리뷰</span>
-                                        <a href="#none" class="btn_more"><i></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                    <div class="morebox">
-                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                        <span class="photo_review"><i></i>포토리뷰</span>
-                                        <a href="#none" class="btn_more"><i></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type dry"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                    <div class="morebox">
-                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                        <span class="photo_review"><i></i>포토리뷰</span>
-                                        <a href="#none" class="btn_more"><i></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top"><span class="type"></span><span class="winfo"><strong>KKON***</strong><em>40대, 여</em></span></div>
-                                <div class="rinfo_con">
-                                    <p class="txtbox">마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 피부 속까지 꽉 채워주는 느낌!특히 자기전에 바르고 아침에 아주 좋은 피부를 경험하게 된네요</p>
-                                    <div class="imgbox"><img src="/aboutCom/images/sample/thum_reviewimg1.jpg" alt="" /></div>
-                                    <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
-                                    <div class="morebox">
-                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                        <span class="photo_review"><i></i>포토리뷰</span>
-                                        <a href="#none" class="btn_more"><i></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <!--페이징-->
-                        <div class="paging">
-                            <a href="#" class="prev"></a>
-                            <strong>1</strong> / 50
-                            <a href="#" class="next"></a>
-                        </div>
-                        <!--//페이징-->
-                    </div>
-                    <!--//제품리뷰-->
-                    <!--체험단리뷰-->
-                    <div class="tab_content" id="expReview">
-                        <div class="brnwrap">
-                            <a href="#" class="bnr">
-                                <span class="txt">어바웃미 <strong>1기 체험단</strong> 모집<br />2015.06.01-2015.06.30</span>
-                            </a>
-                        </div>
-                        <ul class="review_list exp">
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <!-- 해시태그 -->
-                                    <ul class="hash">
-                                        <li>#각질제거</li>
-                                        <li>#미백</li>
-                                        <li>#스페셜케어</li>
-                                    </ul>
-                                    <!-- //해시태그 -->
-                                    <div class="review_view">
-                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                        <div class="detail">
-                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type normal"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <!-- 해시태그 -->
-                                    <ul class="hash">
-                                        <li>#각질제거</li>
-                                        <li>#미백</li>
-                                        <li>#스페셜케어</li>
-                                    </ul>
-                                    <!-- //해시태그 -->
-                                    <div class="review_view">
-                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                        <div class="detail">
-                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type dry"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <!-- 해시태그 -->
-                                    <ul class="hash">
-                                        <li>#각질제거</li>
-                                        <li>#미백</li>
-                                        <li>#스페셜케어</li>
-                                    </ul>
-                                    <!-- //해시태그 -->
-                                    <div class="review_view">
-                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                        <div class="detail">
-                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <!-- 해시태그 -->
-                                    <ul class="hash">
-                                        <li>#각질제거</li>
-                                        <li>#미백</li>
-                                        <li>#스페셜케어</li>
-                                    </ul>
-                                    <!-- //해시태그 -->
-                                    <div class="review_view">
-                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                        <div class="detail">
-                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                            </li>
-                            <li class="review_info">
-                                <div class="rinfo_top">
-                                    <!--
-                                    type class
-                                    건성 : dry
-                                    중성 : normal
-                                    지성 : oily
-                                -->
-                                    <p class="winfo"><span class="type oily"></span><span class="age">40대, 여</span><strong class="id">KKON***</strong><span class="hit">조회수 253</span></p>
-                                </div>
-                                <div class="rinfo_con">
-                                    <!-- 해시태그 -->
-                                    <ul class="hash">
-                                        <li>#각질제거</li>
-                                        <li>#미백</li>
-                                        <li>#스페셜케어</li>
-                                    </ul>
-                                    <!-- //해시태그 -->
-                                    <div class="review_view">
-                                        <div class="photo"><img src="/aboutCom/images/sample/thumb120_2.jpg" alt="" /></div>
-                                        <div class="detail">
-                                            <p class="tit">어바웃미 스킨 톤업 마사지크림</p>
-                                            <p class="txt">지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음지금까지 여러 화장품을 써봤지만 제품의 질감은 그냥 다른 마사지크림과 별다를게 없어요 한줄  더 추가  해서 아주  좋아요  화장품  좋음</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="/shopping/expreview_detail.asp" onclick="window.open(this.href);return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
-                            </li>
-                        </ul>
-                        <!--//리뷰팝업-->
-                        <!--페이징-->
-                        <div class="paging">
-                            <a href="#" class="prev"></a>
-                            <strong>1</strong> / 50
-                            <a href="#" class="next"></a>
-                        </div>
-                        <!--//페이징-->
-                    </div>
-                    <!--//체험단리뷰-->
-                </div>
+                @Html.Action("ReviewInShoppingDetail", "Review", new { P_CODE=Model.P_CODE})
                 <!--//리뷰-->
                 <!--보증/배송-->
                 <div id="Delivery" class="tab_content">
@@ -545,6 +263,10 @@
             <!--배너-->
             @Html.Action("BannerInProductDetail", "ChildActionDisplayer")
             <!--//배너-->
+            <!--기획전-->
+            @{Html.RenderAction("EventInProductDetail", "Event", new { p_code = @ViewBag.P_CODE });}
+            <!--//배너-->
+
             <!--같이구매하면 좋은 상품 (최소 두개의 리스트제공)-->
             @if (this.ViewBag.withCnt != 0) //관련상품 리스트
             {

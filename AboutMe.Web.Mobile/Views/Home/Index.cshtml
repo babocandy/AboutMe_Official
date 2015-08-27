@@ -109,114 +109,7 @@
             </div>
             <!--//메인롤링배너-->
             <!--mainevent-->
-            <div class="mainevent">
-                <h2>Event</h2>
-                <div class="imgbnr">
-                    <a href="#link"><img class="lazyload" data-original="/aboutCom/images/sample/event_ban2.jpg" alt="엄마와 나 나이들지 않는 피부로 체력강화, 엄마와 딸이 함께 아름다워지는 화장대 2015. 06. 18 ~ 2015. 07. 30" /></a>
-                </div>
-
-                <!--상품 리스트가 1개일 때 사용-->
-                <div class="probnr pb15" style="display:none">
-                    <div class="detail">
-                        <!--
-                    .ico_best
-                    .ico_coupon
-                    .ico_time
-                    .ico_soldout
-                    .ico_set
-                    -->
-                        <span class="ico ico_best">BEST</span>
-                        <span class="tit">멀티 사인즈 에이트<br />올 데이 브라이트</span>
-                        <span class="price">
-                            <del>32,000원</del>
-                            <strong>25,000</strong>원
-                        </span>
-                    </div>
-                    <div class="photo"><img src="/aboutCom/images/sample/thumb270_2.jpg" alt="" /></div>
-                </div>
-
-                <!--상품 리스트가 2개이상일 때 사용-->
-                <div class="eventpro_bnr">
-                    <div class="btnarea">
-                        <a href="#" class="prev">이전</a>
-                        <a href="#" class="next">다음</a>
-                    </div>
-                    <ul class="slider">
-                        <li>
-                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
-                            <span class="tit">이뮤젠 에센셜 트리트먼1</span>
-                            <span class="price">
-                                <del>32,000원</del>
-                                <strong>25,000</strong>원
-                            </span>
-                        </li>
-                        <li>
-                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
-                            <span class="tit">이뮤젠 에센셜 트리트먼2</span>
-                            <span class="price">
-                                <del>32,000원</del>
-                                <strong>25,000</strong>원
-                            </span>
-                        </li>
-                        <li>
-                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
-                            <span class="tit">이뮤젠 에센셜 트리트먼3</span>
-                            <span class="price">
-                                <del>32,000원</del>
-                                <strong>25,000</strong>원
-                            </span>
-                        </li>
-                        <li>
-                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
-                            <span class="tit">이뮤젠 에센셜 트리트먼4</span>
-                            <span class="price">
-                                <del>32,000원</del>
-                                <strong>25,000</strong>원
-                            </span>
-                        </li>
-                        <li>
-                            <span class="photo"><img src="/aboutCom/images/sample/thumb270.jpg" alt="" /></span>
-                            <span class="tit">이뮤젠 에센셜 트리트먼5</span>
-                            <span class="price">
-                                <del>32,000원</del>
-                                <strong>25,000</strong>원
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="imgbnr_wrap">
-                    <div class="imgbnr">
-                        <a href="#link"><img class="lazyload" data-original="/aboutCom/images/sample/event_ban4.jpg" alt="엄마와 나 나이들지 않는 피부로 체력강화, 엄마와 딸이 함께 아름다워지는 화장대 2015. 06. 18 ~ 2015. 07. 30" /></a>
-                    </div>
-                    <div class="probnr">
-                        <div class="detail">
-
-                            <!--
-                        .ico_best
-                        .ico_coupon
-                        .ico_time
-                        .ico_soldout
-                        .ico_set
-                        -->
-
-                            <span class="ico ico_best">BEST</span>
-                            <span class="tit">멀티 사인즈 에이트<br />올 데이 브라이트</span>
-                            <span class="price">
-                                <del>32,000원</del>
-                                <strong>25,000</strong>원
-                            </span>
-                        </div>
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb270_2.jpg" alt="" /></div>
-                    </div>
-                </div>
-
-                <div class="imgbnr mt15">
-                    <img class="lazyload" data-original="/aboutCom/images/sample/event_ban3.jpg" alt="씨스타 뷰티 아이템 효린, 보라, 소유, 다솜이가 사랑하는 어바웃미 잇아이템 2015.06.18~2015.07.30" />
-                </div>
-
-                <a href="#" class="btn_moreevent">이벤트 더보기</a>
-            </div>
+            @(Html.Action("MainEvent","Event"))
             <!--//mainevent-->
             <!--스킨타입 추천-->
             <div class="skintype_recom">
@@ -338,18 +231,18 @@
                 </div>
                 <div class="lagre_img">
                     <ul>
-                        <li><img src="/aboutCom/images/common/img_hotnow1.jpg" alt="" /></li>
-                        <li><img src="/aboutCom/images/common/img_hotnow2.jpg" alt="" /></li>
-                        <li><img src="/aboutCom/images/common/img_hotnow3.jpg" alt="" /></li>
-                        <li><img src="/aboutCom/images/common/img_hotnow4.jpg" alt="" /></li>
+                        <li><a href="http://m.aboutmeshop.com/shopping/detail?pcode=RAA00108&page=1&pagesize=6&SORT_GBN=NEW&P_CATE_CODE=101101100&C_CATE_CODE=&L_CATE_CODE=&P_CATE_CODE_3DEPTH=&DEPTH_NAME3=스킨케어"><img src="/aboutCom/images/main/mbnr1.jpg"><img src="/aboutCom/images/common/img_hotnow1.jpg" alt="" /></a></li>
+                        <li><a href="http://m.aboutmeshop.com/shopping/detail?pcode=RAA00121&page=4&pagesize=6&SORT_GBN=NEW&P_CATE_CODE=101102100&C_CATE_CODE=&L_CATE_CODE=&P_CATE_CODE_3DEPTH=&DEPTH_NAME3=팩/마스크"><img src="/aboutCom/images/main/mbnr2.jpg"><img src="/aboutCom/images/common/img_hotnow2.jpg" alt="" /></a></li>
+                        <li><a href="http://m.aboutmeshop.com/shopping/detail?pcode=RAB04055&page=1&pagesize=6&SORT_GBN=NEW&P_CATE_CODE=102103100&C_CATE_CODE=&L_CATE_CODE=&P_CATE_CODE_3DEPTH=&DEPTH_NAME3="><img src="/aboutCom/images/main/mbnr3.jpg"><img src="/aboutCom/images/common/img_hotnow3.jpg" alt="" /></a></li>
+                        <li><a href="http://m.aboutmeshop.com/shopping/detail?pcode=RAB04045&page=1&pagesize=6&SORT_GBN=NEW&P_CATE_CODE=102101100&C_CATE_CODE=&L_CATE_CODE=&P_CATE_CODE_3DEPTH=&DEPTH_NAME3="><img src="/aboutCom/images/common/img_hotnow4.jpg" alt="" /></a></li>
                     </ul>
                 </div>
                 <div class="thum_img">
                     <ul>
-                        <li class="li1 cnt"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
-                        <li class="li2"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
-                        <li class="li3"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
-                        <li class="li4"><div class="bg"></div><a href="javascript:">효린'<br />에센스</a></li>
+                        <li class="li1 cnt"><div class="bg"></div><a href="javascript:">소유’S<br />크림</a></li>
+                        <li class="li2"><div class="bg"></div><a href="javascript:">다솜’S<br />팩</a></li>
+                        <li class="li3"><div class="bg"></div><a href="javascript:">효린’S<br />다이어트</a></li>
+                        <li class="li4"><div class="bg"></div><a href="javascript:">보라’S<br />콜라겐</a></li>
                     </ul>
                 </div>
             </div>

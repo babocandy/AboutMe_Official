@@ -164,7 +164,7 @@
         if ($("#NOMEMBER_PASS").length > 0) {
             param += "&NOMEMBER_PASS=" + $("#NOMEMBER_PASS").val().trim();
         }
-
+        var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
         var frm = document.ini;
         $.ajax({
             cache: false,
@@ -173,8 +173,16 @@
             data: param,
             success: function (data) {
                 if (data.result == "true") {
-                    //이니시스결제 호출!
-                    pay(frm);
+                    if (paygbn == '4') {
+                        if (confirm("포인트/쿠폰 결제 하시겠습니까?"))
+                        {
+                            document.ini.submit();
+                        }
+                    }
+                    else {
+                        pay(frm);
+                    }
+                    
                 }
                 else {
                     if (data.msg != "") {
@@ -390,7 +398,25 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
     {
         if (parseInt(paytotal) >= 300000)
         {
-            $("#rdoRealtime").attr("style","display:none");
+            $("#rdoCredit").attr("style", "display:show");
+            $("#rdoRealtime").attr("style", "display:none");
+            $("#rdoRealtimeEscrow").attr("style", "display:show");
+            $("#rdoPoint").attr("style", "display:none");
+        }
+        else if (paytotal == 0) {
+            $("#rdoCredit").attr("style", "display:none");
+            $("#rdoRealtime").attr("style", "display:none");
+            $("#rdoRealtimeEscrow").attr("style", "display:none");
+            $("#rdoPoint").attr("style", "display:show");
+            $("#rdoPoint").find("input:radio").prop("checked", "checked");
+        }
+        else {
+            $("#rdoCredit").attr("style", "display:show");
+            $("#rdoRealtime").attr("style", "display:show");
+            $("#rdoRealtimeEscrow").attr("style", "display:show");
+            $("#rdoPoint").attr("style", "display:none");
         }
     }
+
+    
 </script>

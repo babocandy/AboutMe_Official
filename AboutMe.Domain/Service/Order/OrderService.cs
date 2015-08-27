@@ -348,5 +348,17 @@ namespace AboutMe.Domain.Service.Order
             return result;
         }
         #endregion
+
+        #region 주문저장 전에 주문정보 체크 모듈
+        public string OrderConfigCheck(int ORDER_IDX)
+        {
+            string result = "";
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                result = EfContext.SP_ORDER_CONFIG_CHECK(ORDER_IDX).DefaultIfEmpty("").FirstOrDefault();
+            }
+            return result;
+        }
+        #endregion
     }
 }

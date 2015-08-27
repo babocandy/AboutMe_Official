@@ -14,7 +14,8 @@ namespace AboutMe.Domain.Service.Coupon
     public class CouponService : ICouponService
     {
 
-        #region 마이페이지 ============================================================
+        #region PC 버전 마이페이지 (일부 pc 모바일 공통메서드 포함)============================================================
+
 
         //다운로드 가능한 쿠폰 - pc버전 , 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
         public List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponList(string M_Id)
@@ -213,52 +214,9 @@ namespace AboutMe.Domain.Service.Coupon
 
         }
 
+     
 
-        //다운로드 처리  - 모바일 버전 , 쿠폰번호 인증이 필요없는 쿠폰
-        //M_id =회원아이디, IdxCouponNumber = 쿠폰일련번호 , UpdateMethod = 'S' : 하나만 업데이트 할때 , 'A' = 모든 쿠폰을 다운로드 할 때
-        public int UpdateCouponDownload_Mobile_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod)
-        {
-            int ResulstCode = 1;
 
-            List<SP_COUPON_MASTER_INFO_SEL_Result> lst1 = GetCouponMasterInfo(M_Id, IdxCouponNumber);
-
-            if (lst1.Count > 0)
-            {
-                if (lst1[0].COUPON_NUM_CHECK_TF == "Y") //번호를 확인해야 하는 쿠폰이면 , 번호 인증후 다운로드 해야함
-                {
-                    ResulstCode = -2;
-                }
-                else
-                {
-                    using (TransactionScope scope = new TransactionScope())
-                    {
-                        try
-                        {
-                            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
-                            {
-                                //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
-                                AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
-                                //NewCdPromotionProduct = objOutParam.Value.ToString();
-                            }
-                            scope.Complete();
-                        }
-                        catch (Exception ex)
-                        {
-                            Transaction.Current.Rollback();
-                            scope.Dispose();
-                            ResulstCode = -1;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                ResulstCode = -3; //존재하지 않는 쿠폰  
-            }
-
-            return ResulstCode;
-
-        }
 
 
 
@@ -323,12 +281,7 @@ namespace AboutMe.Domain.Service.Coupon
         }
 
 
-
-
         //==============================================================
-        //==============================================================
-
-
 
 
         #endregion
@@ -414,6 +367,143 @@ namespace AboutMe.Domain.Service.Coupon
 
 
         #endregion 
+
+
+        #region 모바일버전 마이페이지
+
+
+        //다운로드 가능한 쿠폰 - 모바일 기기에서---------번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        public List<SP_COUPON_DOWNLOADABLE_LIST_Result> GetDownloadableCouponMobileList(string M_Id, string SearchCol, string SearchKeyword, int Page, int PageSize)
+        {
+
+            List<SP_COUPON_DOWNLOADABLE_LIST_Result> lst = new List<SP_COUPON_DOWNLOADABLE_LIST_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_DOWNLOADABLE_ON_MOBILE_LIST(M_Id, Page, PageSize, SearchCol, SearchKeyword).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //다운로드 가능한 쿠폰 수량 가져오기  - 모바일기기에서 ---------- 번호확인 필요한 쿠폰까지 모두 가져옴 COUPON_NUM_CHECK_TF
+        public List<SP_ADMIN_COUPON_COMMON_CNT_Result> GetDownloadableCouponMobileCnt(string M_Id, string SearchCol, string SearchKeyword)
+        {
+
+            List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst = new List<SP_ADMIN_COUPON_COMMON_CNT_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_DOWNLOADABLE_ON_MOBILE_CNT(M_Id, SearchCol, SearchKeyword).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+
+
+        //다운로드 처리  - 모바일 기기에서 , 쿠폰번호 인증이 필요없는 쿠폰
+        //M_id =회원아이디, IdxCouponNumber = 쿠폰일련번호 , UpdateMethod = 'S' : 하나만 업데이트 할때 , 'A' = 모든 쿠폰을 다운로드 할 때
+        public int UpdateCouponDownload_Mobile_Ver_And_NoNumberChk_Ver(string M_Id, int IdxCouponNumber, string UpdateMethod)
+        {
+            int ResulstCode = 1;
+
+            List<SP_COUPON_MASTER_INFO_SEL_Result> lst1 = GetCouponMasterInfo(M_Id, IdxCouponNumber);
+
+            if (lst1.Count > 0)
+            {
+                if (lst1[0].COUPON_NUM_CHECK_TF == "Y") //번호를 확인해야 하는 쿠폰이면 , 번호 인증후 다운로드 해야함
+                {
+                    ResulstCode = -2;
+                }
+                else
+                {
+                    using (TransactionScope scope = new TransactionScope())
+                    {
+                        try
+                        {
+                            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                            {
+                                //ObjectParameter objOutParam = new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));//sp의 output parameter변수명을 동일하게 사용한다.
+                                AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
+                                //NewCdPromotionProduct = objOutParam.Value.ToString();
+                            }
+                            scope.Complete();
+                        }
+                        catch (Exception ex)
+                        {
+                            Transaction.Current.Rollback();
+                            scope.Dispose();
+                            ResulstCode = -1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ResulstCode = -3; //존재하지 않는 쿠폰  
+            }
+
+            return ResulstCode;
+
+        }
+
+        //사용가능한 쿠폰 리스트 가져오기-모바일기기에서 
+        public List<SP_COUPON_ISSUED_DETAIL_SEL_Result> GetCouponAvailableOnMobileList(string M_ID, string SearchCol, string SearchKeyword, int Page, int PageSize)
+        {
+
+            List<SP_COUPON_ISSUED_DETAIL_SEL_Result> lst = new List<SP_COUPON_ISSUED_DETAIL_SEL_Result>();
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_AVAILABLE_ON_MOBILE_LIST_SEL(M_ID, Page, PageSize, SearchCol, SearchKeyword).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+            return lst;
+
+        }
+
+        //사용가능한 쿠폰리스트 COUNT 가져오기-모바일기기에서 
+        public int GettCouponAvailableOnMobileListCnt(string M_ID, string SearchCol, string SearchKeyword)
+        {
+
+            List<SP_COUPON_COMMON_CNT_Result> lst = new List<SP_COUPON_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+            {
+                /**try {**/
+                lst = AdmCouponContext.SP_COUPON_AVAILABLE_ON_MOBILE_LIST_CNT(M_ID, SearchCol, SearchKeyword).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].CNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+        }
+
+
+
+
+
+
+        #endregion
 
 
 

@@ -54,14 +54,22 @@ namespace AboutMe.Domain.Entity.Review
      */
     public class MyReviewCompleteViewModel
     {
+        public MyReviewCompleteViewModel(){
+            PageSize = 10;
+        }
 
         public List<SP_REVIEW_PRODUCT_COMPLETE_SEL_Result> Reviews { get; set; }
 
         public int PageNo { get; set; }
-        public int PageSize { get { return 10; } }
+        public int PageSize { get; set; }
         public int Total { get; set; }
         public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
         public string Pcode { get; set; }
+
+        //모바일용
+        public int Pages{ get; set; }
+        public int PrevPage { get; set; }
+        public int NextPage { get; set; }
     }
 
     //상품리뷰 목록
@@ -133,11 +141,15 @@ namespace AboutMe.Domain.Entity.Review
 
     public class ReviewInProductDetailViewModel
     {
+        public ReviewInProductDetailViewModel()
+        {
+            PageSize = 10;
+        }
 
         public List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result> Reviews { get; set; }
 
         public int PageNo { get; set; }
-        public int PageSize { get { return 10; } }
+        public int PageSize { get; set; }
         public int Total { get; set; }
         public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
         public string Pcode { get; set; }
@@ -312,7 +324,7 @@ namespace AboutMe.Domain.Entity.Review
         public ReviewListMobileUrlParam()
         {
             PAGE = 1;
-            PAGE_SIZE = 3;
+            PAGE_SIZE = 10;
 
         }
         public string CATE{ get; set; }

@@ -76,7 +76,7 @@
             }
             else
             {
-                StrDC = ViewBag.NoLogin_Coupon_Discount_Money;
+                StrDC = string.Format("{0:#,##0}",int.Parse(ViewBag.NoLogin_Coupon_Discount_Money));
                 StrUnit = "원";
             }
 
@@ -94,10 +94,11 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
     {
         if (!String.IsNullOrEmpty(ViewBag.Login_Promotion_00_result_price.ToString()) && ViewBag.Login_Promotion_00_result_price.ToString() !="0")
         {
+            string t_price_00 = ViewBag.Login_Promotion_00_result_price;
 
             <li>
                 <span class="tit">임직원가</span>
-                <span class="pos_right"><strong>@string.Format("{0:#,##0}",ViewBag.Login_Promotion_00_result_price)</strong>원</span>
+                <span class="pos_right"><strong>@String.Format("{0:#,##0}", int.Parse(t_price_00))</strong>원</span>
             </li>
         }
     }
@@ -105,9 +106,10 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
     //{
         if (!String.IsNullOrEmpty(ViewBag.Login_Promotion_03_result_price.ToString()) && ViewBag.Login_Promotion_03_result_price.ToString() !="0")
         {
+            string t_price_03 = ViewBag.Login_Promotion_03_result_price;
             <li>
                 <span class="tit">VIP할인가</span>
-                <span class="pos_right"><strong>@ViewBag.Login_Promotion_03_result_price</strong>원</span>
+                <span class="pos_right"><strong>@String.Format("{0:#,##0}", int.Parse(t_price_03))</strong>원.</span>
             </li>
         }
    // }
@@ -120,18 +122,18 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
             string StrUnit = "" , StrDC = "";
             if (ViewBag.Login_Coupon_RateOrMoney == "R")
             {
-            StrDC = ViewBag.Login_Coupon_Discount_Rate;
-            StrUnit = "%";
+                StrDC = ViewBag.Login_Coupon_Discount_Rate;
+                StrUnit = "%";
             }
             else
             {
-            StrDC = ViewBag.Login_Coupon_Discount_Money;
-            StrUnit = "원";
+                StrDC = string.Format("{0:#,##0}",int.Parse(ViewBag.Login_Coupon_Discount_Money));
+                StrUnit = "원";
             }
         <li>
             <span class="tit">즉시할인</span>
             <span class="pos_right coupon">
-                <strong>>@ViewBag.Login_Coupon_Discount_Rate@StrUnit</strong>쿠폰
+                <strong>>@StrDC@StrUnit</strong>쿠폰
                 <a href="javascript:execCouponDownload(@ViewBag.Login_Coupon_Idx_Coupon_Number,'@ViewBag.Login_Coupon_USE_STATUS','@ViewBag.Login_Coupon_COUPON_NUM_CHECK_TF');"  class=" btn btn_gray_h25 cupondown2 ml10">쿠폰 다운로드</a>
             </span>
         </li>

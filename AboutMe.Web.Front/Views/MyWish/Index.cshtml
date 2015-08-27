@@ -97,7 +97,7 @@
         <div class="mypage_top">
             <!--h2_area-->
             <div class="h2_area">
-                <h2>찜한상품<i></i></h2>
+                <h2>찜목록<i></i></h2>
                 <!--mypage_menu-->
                 @{ Html.RenderPartial("~/Views/AboutMePartial/_MyPageSubMenu.cshtml");}
                 <!--//mypage_menu-->
@@ -113,12 +113,23 @@
         </div>
         <!--//mypage_top-->
         <div class="product_area_t2">
+@if (Model.WishCnt == 0)
+{     
+            <!--데이터없음-->
+            <div class="no_data">
+                <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                <p class="txt">찜한 상품이 없습니다.</p>
+            </div>
+            <!--//데이터없음-->
+}
+else
+{
             <!-- 상품리스트 -->
             <ul class="product_list">
-                @foreach (var item in Model.WishList)
-                {
-                    string img1 = ProductPath + "R270_" + item.MAIN_IMG;
-                    string img2 = ProductPath + "R270_" + item.OTHER_IMG1;
+            @foreach (var item in Model.WishList)
+            {
+                string img1 = ProductPath + "R270_" + item.MAIN_IMG;
+                string img2 = ProductPath + "R270_" + item.OTHER_IMG1;
                 <li>
                     <a href="/shopping/detail?pcode=@item.P_CODE" class="list">
                         <span class="photo">
@@ -139,10 +150,14 @@
                     <label class="chkcon t2"><input type="checkbox" name="gridchk" title="" value="@item.P_CODE" data-wishidx="@item.IDX" onclick="GridCheck(this)" /></label>
                     <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>
                 </li>
-                }
+            }
             </ul>
             <!-- //상품리스트 -->
+}    
         </div>
+
+@if (Model.WishCnt > 0)
+{
         <!-- 선택항목 액션 버튼 -->
         <div class="btn_group mt20">
             <!-- [Desc] 항목 선택 시 <a>태그 "on"클래스 추가 및 <strong>태그 안에 갯수 "(000)" 입력 -->
@@ -156,6 +171,7 @@
             </a>
         </div>
         <!-- //선택항목 액션 버튼 -->
+}
         <!--페이징-->
         @{
             Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.WishCnt, RecordPerPage = Model.PageCnt, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = "" });

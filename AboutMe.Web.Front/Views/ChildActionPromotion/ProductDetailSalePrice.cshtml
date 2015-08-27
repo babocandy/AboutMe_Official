@@ -75,7 +75,7 @@
         }
         else
         {
-            StrDC = ViewBag.NoLogin_Coupon_Discount_Money;
+            StrDC = string.Format("{0:#,##0}",int.Parse(ViewBag.NoLogin_Coupon_Discount_Money));
             StrUnit = "원";
         }
     
@@ -99,7 +99,7 @@ else //로그인 했으면
         { 
             <li>
                 <strong>임직원가</strong>
-                <span class="staff_price"><b>@string.Format("{0:#,##0}",ViewBag.Login_Promotion_00_result_price)</b><text>원</text></span>
+                <span class="staff_price"><b>@string.Format("{0:#,##0}",int.Parse(ViewBag.Login_Promotion_00_result_price))</b><text>원</text></span>
             </li>
         }
     }
@@ -109,7 +109,7 @@ else //로그인 했으면
         { 
             <li>
                 <strong>VIP 할인가</strong>
-                <span class="staff_price"><b>@ViewBag.Login_Promotion_03_result_price</b><text>원</text></span>
+                <span class="staff_price"><b>@string.Format("{0:#,##0}",int.Parse(ViewBag.Login_Promotion_03_result_price))</b><text>원</text></span>
             </li>
         }
    // }
@@ -124,13 +124,13 @@ else //로그인 했으면
         } 
         else 
         {
-            StrDC = ViewBag.Login_Coupon_Discount_Money;
+            StrDC = string.Format("{0:#,##0}",int.Parse(ViewBag.Login_Coupon_Discount_Money));
             StrUnit = "원"; 
         }
 
         <li>
             <strong>즉시할인</strong>
-            <span class="discount_num">@ViewBag.Login_Coupon_Discount_Rate</span>@StrUnit 할인쿠폰
+            <span class="discount_num">@StrDC</span>@StrUnit 할인쿠폰
             <a href="javascript:execCouponDownload(@ViewBag.Login_Coupon_Idx_Coupon_Number,'@ViewBag.Login_Coupon_USE_STATUS','@ViewBag.Login_Coupon_COUPON_NUM_CHECK_TF');" class="ml10 btn_coupondown">쿠폰 다운로드 <img src="/aboutCom/images/common/ico_down.gif" alt="쿠폰 다운로드" /></a>
         </li>
     }

@@ -138,17 +138,20 @@
                                     </dd>
                                 </dl>
                             </li>
+@if (Model.ADD_IMAGE != null)
+{
                             <li>
                                 <dl>
                                     <dt>사진</dt>
-                                    <dd class="photo_upload">
-                                        <div>
-                                            <input type="text" id="ImageFileName" name="ImageFileName" value="@Model.ADD_IMAGE" readonly="readonly" class="ipttypea" title="첨부사진 경로" />
-                                        </div>
-                                        <div class="thumb"><img  src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE )" alt="" /></div>
-                                    </dd>
+
+                                        <dd class="photo_upload">
+                                            <div class="thumb"><img src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE )" alt="" /></div>
+                                        </dd>
+                                    
+                                    
                                 </dl>
                             </li>
+}
                         </ul>
                         <div class="bullistb">
                             <em class="info_sti">유의사항</em>

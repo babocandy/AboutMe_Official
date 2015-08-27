@@ -39,5 +39,6 @@ namespace AboutMe.Domain.Service.Order
         void OrderPartCancelInsert(int ORDER_IDX, string PAT_TID, string OLD_PAT_TID, Int32 CANCEL_PRICE, Int32 REMAINS_PRICE, string EMAIL, Int32 PRTC_REMAINS, string PRTC_TYPE, Int32 PRTC_PRICE, int PRTC_CNT, string REG_ID, string REG_IP);
         
         SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result OrderGetOrderCodeByOldOrderIdx(Int32 OldOrderIdx);
+        string OrderConfigCheck(int ORDER_IDX);
     }
 }
