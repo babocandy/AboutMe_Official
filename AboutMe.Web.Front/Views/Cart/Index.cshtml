@@ -325,7 +325,7 @@
 
 @helper MemberBanner(string banner_url)
 {    
-    @(Html.Action("CartBanner", "ChildActionDisplayer"))
+   
 }
 
 @helper NoMemberBanner()
@@ -340,7 +340,7 @@
         </div>
     </div>
 }
-
+@(Html.Action("CartBanner", "ChildActionDisplayer"))
 @*같이구매하면 좋은 상품*@
 @helper BuyAsGoods()
 {

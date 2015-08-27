@@ -35,17 +35,17 @@
 	var fnUploadImage = null;
 
 	var uploadPath = $Element("uploadPath").$value().value;
-
-	console.log(uploadPath)
 	
 	//File API 지원 여부로 결정
-	function checkDragAndDropAPI(){
+	function checkDragAndDropAPI() {
+	    //console.log(oNavigator.ie);
 		try{
 			if( !oNavigator.ie ){
 				if(!!oNavigator.safari && oNavigator.version <= 5){
 					bSupportDragAndDropAPI = false;
 				}else{
-					bSupportDragAndDropAPI = true;
+				    //bSupportDragAndDropAPI = true;
+				    bSupportDragAndDropAPI = false;
 				}
 			} else {
 				bSupportDragAndDropAPI = false;
