@@ -358,5 +358,23 @@ namespace AboutMe.Domain.Entity.Order
         public string P_VACT_NAME { get; set; }
         public string P_VACT_BANK_CODE { get; set; }
     }
+
+    public class ORDER_MOBILE_PARAM
+    {
+        public string P_GOODS { get; set; }
+        public string P_MID { get; set; }
+        public string P_AMT { get; set; }
+        public string P_OID { get; set; }
+        public string P_MNAME { get; set; }
+        public string P_NOTI { get; set; }
+        public string P_EMAIL { get; set; }
+        public string P_UNAME { get; set; }
+        public string P_MOBILE { get; set; }
+        public string P_NEXT_URL { get; set; }
+        public string P_NOTI_URL { get; set; }
+        public string P_RETURN_URL { get; set; }
+        public string P_RESERVED { get; set; }
+    }
+    
     
 }

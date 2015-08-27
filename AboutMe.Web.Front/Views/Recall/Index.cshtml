@@ -162,6 +162,18 @@
             <!--//조회기간-->
             <!--주문리스트-->
             <div class="oderlist">
+@if (Model.BbsList.Count == 0)
+{
+
+                <!--데이터없음-->
+                <div class="no_data">
+                    <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                    <p class="txt">교환/반품 신청내역이 없습니다.</p>
+                </div>
+                <!--//데이터없음-->
+}
+else
+{
                 <div class="tabletypeb">
                     <table>
                         <colgroup><col width="100" /><col width="186" /><col width="*" /><col width="160" /><col width="130" /></colgroup>
@@ -175,10 +187,6 @@
                             </tr>
                         </thead>
                         <tbody> 
-                            @if (Model.BbsList.Count < 1)
-                            {
-                                <tr><td colspan="5">데이터가 없습니다.</td></tr>
-                            }
                             @foreach (var item in Model.BbsList)
                             { 
                             <tr>
@@ -199,6 +207,7 @@
                         </tbody>
                     </table>
                 </div>
+}
             </div>
             <!--//주문리스트-->
             <!--페이징-->

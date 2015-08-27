@@ -44,6 +44,17 @@
         <!--나의문의리스트-->
         <div class="tabletypeb myquestion_list">
             <a href="/Mypage/Qna/QnaWrite?IDX=0&mode=NEW" class="btn_question btn_brown_w96h38">문의하기</a>
+@if (Model.QnaCount == 0)
+{ 
+            <!--데이터없음-->
+            <div class="no_data">
+                <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                <p class="txt">1:1 문의 내역이 없습니다.</p>
+            </div>
+            <!--//데이터없음-->
+}
+else
+{ 
             <table>
                 <colgroup><col width="100" /><col width="129" /><col width="*" /><col width="160" /><col width="129" /></colgroup>
                 <thead>
@@ -101,6 +112,7 @@
                     }  
                 </tbody>
             </table>
+}
         </div>
         <!--나의문의리스트-->
         <!--페이징-->

@@ -164,7 +164,7 @@
         if ($("#NOMEMBER_PASS").length > 0) {
             param += "&NOMEMBER_PASS=" + $("#NOMEMBER_PASS").val().trim();
         }
-
+        var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
         var frm = document.ini;
         $.ajax({
             cache: false,
@@ -173,7 +173,7 @@
             data: param,
             success: function (data) {
                 if (data.result == "true") {
-                    if (frm.PAY_GBN.value == '4') {
+                    if (paygbn == '4') {
                         if (confirm("포인트/쿠폰 결제 하시겠습니까?"))
                         {
                             document.ini.submit();

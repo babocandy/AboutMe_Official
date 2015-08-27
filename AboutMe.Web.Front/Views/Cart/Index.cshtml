@@ -323,11 +323,7 @@
     </div>
 }
 
-@helper MemberBanner(string banner_url)
-{    
    
-}
-
 @helper NoMemberBanner()
 {
     <div class="banner boxtypef mt40">
@@ -381,17 +377,23 @@
                     <legend>쇼핑백 상품 및 가격 폼</legend>
                    
                     <div class="row1 tabletypeb">
-                        <table summary="상품/옵션정보, 상품금액, 수량, 예상적립 포인트, 주문금액">
-                            <caption>쇼핑백 상품 확인</caption>
                             @if (Model.CartCnt == 0)
                             {
-                                <tr>
-                                    <td width="*" colspan="8">장바구니가 비어있습니다.</td>
-                                </tr>
+
+                        <!--데이터없음-->
+                        <div class="no_data">
+                            <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                            <p class="txt">장바구니에 담긴 상품이 없습니다.</p>
+                        </div>
+                        <!--//데이터없음-->
                             }
                             else
                             {
-                                if (Model.UserProfile.M_GBN == "S") //임직원
+
+                        <table summary="상품/옵션정보, 상품금액, 수량, 예상적립 포인트, 주문금액">
+                            <caption>쇼핑백 상품 확인</caption>
+
+                                @if (Model.UserProfile.M_GBN == "S") //임직원
                                 {
                                     <colgroup>
                                         <col width="73" />
@@ -537,67 +539,13 @@
                                             </td>
                                         </tr>
                                     }
-                                    @*
-                                        <tr>
-                                            <td class="chkbox"><label class="chkcon"><input type="checkbox" name="gridchk" title="" /></label></td>
-                                            <td>
-                                                <a href="#"><img src="/aboutCom/images/sample/thum_cartpdt2.jpg" alt="상품 이미지" /></a>
-                                                <div class="ico_area">
-                                                    <span class="ico_time">TIME</span>
-                                                    <!--- 각 종류별 아이콘 -->
-                                                    <span class="ico_new">NEW</span>
-                                                    <span class="ico_coupon">COUPON</span>
-                                                    <span class="ico_1_1">1+1</span>
-                                                    <span class="ico_best">BEST</span>
-                                                    <span class="ico_soldout">SOLD OUT</span>
-                                                    <span class="ico_set">SET</span>
-                                                    <span class="ico_sale">SALE</span>
-                                                    <span class="ico_custom">커스텀</span>
 
-                                                </div>
-
-                                            </td>
-                                            <td class="product">
-                                                <dl>
-                                                    <dt>
-                                                        <a href="#">
-                                                            <span class="tag"><span class="ico_best">BEST</span></span>
-                                                            뉴트리 워터 스킨
-                                                        </a>
-                                                    </dt>
-                                                    <dd>강력한 보습 성분으로 윤기 넘치는 오아시스 피부</dd>
-                                                </dl>
-                                            </td>
-                                            <td class="proprice">
-                                                <del>32,000원</del>
-                                                <strong>27,000</strong>원
-                                            </td>
-                                            <td class="count">
-                                                <div class="counttypea">
-                                                    <input type='text' name='count' value='1' size='3' />
-                                                    <p class="btn_updown">
-                                                        <a href="javascript:void(0);" class="up"><i>up</i></a>
-                                                        <a href="javascript:void(0);" class="down"><i>down</i></a>
-                                                    </p>
-                                                </div>
-                                                <a href="#" class="btn_white_w74h28">변경</a>
-                                            </td>
-                                            <td class="point">
-                                                <span class="val">540</span>
-                                            </td>
-                                            <td class="ordprice"><strong>27,000</strong>원</td>
-                                            <td class="wishdel">
-                                                <p class="btn_group">
-                                                    <a href="#" class="wish"><i>찜하기</i></a>
-                                                    <a href="#" class="del"><i>삭제</i></a>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    *@
                                 </tbody>
-                            } @*cartcnt > 0*@
                         </table>
+                            } @*cartcnt > 0*@
                     </div>
+                @if (Model.CartCnt > 0)
+                {
                     <div class="row2 mt20">
                         <div class="btn_group">
                             <!-- [Desc] 항목 선택 시 <a>태그 "on"클래스 추가 및 <strong>태그 안에 갯수 "(000)" 입력 -->
@@ -622,8 +570,6 @@
                             <p class="totprice">총 주문 금액<strong id="SumPriceTxt">@String.Format("{0:#,#0.}", Model.SumPrice)</strong><span>원</span></p>
                         </div>
                     </div>
-                    @if (Model.CartCnt > 0)
-                    {
                     <div class="row3 mt40">
                         <div class="btn_group">
                             <a href="#none" class="btn_gray_w185h60" onclick="SelectNextStep(false);">선택 상품 주문</a>
@@ -634,18 +580,12 @@
                 </fieldset>
             </form>
         </div>
-        @if (Model.UserProfile.IS_LOGIN == true)
-        {
-            if (!string.IsNullOrEmpty(Model.BannerUrl))
-            {
-                @MemberBanner(Model.BannerUrl)
-            }
-        }
-        else
+        @if (Model.UserProfile.IS_LOGIN != true)
         {
             @NoMemberBanner()
         }
 
+        @(Html.Action("CartBanner", "ChildActionDisplayer"))
 
         @BuyAsGoods()
 

@@ -141,12 +141,20 @@ namespace AboutMe.Web.Mobile.Controllers
                 P_COUNT_LIST += pData.p_count;
             }
             Int32 Order_Idx = _orderservice.InsertOrderStep1(_user_profile.M_ID, _user_profile.SESSION_ID, P_CODE_LIST, P_COUNT_LIST);
-            //this.TempData["Order_Idx"] = Order_Idx;
-            return Content("<form name='mysubmitform' action='/Order/Step1' method='POST'><input type='hidden' name='ORDER_IDX' value='" + Order_Idx.ToString() + "'></form> <script language='javascript'>document.mysubmitform.submit();</script>");
+            List<SP_ORDER_STEP2_PRODUCT_LIST_Result> ProductList = _orderservice.OrderStep1List(Order_Idx);
+
+            if (ProductList.Count() == 0)
+            {
+                return Content("<script language='javascript'>alert('주문가능한 상품이 존재하지 않습니다.');location.href='/Cart';</script>");
+            }
+            else
+            {
+                return Content("<form name='mysubmitform' action='/Order/Step1' method='POST'><input type='hidden' name='ORDER_IDX' value='" + Order_Idx.ToString() + "'></form> <script language='javascript'>document.mysubmitform.submit();</script>");
+            }
         }
 
         [HttpPost]
-         /*[OutputCache(NoStore = true, Duration = 0)]*/
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Step1(Int32 ORDER_IDX)
         {
 
@@ -203,7 +211,7 @@ namespace AboutMe.Web.Mobile.Controllers
                 TransCouponDisabled = coupon_disable,
                 PriceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx),
                 DiscountInfo = _orderservice.OrderStep1DiscountInfo(OrderIdx),
-                TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID,"TRANS","P")
+                TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID,"TRANS","M")
             };
             return PartialView(M);
         }
@@ -289,14 +297,14 @@ namespace AboutMe.Web.Mobile.Controllers
 
         public ActionResult ProductCouponList(string P_CODE)
         {
-            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "P");
+            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "M"); //모바일구분 M, web : P
             var jsonData = new { result = "true", list= TransCouponList};
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
         public ActionResult SelectCouponOption(string P_CODE, int? COUPON_IDX)
         {
             string str = "<option RATE_OR_MONEY='' COUPON_MONEY='' COUPON_DISCOUNT_RATE='' value=''>쿠폰을 선택하세요</option>\n";
-            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "P");
+            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "M");//모바일구분 M, web : P
             //var jsonData = new { result = "true", list= TransCouponList};
             foreach (SP_ORDER_STEP2_COUPON_SEARCH_Result item in TransCouponList)
             {
@@ -909,6 +917,126 @@ namespace AboutMe.Web.Mobile.Controllers
             SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
             return Content(SBuilder.ToString());
         }
+
+
+        //포인트 결제 저장
+        [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult PointProcess(ORDER_MOBILE_PARAM FrmData)
+        {
+            OrderResult orderResult = new OrderResult();
+            string order_code = "";
+
+            ORDER_PAY_PARAM Param = new ORDER_PAY_PARAM();
+
+            Param.ORDER_IDX = Convert.ToInt32(FrmData.P_OID);
+            Param.CARD_GBN = "";
+            Param.INSTLMT_AT = ""; //할부여부
+            Param.PAT_TID = "";
+            Param.REAL_ACCOUNT_AT = "0";
+            Param.BANK_CODE = "";
+            Param.ESCROW_YN = "N";
+            Param.PAY_GBN = "4";
+            Param.CASHRECEIPT_SE_CODE = "";
+            Param.CASHRECEIPT_RESULT_CODE = "";
+            Param.HTTP_USER_AGENT = Request.UserAgent;
+            Param.PAT_GUBUN = "Mobile";
+            Param.SVR_DOMAIN = HttpContext.Request.Url.Host;
+
+            Param.VACT_Num = "";
+            Param.VACT_BankCode = "";
+            Param.VACT_Name = "";
+            Param.VACT_Date = "";
+            Param.VACT_Time = "";
+            Param.ORDER_STATUS_VALUE = "20"; //결제완료
+
+            //주문전 포인트, 쿠폰, 가격등... 체크
+            string ok_str = "";
+            try
+            {
+                ok_str = _orderservice.OrderConfigCheck(Param.ORDER_IDX);
+            }
+            catch (Exception e)
+            {
+
+                orderResult.Resultcode = "01";
+                orderResult.ResultMsg = e.InnerException.Message;
+                orderResult.ResultErrorCode = "DB체크에러";
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.P_OID);
+                orderResult.PAY_GBN = "4";
+                orderResult.ORDER_CODE = order_code;
+
+
+                //실행결과
+                StringBuilder SBuilder = new StringBuilder();
+                SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", orderResult.ORDER_IDX.ToString());
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", orderResult.ResultErrorCode);
+                SBuilder.Append("</form>\n");
+                SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+                return Content(SBuilder.ToString());
+            }
+
+            try
+            {
+
+                //DB 저장
+                order_code = _orderservice.OrderPaySave(Param);
+
+                //실행결과
+                orderResult.Resultcode = "00";
+                orderResult.ResultMsg = "";
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.P_OID);
+                orderResult.PAY_GBN = "4";
+                orderResult.ORDER_CODE = order_code;
+
+                //메일발송
+                SendOrderResultMail(orderResult.ORDER_CODE);
+
+                //실행결과
+                StringBuilder SBuilder = new StringBuilder();
+                SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", orderResult.ORDER_IDX.ToString());
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", orderResult.ResultErrorCode);
+                SBuilder.Append("</form>\n");
+                SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+                return Content(SBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                //Rollback
+                orderResult.Resultcode = "01";
+                orderResult.ResultMsg = "AboutMe DB입력중 에러(err : " + e.Message + ")"; ;
+                orderResult.ResultErrorCode = "";
+                orderResult.ORDER_IDX = Convert.ToInt32(FrmData.P_OID);
+                orderResult.PAY_GBN = "4";
+                orderResult.ORDER_CODE = order_code;
+
+
+                //실행결과
+                StringBuilder SBuilder = new StringBuilder();
+                SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", orderResult.ORDER_IDX.ToString());
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);
+                SBuilder.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", orderResult.ResultErrorCode);
+                SBuilder.Append("</form>\n");
+                SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+                return Content(SBuilder.ToString());
+            }
+        }
+
         
     }
 }

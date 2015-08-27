@@ -96,25 +96,27 @@ $(function(){
 	
 	var eventpro_bnrIdx =1;
 	var eventpro_bnrIdx2 =1;
+	var eventpro_bnrIdx3 =1;
 	var eventpro_bnrWidth = (mainbnrWidth-30)/2
-	var eventpro_bnrLength = $(".mainevent .eventpro_bnr .slider li").length;
+	var eventpro_bnrLength = $(".mainevent .eventpro_bnr:eq(0) .slider li").length;
 	var eventpro_bnrLength2 = $(".skintype_recom .eventpro_bnr .slider li").length;
+	var eventpro_bnrLength3 = $(".mainevent .eventpro_bnr:eq(1) .slider li").length; //alert(eventpro_bnrLength3);
 	var eventpro_show= 2;
-	$(".mainevent .eventpro_bnr .btnarea .prev").click(function(e){
+	$(".mainevent .eventpro_bnr:eq(0) .btnarea .prev").click(function(e){
 		e.preventDefault();
 		if(eventpro_bnrIdx <=1){
 			return;
 		}
 		eventpro_bnrIdx-- ;
-		$(".mainevent .eventpro_bnr .slider").animate({"margin-left":-((eventpro_bnrIdx-1)*eventpro_bnrWidth)}, 300, "easeInExpo");
+		$(".mainevent .eventpro_bnr:eq(0) .slider").animate({"margin-left":-((eventpro_bnrIdx-1)*eventpro_bnrWidth)}, 300, "easeInExpo");
 	});
-	$(".mainevent .eventpro_bnr .btnarea .next").click(function(e){
+	$(".mainevent .eventpro_bnr:eq(0) .btnarea .next").click(function(e){
 		e.preventDefault();
 		if(eventpro_bnrIdx+eventpro_show-1==eventpro_bnrLength){
 			return;
 		}
 		eventpro_bnrIdx++;
-		$(".mainevent .eventpro_bnr .slider").animate({"margin-left":-((eventpro_bnrIdx-1)*eventpro_bnrWidth)}, 300, "easeInExpo");
+		$(".mainevent .eventpro_bnr:eq(0) .slider").animate({"margin-left":-((eventpro_bnrIdx-1)*eventpro_bnrWidth)}, 300, "easeInExpo");
 	});
 	$(window).resize(function(){
 		mainbnrWidth = $(window).width();
@@ -123,10 +125,50 @@ $(function(){
 		eventpro_bnrResizing();
 	});
 	//손꾸락
-	$(".mainevent .eventpro_bnr .slider").on('swipeleft', function(e) {  
-		$(".mainevent .eventpro_bnr .btnarea .next").click();
+	$(".mainevent .eventpro_bnr:eq(0) .slider").on('swipeleft', function(e) {  
+		$(".mainevent .eventpro_bnr:eq(0) .btnarea .next").click();
 	}).on('swiperight', function(e) {
-		$(".mainevent .eventpro_bnr .btnarea .prev").click();
+		$(".mainevent .eventpro_bnr:eq(0) .btnarea .prev").click();
+	}).on('movestart', function(e) {
+		if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+			e.preventDefault();
+			return;
+		}
+	}).on('move', function(e) {
+		if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+			e.preventDefault();
+			return;
+		}
+	});
+
+	//슬라이드 하나 더 생길때
+	$(".mainevent .eventpro_bnr:eq(1) .btnarea .prev").click(function(e){
+		e.preventDefault();
+		if(eventpro_bnrIdx3 <=1){
+			return;
+		}
+		eventpro_bnrIdx3-- ;
+		$(".mainevent .eventpro_bnr:eq(1) .slider").animate({"margin-left":-((eventpro_bnrIdx3-1)*eventpro_bnrWidth)}, 300, "easeInExpo");
+	});
+	$(".mainevent .eventpro_bnr:eq(1) .btnarea .next").click(function(e){
+		e.preventDefault();
+		if(eventpro_bnrIdx3+eventpro_show-1==eventpro_bnrLength3){
+			return;
+		}
+		eventpro_bnrIdx3++;
+		$(".mainevent .eventpro_bnr:eq(1) .slider").animate({"margin-left":-((eventpro_bnrIdx3-1)*eventpro_bnrWidth)}, 300, "easeInExpo");
+	});
+	$(window).resize(function(){
+		mainbnrWidth = $(window).width();
+		eventpro_bnrIdx3 =1;
+		eventpro_bnrWidth = (mainbnrWidth-30)/2;
+		eventpro_bnrResizing();
+	});
+	//손꾸락
+	$(".mainevent .eventpro_bnr:eq(1) .slider").on('swipeleft', function(e) {  
+		$(".mainevent .eventpro_bnr:eq(1) .btnarea .next").click();
+	}).on('swiperight', function(e) {
+		$(".mainevent .eventpro_bnr:eq(1) .btnarea .prev").click();
 	}).on('movestart', function(e) {
 		if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
 			e.preventDefault();
@@ -209,6 +251,16 @@ $(function(){
 		$(".hotnow .lagre_img li:eq("+m_bnrIdx+")").fadeIn(500);
 		$(".hotnow .thum_img li").removeClass("cnt");
 		$(".hotnow .thum_img li:eq("+m_bnrIdx+")").addClass("cnt");
+	});
+	$(".hotnow .thum_img li a:eq(0)").on("click", function(e){
+		e.preventDefault();
+		$(".hotnow .btn_area a.prev").addClass("off");
+		$(".hotnow .btn_area a.next").removeClass("off");
+	});
+	$(".hotnow .thum_img li a:eq(3)").on("click", function(e){
+		e.preventDefault();
+		$(".hotnow .btn_area a.prev").removeClass("off");
+		$(".hotnow .btn_area a.next").addClass("off");
 	});
 	$(".hotnow .btn_area a.prev").click(function(){
 		if (m_bnrIdx<=0){

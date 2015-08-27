@@ -59,11 +59,12 @@
         if (chk) {
             var mypoint = parseInt('@Model.MyPoint');
             var use_price = parseInt('@Model.DiscountInfo.POINT_USE_PRICE');
-            var pay_price = parseInt('@Model.PriceInfo.TOTAL_PAY_PRICE');
+            var pay_price = parseInt('@Model.PriceInfo.TOTAL_ORDER_PRICE'); //배송비는 포인트결제에서 뺌
             var maxpoint = pay_price + use_price;
             if (maxpoint <= 0) {
                 alert('결제금액이 0원입니다. 현재보유포인트를 사용할 수 없습니다.');
                 $("#use_1").removeAttr("checked");
+                return;
             }
 
             if (mypoint < maxpoint) {
