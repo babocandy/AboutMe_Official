@@ -211,7 +211,7 @@ namespace AboutMe.Web.Mobile.Controllers
                 TransCouponDisabled = coupon_disable,
                 PriceInfo = _orderservice.OrderStep1PriceInfo(OrderIdx),
                 DiscountInfo = _orderservice.OrderStep1DiscountInfo(OrderIdx),
-                TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID,"TRANS","P")
+                TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID,"TRANS","M")
             };
             return PartialView(M);
         }
@@ -297,14 +297,14 @@ namespace AboutMe.Web.Mobile.Controllers
 
         public ActionResult ProductCouponList(string P_CODE)
         {
-            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "P");
+            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "M"); //모바일구분 M, web : P
             var jsonData = new { result = "true", list= TransCouponList};
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
         public ActionResult SelectCouponOption(string P_CODE, int? COUPON_IDX)
         {
             string str = "<option RATE_OR_MONEY='' COUPON_MONEY='' COUPON_DISCOUNT_RATE='' value=''>쿠폰을 선택하세요</option>\n";
-            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "P");
+            List<SP_ORDER_STEP2_COUPON_SEARCH_Result> TransCouponList = _orderservice.OrderStep1CouponSelectList(_user_profile.M_ID, P_CODE, "M");//모바일구분 M, web : P
             //var jsonData = new { result = "true", list= TransCouponList};
             foreach (SP_ORDER_STEP2_COUPON_SEARCH_Result item in TransCouponList)
             {
