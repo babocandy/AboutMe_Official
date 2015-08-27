@@ -323,10 +323,6 @@
     </div>
 }
 
-@helper MemberBanner(string banner_url)
-{    
-   
-}
 
 @helper NoMemberBanner()
 {
@@ -340,7 +336,7 @@
         </div>
     </div>
 }
-@(Html.Action("CartBanner", "ChildActionDisplayer"))
+
 @*같이구매하면 좋은 상품*@
 @helper BuyAsGoods()
 {
@@ -584,15 +580,12 @@ else
                 </fieldset>
             </form>
         </div>
-        @if (Model.UserProfile.IS_LOGIN == true)
-        {
-            @MemberBanner(Model.BannerUrl)
-        }
-        else
+        @if (Model.UserProfile.IS_LOGIN != true)
         {
             @NoMemberBanner()
         }
 
+        @(Html.Action("CartBanner", "ChildActionDisplayer"))
 
         @BuyAsGoods()
 
