@@ -241,15 +241,7 @@
                 <div class="contypea listslider">
                     <h3><strong>@ViewBag.M_NAME</strong>님 피부고민에 이 제품 어떠세요?</h3>
                     <a href="#none" class="setting_skin" onclick="viewSettingSkin()">내 피부 고민 설정</a>
-                    <div class="btn_area listsliderbtn">
-                        <a href="#" class="prev">이전</a>
-                        <a href="#" class="next">다음</a>
-                    </div>
-                    <div class="listwrap">
-                        <ul class="list listslidercon">
-                            @{Html.RenderAction("MypageSkinTypeList", "ChildActionProduct");}
-                        </ul>
-                    </div>
+                    @{Html.RenderAction("MypageSkinTypeList", "ChildActionProduct");}
                 </div>
             </div>
 
