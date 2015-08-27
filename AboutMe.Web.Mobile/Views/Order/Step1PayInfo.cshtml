@@ -156,7 +156,7 @@
         if ($("#NOMEMBER_PASS").length > 0) {
             param += "&NOMEMBER_PASS=" + $("#NOMEMBER_PASS").val().trim();
         }
-
+        var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
         var frm = document.ini;
         $.ajax({
             cache: false,
@@ -165,8 +165,15 @@
             data: param,
             success: function (data) {
                 if (data.result == "true") {
-                    //이니시스결제 호출!
-                    pay(frm);
+                    if (paygbn == '4') {
+                        if (confirm("포인트/쿠폰 결제 하시겠습니까?")) {
+                            document.ini.action = "/Order/PointProcess";
+                            document.ini.submit();
+                        }
+                    }
+                    else {
+                        pay(frm);
+                    }
                 }
                 else {
                     if (data.msg != "") {
@@ -184,6 +191,12 @@
             if ($("#P_GOODS").val() == "")  // 필수항목 체크 (상품명, 상품가격)
             {
                 alert("상품명이 빠졌습니다. 필수항목입니다.");
+                return false;
+            }
+
+            if (parseInt($("#P_AMT").val()) <= 0)  // 가격체크
+            {
+                alert("결제금액이 0원입니다. 결제를 진행할 수 없습니다.");
                 return false;
             }
 
@@ -267,9 +280,13 @@
     <div class="boxtypec pay">
         <h3>결제정보</h3>
         <div class="radio_area">
-            <label class="racon" style="width:29%"><input type="radio" name="PAY_GBN" data-escrow="N" value="1" checked="checked" title="" /> <span class="txt">신용카드</span></label>
+            <label class="racon" style="width:29%" id="rdoCredit"><input type="radio" name="PAY_GBN" data-escrow="N" value="1" checked="checked" title="" /> <span class="txt">신용카드</span></label>
             <label class="racon" style="width:35%" id="rdoRealtime"><input type="radio" name="PAY_GBN" data-escrow="N" value="2" title="" /> <span class="txt">실시간계좌</span></label>
-            <label class="racon" style="width:36%"><input type="radio" name="PAY_GBN" data-escrow="Y" value="2" title="" /> <span class="txt">실시간계좌(에스크로)</span></label>
+            <label class="racon" style="width:36%" id="rdoRealtimeEscrow"><input type="radio" name="PAY_GBN" data-escrow="Y" value="2" title="" /> <span class="txt">실시간계좌(에스크로)</span></label>
+            @if (Model.UserProfile.IS_LOGIN == true)
+            {
+                <label class="racon" style="width:50%;display:none" id="rdoPoint" ><input type="radio" name="PAY_GBN" data-escrow="N" value="4" title="" /> <span class="txt">포인트/쿠폰결제</span></label>
+            }
         </div>
 @if (Model.UserProfile.IS_LOGIN == false)
 {
@@ -332,7 +349,24 @@
     var paytotal = "@Model.PriceInfo.TOTAL_PAY_PRICE";
     if (paytotal != "") {
         if (parseInt(paytotal) >= 300000) {
-            $("#rdoRealtime").attr("style", "display:none");
+            $("#rdoCredit").attr("style", "width:29%;display:show");
+            $("#rdoRealtime").attr("style", "width:35%;display:none");
+            $("#rdoRealtimeEscrow").attr("style", "width:36%;display:show");
+            $("#rdoPoint").attr("style", "width:50%;display:none");
         }
+        else if (paytotal == 0) {
+            $("#rdoCredit").attr("style", "width:29%;display:none");
+            $("#rdoRealtime").attr("style", "width:35%;display:none");
+            $("#rdoRealtimeEscrow").attr("style", "width:36%;display:none");
+            $("#rdoPoint").attr("style", "width:50%;display:show");
+            $("#rdoPoint").find("input:radio").prop("checked", "checked");
+        }
+        else {
+            $("#rdoCredit").attr("style", "width:29%;display:show");
+            $("#rdoRealtime").attr("style", "width:35%;display:show");
+            $("#rdoRealtimeEscrow").attr("style", "width:36%;display:show");
+            $("#rdoPoint").attr("style", "width:50%;display:none");
+        }
+
     }
 </script>

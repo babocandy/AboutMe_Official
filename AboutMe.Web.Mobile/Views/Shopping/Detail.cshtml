@@ -44,7 +44,7 @@
 
             <!--sns-->
             <div class="sns_area">
-                <p><strong>564명</strong> 고객님이 쇼핑백에 담았습니다.</p>
+                <p><strong>@(Html.Action("ProductofCartCnt", "Cart", new { p_code = @ViewBag.P_CODE }))명</strong> 고객님이 쇼핑백에 담았습니다.</p>
                 <ul class="sns_list">
                     <li class="facebook"><a href="#"><img src="/aboutCom/images/shopping/sns_facebook.gif" alt="페이스북" /></a></li>
                     <li class="kastory"><a href="#"><img src="/aboutCom/images/shopping/sns_ks.gif" alt="카카오스토리" /></a></li>
@@ -545,6 +545,10 @@
             <!--배너-->
             @Html.Action("BannerInProductDetail", "ChildActionDisplayer")
             <!--//배너-->
+            <!--기획전-->
+            @{Html.RenderAction("EventInProductDetail", "Event", new { p_code = @ViewBag.P_CODE });}
+            <!--//배너-->
+
             <!--같이구매하면 좋은 상품 (최소 두개의 리스트제공)-->
             @if (this.ViewBag.withCnt != 0) //관련상품 리스트
             {

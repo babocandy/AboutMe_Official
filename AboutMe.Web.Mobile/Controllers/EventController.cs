@@ -145,6 +145,49 @@ namespace AboutMe.Web.Mobile.Controllers
             }
 
         }
+
+        //메인 > 이벤트
+        public ActionResult MainEvent()
+        {
+            List<SP_EVENT_ING_LIST_Result> ingList = _eventservice.EventMainIngList();
+            List<MOBILE_MAIN_EVENT_INFO> M = new List<MOBILE_MAIN_EVENT_INFO>();
+            int cnt = 0;
+            foreach (var item in ingList)
+            {
+                MOBILE_MAIN_EVENT_INFO EventMainInfo = new MOBILE_MAIN_EVENT_INFO();
+
+                EventMainInfo.EventInfo = item;
+
+                if (item.GBN == "EXHIBIT")
+                {
+                    List<SP_ADMIN_EXHIBIT_TAB_SEL_Result> Tablist = _exhibitservice.ExhibitAdminTabList(item.IDX);
+                    List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> TabProducts = new List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result>();
+                    foreach (SP_ADMIN_EXHIBIT_TAB_SEL_Result tab in Tablist)
+                    {
+                        List<SP_EXHIBIT_TAB_PRODUCT_LIST_Result> list2 =_exhibitservice.ExhibitTabProductList(tab.IDX);
+
+                        foreach (SP_EXHIBIT_TAB_PRODUCT_LIST_Result pd in list2)
+                        {
+                            TabProducts.Add(pd);
+                        }
+                    }
+                    EventMainInfo.ProductList = TabProducts;
+                }
+                else
+                {
+                    EventMainInfo.ProductList = null;
+                }
+
+                M.Add(EventMainInfo);
+                cnt++;
+                if (cnt == 3) //상위3개만
+                {
+                    break;
+                }
+            }
+            return PartialView(M);
+        }
+
         #endregion
 
         //타임세일 - 모바일
@@ -222,6 +265,5 @@ namespace AboutMe.Web.Mobile.Controllers
 
             //return View();
         }
-
     }
 }

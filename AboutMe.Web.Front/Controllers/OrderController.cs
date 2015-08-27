@@ -97,14 +97,25 @@ namespace AboutMe.Web.Front.Controllers
                 P_COUNT_LIST += pData.p_count;
             }
             Int32 Order_Idx = _orderservice.InsertOrderStep1(_user_profile.M_ID, _user_profile.SESSION_ID, P_CODE_LIST, P_COUNT_LIST);
-            //this.TempData["Order_Idx"] = Order_Idx;
-            return Content("<form name='mysubmitform' action='/Order/Step1' method='POST'><input type='hidden' name='ORDER_IDX' value='" + Order_Idx.ToString() + "'></form> <script language='javascript'>document.mysubmitform.submit();</script>");
+
+            List<SP_ORDER_STEP2_PRODUCT_LIST_Result> ProductList = _orderservice.OrderStep1List(Order_Idx);
+
+            if (ProductList.Count() == 0)
+            {
+                return Content("<script language='javascript'>alert('주문가능한 상품이 존재하지 않습니다.');location.href='/Cart';</script>");
+            }
+            else
+            {
+                return Content("<form name='mysubmitform' action='/Order/Step1' method='POST'><input type='hidden' name='ORDER_IDX' value='" + Order_Idx.ToString() + "'></form> <script language='javascript'>document.mysubmitform.submit();</script>");
+            }
+
         }
 
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Step1(Int32 ORDER_IDX)
         {
+           
             //ViewBag.Order_Idx = ORDER_IDX;
             ORDER_STEP1_MODEL M = new ORDER_STEP1_MODEL
             {

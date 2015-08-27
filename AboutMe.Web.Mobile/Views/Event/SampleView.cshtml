@@ -80,9 +80,10 @@
 </script>
 }
 <!--container-->
-<div class="container">
+<div class="container detail">
     <div class="h2_area">
-        <h2>@Model.SampleInfo.SAMPLE_NAME (@Model.SampleInfo.FROM_DATE ~ @Model.SampleInfo.TO_DATE)</h2>
+        <h2>@Model.SampleInfo.SAMPLE_NAME</h2>
+        <span class="date">(@Model.SampleInfo.FROM_DATE.Replace('-', '.') ~ @Model.SampleInfo.TO_DATE.Replace('-', '.'))</span>
     </div>
     <!--상세배너-->
     <div class="detailbnr">

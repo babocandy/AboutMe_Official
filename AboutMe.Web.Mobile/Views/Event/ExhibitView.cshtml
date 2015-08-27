@@ -20,7 +20,8 @@
 <!--container-->
 <div class="container detail">
     <div class="h2_area">
-        <h2>@Model.ExhibitInfo.EXHIBIT_NAME (@Model.ExhibitInfo.FROM_DATE ~ @Model.ExhibitInfo.TO_DATE)</h2>
+        <h2>@Model.ExhibitInfo.EXHIBIT_NAME</h2>
+        <span class="date">(@Model.ExhibitInfo.FROM_DATE.Replace('-', '.') ~ @Model.ExhibitInfo.TO_DATE.Replace('-', '.'))</span>
     </div>
     <!--상세배너-->
     <div class="detailbnr">

@@ -123,6 +123,10 @@
 				<li><a href="/event//main.asp" class="menu"><img src="/aboutCom/images/common/m_event.gif" class="imgInteractive" alt="이벤트" /></a></li>
 				<!--//이벤트-->
 
+				<!--고객센터-->
+				<li><a href="/customer/cscenter.asp" class="menu"><img src="/aboutCom/images/common/m_customer.gif" class="imgInteractive" alt="고객센터" /></a></li>
+				<!--//고객센터-->
+
 				<!--VIP샵
 				<li><a href="#" class="menu"><img src="/aboutCom/images/common/m_vip.gif" class="imgInteractive" alt="VIP샵" /></a></li>
 				VIP샵-->
@@ -137,6 +141,7 @@
 				<li><a href="/membership/login.asp"><img src="/aboutCom/images/common/util_login.gif" alt="LOGIN" /></a></li>
 				<li><a href="/membership/joinstep1.asp"><img src="/aboutCom/images/common/util_joinus.gif" alt="JOIN US" /></a></li>
 				<li><a href="/mypage/main.asp"><img src="/aboutCom/images/common/util_mypage.gif" alt="MY PAGE" /></a></li>
+				<li><a href="/customer/notice_list.asp"><img src="/aboutCom/images/common/util_notice.gif" alt="공지사항" /></a></li>
 			</ul>
 		</div>
 		<!--//util-->

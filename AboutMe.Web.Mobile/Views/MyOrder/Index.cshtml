@@ -91,6 +91,16 @@
     <!-- //조회기간 -->
     <!-- 주문상품 리스트 -->
     <div class="myorder_con boxtypea">
+@if (Model.OrderCnt == 0)
+{
+	<!--데이터없음-->
+    <div class="datanone nobg">
+        <p class="txt_none">배송/주문조회 내역이 없습니다.</p>
+    </div>
+	<!--//데이터없음-->
+}
+else
+{
         <h3>주문상품 리스트</h3>
         <p class="total_count">총 <strong>@Model.OrderCnt</strong>건이 조회되었습니다.</p>
         <ul>
@@ -120,6 +130,7 @@
             }
         </ul>
 
+}    
         <!--페이징-->
         @{
             Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.OrderCnt, RecordPerPage = Model.PageSize, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = "FromDate=" + @Model.FromDate + "&ToDate=" + @Model.ToDate + "&TermGbn=" + @ViewBag.TermGbn });
