@@ -3,94 +3,119 @@
     Layout = null;
 }
 
-@foreach (var item in Model)
-{
-    string imgUrl = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
-    <li>
-        <a href="/shopping/detail?pcode=@item.P_CODE">
-            <span class="photo"><img src="@imgUrl" alt="" /></span>
-            <span class="detail">
-                <em class="ico">
-                    @if (!string.IsNullOrEmpty(item.ICON_YN))
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+            <div class="btn_area listsliderbtn">
+                <a href="#" class="prev">이전</a>
+                <a href="#" class="next">다음</a>
+            </div>
+            <div class="listwrap">
+                <ul class="list listslidercon">
+                    @foreach (var item in Model)
                     {
-                        if (item.ICON_YN.IndexOf('B') != -1)
-                        { <text> <em class="ico_best">BEST</em></text> }
-                        if (item.ICON_YN.IndexOf('S') != -1)
-                        { <text> <em class="ico_soldout">SOLD OUT</em></text> }
-                        if (item.ICON_YN.IndexOf('N') != -1)
-                        { <text> <em class="ico_new">NEW</em></text> }
-                        if (item.ICON_YN.IndexOf('C') != -1)
-                        { <text> <em class="ico_custom ">커스텀</em></text> }
-                    }
-                    @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
-                    {
-                        if (item.PMO_PRODUCT_CATEGORY == "01")
-                        { <text> <em class="ico_set">SET</em></text> }
-                        if (item.PMO_PRODUCT_CATEGORY == "02")
-                        { <text> <em class="ico_1_1">1+1</em></text> }
-                        if (item.PMO_PRODUCT_CATEGORY == "03")
-                        { <text> <em class="ico_time">TIME</em></text> }
-                    }
-                    @if (!string.IsNullOrEmpty(item.COUPON_CODE))
-                    {
-                        <text> <em class="ico_coupon">COUPON</em></text>
-                    }
+                        string imgUrl = ViewBag.PRODUCT_PATH + "R270_" + item.MAIN_IMG;
+                        <li>
+                            <a href="/shopping/detail?pcode=@item.P_CODE">
+                                <span class="photo"><img src="@imgUrl" alt="" /></span>
+                                <span class="detail">
+                                    <em class="ico">
+                                        @if (!string.IsNullOrEmpty(item.ICON_YN))
+                                        {
+                                            if (item.ICON_YN.IndexOf('B') != -1)
+                                            { <text> <em class="ico_best">BEST</em></text> }
+                                            if (item.ICON_YN.IndexOf('S') != -1)
+                                            { <text> <em class="ico_soldout">SOLD OUT</em></text> }
+                                            if (item.ICON_YN.IndexOf('N') != -1)
+                                            { <text> <em class="ico_new">NEW</em></text> }
+                                            if (item.ICON_YN.IndexOf('C') != -1)
+                                            { <text> <em class="ico_custom ">커스텀</em></text> }
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
+                                        {
+                                            if (item.PMO_PRODUCT_CATEGORY == "01")
+                                            { <text> <em class="ico_set">SET</em></text> }
+                                            if (item.PMO_PRODUCT_CATEGORY == "02")
+                                            { <text> <em class="ico_1_1">1+1</em></text> }
+                                            if (item.PMO_PRODUCT_CATEGORY == "03")
+                                            { <text> <em class="ico_time">TIME</em></text> }
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.COUPON_CODE))
+                                        {
+                                            <text> <em class="ico_coupon">COUPON</em></text>
+                                        }
 
-                </em>
-                <em class="tit txtdotdot">@(new HtmlString(item.P_SUB_TITLE))</em>
-                    <em class="stit">@(new HtmlString(item.P_NAME))</em>
-                    <em class="price">
-@if (item.SELLING_PRICE != item.RESULT_PRICE)
-{
-                        <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
-}
-                        @string.Format("{0:#,##0}", item.RESULT_PRICE)원
-                    </em>
-</span>
-        </a>
-    </li>
-}
+                                    </em>
+                                    <em class="tit txtdotdot">@(new HtmlString(item.P_SUB_TITLE))</em>
+                                    <em class="stit">@(new HtmlString(item.P_NAME))</em>
+                                    <em class="price">
+                                        @if (item.SELLING_PRICE != item.RESULT_PRICE)
+                                        {
+                                            <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                                        }
+                                        @string.Format("{0:#,##0}", item.RESULT_PRICE)원
+                                    </em>
+                                </span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+
+        }
+        else
+        {
+            <img src="/aboutCom/images/mypage/skintype_setting.jpg" alt="내 피부 고민을 설정해보세요" />
+        }
+    }
+    else
+    {
+        <img src="/aboutCom/images/mypage/skintype_setting.jpg" alt="내 피부 고민을 설정해보세요" />
+    }
+
 
 
 @*<li>
-    <a href="#">
-        <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
-        <span class="detail">
-            <em class="ico ico_new">new</em>
-            <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게2</em>
-            <em class="stit">스킨 톤업 버블 워시</em>
-            <em class="price">
-                <del>32,000원</del>
-                25,000원
-            </em>
-        </span>
-    </a>
-</li>
-<li>
-    <a href="#">
-        <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
-        <span class="detail">
-            <em class="ico ico_new">new</em>
-            <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게3</em>
-            <em class="stit">스킨 톤업 버블 워시</em>
-            <em class="price">
-                <del>32,000원</del>
-                25,000원
-            </em>
-        </span>
-    </a>
-</li>
-<li>
-    <a href="#">
-        <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
-        <span class="detail">
-            <em class="ico ico_new">new</em>
-            <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게4</em>
-            <em class="stit">스킨 톤업 버블 워시</em>
-            <em class="price">
-                <del>32,000원</del>
-                25,000원
-            </em>
-        </span>
-    </a>
-</li>*@
+        <a href="#">
+            <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+            <span class="detail">
+                <em class="ico ico_new">new</em>
+                <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게2</em>
+                <em class="stit">스킨 톤업 버블 워시</em>
+                <em class="price">
+                    <del>32,000원</del>
+                    25,000원
+                </em>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+            <span class="detail">
+                <em class="ico ico_new">new</em>
+                <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게3</em>
+                <em class="stit">스킨 톤업 버블 워시</em>
+                <em class="price">
+                    <del>32,000원</del>
+                    25,000원
+                </em>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <span class="photo"><img src="/aboutCom/images/sample/thumb240240_2.jpg" alt="" /></span>
+            <span class="detail">
+                <em class="ico ico_new">new</em>
+                <em class="tit">조밀조밀 풍성한 거품이<br />피부톤을 맑고 깨끗하게4</em>
+                <em class="stit">스킨 톤업 버블 워시</em>
+                <em class="price">
+                    <del>32,000원</del>
+                    25,000원
+                </em>
+            </span>
+        </a>
+    </li>*@

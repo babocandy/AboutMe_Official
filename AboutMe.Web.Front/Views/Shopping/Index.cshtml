@@ -254,7 +254,7 @@ i++;
                     <!--상품리스트-->
                     <div class="product_area">
                         <div class="product_top">
-                            <span class="totaltxt">총 @ViewBag.TotalRecord 개의 상품이 있습니다. </span>
+                            <span class="totaltxt">@ViewBag.DEPTH_NAME3 관련 총 @ViewBag.TotalRecord 개의 상품이 있습니다. </span>
                             <!--분류-->
                             <ul class="sort">
                                 <li @if (ViewBag.SORT_GBN == "NEW"){ <text> class="cnt" </text>  } ><a href="javascript:sortGbn('NEW');" onclick="javascript:sortGbn('NEW');">신상품순</a></li>
@@ -265,7 +265,16 @@ i++;
                             <!--//분류-->
                         </div>
 
-
+                        @if (ViewBag.TotalRecord == 0)
+                        { 
+                            <!--상품리스트-->
+                            <div class="no_data">
+                                <img alt="" src="/aboutCom/images/common/ico_nodata.gif">
+                                <p class="txt">찾으시는 상품이 없습니다.</p>
+                            </div>
+						    <!--//상품리스트-->
+                        }
+                        else { 
                         <!--상품리스트-->
                         <ul class="product_list">
                             @foreach (var item in Model)
@@ -324,6 +333,7 @@ i++;
                            
                         </ul>
                         <!--//상품리스트-->
+                        }
                     </div>
                     <!--//상품리스트-->
                     <!--페이징-->
