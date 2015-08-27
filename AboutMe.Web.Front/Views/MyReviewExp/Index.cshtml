@@ -71,74 +71,92 @@
                     </thead>
                     <tbody>
 
-@foreach (var item in Model.List)
-{
-                        <tr>
-                            <td class="proimg">
-                                <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, item.Item2.MAIN_IMG)" alt="" /></a>
-                            </td>
-                            <td class="product">
-                                <dl>
-                                    <dt>
-                                        <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})">
-                                            <span class="tag">
+                        @if (Model.List.Count > 0)
+                        {
+                            foreach (var item in Model.List)
+                            {
+                                <tr>
+                                    <td class="proimg">
+                                        <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, item.Item2.MAIN_IMG)" alt="" /></a>
+                                    </td>
+                                    <td class="product">
+                                        <dl>
+                                            <dt>
+                                                <a href="@Url.Action("Detail", "Shopping", new { pcode= @item.Item1.P_CODE})">
+                                                    <span class="tag">
 
-                                                @if (!string.IsNullOrEmpty(item.Item2.ICON_YN))
-                                                {
-                                                    if (item.Item2.ICON_YN.IndexOf('B') != -1)
-                                                    { <text> <span class="ico ico_best">BEST</span></text> }
-                                                    if (item.Item2.ICON_YN.IndexOf('S') != -1)
-                                                    { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
-                                                    if (item.Item2.ICON_YN.IndexOf('N') != -1)
-                                                    { <text> <span class="ico ico_new">NEW</span></text> }
-                                                    if (item.Item2.ICON_YN.IndexOf('C') != -1)
-                                                    { <text> <span class="ico ico_custom ">커스텀</span></text> }
-                                                }
-                                                @if (!string.IsNullOrEmpty(item.Item2.PMO_PRODUCT_CATEGORY))
-                                                {
-                                                    if (item.Item2.PMO_PRODUCT_CATEGORY == "01")
-                                                    { <text> <span class="ico ico_set">SET</span></text> }
-                                                    if (item.Item2.PMO_PRODUCT_CATEGORY == "02")
-                                                    { <text> <span class="ico ico_1_1">1+1</span></text> }
-                                                    if (item.Item2.PMO_PRODUCT_CATEGORY == "03")
-                                                    { <text> <span class="ico ico_time">TIME</span></text> }
-                                                }
-                                                @if (!string.IsNullOrEmpty(item.Item2.COUPON_CODE))
-                                                {
-                                                    <text> <span class="ico ico_coupon">COUPON</span></text>
-                                                }
-                                                
-                                            </span>
-                                            @item.Item2.P_NAME
-                                        </a>
-                                    </dt>
-                                    <dd>@item.Item2.P_SUB_TITLE</dd>
-                                </dl>
-                            </td>
-                            <td>@string.Format("{0}~{1}", item.Item1.FROM_DATE.Value.ToString("yyyy.MM.dd"), item.Item1.TO_DATE.Value.ToString("yyyy.MM.dd"))</td>
-                            <td>
-                            
-                                @if (item.Item1.IS_AUTH != "Y" || item.Item1.IS_DATE_VALID != "Y")
-                                {
-                                                                    
-                                }
-                                else
-                                {
-                                    if (item.Item1.IS_WRITTEN == "Y")
-                                    {
-                                        <a href="@Url.Action("Update", new { ARTICLE_IDX = item.Item1.ARTICLE_IDX, EXP_MASTER_IDX = item.Item1.IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview" >리뷰수정</a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("Write", new { EXP_MASTER_IDX = item.Item1.IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview">리뷰쓰기</a>
-                                    }
-                                }
+                                                        @if (!string.IsNullOrEmpty(item.Item2.ICON_YN))
+                                                        {
+                                                            if (item.Item2.ICON_YN.IndexOf('B') != -1)
+                                                            { <text> <span class="ico ico_best">BEST</span></text> }
+                                                            if (item.Item2.ICON_YN.IndexOf('S') != -1)
+                                                            { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
+                                                            if (item.Item2.ICON_YN.IndexOf('N') != -1)
+                                                            { <text> <span class="ico ico_new">NEW</span></text> }
+                                                            if (item.Item2.ICON_YN.IndexOf('C') != -1)
+                                                            { <text> <span class="ico ico_custom ">커스텀</span></text> }
+                                                        }
+                                                        @if (!string.IsNullOrEmpty(item.Item2.PMO_PRODUCT_CATEGORY))
+                                                        {
+                                                            if (item.Item2.PMO_PRODUCT_CATEGORY == "01")
+                                                            { <text> <span class="ico ico_set">SET</span></text> }
+                                                            if (item.Item2.PMO_PRODUCT_CATEGORY == "02")
+                                                            { <text> <span class="ico ico_1_1">1+1</span></text> }
+                                                            if (item.Item2.PMO_PRODUCT_CATEGORY == "03")
+                                                            { <text> <span class="ico ico_time">TIME</span></text> }
+                                                        }
+                                                        @if (!string.IsNullOrEmpty(item.Item2.COUPON_CODE))
+                                                        {
+                                                            <text> <span class="ico ico_coupon">COUPON</span></text>
+                                                        }
 
-                                
-                            
-                            </td>
-                        </tr>
-}
+                                                    </span>
+                                                    @item.Item2.P_NAME
+                                                </a>
+                                            </dt>
+                                            <dd>@item.Item2.P_SUB_TITLE</dd>
+                                        </dl>
+                                    </td>
+                                    <td>@string.Format("{0}~{1}", item.Item1.FROM_DATE.Value.ToString("yyyy.MM.dd"), item.Item1.TO_DATE.Value.ToString("yyyy.MM.dd"))</td>
+                                    <td>
+
+                                        @if (item.Item1.IS_AUTH != "Y" || item.Item1.IS_DATE_VALID != "Y")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (item.Item1.IS_WRITTEN == "Y")
+                                            {
+                                                <a href="@Url.Action("Update", new { ARTICLE_IDX = item.Item1.ARTICLE_IDX, EXP_MASTER_IDX = item.Item1.IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview">리뷰수정</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Write", new { EXP_MASTER_IDX = item.Item1.IDX, P_CODE = item.Item1.P_CODE })" class="btn_goreview">리뷰쓰기</a>
+                                            }
+                                        }
+
+
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">
+                                    <!--데이터없음-->
+                                    <div class="no_data">
+                                        <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                                        <p class="txt">작성한 체험단 리뷰가 없습니다.</p>
+                                    </div>
+                                    <!--//데이터없음-->
+                                </td>
+                            </tr>
+                        }
+
+
                     </tbody>
                 </table>
                 <!--//작성 가능한 리뷰 목록-->

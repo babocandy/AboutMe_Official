@@ -75,13 +75,23 @@ i{display:inline-block;vertical-align:middle;}
 .cart .cartform .row3 .btn_group a+a{margin-left:2px;}
 .cart .prolist{background-color:#fff;border-bottom:1px solid #efe8e6;}
 .cart .prolist ul:after{content:"";display:block;clear:both;}
-.cart .prolist ul li{float:left;padding:16px 0 25px;width:270px;text-align:center;}
+.cart .prolist ul li{float:left;position:relative;padding:16px 0 25px;width:270px;text-align:center;}
 .cart .prolist ul li .tag{display:block;margin:10px 0 0 -3px;}
 .cart .prolist ul li .tag span{margin-left:3px;}
 .cart .prolist ul li .ptit{display:block;margin-top:12px;padding:0 25px;height:21px;font-size:13px;color:#1b1818;}
 .cart .prolist ul li .pdesc{margin-top:1px;padding:0 25px;height:13px;font-family:"Dotum";font-size:11px;letter-spacing:-1px;color:#bbb5b4;}
 .cart .prolist ul li .pprice{margin-top:14px;padding:0 25px;font-size:16px;line-height:1;color:#1b1818;}
 .cart .prolist ul li .pprice del{margin-right:8px;font-size:13px;line-height:19px;color:#696361;}
+.cart .prolist ul li a.cart{display:none; position:absolute; left:208px; top:209px; padding:0; border:none;}
+.cart .prolist ul li:hover a.cart{display:block;}
+.cart .prolist ul li a.cart:hover{border:none;}
+.cart .prolist ul li span.frame{display:none;}
+.cart .prolist ul li:hover span.frame{display:block;}
+.cart .prolist ul li span.l{position:absolute; left:-1px; top:-1px; display:block; width:1px; height:386px; background:#33c1e5; z-index:10;}
+.cart .prolist ul li span.t{position:absolute; left:0; top:-1px; display:block; width:270px; height:1px; background:#33c1e5; z-index:10;}
+.cart .prolist ul li span.r{position:absolute; right:0; top:-1px; display:block; width:1px; height:386px; background:#33c1e5;}
+.cart .prolist ul li span.b{position:absolute; left:0; bottom:-1px; display:block; width:270px; height:1px; background:#33c1e5; z-index:10;}
+
 .cart.nonmb .user_area{height:198px;box-sizing:border-box;}
 .cart.nonmb .user_area .info{padding:42px 0 0 19px;overflow:hidden;}
 .cart.nonmb .user_area .info .nonmbmsg{float:left;display:inline-block;font-size:32px;line-height:1;color:#000;font-weight:bold;}

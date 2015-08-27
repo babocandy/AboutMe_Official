@@ -67,7 +67,7 @@
                             @Html.Raw(item.COMMENT.Replace("\r\n","<br/>"));
                             @if (item.IS_PHOTO == "Y")
                             {
-                                <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
+                                <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" />
                             }
                         </div>
 
@@ -388,7 +388,7 @@
                             html += item.COMMENT.replace('\r\n','<br/>');
             if (item.IS_PHOTO == "Y")
             {
-                                html += "          <img src='"+img_path_review+item.ADD_IMAGE+"' alt='' />";
+                                html += "          <img src='"+img_path_review+"R308_"+item.ADD_IMAGE+"' alt='' />";
                                 }
                             html += "       </div>";
 
@@ -503,7 +503,7 @@
 
             html += "    <div class='reviewcont' onclick=\"reviewpop_view("+item.IDX +",'"+item.P_CODE+"',this);return false;\">";
             html += "        <div class='photo'>";
-            html += "             <img src='"+img_path_review+item.SUB_IMG_1+"' alt='' />";
+            html += "             <img src='"+img_path_review+"R308_"+item.SUB_IMG_1+"' alt='' />";
             html += "        </div>";
             html += "        <div class='detail'>";
             html += "            <div class='tag'>";

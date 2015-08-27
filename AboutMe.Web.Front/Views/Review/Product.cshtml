@@ -33,7 +33,7 @@
     var sort = "@ReviewProductListViewModel.SORT_PHOTO";//포토순
     var tailIdx = @(Model.Reviews.Count > 0 ? Model.Reviews.Last().IDX : -1);
 
-    console.log("tailIdx", tailIdx);
+
 
     // select category
     function selectCategoryMenu(cc) {
@@ -62,24 +62,31 @@
     });
 
     function initMasonry() {
-        /**/
+
         // init Masonry
         $grid = $('#reviewConts').masonry({
             itemSelector: ".grid",
             transitionDuration: 0
         });
+
         // layout Masonry after each image loads
         $grid.imagesLoaded().progress(function () {
             $grid.masonry('layout');
         });
 
+
+        $grid.imagesLoaded(function(){
+            $grid.masonry({
+                transitionDuration: 0,
+                itemSelector : '.grid'
+            });
+        })
         /*
         //example  http://masonry.desandro.com/methods.html#appended
 
        */
     }
     function getReviewProducList() {
-        console.log(tailIdx, categoryCode, sort);
 
         $.ajax({
             url: "@(Url.Action("GetReviewProductList", "Review"))",
@@ -91,20 +98,30 @@
                 , SORT: sort
             },
             success: function (data) {
-                //alert(data.success);
-                console.log(data);
 
                 if (data.Success) {
 
-
-                    addItems(data.Reviews);
-
                     $("#totalReview").text(data.Total);
+                    if(data.Reviews.length > 0){
+                        addItems(data.Reviews);
+                        $(".no_data").hide();
+                        $(".btn_more").show();
+
+                       
+                    }else{
+                        if ( $(".grid").size() == 0) {
+                            $(".no_data").show();
+                            $(".btn_more").hide();
+                            $("#reviewConts").height(0)
+                        }
+
+                        alert("더 이상 결과값이 없습니다.");
+                    }
 
                 }
             },
             error: function (e) {
-                console.log(e);
+               
             }
         });
     }//end func
@@ -161,7 +178,8 @@
                 $grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
 
-            console.log("d.IDX", d.IDX)
+            $grid.masonry('reloadItems')
+
 
             //꼬리값 물기
             if (tailIdx != d.IDX) {
@@ -300,11 +318,12 @@
                       }
                     </div>
                 </div>
-
-
                 <a href="#" class="btn_more" onclick="moreView(); return false;">더보기<i></i></a>
 
-
+                <div class="no_data" style="display:none">
+                    <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                    <p class="txt">총 0개의 상품 리뷰가 있습니다.</p>
+                </div>
             </div>
         </div>
         <!--//container-->

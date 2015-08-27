@@ -50,27 +50,32 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                var count = Model.TotalItem - 10 * (Model.PageNo - 1) ;
-            }
-            @foreach (var item in Model.PointHistoryList)
+
+            @if (Model.PointHistoryList.Count > 0)
             {
-                <tr>
-                    <td class="brnone">@count</td>
-                    <td class="text-success">@item.KIND</td>
-                    <td class="">@item.INS_DATE.Value.ToShortDateString()</td>
-                    <td>@item.POINT</td>
-                    <td>@item.SUM_POINT</td>
-                    <td>@item.ORDER_CODE</td>
-                    <td>@string.Format(("{0}({1})"),  @item.P_NAME, @item.ORDER_DETAIL_IDX)</td>
-                    <td>@item.DETAIL</td>
-                    <td>@item.ADDITION_REASON</td>
-                    <td class="brnone">@item.ADM_NAME</td>
-                    @{
-                        count = count - 1;
-                    }
-                </tr>
+                
+                var count = Model.TotalItem - 10 * (Model.PageNo - 1);
+                
+                foreach (var item in Model.PointHistoryList)
+                {
+                    <tr>
+                        <td class="brnone">@count</td>
+                        <td class="text-success">@item.KIND</td>
+                        <td class="">@item.INS_DATE.Value.ToShortDateString()</td>
+                        <td>@item.POINT</td>
+                        <td>@item.SUM_POINT</td>
+                        <td>@item.ORDER_CODE</td>
+                        <td>@string.Format(("{0}({1})"), @item.P_NAME, @item.ORDER_DETAIL_IDX)</td>
+                        <td>@item.DETAIL</td>
+                        <td>@item.ADDITION_REASON</td>
+                        <td class="brnone">@item.ADM_NAME</td>
+                        @{
+                    count = count - 1;
+                        }
+                    </tr>
+                }
             }
+
         
         </tbody>
     </table>
