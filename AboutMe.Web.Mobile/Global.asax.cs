@@ -32,7 +32,13 @@ namespace AboutMe.Web.Mobile
         }
 
 
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            // event is raised each time a new session is created   
+            //더미세션 세팅:
+            HttpContext.Current.Session["dummy_session"] = HttpContext.Current.Session.SessionID;
 
+        }
               
 
         public static void LoadWurflData(HttpContext context)
