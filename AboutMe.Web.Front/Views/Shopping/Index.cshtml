@@ -249,12 +249,14 @@ i++;
 
             </div>
 }
+
+            @{ var cate_keyword = string.IsNullOrEmpty(ViewBag.DEPTH_NAME3) ? "" : ViewBag.DEPTH_NAME3 + "관련"; }
             <div class="container1080">
                 <div class="display_bottom">
                     <!--상품리스트-->
                     <div class="product_area">
                         <div class="product_top">
-                            <span class="totaltxt">@ViewBag.DEPTH_NAME3 관련 총 @ViewBag.TotalRecord 개의 상품이 있습니다. </span>
+                            <span class="totaltxt">@cate_keyword 총 @ViewBag.TotalRecord 개의 상품이 있습니다. </span>
                             <!--분류-->
                             <ul class="sort">
                                 <li @if (ViewBag.SORT_GBN == "NEW"){ <text> class="cnt" </text>  } ><a href="javascript:sortGbn('NEW');" onclick="javascript:sortGbn('NEW');">신상품순</a></li>
