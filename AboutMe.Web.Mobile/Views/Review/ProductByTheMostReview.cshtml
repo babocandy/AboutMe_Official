@@ -1,0 +1,47 @@
+﻿@model AboutMe.Domain.Entity.Review.ProductByTheMostReviewViewModel
+@using AboutMe.Web.Mobile.Controllers
+@{
+    Layout = null;
+    var myController = ViewContext.Controller as ReviewController;
+}
+
+<div class="review_wrap">
+    <h2>최다리뷰 상품</h2>
+    <div class="top">
+        <div class="txtarea">
+            <p class="tit">Talk on Beauty</p>
+            <p class="num">@string.Format("{0:#,##0}",   Model.ReviewTotal)</p>
+            <p class="txt">최다<strong>리뷰</strong> 상품은?</p>
+        </div>
+
+        @Html.Action("TalkBannerInMain", "ChildActionDisplayer");
+    </div>
+    <div class="review" onclick="window.location.href='@Url.Action("Detail", "Shopping", new { pcode = Model.ProductDetail.P_CODE})'; return false;">
+        <div class="proarea">
+            <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.ProductDetail.MAIN_IMG)" alt="" /></div>
+            <div class="detail">
+                <p class="tit">@Model.ProductDetail.P_NAME</p>
+                <p class="price">
+                    @if (Model.ProductDetail.RESULT_PRICE != Model.ProductDetail.SELLING_PRICE)
+                    {
+                        <del>@string.Format("{0:#,##0}", Model.ProductDetail.SELLING_PRICE)원</del>
+                    }
+                   
+                    <strong>@string.Format("{0:#,##0}", Model.ProductDetail.RESULT_PRICE)</strong>원
+                </p>
+            </div>
+        </div>
+        <div class="txtarea">
+            <div class="info">
+                <span class="skin @(Model.ReviewDetail.SKIN_TYPE_CSS)"></span>
+                <span class="writer">
+                    <strong class="id">@Model.ReviewDetail.M_ID_LBL</strong>
+                    <span class="age">@(Model.ReviewDetail.M_BIRTHDAY_LBL)대, @(Model.ReviewDetail.M_SEX_LBL)</span>
+                </span>
+            </div>
+            <div class="userrivew">
+                @Model.ReviewDetail.COMMENT
+            </div>
+        </div>
+    </div>
+</div>

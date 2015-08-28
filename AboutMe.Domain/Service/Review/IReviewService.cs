@@ -38,5 +38,8 @@ namespace AboutMe.Domain.Service.Review
 
         Tuple<List<SP_REVIEW_PRODUCT_MOBILE_SEL_Result>, int, int> GetReviewProductListMobile(ReviewListMobileUrlParam p);
         Tuple<List<SP_REVIEW_EXP_MOBILE_SEL_Result>, int, int> GetReviewExpListMobile(ReviewListMobileUrlParam p);
+
+        int GetReviewTotalByProductCode(string pcode);
+        SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result GetReviewDetailByMostReviewPdt();
     }
 }

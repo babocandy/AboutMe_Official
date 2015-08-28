@@ -335,7 +335,13 @@ namespace AboutMe.Domain.Entity.Review
         public string SORT { get; set; }
     }
 
-    //상품리뷰 목록
+    //최다리뷰 상품
+    public class ProductByTheMostReviewViewModel
+    {
+        public int ReviewTotal { get; set; }
+        public SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result ReviewDetail { get; set; }
+        public SP_PRODUCT_MOBILE_DETAIL_VIEW_Result ProductDetail { get; set; }
+    }
 
 
 }

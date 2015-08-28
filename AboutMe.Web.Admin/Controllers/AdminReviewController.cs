@@ -65,6 +65,8 @@ namespace AboutMe.Web.Admin.Controllers
             model.SKIN_TYPE = tp.Item1.SKIN_TYPE;
             model.SKIN_TYPE_LBL = tp.Item1.SKIN_TYPE_LBL;
             model.INS_DATE = tp.Item1.INS_DATE;
+            model.IS_MOST_CNT = tp.Item1.IS_MOST_CNT;
+            model.IS_PHOTO = tp.Item1.IS_PHOTO;
 
             return View(model);
         }
@@ -79,7 +81,7 @@ namespace AboutMe.Web.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var tp = _service.ReviewPdtUpdate(model);
-
+               
                 TempData["ResultNum"] = tp.Item1;
                 TempData["ResultMessage"] = tp.Item2;
 

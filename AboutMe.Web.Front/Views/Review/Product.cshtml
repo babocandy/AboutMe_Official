@@ -37,6 +37,7 @@
 
     // select category
     function selectCategoryMenu(cc) {
+        is_more_req = false;
         if (categoryCode != cc) categoryCode = cc;
         tailIdx = undefined;
         removeAllItems();
@@ -53,7 +54,9 @@
     }
 
     //더 보기
+    var is_more_req = false;
     function moreView() {
+        is_more_req = true;
         getReviewProducList();
     }
 
@@ -115,7 +118,11 @@
                             $("#reviewConts").height(0)
                         }
 
-                        alert("더 이상 결과값이 없습니다.");
+                        if(is_more_req){
+                            alert("더 이상 결과값이 없습니다.");
+                            is_more_req = false;
+                        }
+                       
                     }
 
                 }
@@ -186,7 +193,7 @@
                 tailIdx = d.IDX;
             }
         } else {
-            alert("더 이상 결과값이 없습니다.");
+            //alert("더 이상 결과값이 없습니다.");
         }
     }//end func
 

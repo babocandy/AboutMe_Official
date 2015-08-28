@@ -37,7 +37,9 @@
 
 
     // select category
-    function selectCategoryMenu(cc) {
+        function selectCategoryMenu(cc) {
+            is_more_req = false;
+
         if (categoryCode != cc) categoryCode = cc;
         tailIdx = undefined;
         removeAllItems();
@@ -53,8 +55,10 @@
         getReviewList();
     }
 
-    //더 보기
+        //더 보기
+    var is_more_req = false;
     function moreView() {
+        is_more_req = true;
         getReviewList();
     }
 
@@ -74,13 +78,20 @@
             $grid.masonry('layout');
         });
 
+
+        $grid.imagesLoaded(function(){
+            $grid.masonry({
+                transitionDuration: 0,
+                itemSelector : '.grid'
+            });
+        })
         /*
         //example  http://masonry.desandro.com/methods.html#appended
 
        */
     }
     function getReviewList() {
-        console.log(tailIdx, categoryCode, sort);
+        //console.log(tailIdx, categoryCode, sort);
 
         $.ajax({
             url: "@(Url.Action("GetReviewExpList", "Review"))",
@@ -92,20 +103,31 @@
                 , SORT: sort
             },
             success: function (data) {
-                //alert(data.success);
-                console.log(data);
-
                 if (data.Success) {
-
-
-                    addItems(data.Reviews);
-
                     $("#totalReview").text(data.Total);
+                    if(data.Reviews.length > 0){
+                        addItems(data.Reviews);
+                        $(".no_data").hide();
+                        $(".btn_more").show();
+
+                       
+                    }else{
+                        if ( $(".grid").size() == 0) {
+                            $(".no_data").show();
+                            $(".btn_more").hide();
+                            $("#reviewConts").height(0)
+                        }
+
+                        if(is_more_req){
+                            alert("더 이상 결과값이 없습니다.");
+                            is_more_req = false;
+                        }
+                    }
 
                 }
             },
             error: function (e) {
-                console.log(e);
+               // console.log(e);
             }
         });
     }//end func
@@ -163,9 +185,6 @@
 
                 html += "</div>";
 
-
-
-
                 var elem = $(html);
                 $grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
@@ -177,7 +196,7 @@
                 tailIdx = item.IDX;
             }
         } else {
-            alert("더 이상 결과값이 없습니다.");
+            //alert("더 이상 결과값이 없습니다.");
         }
     }//end func
 
@@ -376,6 +395,11 @@
 
                 <a href="#" class="btn_more"  onclick="moreView(); return false;">더보기<i></i></a>
 
+                <div class="no_data" style="display:none">
+                    <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                    <p class="txt">총 0개의 체험단 리뷰가 있습니다.</p>
+                </div>
+
                 <script type="text/javascript">
 
                     var detail;
@@ -390,7 +414,7 @@
 
                     //리뷰팝업
                     function reviewpop_view(aidx,pcode, my) {
-                        console.log(aidx, pcode);
+                        //console.log(aidx, pcode);
                         $.ajax({
                             url: "@(Url.Action("GetReviewExpDetail", "Review"))",
                             type: "POST",
@@ -400,7 +424,7 @@
                             },
                             success: function (data) {
                                 //alert(data.success);
-                                console.log(data);
+                                //console.log(data);
 
                                 if (data.Success) {
 

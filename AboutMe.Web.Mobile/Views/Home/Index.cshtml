@@ -142,45 +142,7 @@
             </div>
             <!--//스킨타입 추천-->
             <!--최다리뷰상품-->
-            <div class="review_wrap">
-                <h2>최다리뷰 상품</h2>
-                <div class="top">
-                    <div class="txtarea">
-                        <p class="tit">Talk on Beauty</p>
-                        <p class="num">1,980</p>
-                        <p class="txt">최다<strong>리뷰</strong> 상품은?</p>
-                    </div>
-                    
-                    @Html.Action("TalkBannerInMain", "ChildActionDisplayer");
-                </div>
-                <div class="review">
-                    <div class="proarea">
-                        <div class="photo"><img src="/aboutCom/images/sample/thumb120.jpg" alt="" /></div>
-                        <div class="detail">
-                            <p class="tit">굿 나이트 모이스처 앰플</p>
-                            <p class="price"><del>4,800원</del><strong>4,000</strong>원</p>
-                        </div>
-                    </div>
-                    <div class="txtarea">
-                        <!--
-                    피부타입별 class
-                    건성 : dry
-                    중성 : normal
-                    지복합성 :oily
-                    -->
-                        <div class="info">
-                            <span class="skin oily"></span>
-                            <span class="writer">
-                                <strong class="id">kkon**</strong>
-                                <span class="age">40대, 여</span>
-                            </span>
-                        </div>
-                        <div class="userrivew">
-                            마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고  않고 계에서 앰플 바르니까 촉촉해요, 겉돌지 않고 마지막 단계에서 앰플 바르니까 촉촉해요, 겉돌지 않고
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @Html.Action("ProductByTheMostReview", "Review");
             <!--//최다리뷰상품-->
             <!--최다판매상품-->
             <div class="review_wrap">

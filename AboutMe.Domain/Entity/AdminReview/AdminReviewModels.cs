@@ -66,9 +66,9 @@ namespace AboutMe.Domain.Entity.AdminReview
     /**
      * 상품리뷰 수정
      */
-    public class AdminReviewInputViewModel 
+    public class AdminReviewInputViewModel : SP_ADMIN_REVIEW_PRODUCT_INFO_Result
     {
-        public int IDX { get; set; }
+        /*public int IDX { get; set; }
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public string C_CATE_CODE { get; set; }
@@ -88,6 +88,8 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string SKIN_TYPE { get; set; }
         public string MEDIA_GBN_LBL { get; set; }
         public string SKIN_TYPE_LBL { get; set; }
+        public string IS_MOST_CNT { get; set; }
+        **/
     }
 
     /**
