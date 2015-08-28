@@ -1011,9 +1011,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
 
-        //가격정보 생성
-        //[Bind(Exclude="Id")]Product productToCreate
-        //public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
+        //가격정보 생성-------------------------------------
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         public ActionResult PrdPricingCreate(string CdPromotionProduct)
         {
@@ -1023,7 +1021,6 @@ namespace AboutMe.Web.Admin.Controllers
                 inst_TB_PROMOTION_BY_PRODUCT_PRICE = new TB_PROMOTION_BY_PRODUCT_PRICE(),
                 inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList()
             };
-
 
             //[1]프로모션 마스터 정보 가져오기 ===========================================================
             //프로모션 시작시간 가져오기 
@@ -1042,20 +1039,13 @@ namespace AboutMe.Web.Admin.Controllers
             ViewData["PromotionEndTime"] = PmoProductDateTo;
             ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
             //==============================================================================================
-
-
-
-            
+    
             return View(mMyMultiModelForProductPricing);
 
         }
 
 
-        //가격정보 생성
-        //[Bind(Exclude="Id")]Product productToCreate
-        //public ActionResult Create([Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
-
-
+        //가격정보 생성------------------------
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
@@ -1156,21 +1146,134 @@ namespace AboutMe.Web.Admin.Controllers
 
         }
 
-
-
-
-        /**
+        //프로모션 상품정보 등록시, 해당상품코드가 존재하는 상품코드인지 확인 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PrdPricingUpdate([Bind(Prefix = "inst_TB_PROMOTION_BY_PRODUCT_PRICE", Include = "P_CODE,PMO_PRICE,PMO_ONE_ONE_P_CODE,PMO_ONE_ONE_PRICE,USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
-        **/
-
-        /**
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult PrdPricingUpdate([Bind(Include = "USABLE_YN")]  TB_PROMOTION_BY_PRODUCT_PRICE tb_promotion_by_product_price, string CdPromotionProduct, string[] CheckCdPromotionTotal)
+        public ActionResult PcodeChk(string P_CODE)
         {
-         * **/
+            
+            int? pcodeCount = _AdminPromotionService.GetAdminPromotionProductCodeCheck(P_CODE);
+            if (pcodeCount == 1)
+            {
+                return Json(new { success = true, msg = "사용가능한 상품코드입니다." });
+            }
+            else
+            {
+                return Json(new { success = false, msg = "존재하지 않거나 비전시 상태의 상품코드입니다." });
+            }
+        }
+
+
+
+        //가격정보 복수 생성-------------------------------------
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
+        public ActionResult PrdPricingMultiCreate(string CdPromotionProduct)
+        {
+
+            var mMyMultiModelForProductPricing = new MyMultiModelForProductPricing
+            {
+                inst_TB_PROMOTION_BY_PRODUCT_PRICE = new TB_PROMOTION_BY_PRODUCT_PRICE(),
+                inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result = _AdminPromotionService.GetAdminPromotionByTotalActiveList().ToList()
+            };
+
+            //[1]프로모션 마스터 정보 가져오기 ===========================================================
+            //프로모션 시작시간 가져오기 
+            Nullable<DateTime> PmoProductDateFrom = null;
+            //프로모션 종료시간 가져오기
+            Nullable<DateTime> PmoProductDateTo = null;
+
+            List<SP_ADMIN_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result> TotalLst = _AdminPromotionService.GetAdminPromotionByProductDetail(CdPromotionProduct).ToList();
+            if (TotalLst.Count > 0)
+            {
+                PmoProductDateFrom = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_FROM);
+                PmoProductDateTo = Convert.ToDateTime(TotalLst[0].PMO_PRODUCT_DATE_TO);
+            }
+            ViewData["PMO_PRODUCT_CATEGORY"] = TotalLst[0].PMO_PRODUCT_CATEGORY;
+            ViewData["PromotionStartTime"] = PmoProductDateFrom;
+            ViewData["PromotionEndTime"] = PmoProductDateTo;
+            ViewData["PromotionUsableYN"] = TotalLst[0].USABLE_YN;
+            //==============================================================================================
+
+            return View(mMyMultiModelForProductPricing);
+
+        }
+
+
+         //가격정보 복수 생성-------------------------------------
+        [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능
+        [HttpPost]
+        public ActionResult PrdPricingMultiCreate(List<PromotionByProductReg> Tb_PmoProdEntity , string CdPromotionProduct)
+        {
+            
+            string PCode = "";
+            int ErrResultNum = 0 ;
+            int ValidatedCount = 0; 
+            foreach (PromotionByProductReg Titem in Tb_PmoProdEntity)
+            {
+                PCode = Titem.P_CODE.Trim();
+
+                if (PCode != "")
+                {
+                    //입력된 상품코드가 존재하고, 전시상태가 Y이면 
+                    int? pcodeCount = _AdminPromotionService.GetAdminPromotionProductCodeCheck(PCode); //상품유효성 검증 
+
+                    if (pcodeCount == 1) 
+                    { 
+                        int? PcodeDupCnt =_AdminPromotionService.GetAdminPromotionByProductPricingAllDupSel(CdPromotionProduct, PCode) ;
+
+                        // 동일시간대 활성화된 프로모션에 소속된 상품들중, 중복상품이 없음 OR  지금 입력한 가격정책의 UsableYN = 'N'이면 
+                        if (PcodeDupCnt == 0 || Titem.USABLE_YN == "N")
+                        {
+                            if (Titem.PMO_PRICE != null && Titem.PMO_PRICE > 0)
+                            {
+                                ValidatedCount++;
+                            }
+                            else
+                            {
+                                ErrResultNum = -3; //프로모션가격이 입력되지 않았습니다.
+                            }
+                        }
+                        else
+                        {
+                            ErrResultNum = -2 ; //프로모션에 상품코드의 중복 존재
+                        }
+                    }
+                    else 
+                    { 
+                        ErrResultNum = -1 ; //유효하지 않은 상품코드
+                        break;
+                    }
+
+                }
+            }
+
+            if (ErrResultNum == 0 && ValidatedCount > 0)
+            {
+                //일괄등록 수행후 ........................
+                // .......................................
+                //..................................
+
+                return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
+            }
+            else if (ErrResultNum == -1)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('["+PCode+"]는 존재하지 않거나 비전시 상태의 상품코드입니다.');history.go(-1);</script>");
+
+            }
+            else if (ErrResultNum == -2)
+            {
+                 return Content("<script language='javascript' type='text/javascript'>alert('["+PCode+"] 상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.');history.go(-1);</script>");
+            }
+            else if (ErrResultNum == -3)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('["+PCode+"] 프로모션 가격이 입력되지 않았습니다');history.go(-1);</script>");
+            }
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('상품가격 등록 실행과정에 오류가 있습니다');history.go(-1);</script>");
+            }
+
+         
+        }
    
         
         [HttpPost]

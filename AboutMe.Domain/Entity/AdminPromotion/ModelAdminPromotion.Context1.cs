@@ -737,5 +737,14 @@ namespace AboutMe.Domain.Entity.AdminPromotion
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE", pMO_PRODUCT_NAMEParameter, pMO_PRODUCT_MAIN_TITLEParameter, pMO_PRODUCT_SUB_TITLEParameter, pMO_PRODUCT_SHOPPING_TIPParameter, pMO_PRODUCT_MAIN_IMGParameter, pMO_PRODUCT_PC_MAINPG_IMGParameter, pMO_PRODUCT_PC_MAINPG_SMALL_IMGParameter, pMO_PRODUCT_PC_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_MAIN_IMGParameter, pMO_PRODUCT_MOBILE_MAINPG_IMGParameter, pMO_PRODUCT_MOBILE_EVENT_MAINPG_IMGParameter, pMO_PRODUCT_RATE_OR_MONEYParameter, pMO_PRODUCT_DISCOUNT_RATEParameter, pMO_PRODUCT_DISCOUNT_MONEYParameter, pMO_SET_DISCOUNT_CNTParameter, pMO_ONEONE_MULTIPLE_CNTParameter, pMO_PRODUCT_DATE_FROMParameter, pMO_PRODUCT_DATE_TOParameter, uSABLE_YNParameter, cD_PROMOTION_PRODUCTParameter);
         }
+    
+        public virtual ObjectResult<SP_ADMIN_PROMOTION_COMMON_CNT_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK", p_CODEParameter);
+        }
     }
 }
