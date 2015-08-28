@@ -341,13 +341,18 @@ i++;
                     <!--페이징-->
                     @{
                         //paging 파라메터
+
+
+                        string depthName = ViewBag.DEPTH_NAME3;
+                        depthName = HttpUtility.UrlEncode(depthName);
+                        
                         string PagingParam = "";
                         PagingParam = PagingParam + "&SORT_GBN=" + ViewBag.SORT_GBN;
                         PagingParam = PagingParam + "&P_CATE_CODE=" + ViewBag.P_CATE_CODE;
                         PagingParam = PagingParam + "&C_CATE_CODE=" + ViewBag.C_CATE_CODE;
                         PagingParam = PagingParam + "&L_CATE_CODE=" + ViewBag.L_CATE_CODE;
                         PagingParam = PagingParam + "&P_CATE_CODE_3DEPTH=" + ViewBag.P_CATE_CODE_3DEPTH;
-                        PagingParam = PagingParam + "&DEPTH_NAME3=" + ViewBag.DEPTH_NAME3;
+                        PagingParam = PagingParam + "&DEPTH_NAME3=" + depthName;
                     }
                     @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PAGESIZE, PagePerBlock = 10, CurrentPage = ViewBag.PAGE, QueryStr = PagingParam });}
                     <!--//페이징-->
