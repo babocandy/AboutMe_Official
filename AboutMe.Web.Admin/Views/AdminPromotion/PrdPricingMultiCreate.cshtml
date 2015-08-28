@@ -1,0 +1,335 @@
+﻿@*@model AboutMe.Domain.Entity.AdminPromotion.TB_PROMOTION_BY_PRODUCT*@
+
+@model AboutMe.Web.Admin.Controllers.AdminPromotionController.MyMultiModelForProductPricing
+
+
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+}
+
+@section Scripts{
+
+
+
+    @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
+    {
+        if (TempData["jsMessage"] == "-1")
+        {
+            <text>
+                <script language='javascript'>alert('데이터 insert 과정에서 에러 발생.')</script>
+            </text>
+        }
+
+        if (TempData["jsMessage"] == "-2")
+        {
+            <text>
+                <script language='javascript'>alert('상품코드 중복이 있습니다. 동일 날짜대에 실행될 프로모션에 같은 상품이 존재합니다.')</script>
+            </text>
+        }
+
+        if (TempData["jsMessage"] == "-3")
+        {
+            <text>
+                <script language='javascript'>alert('입력한 상품코드가 존재하지 않거나 비전시 상태입니다.')</script>
+            </text>
+        }
+    }
+
+
+    <script language="javascript">
+
+    function frmCheck() {
+        //alert("여기입니다");
+
+
+
+        var f = document.frm01;
+
+       
+
+         return true;
+      }
+
+
+    function upt_promotion_total( chkbox_list , hiddenfield_obj)
+    {
+
+        var checked_values = "";
+        for (var i = 0; i < chkbox_list.length; i++)
+        {
+            if (chkbox_list[i].checked == true) {
+                checked_values = checked_values + chkbox_list[i].value;
+
+                //if (i < (chkbox_list.length-1))
+                checked_values = checked_values + ","
+            }
+        }
+        hiddenfield_obj = checked_values;
+
+    }
+
+    function pcodeUseChk(obj,span_name) {
+
+
+       
+        if (obj.value == '') {
+            $(span_name).html("상품코드를 입력하세요.");
+            return false;
+        }
+        if ((obj.value).length != 8) {
+            $(span_name).html("상품코드는 8자리입니다.");
+            obj.focus();
+            return false;
+        }
+
+        $.ajax({
+            url: '/AdminPromotion/PcodeChk',
+            type: 'POST',
+            data: {
+                P_CODE: obj.value
+            },
+            success: function (data) {
+                if (data.success) {
+                    //bform.P_CODE_CHK_OK.value = "Y";
+                } else {
+                    //bform.P_CODE_CHK_OK.value = "N";
+                }
+                alert(data.msg);
+
+                //alert(data.success);
+
+            },
+            error: function (errorData) {
+                alert("error");
+                //onError(errorData);
+            }
+        });
+    }
+
+
+
+    </script>
+
+}
+
+@section Left {
+
+    @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
+}
+
+@section Header{
+    @{ Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminHeader.cshtml");}
+}
+
+@section Body{
+
+    <div class="content">
+        <!--path-->
+        <div class="path">
+            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+        </div>
+        <!--//path-->
+
+        <div class="panel">
+            <h3 class="sub-header">상품별 프로모션 가격정보 등록</h3>
+
+                <form id="frm01" name="frm01" method="post" action="/AdminPromotion/PrdPricingMultiCreate">
+
+                                        <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()" />
+                                        <table class="table table_row">
+                                            <colgroup>
+                                                    <col width="20%" /><col width="15%" /><col width="15%" /><col width="15%" /><col width="15%" />
+                                            </colgroup>
+                                            <thead>
+                                                <td>상품코드</td>
+                                                <td>전체할인 적용</td>
+                                                <td>최종할인가</td>
+                                                <td>활성화 Y/N</td>
+                                                <td><input type="button" value=" Add >> " class="btn btn-default middium" /></td>
+                                            </thead>
+                                            <tbody>
+                                                <!--[0]-->
+                                                <tr>
+                                                   
+                                                    <td>
+                                                        <input type="hidden" id="PCODE_0_CHK" name="PCODE_0_CHK" value="" />
+                                                        <input id="PCODE_0" name="PromotionByProductReg[0].PCODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_0')" />
+                                                        <font color="red"></font><span id="pcodeMsgSpan_0"></span></font>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" id="CD_PROMOTION_TOTAL_LST_0" name="PromotionByProductReg[0].CD_PROMOTION_TOTAL_LST" value=""/>
+                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+                                                        {
+                                                            <text>
+                                                            <input type="checkbox" id="CheckCdPromotiontTotal_0" name="CheckCdPromotionTotal_0" onclick="upt_promotion_total(this.form.CheckCdPromotionTotal_0, this.form.CD_PROMOTION_TOTAL_LST_0);" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
+                                                            </text>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <input id="PMO_PRICE" name="PromotionByProductReg[0].PMO_PRICE" type="text" size="7" maxlength="7" value="" />
+                                                    </td>
+                                                    <td>
+                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N")
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[0].USABLE_YN" /> <text>활성화</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[0].USABLE_YN" disabled /> <text><font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
+                                                        }
+                                                        <input type="radio" id="USABLE_YN" value="N" name="PromotionByProductReg[0].USABLE_YN" /> 비활성화
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
+                                                <!---[1]-->
+                                                <tr>
+
+                                                    <td>
+                                                        <input type="hidden" id="PCODE_1_CHK" name="PCODE_1_CHK" value="" />
+                                                        <input id="PCODE_1" name="PromotionByProductReg[1].PCODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_1')" />
+                                                        <font color="red"></font><span id="pcodeMsgSpan_1"></span></font>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" id="CD_PROMOTION_TOTAL_LST_1" name="PromotionByProductReg[1].CD_PROMOTION_TOTAL_LST" value="" />
+                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+                                                        {
+                                                            <text>
+                                                                <input type="checkbox" id="CheckCdPromotiontTotal_1" name="CheckCdPromotionTotal_1" onclick="upt_promotion_total(this.form.CheckCdPromotionTotal_1, this.form.CD_PROMOTION_TOTAL_LST_1);" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
+                                                            </text>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <input id="PMO_PRICE" name="PromotionByProductReg[1].PMO_PRICE" type="text" size="7" maxlength="7" value="" />
+                                                    </td>
+                                                    <td>
+                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N")
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[1].USABLE_YN" /> <text>활성화</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[1].USABLE_YN" disabled /> <text><font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
+                                                        }
+                                                        <input type="radio" id="USABLE_YN" value="N" name="PromotionByProductReg[1].USABLE_YN" /> 비활성화
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <!--[2]-->
+                                                <tr>
+
+                                                    <td>
+                                                        <input type="hidden" id="PCODE_2_CHK" name="PCODE_2_CHK" value="" />
+                                                        <input id="PCODE_2" name="PromotionByProductReg[2].PCODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_2')" />
+                                                        <font color="red"></font><span id="pcodeMsgSpan_2"></span></font>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" id="CD_PROMOTION_TOTAL_LST_2" name="PromotionByProductReg[2].CD_PROMOTION_TOTAL_LST" value="" />
+                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+                                                        {
+                                                            <text>
+                                                                <input type="checkbox" id="CheckCdPromotiontTotal_2" name="CheckCdPromotionTotal_2" onclick="upt_promotion_total(this.form.CheckCdPromotionTotal_2, this.form.CD_PROMOTION_TOTAL_LST_2);" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
+                                                            </text>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <input id="PMO_PRICE" name="PromotionByProductReg[2].PMO_PRICE" type="text" size="7" maxlength="7" value="" />
+                                                    </td>
+                                                    <td>
+                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N")
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[2].USABLE_YN" /> <text>활성화</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[2].USABLE_YN" disabled /> <text><font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
+                                                        }
+                                                        <input type="radio" id="USABLE_YN" value="N" name="PromotionByProductReg[2].USABLE_YN" /> 비활성화
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <!--[3]-->
+                                                <tr>
+
+                                                    <td>
+                                                        <input type="hidden" id="PCODE_3_CHK" name="PCODE_3_CHK" value="" />
+                                                        <input id="PCODE_3" name="PromotionByProductReg[3].PCODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_3')" />
+                                                        <font color="red"></font><span id="pcodeMsgSpan_3"></span></font>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" id="CD_PROMOTION_TOTAL_LST_3" name="PromotionByProductReg[3].CD_PROMOTION_TOTAL_LST" value="" />
+                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+                                                        {
+                                                            <text>
+                                                                <input type="checkbox" id="CheckCdPromotiontTotal_3" name="CheckCdPromotionTotal_3" onclick="upt_promotion_total(this.form.CheckCdPromotionTotal_3, this.form.CD_PROMOTION_TOTAL_LST_3);" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
+                                                            </text>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <input id="PMO_PRICE" name="PromotionByProductReg[3].PMO_PRICE" type="text" size="7" maxlength="7" value="" />
+                                                    </td>
+                                                    <td>
+                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N")
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[3].USABLE_YN" /> <text>활성화</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[3].USABLE_YN" disabled /> <text><font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
+                                                        }
+                                                        <input type="radio" id="USABLE_YN" value="N" name="PromotionByProductReg[3].USABLE_YN" /> 비활성화
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                <!--[4]-->
+                                                <tr>
+
+                                                    <td>
+                                                        <input type="hidden" id="PCODE_4_CHK" name="PCODE_4_CHK" value="" />
+                                                        <input id="PCODE_4" name="PromotionByProductReg[4].PCODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_4')" />
+                                                        <font color="red"></font><span id="pcodeMsgSpan_4"></span></font>
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" id="CD_PROMOTION_TOTAL_LST_4" name="PromotionByProductReg[4].CD_PROMOTION_TOTAL_LST" value="" />
+                                                        @foreach (var item2 in Model.inst_SP_ADMIN_PROMOTION_BY_TOTAL_ACTIVE_LIST_SEL_Result)
+                                                        {
+                                                            <text>
+                                                                <input type="checkbox" id="CheckCdPromotiontTotal_4" name="CheckCdPromotionTotal_4" onclick="upt_promotion_total(this.form.CheckCdPromotionTotal_4, this.form.CD_PROMOTION_TOTAL_LST_4);" value="@item2.CD_PROMOTION_TOTAL" /> @item2.PMO_TOTAL_NAME <br />
+                                                            </text>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <input id="PMO_PRICE" name="PromotionByProductReg[4].PMO_PRICE" type="text" size="7" maxlength="7" value="" />
+                                                    </td>
+                                                    <td>
+                                                        @if (ViewData["PromotionUsableYN"].ToString() != "N")
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[4].USABLE_YN" /> <text>활성화</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="radio" id="USABLE_YN" value="Y" name="PromotionByProductReg[4].USABLE_YN" disabled /> <text><font color="red">-프로모션이 비활성화 상태이면 소속상품을 활성화상태로 등록할 수 없습니다</font></text>
+                                                        }
+                                                        <input type="radio" id="USABLE_YN" value="N" name="PromotionByProductReg[4].USABLE_YN" /> 비활성화
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+
+
+                                                
+                                            </tbody>
+                                        </table>
+
+            </form>
+        </div>
+
+        <div class="btn_area">
+            <input type="submit" value="저장" class="btn btn-default middium" />
+            <a class="btn btn-primary small" href="/AdminPromotion/PrdPricingIndex?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">목록</a>
+        </div>
+
+
+    </div>
+}
+

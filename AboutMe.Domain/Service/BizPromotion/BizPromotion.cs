@@ -65,7 +65,7 @@ namespace AboutMe.Domain.Service.BizPromotion
                    
                 }
 
-                //[2]포인트정보 - 비 로그인시에는 일반, 브론즈회원으로.. 
+                //[2]포인트정보 - 비 로그인시에는 일반, 브론즈회원으로.. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 MGbn = "A" ;
                 MGrade = "S" ;
                 List<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result> lst2 = PmoService.GetPointSaveRateByMemGrade(MGbn, MGrade);
@@ -83,8 +83,19 @@ namespace AboutMe.Domain.Service.BizPromotion
 
             if (M_id != "") //===========================================================================================로긴 했으면
             {
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //
+                //
+                // 등급을 VIP 로 강제지정
+                string tmp_MGrade = "";
+                tmp_MGrade = "V"; //주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보여주기로 한다
+                //
+                //
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                
                 //[1] 임직원가 , VIP 할인가 
-                List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> lst1 = PmoService.GetPromotionTotalInfo_ByProduct(PCode, MGbn, MGrade);
+                List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> lst1 = PmoService.GetPromotionTotalInfo_ByProduct(PCode, MGbn, tmp_MGrade);
 
 
                 //임직원 전용할인 존재 여부 활인
@@ -123,7 +134,7 @@ namespace AboutMe.Domain.Service.BizPromotion
                 {
                     var itm = qry.FirstOrDefault();
 
-                    if (itm.M_GRADE == "V") //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!일단은 VIP대상 등급할인만 보여주기로함 !!!!!!!!!!!!!!!!!!!!!!!!!
+                    if (itm.M_GRADE == "V") //!!!!!!!!!!!!!!!!!!!!!!!일단은 VIP대상 등급할인만 보여주기로함- db상으로는 가능하지만 브론즈,실버,골드 전체할인제도는 정책적으로 사용하지 않는다 !!!!!!!!!!!!!!!!!!!!!!!!!
                     {
 
                         if (itm.PMO_TOTAL_CATEGORY == "03") //등급할인 이 있으면 최종가를 그렇게 적용
