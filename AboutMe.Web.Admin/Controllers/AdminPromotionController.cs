@@ -1203,54 +1203,87 @@ namespace AboutMe.Web.Admin.Controllers
         [HttpPost]
         public ActionResult PrdPricingMultiCreate(List<PromotionByProductReg> Tb_PmoProdEntity , string CdPromotionProduct)
         {
-            
+
             string PCode = "";
-            int ErrResultNum = 0 ;
-            int ValidatedCount = 0; 
-            foreach (PromotionByProductReg Titem in Tb_PmoProdEntity)
+            int ErrResultNum = 0;
+            int ValidatedCount = 0;
+
+            //[1]빈 데이터를 모두 삭제한다 ----------------------------
+            Tb_PmoProdEntity.RemoveAll(c => c.P_CODE == null || c.P_CODE.Trim() == "" || c.PMO_PRICE == null || c.PMO_PRICE == 0 || c.USABLE_YN == null);
+            //--------------------------------------------------------
+
+            //[2]중복 상품코드가 있는지 체크한다 ----------------------
+            var query = Tb_PmoProdEntity.GroupBy(x => x.P_CODE)
+              .Where(g => g.Count() > 1)
+              .Select(y => y.Key)
+              .ToList();
+
+            int DupCount = query.Count;
+            //-------------------------------------------------------
+
+            //중복된 상품코드가 있는지
+            if (DupCount != 0)
             {
-                PCode = Titem.P_CODE.Trim();
-
-                if (PCode != "")
+                ErrResultNum = -4; //입력된 상품코드중 중복된 코드가 존재합니다 
+            }
+            else
+            {
+                foreach (PromotionByProductReg Titem in Tb_PmoProdEntity)
                 {
-                    //입력된 상품코드가 존재하고, 전시상태가 Y이면 
-                    int? pcodeCount = _AdminPromotionService.GetAdminPromotionProductCodeCheck(PCode); //상품유효성 검증 
+                    if (Titem.P_CODE != null && Titem.P_CODE.Trim() != "")
+                    {
+                        PCode = Titem.P_CODE.Trim();
 
-                    if (pcodeCount == 1) 
-                    { 
-                        int? PcodeDupCnt =_AdminPromotionService.GetAdminPromotionByProductPricingAllDupSel(CdPromotionProduct, PCode) ;
 
-                        // 동일시간대 활성화된 프로모션에 소속된 상품들중, 중복상품이 없음 OR  지금 입력한 가격정책의 UsableYN = 'N'이면 
-                        if (PcodeDupCnt == 0 || Titem.USABLE_YN == "N")
+                        //입력된 상품코드가 존재하고, 전시상태가 Y이면 
+                        int? pcodeCount = _AdminPromotionService.GetAdminPromotionProductCodeCheck(PCode); //상품유효성 검증 
+
+                        if (pcodeCount == 1)
                         {
-                            if (Titem.PMO_PRICE != null && Titem.PMO_PRICE > 0)
+                            int? PcodeDupCnt = _AdminPromotionService.GetAdminPromotionByProductPricingAllDupSel(CdPromotionProduct, PCode);
+
+                            // 동일시간대 활성화된 프로모션에 소속된 상품들중, 중복상품이 없음 OR  지금 입력한 가격정책의 UsableYN = 'N'이면 
+                            if (PcodeDupCnt == 0 || Titem.USABLE_YN == "N")
                             {
-                                ValidatedCount++;
+                                if (Titem.PMO_PRICE != null && Titem.PMO_PRICE > 0)
+                                {
+                                    ValidatedCount++;
+                                }
+                                else
+                                {
+                                    ErrResultNum = -3; //프로모션가격이 입력되지 않았습니다.
+                                    break;
+                                }
                             }
                             else
                             {
-                                ErrResultNum = -3; //프로모션가격이 입력되지 않았습니다.
+                                ErrResultNum = -2; //프로모션에 상품코드의 중복 존재
+                                break;
                             }
                         }
                         else
                         {
-                            ErrResultNum = -2 ; //프로모션에 상품코드의 중복 존재
+                            ErrResultNum = -1; //유효하지 않은 상품코드
+                            break;
                         }
-                    }
-                    else 
-                    { 
-                        ErrResultNum = -1 ; //유효하지 않은 상품코드
-                        break;
                     }
 
                 }
             }
+            
 
             if (ErrResultNum == 0 && ValidatedCount > 0)
             {
-                //일괄등록 수행후 ........................
-                // .......................................
-                //..................................
+                //일괄등록 수행
+                int is_success = _AdminPromotionService.InsAdminPromotionByProductPricingMultiple(Tb_PmoProdEntity, CdPromotionProduct);
+                if (is_success == 1) // INSERT가 성공했으면 
+                {
+                    return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
+                }
+                else
+                {
+                    TempData["jsMessage"] = "-1"; //데이터 INSERT 과정에 에러발생
+                }
 
                 return RedirectToAction("PrdPricingIndex", new { CdPromotionProduct = CdPromotionProduct });
             }
@@ -1266,6 +1299,10 @@ namespace AboutMe.Web.Admin.Controllers
             else if (ErrResultNum == -3)
             {
                 return Content("<script language='javascript' type='text/javascript'>alert('["+PCode+"] 프로모션 가격이 입력되지 않았습니다');history.go(-1);</script>");
+            }
+            else if (ErrResultNum == -4)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert(' 입력된 상품코드중 중복된 코드가 존재합니다');history.go(-1);</script>");
             }
             else
             {

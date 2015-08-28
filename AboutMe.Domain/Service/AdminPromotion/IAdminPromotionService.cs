@@ -44,6 +44,7 @@ namespace AboutMe.Domain.Service.AdminPromotion
 
         int GetAdminPromotionByProductPricingAllDupSel(string CdPromotionProduct, string Pcode);
         int InsAdminPromotionByProductPricing(TB_PROMOTION_BY_PRODUCT_PRICE Tb, string CdPromotionProduct, string[] CheckCdPromotiontTotal);
+        int InsAdminPromotionByProductPricingMultiple(List<PromotionByProductReg> Tb_PmoProdEntity, string CdPromotionProduct);
         int GetAdminPromotionProductCodeCheck(string Pcode);
 
 
