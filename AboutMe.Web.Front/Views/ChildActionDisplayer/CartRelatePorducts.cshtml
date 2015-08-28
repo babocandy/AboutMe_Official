@@ -49,10 +49,10 @@
                     <p class="pprice">
                         @if (item.RESULT_PRICE != item.SELLING_PRICE)
                         {
-                            <del>@string.Format("{0:#,##0}", item.RESULT_PRICE)원</del>
+                            <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
                         }
 
-                        <strong>@string.Format("{0:#,##0}", @item.SELLING_PRICE)</strong>
+                        <strong>@string.Format("{0:#,##0}", @item.RESULT_PRICE)</strong>
                     </p>
                     <a href="#" class="cart" onclick="Cart_Product_Input('@item.P_CODE', 1);return false;"><img src="/aboutCom/images/shopping/ico_cart.png" alt=""></a>
                     <span class="frame"><span class="l"></span><span class="t"></span><span class="r"></span><span class="b"></span></span>

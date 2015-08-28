@@ -1,7 +1,8 @@
 ﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewInputViewModel
-
+@using AboutMe.Web.Admin.Controllers
 @{
     Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
+    var myctrl = ViewContext.Controller as AdminReviewController;
 }
 
 
@@ -30,6 +31,7 @@
 
         if (rNum != "0" && rNum != "") {
             alert(rMsg);
+            self.close();
         } else if (rNum == "0") {
             closePopup();
         }
@@ -45,14 +47,25 @@
     {
         @Html.AntiForgeryToken()
         <input type="hidden" name="IDX" value="@Model.IDX" />
-        <table class="table table_row" style="min-width:500px">
+    <input type="hidden" name="P_CODE" value="@Model.P_CODE" />
+    <input type="hidden" name="P_NAME" value="@Model.P_NAME" />
+    <input type="hidden" name="MEDIA_GBN_LBL" value="@Model.MEDIA_GBN_LBL" />
+    <input type="hidden" name="INS_DATE" value="@Model.INS_DATE" />
+    <input type="hidden" name="M_ID" value="@Model.M_ID" />
+    <input type="hidden" name="M_NAME" value="@Model.M_NAME" />
+    <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
+    <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
+    <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
+    <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
+
+        <table class="table table_row" style="max-width:500px">
             <tr>
                 <th>베스트지정</th>
-                @{
-        var isBestChk = Model.IS_BEST == "Y" ? "checked" : "";
-                }
-
-                <td colspan="3"><label for="chb1"><input type="checkbox" id="chb1" name="IS_BEST" value="Y" @isBestChk /></label></td>
+                <td colspan="3"><label for="chb1"><input type="checkbox" id="chb1" name="IS_BEST" value="Y" @(Model.IS_BEST == "Y" ? "checked" : "") /></label></td>
+            </tr>
+            <tr>
+                <th>최다리뷰 상품 지정</th>
+                <td colspan="3"><label for="chb2"><input type="checkbox" id="chb2" name="IS_MOST_CNT" value="Y" @(Model.IS_MOST_CNT == "Y" ? "checked" : "") /></label></td>
             </tr>
             <tr>
                 <th>상품코드</th>
@@ -76,8 +89,8 @@
                 <th>전시여부</th>
                 <td colspan="3">
                     @{
-        var checked_0 = Model.IS_DISPLAY == "Y" ? "checked" : "";
-        var checked_1 = Model.IS_DISPLAY == "N" ? "checked" : "";
+                        var checked_0 = Model.IS_DISPLAY == "Y" ? "checked" : "";
+                        var checked_1 = Model.IS_DISPLAY == "N" ? "checked" : "";
                     }
                     <label for="radi1"><input type="radio" name="IS_DISPLAY" id="radi1" value="Y" @checked_0 /><span class="txt mr5">전시</span></label>
                     <label for="radi2"><input type="radio" name="IS_DISPLAY" id="radi2" value="N" @checked_1 /><span class="txt mr5">비전시</span></label>
@@ -86,12 +99,25 @@
             <tr>
                 <th>피부타입</th>
                 <td>@Model.SKIN_TYPE_LBL</td>
-                <th>포토이미지</th>
-                <td><img src="@Model.ADD_IMAGE" alt="" /></td>
+                <th>포토이미지1</th>
+                <td>
+                    @if (Model.IS_PHOTO == "Y")
+	                {
+                        <img src="@string.Format("{0}R308_{1}", myctrl._img_path_review, Model.ADD_IMAGE)   " alt="" />
+                    }
+                    else
+                    {
+                        <span>텍스트 리뷰입니다.</span>
+                    }
+                   
+                </td>
             </tr>
             <tr>
                 <th>내용</th>
-                <td colspan="3">@Model.COMMENT</td>
+                <td colspan="3">
+                <textarea style="width:100%;height:100px;">@Html.Raw(Model.COMMENT)</textarea>
+                   
+                </td>
             </tr>
         </table>
 

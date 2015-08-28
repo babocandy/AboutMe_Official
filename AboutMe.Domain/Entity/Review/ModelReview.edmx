@@ -68,6 +68,10 @@
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
           <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_REVIEW_PRODCUT_TOTAL_BY_PCODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_REVIEW_PRODUCT_COMPLETE_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="M_ID" Type="varchar" Mode="In" />
         </Function>
@@ -256,6 +260,10 @@
             <Parameter Name="SORT" Mode="In" Type="String" />
             <Parameter Name="TOTAL_PAGE" Mode="InOut" Type="Int32" />
             <Parameter Name="TOTAL_ITEM" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT" ReturnType="Collection(ReviewModel.SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result)" />
+          <FunctionImport Name="SP_REVIEW_PRODCUT_TOTAL_BY_PCODE" ReturnType="Collection(Int32)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_REVIEW_PRODUCT_READY_SEL_Result">
@@ -542,6 +550,31 @@
           <Property Type="String" Name="TAG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_ID_LBL" Nullable="true" MaxLength="27" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="M_SEX" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_SEX_LBL" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="M_BIRTHDAY" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="M_BIRTHDAY_LBL" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="SKIN_TYPE_CSS" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="ADD_IMAGE" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -896,6 +929,36 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT" FunctionName="ReviewModel.Store.SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewModel.SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_ID_LBL" ColumnName="M_ID_LBL" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="M_SEX" ColumnName="M_SEX" />
+                <ScalarProperty Name="M_SEX_LBL" ColumnName="M_SEX_LBL" />
+                <ScalarProperty Name="M_BIRTHDAY" ColumnName="M_BIRTHDAY" />
+                <ScalarProperty Name="M_BIRTHDAY_LBL" ColumnName="M_BIRTHDAY_LBL" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
+                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="SKIN_TYPE_CSS" ColumnName="SKIN_TYPE_CSS" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
+                <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_REVIEW_PRODCUT_TOTAL_BY_PCODE" FunctionName="ReviewModel.Store.SP_REVIEW_PRODCUT_TOTAL_BY_PCODE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

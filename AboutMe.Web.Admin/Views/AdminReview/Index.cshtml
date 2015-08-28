@@ -1,9 +1,11 @@
 ﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewListViewModel
+@using AboutMe.Web.Admin.Controllers
 @using AboutMe.Common.Helper 
 @using AboutMe.Common.Data        
 @{
     ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_AboutMeAdminLayoutA.cshtml";
+    var myctrl = ViewContext.Controller as AdminReviewController;
 }
 @section Left {
 
@@ -160,20 +162,21 @@
     <div class="panel">
         <h4>총 검색 :@(Model.Total)개</h4>
         <table class="table table_col">
-            <colgroup><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""></colgroup>
+            <colgroup><col width="5"><col width="5"><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""><col width=""></colgroup>
             <thead>
                 <tr>
                     <th>No</th>
                     <th>베스트지정</th>
+                    <th>최다리뷰지정</th>
                     <th>매체구분</th>
                     <th>포토이미지</th>
                     <th>내용</th>
                     <th>회원 ID</th>
-                    <th>등급</th>
+                    <!--<th>등급</th>-->
                     <th>카테고리</th>
                     <th>상품이미지</th>
                     <th>상품품번</th>
-                    <th>조회</th>
+     
                     <th>전시여부</th>
                     <th>등록일</th>
                     <th>수정</th>
@@ -185,19 +188,24 @@
                     <tr>
                         <td>@item.IDX</td>
                         <td>@(item.IS_BEST=="Y" ? "O":"")</td>
-                        <td>@item.MEDIA_GBN</td>
-                        <td><img src="@item.ADD_IMAGE" alt="" /></td>
+                        <td>@(item.IS_MOST_CNT == "Y" ? "O" : "")</td>
+                        <td>@item.MEDIA_GBN_LBL</td>
+                        <td>
+                            @if (item.IS_PHOTO == "Y")
+                            {
+                                <img src="@string.Format("{0}R308_{1}",myctrl._img_path_review,item.ADD_IMAGE)" alt="" />
+                            }
+                        
+                        </td>
                         <td>@item.P_NAME</td>
                         <td>@item.M_ID</td>
-                        <td>@item.M_GRADE_LBL</td>
+           
                         <td>
                             @item.CATE_GBN_LBL
                         </td>
-                        <td><img src="@item.P_MAIN_IMG" alt="" /></td>
+                        <td><img src="@string.Format("{0}R120_{0}", myctrl._img_path_product , item.P_MAIN_IMG)" alt="" /></td>
                         <td>@item.P_CODE</td>
-                        <td>
-                            @item.VIEW_CNT
-                        </td>
+
                         <td>
                             @item.IS_DISPLAY_LBL
                         </td>
@@ -205,7 +213,7 @@
                             @item.INS_DATE.Value.ToString("yyyy-MM-dd")
                         </td>
                         <td>
-                            <a class="btn btn-success small" href="#" onclick="window.open('@Url.Action(string.Format("Update/{0}", item.IDX), "AdminReview", Model.RouteParam)', 'window', 'width=800,height=400');">수정</a>
+                            <a class="btn btn-success small" href="#" onclick="window.open('@Url.Action(string.Format("Update/{0}", item.IDX), "AdminReview", Model.RouteParam)', 'window', 'width=800,height=500');">수정</a>
                         </td>
                     </tr>
                 }
