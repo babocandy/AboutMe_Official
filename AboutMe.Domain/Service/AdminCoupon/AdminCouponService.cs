@@ -138,7 +138,6 @@ namespace AboutMe.Domain.Service.AdminCoupon
                             (CdCoupon, Tb.COUPON_NAME, Tb.COUPON_AD_MSG, Tb.COUPON_USE_DESCRIPTION, Tb.FIXED_PERIOD_FROM, Tb.FIXED_PERIOD_TO, Tb.EXRIRED_DAY_FROM_ISSUE_DT
                             , Tb.MASTER_FROM_DATE, Tb.MASTER_TO_DATE, Tb.USABLE_YN);
 
-
                         //적용 회원등급 삭제
                         AdmCouponContext.SP_ADMIN_COUPON_MEMBER_GRADE_DEL(CdCoupon);
 
@@ -246,8 +245,6 @@ namespace AboutMe.Domain.Service.AdminCoupon
 
 
         #endregion
-
-
 
 
         #region 쿠폰 적용 대상 상품  ==================================================================

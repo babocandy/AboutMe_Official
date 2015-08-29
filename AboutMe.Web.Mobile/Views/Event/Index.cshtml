@@ -53,10 +53,7 @@
     <!--진행중 기획전/이벤트-->
     <div id="eventCon1" class="tab_content eventcon">
         <!--타임세일-->
-        <div class="event_timesale">
-            <a href="#link"><img class="lazyload" data-original="/aboutCom/images/sample/event_ban1.jpg" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></a>
-            <p id="timesale" class="remain_time ffOS"></p>
-        </div>
+        @{Html.RenderAction("EventPgTimeSaleBanner", "ChildActionPromotion");}
         <!--//타임세일-->
 
         <div class="event_plan">

@@ -87,7 +87,7 @@
      }
     <li>
         <strong>포인트</strong>
-        <span class="discount_num v2">ⓟ @string.Format("{0:#,##0}",ViewBag.NoLogin_Point)</span>
+        <span class="discount_num v2">ⓟ @string.Format("{0:#,##0}",int.Parse(ViewBag.NoLogin_Point))</span>
     </li>
 }
 else //로그인 했으면 
@@ -136,6 +136,6 @@ else //로그인 했으면
     }
     <li>
         <strong>포인트</strong>
-        <span class="discount_num v2">ⓟ @string.Format("{0:#,##0}",ViewBag.Login_Point)</span>
+        <span class="discount_num v2">ⓟ @string.Format("{0:#,##0}",int.Parse(ViewBag.Login_Point))</span>
     </li>
 }

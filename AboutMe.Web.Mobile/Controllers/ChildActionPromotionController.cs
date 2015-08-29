@@ -98,5 +98,27 @@ namespace AboutMe.Web.Mobile.Controllers
             return View();
         }
         #endregion
+
+
+
+
+
+        #region  이벤트페이지의 타임세일배너
+
+        [ChildActionOnly]
+        public ActionResult EventPgTimeSaleBanner()
+        {
+            ViewBag.PromotionPhotoPath = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //이미지디렉토리경로
+
+            List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> lst = new List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>();
+
+            //타임세일 프로모션 정보중 유효한 TOP 1 가져오기 
+            lst = _PromotionService.GetPromotionByProductTop1_Info("03").ToList();
+
+            return View(lst);
+        }
+
+        #endregion 
+
     }
 }

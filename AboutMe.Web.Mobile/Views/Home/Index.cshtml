@@ -6,51 +6,51 @@
 @{
 
     @helper fSkinTroubleDisplay(string argCD = "", string argNAME = "")
-{
-    string trouble_ico_class = "type1";
-    string m_trouble_name = "보습";
-    string str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
-    switch (argCD)
     {
-        case "101201100": m_trouble_name = "보습"; trouble_ico_class = "type1"; str_comment = "<strong>5 Step 수분가득 보습케어</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101202100": m_trouble_name = "탄력/주름"; trouble_ico_class = "type2"; str_comment = "<strong>5 Step 촉촉하게 채워주는 스페셜 케어</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101203100": m_trouble_name = "브라이트닝"; trouble_ico_class = "type3"; str_comment = "<strong>5 Step 싱그러운 피부리듬 회복케어</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101204100": m_trouble_name = "화이트닝"; trouble_ico_class = "type4"; str_comment = "<strong>5 Step 닦아내고 채워주는 이중케어</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101205100": m_trouble_name = "안티에이징"; trouble_ico_class = "type5"; str_comment = "<strong>5 Step 피부체력강화 집중케어</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101206100": m_trouble_name = "피지,모공"; trouble_ico_class = "type6"; str_comment = "<strong>5 Step 쫀쫀하고 탄탄한 어린 모공만들기</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101207100": m_trouble_name = "생기,활력"; trouble_ico_class = "type7"; str_comment = "<strong>5 Step 환하고 윤기나는 미백&영양케어</strong>로<br />피부고민을 해결해보세요!";
-            break;
-        case "101208100": m_trouble_name = "자외선 차단"; trouble_ico_class = "type8"; str_comment = "<strong>5 Step 영양 수분가득 자외선 차단</strong>으로<br />피부고민을 해결해보세요!";
-            break;
-    }
+        string trouble_ico_class = "type1";
+        string m_trouble_name = "보습";
+        string str_comment = "5 Step 수분가득 보습케어로 피부고민을 해결해보세요!";
+        switch (argCD)
+        {
+            case "101201100": m_trouble_name = "보습"; trouble_ico_class = "type1"; str_comment = "<strong>5 Step 수분가득 보습케어</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101202100": m_trouble_name = "탄력/주름"; trouble_ico_class = "type2"; str_comment = "<strong>5 Step 촉촉하게 채워주는 스페셜 케어</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101203100": m_trouble_name = "브라이트닝"; trouble_ico_class = "type3"; str_comment = "<strong>5 Step 싱그러운 피부리듬 회복케어</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101204100": m_trouble_name = "화이트닝"; trouble_ico_class = "type4"; str_comment = "<strong>5 Step 닦아내고 채워주는 이중케어</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101205100": m_trouble_name = "안티에이징"; trouble_ico_class = "type5"; str_comment = "<strong>5 Step 피부체력강화 집중케어</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101206100": m_trouble_name = "피지,모공"; trouble_ico_class = "type6"; str_comment = "<strong>5 Step 쫀쫀하고 탄탄한 어린 모공만들기</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101207100": m_trouble_name = "생기,활력"; trouble_ico_class = "type7"; str_comment = "<strong>5 Step 환하고 윤기나는 미백&영양케어</strong>로<br />피부고민을 해결해보세요!";
+                break;
+            case "101208100": m_trouble_name = "자외선 차단"; trouble_ico_class = "type8"; str_comment = "<strong>5 Step 영양 수분가득 자외선 차단</strong>으로<br />피부고민을 해결해보세요!";
+                break;
+        }
 
-    <div class="login" >
-        <p class="tittxt"><strong>@argNAME</strong> 님, @Html.Raw(@str_comment)</p>
-        <!--
-        피부타입별 class
-        보습 :  type1
-        탄력/주름 : type2
-        브라이트닝 : type3
-        화이트닝 : type4
-        안티에이징: type5
-        피지/모공: type6
-        생기/활력 : type7
-        자외선차단: type8
-        -->
-        <span class="ico_skin @trouble_ico_class"></span>
-        <p class="txt_skintype"><span>@m_trouble_name</span></p>
-        <a href="/Shopping/Index?CATE_CD=@argCD" class="btn btn_white_h30 btn_viewprd">상품보기</a>
-    </div>
+        <div class="login" >
+            <p class="tittxt"><strong>@argNAME</strong> 님, @Html.Raw(@str_comment)</p>
+            <!--
+            피부타입별 class
+            보습 :  type1
+            탄력/주름 : type2
+            브라이트닝 : type3
+            화이트닝 : type4
+            안티에이징: type5
+            피지/모공: type6
+            생기/활력 : type7
+            자외선차단: type8
+            -->
+            <span class="ico_skin @trouble_ico_class"></span>
+            <p class="txt_skintype"><span>@m_trouble_name</span></p>
+            <a href="/Shopping/Index?CATE_CD=@argCD" class="btn btn_white_h30 btn_viewprd">상품보기</a>
+        </div>
     
 
 
-} //func
+    } //func
 
 }
 
