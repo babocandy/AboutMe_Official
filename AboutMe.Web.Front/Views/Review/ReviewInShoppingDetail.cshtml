@@ -67,7 +67,7 @@
                             @Html.Raw(item.COMMENT.Replace("\r\n","<br/>"));
                             @if (item.IS_PHOTO == "Y")
                             {
-                                <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
+                                <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" />
                             }
                         </div>
 
@@ -78,8 +78,9 @@
             </div>
             <!--//리뷰 슬라이드-->
 
-            <div class="datanone nobg" style="text-align:center;display:@(Model.Reviews.Count > 0 ? "none":"block")">
-                <p class="txt_none">상품리뷰가 없습니다.</p>
+            <div class="no_data" style="display:@(Model.Reviews.Count > 0 ? "none":"block")">
+                <img src="/aboutCom/images/common/ico_nodata2.gif" alt="">
+                <p class="txt">상품 리뷰가 없습니다.</p>
             </div>
 
             <!--페이징-->
@@ -102,9 +103,12 @@
                 </ul>
             </div>
 
-            <div class="datanone nobg" style="display:none;text-align:center" >
-                <p class="txt_none">체험단리뷰가 없습니다.</p>
+            <div class="no_data" style="display:none;">
+                <img src="/aboutCom/images/common/ico_nodata2.gif" alt="">
+                <p class="txt">체험단 리뷰가 없습니다.</p>
             </div>
+
+
             <!--//체험단리뷰-->
             <!--리뷰상세팝업-->
             <div class="reviewpop_wrap">
@@ -388,7 +392,7 @@
                             html += item.COMMENT.replace('\r\n','<br/>');
             if (item.IS_PHOTO == "Y")
             {
-                                html += "          <img src='"+img_path_review+item.ADD_IMAGE+"' alt='' />";
+                                html += "          <img src='"+img_path_review+"R308_"+item.ADD_IMAGE+"' alt='' />";
                                 }
                             html += "       </div>";
 
@@ -440,13 +444,13 @@
                     if(data.Reviews.length > 0){
                         buildList2(data.Reviews);
 
-                        $("#review2 .datanone").hide();
+                        $("#review2 .no_data").hide();
 
 
                         paging(no, pageSize, blockSize, data.Total, $("#review2 .paging"), "review.getReviewExpListByPageNo" );
 
                     }else {
-                        $("#review2 .datanone").show();
+                        $("#review2 .no_data").show();
                        
                     }
 
@@ -503,7 +507,7 @@
 
             html += "    <div class='reviewcont' onclick=\"reviewpop_view("+item.IDX +",'"+item.P_CODE+"',this);return false;\">";
             html += "        <div class='photo'>";
-            html += "             <img src='"+img_path_review+item.SUB_IMG_1+"' alt='' />";
+            html += "             <img src='"+img_path_review+"R308_"+item.SUB_IMG_1+"' alt='' />";
             html += "        </div>";
             html += "        <div class='detail'>";
             html += "            <div class='tag'>";

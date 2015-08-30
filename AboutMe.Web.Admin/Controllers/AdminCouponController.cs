@@ -203,7 +203,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
-        public ActionResult Update([Bind(Prefix = "inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0]", Include = "COUPON_NAME,FIXED_PERIOD_FROM,FIXED_PERIOD_TO,EXRIRED_DAY_FROM_ISSUE_DT,MASTER_FROM_DATE,MASTER_TO_DATE,USABLE_YN")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade, string CdCoupon
+        public ActionResult Update([Bind(Prefix = "inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0]", Include = "COUPON_NAME,COUPON_USE_DESCRIPTION,FIXED_PERIOD_FROM,FIXED_PERIOD_TO,EXRIRED_DAY_FROM_ISSUE_DT,MASTER_FROM_DATE,MASTER_TO_DATE,USABLE_YN")]  TB_COUPON_MASTER tb_coupon_master, string[] CheckMemGrade, string CdCoupon
                             , string SERVICE_LIFE_GBN, string ORG_MASTER_FROM_DATE, string ORG_MASTER_TO_DATE, string ORG_FIXED_PERIOD_FROM, string ORG_FIXED_PERIOD_TO)
         {
 
@@ -302,12 +302,8 @@ namespace AboutMe.Web.Admin.Controllers
             } //발행된 쿠폰이 있으면 [END]======================================================================================================
        
 
-           
-
-            
             int is_success = 1;
        
-
             //if (ModelState.IsValid)
             //{
 

@@ -121,7 +121,7 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/index.asp">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <a href="#">상품별 프로모션</a> &gt; <strong>상품별 프로모션 소속 상품</strong>
         </div>
         <!--//path-->
 
@@ -130,6 +130,7 @@
             @if (IsOverEndingTime(Convert.ToDateTime(ViewData["PromotionEndTime"])) != true )
             { 
                 <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 등록 </a>
+                <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingMultiCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 복수등록 </a>
             }
             else
             {

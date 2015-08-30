@@ -32,9 +32,6 @@ namespace AboutMe.Domain.Service.Point
 
             List<SP_POINT_MY_HISTORY_SEL_Result> lst = new List<SP_POINT_MY_HISTORY_SEL_Result>();
 
-            Debug.WriteLine(p.M_ID);
-            Debug.WriteLine(p.PAGE);
-            Debug.WriteLine(p.PAGE_SIZE);
 
             using (PointEntities context = new PointEntities())
             {

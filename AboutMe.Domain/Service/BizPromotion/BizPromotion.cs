@@ -46,7 +46,6 @@ namespace AboutMe.Domain.Service.BizPromotion
             CouponService CpnService  = new CouponService();
             PromotionService PmoService = new PromotionService();
 
-
             int PointSavingRate = 0;
             int PointSaving = 0 ;
             int MinusPrice = 0;
@@ -54,23 +53,19 @@ namespace AboutMe.Domain.Service.BizPromotion
             if(M_id == "") //============================================================================================로긴 안했으면
             {
                 //[1]쿠폰정보
-            
-
                 List<SP_COUPON_TOP1_BY_PRD_SEL_NO_LOGIN_SEL_Result> lst1  = CpnService.GetCouponTop1_ByNoLogin_ByPrd(UsableDeviceGbn, PCode);
                 if (lst1.Count > 0)
                 {
                     dict["NoLogin_Coupon_RateOrMoney"] = lst1[0].RATE_OR_MONEY.ToString();
                     dict["NoLogin_Coupon_Discount_Rate"] = lst1[0].COUPON_DISCOUNT_RATE.ToString();
                     dict["NoLogin_Coupon_Discount_Money"] = lst1[0].COUPON_DISCOUNT_MONEY.ToString();
-                   
                 }
 
-                //[2]포인트정보 - 비 로그인시에는 일반, 브론즈회원으로.. 
+                //[2]포인트정보 - 비 로그인시에는 일반, 브론즈회원으로.. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 MGbn = "A" ;
                 MGrade = "S" ;
                 List<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result> lst2 = PmoService.GetPointSaveRateByMemGrade(MGbn, MGrade);
                 
-
                 if(lst2.Count > 0)
                 {
                     PointSavingRate= lst2[0].SAVE_RATE.Value;
@@ -83,9 +78,17 @@ namespace AboutMe.Domain.Service.BizPromotion
 
             if (M_id != "") //===========================================================================================로긴 했으면
             {
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //
+                // 등급을 VIP 로 강제지정
+                string tmp_MGrade = "";
+                tmp_MGrade = "V"; //주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보여주기로 한다
+                //
+                //
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                
                 //[1] 임직원가 , VIP 할인가 
-                List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> lst1 = PmoService.GetPromotionTotalInfo_ByProduct(PCode, MGbn, MGrade);
-
+                List<SP_PROMOTION_TOTAL_BY_PRODUCT_DUMMY_ALL_SEL_Result> lst1 = PmoService.GetPromotionTotalInfo_ByProduct(PCode, MGbn, tmp_MGrade);
 
                 //임직원 전용할인 존재 여부 활인
                 var qry = from WD in lst1
@@ -94,7 +97,6 @@ namespace AboutMe.Domain.Service.BizPromotion
                 
                 if(qry.Count() > 0) //임직원 전용할인 이 있으면 최종가를 그렇게 적용
                 {
-                   
                      dict["Login_Promotion_00"] = "00";
                      var itm = qry.FirstOrDefault();
 
@@ -102,17 +104,18 @@ namespace AboutMe.Domain.Service.BizPromotion
                      {
                          MinusPrice = (int)Math.Ceiling((double)((ResultPrice * itm.PMO_TOTAL_DISCOUNT_RATE) / 100));
                          ResultPrice = ResultPrice - MinusPrice;
-                      }
+                     }
 
-                      if (itm.PMO_TOTAL_RATE_OR_MONEY == "M")
-                      {
-                          ResultPrice = ResultPrice - itm.PMO_TOTAL_DISCOUNT_MONEY.Value;
-                      }
-
-                      dict["Login_Promotion_00_result_price"] = ResultPrice.ToString();
-                   
+                     if (itm.PMO_TOTAL_RATE_OR_MONEY == "M")
+                     {
+                         ResultPrice = ResultPrice - itm.PMO_TOTAL_DISCOUNT_MONEY.Value;
+                     }
+                     dict["Login_Promotion_00_result_price"] = ResultPrice.ToString();
                 }
 
+                //여기까지 계산된 ResultPrice를 저장!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                int OriginResultPrice = ResultPrice;
+             
                 //등급 할인 존재 여부 확인
                 qry = from WD in lst1
                           where WD.PMO_TOTAL_CATEGORY == "03"
@@ -123,7 +126,7 @@ namespace AboutMe.Domain.Service.BizPromotion
                 {
                     var itm = qry.FirstOrDefault();
 
-                    if (itm.M_GRADE == "V") //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!일단은 VIP대상 등급할인만 보여주기로함 !!!!!!!!!!!!!!!!!!!!!!!!!
+                    if (itm.M_GRADE == "V") //!!!!!!!!!!!!!!!!!!!!!!!일단은 VIP대상 등급할인만 보여주기로함- db상으로는 가능하지만 브론즈,실버,골드 전체할인제도는 정책적으로 사용하지 않는다 !!!!!!!!!!!!!!!!!!!!!!!!!
                     {
 
                         if (itm.PMO_TOTAL_CATEGORY == "03") //등급할인 이 있으면 최종가를 그렇게 적용
@@ -141,13 +144,16 @@ namespace AboutMe.Domain.Service.BizPromotion
                                 ResultPrice = ResultPrice - itm.PMO_TOTAL_DISCOUNT_MONEY.Value;
                             }
                             dict["Login_Promotion_03_result_price"] = ResultPrice.ToString();
+
+                            //로그인한 회원이 사실은 VIP 등급이 아니면  ResultPrice를 원래되로 되돌려 놓아야한다.. 위의 과정은 그냥  vip가격을 광고하기 위한 과정이니까...
+                            if (MGrade != "V")  //-->dict["Login_Promotion_03_result_price"] 에 저장하면 페이지에서 vip가격을 광고 위한 준비를 끝낸거니까 되돌려 놓는것이다
+                            {
+                                ResultPrice = OriginResultPrice;
+                            }
                         }
                     }
                 }
-
-
-               
-                  
+   
                 //[2]포인트 적용율 계산
                 List<SP_PROMOTION_POINT_SAVE_RATE_BY_MEMGRADE_SEL_Result> lst2 = PmoService.GetPointSaveRateByMemGrade(MGbn, MGrade);
                   
@@ -160,7 +166,6 @@ namespace AboutMe.Domain.Service.BizPromotion
                     dict["Login_Point"] = PointSaving.ToString();
                 }
 
-
                 //[3]쿠폰정보
                 List<SP_COUPON_TOP_1_BY_MEMBER_BY_PRD_SEL_Result> lst3 =  CpnService.GetCouponTop1_ByMem_ByPrd(UsableDeviceGbn, PCode, M_id);
                 if(lst3.Count > 0 )
@@ -172,14 +177,9 @@ namespace AboutMe.Domain.Service.BizPromotion
                     dict["Login_Coupon_Idx_Coupon_Number"] = lst3[0].IDX_COUPON_NUMBER.ToString();
                     dict["Login_Coupon_USE_STATUS"] = lst3[0].USE_STATUS.ToString();
                     dict["Login_Coupon_COUPON_NUM_CHECK_TF"] = lst3[0].COUPON_NUM_CHECK_TF.ToString(); //Y=번호인증필요한 쿠폰
-
-                }
-             
-                
+                } 
             }
-            
-           
-
+  
             return dict ;
         }
     }

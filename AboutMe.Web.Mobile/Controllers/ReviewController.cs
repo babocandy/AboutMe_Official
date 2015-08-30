@@ -157,5 +157,14 @@ namespace AboutMe.Web.Mobile.Controllers
 
         }
 
+        [ChildActionOnly]
+        public ActionResult ProductByTheMostReview()
+        {
+            ProductByTheMostReviewViewModel model = new ProductByTheMostReviewViewModel();
+            model.ReviewDetail = _ReviewService.GetReviewDetailByMostReviewPdt();
+            model.ReviewTotal = _ReviewService.GetReviewTotalByProductCode(model.ReviewDetail.P_CODE);
+            model.ProductDetail = _ProductService.ViewProductMobile(model.ReviewDetail.P_CODE);
+            return View(model);
+        }
     }
 }

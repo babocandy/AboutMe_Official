@@ -35,7 +35,7 @@
                 <ul class="ps_list">
                     <li>베스트 리뷰로 선정되면 2,000포인트 추가 지급 됩니다.</li>
                     <li>포토리뷰 작성 시 1,000 포인트가 적립됩니다.</li>
-                    <li>텍스트 리뷰 작성 시 500 포인트가 적립니다.</li>
+                    <li>텍스트 리뷰 작성 시 500 포인트가 적립됩니다.</li>
                     <li>텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
                     <li>구매확정 후 작성 가능합니다.</li>
                     <li>리뷰 작성 시 개인정보는 가급적 노출하지 마시기 바랍니다. (본 쇼핑몰에서는 책임지지 않습니다.)</li>
@@ -129,9 +129,9 @@
                                             <div class="relbox">@string.Format("{0:#,##0}", item.Item2.REAL_PAY_PRICE)</div>
                                         </td>
                                         @{
-                                    MyReviewPdtInputParam p = new MyReviewPdtInputParam();
-                                    p.ORDER_DETAIL_IDX = item.Item2.ORDER_DETAIL_IDX;
-                                    p.P_CODE = item.Item2.P_CODE;
+                                            MyReviewPdtInputParam p = new MyReviewPdtInputParam();
+                                            p.ORDER_DETAIL_IDX = item.Item2.ORDER_DETAIL_IDX;
+                                            p.P_CODE = item.Item2.P_CODE;
                                         }
                                         <td><a href="#" class="btn_goreview" onclick="PopupCenter('@Url.Action("Write", "MyReview", p)', '', 780, 600); return false;">리뷰쓰기</a></td>
                                     </tr>
@@ -140,10 +140,10 @@
                             else //목록 없음
                             {
                                 <tr>
-                                    <td class="none" colspan="5" style="height:645px;">
+                                    <td class="none" colspan="5">
                                         <img src="/aboutCom/images/mypage/ico_warning.gif" alt="">
                                         <p>
-                                            구매내역이 없거나 리뷰 작성 가능한 내역이 없습니다.<br />
+                                            구매내역이 없거나 리뷰 작성 가능한 내역이 없습니다.<br>
                                             구매확정 후 리뷰 작성이 가능합니다.
                                         </p>
                                     </td>

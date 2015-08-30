@@ -32,7 +32,7 @@
                         <ul class="ps_list">
                             <li>베스트 리뷰로 선정되면 2,000포인트 추가 지급 됩니다.</li>
                             <li>포토리뷰 작성 시 1,000 포인트가 적립됩니다.</li>
-                            <li>텍스트 리뷰 작성 시 500 포인트가 적립니다.</li>
+                            <li>텍스트 리뷰 작성 시 500 포인트가 적립됩니다.</li>
                             <li>텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
                             <li>구매확정 후 작성 가능합니다.</li>
                             <li>리뷰 작성 시 개인정보는 가급적 노출하지 마시기 바랍니다. (본 쇼핑몰에서는 책임지지 않습니다.)</li>
@@ -55,41 +55,43 @@
                         <!--//리뷰 탭-->
                         <!--리뷰 컨텐츠-->
                         <div id="tabCon2" class="wrote tab_content" style="display:block">
-                            <!--리뷰 슬라이드-->
-                            <div class="pur_review accordion">
+                <!--리뷰 슬라이드-->
+                <div class="pur_review accordion">
 
-    @{
-        var i = 0;
-        var count = Model.Reviews.Count;
-    }
-    @foreach (var item in Model.Reviews)
-    {
-
-                        var cssClassName = "";
-                        var selectContent = "";
-        
-                        if (i == 0)
+                    @if (Model.Reviews.Count > 0)
+                    {
+                        
+                        var i = 0;
+                        var count = Model.Reviews.Count;
+                        
+                        foreach (var item in Model.Reviews)
                         {
-                            cssClassName = "first";
-                            selectContent = "cnt";
-                        }
-                        else if (i >= count - 1)
-                        {
-                            cssClassName = "last";
-            
-                        }
 
-                         <div class="cont accordcont @cssClassName @selectContent">
+                            var cssClassName = "";
+                            var selectContent = "";
 
-                             <div class="subj accordsubject">
+                            if (i == 0)
+                            {
+                                cssClassName = "first";
+                                selectContent = "cnt";
+                            }
+                            else if (i >= count - 1)
+                            {
+                                cssClassName = "last";
 
-                                 <div class="writer">
-                                     <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
-                                     <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
-                                 </div>
-                                 <p class="txtdotdot">
-                                     @Html.Raw(item.COMMENT)
-                                 </p>
+                            }
+
+                            <div class="cont accordcont @cssClassName @selectContent">
+
+                                <div class="subj accordsubject">
+
+                                    <div class="writer">
+                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                        <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
+                                    </div>
+                                    <p class="txtdotdot">
+                                        @Html.Raw(item.COMMENT)
+                                    </p>
                                     @if (item.IS_PHOTO == "Y")
                                     {
                                         <!--사진이 등록된 리뷰일 때 사용-->
@@ -97,36 +99,48 @@
                                         <!--//사진이 등록된 리뷰일 때 사용-->
                                     }
 
-                             </div>
-                             <div class="contxt accordtxt">
+                                </div>
+                                <div class="contxt accordtxt">
 
-                                 <div class="writer">
-                                     <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
-                                 </div>
-                                 @Html.Raw(item.COMMENT.Replace("\r\n", "<br />"))
-                                 @if (item.IS_PHOTO == "Y")
-                                 {
-                                     <img src="@myController._img_path_review@item.ADD_IMAGE" alt="" />
-                                 } 
+                                    <div class="writer">
+                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                    </div>
+                                    @Html.Raw(item.COMMENT.Replace("\r\n", "<br />"))
+                                    @if (item.IS_PHOTO == "Y")
+                                    {
+                                        <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" />
+                                    }
 
-                                 <a href="#none" class="btn_modify btn_gray_w96h38" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")', '', 780, 600); return false;">수정</a>             
-                             </div>
+                                    <a href="#none" class="btn_modify btn_gray_w96h38" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")', '', 780, 600); return false;">수정</a>
+                                </div>
 
-                        </div>
+                            </div>
 
-                        i++;
+                                    i++;
+                        }
                     }
+                    else
+                    {
+                        <div class="no_data">
+                            <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
+                            <p class="txt">작성한 리뷰가 없습니다.</p>
+                        </div>
+                    }
+
+
 
 
                 </div>
                 <!--//리뷰 슬라이드-->
+                            <!--페이징-->
+                            @if (Model.Reviews.Count > 0)
+                            {
+    
+                                Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = Model.PageSize, CurrentPage = Model.PageNo, QueryStr = "" });
+    
+                            }
+                            <!--//페이징-->
 
-                <!--페이징-->
-                @{
-
-                    Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = Model.PageSize, CurrentPage = Model.PageNo, QueryStr = "" });
-                }
-                <!--//페이징-->
             </div>
                         <!--//리뷰 컨텐츠-->
                         </div>

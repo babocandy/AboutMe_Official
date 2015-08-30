@@ -104,6 +104,7 @@
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="IS_BEST" Type="varchar" Mode="In" />
           <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="IS_MOST_CNT" Type="varchar" Mode="In" />
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
           <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
         </Function>
@@ -137,6 +138,7 @@
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="IS_BEST" Mode="In" Type="String" />
             <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+            <Parameter Name="IS_MOST_CNT" Mode="In" Type="String" />
             <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
             <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -242,6 +244,7 @@
           <Property Type="String" Name="IS_DISPLAY_LBL" Nullable="true" MaxLength="3" />
           <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="SKIN_TYPE_CSS" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="IS_MOST_CNT" Nullable="true" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_REVIEW_PRODUCT_INFO_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -264,6 +267,7 @@
           <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="MEDIA_GBN_LBL" Nullable="false" MaxLength="6" />
           <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="IS_MOST_CNT" Nullable="true" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -394,6 +398,7 @@
                 <ScalarProperty Name="IS_DISPLAY_LBL" ColumnName="IS_DISPLAY_LBL" />
                 <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
                 <ScalarProperty Name="SKIN_TYPE_CSS" ColumnName="SKIN_TYPE_CSS" />
+                <ScalarProperty Name="IS_MOST_CNT" ColumnName="IS_MOST_CNT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -420,6 +425,7 @@
                 <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
                 <ScalarProperty Name="MEDIA_GBN_LBL" ColumnName="MEDIA_GBN_LBL" />
                 <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="IS_MOST_CNT" ColumnName="IS_MOST_CNT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

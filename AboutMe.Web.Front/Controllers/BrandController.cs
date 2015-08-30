@@ -30,6 +30,23 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
+        public ActionResult brand()
+        {
+            return View();
+        }
+
+      
+        public ActionResult brand2()
+        {
+            return View();
+        }
+
+       
+        public ActionResult brand3()
+        {
+            return View();
+        }
+
         public ActionResult Magazine()
         {
             List<SP_MAGAZINE_LIST_Result> list = new List<SP_MAGAZINE_LIST_Result>();

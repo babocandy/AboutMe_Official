@@ -641,6 +641,76 @@ namespace AboutMe.Domain.Service.AdminPromotion
         }
 
 
+
+        //상품별할인 프로모션 신규생성 - 복수의 상품코드 일괄처리 
+        public int InsAdminPromotionByProductPricingMultiple(List<PromotionByProductReg> Tb_PmoProdEntity, string CdPromotionProduct)
+        {
+
+            int IsSuccess = 1;
+            int NewPricingIdx = 0; //신규생성된 가격 일련번호
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+                    foreach (PromotionByProductReg Tb in Tb_PmoProdEntity)
+                    {
+
+                        using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+                        {
+                            ObjectParameter objOutParam = new ObjectParameter("OUTPUT_PRODUCT_PRICE_IDX", typeof(int));//sp의 output parameter변수명을 동일하게 사용한다.
+                            AdmPromotionContext.SP_ADMIN_PROMOTION_PRODUCT_PRICE_INS(
+                                 CdPromotionProduct
+                                , Tb.P_CODE
+                                , Tb.P_DISCOUNT_PRICE
+                                , "M"
+                                , Tb.PMO_PRICE
+                                , Tb.P_CODE //Tb.PMO_ONE_ONE_P_CODE
+                                , Tb.PMO_PRICE //Tb.PMO_ONE_ONE_PRICE
+                                , Tb.USABLE_YN
+                                , objOutParam);
+                            NewPricingIdx = int.Parse(objOutParam.Value.ToString());
+                        }
+
+                        string[] CheckCdPromotiontTotal = Tb.CD_PROMOTION_TOTAL_LST.Split(',');
+
+                        if (CheckCdPromotiontTotal != null)
+                        {
+                            using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+                            {
+                                for (int i = 0; i < CheckCdPromotiontTotal.Length; i++)
+                                {
+                                    if (CheckCdPromotiontTotal[i].Trim() != "")
+                                    {
+                                        AdmPromotionContext.SP_ADMIN_PROMOTION_PRODUCT_PRICE_VS_TOTAL_INS(CdPromotionProduct, CheckCdPromotiontTotal[i], NewPricingIdx, Tb.P_CODE, Tb.USABLE_YN);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Current.Rollback();
+                    scope.Dispose();
+                    IsSuccess = -1;
+                    
+                    //에러를 강제로 발생시킨다.
+                    throw new Exception("Transction Error", ex);
+
+                    //LogHelper.Error("TEST EXCEPTION", ex);
+
+                }
+
+            }
+
+
+            return IsSuccess;
+        }
+
+
         //상품코드 유효성 Check
         public int GetAdminPromotionProductCodeCheck(string Pcode)
         {

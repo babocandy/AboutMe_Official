@@ -311,9 +311,15 @@
 
                                                 <tr>
                                                     <th>쿠폰명 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME , new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME, new { cssClass = "input-sm text-left", size = "30", maxlength = "25" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
 
                                                 </tr>
+                                                <tr>
+                                                    <th>쿠폰사용조건 </th>
+                                                    <td>@Html.TextAreaFor(model => model.inst_TB_COUPON_MASTER.COUPON_USE_DESCRIPTION, new { cssClass = "input-sm text-left",cols="30", rows="3", maxlength="60" })  </td>
+
+                                                </tr>
+
                                                 <tr>
                                                     <th>용도구분 </th>
                                                     <td>@Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN, "M") 지불 @Html.RadioButtonFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN, "S") 배송쿠폰 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_GBN)</font></td>

@@ -48,8 +48,11 @@
             <div class="bottom"></div>
         </div>
         <!--//현재적립금액-->
+@if (Model.List.Count > 0)
+{
         <!--포인트리스트-->
         <div class="tabletypeb savepoint_table">
+
             <table>
                 <colgroup><col width="160" /><col width="*" /><col width="135" /><col width="145" /><col width="132" /></colgroup>
                 <thead>
@@ -63,33 +66,40 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model.List)
-                    {
-                        <tr>
-                            <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
-                            <td class="subject"><a href="#">@(item.DETAIL)@(item.ADDITION_REASON != null ? string.Format("- {0}", item.ADDITION_REASON) : "")</a></td>
-                            @{
-                                var pt = item.POINT.Value ;
-                            }
-                            <td><span class="@(pt > 0 ? "pluspoint" : "minuspoint")">@string.Format("{0:#,##0}", Math.Abs( pt ))</span></td>
-                            <td class="fcblue">@item.KIND</td>
-                            <td>@string.Format("{0:#,##0}", item.SUM_POINT)</td>
-                        </tr>
-                    }
+                        @foreach (var item in Model.List)
+                        {
+                            <tr>
+                                <td>@item.INS_DATE.Value.ToString("yyyy.MM.dd")</td>
+                                <td class="subject"><a href="#">@(item.DETAIL)@(item.ADDITION_REASON != null ? string.Format("- {0}", item.ADDITION_REASON) : "")</a></td>
+                                @{
+                                    var pt = item.POINT.Value;
+                                }
+                                <td><span class="@(pt > 0 ? "pluspoint" : "minuspoint")">@string.Format("{0:#,##0}", Math.Abs(pt))</span></td>
+                                <td class="fcblue">@item.KIND</td>
+                                <td>@string.Format("{0:#,##0}", item.SUM_POINT)</td>
+                            </tr>
+                        }
+
+
 
                 </tbody>
             </table>
         </div>
         <!--//포인트리스트-->
         <!--페이징-->
-        @{
+        
             string search = Utility01.ConvertObject2UriQuery(Model.Route);
-
             Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.Total, RecordPerPage = 10, PagePerBlock = 10, CurrentPage = Model.Route.PAGE, QueryStr = search });
-        }
+       
         <!--//페이징-->
-
-
+}
+else
+{
+    <div class="no_data">
+        <img src="/aboutCom/images/common/ico_nodata3.gif" alt="">
+        <p class="txt">포인트 내역이 없습니다.</p>
+    </div>
+}
     </div>
 </div>
 <!--//container-->

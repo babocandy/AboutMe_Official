@@ -17,11 +17,18 @@
             @foreach (var item in Model.PdtList)
             {
                 <li>
-                    <div class="photo"><img src="@string.Format("{0}{1}" , myController._img_path_product, item.MAIN_IMG)" alt="" /></div>
+                    <div class="photo"><a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})"><img src="@string.Format("{0}{1}" , myController._img_path_product, item.MAIN_IMG)" alt="" /></a></div>
                     <div class="detail">
                         <span class="ptit">@item.P_NAME</span>
-                        <span class="price"><del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del><strong>@string.Format("{0:#,##0}",item.DISCOUNT_PRICE)</strong>원</span>
-                        <a href="@Url.Action("Detail", "Shopping", new { pcode = item.P_CODE})" class="btn_cart">쇼핑백</a>
+                        <span class="price">
+                            @if (item.RESULT_PRICE != item.SELLING_PRICE)
+                            {
+                                <del>@string.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
+                            }
+                            
+                            <strong>@string.Format("{0:#,##0}",item.RESULT_PRICE)</strong>원
+                        </span>
+                        <a href="#" class="btn_cart" onclick="Cart_Product_Input('@item.P_CODE', '1');return false;">쇼핑백</a>
                     </div>
                 </li>
             }

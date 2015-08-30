@@ -8,6 +8,8 @@
 <ul class="slide moveslidercon">
     @foreach (var item in Model.List)
     {
-        <li><img src="@(myController._img_path_display)@(item.IMG)" alt="" /></li>
+        <li>
+            <a href="@item.URL"><img src="@(myController._img_path_display)@(item.IMG)" alt="" /></a>
+        </li>
     }
 </ul>

@@ -53,15 +53,6 @@ namespace AboutMe.Web.Mobile.Controllers
             this.ViewBag.MGbn = MGbn = MemberInfo.GetMemberGBN();
 
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            //
-            // 등급을 VIP 로 강제지정
-            MGrade = "V"; //주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보여주기로 한다
-            //
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-
             Dictionary<string, string> dict =
              _BizPromotionService.GetPromotionInfoForDetialPage(UsableDeviceGbn, MGbn, MGrade, M_id, P_CODE, ResultPrice);
 
@@ -107,5 +98,27 @@ namespace AboutMe.Web.Mobile.Controllers
             return View();
         }
         #endregion
+
+
+
+
+
+        #region  이벤트페이지의 타임세일배너
+
+        [ChildActionOnly]
+        public ActionResult EventPgTimeSaleBanner()
+        {
+            ViewBag.PromotionPhotoPath = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //이미지디렉토리경로
+
+            List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result> lst = new List<SP_PROMOTION_BY_PRODUCT_TOP_1_DETAIL_SEL_Result>();
+
+            //타임세일 프로모션 정보중 유효한 TOP 1 가져오기 
+            lst = _PromotionService.GetPromotionByProductTop1_Info("03").ToList();
+
+            return View(lst);
+        }
+
+        #endregion 
+
     }
 }

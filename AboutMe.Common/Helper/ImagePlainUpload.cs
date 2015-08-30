@@ -72,19 +72,19 @@ namespace AboutMe.Common.Helper
                 //썸네일
                 var path = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath),  fileName);
 
-                var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R100_" + fileName);
+               // var path_small = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R100_" + fileName);
                 var path_middle = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R308_" + fileName);
-                var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R500_" + fileName);
+                //var path_big = Path.Combine(HttpContext.Current.Request.MapPath(UploadPath), "R500_" + fileName);
 
                 //원본 뜨기
                 Image imgOriginal = Image.FromFile(path);
-
+/*
                 //썸네일 이미지 생성
                 Image imgActual = Scale(imgOriginal, 500);
                 imgActual.Save(path_big);
                 imgActual.Dispose();
-
-                imgActual = Scale(imgOriginal, 308);
+                */
+                Image imgActual = Scale(imgOriginal, 308);
                 imgActual.Save(path_middle);
                 imgActual.Dispose();
 
