@@ -170,6 +170,10 @@ namespace AboutMe.Web.Mobile.Controllers
 
             }
 
+            if (_user_profile.IS_LOGIN)
+            {
+                _orderservice.OrderMasterPointSet(info.ORDER_IDX, "90", _user_profile.M_ID);
+            }
             _orderservice.MyOrderMasterStatusChange(info.ORDER_IDX, "90", Mid); //취소
 
             SBuilder.Append("<form name='mysubmitform' action='/MyPage/MyOrder' method='POST'>\n");
@@ -205,6 +209,10 @@ namespace AboutMe.Web.Mobile.Controllers
                 return Content(SBuilder.ToString());
             }
 
+            if (_user_profile.IS_LOGIN)
+            {
+                _orderservice.OrdeDetailPointSet(OrderDetailIdx, "60", "Y", Mid); //구매포인트 지급
+            }
             _orderservice.MyOrderDetailStatusChange(OrderDetailIdx, "60", Mid); //구매확정
             
             return RedirectToAction("OrderView", new { OrderCode = OrderCode, FromDate = FromDate, ToDate = ToDate, page = page });
