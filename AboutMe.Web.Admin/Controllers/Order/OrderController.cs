@@ -42,6 +42,20 @@ namespace AboutMe.Web.Admin.Controllers.Order
             this._adminorderservice = _adminorderservice;
         }
 
+        //HTML태그제거
+        private String TagStrip(String text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+
+                return String.Empty;
+            }
+            else
+            {
+                return System.Text.RegularExpressions.Regex.Replace(text, @"<(.|\n)*?>", String.Empty);
+            }
+        }
+
         public ActionResult Index(SP_TB_ADMIN_ORDER_Param Param) {
             ORDER_INDEX_MODEL m = new ORDER_INDEX_MODEL();
             m.SearchOption = Param;
@@ -91,15 +105,134 @@ namespace AboutMe.Web.Admin.Controllers.Order
             return RedirectToAction("Detail", param );
         }
         
+        //이니시스 에스크로 배송(송장) 번호 등록
+        public string InisysDeliveryUpdate(SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo, string DELIVERY_NUM)
+        {
+
+            //상품명구하기
+
+            List<SP_ADMIN_ORDERLIST_DETAIL_LIST_Result> OrderList = _adminorderservice.OrderDetailList(orderInfo.ORDER_IDX);
+            string goodname = OrderList.FirstOrDefault().P_NAME;
+            goodname = TagStrip(goodname);
+            if (OrderList.Count() > 1)
+            {
+                goodname = goodname + "외 " + Convert.ToString(OrderList.Count() - 1) + "건";
+            }
+
+
+            INIESCROW_DELIVERY_RESULT EscrowResult = new INIESCROW_DELIVERY_RESULT();
+            //###############################################################################
+            //# 1. 객체 생성 #
+            //################
+            IINIpay INIpay = new IINIpay("50");
+
+            //###############################################################################
+            //# 2. 인스턴스 초기화 /3. 거래 유형 설정 #
+            //######################
+            INIpay.Initialize("escrow");
+
+            INIpay.SetPath(_inipay_setpath);
+            //###############################################################################
+            //# 4. 정보 설정 #
+            //################
+            INIpay.SetField("type", "escrow");	          			        // 수정금지
+            //INIpay.SetField("pgid", "INInetRPAY");	          			// 서브 PG아이디 , 수정금지 INIpayRPAY
+            if (orderInfo.PAT_GUBUN.ToUpper() == "MOBILE")
+            {
+                INIpay.SetField("mid", _inipay_mobile_mid);	            // 상점아이디(모바일)
+                INIpay.SetField("admin", _inipay_mobile_admin);			// 키패스워드(모바일)(상점아이디에 따라 변경)
+            }
+            else
+            {
+                INIpay.SetField("mid", _inipay_mid);	               		// 상점아이디
+                INIpay.SetField("admin", _inipay_admin);					// 키패스워드(상점아이디에 따라 변경)
+            }
+            INIpay.SetField("escrowtype", "dlv");
+            INIpay.SetField("tid", orderInfo.PAT_TID);				// 거래 tid
+            INIpay.SetField("oid", Convert.ToString(orderInfo.OLD_ORDER_IDX));         //old order idx
+            INIpay.SetField("soid", "1");
+            INIpay.SetField("dlv_invoice", DELIVERY_NUM);     //송장번호
+            INIpay.SetField("dlv_report", "I");        //I:배송등록, U:배송수정
+            INIpay.SetField("dlv_name ", AdminUserInfo.GetAdmId());                      //배송등록자
+            INIpay.SetField("dlv_excode", "cjgls");                     //택배사코드 "cjgls : CJ대한통운"
+            INIpay.SetField("dlv_exname", "CJ대한통운");					//택배사명 "CJ대한통운"
+
+            INIpay.SetField("dlv_invoiceday", DateTime.Today.ToShortDateString());  //배송등록 확인일시
+            if (orderInfo.TRANS_PRICE > 0)
+            {
+                INIpay.SetField("dlv_charge", "BH");  //배송비 지급방법 (배송비 지급방법 (SH : 판매자부담, BH : 구매자부담 )
+            }
+            else
+            {
+                INIpay.SetField("dlv_charge", "SH");  //배송비 지급방법 (배송비 지급방법 (SH : 판매자부담, BH : 구매자부담 )
+            }
+
+            INIpay.SetField("dlv_sendname", orderInfo.ORDER_NAME);
+            INIpay.SetField("dlv_sendpost", orderInfo.SENDER_POST);
+            INIpay.SetField("dlv_sendaddr1", orderInfo.SENDER_ADDR1);
+            INIpay.SetField("dlv_sendaddr2", orderInfo.SENDER_ADDR2);
+            INIpay.SetField("dlv_sendtel", orderInfo.SENDER_HP);
+            INIpay.SetField("dlv_recvname", orderInfo.RECEIVER_NAME);
+            INIpay.SetField("dlv_recvpost", orderInfo.RECEIVER_POST);
+            INIpay.SetField("dlv_recvaddr", orderInfo.RECEIVER_ADDR1 + " " + orderInfo.RECEIVER_ADDR2);
+            INIpay.SetField("dlv_recvtel", orderInfo.RECEIVER_HP);
+            INIpay.SetField("dlv_goods", goodname);
+            INIpay.SetField("price", Convert.ToString(orderInfo.REAL_PAY_PRICE));
+
+            //###############################################################################
+            //# 5. 취소 요청 #
+            //################
+            INIpay.StartAction();
+
+            //###############################################################################
+            //# 6.  결과 #
+            //################
+            EscrowResult.tid = INIpay.GetResult("tid");	                            //신거래ID
+            EscrowResult.resultcode = INIpay.GetResult("resultcode");				// 결과코드 ("00"이면 부분취소 성공)
+            EscrowResult.resultmsg = INIpay.GetResult("resultmsg");					// 결과내용
+
+            EscrowResult.DLV_Date = INIpay.GetResult("DLV_Date");	        //처리날자
+            EscrowResult.DLV_Time = INIpay.GetResult("DLV_Time");	        //처리시간
+
+           
+            if (EscrowResult.resultcode == "00")
+            {
+                string setdate = EscrowResult.DLV_Date+" "+EscrowResult.DLV_Time;
+                //결과 저장
+                _adminorderservice.OrderEscrowResultSet(orderInfo.ORDER_IDX, "DELIVERY", setdate);
+            }
+
+
+            //###############################################################################
+            //# 7. 인스턴스 해제 #
+            //####################
+            INIpay.Destory();
+            INIpay = null;
+
+            return EscrowResult.resultcode;
+        }
+
+
         //송장번호 변경
         [HttpPost]
         public ActionResult OrderDetailDeliveryUpdate(int ORDER_IDX, int ORDER_DETAIL_IDX, SP_TB_ADMIN_ORDER_Param SEARCH_OPTION, string DELIVERY_NUM)
         {
             string REG_ID = AdminUserInfo.GetAdmId();
+            string resultcode = "00";
+            //에스크로일경우 이니시스에 배송등록실행
+            SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(ORDER_IDX);
+            if (orderInfo.ESCROW_YN == "Y" && string.IsNullOrEmpty(orderInfo.INIESCROW_DELIVERY))
+            {
+                resultcode = InisysDeliveryUpdate(orderInfo, DELIVERY_NUM);
+            }
+
             RouteValueDictionary param = ConvertRouteValue(SEARCH_OPTION);
             param.Add("ORDER_IDX", ORDER_IDX);
 
-            _adminorderservice.OrderDetailDeliveryUpdate(ORDER_DETAIL_IDX, DELIVERY_NUM, REG_ID);
+            if (resultcode == "00")
+            { 
+                _adminorderservice.OrderDetailDeliveryUpdate(ORDER_DETAIL_IDX, DELIVERY_NUM, REG_ID);
+            }
             return RedirectToAction("Detail", param );
         }
 
@@ -141,6 +274,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
                     if (repay.ResultCode == "00") //성공
                     {
                         string REG_IP = Request.ServerVariables["REMOTE_HOST"];
+                        _adminorderservice.OrdeDetailPointSet(ORDER_DETAIL_IDX, TOBE_STATUS, "Y", REG_ID);
                         _adminorderservice.OrderPartCancelInsert(ORDER_IDX, repay.TID, top1.TID, Convert.ToInt32(real_pay_price), Convert.ToInt32(confirm_price), top1.EMAIL, Convert.ToInt32(repay.PRTC_Remains), repay.PRTC_Type, Convert.ToInt32(repay.PRTC_Price), Convert.ToInt16(repay.PRTC_Cnt), REG_ID, REG_IP);
                         _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
                         return RedirectToAction("Detail", param);
@@ -153,12 +287,14 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 }
                 else
                 {
+                    _adminorderservice.OrdeDetailPointSet(ORDER_DETAIL_IDX, TOBE_STATUS, "Y", REG_ID);
                     _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
                     return RedirectToAction("Detail", param);
                 }
             }
             else
             {
+                _adminorderservice.OrdeDetailPointSet(ORDER_DETAIL_IDX, TOBE_STATUS, "Y", REG_ID);
                 _adminorderservice.OrderDetailStatusUpdate(ORDER_DETAIL_IDX, TOBE_STATUS, REG_ID);
                 return RedirectToAction("Detail", param);
             }
@@ -402,6 +538,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 }
             }
 
+            _adminorderservice.OrderMasterPointSet(ORDER_IDX, "90", REG_ID);
             _adminorderservice.OrderMasterStatusUpdate(ORDER_IDX, "90", REG_ID); //취소
             RouteValueDictionary param = ConvertRouteValue(SEARCH_OPTION);
             param.Add("ORDER_IDX", ORDER_IDX);
@@ -646,7 +783,20 @@ namespace AboutMe.Web.Admin.Controllers.Order
                                     dv.DELIVERY_NUM = delivery_num;
                                     result.Add(dv);
 
-                                    _adminorderservice.OrderDetailDeliveryUpdate(Convert.ToInt16(order_detail_idx), delivery_num, REG_ID);
+                                    string resultcode = "00";
+                                    //에스크로일경우 이니시스에 배송등록실행
+                                    SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(Convert.ToInt32(order_idx));
+                                    if (orderInfo.ESCROW_YN == "Y" && string.IsNullOrEmpty(orderInfo.INIESCROW_DELIVERY))
+                                    {
+                                        resultcode = InisysDeliveryUpdate(orderInfo, delivery_num);
+                                    }
+
+                                    if (resultcode == "00")
+                                    {
+                                        _adminorderservice.OrderDetailDeliveryUpdate(Convert.ToInt16(order_detail_idx), delivery_num, REG_ID);
+                                    }
+
+                                   
                                 }
                             }
 
@@ -678,6 +828,86 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 OrderList = _adminorderservice.OrderMemberList(M_ID, Page, PageSize)
             };
             return View(M);
+        }
+
+
+        //에스크로 지불거절 확인
+        [HttpPost]
+        public ActionResult InipayEscrowDenyConfirm(int ORDER_IDX, SP_TB_ADMIN_ORDER_Param SEARCH_OPTION)
+        {
+            string REG_ID = AdminUserInfo.GetAdmId();
+            SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(ORDER_IDX);
+
+            //###############################################################################
+            //# 1. 객체 생성 #
+            //################
+            IINIpay INIpay = new IINIpay("50");
+
+
+            //###############################################################################
+            //# 2. 인스턴스 초기화 /3. 거래 유형 설정 #
+            //######################
+            INIpay.Initialize("escrow", "dcnf");										 // 고정 (절대 수정 불가)
+
+            //###############################################################################
+            //# 4. 정보 설정 #
+            //################
+            INIpay.SetPath(_inipay_setpath);
+            INIpay.SetField("escrowtype", "dcnf");										// 고정 (절대 수정 불가)
+            if (orderInfo.PAT_GUBUN.ToUpper() == "MOBILE")
+            {
+                INIpay.SetField("mid", _inipay_mobile_mid);	            // 상점아이디(모바일)
+                INIpay.SetField("admin", _inipay_mobile_admin);			// 키패스워드(모바일)(상점아이디에 따라 변경)
+            }
+            else
+            {
+                INIpay.SetField("mid", _inipay_mid);	               		// 상점아이디
+                INIpay.SetField("admin", _inipay_admin);					// 키패스워드(상점아이디에 따라 변경)
+            }
+
+            INIpay.SetField("tid", orderInfo.PAT_TID);								// 거래아이디
+            INIpay.SetField("DCNF_Name", REG_ID);				            	// 거절확인자
+            INIpay.SetField("uip", Request.UserHostAddress);							// 사용자 IP
+            INIpay.SetField("debug", "true");											// 로그모드("true"로 설정하면 상세한 로그를 남김)
+
+
+            //###############################################################################
+            //# 5. 요청 처리 #
+            //################
+            INIpay.StartAction();
+
+
+            //###############################################################################
+            //6. 결과 정보 #
+            //###############################################################################
+
+
+            string result_tid = INIpay.GetResult("tid");							//거래번호
+            string resultcode = INIpay.GetResult("resultcode");					//결과코드 ("00"이면 처리성공)
+            string resultmsg = INIpay.GetResult("resultmsg");					//결과내용
+            string DCNF_Date = INIpay.GetResult("DCNF_Date");					//처리 날짜
+            string DCNF_Time = INIpay.GetResult("DCNF_Time");					//처리 시각
+
+            //###############################################################################
+            //# 7. 인스턴스 해제 #
+            //####################
+            INIpay.Destory();
+            INIpay = null;
+
+            if (resultcode == "00")
+            {
+                string setdate = DCNF_Date + " " + DCNF_Time;
+                _adminorderservice.OrderEscrowResultSet(ORDER_IDX, "CANCEL_OK", setdate);
+
+                RouteValueDictionary param = ConvertRouteValue(SEARCH_OPTION);
+                param.Add("ORDER_IDX", ORDER_IDX);
+                return RedirectToAction("Detail", param);
+            }
+            else
+            {
+                string result = "<script language='javascript'>alert('에러코드 : "+resultcode+", 에러메시지 : "+resultmsg+"');history.go(-1);</script>";
+                return Content(result);
+            }
         }
     }
 }

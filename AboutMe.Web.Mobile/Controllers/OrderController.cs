@@ -387,8 +387,22 @@ namespace AboutMe.Web.Mobile.Controllers
             Param.RECEIVER_HP3 = TagStrip(Param.RECEIVER_HP3);
 
             _orderservice.OrderStep1SaveReceiverAddress(ORDER_IDX, Param);
-            var jsonData = new { result = "true" };
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+            //주문전 포인트, 쿠폰, 가격등... 체크
+            string ok_str = "";
+            try
+            {
+                ok_str = _orderservice.OrderConfigCheck(ORDER_IDX);
+
+                var jsonData = new { result = "true" };
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                string errmsg = e.InnerException.Message + "(제품 가격 또는 프로모션조건이 변경된 상품이 포함되어있습니다. 장바구니부터 다시진행 해 주시기 바랍니다.)";
+                var jsonData = new { result = "false", msg = errmsg };
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
         }
         
 

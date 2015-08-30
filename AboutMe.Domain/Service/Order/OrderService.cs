@@ -360,5 +360,36 @@ namespace AboutMe.Domain.Service.Order
             return result;
         }
         #endregion
+
+        #region 마스터 주문상태 변경시 포인트 지급/환불
+        public void OrderMasterPointSet(int ORDER_IDX, string TOBE_STATUS, string REG_ID)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_MASTER_POINT_SET(ORDER_IDX, TOBE_STATUS, REG_ID);
+            }
+        }
+        #endregion
+
+        #region 디테일 주문상태 변경시 포인트 지급/환불 (MASTER_CONTROL은 Y 로)
+        public void OrdeDetailPointSet(int ORDER_DETAIL_IDX, string TOBE_STATUS, string MASTER_CONTROL, string REG_ID)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_DETAIL_POINT_SET(ORDER_DETAIL_IDX, TOBE_STATUS, MASTER_CONTROL, REG_ID);
+            }
+        }
+        #endregion
+
+        #region 에스크로 관련 결과 주문테이블에 저장 (GUBUN : DELIVERY(배송등록), CONFIRM(구매승인), CANCEL(구매거절), CANCEL_OK(구매거절확인)
+        public void OrderEscrowResultSet(int ORDER_IDX, string GUBUN, string SET_DATE)
+        {
+            using (OrderEntities EfContext = new OrderEntities())
+            {
+                EfContext.SP_ADMIN_ORDER_ESCROW_SET(ORDER_IDX, GUBUN, SET_DATE);
+            }
+        }
+        #endregion
+
     }
 }

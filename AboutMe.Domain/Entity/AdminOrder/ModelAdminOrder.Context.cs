@@ -578,5 +578,60 @@ namespace AboutMe.Domain.Entity.AdminOrder
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_ORDER_LIST_Result>("SP_ADMIN_ORDER_MEMBER_LIST", m_IDParameter, pAGEParameter, pAGESIZEParameter);
         }
+    
+        public virtual int SP_ADMIN_ORDER_ESCROW_SET(Nullable<int> oRDER_IDX, string gUBUN, string sET_DATE)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var gUBUNParameter = gUBUN != null ?
+                new ObjectParameter("GUBUN", gUBUN) :
+                new ObjectParameter("GUBUN", typeof(string));
+    
+            var sET_DATEParameter = sET_DATE != null ?
+                new ObjectParameter("SET_DATE", sET_DATE) :
+                new ObjectParameter("SET_DATE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_ESCROW_SET", oRDER_IDXParameter, gUBUNParameter, sET_DATEParameter);
+        }
+    
+        public virtual int SP_ADMIN_ORDER_DETAIL_POINT_SET(Nullable<int> oRDER_DETAIL_IDX, string tOBE_STATUS, string mASTER_CONTROL, string rEG_ID)
+        {
+            var oRDER_DETAIL_IDXParameter = oRDER_DETAIL_IDX.HasValue ?
+                new ObjectParameter("ORDER_DETAIL_IDX", oRDER_DETAIL_IDX) :
+                new ObjectParameter("ORDER_DETAIL_IDX", typeof(int));
+    
+            var tOBE_STATUSParameter = tOBE_STATUS != null ?
+                new ObjectParameter("TOBE_STATUS", tOBE_STATUS) :
+                new ObjectParameter("TOBE_STATUS", typeof(string));
+    
+            var mASTER_CONTROLParameter = mASTER_CONTROL != null ?
+                new ObjectParameter("MASTER_CONTROL", mASTER_CONTROL) :
+                new ObjectParameter("MASTER_CONTROL", typeof(string));
+    
+            var rEG_IDParameter = rEG_ID != null ?
+                new ObjectParameter("REG_ID", rEG_ID) :
+                new ObjectParameter("REG_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_DETAIL_POINT_SET", oRDER_DETAIL_IDXParameter, tOBE_STATUSParameter, mASTER_CONTROLParameter, rEG_IDParameter);
+        }
+    
+        public virtual int SP_ADMIN_ORDER_MASTER_POINT_SET(Nullable<int> oRDER_IDX, string tOBE_STATUS, string rEG_ID)
+        {
+            var oRDER_IDXParameter = oRDER_IDX.HasValue ?
+                new ObjectParameter("ORDER_IDX", oRDER_IDX) :
+                new ObjectParameter("ORDER_IDX", typeof(int));
+    
+            var tOBE_STATUSParameter = tOBE_STATUS != null ?
+                new ObjectParameter("TOBE_STATUS", tOBE_STATUS) :
+                new ObjectParameter("TOBE_STATUS", typeof(string));
+    
+            var rEG_IDParameter = rEG_ID != null ?
+                new ObjectParameter("REG_ID", rEG_ID) :
+                new ObjectParameter("REG_ID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_ORDER_MASTER_POINT_SET", oRDER_IDXParameter, tOBE_STATUSParameter, rEG_IDParameter);
+        }
     }
 }

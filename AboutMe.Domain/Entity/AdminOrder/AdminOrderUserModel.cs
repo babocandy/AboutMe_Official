@@ -188,4 +188,14 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public List<SP_ADMIN_ORDER_LIST_Result> OrderList { get; set; }
     }
 
+    public class INIESCROW_DELIVERY_RESULT
+    {
+        public string tid { get; set; }
+        public string resultcode { get; set; }
+        public string resultmsg { get; set; }  //I:배송등록, U:배송수정
+        public string DLV_Date { get; set; } //운송장 번호
+        public string DLV_Time { get; set; } //배송등록자
+    }
+
+
 }

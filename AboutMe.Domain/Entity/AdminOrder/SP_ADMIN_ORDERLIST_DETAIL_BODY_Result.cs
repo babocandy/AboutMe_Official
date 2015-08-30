@@ -58,5 +58,12 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string VACT_BankName { get; set; }
         public string ESCROW_YN { get; set; }
         public string PAT_GUBUN { get; set; }
+        public Nullable<int> OLD_ORDER_IDX { get; set; }
+        public string INIESCROW_DELIVERY { get; set; }
+        public string INIESCROW_CONFIRM { get; set; }
+        public string INIESCROW_CANCEL { get; set; }
+        public string ESCROW_USER_CMD { get; set; }
+        public Nullable<System.DateTime> ESCROW_USER_DATE { get; set; }
+        public string ESCROW_USER_DESC { get; set; }
     }
 }

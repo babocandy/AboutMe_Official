@@ -10,182 +10,192 @@
     <script type="text/javascript" src="/cmsmanager/aboutCom/js/common_admin.js"></script>
 
     <script language="javascript">
-        function PopupMember(member_id)
-        {
-            alert(member_id);
+    function PopupMember(member_id) {
+        alert(member_id);
+    }
+
+    function deliveryformCheck() {
+
+        if ($("#RECEIVER_NAME_TXT").val().trim() == '') {
+            alert('받는이 이름을 입력하세요.');
+            $("#RECEIVER_NAME_TXT").focus();
+            return false;
         }
 
-        function deliveryformCheck()
-        {
-
-            if ($("#RECEIVER_NAME_TXT").val().trim() == '') {
-                alert('받는이 이름을 입력하세요.');
-                $("#RECEIVER_NAME_TXT").focus();
-                return false;
-            }
-
-            if ($("#RECEIVER_POST_TXT").val().trim() == '') {
-                alert('우편번호를 입력하세요.');
-                $("#RECEIVER_POST_TXT").focus();
-                return false;
-            }
-
-            if ($("#RECEIVER_ADDR1_TXT").val().trim() == '') {
-                alert('배송지 주소를 입력하세요.');
-                $("#RECEIVER_ADDR1_TXT").focus();
-                return false;
-            }
-
-            if ($("#RECEIVER_ADDR2_TXT").val().trim() == '') {
-                alert('배송지 상세주소를 입력하세요.');
-                $("#RECEIVER_ADDR2_TXT").focus();
-                return false;
-            }
-            if ($("#RECEIVER_HP_TXT").val().trim() == '') {
-                alert('받는이 핸드폰번호 입력하세요.');
-                $("#RECEIVER_HP_TXT").focus();
-                return false;
-            }
-
-            if (confirm('배송지정보를 변경하시겠습니까?'))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
+        if ($("#RECEIVER_POST_TXT").val().trim() == '') {
+            alert('우편번호를 입력하세요.');
+            $("#RECEIVER_POST_TXT").focus();
+            return false;
         }
 
-        function memoformCheck() {
-
-            if (confirm('메모를 저장 하시겠습니까?')) {
-                return true;
-            }
-            else {
-                return false;
-            }
+        if ($("#RECEIVER_ADDR1_TXT").val().trim() == '') {
+            alert('배송지 주소를 입력하세요.');
+            $("#RECEIVER_ADDR1_TXT").focus();
+            return false;
         }
 
-
-        function changeDelivery(detail_idx) {
-            var f = document.dumyForm;
-            var delivery_num = $("#edit_delivery_" + detail_idx).val().trim();
-            if (delivery_num == "") {
-                alert("송장번호를 입력해 주세요.");
-                return false;
-            }
-
-            if (confirm('송장번호를 변경 하시겠습니까?')) {
-                f.ORDER_DETAIL_IDX.value = detail_idx;
-                f.DELIVERY_NUM.value = delivery_num;
-                f.TOBE_STATUS.value = "";
-                f.action = "/Order/OrderDetailDeliveryUpdate";
-                f.submit();
-            }
+        if ($("#RECEIVER_ADDR2_TXT").val().trim() == '') {
+            alert('배송지 상세주소를 입력하세요.');
+            $("#RECEIVER_ADDR2_TXT").focus();
+            return false;
+        }
+        if ($("#RECEIVER_HP_TXT").val().trim() == '') {
+            alert('받는이 핸드폰번호 입력하세요.');
+            $("#RECEIVER_HP_TXT").focus();
+            return false;
         }
 
-        function changeStaus(detail_idx, asis_status, asis_status_name) {
-            var f = document.dumyForm;
-            var tobe_status = $("#ORDER_STATUS_" + detail_idx).val().trim();
-            
-            if (asis_status == tobe_status)
-            {
-                alert("현재 주문상태가 ["+asis_status_name+"]상태입니다.다른 상태를 선택해주세요.");
-                return false;
-            }
+        if (confirm('배송지정보를 변경하시겠습니까?')) {
+            return true;
+        }
+        else {
+            return false;
+        }
 
-            if (tobe_status == "") {
-                alert("변경할 상태를 선택해 주세요.");
-                return false;
-            }
+    }
+
+    function memoformCheck() {
+
+        if (confirm('메모를 저장 하시겠습니까?')) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 
-            if (confirm('주문상태를 변경 하시겠습니까?')) {
-                f.ORDER_DETAIL_IDX.value = detail_idx;
-                f.DELIVERY_NUM.value = "";
-                f.TOBE_STATUS.value = tobe_status;
-                f.action = "/Order/OrderDetailStatusUpdate";
-                f.submit();
-            }
+    function changeDelivery(detail_idx) {
+        var f = document.dumyForm;
+        var delivery_num = $("#edit_delivery_" + detail_idx).val().trim();
+        if (delivery_num == "") {
+            alert("송장번호를 입력해 주세요.");
+            return false;
+        }
+
+        if (confirm('송장번호를 변경 하시겠습니까?')) {
+            f.ORDER_DETAIL_IDX.value = detail_idx;
+            f.DELIVERY_NUM.value = delivery_num;
+            f.TOBE_STATUS.value = "";
+            f.action = "/Order/OrderDetailDeliveryUpdate";
+            f.submit();
+        }
+    }
+
+    function changeStaus(detail_idx, asis_status, asis_status_name) {
+        var f = document.dumyForm;
+        var tobe_status = $("#ORDER_STATUS_" + detail_idx).val().trim();
+
+        if (asis_status == tobe_status) {
+            alert("현재 주문상태가 [" + asis_status_name + "]상태입니다.다른 상태를 선택해주세요.");
+            return false;
+        }
+
+        if (tobe_status == "") {
+            alert("변경할 상태를 선택해 주세요.");
+            return false;
         }
 
 
-        //기능별 상세팝업 :
-        function fPopPersonalDetail(argKIND, strM_ID) {
-            var xurl = "";
-            var wid = "1000";
-            var hei = "600";
-            var tar = "PERSONAL_POP";
+        if (confirm('주문상태를 변경 하시겠습니까?')) {
+            f.ORDER_DETAIL_IDX.value = detail_idx;
+            f.DELIVERY_NUM.value = "";
+            f.TOBE_STATUS.value = tobe_status;
+            f.action = "/Order/OrderDetailStatusUpdate";
+            f.submit();
+        }
+    }
 
-            xurl = "/AdminOrder/Index?M_ID=" + strM_ID;  //default
-            if (argKIND == "ORDER") {
-                xurl = "/AdminOrder/Index?M_ID=" + strM_ID;
-            }
-            else if (argKIND == "POINT") {
-                xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
-            }
-            else if (argKIND == "COUPON") {
-                xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
-            }
-            else if (argKIND == "QNA") {
-                xurl = "/AdminQna/Index?M_ID=" + strM_ID;
-            }
-            else if (argKIND == "MEMBER_INFO") {
-                xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
-            }
-            ow_yes(xurl, tar, wid, hei); //팝업
+
+    //기능별 상세팝업 :
+    function fPopPersonalDetail(argKIND, strM_ID) {
+        var xurl = "";
+        var wid = "1000";
+        var hei = "600";
+        var tar = "PERSONAL_POP";
+
+        xurl = "/AdminOrder/Index?M_ID=" + strM_ID;  //default
+        if (argKIND == "ORDER") {
+            xurl = "/AdminOrder/Index?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "POINT") {
+            xurl = "/AdminPoint/MyPointHistory?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "COUPON") {
+            xurl = "/AdminCoupon/Index?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "QNA") {
+            xurl = "/AdminQna/Index?M_ID=" + strM_ID;
+        }
+        else if (argKIND == "MEMBER_INFO") {
+            xurl = "/AdminFrontMember/PopMemberInfo?M_ID=" + strM_ID;
+        }
+        ow_yes(xurl, tar, wid, hei); //팝업
+    }
+
+    function order_part_cancel() {
+
+        ow_yes('/Order/INIrepay?ORDER_IDX=@Model.ORDER_IDX', 'INIrepay', '650', '400');
+    }
+    //전체취소
+    function order_cancel() {
+        var f = document.dumyForm;
+
+        if (confirm('주문을 전체 취소 하시겠습니까?')) {
+            f.ORDER_DETAIL_IDX.value = "";
+            f.DELIVERY_NUM.value = "";
+            f.TOBE_STATUS.value = "90";
+            f.action = "/Order/OrderCancel";
+            f.submit();
+        }
+    }
+
+    //상태 일괄변경
+    function MutiStatusChange() {
+        var tobe = $("#MULTI_CHANGE_STATUS").val();
+        var tobe_nm = $("#MULTI_CHANGE_STATUS").data("kendoDropDownList").text();
+        if (tobe == "" || tobe == "undefined") {
+            alert("일괄변경할 상태를 선택해주세요.");
+            return false;
         }
 
-        function order_part_cancel() {
-
-            ow_yes('/Order/INIrepay?ORDER_IDX=@Model.ORDER_IDX', 'INIrepay', '650', '400');
+        if (tobe == "99") {
+            alert("기타 상태로는 변경할 수 없습니다.")
+            return false;
         }
-        //전체취소
-        function order_cancel() {
-            var f = document.dumyForm;
+        var f = document.dumyForm
 
-            if (confirm('주문을 전체 취소 하시겠습니까?')) {
-                f.ORDER_DETAIL_IDX.value = "";
-                f.DELIVERY_NUM.value = "";
-                f.TOBE_STATUS.value = "90";
-                f.action = "/Order/OrderCancel";
-                f.submit();
-            }
+        if (confirm(tobe_nm + "(으)로 일괄 변경하시겠습니까?")) {
+            f.ORDER_DETAIL_IDX.value = "";
+            f.DELIVERY_NUM.value = "";
+            f.TOBE_STATUS.value = tobe;
+            f.RedirectAction.value = "Detail";
+            f.action = "/Order/OrderMasterStatusUpdate";
+            f.submit();
         }
-
-        //상태 일괄변경
-        function MutiStatusChange() {
-            var tobe = $("#MULTI_CHANGE_STATUS").val();
-            var tobe_nm = $("#MULTI_CHANGE_STATUS").data("kendoDropDownList").text();
-            if (tobe == "" || tobe == "undefined") {
-                alert("일괄변경할 상태를 선택해주세요.");
-                return false;
-            }
-
-            if (tobe == "99")
-            {
-                alert("기타 상태로는 변경할 수 없습니다.")
-                return false;
-            }
-            var f = document.dumyForm
-
-            if (confirm( tobe_nm + "(으)로 일괄 변경하시겠습니까?")) {
-                f.ORDER_DETAIL_IDX.value = "";
-                f.DELIVERY_NUM.value = "";
-                f.TOBE_STATUS.value = tobe;
-                f.RedirectAction.value = "Detail";
-                f.action = "/Order/OrderMasterStatusUpdate";
-                f.submit();
-            }
-        }
+    }
 
         //배송조회
         function DeliverySearch(delivery_num) {
             var DeliveryUrl = "@DeliveryUrl";
-            DeliveryUrl = DeliveryUrl + "&pTdNo=" + delivery_num;
-            window.open(DeliveryUrl, "deliveryPop", "width=800,height=500,left=1,top=1");
+                DeliveryUrl = DeliveryUrl + "&pTdNo=" + delivery_num;
+                window.open(DeliveryUrl, "deliveryPop", "width=800,height=500,left=1,top=1");
+        }
+
+        //에스크로 지급거절 승인
+        function order_escrow_cancel_confirm()
+        {
+            //ow_yes('/Order/InipayEscrowDenyConfirm?ORDER_IDX=@Model.ORDER_IDX', 'InipayEscrow', '650', '400');
+            var f = document.dumyForm
+
+            if (confirm("지급거절을 승인하시겠습니까?")) {
+                f.ORDER_DETAIL_IDX.value = "";
+                f.DELIVERY_NUM.value = "";
+                f.TOBE_STATUS.value = "";
+                f.RedirectAction.value = "Detail";
+                f.action = "/Order/InipayEscrowDenyConfirm";
+                f.submit();
+            }
 
         }
     </script>
@@ -608,7 +618,52 @@
         <td class="fcred">@Model.BodyInfo.VACT_Date 까지</td>
     </tr>
 }
+
+        @if (Model.BodyInfo.ESCROW_YN == "Y")
+        {
+            string escrow_state = "결제완료";
+            string escrow_date = "";
+
+            if (Model.BodyInfo.ESCROW_USER_CMD == "D")
+            {
+                escrow_state = "배송등록";
+                escrow_date = Model.BodyInfo.INIESCROW_DELIVERY;
+            }
+            else if (Model.BodyInfo.ESCROW_USER_CMD == "M")
+            {
+                escrow_state = "지불승인";
+                escrow_date = Model.BodyInfo.INIESCROW_CONFIRM;
+            }
+            else if (Model.BodyInfo.ESCROW_USER_CMD == "C")
+            {
+                escrow_state = "지불거절";
+                escrow_date = Model.BodyInfo.INIESCROW_CANCEL;
+            }
+            else if (Model.BodyInfo.ESCROW_USER_CMD == "E")
+            {
+                escrow_state = "판매자 지불거절확인";
+                escrow_date = Convert.ToString( Model.BodyInfo.ESCROW_USER_DATE );
+            }
+            
+            <tr>
+                <th>에스크로 진행상태</th>
+                <td>@escrow_state</td>
+                <th>상태변경일</th>
+                <td class="fcred">@escrow_date</td>
+            </tr>
+        }
+
 	</table>
+
+@if (Model.BodyInfo.ESCROW_YN == "Y")
+{
+    if (Model.BodyInfo.ESCROW_USER_CMD == "C")
+    { 
+        <div class="mt10" style="position: absolute;">
+            <a class="btn btn-default middium" href="#none" onclick="order_escrow_cancel_confirm();">에스크로 지불거절확인</a>
+        </div>
+    }
+}
 
 	<h3 class="sub-header mt20">주문자 정보</h3>
 	<table class="table table_row v2">

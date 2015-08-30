@@ -308,6 +308,7 @@ namespace AboutMe.Web.Front.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
+        //PG사 주문요청 전에 배송지 정보저장하고 주문제품의 가격등 조건이 변경됐는지 체크하는 모듈
         [HttpPost, ValidateInput(false)]
         public ActionResult SaveReceiverAddress(Int32 ORDER_IDX, SENDER_RECEIVER_SAVE_Param Param)
         {
@@ -338,8 +339,23 @@ namespace AboutMe.Web.Front.Controllers
             Param.RECEIVER_HP3 = TagStrip(Param.RECEIVER_HP3);
 
             _orderservice.OrderStep1SaveReceiverAddress(ORDER_IDX, Param);
-            var jsonData = new { result = "true" };
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+            //주문전 포인트, 쿠폰, 가격등... 체크
+            string ok_str = "";
+            try
+            {
+                ok_str = _orderservice.OrderConfigCheck(ORDER_IDX);
+
+                var jsonData = new { result = "true" };
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                string errmsg = e.InnerException.Message + "(제품 가격 또는 프로모션조건이 변경된 상품이 포함되어있습니다. 장바구니부터 다시진행 해 주시기 바랍니다.)";
+                var jsonData = new { result = "false", msg = errmsg };
+                return Json(jsonData, JsonRequestBehavior.AllowGet);
+            }
+
         }
         
 
@@ -619,6 +635,36 @@ namespace AboutMe.Web.Front.Controllers
             }
             else
             {
+                //주문전 포인트, 쿠폰, 가격등... 체크
+                string ok_str = "";
+                try
+                {
+                    ok_str = _orderservice.OrderConfigCheck(Convert.ToInt32(FrmData.oid));
+                }
+                catch (Exception e)
+                {
+                    //실행결과
+                    orderResult.Resultcode = "01";
+                    orderResult.ResultMsg = e.InnerException.Message;
+                    orderResult.ResultErrorCode = "제품 가격 또는 프로모션조건이 변경된 상품이 포함되어있습니다.";
+                    orderResult.ORDER_IDX = Convert.ToInt32(FrmData.oid);
+                    orderResult.PAY_GBN = FrmData.PAY_GBN;
+                    orderResult.ORDER_CODE = "";
+
+                    StringBuilder SBuilder1 = new StringBuilder();
+                    SBuilder1.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");
+                    SBuilder1.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_IDX", orderResult.ORDER_IDX.ToString());
+                    SBuilder1.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "PAY_GBN", orderResult.PAY_GBN);
+                    SBuilder1.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ORDER_CODE", orderResult.ORDER_CODE);
+                    SBuilder1.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "Resultcode", orderResult.Resultcode);
+                    SBuilder1.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultMsg", orderResult.ResultMsg);
+                    SBuilder1.AppendFormat("<input type='hidden' name='{0}' value='{1}'>\n", "ResultErrorCode", orderResult.ResultErrorCode);
+                    SBuilder1.Append("</form>\n");
+                    SBuilder1.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
+                    return Content(SBuilder1.ToString());
+                }
+
+
                 INISYSPAY_RESULT PayResult = new INISYSPAY_RESULT();
                 INIPAYRESULT Result = new INIPAYRESULT();
                 

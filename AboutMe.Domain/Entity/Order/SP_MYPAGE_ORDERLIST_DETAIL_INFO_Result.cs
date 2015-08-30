@@ -53,5 +53,12 @@ namespace AboutMe.Domain.Entity.Order
         public string VACT_Name { get; set; }
         public string VACT_Date { get; set; }
         public string PAT_GUBUN { get; set; }
+        public string ESCROW_YN { get; set; }
+        public Nullable<int> OLD_ORDER_IDX { get; set; }
+        public string INIESCROW_DELIVERY { get; set; }
+        public string INIESCROW_CONFIRM { get; set; }
+        public string INIESCROW_CANCEL { get; set; }
+        public string ESCROW_USER_CMD { get; set; }
+        public Nullable<System.DateTime> ESCROW_USER_DATE { get; set; }
     }
 }

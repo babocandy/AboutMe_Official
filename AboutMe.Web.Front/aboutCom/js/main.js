@@ -3,7 +3,7 @@ $(function(){
 		$(".txtdotdot").dotdotdot();
 	}
 	if( $("*").is(".main") ){
-		console.log("dd");
+		//console.log("dd");
 		$("body").css({"min-width":"1320px"});
 	}
 	/*main 슬라이드*/
