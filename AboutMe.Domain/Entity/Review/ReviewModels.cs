@@ -137,6 +137,8 @@ namespace AboutMe.Domain.Entity.Review
         public string C_CATE_CODE { get; set; }
 
         public string MEDIA_GBN { get; set; }
+
+        public string IS_PHOTO { get; set; }
     }
 
     public class ReviewInProductDetailViewModel
