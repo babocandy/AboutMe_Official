@@ -86,6 +86,7 @@ namespace AboutMe.Web.Admin.Controllers
             ViewBag.mail_sender = mObj.sender;
             ViewBag.mail_receiver = mObj.receiver;
             ViewBag.mail_subject = mObj.subject;
+
             ViewBag.mail_body = mObj.body;
 
   
