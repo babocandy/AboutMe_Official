@@ -93,7 +93,7 @@
             <div class="review_write boxtypea">
                 <h3>제품리뷰등록</h3>
 
-                @using (Html.BeginForm("Update", "MyReview", FormMethod.Post, new { id = "frm", name = "frm"}))
+                @using (Html.BeginForm("Update", "MyReview", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
                 {                    @Html.AntiForgeryToken()
                     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
                     <input type="hidden" name="IDX" value="@Model.IDX" />
@@ -103,6 +103,8 @@
                     <input type="hidden" name="C_CATE_CODE" value="@Model.C_CATE_CODE" />
                     <input type="hidden" name="SKIN_TYPE" value="@Model.SKIN_TYPE" />
                     <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
+                    <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
+                    <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
 
                     <fieldset>
                         <legend>제품리뷰등록 입력</legend>
@@ -112,6 +114,7 @@
                                     <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
                                     <div class="detail">
                                         <span class="tit">@Model.P_NAME</span>
+                                        <span class="stit">@Model.P_SUB_TITLE</span>
                                     </div>
                                 </div>
                             </li>
@@ -138,19 +141,20 @@
                                     </dd>
                                 </dl>
                             </li>
-@if (Model.ADD_IMAGE != null)
+@if (Model.IS_PHOTO == "Y")
 {
-                            <li>
-                                <dl>
-                                    <dt>사진</dt>
-
-                                        <dd class="photo_upload">
-                                            <div class="thumb"><img src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE )" alt="" /></div>
-                                        </dd>
-                                    
-                                    
-                                </dl>
-                            </li>
+                    <li>
+                        <dl>
+                            <dt>사진첨부</dt>
+                            <dd class="photo_upload">
+                                <div>
+                                    <input type="file" id="UploadImage" name="UploadImage" value="@Model.UploadImage" class="fileField" onchange="changeUploadFile(this);" />
+                                    <input type="text" id="ImageFileName" name="ImageFileName" readonly="readonly" class="ipttypea" title="첨부사진 경로" value="@Model.ADD_IMAGE"/><a href="#none" class="btn btn_white_h30 v2" onclick="findUploadFile(); return false;">찾아보기</a>
+                                </div>
+                                <div class="thumb"><img id="previewImage" src="@string.Format("{0}R308_{1}", myController._img_path_review, Model.ADD_IMAGE)" alt="" /></div>
+                            </dd>
+                        </dl>
+                    </li>
 }
                         </ul>
                         <div class="bullistb">

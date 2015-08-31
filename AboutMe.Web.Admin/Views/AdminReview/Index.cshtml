@@ -193,7 +193,7 @@
                         <td>
                             @if (item.IS_PHOTO == "Y")
                             {
-                                <img src="@string.Format("{0}R308_{1}",myctrl._img_path_review,item.ADD_IMAGE)" alt="" />
+                                <img src="@string.Format("{0}R308_{1}",myctrl._img_path_review,item.ADD_IMAGE)" alt="" style="width:120px;"/>
                             }
                         
                         </td>
@@ -203,7 +203,13 @@
                         <td>
                             @item.CATE_GBN_LBL
                         </td>
-                        <td><img src="@string.Format("{0}R120_{0}", myctrl._img_path_product , item.P_MAIN_IMG)" alt="" /></td>
+                        <td>
+                            @if (item.P_MAIN_IMG != null)
+                            {
+                                <img src="@string.Format("{0}R120_{1}", myctrl._img_path_product , item.P_MAIN_IMG)" alt="" />
+                            }
+                           
+                        </td>
                         <td>@item.P_CODE</td>
 
                         <td>

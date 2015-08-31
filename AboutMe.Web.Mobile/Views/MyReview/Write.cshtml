@@ -105,9 +105,10 @@
         <ul class="review_list">
             <li class="product_info">
                 <div class="photo_info">
-                    <div class="photo"><img src="@string.Format("{0}{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
+                    <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.ProductInfo.MAIN_IMG)" alt="" /></div>
                     <div class="detail">
                         <span class="tit">@Model.ProductInfo.P_NAME</span>
+                        <span class="stit">@Model.ProductInfo.P_SUB_TITLE</span>
                     </div>
                 </div>
             </li>
