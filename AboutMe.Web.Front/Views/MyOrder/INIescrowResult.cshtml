@@ -20,6 +20,11 @@
     <script src="/aboutCom/js/lib/jquery.dotdotdot.js" type="text/javascript"></script>
     <script src="/aboutCom/js/script.js" type="text/javascript"></script>
     <title>ABOUT ME</title>
+    <script language="javascript">
+        var openwin = window.open("/Content/child.html", "childwin2", "width=300,height=150");
+        openwin.close();
+    </script>
+
 </head>
 <body class="popup">
     <!-- 비밀번호변경 팝업 -->
@@ -40,22 +45,22 @@
                     {
                         if (!string.IsNullOrEmpty(Model.DNY_Date))
                         {
-                            Html.Raw("에스크로 지급거절이 완료되었습니다.");
+                            @Html.Raw("에스크로 지급거절이 완료되었습니다.<br /><br />");
                         }
                         else
                         {
-                            Html.Raw("에스크로 지급확인이 완료되었습니다.");
+                            @Html.Raw("에스크로 지급확인이 완료되었습니다.<br /><br />");
                         }
                     }
                     else
                     {
                         if (!string.IsNullOrEmpty(Model.DNY_Date))
                         {
-                            Html.Raw("에스크로 지급거절중 아래와 같은 에러가 발생 되었습니다.");
+                            @Html.Raw("에스크로 지급거절중 아래와 같은 에러가 발생 되었습니다.");
                         }
                         else
                         {
-                            Html.Raw("에스크로 지급확인중 아래와 같은 에러가 발생 되었습니다.");
+                            @Html.Raw("에스크로 지급확인중 아래와 같은 에러가 발생 되었습니다.");
                         }
                     }
                 </p>

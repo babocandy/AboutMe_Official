@@ -485,6 +485,23 @@ namespace AboutMe.Web.Front.Controllers
 
         }
 
+        // 임직원신청 팝업전 로그인 체크
+        public ActionResult StaffRequest_PreStep()
+        {
+
+            bool IS_LOGIN = MemberInfo.IsMemberLogin();  //로그인 여부  T/F
+            string M_GBN = MemberInfo.GetMemberGBN();
+            if (IS_LOGIN)
+            {
+                return Content("<script language='javascript' type='text/javascript'>location.href='/Mypage/StaffRequest';</script>");
+            }
+            else
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('로그인후 사용하십시오.'); opener.window.location='/MemberShip/Login'; self.close();</script>");
+
+            }
+        }
+
 
         // 임직원신청 팝업 폼
         [CustomAuthorize]
