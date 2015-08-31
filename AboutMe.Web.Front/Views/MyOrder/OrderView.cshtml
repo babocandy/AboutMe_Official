@@ -69,7 +69,7 @@
 
     //이니시스 에스크로 지급승인/거절창
     function EscrowConfirm() {
-        ow_yes('/MyPage/MyOrder/InipayEscrow?ORDER_CODE=@Model.DetailInfo.ORDER_CODE', 'InipayEscrow', '650', '400');
+        ow_yes('/MyPage/MyOrder/InipayEscrow?ORDER_CODE=@Model.DetailInfo.ORDER_CODE', 'InipayEscrow', '440', '342');
     }
 
     </script>
@@ -118,9 +118,10 @@
                 <a href="#none" class="btn_white_w118h38 btn_allcancel" onclick="OrderCancel();">전체 주문취소</a>
             }
             
-            @if (Model.DetailInfo.ESCROW_YN == "Y" && (Model.DetailInfo.ESCROW_USER_CMD == "D" || Model.DetailInfo.ESCROW_USER_CMD == "C") ) //배송, 거절상태일경우에만 노출
+            @if (Model.DetailInfo.ESCROW_YN == "Y" && (Model.DetailInfo.ORDER_STATUS == "40" || Model.DetailInfo.ORDER_STATUS == "50") && (Model.DetailInfo.ESCROW_USER_CMD == "D" || Model.DetailInfo.ESCROW_USER_CMD == "C")) //배송, 거절상태일경우에만 노출
             {
-                <a href="#none" class="btn_brown_w128h38" onclick="EscrowConfirm();">에스크로지급확인/거절</a>
+              <div class="btn_escrow">                <a href="#none" class="btn_brown_w128h38" onclick="EscrowConfirm();">에스크로지급 확인/거절</a>
+              </div>
             }
             <div class="row1 tabletypeb">
                 <table summary="상품명, 상품금액, 수량, 쿠폰적용, 예상적립 포인트, 주문금액">
