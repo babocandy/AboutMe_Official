@@ -158,7 +158,13 @@
                 html += "       <span class='skin "+item.SKIN_TYPE_LBL+"'>"+item.SKIN_TYPE_CSS+"</span><em class='userage'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em>";
                 html += "   </div>";
                 html += "   <div class='tag'>";
-                html +=         item.TAG;
+
+                    /*tag common*/
+                    var arr = item.TAG.split("#");
+                    for(var k = 0; k < arr.length ; ++k){
+                        html += "<span>#" + arr[k] + "</span>";
+                    }
+
                 html += "   </div>";
                 html += "   <div class='reviewtxt'>";
                 html += "       <p class='title'>"+item.TITLE+"</p>";
@@ -298,8 +304,16 @@
                                     <span class="skin @(item.SKIN_TYPE_CSS)">@(item.SKIN_TYPE_LBL)</span><em class="userage">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</em>
                                 </div>
                                 <div class="tag">
-                                    @(item.TAG)
-                                    <!--<span>#마사지</span> <span>#미백</span> <span>#촉촉</span>-->
+                                     @{
+                                        @*tag common*@
+                                        var arr = item.TAG.Split('#');
+                                                
+                                        foreach (var tag in arr)
+                                        {
+                                            <span>#@tag</span>
+                                        }
+                                    }   
+           
                                 </div>
                                 <div class="reviewtxt">
                                     <p class="title">@item.TITLE</p>
@@ -432,7 +446,15 @@
                                     //console.log(item.TITLE);
                              
                                     $(".reviewpop_wrap .title_area .title").text( item.TITLE );
-                                    $(".reviewpop_wrap .title_area .tag").text( item.TAG );
+
+                                    /*tag common*/
+                                    var arr = item.TAG.split("#");
+                                    var html = "";
+                                    for(var k = 0; k < arr.length ; ++k){
+                                        html += "<span>#" + arr[k] + "</span>";
+                                    }
+
+                                    $(".reviewpop_wrap .title_area .tag").html( html);
 
                                     $(".reviewpop_wrap .writer .skin").removeClass();
                               

@@ -2,6 +2,7 @@
 @using AboutMe.Common.Data
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Mobile.Controllers
+@using System.Text.RegularExpressions
 @{
     ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
@@ -124,10 +125,15 @@
                                     <div class="rinfo_con">
                                         <!-- 해시태그 -->
                                         <ul class="hash">
-                                            <!--<li>#각질제거</li>
-                                            <li>#미백</li>
-                                            <li>#스페셜케어</li>-->
-                                            @item.TAG
+                                            @{
+                                                @*tag common*@
+                                                var arr = item.TAG.Split('#');
+                                                
+                                                foreach (var tag in arr)
+                                                {
+                                                    <li>#@tag</li>
+                                                }
+                                            }                                            
                                         </ul>
                                         <!-- //해시태그 -->
                                         <div class="review_view">
