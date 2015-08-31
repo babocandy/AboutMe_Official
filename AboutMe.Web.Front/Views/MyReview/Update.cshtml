@@ -88,9 +88,9 @@
                             <tbody>
                                 <tr>
                                     <th>상품명</th>
-                                    <td class="pro_info">
+                                    <td class="pro_info" colspan="@(ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE) ? "" : "3")" >
                                         <!--이미지사이즈 96x96-->
-                                        <div class="photo"><img src="@string.Format("{0}{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
+                                        <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
                                         <div class="detail">
                                             <p class="tit">@Model.P_NAME</p>
                                             <p class="stit">@Model.P_SUB_TITLE</p>
