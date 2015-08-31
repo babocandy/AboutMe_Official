@@ -93,8 +93,8 @@ namespace AboutMe.Common.Helper
             }
             catch (Exception ex)
             {
-            //
-             }
+                Debug.WriteLine(ex);
+            }
         }
 
  
@@ -176,11 +176,11 @@ namespace AboutMe.Common.Helper
                     Image imgOriginal = Image.FromFile(path);
 
                     //썸네일 이미지 생성
-                    Image imgActual = Scale(imgOriginal, 500);
-                    imgActual.Save(path_big);
-                    imgActual.Dispose();
+                    //Image imgActual = Scale(imgOriginal, 500);
+                   // imgActual.Save(path_big);
+                    //imgActual.Dispose();
 
-                    imgActual = Scale(imgOriginal, 308);
+                    Image imgActual = Scale(imgOriginal, 308);
                     imgActual.Save(path_middle);
                     imgActual.Dispose();
 
