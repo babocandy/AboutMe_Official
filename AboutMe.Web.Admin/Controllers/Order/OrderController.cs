@@ -106,7 +106,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
         }
         
         //이니시스 에스크로 배송(송장) 번호 등록
-        public string InisysDeliveryUpdate(SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo, string DELIVERY_NUM)
+        public INIESCROW_DELIVERY_RESULT InisysDeliveryUpdate(SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo, string DELIVERY_NUM)
         {
 
             //상품명구하기
@@ -209,7 +209,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
             INIpay.Destory();
             INIpay = null;
 
-            return EscrowResult.resultcode;
+            return EscrowResult;
         }
 
 
@@ -218,22 +218,27 @@ namespace AboutMe.Web.Admin.Controllers.Order
         public ActionResult OrderDetailDeliveryUpdate(int ORDER_IDX, int ORDER_DETAIL_IDX, SP_TB_ADMIN_ORDER_Param SEARCH_OPTION, string DELIVERY_NUM)
         {
             string REG_ID = AdminUserInfo.GetAdmId();
-            string resultcode = "00";
+            INIESCROW_DELIVERY_RESULT result = null;
             //에스크로일경우 이니시스에 배송등록실행
             SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(ORDER_IDX);
             if (orderInfo.ESCROW_YN == "Y" && string.IsNullOrEmpty(orderInfo.INIESCROW_DELIVERY))
             {
-                resultcode = InisysDeliveryUpdate(orderInfo, DELIVERY_NUM);
+                result = InisysDeliveryUpdate(orderInfo, DELIVERY_NUM);
             }
 
             RouteValueDictionary param = ConvertRouteValue(SEARCH_OPTION);
             param.Add("ORDER_IDX", ORDER_IDX);
 
-            if (resultcode == "00")
-            { 
+            if (result.resultcode == "00")
+            {
                 _adminorderservice.OrderDetailDeliveryUpdate(ORDER_DETAIL_IDX, DELIVERY_NUM, REG_ID);
+                return RedirectToAction("Detail", param);
             }
-            return RedirectToAction("Detail", param );
+            else
+            {
+                return Content("<script>alert(\"error : " + result.resultcode + " Message:" + result.resultmsg + ", 송장번호 저장실패\"); history.go(-1);</script>");
+            }
+
         }
 
         //주문상세 상태 변경
@@ -784,11 +789,13 @@ namespace AboutMe.Web.Admin.Controllers.Order
                                     result.Add(dv);
 
                                     string resultcode = "00";
+                                    INIESCROW_DELIVERY_RESULT IniResult = null;
                                     //에스크로일경우 이니시스에 배송등록실행
                                     SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(Convert.ToInt32(order_idx));
                                     if (orderInfo.ESCROW_YN == "Y" && string.IsNullOrEmpty(orderInfo.INIESCROW_DELIVERY))
                                     {
-                                        resultcode = InisysDeliveryUpdate(orderInfo, delivery_num);
+                                        IniResult = InisysDeliveryUpdate(orderInfo, delivery_num);
+                                        resultcode = IniResult.resultcode;
                                     }
 
                                     if (resultcode == "00")

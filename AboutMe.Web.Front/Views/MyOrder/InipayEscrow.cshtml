@@ -55,7 +55,17 @@
                 }
                 else {
                     if (MakePayMessage(frm)) {
-                        return true;
+                        var sw = screen.availWidth;
+                        var sh = screen.availHeight;
+                        var width = 300;
+                        var height = 150;
+                        var px = (sw - width) / 2;
+                        var py = (sh - height) / 2;
+                        var set = 'top=' + py + ',left=' + px;
+                        set += ',width=' + width + ',height=' + height + ',menubar = no, toolbar = no, location = no, status = no, scrollbars = no, resizable = no';
+
+                        openwin = window.open("/Content/child.html", "childwin2", set);
+                        document.ini.submit();
                     }
                     else {
                         return false;
@@ -84,7 +94,7 @@
 
 </head>
 <body class="popup" onload="javascript:enable_click();" onfocus="javascript:focus_control()">
-    <form name=ini method=post action="/MyPage/MyOrder/INIescrowConfirm" onsubmit="return pay(this)">
+    <form name=ini method=post action="/MyPage/MyOrder/INIescrowConfirm" >
         <div class="popupwrap">
             <div class="pop">
                 <!--pop_top-->
@@ -104,7 +114,7 @@
                     <div class="confirm_info">
                         <span>주문번호 : <em>@Model.ORDER_CODE</em></span>
                     </div>
-                    <a href="#none" class="btn_brown_w96h38" onclick="return pay(document.ini);">확인</a> <a href="#none" class="btn_white_w96h38" onclick="    PopupClose()">창닫기</a>
+                    <a href="#none" class="btn_brown_w96h38" onclick="return pay(document.ini)">확인</a> <a href="#none" class="btn_white_w96h38" onclick="    PopupClose()">창닫기</a>
                 </div>
                 <!--//pop_bottom-->
             </div>
