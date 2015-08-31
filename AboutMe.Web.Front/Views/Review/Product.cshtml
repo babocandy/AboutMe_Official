@@ -79,15 +79,9 @@
 
 
         $grid.imagesLoaded(function(){
-            $grid.masonry({
-                transitionDuration: 0,
-                itemSelector : '.grid'
-            });
+            $grid.masonry('layout');
         })
-        /*
-        //example  http://masonry.desandro.com/methods.html#appended
 
-       */
     }
     function getReviewProducList() {
 
@@ -101,6 +95,7 @@
                 , SORT: sort
             },
             success: function (data) {
+
 
                 if (data.Success) {
 
@@ -124,8 +119,9 @@
                         }
                        
                     }
-                    console.log($grid)
-                    $grid.masonry('reloadItems')
+
+                    initMasonry();
+                    $grid.masonry('reloadItems');
 
                 }
             },
@@ -138,10 +134,9 @@
     function addItems(list) {
         if (list.length > 0) {
 
-            //var $items = [];
+            var all_html = "";
             for (var i = 0 ; i < list.length ; ++i) {
                 var d = list[i];
-
 
                 var html = "<div class='grid'>";
 
@@ -151,7 +146,7 @@
 
                 //<!--제품 이름 및 정보-->
                 html += "<div class='product_info'>";
-                html += "<div class='photo'><img src='" + img_path_product + d.P_MAIN_IMG + "' alt''></div>";
+                html += "<div class='photo'><img src='" + img_path_product + "R120_" + d.P_MAIN_IMG + "' alt''></div>";
                 html += "<div class='detail'>";
                 html += "<p class='tit'>" + d.P_NAME + "</p>";
                 html += "<p class='stit'>" + (d.P_SUB_TITLE ? d.P_SUB_TITLE : "") + "</p>";
@@ -172,7 +167,7 @@
                 html += "<div class='reviewtxt'>";
 
                 if (d.IS_PHOTO == "Y" ) {
-                    html += "<img src='" + img_path_review + d.ADD_IMAGE + "' alt=''>";
+                    html += "<img src='" + img_path_review +"R308_"+ d.ADD_IMAGE + "' alt=''>";
                 }
 
                 html += "<div class='txt txtdotdot'>";
@@ -183,14 +178,14 @@
 
                 html += "</div>"; //end grid
 
+                all_html += html;
 
-
-                var elem = $(html);
-                $grid.masonry().append(elem).masonry('appended', elem).masonry();
+               // var elem = $(html);
+                //$grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
 
            
-
+            $grid.masonry().append($(all_html)  ).masonry('appended', $(all_html)).masonry();
 
             //꼬리값 물기
             if (tailIdx != d.IDX) {
@@ -299,7 +294,7 @@
                             
                             <!--제품 이름 및 정보-->
                             <div class="product_info">
-                                <div class="photo"><img src="@myController._img_path_product@item.P_MAIN_IMG" alt=""></div>
+                                <div class="photo"><img src="@string.Format("{0}R120_{1}",   myController._img_path_product, item.P_MAIN_IMG)" alt=""></div>
                                 <div class="detail">
                                     <p class="tit">@item.P_NAME</p>
                                     <p class="stit">@item.P_SUB_TITLE</p>                 
@@ -317,7 +312,7 @@
                                 <div class="reviewtxt">
                                     @if (@item.IS_PHOTO == "Y" )
                                     {
-                                        <img src="@myController._img_path_review@item.ADD_IMAGE" alt="">
+                                        <img src="@string.Format("{0}R308_{1}",  myController._img_path_review, item.ADD_IMAGE)" alt="">
                                     }
                                    
                                     <div class="txt txtdotdot">
