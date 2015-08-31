@@ -124,6 +124,8 @@
                         }
                        
                     }
+                    console.log($grid)
+                    $grid.masonry('reloadItems')
 
                 }
             },
@@ -159,9 +161,11 @@
 
                 html += "<div class='comments'>";
                 html += "<div class='writer'>";
+
+                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' ></span>";
                 html += "<span class='id'>" + d.M_ID_LBL + "</span>";
                 html += "<span class='userage'>" + d.M_BIRTHDAY_LBL + "대, " +d.M_SEX_LBL + "</span>";
-                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' ></span>";
+                
                 html += "</div>";
 
 
@@ -185,7 +189,7 @@
                 $grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
 
-            $grid.masonry('reloadItems')
+           
 
 
             //꼬리값 물기
@@ -305,9 +309,10 @@
                             <!--리뷰-->
                             <div class="comments">
                                 <div class="writer">
+                                    <span class="skin @item.SKIN_TYPE_CSS"></span>
                                     <span class="id">@item.M_ID_LBL</span>
                                     <span class="userage"> @item.M_BIRTHDAY_LBL 대,  @item.M_SEX_LBL</span>
-                                    <span class="skin @item.SKIN_TYPE_CSS"></span>
+                                    
                                 </div>
                                 <div class="reviewtxt">
                                     @if (@item.IS_PHOTO == "Y" )

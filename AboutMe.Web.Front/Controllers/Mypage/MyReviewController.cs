@@ -103,26 +103,18 @@ namespace AboutMe.Web.Front.Controllers
            if (ModelState.IsValid){
 
                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true};
-               Debug.WriteLine("model.UploadImage - " + model.UploadImage );
+
               
                if (model.UploadImage != null)
                {
                    ImageResult imageResult = imageUpload.RenameUploadFile( model.UploadImage );
                    if (imageResult.Success)
                    {
-                       //Debug.WriteLine(" imageResult.ImageName - " + imageResult.ImageName);
                        model.ADD_IMAGE = imageResult.ImageName;
                        
                    }
                }
-               /*
-               MyReviewPdtParamOnSaveToDb p = new MyReviewPdtParamOnSaveToDb();
-               p.M_ID = model.M_ID;
-               p.ORDER_DETAIL_IDX =  model.ORDER_DETAIL_IDX;
-               p.P_CODE = model.P_CODE;
-               p.SKIN_TYPE = model.SKIN_TYPE;
-               p.COMMENT = model.COMMENT;
-               p.ADD_IMAGE =  model.ADD_IMAGE;*/
+
 
                Tuple<string, string> ret = _ReviewService.InsertMyReview(model);
 
@@ -133,22 +125,6 @@ namespace AboutMe.Web.Front.Controllers
            }
 
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
-
-            /*
-            if (model.ORDER_DETAIL_IDX == null )
-            {
-                 ModelState.AddModelError("", "*주문상세일련번호가 필요합니다.");
-            }
-
-            if (model.P_CODE == null && model.P_CODE == "")
-            {
-                ModelState.AddModelError("", "*상품코드가 필요합니다.");
-            }
-
-            if (model.M_ID == null && model.M_ID == "")
-            {
-                ModelState.AddModelError("", "*회원아이디가 필요합니다.");
-            }*/
 
             return View(model);
         }
@@ -193,8 +169,10 @@ namespace AboutMe.Web.Front.Controllers
             model.C_CATE_CODE = detail.C_CATE_CODE;
             model.SKIN_TYPE = detail.SKIN_TYPE;
             model.SKIN_TYPE_LBL = detail.SKIN_TYPE_LBL;
+            model.IS_PHOTO = detail.IS_PHOTO;
+            model.ADD_IMAGE = detail.ADD_IMAGE;
 
-            Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
+            //Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
 
             return View(model);
         }
@@ -205,12 +183,34 @@ namespace AboutMe.Web.Front.Controllers
         [Route("Update/{id:int}")]
         public ActionResult Update(MyReviewProductInputViewModel model)
         {
-            Debug.WriteLine("Update");
-
-            Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
+            Debug.WriteLine("ModelState.IsValid " + ModelState.IsValid);
+            Debug.WriteLine("model.IS_PHOTO " + model.IS_PHOTO);
+            Debug.WriteLine(" model.ADD_IMAGE " + model.ADD_IMAGE);
 
             if (ModelState.IsValid)
             {
+
+                if (model.IS_PHOTO == "Y")
+                {
+
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true };
+
+                    Debug.WriteLine(" _img_path_review  " + _img_path_review);
+                    Debug.WriteLine(" model.UploadImage  " + model.UploadImage);
+                    Debug.WriteLine(" model.UploadImage  " + model.UploadImage);
+
+                    if (model.UploadImage != null)
+                    {
+                        ImageResult imageResult = imageUpload.RenameUploadFile(model.UploadImage);
+                        if (imageResult.Success)
+                        {
+                            model.ADD_IMAGE = imageResult.ImageName;
+                            Debug.WriteLine(" model.ADD_IMAGE1  " + model.ADD_IMAGE);
+                        }
+                    }
+                }
+               
+
                 Tuple<string, string> ret = _ReviewService.UpdateMyReview(model);
 
                 TempData["ResultNum"] = ret.Item1;

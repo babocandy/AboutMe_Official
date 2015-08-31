@@ -75,7 +75,7 @@ namespace AboutMe.Domain.Service.Review
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                context.SP_REVIEW_PRODUCT_UPD(p.IDX, p.COMMENT, retNum, retMsg);
+                context.SP_REVIEW_PRODUCT_UPD(p.IDX, p.COMMENT, p.ADD_IMAGE, retNum, retMsg);
             }
 
             return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());

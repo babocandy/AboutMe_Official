@@ -96,7 +96,7 @@ namespace AboutMe.Web.Front.Controllers
 
             model.CategoryBeauty = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.BEAUTY, "");
             model.CategoryCodeHealth = CategoryCode.HEALTH_DEFAULT;
-            model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
+            model.CategorySelShop = _ProductService.GetCategoryDeptList("PRODUCT_TYPE", CategoryCode.SEL_SHOP, "");
 
             var tp = _ReviewService.GetReviewExpList(null, CategoryCode.BEAUTY_DEFAULT, ReviewExpListViewModel.SORT_LASTEST);
             model.Reviews = tp.Item1;// ReviewHelper.GetDataForUser(tp.Item1);
