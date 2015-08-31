@@ -30,7 +30,9 @@ $(function(){
 		$(".lnb").stop().animate({"left":"0"});
 		$(".lnb_area .dim").fadeIn(300);
 		$(".f_bottom ").hide();
-		$("body").bind('touchmove', function(e){e.preventDefault()});
+		//$(".container").bind('touchmove', function(e){e.preventDefault()});
+		$(".container").css({"position":"fixed"});
+		$(".footer").hide();
 	});
 	$(".lnbclose, .lnb_area .dim").click(function(e){
 		e.preventDefault();
@@ -38,7 +40,9 @@ $(function(){
 		$(".lnb").stop().animate({"left":"-280px"});
 		$(".lnb_area .dim").hide(0);
 		$(".f_bottom ").show();
-		$("body").unbind('touchmove');
+		//$(".container").unbind('touchmove');
+		$(".container").css({"position":"relative"});
+		$(".footer").show();
 	});
 
 	$(".nav li a").on("click", function(){

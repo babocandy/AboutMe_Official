@@ -118,12 +118,14 @@
                 <h3>진행중인 주문/배송현황</h3>
                 <div class="deliveryflow">
                     <ul>
-                        <li class="cnt"><span class="bg_d0">진행중<br /><strong>@Model.STATUS_ALL</strong>건</span><span class="hidden">-현재위치</span></li>
-                        <li><i class="ico_d1"></i>입금대기<br /><strong>@Model.STATUS_10</strong>건</li>
-                        <li><i class="ico_d2"></i>결제완료<br /><strong>@Model.STATUS_20</strong>건</li>
-                        <li><i class="ico_d3"></i>상품준비중<br /><strong>@Model.STATUS_30</strong>건</li>
-                        <li><i class="ico_d4"></i>배송중<br /><strong>@Model.STATUS_40</strong>건</li>
-                        <li><i class="ico_d5"></i>배송완료<br /><strong>@Model.STATUS_50</strong>건</li>
+                        <a href="/MyPage/MyOrder">
+                            <li class="cnt"><span class="bg_d0">진행중<br /><strong>@Model.STATUS_ALL</strong>건</span><span class="hidden">-현재위치</span></li>
+                            <li class="@{ if(@Model.STATUS_10 > 0) {@Html.Raw("cnt");} }"><i class="ico_d1"></i>입금대기<br /><strong>@Model.STATUS_10</strong>건</li>
+                            <li class="@{ if(@Model.STATUS_20 > 0) {@Html.Raw("cnt");} }"><i class="ico_d2"></i>결제완료<br /><strong>@Model.STATUS_20</strong>건</li>
+                            <li class="@{ if(@Model.STATUS_30 > 0) {@Html.Raw("cnt");} }"><i class="ico_d3"></i>상품준비중<br /><strong>@Model.STATUS_30</strong>건</li>
+                            <li class="@{ if(@Model.STATUS_40 > 0) {@Html.Raw("cnt");} }"><i class="ico_d4"></i>배송중<br /><strong>@Model.STATUS_40</strong>건</li>
+                            <li class="@{ if(@Model.STATUS_50 > 0) {@Html.Raw("cnt");} }"><i class="ico_d5"></i>배송완료<br /><strong>@Model.STATUS_50</strong>건</li>
+                        </a>
                     </ul>
                 </div>
                 <div class="myinfo_list">
