@@ -286,7 +286,7 @@
                                 <option value="0505" @if (Model.BaseAddrInfo.M_PHONE1 == "0505") { @Html.Raw("selected='selected'") ; }>0505</option>
                                 <option value="070" @if (Model.BaseAddrInfo.M_PHONE1 == "070") { @Html.Raw("selected='selected'") ; }>070</option>
                                 <option value="080" @if (Model.BaseAddrInfo.M_PHONE1 == "080") { @Html.Raw("selected='selected'") ; }>080</option>
-                            </select><input type="number" class="ipttypea ml10" style="width:80px" name="SENDER_TEL2" id="SENDER_TEL2" max="9999" value="@Model.BaseAddrInfo.M_PHONE2" title="전화번호 중간 번호 입력" maxlength="4" /><input type="number" class="ipttypea ml10" style="width:80px" name="SENDER_TEL3" id="SENDER_TEL3" value="@Model.BaseAddrInfo.M_PHONE3" max="9999" title="전화번호 끝 번호 입력" maxlength="4" />
+                            </select><input type="text" class="ipttypea ml10" style="width:80px" name="SENDER_TEL2" id="SENDER_TEL2" max="9999" value="@Model.BaseAddrInfo.M_PHONE2" title="전화번호 중간 번호 입력" maxlength="4" /><input type="text" class="ipttypea ml10" style="width:80px" name="SENDER_TEL3" id="SENDER_TEL3" value="@Model.BaseAddrInfo.M_PHONE3" max="9999" title="전화번호 끝 번호 입력" maxlength="4" />
                         </td>
                     </tr>
                     <tr>
@@ -299,7 +299,7 @@
                                 <option value="017" @if (Model.BaseAddrInfo.M_MOBILE1 == "017") { @Html.Raw("selected='selected'") ; }>017</option>
                                 <option value="018" @if (Model.BaseAddrInfo.M_MOBILE1 == "018") { @Html.Raw("selected='selected'") ; }>018</option>
                                 <option value="019" @if (Model.BaseAddrInfo.M_MOBILE1 == "019") { @Html.Raw("selected='selected'") ; }>019</option>
-                            </select><input type="number" class="ipttypea ml10" name="SENDER_HP2" id="SENDER_HP2" value="@Model.BaseAddrInfo.M_MOBILE2" max="9999" style="width:80px" title="휴대폰 중간 번호 입력" maxlength="4" /><input type="number" class="ipttypea ml10" name="SENDER_HP3" id="SENDER_HP3" max="9999" style="width:80px" value="@Model.BaseAddrInfo.M_MOBILE3" title="휴대폰 끝 번호 입력" maxlength="4" />
+                            </select><input type="text" class="ipttypea ml10" name="SENDER_HP2" id="SENDER_HP2" value="@Model.BaseAddrInfo.M_MOBILE2" max="9999" style="width:80px" title="휴대폰 중간 번호 입력" maxlength="4" /><input type="text" class="ipttypea ml10" name="SENDER_HP3" id="SENDER_HP3" max="9999" style="width:80px" value="@Model.BaseAddrInfo.M_MOBILE3" title="휴대폰 끝 번호 입력" maxlength="4" />
                         </td>
                     </tr>
                     <tr>
@@ -393,7 +393,7 @@
                                 <option value="0505">0505</option>
                                 <option value="070">070</option>
                                 <option value="080">080</option>
-                            </select><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_TEL2" id="RECEIVER_TEL2" max="9999" title="전화번호 중간 번호 입력" maxlength="4" /><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_TEL3" id="RECEIVER_TEL3" max="9999" title="전화번호 끝 번호 입력" maxlength="4" />
+                            </select><input type="text" class="ipttypea ml10" style="width:80px" name="RECEIVER_TEL2" id="RECEIVER_TEL2" max="9999" title="전화번호 중간 번호 입력" maxlength="4" /><input type="text" class="ipttypea ml10" style="width:80px" name="RECEIVER_TEL3" id="RECEIVER_TEL3" max="9999" title="전화번호 끝 번호 입력" maxlength="4" />
                         </td>
                     </tr>
                     <tr>
@@ -406,7 +406,7 @@
                                 <option value="017">017</option>
                                 <option value="018">018</option>
                                 <option value="019">019</option>
-                            </select><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_HP2" id="RECEIVER_HP2" max="9999" title="휴대폰 중간 번호 입력" maxlength="4" /><input type="number" class="ipttypea ml10" style="width:80px" name="RECEIVER_HP3" id="RECEIVER_HP3" max="9999" title="휴대폰 끝 번호 입력" maxlength="4" />
+                            </select><input type="text" class="ipttypea ml10" style="width:80px" name="RECEIVER_HP2" id="RECEIVER_HP2" max="9999" title="휴대폰 중간 번호 입력" maxlength="4" /><input type="text" class="ipttypea ml10" style="width:80px" name="RECEIVER_HP3" id="RECEIVER_HP3" max="9999" title="휴대폰 끝 번호 입력" maxlength="4" />
                         </td>
                     </tr>
                     <tr>

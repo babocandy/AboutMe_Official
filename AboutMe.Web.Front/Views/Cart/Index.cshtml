@@ -296,12 +296,14 @@
                         <span class="tit">보유 쿠폰</span>
                     </li>
                 </a>
-                <li class="downpoint">
-                    <span class="ico"></span>
-                    <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
-                    <span class="tit">포인트</span>
-                </li>
-            </ul>
+                <a href="/MyPage/MyPoint">
+                    <li class="downpoint">
+                        <span class="ico"></span>
+                        <span class="num">@(Html.Action("CurrentTotal", "MyPoint", new { mid = Model.UserProfile.M_ID }))</span>
+                        <span class="tit">포인트</span>
+                    </li>
+                </a>
+</ul>
         </div>
     </div>
 }
@@ -313,7 +315,7 @@
             <p class="nonmbmsg">
                 지금 어바웃미 멤버십에 가입 하세요!<br />
                 <span>회원 구매 시 <strong>할인 쿠폰 및 포인트 적립 등의 다양한 혜택</strong>이 있습니다.</span><br />
-                <a href="/customer/benefit.asp" class="benefitview">회원혜택 보기<i></i></a>
+                <a href="/Customer/Benefit" class="benefitview">회원혜택 보기<i></i></a>
             </p>
             <div class="btn_nonmb">
                 <a href="/MemberShip/JoinStep1" class="btn_white_w155h48">회원가입</a>
