@@ -28,7 +28,7 @@ $(function(){
 						mainbnrIdx=0;
 					}
 					$(".mainvisual_banner .nav li:eq("+mainbnrIdx+") a").click();
-				},5000);
+				},7000);
 		}
 		function mainBannerSlideclearIntvals(){
 			mainBannerSlideTime != undefined && clearInterval(mainBannerSlideTime);
