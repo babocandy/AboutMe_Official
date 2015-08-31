@@ -25,13 +25,13 @@
                                         {
                                             if (item.ICON_YN.IndexOf('B') != -1)
                                             { <text> <em class="ico_best">BEST</em></text> }
-                                            if (item.ICON_YN.IndexOf('S') != -1)
-                                            { <text> <em class="ico_soldout">SOLD OUT</em></text> }
                                             if (item.ICON_YN.IndexOf('N') != -1)
                                             { <text> <em class="ico_new">NEW</em></text> }
                                             if (item.ICON_YN.IndexOf('C') != -1)
                                             { <text> <em class="ico_custom ">커스텀</em></text> }
                                         }
+                                        @if (item.SOLDOUT_YN == "Y")
+                                        { <text> <em class="ico_soldout">SOLD OUT</em></text> }
                                         @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
                                         {
                                             if (item.PMO_PRODUCT_CATEGORY == "01")

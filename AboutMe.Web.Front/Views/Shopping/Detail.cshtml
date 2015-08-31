@@ -219,13 +219,13 @@
                             {
                                 if (Model.ICON_YN.IndexOf('B') != -1)
                                 { <text> <span class="ico_best">BEST</span></text> }
-                                if (Model.ICON_YN.IndexOf('S') != -1)
-                                { <text> <span class="ico_soldout">SOLD OUT</span></text> }
                                 if (Model.ICON_YN.IndexOf('N') != -1)
                                 { <text> <span class="ico_new">NEW</span></text> }
                                 if (Model.ICON_YN.IndexOf('C') != -1)
                                 { <text> <span class="ico_custom ">커스텀</span></text> }
                             }
+                            @if (Model.SOLDOUT_YN == "Y")
+                            { <text> <span class="ico_soldout">SOLD OUT</span></text> }
                             @if (!string.IsNullOrEmpty(Model.PMO_PRODUCT_CATEGORY))
                             {
                                 if (Model.PMO_PRODUCT_CATEGORY == "01")
@@ -453,13 +453,13 @@
                                                 {
                                                     if (item.ICON_YN.IndexOf('B') != -1)
                                                     { <text> <span class="ico ico_best">BEST</span></text> }
-                                                    if (item.ICON_YN.IndexOf('S') != -1)
-                                                    { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
                                                     if (item.ICON_YN.IndexOf('N') != -1)
                                                     { <text> <span class="ico ico_new">NEW</span></text> }
                                                     if (item.ICON_YN.IndexOf('C') != -1)
                                                     { <text> <span class="ico ico_custom ">커스텀</span></text> }
                                                 }
+                                                @if (item.SOLDOUT_YN == "Y")
+                                                { <text> <span class="ico ico_soldout">SOLD OUT</span></text> }
                                                 @if (!string.IsNullOrEmpty(item.PMO_PRODUCT_CATEGORY))
                                                 {
                                                     if (item.PMO_PRODUCT_CATEGORY == "01")
