@@ -1,0 +1,53 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MailTest</title>
+</head>
+<body>
+    <div> 
+        <script>
+    function fGoMail() {
+        var f = document.frmMAIL;
+        /*
+        if (f.sender.value.length < 1) {
+            alert("발송자를 등록하세요");
+            return;
+        }
+        */
+        if (f.receiver.value.length < 1) {
+            alert("수신자를 등록하세요");
+            return;
+        }
+        f.action = "/Home/SendMailGo";
+        f.submit();
+    }
+
+        </script>
+        <form name="frmMAIL" method="post" action="" target="_blank">
+            <br />
+            customer@aboutmeshop.com
+            <br />
+            receiver:<input type="text" name="receiver" value="" />
+            <br />
+            subject:<input type="text" name="subject" value="test mail @DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss") " />
+            <br />
+            body:<textarea name="body" cols="800" rows="10">
+
+                hello! test mail 
+                @DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss")
+
+            </textarea>
+        </form>
+
+        <a href="javascript:fGoMail();">[GoMail]</a>
+
+    </div>
+</body>
+</html>
