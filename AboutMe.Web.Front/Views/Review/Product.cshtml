@@ -105,7 +105,7 @@
                         $(".no_data").hide();
                         $(".btn_more").show();
 
-                       
+
                     }else{
                         if ( $(".grid").size() == 0) {
                             $(".no_data").show();
@@ -117,7 +117,7 @@
                             alert("더 이상 결과값이 없습니다.");
                             is_more_req = false;
                         }
-                       
+
                     }
 
                     initMasonry();
@@ -126,7 +126,7 @@
                 }
             },
             error: function (e) {
-               
+
             }
         });
     }//end func
@@ -143,9 +143,10 @@
                 if (d.IS_BEST == "Y") {
                     html += "<span class='best_choice'><img src='/aboutCom/images/review/ico_best.png' alt='best'></span>";
                 }
-
+                // onclick=\"window.location.href='/Shopping/Detail?pcode="+item.P_CODE +"\"
                 //<!--제품 이름 및 정보-->
-                html += "<div class='product_info'>";
+                html += "<div class='product_info' onclick=\"window.location.href='/Shopping/Detail?pcode="+d.P_CODE+"';return false;\">";
+                console.log(html)
                 html += "<div class='photo'><img src='" + img_path_product + "R120_" + d.P_MAIN_IMG + "' alt''></div>";
                 html += "<div class='detail'>";
                 html += "<p class='tit'>" + d.P_NAME + "</p>";
@@ -160,7 +161,7 @@
                 html += "<span class='skin " + d.SKIN_TYPE_CSS + "' ></span>";
                 html += "<span class='id'>" + d.M_ID_LBL + "</span>";
                 html += "<span class='userage'>" + d.M_BIRTHDAY_LBL + "대, " +d.M_SEX_LBL + "</span>";
-                
+
                 html += "</div>";
 
 
@@ -184,7 +185,7 @@
                 //$grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
 
-           
+
             $grid.masonry().append($(all_html)  ).masonry('appended', $(all_html)).masonry();
 
             //꼬리값 물기
@@ -293,11 +294,11 @@
                             }
                             
                             <!--제품 이름 및 정보-->
-                            <div class="product_info">
+                            <div class="product_info" onclick="window.location.href='@(Url.Action("Detail", "Shopping", new  { pcode=item.P_CODE }))';return false;">
                                 <div class="photo"><img src="@string.Format("{0}R120_{1}",   myController._img_path_product, item.P_MAIN_IMG)" alt=""></div>
                                 <div class="detail">
                                     <p class="tit">@item.P_NAME</p>
-                                    <p class="stit">@item.P_SUB_TITLE</p>                 
+                                    <p class="stit">@item.P_SUB_TITLE</p>
                                 </div>
                             </div>
                             <!--//제품 이름 및 정보-->

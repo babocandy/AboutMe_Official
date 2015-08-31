@@ -29,14 +29,21 @@
         <div class="photo"><img src="@string.Format("{0}R120_{1}", mycontrl._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
         <div class="detail">
             <p class="prd_name">@Model.P_NAME</p>
-            <p class="prd_st">@Model.P_SUB_TITLE</p>
+            <p class="prd_price">@Model.P_SUB_TITLE</p>
         </div>
     </div>
 
     <div class="subject_area">
         <div class="tag">
-            @Model.TAG
-            <!--<span>#각질제거</span> <span>#각질제거</span> <span>#각질제거</span>-->
+            @{
+                @*tag common*@
+                var arr = Model.TAG.Split('#');
+
+                foreach (var tag in arr)
+                {
+                    <span>#@tag</span>
+                }
+            }            
         </div>
         <p class="subject">@Model.TITLE</p>
         <div class="writer_area">

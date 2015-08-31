@@ -281,10 +281,14 @@
                 html += "   <div class='rinfo_con'>";
 
                 html += "    <ul class='hash'>";
-               // html += "   <li>#각질제거</li>";
-                //html += "    <li>#미백</li>";
-                //html += "    <li>#스페셜케어</li>";
-                html += "    <li>"+ item.TAG+"</li>";
+
+                /*tag common*/
+                var arr = item.TAG.split("#");
+                for(var k = 0; k < arr.length ; ++k){
+                    html += "<li>#" + arr[k] + "</li>\n"
+                }
+                
+               
                 html += "    </ul>";
                     
                 html += "   <div class='review_view'>";

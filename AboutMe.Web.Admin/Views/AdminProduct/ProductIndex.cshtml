@@ -544,7 +544,6 @@
                             <td>
                                 <label for="icon1"><input type="checkbox" id="iconYn" name="iconYn" value="N" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('N') != -1) { <text> checked</text> } /><span class="txt mr5">NEW</span></label>
                                 <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="B" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } /><span class="txt mr5">BEST</span></label>
-                                <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="S" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } /><span class="txt mr5">SOLD OUT</span></label>
                                 <label for="icon4"><input type="checkbox" id="iconYn" name="iconYn" value="C" @if (Model.productSearch_Entity.iconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } /><span class="txt mr5">커스텀</span></label>
                             </td>
                         </tr>
@@ -569,9 +568,6 @@
                             </label>
                             <label for="icon4">
                                 <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="B" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('B') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">BEST</span>
-                            </label>
-                            <label for="icon4">
-                                <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="S" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('S') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">SOLD OUT</span>
                             </label>
                             <label for="icon4">
                                 <input type="checkbox" id="BatchIconYn" name="BatchIconYn" value="C" @if (Model.productSearch_Entity.BatchIconYn.ToString().IndexOf('C') != -1) { <text> checked</text> } onclick="selectedIconChk();" /><span class="txt mr5">커스텀</span>
@@ -659,11 +655,11 @@
                                 { ICON_NAME = ICON_NAME + ",NEW"; }
                                 if (item.ICON_YN.ToString().IndexOf('B') != -1)
                                 { ICON_NAME = ICON_NAME + ",BEST"; }
-                                if (item.ICON_YN.ToString().IndexOf('S') != -1)
-                                { ICON_NAME = ICON_NAME + ",SOLD OUT"; }
                                 if (item.ICON_YN.ToString().IndexOf('C') != -1)
                                 { ICON_NAME = ICON_NAME + ",커스텀"; }
                             }
+                            @if (item.SOLDOUT_YN == "Y")
+                                { ICON_NAME = ICON_NAME + ",SOLD OUT"; }
 
                             @if (ICON_NAME.Length > 1)
                             {

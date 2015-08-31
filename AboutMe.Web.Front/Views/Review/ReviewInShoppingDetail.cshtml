@@ -511,7 +511,13 @@
             html += "        </div>";
             html += "        <div class='detail'>";
             html += "            <div class='tag'>";
-            html +=                 "<span>"+item.TAG+"</span>"
+
+            /*tag common*/
+            var arr = item.TAG.split("#");
+            for(var k = 0; k < arr.length ; ++k){
+                html += "<span>#" + arr[k] + "</span>\n";
+            }
+
             html += "            </div>";
             html += "            <div class='reviewtxt'>";
             html += "                <p class='tit'>"+ item.TITLE +"</p>";
@@ -551,7 +557,15 @@
                     //console.log(item.TITLE);
 
                     $(".reviewpop_wrap .title_area .title").text( item.TITLE );
-                    $(".reviewpop_wrap .title_area .tag").html("<span>"+ item.TAG + "</span>" );
+
+                    /*tag common*/
+                    var arr = item.TAG.split("#");
+                    var html = "";
+                    for(var k = 0; k < arr.length ; ++k){
+                        html += "<span>#" + arr[k] + "</span>\n";
+                    }
+
+                    $(".reviewpop_wrap .title_area .tag").html( html );
 
                     $(".reviewpop_wrap .writer .skin").removeClass();
 
