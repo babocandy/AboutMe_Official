@@ -515,7 +515,7 @@
             /*tag common*/
             var arr = item.TAG.split("#");
             for(var k = 0; k < arr.length ; ++k){
-                html += "<span>#" + arr[k] + "</span>";
+                html += "<span>#" + arr[k] + "</span>\n";
             }
 
             html += "            </div>";
@@ -562,7 +562,7 @@
                     var arr = item.TAG.split("#");
                     var html = "";
                     for(var k = 0; k < arr.length ; ++k){
-                        html += "<span>#" + arr[k] + "</span>";
+                        html += "<span>#" + arr[k] + "</span>\n";
                     }
 
                     $(".reviewpop_wrap .title_area .tag").html( html );
