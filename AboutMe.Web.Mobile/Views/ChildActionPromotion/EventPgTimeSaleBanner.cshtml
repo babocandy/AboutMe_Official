@@ -5,8 +5,17 @@
 }
 
 @{
+    string CurYYYY = "", CurMM = "", CurDD = "", CurHH = "", CurMin = "", CurSS = "";
     string FromYYYY = "", FromMM = "", FromDD = "", FromHH = "", FromMin = "", FromSS = "";
     string ToYYYY = "", ToMM = "", ToDD = "", ToHH = "", ToMin = "", ToSS = "";
+
+    CurYYYY = DateTime.Now.Year.ToString();
+    CurMM = DateTime.Now.Month.ToString().PadLeft(2, '0');
+    CurDD = DateTime.Now.Day.ToString().PadLeft(2, '0');
+    CurHH = DateTime.Now.Hour.ToString().PadLeft(2, '0');
+    CurMin = DateTime.Now.Minute.ToString().PadLeft(2, '0');
+    CurSS = DateTime.Now.Second.ToString().PadLeft(2, '0');
+    
 
     if (Model.Count > 0)
     {
@@ -31,31 +40,34 @@
         <a href="#link"><img class="lazyload" data-original="@ViewBag.PromotionPhotoPath@Model[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG" alt="늦가을 자외선으로부터 내 피부를 보호하자 굿 나이트 모이스처 앰플 25,000원" /></a>
         <p id="timesale" class="remain_time ffOS"></p>
         <script type="text/javascript">
-        $(function () {
-            //타임세일 현재날짜와 종료날짜를 입력해주세요.
-            $('#timesale').countdown({
-                starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
-                endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
-                callback: function (m) {
-                    $('#timesale').html(m);
-                }
-            });
-            //레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
-            $('#ly_timesale').countdown({
-                starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
-                endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
-                callback: function (m) {
-                    $('#ly_timesale').html(m);
-                }
-            });
+    $(function () {
+        //타임세일 현재날짜와 종료날짜를 입력해주세요.
 
-            //Lazy Load Script
-            $("img.lazyload").lazyload({
-                threshold: 100,
-                effect: "fadeIn",
-                skip_invisible: false
-            });
+        //타임세일 현재날짜와 종료날짜를 입력해주세요.
+        $('#timesale').countdown({
+            starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
+            endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
+            callback: function (m) {
+                $('#timesale').html(m);
+            }
         });
+
+        //레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
+        $('#ly_timesale').countdown({
+            starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
+            endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
+            callback: function (m) {
+                $('#ly_timesale').html(m);
+            }
+        });
+
+        //Lazy Load Script
+        $("img.lazyload").lazyload({
+            threshold: 100,
+            effect: "fadeIn",
+            skip_invisible: false
+        });
+    });
        </script>
 
     </div>
