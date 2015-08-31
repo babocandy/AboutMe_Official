@@ -1,9 +1,11 @@
 ﻿@model AboutMe.Domain.Entity.Review.MyReviewProductInputViewModel
 @using AboutMe.Common.Helper
 @using AboutMe.Common.Data
+@using AboutMe.Web.Front.Controllers
 @{
     ViewBag.Title = "Write";
     Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
+    var myctrl = ViewContext.Controller as MyReviewController;
 }
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
@@ -106,9 +108,9 @@ else
                         <tbody>
                             <tr>
                                 <th>상품명</th>
-                                <td class="pro_info">
+                                <td class="pro_info" colspan="@(ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE) ? "" : "3")" >
                                     <!--이미지사이즈 96x96-->
-                                    <div class="photo"><img src="@Model.ProductInfo.MAIN_IMG" alt="" /></div>
+                                    <div class="photo"><img src="@string.Format("{0}R120_{1}", myctrl._img_path_product, Model.ProductInfo.MAIN_IMG)" alt="" /></div>
                                     <div class="detail">
                                         <p class="tit">@Model.ProductInfo.P_NAME</p>
                                         <p class="stit">@Model.ProductInfo.P_SUB_TITLE</p>
@@ -116,7 +118,7 @@ else
                                     </div>
                                 </td>
 
-                                @if (ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE))
+                                @if ( ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE) )
                                 {
                                     <th class="skintype"><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
                                     <td class="skintype">
