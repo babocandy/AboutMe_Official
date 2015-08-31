@@ -61,7 +61,7 @@
             }
         }
 
-        //선택 장바구니 담기
+        //선택 쇼핑백 담기
         function CheckAllCart(b) {
             if ($(b).hasClass("on")) {
                 var cnt = 0;
@@ -79,7 +79,7 @@
                 });
 
                 if (cnt == 0) {
-                    alert("장바구니에 담을 상품을 선택해주세요.");
+                    alert("쇼핑백에 담을 상품을 선택해주세요.");
                     return false;
                 }
 
@@ -163,7 +163,7 @@ else
             <!-- [Desc] 항목 선택 시 <a>태그 "on"클래스 추가 및 <strong>태그 안에 갯수 "(000)" 입력 -->
             <a href="javascript:void(0)" class="cart" onclick="CheckAllCart(this);">
                 <span class="ico"><i></i></span>
-                <span class="txt">장바구니 담기<strong id="CartCntTxt"></strong></span>
+                <span class="txt">쇼핑백 담기<strong id="CartCntTxt"></strong></span>
             </a>
             <a href="javascript:void(0)" class="del" onclick="CheckAllDelete(this);">
                 <span class="ico"><i></i></span>

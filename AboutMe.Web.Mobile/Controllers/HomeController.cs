@@ -50,6 +50,22 @@ namespace AboutMe.Web.Mobile.Controllers
             return View();
         }
 
+
+
+
+        public ActionResult Index_origin()
+        {
+            this.ViewBag.IS_LOGIN = MemberInfo.IsMemberLogin();//로그인 여부 T/F
+            this.ViewBag.M_ID = MemberInfo.GetMemberId();  //계정
+            this.ViewBag.M_NAME = MemberInfo.GetMemberName(); //이름
+            this.ViewBag.M_GBN = MemberInfo.GetMemberGBN(); //임직원구분 A,S
+            this.ViewBag.M_GRADE = MemberInfo.GetMemberGrade(); //등급코드
+            this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName(); //등급명
+            this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피부고민코드
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

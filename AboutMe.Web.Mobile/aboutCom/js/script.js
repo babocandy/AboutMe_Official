@@ -962,4 +962,77 @@ $(function(){
 		});
 	}
 
+	//메인 배너 슬라이드
+	if($(".slide_banner").length){
+		$(".slide_banner .slider ul li").each(function(){
+			$(".slide_banner .nav ul").append("<li><a href='#'></a></li> ");
+		});
+		$(".slide_banner .nav ul li").eq(0).addClass("cnt");
+		var photo_itemW = $(".slide_banner .slider").width();
+		var item_length = $(".slide_banner .nav li").length;
+		$(".slide_banner .slider li").css({"width":photo_itemW});
+
+		var prd_idx =0;
+		$(".slide_banner .nav ul li a").on("click", function(e){
+			e.preventDefault();
+			prd_idx = $(this).parent().index();
+			$(".slide_banner .slider ul").animate({"margin-left": -(photo_itemW*prd_idx)},300,"easeInExpo");
+			$(".slide_banner .nav li").removeClass("cnt");
+			$(".slide_banner .nav li:eq("+prd_idx+")").addClass("cnt");
+		});
+		
+		function detailprd_left(){
+			prd_idx--;
+			if (prd_idx==-1){
+				prd_idx=(item_length-1);
+				$(".slide_banner .slider ul li:eq("+(item_length-1)+")").clone().insertBefore($(".slide_banner .slider ul li:eq(0)"));
+				$(".slide_banner .slider ul").css({"margin-left":-photo_itemW});
+				$(".slide_banner .slider ul").animate({"margin-left":0},300,"easeInExpo", function(){
+					$(".slide_banner .slider ul").css({"margin-left":-(photo_itemW*(prd_idx))});
+					$(".slide_banner .slider ul li:eq(0)").remove();
+				});
+			}
+			else{
+				$(".slide_banner .slider ul").animate({"margin-left": -(photo_itemW*prd_idx)},300,"easeInExpo");
+			}
+			$(".slide_banner .nav li:eq("+prd_idx+") a").click();
+		}
+		function detailprd_right(){
+			prd_idx++;
+			if (prd_idx==item_length){
+				prd_idx=0;
+				$(".slide_banner .slider ul li:eq(0)").clone().insertAfter($(".slide_banner .slider ul li:eq("+(item_length-1)+")")); 
+				$(".slide_banner .slider ul").animate({"margin-left": +(-(photo_itemW*item_length)) },300,"easeInExpo", function(){
+					$(".slide_banner .slider ul").css({"margin-left":0});
+					$(".slide_banner .slider ul li:eq("+(item_length)+")").remove();
+				});
+			}else{
+				$(".slide_banner .slider ul").animate({"margin-left": -(photo_itemW*prd_idx)},300,"easeInExpo");
+			}
+			$(".slide_banner .nav li:eq("+prd_idx+") a").click();
+		}
+
+		$(window).resize(function(){
+			photo_itemW = $(".slide_banner .slider").width();
+			$(".slide_banner .slider li").css({"width":photo_itemW});
+			$(".slide_banner .slider ul").css({"margin-left": -(photo_itemW*prd_idx)});
+		});
+
+		//손꾸락 //swipeleft, swiperight, swipeup, swipedown
+		$(".slide_banner .slider").on('swipeleft', function(e) {
+			detailprd_right();
+		}).on('swiperight', function(e) {
+			detailprd_left();
+		}).on('movestart', function(e) {
+			if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+				e.preventDefault();
+				return;
+			}
+		}).on('move', function(e) {
+			if ( (e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY) ){
+				e.preventDefault();
+				return;
+			}
+		});
+	}
 });

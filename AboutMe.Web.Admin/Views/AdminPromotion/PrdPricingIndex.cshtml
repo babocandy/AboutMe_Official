@@ -130,7 +130,7 @@
             @if (IsOverEndingTime(Convert.ToDateTime(ViewData["PromotionEndTime"])) != true )
             { 
                 <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 등록 </a>
-                <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingMultiCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 복수등록 </a>
+                <!--<a class="btn btn-default middium" href="/AdminPromotion/PrdPricingMultiCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 복수등록 </a>-->
             }
             else
             {
