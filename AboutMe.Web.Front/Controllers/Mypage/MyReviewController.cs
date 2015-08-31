@@ -183,9 +183,6 @@ namespace AboutMe.Web.Front.Controllers
         [Route("Update/{id:int}")]
         public ActionResult Update(MyReviewProductInputViewModel model)
         {
-            Debug.WriteLine("ModelState.IsValid " + ModelState.IsValid);
-            Debug.WriteLine("model.IS_PHOTO " + model.IS_PHOTO);
-            Debug.WriteLine(" model.ADD_IMAGE " + model.ADD_IMAGE);
 
             if (ModelState.IsValid)
             {
@@ -195,17 +192,13 @@ namespace AboutMe.Web.Front.Controllers
 
                     ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true };
 
-                    Debug.WriteLine(" _img_path_review  " + _img_path_review);
-                    Debug.WriteLine(" model.UploadImage  " + model.UploadImage);
-                    Debug.WriteLine(" model.UploadImage  " + model.UploadImage);
-
                     if (model.UploadImage != null)
                     {
                         ImageResult imageResult = imageUpload.RenameUploadFile(model.UploadImage);
                         if (imageResult.Success)
                         {
                             model.ADD_IMAGE = imageResult.ImageName;
-                            Debug.WriteLine(" model.ADD_IMAGE1  " + model.ADD_IMAGE);
+
                         }
                     }
                 }
