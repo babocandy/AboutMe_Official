@@ -70,7 +70,7 @@ namespace AboutMe.Domain.Entity.Review
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODUCT_READY_SEL_Result>("SP_REVIEW_PRODUCT_READY_SEL", m_IDParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_REVIEW_PRODUCT_UPD(Nullable<int> iDX, string cOMMENT, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_REVIEW_PRODUCT_UPD(Nullable<int> iDX, string cOMMENT, string aDD_IMAGE, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -80,7 +80,11 @@ namespace AboutMe.Domain.Entity.Review
                 new ObjectParameter("COMMENT", cOMMENT) :
                 new ObjectParameter("COMMENT", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_PRODUCT_UPD", iDXParameter, cOMMENTParameter, rET_NUM, rET_MESSAGE);
+            var aDD_IMAGEParameter = aDD_IMAGE != null ?
+                new ObjectParameter("ADD_IMAGE", aDD_IMAGE) :
+                new ObjectParameter("ADD_IMAGE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_REVIEW_PRODUCT_UPD", iDXParameter, cOMMENTParameter, aDD_IMAGEParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<SP_REVIEW_GET_PRODUCT_INFO_Result> SP_REVIEW_GET_PRODUCT_INFO(string p_CODE)
@@ -374,6 +378,20 @@ namespace AboutMe.Domain.Entity.Review
                 new ObjectParameter("SORT", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_EXP_MOBILE_SEL_Result>("SP_REVIEW_EXP_MOBILE_SEL", pAGEParameter, pAGESIZEParameter, cATE_CODEParameter, sORTParameter, tOTAL_PAGE, tOTAL_ITEM);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result> SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result>("SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_REVIEW_PRODCUT_TOTAL_BY_PCODE(string p_CODE)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_REVIEW_PRODCUT_TOTAL_BY_PCODE", p_CODEParameter);
         }
     }
 }

@@ -7,7 +7,7 @@
     <a href="#">쇼핑</a>
     <div class="depth2">
         <div class="fl">
-            <p class="tit">뷰티</p>
+            <p class="tit"><a href="#">뷰티</a></p>
             <ul>
                 @foreach (var item in ViewData["category1"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                 {
@@ -24,7 +24,7 @@
             </ul>
         </div>
         <div class="fl">
-            <p class="tit">헬스</p>
+            <p class="tit"><a href="#">헬스</a></p>
             <ul>
                 @foreach (var item in ViewData["category2"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                 {
@@ -34,7 +34,7 @@
                 <li><a href="#">뉴트리선케어</a></li>
                 <li><a href="#">웨이트케어</a></li>*@
             </ul>
-            <p class="tit">기타브랜드</p>
+            <p class="tit"><a href="#">기타브랜드</a></p>
             <ul>
                 @foreach (var item in ViewData["category3"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                 {

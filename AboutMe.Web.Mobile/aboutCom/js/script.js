@@ -20,20 +20,31 @@ $(function(){
 	$(".historyback").click(function(){
 		historyback();
 	});
+
 	/*nav*/
+	var winWidth = $(window).width();
+	$(".lnb_area").css({"left":-winWidth});
 	$(".openlnb").click(function(e){
 		e.preventDefault();
-		$(".lnb_area").show();
-		$(".lnb").animate({"left":"0"},"fast" );
-		$(".container").css({"position":"fixed"});
+		$(".lnb_area").stop().animate({"left":"0"});
+		$(".lnb").stop().animate({"left":"0"});
+		$(".lnb_area .dim").fadeIn(300);
 		$(".f_bottom ").hide();
+		//$(".container").bind('touchmove', function(e){e.preventDefault()});
+		$(".container").css({"position":"fixed"});
+		$(".footer").hide();
 	});
 	$(".lnbclose, .lnb_area .dim").click(function(e){
 		e.preventDefault();
-		$(".lnb").stop().animate({"left":"-280px"},"100", function(){$(".lnb_area").hide()});
-		$(".container").css({"position":"relative"});
+		$(".lnb_area").css({"left":-winWidth});
+		$(".lnb").stop().animate({"left":"-280px"});
+		$(".lnb_area .dim").hide(0);
 		$(".f_bottom ").show();
+		//$(".container").unbind('touchmove');
+		$(".container").css({"position":"relative"});
+		$(".footer").show();
 	});
+
 	$(".nav li a").on("click", function(){
 		if($(this).parent(".slidetype").hasClass("v2")){
 			return false;
@@ -49,13 +60,30 @@ $(function(){
 		}
 		
 	});
-	/*상단검색*/
+	/*상단검색
 	$(".h_top .btn_search").toggle(function(){
 		$(".h_search_wrap").slideDown(300);
 		$("body").bind('touchmove', function(e){e.preventDefault()});
 	}, function(){
 		$(".h_search_wrap").slideUp(300);
 		$("body").unbind('touchmove');
+	});*/
+	var searchVal = false;
+	$(".h_top .btn_search").click(function(){
+		if(!searchVal){
+			$(".h_search_wrap").slideDown(300);
+			$("body").bind('touchmove', function(e){e.preventDefault()});
+			searchVal = true;
+		}else{
+			$(".h_search_wrap").slideUp(300);
+			$("body").unbind('touchmove');
+			searchVal = false
+		}
+	});
+	$(".h_search_wrap .dimd").click(function(){
+		$(".h_search_wrap").slideUp(300);
+		$("body").unbind('touchmove');
+		searchVal = false
 	});
 
 	/*footer*/
@@ -239,7 +267,7 @@ $(function(){
 		}
 	});
 
-	/*장바구니*/
+	/*쇼핑백*/
 	$(".btn_change_count").click(function(){
 		$(this).parent().find(".change_count").slideDown(300);
 	});
@@ -301,7 +329,7 @@ $(function(){
 		}
 	});
 
-	//장바구니 textarea 글자수제한
+	//쇼핑백 textarea 글자수제한
 	$("#edu_thesis").on("keyup", function() {
 		// 변수초기화
 		var ls_str = $(this).val(); // 이벤트가 일어난 컨트롤의 value 값

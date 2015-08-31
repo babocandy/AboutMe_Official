@@ -75,7 +75,7 @@ namespace AboutMe.Domain.Service.Review
 
             using (ReviewEntities context = new ReviewEntities())
             {
-                context.SP_REVIEW_PRODUCT_UPD(p.IDX, p.COMMENT, retNum, retMsg);
+                context.SP_REVIEW_PRODUCT_UPD(p.IDX, p.COMMENT, p.ADD_IMAGE, retNum, retMsg);
             }
 
             return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
@@ -345,5 +345,26 @@ namespace AboutMe.Domain.Service.Review
 
         }
 
+        /**
+         * 상품에 달린 상품리뷰 총수
+         */
+        public int GetReviewTotalByProductCode(string pcode)
+        {
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                return context.SP_REVIEW_PRODCUT_TOTAL_BY_PCODE(pcode).SingleOrDefault() ?? 0;
+            }
+        }
+
+        /**
+         * 가장많이 리뷰달린 상품의 리뷰상세
+         */
+        public SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result GetReviewDetailByMostReviewPdt()
+        {
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                return context.SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT().SingleOrDefault();
+            }
+        }
     }
 }

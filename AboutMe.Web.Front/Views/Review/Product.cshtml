@@ -37,6 +37,7 @@
 
     // select category
     function selectCategoryMenu(cc) {
+        is_more_req = false;
         if (categoryCode != cc) categoryCode = cc;
         tailIdx = undefined;
         removeAllItems();
@@ -53,7 +54,9 @@
     }
 
     //더 보기
+    var is_more_req = false;
     function moreView() {
+        is_more_req = true;
         getReviewProducList();
     }
 
@@ -76,15 +79,9 @@
 
 
         $grid.imagesLoaded(function(){
-            $grid.masonry({
-                transitionDuration: 0,
-                itemSelector : '.grid'
-            });
+            $grid.masonry('layout');
         })
-        /*
-        //example  http://masonry.desandro.com/methods.html#appended
 
-       */
     }
     function getReviewProducList() {
 
@@ -99,6 +96,7 @@
             },
             success: function (data) {
 
+
                 if (data.Success) {
 
                     $("#totalReview").text(data.Total);
@@ -107,7 +105,7 @@
                         $(".no_data").hide();
                         $(".btn_more").show();
 
-                       
+
                     }else{
                         if ( $(".grid").size() == 0) {
                             $(".no_data").show();
@@ -115,13 +113,20 @@
                             $("#reviewConts").height(0)
                         }
 
-                        alert("더 이상 결과값이 없습니다.");
+                        if(is_more_req){
+                            alert("더 이상 결과값이 없습니다.");
+                            is_more_req = false;
+                        }
+
                     }
+
+                    initMasonry();
+                    $grid.masonry('reloadItems');
 
                 }
             },
             error: function (e) {
-               
+
             }
         });
     }//end func
@@ -129,20 +134,20 @@
     function addItems(list) {
         if (list.length > 0) {
 
-            //var $items = [];
+            var all_html = "";
             for (var i = 0 ; i < list.length ; ++i) {
                 var d = list[i];
-
 
                 var html = "<div class='grid'>";
 
                 if (d.IS_BEST == "Y") {
                     html += "<span class='best_choice'><img src='/aboutCom/images/review/ico_best.png' alt='best'></span>";
                 }
-
+                // onclick=\"window.location.href='/Shopping/Detail?pcode="+item.P_CODE +"\"
                 //<!--제품 이름 및 정보-->
-                html += "<div class='product_info'>";
-                html += "<div class='photo'><img src='" + img_path_product + d.P_MAIN_IMG + "' alt''></div>";
+                html += "<div class='product_info' onclick=\"window.location.href='/Shopping/Detail?pcode="+d.P_CODE+"';return false;\">";
+                console.log(html)
+                html += "<div class='photo'><img src='" + img_path_product + "R120_" + d.P_MAIN_IMG + "' alt''></div>";
                 html += "<div class='detail'>";
                 html += "<p class='tit'>" + d.P_NAME + "</p>";
                 html += "<p class='stit'>" + (d.P_SUB_TITLE ? d.P_SUB_TITLE : "") + "</p>";
@@ -152,16 +157,18 @@
 
                 html += "<div class='comments'>";
                 html += "<div class='writer'>";
+
+                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' ></span>";
                 html += "<span class='id'>" + d.M_ID_LBL + "</span>";
                 html += "<span class='userage'>" + d.M_BIRTHDAY_LBL + "대, " +d.M_SEX_LBL + "</span>";
-                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' ></span>";
+
                 html += "</div>";
 
 
                 html += "<div class='reviewtxt'>";
 
                 if (d.IS_PHOTO == "Y" ) {
-                    html += "<img src='" + img_path_review + d.ADD_IMAGE + "' alt=''>";
+                    html += "<img src='" + img_path_review +"R308_"+ d.ADD_IMAGE + "' alt=''>";
                 }
 
                 html += "<div class='txt txtdotdot'>";
@@ -172,21 +179,21 @@
 
                 html += "</div>"; //end grid
 
+                all_html += html;
 
-
-                var elem = $(html);
-                $grid.masonry().append(elem).masonry('appended', elem).masonry();
+               // var elem = $(html);
+                //$grid.masonry().append(elem).masonry('appended', elem).masonry();
             }
 
-            $grid.masonry('reloadItems')
 
+            $grid.masonry().append($(all_html)  ).masonry('appended', $(all_html)).masonry();
 
             //꼬리값 물기
             if (tailIdx != d.IDX) {
                 tailIdx = d.IDX;
             }
         } else {
-            alert("더 이상 결과값이 없습니다.");
+            //alert("더 이상 결과값이 없습니다.");
         }
     }//end func
 
@@ -287,25 +294,26 @@
                             }
                             
                             <!--제품 이름 및 정보-->
-                            <div class="product_info">
-                                <div class="photo"><img src="@myController._img_path_product@item.P_MAIN_IMG" alt=""></div>
+                            <div class="product_info" onclick="window.location.href='@(Url.Action("Detail", "Shopping", new  { pcode=item.P_CODE }))';return false;">
+                                <div class="photo"><img src="@string.Format("{0}R120_{1}",   myController._img_path_product, item.P_MAIN_IMG)" alt=""></div>
                                 <div class="detail">
                                     <p class="tit">@item.P_NAME</p>
-                                    <p class="stit">@item.P_SUB_TITLE</p>                 
+                                    <p class="stit">@item.P_SUB_TITLE</p>
                                 </div>
                             </div>
                             <!--//제품 이름 및 정보-->
                             <!--리뷰-->
                             <div class="comments">
                                 <div class="writer">
+                                    <span class="skin @item.SKIN_TYPE_CSS"></span>
                                     <span class="id">@item.M_ID_LBL</span>
                                     <span class="userage"> @item.M_BIRTHDAY_LBL 대,  @item.M_SEX_LBL</span>
-                                    <span class="skin @item.SKIN_TYPE_CSS"></span>
+                                    
                                 </div>
                                 <div class="reviewtxt">
                                     @if (@item.IS_PHOTO == "Y" )
                                     {
-                                        <img src="@myController._img_path_review@item.ADD_IMAGE" alt="">
+                                        <img src="@string.Format("{0}R308_{1}",  myController._img_path_review, item.ADD_IMAGE)" alt="">
                                     }
                                    
                                     <div class="txt txtdotdot">

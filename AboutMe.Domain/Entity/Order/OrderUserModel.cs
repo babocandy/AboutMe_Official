@@ -375,6 +375,23 @@ namespace AboutMe.Domain.Entity.Order
         public string P_RETURN_URL { get; set; }
         public string P_RESERVED { get; set; }
     }
-    
-    
+
+    public class INIESCROW_CONFIRM
+    {
+        public string ORDER_CODE { get; set; }
+        public string Resultcode { get; set; }       // 결과코드 ("00"이면 지불성공)
+        public string ResultMsg { get; set; }
+        public string CNF_Date { get; set; }   //구매확정일 경우
+        public string CNF_Time { get; set; }
+        public string DNY_Date { get; set; }   //구매거절일 경우
+        public string DNY_Time { get; set; }
+    }
+
+    public class INIPAYESCROW
+    {
+        public string ORDER_CODE { get; set; }
+        public string tid { get; set; }
+        public string mid { get; set; }
+    }
+
 }

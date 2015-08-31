@@ -4,6 +4,18 @@
 
     var openwin;
 
+    //PW 체계 유효성 검증 : 첫글자영문, 5~12 자 영문 숫자,
+    function fIsValidMemberPWD(argPWD) {
+        var reg_exp = new RegExp("^[a-zA-Z][a-zA-Z0-9]{4,11}$", "g");
+        var match = reg_exp.exec(argPWD);
+
+        if (match == null || argPWD.length < 5 || argPWD.length > 12) {
+            alert("비밀번호 형식이 잘못되었습니다. 첫글자가 영문이어야하며, 5~12자의 영문or 숫자로 구성되어야 합니다");
+            return false;
+        }
+        return true;
+    }
+
     //주문결제
     function payConfirm() {
         var paygbn = $(':radio[name="PAY_GBN"]:checked').val();
@@ -110,6 +122,12 @@
                 $("#NOMEMBER_PASS").setfocus();
                 return false;
             }
+
+            //암호 유효성 검증
+            if (fIsValidMemberPWD($("#NOMEMBER_PASS").val().trim()) == false) {
+                return false;
+            }
+
         }
 
         if ($("#mem_agree1_chk").length > 0) {
@@ -367,7 +385,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             @if (Model.UserProfile.IS_LOGIN == false)
             {
                 <div class="nmpwd">
-                    <label>비회원 비밀번호<input type="password" class="ipttypea h28 ml10" style="width:162px" name="NOMEMBER_PASS" id="NOMEMBER_PASS" title="비회원 비밀번호" /></label>
+                    <label>비회원 비밀번호<input type="password" class="ipttypea h28 ml10" style="width:162px" name="NOMEMBER_PASS" id="NOMEMBER_PASS" title="비회원 비밀번호"  /></label>
                     <span class="info mt10"><i></i>비회원 주문 조회 시 사용  4자에서 12자 영문 또는 숫자 조합)</span>
                 </div>
             }
@@ -418,5 +436,20 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         }
     }
 
-    
+
+
+    if ($("*").is(".wrap.order")) {
+        $(".paycon .racon input[name='PAY_GBN']").change(function (e) {
+            e.preventDefault();
+            $(".paycon .paytip").css("display", "none");
+            if ($(this).parents("#rdoCredit").length) {
+                $("#credit").css("display", "block");
+            } else if ($(this).parents("#rdoRealtime").length) {
+                $("#realtime").css("display", "block");
+            } else if ($(this).parents("#rdoVirtual").length) {
+                $("#virtual").css("display", "block");
+            }
+        });
+    }
+
 </script>

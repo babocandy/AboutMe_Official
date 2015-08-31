@@ -12,6 +12,18 @@
 
     var openwin;
 
+    //PW 체계 유효성 검증 : 첫글자영문, 5~12 자 영문 숫자,
+    function fIsValidMemberPWD(argPWD) {
+        var reg_exp = new RegExp("^[a-zA-Z][a-zA-Z0-9]{4,11}$", "g");
+        var match = reg_exp.exec(argPWD);
+
+        if (match == null || argPWD.length < 5 || argPWD.length > 12) {
+            alert("비밀번호 형식이 잘못되었습니다. 첫글자가 영문이어야하며, 5~12자의 영문or 숫자로 구성되어야 합니다");
+            return false;
+        }
+        return true;
+    }
+
     //주문결제
     function payConfirm() {
 
@@ -100,6 +112,11 @@
             if ($("#NOMEMBER_PASS").val().trim() == "") {
                 alert("비회원 비밀번호를 입력하세요.");
                 $("#NOMEMBER_PASS").setfocus();
+                return false;
+            }
+
+            //암호 유효성 검증
+            if (fIsValidMemberPWD($("#NOMEMBER_PASS").val().trim()) == false) {
                 return false;
             }
         }

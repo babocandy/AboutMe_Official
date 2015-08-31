@@ -5,8 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AboutMeModel4.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_ADMIN_ORDER_DETAIL_POINT_SET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
+          <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="MASTER_CONTROL" Type="char" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_ORDER_DETAIL_STATUS_CHANGE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_DETAIL_IDX" Type="int" Mode="In" />
+          <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
+          <Parameter Name="REG_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_ESCROW_SET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="GUBUN" Type="varchar" Mode="In" />
+          <Parameter Name="SET_DATE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ADMIN_ORDER_MASTER_POINT_SET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
           <Parameter Name="TOBE_STATUS" Type="varchar" Mode="In" />
           <Parameter Name="REG_ID" Type="varchar" Mode="In" />
         </Function>
@@ -56,6 +72,11 @@
         </Function>
         <Function Name="SP_ORDER_CONFIG_CHECK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDER_ESCROW_USER_SET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ORDER_IDX" Type="int" Mode="In" />
+          <Parameter Name="ESCROW_USER_CMD" Type="char" Mode="In" />
+          <Parameter Name="ESCROW_USER_DESC" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OLD_ORDER_IDX" Type="int" Mode="In" />
@@ -367,6 +388,22 @@
           <FunctionImport Name="SP_ORDER_CONFIG_CHECK" ReturnType="Collection(String)">
           <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_ESCROW_SET">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="GUBUN" Mode="In" Type="String" />
+            <Parameter Name="SET_DATE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_DETAIL_POINT_SET">
+            <Parameter Name="ORDER_DETAIL_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
+            <Parameter Name="MASTER_CONTROL" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_ORDER_MASTER_POINT_SET">
+            <Parameter Name="ORDER_IDX" Mode="In" Type="Int32" />
+            <Parameter Name="TOBE_STATUS" Mode="In" Type="String" />
+            <Parameter Name="REG_ID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ORDER_STEP2_BASEADDR_INFO_Result">
           <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
@@ -473,7 +510,7 @@
           <Property Type="String" Name="ORDER_CODE" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="ORDER_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="ORDER_STATUS" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="24" />
           <Property Type="String" Name="PAT_TID" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="SENDER_EMAIL" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="ORDER_NAME" Nullable="true" MaxLength="30" />
@@ -508,6 +545,7 @@
           <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="PAY_GBN" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="ESCROW_YN" Nullable="false" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="SP_ORDER_RESULT_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -550,7 +588,7 @@
           <Property Type="String" Name="ORDER_CODE" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="ORDER_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="ORDER_STATUS" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="PAY_GBN_NM" Nullable="false" MaxLength="24" />
           <Property Type="String" Name="PAT_TID" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="SENDER_EMAIL" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="ORDER_NAME" Nullable="true" MaxLength="30" />
@@ -585,7 +623,14 @@
           <Property Type="String" Name="VACT_BankName" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="VACT_Name" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="VACT_Date" Nullable="true" MaxLength="8" />
-          <Property Type="String" Name="PAT_GUBUN" Nullable="false" />
+          <Property Type="String" Name="PAT_GUBUN" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ESCROW_YN" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="OLD_ORDER_IDX" Nullable="true" />
+          <Property Type="String" Name="INIESCROW_DELIVERY" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="INIESCROW_CONFIRM" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="INIESCROW_CANCEL" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="ESCROW_USER_CMD" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="ESCROW_USER_DATE" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="SP_MYPAGE_ORDERLIST_DETAIL_PRODUCT_LIST_Result">
           <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="false" />
@@ -848,6 +893,7 @@
                 <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
                 <ScalarProperty Name="PAY_GBN" ColumnName="PAY_GBN" />
                 <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
+                <ScalarProperty Name="ESCROW_YN" ColumnName="ESCROW_YN" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -963,6 +1009,14 @@
                 <ScalarProperty Name="VACT_BankName" ColumnName="VACT_BankName" />
                 <ScalarProperty Name="VACT_Name" ColumnName="VACT_Name" />
                 <ScalarProperty Name="VACT_Date" ColumnName="VACT_Date" />
+                <ScalarProperty Name="PAT_GUBUN" ColumnName="PAT_GUBUN" />
+                <ScalarProperty Name="ESCROW_YN" ColumnName="ESCROW_YN" />
+                <ScalarProperty Name="OLD_ORDER_IDX" ColumnName="OLD_ORDER_IDX" />
+                <ScalarProperty Name="INIESCROW_DELIVERY" ColumnName="INIESCROW_DELIVERY" />
+                <ScalarProperty Name="INIESCROW_CONFIRM" ColumnName="INIESCROW_CONFIRM" />
+                <ScalarProperty Name="INIESCROW_CANCEL" ColumnName="INIESCROW_CANCEL" />
+                <ScalarProperty Name="ESCROW_USER_CMD" ColumnName="ESCROW_USER_CMD" />
+                <ScalarProperty Name="ESCROW_USER_DATE" ColumnName="ESCROW_USER_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1037,6 +1091,9 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ORDER_CONFIG_CHECK" FunctionName="AboutMeModel4.Store.SP_ORDER_CONFIG_CHECK">
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_ESCROW_SET" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_ESCROW_SET" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_DETAIL_POINT_SET" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_DETAIL_POINT_SET" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_ORDER_MASTER_POINT_SET" FunctionName="AboutMeModel4.Store.SP_ADMIN_ORDER_MASTER_POINT_SET" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

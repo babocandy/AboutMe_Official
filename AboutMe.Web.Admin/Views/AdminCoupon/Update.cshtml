@@ -300,9 +300,13 @@
                                             <tbody>
                                                 <tr>
                                                     <th>쿠폰명 </th>
-                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
+                                                    <td>@Html.TextBoxFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_NAME, new { cssClass = "input-sm text-left", size = "30", maxlength = "25" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.COUPON_NAME)</font></td>
                                                 </tr>
-                                                <tㅇ>
+                                                <tr>
+                                                    <th>쿠폰사용조건 </th>
+                                                    <td>@Html.TextAreaFor(model => model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_USE_DESCRIPTION, new { cssClass = "input-sm text-left",cols="30", rows="3",  maxlength = "120" }) </td>
+                                                </tr>
+                                                <tr>
                                                     <th>용도구분 </th>
                                                     <td>
                                                         @if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].COUPON_GBN == "M")
@@ -314,6 +318,7 @@
                                                             @:배송 
                                                         }
                                                     </td>
+                                                </tr>
                                                 <tr>
                                                     <th>용도구분 2차 </th>
                                                     <td>

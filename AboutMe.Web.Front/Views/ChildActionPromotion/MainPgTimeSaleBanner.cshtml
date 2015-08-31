@@ -5,11 +5,19 @@
 }
 
 @{
+    string CurYYYY = "", CurMM = "", CurDD = "", CurHH = "", CurMin = "", CurSS = "";
     string FromYYYY = "", FromMM = "", FromDD = "", FromHH = "", FromMin = "", FromSS = "";
     string ToYYYY = "", ToMM = "", ToDD = "", ToHH = "", ToMin = "", ToSS = "";
 
     if(Model.Count > 0)
     {
+        CurYYYY = DateTime.Now.Year.ToString();
+        CurMM = DateTime.Now.Month.ToString().PadLeft(2, '0');
+        CurDD = DateTime.Now.Day.ToString().PadLeft(2, '0');
+        CurHH = DateTime.Now.Hour.ToString().PadLeft(2, '0');
+        CurMin = DateTime.Now.Minute.ToString().PadLeft(2, '0');
+        CurSS = DateTime.Now.Second.ToString().PadLeft(2, '0');
+        
         FromYYYY = Model[0].PMO_PRODUCT_DATE_FROM.Value.Year.ToString();
         FromMM = Model[0].PMO_PRODUCT_DATE_FROM.Value.Month.ToString().PadLeft(2, '0');
         FromDD = Model[0].PMO_PRODUCT_DATE_FROM.Value.Day.ToString().PadLeft(2, '0');

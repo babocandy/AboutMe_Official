@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "브랜드소개 - ABOUT ME";
+    ViewBag.TopClass = "brand";
+
+    Layout = "~/Views/Shared/_AboutMeLayoutB.cshtml";
+}
+@section Scripts {
+    <link href="/aboutCom/css/aboutme.css" rel="stylesheet" />
+}
+
+<!--container-->
+<div id="container">
+    <div class="container100per brand1">
+        <div class="inner">
+            <img src="/aboutCom/images/aboutme/temp_brandimg_1.jpg" usemap="#link" alt="" />
+            <map name="link">
+                <area shape="rect" coords="226,59,337,122" href="/Brand/brand" alt="" />
+                <area shape="rect" coords="488,59,597,122" href="/Brand/brand2" alt="" />
+                <area shape="rect" coords="747,59,858,122" href="/Brand/brand3" alt="" />
+            </map>
+        </div>
+    </div>
+    <div class="container100per bg2">
+        <div class="inner">
+            <div class="go_link">
+                <ul>
+                    <li><a href="/Brand/Shopinfo"><img src="/aboutCom/images/aboutme/go_store.jpg" alt="매장 더 둘러보기" /></a></li>
+                    <li><a href="/Brand/Magazine"><img src="/aboutCom/images/aboutme/go_magazin.jpg" alt="매거진 보러가기" /></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//container-->

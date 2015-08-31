@@ -52,5 +52,6 @@ namespace AboutMe.Domain.Entity.Order
         public string VACT_Name { get; set; }
         public string PAY_GBN { get; set; }
         public string VACT_Date { get; set; }
+        public string ESCROW_YN { get; set; }
     }
 }

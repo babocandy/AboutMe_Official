@@ -40,5 +40,9 @@ namespace AboutMe.Domain.Service.Order
         
         SP_ORDER_GET_ORDERCODE_BY_TMP_ORDERIDX_Result OrderGetOrderCodeByOldOrderIdx(Int32 OldOrderIdx);
         string OrderConfigCheck(int ORDER_IDX);
+        void OrderMasterPointSet(int ORDER_IDX, string TOBE_STATUS, string REG_ID);
+        void OrdeDetailPointSet(int ORDER_DETAIL_IDX, string TOBE_STATUS, string MASTER_CONTROL, string REG_ID);
+
+        void OrderEscrowResultSet(int ORDER_IDX, string GUBUN, string SET_DATE);
     }
 }

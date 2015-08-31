@@ -90,7 +90,7 @@ namespace AboutMe.Domain.Entity.AdminReview
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_REVIEW_PRODUCT_INFO_Result>("SP_ADMIN_REVIEW_PRODUCT_INFO", iDXParameter, rET_NUM, rET_MESSAGE);
         }
     
-        public virtual int SP_ADMIN_REVIEW_PRODUCT_UPDATE(Nullable<int> iDX, string iS_BEST, string iS_DISPLAY, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
+        public virtual int SP_ADMIN_REVIEW_PRODUCT_UPDATE(Nullable<int> iDX, string iS_BEST, string iS_DISPLAY, string iS_MOST_CNT, ObjectParameter rET_NUM, ObjectParameter rET_MESSAGE)
         {
             var iDXParameter = iDX.HasValue ?
                 new ObjectParameter("IDX", iDX) :
@@ -104,7 +104,11 @@ namespace AboutMe.Domain.Entity.AdminReview
                 new ObjectParameter("IS_DISPLAY", iS_DISPLAY) :
                 new ObjectParameter("IS_DISPLAY", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_PRODUCT_UPDATE", iDXParameter, iS_BESTParameter, iS_DISPLAYParameter, rET_NUM, rET_MESSAGE);
+            var iS_MOST_CNTParameter = iS_MOST_CNT != null ?
+                new ObjectParameter("IS_MOST_CNT", iS_MOST_CNT) :
+                new ObjectParameter("IS_MOST_CNT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ADMIN_REVIEW_PRODUCT_UPDATE", iDXParameter, iS_BESTParameter, iS_DISPLAYParameter, iS_MOST_CNTParameter, rET_NUM, rET_MESSAGE);
         }
     
         public virtual ObjectResult<SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result> SP_ADMIN_REVIEW_CATE_THEMA_SEL()

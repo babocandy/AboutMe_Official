@@ -174,6 +174,9 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           <Parameter Name="USABLE_YN" Type="varchar" Mode="In" />
           <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="P_CODE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CD_PROMOTION_PRODUCT" Type="varchar" Mode="In" />
         </Function>
@@ -636,6 +639,9 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
             <Parameter Name="PMO_PRODUCT_DATE_TO" Mode="In" Type="DateTime" />
             <Parameter Name="USABLE_YN" Mode="In" Type="String" />
             <Parameter Name="CD_PROMOTION_PRODUCT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK" ReturnType="Collection(ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result)">
+            <Parameter Name="P_CODE" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="TB_PROMOTION_BY_TOTAL_CATEGORY">
@@ -1431,6 +1437,13 @@ warning 6002: The table/view 'AboutMe.dbo.TB_PROMOTION_PRODUCT_VS_TOTAL' does no
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_INS" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_INS" />
           <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK" FunctionName="ModelAdminPromotion.Store.SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ModelAdminPromotion.SP_ADMIN_PROMOTION_COMMON_CNT_Result">
+                <ScalarProperty Name="CNT" ColumnName="CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

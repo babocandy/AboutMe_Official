@@ -33,5 +33,6 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string SKIN_TYPE { get; set; }
         public string MEDIA_GBN_LBL { get; set; }
         public string SKIN_TYPE_LBL { get; set; }
+        public string IS_MOST_CNT { get; set; }
     }
 }

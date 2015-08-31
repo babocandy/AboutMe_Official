@@ -37,6 +37,29 @@
         }
         
 
+        function findUploadFile() {
+            document.getElementById("UploadImage").click();
+        }
+
+        function changeUploadFile(file) {
+            var filename = file.value;
+            filename = filename.split(/(\\|\/)/g).pop();
+
+            document.frm.ImageFileName.value = filename;
+
+            //이미지 미리보기 등록
+            if (FileReader != undefined) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var previewImage = document.getElementById("previewImage");
+                    previewImage.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file.files[0]);
+            }
+
+        }
     </script>
 
 }
@@ -55,7 +78,7 @@
             <!--//pop_top-->
             <!--pop_bottom-->
             <div class="write_review pro">
-                @using (Html.BeginForm("Update", "MyReview", FormMethod.Post, new { id = "frm", name = "frm"}))
+                @using (Html.BeginForm("Update", "MyReview", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data"  }))
                 {
                     @Html.AntiForgeryToken()
                     <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
@@ -66,6 +89,9 @@
                     <input type="hidden" name="C_CATE_CODE" value="@Model.C_CATE_CODE" />
                     <input type="hidden" name="SKIN_TYPE" value="@Model.SKIN_TYPE" />
                     <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
+                    <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
+                    <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
+
                     <fieldset>
                         <legend>상품 리뷰 등록 폼</legend>
                         <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
@@ -88,9 +114,9 @@
                             <tbody>
                                 <tr>
                                     <th>상품명</th>
-                                    <td class="pro_info">
+                                    <td class="pro_info" colspan="@(ReviewHelper.CheckBeauty(Model.C_CATE_CODE) ? "" : "3")" >
                                         <!--이미지사이즈 96x96-->
-                                        <div class="photo"><img src="@string.Format("{0}{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
+                                        <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
                                         <div class="detail">
                                             <p class="tit">@Model.P_NAME</p>
                                             <p class="stit">@Model.P_SUB_TITLE</p>
@@ -115,14 +141,17 @@
                                 <tr class="attach">
                                     <th>사진</th>
                                     <td colspan="3">
+
+@if (Model.IS_PHOTO == "Y")
+{
                                         <span class="imgbox">
-                                            @if (@Model.ADD_IMAGE != null)
-                                            {
-                                                <img id="previewImage" src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE)" alt="" />
-                                            }
-                                            
+                                            <img id="previewImage" src="@string.Format("{0}R308_{1}", myController._img_path_review, Model.ADD_IMAGE)" alt="" /><!--/aboutCom/images/review/write_imgnone.jpg-->
                                         </span>
-                          
+                                         <input type="text" readonly="readonly" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" value="@Model.ADD_IMAGE" />
+                                        @Html.TextBoxFor(m => m.UploadImage, new { type = "file", style = "visibility:hidden;width:0px;", onchange = "changeUploadFile(this);" })
+                                        <a href="#" class="btn_white_w96h38 ml5" onclick="findUploadFile(); return false;">찾아보기</a>
+
+}
                                     </td>
                                 </tr>
                             </tbody>

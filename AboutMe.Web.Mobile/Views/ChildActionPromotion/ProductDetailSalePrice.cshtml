@@ -83,7 +83,7 @@
         <li>
             <span class="tit">즉시할인</span>
             <span class="pos_right coupon">
-                <strong>@ViewBag.NoLogin_Coupon_Discount_Rate@StrUnit</strong>쿠폰
+                <strong>@StrDC@StrUnit</strong>쿠폰
             </span>
         </li>
        }
@@ -140,7 +140,7 @@ else if (ViewBag.M_ID != "") // 로그인 했으면
      }
         <li>
             <span class="tit">포인트</span>
-            <span class="pos_right"><strong>ⓟ @string.Format("{0:#,##0}",ViewBag.Login_Point)</strong></span>
+            <span class="pos_right"><strong>ⓟ @string.Format("{0:#,##0}",int.Parse(ViewBag.Login_Point))</strong></span>
         </li>
 
 

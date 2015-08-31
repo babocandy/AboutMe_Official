@@ -33,6 +33,9 @@ namespace AboutMe.Domain.Service.AdminOrder
         SP_ADMIN_ORDER_MEMBER_STATUS_Result OrderMemberStatus(string M_ID);
         List<SP_ADMIN_ORDER_LIST_Result> OrderMemberList(string M_ID, int Page = 1, int PageSize = 10);
         int OrderMemberListCount(string M_ID);
+        void OrderMasterPointSet(int ORDER_IDX, string TOBE_STATUS, string REG_ID);
+        void OrdeDetailPointSet(int ORDER_DETAIL_IDX, string TOBE_STATUS, string MASTER_CONTROL, string REG_ID);
+        void OrderEscrowResultSet(int ORDER_IDX, string GUBUN, string SET_DATE);
 
     }
 

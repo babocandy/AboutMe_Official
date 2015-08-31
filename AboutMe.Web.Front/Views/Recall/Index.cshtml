@@ -12,11 +12,7 @@
 <script src="/aboutCom/js/lib/jquery-ui.js"></script>
 <script src="/aboutCom/js/lib/ui.datepicker-ko.js"></script>
 <script>
-
-    function goSearch() {
-        alert(1);
-    }
-
+    
     function ChgDateType(val) {
         var now_date = '@DateTime.Now.ToString("yyyy-MM-dd")'; 
 
@@ -44,7 +40,7 @@
         }
     }
 
-    function goSearch() {
+    function goBbsSearch() {
         var frm = document.frm;
         if ($.trim($("#start_date").val()) == "" && $.trim($("#end_date").val()) != "") { alert("조회 시작일을 입력하세요."); $("#start_date").focus; return false; }
         if ($.trim($("#start_date").val()) != "" && $.trim($("#end_date").val()) == "") { alert("조회 종료일을 입력하세요."); $("#end_date").focus; return false; }
@@ -126,7 +122,7 @@
                     <span class="ipttypedate ml20"><input type="text" id="start_date" name="start_date" class="" value="@Model.SearchParam.start_date" style="width:120px"></span>
                     @dash
                     <span class="ipttypedate"><input type="text" id="end_date" name="end_date" class="" value="@Model.SearchParam.end_date" style="width:120px"></span>
-                    <a href="javascript:" onclick="goSearch();"  class="btn_brown_w96h38">조회</a>
+                    <a href="javascript:" onclick="goBbsSearch();"  class="btn_brown_w96h38">조회</a>
                 }
                 <script type="text/javascript">
 						$(function() {

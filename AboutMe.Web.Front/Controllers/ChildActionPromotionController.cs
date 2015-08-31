@@ -70,14 +70,7 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.MGbn = MGbn = MemberInfo.GetMemberGBN();
 
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            //
-            // 등급을 VIP 로 강제지정
-            MGrade = "V"; //주의!!!!!!!!!!!!!!!! 등급이 VIP가 아니더라도 무조건 VIP할인가가 있으면 보여주기로 한다
-            //
-            //
-            ///////////////////////////////////////////////////////////////////////////////////////////////
+         
 
             Dictionary<string, string> dict =
              _BizPromotionService.GetPromotionInfoForDetialPage(UsableDeviceGbn,MGbn, MGrade, M_id, P_CODE, ResultPrice);

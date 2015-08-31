@@ -187,6 +187,7 @@ namespace AboutMe.Web.Mobile.Controllers
             model.SKIN_TYPE = detail.SKIN_TYPE;
             model.SKIN_TYPE_LBL = detail.SKIN_TYPE_LBL;
             model.MEDIA_GBN = detail.MEDIA_GBN;
+            model.IS_PHOTO = detail.IS_PHOTO;
             model.ADD_IMAGE = detail.ADD_IMAGE;
        
             return View(model);
@@ -200,6 +201,24 @@ namespace AboutMe.Web.Mobile.Controllers
         {
             if (ModelState.IsValid)
             {
+
+
+                if (model.IS_PHOTO == "Y")
+                {
+
+                    ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true };
+
+                    if (model.UploadImage != null)
+                    {
+                        ImageResult imageResult = imageUpload.RenameUploadFile(model.UploadImage);
+                        if (imageResult.Success)
+                        {
+                            model.ADD_IMAGE = imageResult.ImageName;
+ 
+                        }
+                    }
+                }
+
                 Tuple<string, string> ret = _ReviewService.UpdateMyReview(model);
 
                 TempData["ResultNum"] = ret.Item1;

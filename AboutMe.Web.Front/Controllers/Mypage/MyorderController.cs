@@ -18,6 +18,7 @@ using System.Web.UI;
 using AboutMe.Web.Front.Common.Filters;
 
 using INIpayNet;
+using Newtonsoft.Json;
 
 namespace AboutMe.Web.Front.Controllers
 {
@@ -182,8 +183,12 @@ namespace AboutMe.Web.Front.Controllers
 
             }
 
+            if (_user_profile.IS_LOGIN)
+            {
+                _orderservice.OrderMasterPointSet(info.ORDER_IDX, "90", _user_profile.M_ID);
+            }
             _orderservice.MyOrderMasterStatusChange(info.ORDER_IDX, "90", Mid); //취소
-
+            
             SBuilder.Append("<form name='mysubmitform' action='/MyPage/MyOrder' method='POST'>\n");
             SBuilder.Append("</form>\n");
             SBuilder.Append("<script language='javascript'>document.mysubmitform.submit();</script>\n");
@@ -217,11 +222,147 @@ namespace AboutMe.Web.Front.Controllers
                 return Content(SBuilder.ToString());
             }
 
+            if (_user_profile.IS_LOGIN)
+            {
+                _orderservice.OrdeDetailPointSet(OrderDetailIdx, "60", "Y", Mid); //구매포인트 지급
+            }
             _orderservice.MyOrderDetailStatusChange(OrderDetailIdx, "60", Mid); //구매확정
-            
             return RedirectToAction("OrderView", new { OrderCode = OrderCode, FromDate = FromDate, ToDate = ToDate, page = page });
         }
 
+        public ActionResult InipayEscrow(string ORDER_CODE)
+        {
+            string Mid = _user_profile.M_ID;
+            if (!_user_profile.IS_LOGIN)
+            {
+                ORDER_CODE = _user_profile.NOMEMBER_ORDER_CODE;
+                Mid = "";
+            }
+
+            SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result Info = _orderservice.MyOrderDetailInfo(ORDER_CODE, Mid);
+            INIPAYESCROW M = new INIPAYESCROW();
+            M.ORDER_CODE = ORDER_CODE;
+            M.tid = Info.PAT_TID;
+            if (Info.PAY_GBN.ToUpper() == "MOBILE")
+            {
+                M.mid = _inipay_mobile_mid;
+            }
+            else
+            {
+                M.mid = _inipay_mid;
+            }
+            return View(M);
+        }
+
+        //에스크로 지급 승인
+        [HttpPost]
+        public ActionResult INIescrowConfirm(string ORDER_CODE, string encrypted, string sessionkey, string paymethod, string acceptmethod)
+        {
+            string Mid = _user_profile.M_ID;
+            if (!_user_profile.IS_LOGIN)
+            {
+                ORDER_CODE = _user_profile.NOMEMBER_ORDER_CODE;
+                Mid = "";
+            }
+            SP_MYPAGE_ORDERLIST_DETAIL_INFO_Result Info = _orderservice.MyOrderDetailInfo(ORDER_CODE, Mid);
+            INIESCROW_CONFIRM EscrowResult = new INIESCROW_CONFIRM();
+            EscrowResult.ORDER_CODE = ORDER_CODE;
+            //상태 체크 //40:배송중 50:배송완료 이고 이니페이배송일자가 있을경우 노출
+            if (!(Info.ESCROW_YN == "Y" && !string.IsNullOrEmpty(Info.INIESCROW_DELIVERY)))
+            {
+                EscrowResult.Resultcode = "09";
+                EscrowResult.ResultMsg = "지급 승인 할 수 있는 상태가 아닙니다.";
+                EscrowResult.CNF_Date = "";
+                EscrowResult.CNF_Time = "";
+                EscrowResult.DNY_Date = "";
+                EscrowResult.DNY_Time = "";
+            }
+            else
+            {
+                EscrowResult = InipayEscrowConfirmProcess(Info.ORDER_IDX, Info.PAT_TID, Info.PAT_GUBUN, encrypted, sessionkey, paymethod, acceptmethod);
+            }
+            return RedirectToAction("INIescrowResult", EscrowResult);
+        }
+
+        public ActionResult INIescrowResult(INIESCROW_CONFIRM EscrowResult)
+        {
+
+            return View(EscrowResult);
+        }
+
+
+        //이니시스 에스크로 지급승인
+        private INIESCROW_CONFIRM InipayEscrowConfirmProcess(int ORDER_IDX, string Tid, string pat_gbn, string encrypted, string sessionkey, string paymethod, string acceptmethod)
+        {
+            INIESCROW_CONFIRM result = new INIESCROW_CONFIRM();
+            //###############################################################################
+            //# 1. 객체 생성 #
+            //################
+            IINIpay INIpay = new IINIpay("50");
+
+            //###############################################################################
+            //# 2. 인스턴스 초기화 /3. 거래 유형 설정 #
+            //######################
+            INIpay.Initialize("escrow", "confirm");
+
+            INIpay.SetPath(_inipay_setpath);
+            //###############################################################################
+            //# 4. 정보 설정 #
+            //################
+            if (pat_gbn.ToUpper() == "MOBILE")
+            {
+                INIpay.SetField("mid", _inipay_mobile_mid);	            // 상점아이디(모바일)
+                INIpay.SetField("admin", _inipay_mobile_admin);			// 키패스워드(모바일)(상점아이디에 따라 변경)
+            }
+            else
+            {
+                INIpay.SetField("mid", _inipay_mid);	               		// 상점아이디
+                INIpay.SetField("admin", _inipay_admin);					// 키패스워드(상점아이디에 따라 변경)
+            }
+            INIpay.SetField("debug", _inipay_debug);						// 로그모드(실서비스시에는 "false"로)
+            INIpay.SetField("escrowtype", "confirm");
+            INIpay.SetField("tid", Tid);				// 거래 tid
+            INIpay.SetField("encrypted", encrypted);
+            INIpay.SetField("sessionkey", sessionkey);
+            INIpay.SetField("uip", Request.UserHostAddress);
+            INIpay.StartAction();
+
+            //###############################################################################
+            //# 6.  결과 #
+            //################
+            result.Resultcode = INIpay.GetResult("resultcode");				// 결과코드 ("00"이면 취소 성공)
+            result.ResultMsg = INIpay.GetResult("resultmsg");				// 결과내용
+            result.CNF_Date = INIpay.GetResult("CNF_Date");
+            result.CNF_Time = INIpay.GetResult("CNF_Time");
+            result.DNY_Date = INIpay.GetResult("DNY_Date");
+            result.DNY_Time = INIpay.GetResult("DNY_Time");
+
+            //###############################################################################
+            //# 7. 인스턴스 해제 #
+            //####################
+            INIpay.Destory();
+            INIpay = null;
+
+            if (result.Resultcode == "00")
+            {
+                string setdate = "";
+                if (!string.IsNullOrEmpty(result.DNY_Date))
+                {
+                    setdate = result.DNY_Date + " " + result.DNY_Time;
+                    //결과 저장
+                    _orderservice.OrderEscrowResultSet(ORDER_IDX, "CANCEL", setdate);
+                }
+                else
+                {
+                    setdate = result.CNF_Date + " " + result.CNF_Time;
+                    //결과 저장
+                    _orderservice.OrderEscrowResultSet(ORDER_IDX, "CONFIRM", setdate);
+                }
+
+            }
+
+            return result;
+        }
 
     }
 }
