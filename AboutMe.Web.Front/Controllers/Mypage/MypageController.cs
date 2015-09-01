@@ -619,6 +619,7 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult test()
         {
             string M_ID = MemberInfo.GetMemberId();
+
             return View();
         }
     }
