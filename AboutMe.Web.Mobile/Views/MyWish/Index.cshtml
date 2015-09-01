@@ -120,6 +120,15 @@
     <!-- 찜목록 -->
     <div class="product_list">
         <h3>찜목록</h3>
+@if (Model.WishCnt == 0)
+{
+    <!--데이터없음-->
+    <div class="datanone nobg">
+        <p class="txt_none">찜 상품이 없습니다.</p>
+    </div>
+}
+else
+{ 
         <ul>
         @foreach (var item in Model.WishList)
         {
@@ -153,7 +162,7 @@
             </li>
         }
         </ul>
-
+}
         <!--페이징-->
         @{
             Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = Model.WishCnt, RecordPerPage = Model.PageCnt, PagePerBlock = 10, CurrentPage = Model.Page, QueryStr = "" });
