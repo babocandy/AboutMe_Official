@@ -454,11 +454,43 @@ namespace AboutMe.Web.Admin.Controllers
 
                 #region 상품등록 로그 생성
                 var serialised = "결과값 intResult :" + intResult;
-                serialised = serialised + JsonConvert.SerializeObject(tb_product_info); //entity 클래스 값을 json 포맷으로 파싱
+                //serialised = serialised + JsonConvert.SerializeObject(tb_product_info); //entity 클래스 값을 json 포맷으로 파싱
+                serialised = serialised + " IDX:" + tb_product_info.IDX;
+                serialised = serialised + " P_CATE_CODE:" + tb_product_info.P_CATE_CODE;
+                serialised = serialised + " P_CODE:" + tb_product_info.P_CODE;
+                serialised = serialised + " P_COUNT:" + tb_product_info.P_COUNT;
+                serialised = serialised + " P_NAME:" + tb_product_info.P_NAME;
+                serialised = serialised + " P_OUTLET_YN:" + tb_product_info.P_OUTLET_YN;
+                serialised = serialised + " P_SUB_TITLE:" + tb_product_info.P_SUB_TITLE;
+                serialised = serialised + " P_TAG:" + tb_product_info.P_TAG;
+                serialised = serialised + " P_VIEW_COUNT:" + tb_product_info.P_VIEW_COUNT;
+                serialised = serialised + " RE_SORT:" + tb_product_info.RE_SORT;
+                serialised = serialised + " SELLING_MONTH_COUNT:" + tb_product_info.SELLING_MONTH_COUNT;
+                serialised = serialised + " SELLING_PRICE:" + tb_product_info.SELLING_PRICE;
+                serialised = serialised + " SOLDOUT_YN:" + tb_product_info.SOLDOUT_YN;
+                serialised = serialised + " UPD_DATE:" + tb_product_info.UPD_DATE;
+                serialised = serialised + " WITH_PRODUCT_LIST:" + tb_product_info.WITH_PRODUCT_LIST;
+                serialised = serialised + " C_CATE_CODE:" + tb_product_info.C_CATE_CODE;
+                serialised = serialised + " DISCOUNT_PRICE:" + tb_product_info.DISCOUNT_PRICE;
+                serialised = serialised + " DISCOUNT_RATE:" + tb_product_info.DISCOUNT_RATE;
+                serialised = serialised + " DISPLAY_YN:" + tb_product_info.DISPLAY_YN;
+                serialised = serialised + " ICON_BATCH_CHK:" + tb_product_info.ICON_BATCH_CHK;
+                serialised = serialised + " ICON_YN:" + tb_product_info.ICON_YN;
+                serialised = serialised + " INS_DATE:" + tb_product_info.INS_DATE;
+                serialised = serialised + " L_CATE_CODE:" + tb_product_info.L_CATE_CODE;
+                serialised = serialised + " MAIN_IMG:" + tb_product_info.MAIN_IMG;
+                serialised = serialised + " MV_URL:" + tb_product_info.MV_URL;
+                serialised = serialised + " OLD_MAIN_IMG:" + tb_product_info.OLD_MAIN_IMG;
+                serialised = serialised + " OLD_OTHER_IMG1:" + tb_product_info.OLD_OTHER_IMG1;
+                serialised = serialised + " OLD_OTHER_IMG2:" + tb_product_info.OLD_OTHER_IMG2;
+                serialised = serialised + " OLD_OTHER_IMG3:" + tb_product_info.OLD_OTHER_IMG3;
+                serialised = serialised + " OTHER_IMG1:" + tb_product_info.OTHER_IMG1;
+                serialised = serialised + " OTHER_IMG2:" + tb_product_info.OTHER_IMG2;
+                serialised = serialised + " OTHER_IMG3:" + tb_product_info.OTHER_IMG3;
+
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자상품등록");
                 #endregion
-
 
                 if (intResult != 0)
                 {
@@ -620,7 +652,40 @@ namespace AboutMe.Web.Admin.Controllers
 
                 #region 상품수정 로그 생성
                 var serialised = "결과값 intResult :" + intResult;
-                serialised = serialised + JsonConvert.SerializeObject(tb_product_info);
+                //serialised = serialised + JsonConvert.SerializeObject(tb_product_info);
+                serialised = serialised + " IDX:" + tb_product_info.IDX;
+                serialised = serialised + " P_CATE_CODE:" + tb_product_info.P_CATE_CODE;
+                serialised = serialised + " P_CODE:" + tb_product_info.P_CODE;
+                serialised = serialised + " P_COUNT:" + tb_product_info.P_COUNT;
+                serialised = serialised + " P_NAME:" + tb_product_info.P_NAME;
+                serialised = serialised + " P_OUTLET_YN:" + tb_product_info.P_OUTLET_YN;
+                serialised = serialised + " P_SUB_TITLE:" + tb_product_info.P_SUB_TITLE;
+                serialised = serialised + " P_TAG:" + tb_product_info.P_TAG;
+                serialised = serialised + " P_VIEW_COUNT:" + tb_product_info.P_VIEW_COUNT;
+                serialised = serialised + " RE_SORT:" + tb_product_info.RE_SORT;
+                serialised = serialised + " SELLING_MONTH_COUNT:" + tb_product_info.SELLING_MONTH_COUNT;
+                serialised = serialised + " SELLING_PRICE:" + tb_product_info.SELLING_PRICE;
+                serialised = serialised + " SOLDOUT_YN:" + tb_product_info.SOLDOUT_YN;
+                serialised = serialised + " UPD_DATE:" + tb_product_info.UPD_DATE;
+                serialised = serialised + " WITH_PRODUCT_LIST:" + tb_product_info.WITH_PRODUCT_LIST;
+                serialised = serialised + " C_CATE_CODE:" + tb_product_info.C_CATE_CODE;
+                serialised = serialised + " DISCOUNT_PRICE:" + tb_product_info.DISCOUNT_PRICE;
+                serialised = serialised + " DISCOUNT_RATE:" + tb_product_info.DISCOUNT_RATE;
+                serialised = serialised + " DISPLAY_YN:" + tb_product_info.DISPLAY_YN;
+                serialised = serialised + " ICON_BATCH_CHK:" + tb_product_info.ICON_BATCH_CHK;
+                serialised = serialised + " ICON_YN:" + tb_product_info.ICON_YN;
+                serialised = serialised + " INS_DATE:" + tb_product_info.INS_DATE;
+                serialised = serialised + " L_CATE_CODE:" + tb_product_info.L_CATE_CODE;
+                serialised = serialised + " MAIN_IMG:" + tb_product_info.MAIN_IMG;
+                serialised = serialised + " MV_URL:" + tb_product_info.MV_URL;
+                serialised = serialised + " OLD_MAIN_IMG:" + tb_product_info.OLD_MAIN_IMG;
+                serialised = serialised + " OLD_OTHER_IMG1:" + tb_product_info.OLD_OTHER_IMG1;
+                serialised = serialised + " OLD_OTHER_IMG2:" + tb_product_info.OLD_OTHER_IMG2;
+                serialised = serialised + " OLD_OTHER_IMG3:" + tb_product_info.OLD_OTHER_IMG3;
+                serialised = serialised + " OTHER_IMG1:" + tb_product_info.OTHER_IMG1;
+                serialised = serialised + " OTHER_IMG2:" + tb_product_info.OTHER_IMG2;
+                serialised = serialised + " OTHER_IMG3:" + tb_product_info.OTHER_IMG3;
+                
                 AdminLog adminlog = new AdminLog();
                 adminlog.AdminLogSave(serialised, "관리자상품수정");
                 #endregion
