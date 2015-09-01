@@ -168,11 +168,19 @@
                 html += "<div class='reviewtxt'>";
 
                 if (d.IS_PHOTO == "Y" ) {
-                    html += "<img src='" + img_path_review +"R308_"+ d.ADD_IMAGE + "' alt=''>";
+
+                    if(d.ORDER_DETAIL_IDX != undefined){
+                        html += "<img src='" + img_path_review +"R308_"+ d.ADD_IMAGE + "' alt=''>";
+                    }else{//구리뷰
+                        html += "<img src='" + img_path_review +"old/"+ d.ADD_IMAGE + "' alt=''>";
+                    }
+                    
                 }
 
                 html += "<div class='txt txtdotdot'>";
-                html += d.COMMENT;
+               
+                html +=  $('<div/>').html(d.COMMENT).text();
+
                 html += "</div>";
                 html += "</div>";
                 html += "</div>"; //end comment
@@ -311,13 +319,22 @@
                                     
                                 </div>
                                 <div class="reviewtxt">
-                                    @if (@item.IS_PHOTO == "Y" )
+                                    @if (@item.IS_PHOTO == "Y")
                                     {
-                                        <img src="@string.Format("{0}R308_{1}",  myController._img_path_review, item.ADD_IMAGE)" alt="">
+                                        if (item.ORDER_DETAIL_IDX != null)
+                                        {
+                                            <img src="@string.Format("{0}R308_{1}",  myController._img_path_review, item.ADD_IMAGE)" alt="">
+                                        }
+                                        else //구리뷰
+                                        {
+                                            <img src="@string.Format("{0}old/{1}",  myController._img_path_review, item.ADD_IMAGE)" alt="">
+                                        }
+
                                     }
                                    
                                     <div class="txt txtdotdot">
-                                        @Html.Raw(item.COMMENT);
+                                       @Html.Raw( Server.HtmlDecode(  item.COMMENT ) )
+                                        
                                     </div>
                                 </div>
                             </div>
