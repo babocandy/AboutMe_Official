@@ -6,5 +6,5 @@
     var myController = ViewContext.Controller as ChildActionDisplayerController;
 }
 <div class="month_banner">
-    <img src="@(string.Format("{0}{1}", myController._img_path_display, Model.One.IMG))" alt="" />
+    <a href="@Model.One.URL"><img src="@(string.Format("{0}{1}", myController._img_path_display, Model.One.IMG))" alt="" /></a>    
 </div>
