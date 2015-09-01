@@ -17,7 +17,7 @@
                 <span class="photo"><img src="@string.Format("{0}{1}{2}", myController._img_path_product, "R270_", Model.Product_1.MAIN_IMG)" alt="" /></span>
                 <span class="tit txtdotdot">@Html.Raw(Model.Product_1.P_NAME)</span>
                 <span class="stit">@Html.Raw(Model.Product_1.P_SUB_TITLE)</span>
-                <span class="price"><em>@string.Format("{0:#,##0}", Model.Product_1.SELLING_PRICE)</em>원</span>
+                <span class="price"><em>@string.Format("{0:#,##0}", Model.Product_1.RESULT_PRICE)</em>원</span>
             </a>
         </li>
     }
@@ -30,7 +30,7 @@
                 <span class="photo"><img src="@string.Format("{0}{1}{2}", myController._img_path_product, "R270_", Model.Product_2.MAIN_IMG)" alt="" /></span>
                 <span class="tit txtdotdot">@Html.Raw(Model.Product_2.P_NAME)</span>
                 <span class="stit">@Html.Raw(Model.Product_2.P_SUB_TITLE)</span>
-                <span class="price"><em>@string.Format("{0:#,##0}",  Model.Product_2.SELLING_PRICE)</em>원</span>
+                <span class="price"><em>@string.Format("{0:#,##0}", Model.Product_2.RESULT_PRICE)</em>원</span>
             </a>
         </li>
 }
@@ -43,7 +43,7 @@
                     <span class="photo"><img src="@string.Format("{0}{1}{2}", myController._img_path_product, "R270_", Model.Product_3.MAIN_IMG)" alt="" /></span>
                     <span class="tit txtdotdot">@Html.Raw(Model.Product_3.P_NAME)</span>
                     <span class="stit">@Html.Raw(Model.Product_3.P_SUB_TITLE)</span>
-                    <span class="price"><em>@string.Format("{0:#,##0}", Model.Product_3.SELLING_PRICE)</em>원</span>
+                    <span class="price"><em>@string.Format("{0:#,##0}", Model.Product_3.RESULT_PRICE)</em>원</span>
                 </a>
             </li>
         }

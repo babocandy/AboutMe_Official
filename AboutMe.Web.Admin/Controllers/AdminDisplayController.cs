@@ -178,6 +178,8 @@ namespace AboutMe.Web.Admin.Controllers
 
             string imgName = param.IMG_NAME;
 
+         
+
             if (param.IMG_FILE != null)
             {
                 ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_display };

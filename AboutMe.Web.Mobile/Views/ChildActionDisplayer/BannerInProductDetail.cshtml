@@ -9,7 +9,7 @@
 
     @foreach (var item in Model.List)
     {
-        <div class="bnr"><img src="@(string.Format("{0}{1}", myController._img_path_display, item.IMG))" alt="" /></div>
+        <div class="bnr"><a href="@item.URL"><img src="@(string.Format("{0}{1}", myController._img_path_display, item.IMG))" alt="" /></a></div>
     }
 
 </div>
