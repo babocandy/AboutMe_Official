@@ -1155,5 +1155,10 @@ namespace AboutMe.Web.Front.Controllers
             }
             
         }
+
+        public ActionResult OfferPrivacy()
+        {
+            return View();
+        }
     }
 }

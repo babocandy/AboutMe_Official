@@ -188,7 +188,7 @@
             //ow_yes('/Order/InipayEscrowDenyConfirm?ORDER_IDX=@Model.ORDER_IDX', 'InipayEscrow', '650', '400');
             var f = document.dumyForm
 
-            if (confirm("지급거절을 승인하시겠습니까?")) {
+            if (confirm("지급거절을 승인하시면 PG사취소가이루어지고 결제취소상태로 변경됩니다. 진행하시 겠습니까?")) {
                 f.ORDER_DETAIL_IDX.value = "";
                 f.DELIVERY_NUM.value = "";
                 f.TOBE_STATUS.value = "";
@@ -661,6 +661,7 @@
     { 
         <div class="mt10" style="position: absolute;">
             <a class="btn btn-default middium" href="#none" onclick="order_escrow_cancel_confirm();">에스크로 지불거절확인</a>
+            <span class="fcred"> (이니시스결제가 취소처리되고 취소상태로 변경됩니다.)</span>
         </div>
     }
 }

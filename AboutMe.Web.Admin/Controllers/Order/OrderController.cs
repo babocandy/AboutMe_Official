@@ -906,6 +906,10 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 string setdate = DCNF_Date + " " + DCNF_Time;
                 _adminorderservice.OrderEscrowResultSet(ORDER_IDX, "CANCEL_OK", setdate);
 
+                //주문취소모듈
+                _adminorderservice.OrderMasterPointSet(ORDER_IDX, "90", REG_ID);
+                _adminorderservice.OrderMasterStatusUpdate(ORDER_IDX, "90", REG_ID); //취소
+
                 RouteValueDictionary param = ConvertRouteValue(SEARCH_OPTION);
                 param.Add("ORDER_IDX", ORDER_IDX);
                 return RedirectToAction("Detail", param);

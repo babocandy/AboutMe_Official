@@ -220,6 +220,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th{font-weight:normal;-webkit-text-stroke-width:0.5px
 .btn_white_h30 {width:100px; border:1px solid #9f9998; background-color:#fff; font-size:12px; line-height:28px; color:#1b1818;}
 .btn_white_h30.v2 {border-color:#403836;}
 .btn_white_h30.v3 {border-color:#bbb5b4;}
+.btn_white_h30.v4 {border-color:#7b7472;}
 .btn_white_h40 {width:100px; border:1px solid #9f9998; background-color:#fff; font-size:13px; line-height:38px; color:#1b1818;}
 .btn_white_h40.v2 {border-color:#403836;}
 .btn_white_h40.v3 {border-color:#bbb5b4;}
@@ -546,3 +547,12 @@ i.bl_wish{display:inline-block;width:15px;height:15px;background:url("/aboutCom/
 .popupwrap .confirm .contact{margin-top:20px;padding-top:20px;border-top:1px solid #696361;font-size:10px;color:#7b7b7b;text-align:center;}
 .popupwrap .confirm .contact .number{display:inline-block;margin-bottom:8px;font-size:12px;color:#1b1818;}
 .popupwrap .confirm .contact .number img{width:84px;vertical-align:top;}
+
+/* 레이어 팝업 */
+.ly_wrap{display:none;position:fixed;bottom:85px;left:50%;margin-left:-45%;width:90%;border:1px solid #b3b3b3;background-color:#e3e3e3;z-index:100;}
+.ly_wrap .ly_contents{text-align:center;}
+.ly_wrap .ly_contents img{width:100%;}
+.ly_wrap .ly_button{padding:10px;}
+.ly_wrap .ly_button:after{content:"";display:block;clear:both;}
+.ly_wrap .ly_button .btn{float:left;width:49%;}
+.ly_wrap .ly_button .btn + .btn{margin-left:2%;}

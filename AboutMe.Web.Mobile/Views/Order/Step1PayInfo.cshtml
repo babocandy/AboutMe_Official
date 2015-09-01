@@ -341,7 +341,7 @@
         </div>
         <div class="txtcon v2">
             <p class="tit">개인정보 제3자 제공/위탁동의</p>
-            <a href="#" class="btn btn_white_h30 v2 btn_agree">약관전체보기</a>
+            <a href="#none" class="btn btn_white_h30 v2 btn_agree" onclick="PopupCenter('/Order/OfferPrivacy', '', '760', '429'); return false;">약관전체보기</a>
             <label class="chkcon v2 mt10"><input type="checkbox" name="mem_agree2_chk" id="mem_agree2_chk" value="1" title="" /> <span class="txt">동의합니다.</span></label>
         </div>
 @if (Model.UserProfile.IS_LOGIN == false)
