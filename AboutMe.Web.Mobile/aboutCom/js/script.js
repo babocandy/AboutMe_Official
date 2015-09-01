@@ -15,7 +15,62 @@ function PopupCenter(popNM, parms, width, height){
 	window.name="pop";
 	window.open (popNM + parms , '' , set) ;
 }
+
+//Layer lyPopupShow
+function lyPopupShow(obj){
+	$(obj).fadeIn(400);
+}
+//Layer lyPopupHide
+function lyPopupHide(obj){
+	$(obj).fadeOut(400);
+}
+
+//쿠키 설정
+function setCookiePopup(name, value, expiredays){
+	var todayDate = new Date(); 
+	todayDate.setDate( todayDate.getDate() + expiredays ); 
+	document.cookie = name + "=" + escape( value ) + ";path=/;"
+}
+//쿠키 체크
+function getCookiePopup(name){
+	var Found = false 
+	var start, end 
+	var i = 0 
+	while(i <= document.cookie.length) { 
+		start = i 
+		end = start + name.length 
+		if(document.cookie.substring(start, end) == name) { 
+			Found = true 
+			break 
+		}
+		i++
+	} 
+	if(Found == true) { 
+		start = end + 1 
+		end = document.cookie.indexOf(";", start) 
+		if(end < start)
+			end = document.cookie.length 
+		return document.cookie.substring(start, end) 
+	}
+	return "" 
+}
+
 $(function(){
+	//layer 팝업
+	if ( $("*").is("#ly_wrap") ){
+		//이번만 닫기
+		$("#ly_wrap .ly_button .btn_once").click(function(){
+			var cookieid = $(this).parent().parent().get(0).id;
+			lyPopupHide("#"+cookieid);
+		});
+		//24시간 닫기
+		$("#ly_wrap .ly_button .btn_oneday").click(function(){
+			var cookieid = $(this).parent().parent().get(0).id;
+			setCookiePopup(cookieid, "no", 1);
+			lyPopupHide("#"+cookieid);
+		});
+	}
+
 	/*뒤로가기*/
 	$(".historyback").click(function(){
 		historyback();
