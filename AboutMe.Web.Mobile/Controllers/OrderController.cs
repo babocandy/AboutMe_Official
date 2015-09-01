@@ -1051,6 +1051,9 @@ namespace AboutMe.Web.Mobile.Controllers
             }
         }
 
-        
+        public ActionResult OfferPrivacy()
+        {
+            return View();
+        }
     }
 }
