@@ -108,25 +108,16 @@ namespace AboutMe.Web.Mobile.Controllers
             return list.Count > 0 ? list[0] : new SP_DISPLAY_SEL_Result();
         }
 
-        /*
 
 
         [ChildActionOnly]
-        public ActionResult CartRelatePorducts()
+        public ActionResult PopupMgr()
         {
-            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
-            model.List = _service.GetListDisplay(DisplayerCode.CART_PRODUCT_DISPLAY);
-
-            List<SP_PRODUCT_DETAIL_VIEW_Result> plist = new List<SP_PRODUCT_DETAIL_VIEW_Result>();
-            foreach (var item in model.List)
-            {
-                plist.Add(_service_pdt.ViewProduct(item.P_CODE));
-            }
-
-            model.PdtList = plist;
-
-            return View(model);
+            PopupMgrMobileViewModel model = new PopupMgrMobileViewModel();
+            model.List = _service.GetListPopupMobile();
+            return PartialView(model);
         }
-        */
+
+
     }
 }

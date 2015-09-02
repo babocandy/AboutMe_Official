@@ -54,26 +54,10 @@
         <!--footer-->
         @{ Html.RenderPartial("~/Views/AboutMePartial/_Footer.cshtml");}
         <!--//footer-->
+        <!--팝업관리-->
+        @Html.Action("PopupMgr", "ChildActionDisplayer")
 
-        <div id="ly_wrap" class="ly_wrap">
-            <div class="ly_contents">
-                <a href="#"><img src="/aboutCom/images/sample/event_ban3.jpg" alt="" /></a>
-            </div>
-            <div class="ly_button">
-                <a href="#none" class="btn btn_white_h30 v4 btn_oneday">오늘하루 닫기</a><a href="#none" class="btn btn_white_h30 v4 btn_once">닫기</a>
-            </div>
-        </div>
-
-        <script type="text/javascript">
-            //<![CDATA[
-            $(function () {
-                //layer_popup : cookie 값 체크 후 팝업 OPEN
-                if (getCookiePopup("ly_wrap") != "no") {
-                    lyPopupShow("#ly_wrap");
-                }
-            });
-            //]]>
-        </script>
+        <!--/팝업관리-->
     </div>
 
 }
