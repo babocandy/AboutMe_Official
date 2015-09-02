@@ -76,12 +76,28 @@ namespace AboutMe.Web.Mobile.Controllers
             return View(model);
         }
 
+        [ChildActionOnly]
+        public ActionResult BannerInShopping()
+        {
+            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
+            model.List = _service.GetListDisplay(DisplayerCode.MOBILE_SHOPPING);
+            return View(model);
+        }
+
 
         [ChildActionOnly]
         public ActionResult BannerInProductDetail()
         {
             BaseDisplayerViewModel model = new BaseDisplayerViewModel();
             model.List = _service.GetListDisplay(DisplayerCode.PDT_DETAIL_MOBILE);
+            return View(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult ExpBanner()
+        {
+            BaseDisplayerViewModel model = new BaseDisplayerViewModel();
+            model.One = GetOneDisplayResult(_service.GetListDisplay(DisplayerCode.EXP_MOBILE));
             return View(model);
         }
 

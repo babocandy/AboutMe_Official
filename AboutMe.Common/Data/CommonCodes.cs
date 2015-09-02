@@ -179,6 +179,8 @@ namespace AboutMe.Common.Data
         public static string MOBILE_MAIN_TALK = "50";
         public static string MOBILE_MAIN_BEST = "60";
 
+        
+
         public static string CART_WEB = "70";
         public static string CART_MOBILE = "80";
         public static string CART_PRODUCT_DISPLAY = "90";
@@ -189,7 +191,10 @@ namespace AboutMe.Common.Data
         public static string PDT_DETAIL_WEB = "120";
         public static string PDT_DETAIL_MOBILE = "130";
 
+        public static string MOBILE_SHOPPING = "140";
 
+        public static string EXP_WEB = "150";
+        public static string EXP_MOBILE = "151";
        
 
         public static string SUB_KIND_10 = "10";

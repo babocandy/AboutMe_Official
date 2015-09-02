@@ -75,6 +75,14 @@ namespace AboutMe.Domain.Entity.AdminDisplay
     }
 
     /**
+     * 관리자 모바일 쇼핑
+     */
+    public class AdminDisplayMobileShoppingViewModel
+    {
+        public List<SP_ADMIN_DISPLAY_SEL_Result> BannerList { get; set; }
+    }
+
+    /**
      * 관리자 장바구니 전시
      */
     public class AdminDisplayCartViewModel
@@ -102,6 +110,16 @@ namespace AboutMe.Domain.Entity.AdminDisplay
         public SP_ADMIN_DISPLAY_SEL_Result Link10 { get; set; }
         public SP_ADMIN_DISPLAY_SEL_Result Link11 { get; set; }
     }
+
+    /**
+     * 관리자  전시 체험단 메뉴
+     */
+    public class AdminDisplayExpViewModel
+    {
+        public SP_ADMIN_DISPLAY_SEL_Result Web { get; set; }
+        public SP_ADMIN_DISPLAY_SEL_Result Mobile { get; set; }
+    }
+
 
     /**
      * 관리자  전시 상세
