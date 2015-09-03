@@ -340,7 +340,8 @@ namespace AboutMe.Web.Admin.Controllers
                 file.SaveAs(Server.MapPath(FilePath));
 
 
-                string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(FilePath));
+                //string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(FilePath));
+                string excelConnectionString = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=""Excel 12.0;HDR=YES;READONLY=FALSE"";", Server.MapPath(FilePath));
                 OleDbConnection con = new System.Data.OleDb.OleDbConnection(excelConnectionString);
                 OleDbDataAdapter cmd = new System.Data.OleDb.OleDbDataAdapter("select * from [Sheet1$] ", con);
 

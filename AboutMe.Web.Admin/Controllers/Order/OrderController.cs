@@ -218,7 +218,13 @@ namespace AboutMe.Web.Admin.Controllers.Order
         public ActionResult OrderDetailDeliveryUpdate(int ORDER_IDX, int ORDER_DETAIL_IDX, SP_TB_ADMIN_ORDER_Param SEARCH_OPTION, string DELIVERY_NUM)
         {
             string REG_ID = AdminUserInfo.GetAdmId();
-            INIESCROW_DELIVERY_RESULT result = null;
+            INIESCROW_DELIVERY_RESULT result = new INIESCROW_DELIVERY_RESULT { 
+                resultcode = "00",
+                resultmsg = "",
+                tid = "",
+                DLV_Date = "",
+                DLV_Time = ""
+            };
             //에스크로일경우 이니시스에 배송등록실행
             SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(ORDER_IDX);
             if (orderInfo.ESCROW_YN == "Y" && string.IsNullOrEmpty(orderInfo.INIESCROW_DELIVERY))
@@ -607,7 +613,7 @@ namespace AboutMe.Web.Admin.Controllers.Order
 
             System.IO.File.Copy(source, Server.MapPath(dest));
             //string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(dest));
-            string excelConnectionString = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=""Excel 12.0;HDR=YES;IMEX=1;MAXSCANROWS=15;READONLY=FALSE"";", Server.MapPath(dest));
+            string excelConnectionString = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=""Excel 12.0;HDR=YES;READONLY=FALSE"";", Server.MapPath(dest));
             
             OleDbConnection con = new System.Data.OleDb.OleDbConnection(excelConnectionString);
             con.Open();
@@ -616,14 +622,14 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 foreach (var row in lst)
                 {
                     string delivery_num = (string.IsNullOrEmpty(row.DELIVERY_NUM) ? "" : row.DELIVERY_NUM.ToString().Trim());
-
+                    
                     sql = "INSERT INTO [Sheet1$] ([ORDER IDX],[ORDER DETAIL IDX],[주문번호],[주문일자],[주문자명],[임직원여부],[상품코드],[상품명],[개수],[결제구분],[결제액],[상태],[프로모션종류],[프로모션명],[사은품명],[송장번호]) ";
                     sql = sql + String.Format(" VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}');"
                                     , row.ORDER_IDX.ToString().Trim(), row.ORDER_DETAIL_IDX.ToString().Trim(), row.ORDER_CODE.ToString().Trim(), row.ORDER_DATE.ToString().Trim(), row.ORDER_NAME.ToString().Trim()
                                     , row.EMP_YN.ToString().Trim(), row.P_CODE.ToString().Trim(), row.P_NAME.ToString().Trim(), row.P_COUNT.ToString().Trim(), row.PAY_NM.ToString().Trim()
                                     , row.REAL_PAY_PRICE.ToString().Trim(), row.ORDER_STATUS_NM.ToString().Trim(), row.PROMOTION_NM.ToString().Trim(), row.PMO_PRODUCT_NAME.ToString().Trim()
                                     , row.FREEGIFT_NAME.ToString().Trim(), delivery_num);
-
+                    
                     OleDbCommand Com = new OleDbCommand(sql, con);
                     Com.ExecuteNonQuery();
                 }
@@ -681,11 +687,11 @@ namespace AboutMe.Web.Admin.Controllers.Order
         }
 
 
-        public ActionResult Delivery()
+        public ActionResult Delivery(List<DELIVERTY_EXCEL_RESULT> param)
         {
-            object result = TempData["UploadResult"];
+            //object result = TempData["UploadResult"];
            // List<DELIVERTY_EXCEL_RESULT> lst = JsonConvert.DeserializeObject<List<DELIVERTY_EXCEL_RESULT>>(result);
-            return View(result);
+            return View(param);
         }
         
         [HttpPost]
@@ -726,7 +732,8 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 file.SaveAs(Server.MapPath(FilePath));
 
                 
-                string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(FilePath));
+                //string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(FilePath));
+                string excelConnectionString = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=""Excel 12.0;HDR=YES;READONLY=FALSE"";", Server.MapPath(FilePath));
                 OleDbConnection con = new System.Data.OleDb.OleDbConnection(excelConnectionString);
                 OleDbDataAdapter cmd = new System.Data.OleDb.OleDbDataAdapter("select * from [Sheet1$] ", con);
 
@@ -789,16 +796,23 @@ namespace AboutMe.Web.Admin.Controllers.Order
                                     result.Add(dv);
 
                                     string resultcode = "00";
-                                    INIESCROW_DELIVERY_RESULT IniResult = null;
+                                    INIESCROW_DELIVERY_RESULT IniResult = new INIESCROW_DELIVERY_RESULT
+                                    {
+                                        resultcode = "00",
+                                        resultmsg = "",
+                                        tid = "",
+                                        DLV_Date = "",
+                                        DLV_Time = ""
+                                    };
+
                                     //에스크로일경우 이니시스에 배송등록실행
                                     SP_ADMIN_ORDERLIST_DETAIL_BODY_Result orderInfo = _adminorderservice.OrderDetailBodyInfo(Convert.ToInt32(order_idx));
                                     if (orderInfo.ESCROW_YN == "Y" && string.IsNullOrEmpty(orderInfo.INIESCROW_DELIVERY))
                                     {
                                         IniResult = InisysDeliveryUpdate(orderInfo, delivery_num);
-                                        resultcode = IniResult.resultcode;
                                     }
 
-                                    if (resultcode == "00")
+                                    if (IniResult.resultcode == "00")
                                     {
                                         _adminorderservice.OrderDetailDeliveryUpdate(Convert.ToInt16(order_detail_idx), delivery_num, REG_ID);
                                     }
@@ -816,9 +830,9 @@ namespace AboutMe.Web.Admin.Controllers.Order
                     con.Close();
                 }
             } //end if
-            TempData["UploadResult"] = result;
-            return RedirectToAction("Delivery");
-          
+          //  TempData["UploadResult"] = result;
+          //  return RedirectToAction("Delivery", result);
+            return View("Delivery", result);
         }
 
         //회원정보 > 주문내역
