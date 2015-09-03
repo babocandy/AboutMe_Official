@@ -3,9 +3,31 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
 }
+@{
+    string DomainUrl = "http://" + HttpContext.Current.Request.Url.Host;
+    string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
+    string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+    string meta_big_img1 = DomainUrl + ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
+    string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
+    string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
+    string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
+    string big_img3 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG2;
+    string thumb_img4 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG3;
+    string big_img4 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG3;
+
+    string preUrl = HttpContext.Current.Request.Url.ToString();
+}
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/shopping.css" rel="stylesheet" />
+<meta property="fb:app_id" content="817303641716698" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="상품 상세페이지" />
+<meta property="og:url" content="@preUrl" />
+<meta property="og:description" content="상품설명" />
+<meta property="og:image" content="@meta_big_img1" />
+<meta property="og:site_name" content="@DomainUrl" />
+
 }
 <!--header-->
 @section Header{
@@ -135,9 +157,9 @@
             <div class="sns_area">
                 <p><strong>@(Html.Action("ProductofCartCnt", "Cart", new { p_code = @ViewBag.P_CODE }))명</strong> 고객님이 쇼핑백에 담았습니다.</p>
                 <ul class="sns_list">
-                    <li class="facebook"><a href="#"><img src="/aboutCom/images/shopping/sns_facebook.gif" alt="페이스북" /></a></li>
-                    <li class="kastory"><a href="#"><img src="/aboutCom/images/shopping/sns_ks.gif" alt="카카오스토리" /></a></li>
-                    <li class="katalk"><a href="#"><img src="/aboutCom/images/shopping/sns_kt.gif" alt="카카오톡" /></a></li>
+                    <li class="facebook"><a href="javascript:sendSns('facebook','@preUrl','@Model.P_NAME')"><img src="/aboutCom/images/shopping/sns_facebook.gif" alt="페이스북" /></a></li>
+                    <li class="kastory"><a href="javascript:sendSns('kakaostory','@preUrl','@Model.P_NAME')"><img src="/aboutCom/images/shopping/sns_ks.gif" alt="카카오스토리" /></a></li>
+                    <li class="katalk"><a href="javascript:sendSns('kakaotalk','@preUrl','@Model.P_NAME')"><img src="/aboutCom/images/shopping/sns_kt.gif" alt="카카오톡" /></a></li>
                 </ul>
             </div>
             <!--//sns-->
@@ -177,16 +199,6 @@
                         <ul></ul>
                     </div>
                     <div class="slider">
-                        @{
-                            string thumb_img1 = ViewBag.PRODUCT_PATH + "R64_" + Model.MAIN_IMG;
-                            string big_img1 = ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG;
-                            string thumb_img2 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG1;
-                            string big_img2 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG1;
-                            string thumb_img3 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG2;
-                            string big_img3 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG2;
-                            string thumb_img4 = ViewBag.PRODUCT_PATH + "R64_" + Model.OTHER_IMG3;
-                            string big_img4 = ViewBag.PRODUCT_PATH + "R500_" + Model.OTHER_IMG3;
-                        }
                         <ul>
                             @if (!string.IsNullOrEmpty(Model.MAIN_IMG))
                             {
