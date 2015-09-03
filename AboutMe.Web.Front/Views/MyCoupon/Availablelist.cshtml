@@ -109,7 +109,7 @@
                         </ul>
                     </div>
                     <!--//쿠폰소팅-->
-                    <!--쿠폰리스트-->
+          <!--쿠폰리스트-->
                     <div class="coupon_list tabletypeb">
                         <table>
                             <colgroup><col width="210" /><col width="203" /><col width="*" /><col width="170" /><col width="225" /></colgroup>
@@ -123,7 +123,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
 
                             @{
                                 string cssType = "";
@@ -202,60 +201,7 @@
                                 </tr>
                             }
                                
-                                <!--
-                                 <tr>
-                                    <td>
-                                       
-                                            쿠폰 타입 3가지 있습니다.
-                                            type1, type2, type3
-                                        
-                                        <div class="couponimg type2"><strong>10,000</strong>원</div>
-                                    </td>
-                                    <td>가을아이템 5% 할인</td>
-                                    <td>상품금액 3만원 이상 ~ 7만원 이하</td>
-                                    <td><a href="/mypage/pop_coupongoods.asp" onclick="PopupCenter(this.href, '', '800', '806'); return false;" class="btn_coupongoods">적용대상 보기<i></i></a></td>
-                                    <td>2015. 09. 01 ~ 09. 15</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        
-                                            쿠폰 타입 3가지 있습니다.
-                                            type1, type2, type3
-                                        
-                                        <div class="couponimg type3">무료배송</div>
-                                    </td>
-                                    <td>가을아이템 5% 할인</td>
-                                    <td>상품금액 3만원 이상 ~ 7만원 이하</td>
-                                    <td>전체 상품</td>
-                                    <td>2015. 09. 01 ~ 09. 15</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                       
-                                            쿠폰 타입 3가지 있습니다.
-                                            type1, type2, type3
-                                      
-                                        <div class="couponimg type2"><strong>10,000</strong>원</div>
-                                    </td>
-                                    <td>가을아이템 5% 할인</td>
-                                    <td>상품금액 3만원 이상 ~ 7만원 이하</td>
-                                    <td>전체 상품</td>
-                                    <td>2015. 09. 01 ~ 09. 15</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        
-                                            쿠폰 타입 3가지 있습니다.
-                                            type1, type2, type3
-                                     
-                                        <div class="couponimg type2"><strong>10,000</strong>원</div>
-                                    </td>
-                                    <td>가을아이템 5% 할인</td>
-                                    <td>상품금액 3만원 이상 ~ 7만원 이하</td>
-                                    <td>전체 상품</td>
-                                    <td>2015. 09. 01 ~ 09. 15</td>
-                                </tr>
-                            -->
+                                
                             </tbody>
                         </table>
                     </div>
@@ -267,24 +213,7 @@
                         Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = 10, PagePerBlock = ViewBag.PageSize, CurrentPage = ViewBag.Page, QueryStr = "" });
                     }
                    
-                    <!---
-                    <div class="paging mt30">
-                        <a href="#" class="prev">이전</a>
-                       
-                        <strong>1</strong>
-                      
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">7</a>
-                        <a href="#">8</a>
-                        <a href="#">9</a>
-                        <a href="#">10</a>
-                        <a href="#" class="next">다음</a>
-                    </div>
-                        -->
+                    
                     <!--//페이징-->
 
                 </div>

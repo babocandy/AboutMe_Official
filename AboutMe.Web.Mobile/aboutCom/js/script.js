@@ -697,6 +697,10 @@ $(function(){
 	});
 
 	/*전시 메인*/
+	imagesLoaded( '.display_bnr .slider', function() {
+		display_bnrHeight = $(".display_bnr .slider img").height();
+		$(".display .display_bnr").css({"height":display_bnrHeight});
+	});
 	$(".display_bnr .slider li").each(function(){
 		$(".display_bnr .nav ul").append("<li><a href='#'></a></li> ");
 	});
@@ -789,14 +793,14 @@ $(function(){
 	
 	
 	/*브랜드소개*/
-	var scrollYval = $(".visual").height();
+	/*var scrollYval = $(".visual").height();
 	$(".visual img").load(function(){
 		scrollYval = $(".visual").height()+130;
 		//alert(scrollYval);
 		$(".txt_brandstroy,.brand_tab li").on("click", function(){
 			$('html, body').stop().animate({ scrollTop : scrollYval },500 ,"easeInExpo");
 		});
-	})
+	})*/
 	
 	
 	var brandWidth = $(window).width()-20; // 아이템 width
@@ -818,6 +822,10 @@ $(function(){
 	
 	var brand_idx=0; //idx값
 	var brandTotal_length = $(".tab_content_wrap .slider li").length; //총 li갯수
+	$(".tab_content_wrap .subject_slider li img").load(function(){
+		$(".tab_content_wrap .btn_prevnext").css({"height":$(".tab_content_wrap .subject_slider li img").height()})
+	});
+	
 	function brandSlide(){
 		$(".tab_content_wrap .slider").animate({"margin-left": -(brandWidth*brand_idx)},300,"easeInExpo");
 	}
@@ -830,37 +838,28 @@ $(function(){
 			$(".brand_tab ul li").removeClass("cnt")
 			$(".brand_tab ul li:eq(2)").addClass("cnt");
 			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(5)").fadeIn();
+			$(".subject_slider li:eq(2)").fadeIn();
 			$(".tab_content_wrap .slider li:eq("+(brandTotal_length-1)+")").clone().insertBefore($(".tab_content_wrap .slider li:eq(0)"));
 			$(".tab_content_wrap .slider").css({"margin-left":-brandWidth});
 			$(".tab_content_wrap .slider").animate({"margin-left":0},300,"easeInExpo", function(){
 				$(".tab_content_wrap .slider").css({"margin-left":-(brandWidth*(brand_idx))});
 				$(".tab_content_wrap .slider li:eq(0)").remove();
 			});
-		}else if(brand_idx==1){
-			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(0)").fadeIn();
-			brandSlide();
-		}else if(brand_idx==3){
+			$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_1.jpg') 0 0 no-repeat", "background-size":"cover" });
+		}else if(brand_idx==4){
 			$(".brand_tab ul li").removeClass("cnt")
 			$(".brand_tab ul li:eq(0)").addClass("cnt");
 			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(1)").fadeIn();
+			$(".subject_slider li:eq(0)").fadeIn();
 			brandSlide();
-		}else if(brand_idx==7){
-			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(2)").fadeIn();
-			brandSlide();
-		}else if(brand_idx==15){
+			$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_2.jpg') 0 0 no-repeat", "background-size":"cover" });
+		}else if(brand_idx==8){
 			$(".brand_tab ul li").removeClass("cnt")
 			$(".brand_tab ul li:eq(1)").addClass("cnt");
 			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(3)").fadeIn();
+			$(".subject_slider li:eq(1)").fadeIn();
 			brandSlide();
-		}else if(brand_idx==16){
-			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(4)").fadeIn();
-			brandSlide();
+			$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_2.jpg') 0 0 no-repeat", "background-size":"cover" });
 		}else{
 			brandSlide();
 		}
@@ -869,30 +868,20 @@ $(function(){
 		e.preventDefault();
 		brand_idx++;
 		//console.log(brand_idx);
-		if (brand_idx==2){
+		if (brand_idx==5){
 			brandSlide();
-			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(1)").fadeIn();
-		}else if(brand_idx==4){
 			$(".brand_tab ul li").removeClass("cnt")
 			$(".brand_tab ul li:eq(1)").addClass("cnt");
 			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(2)").fadeIn();
-			brandSlide();
-		}else if(brand_idx==8){
-			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(3)").fadeIn();
-			brandSlide();
-		}else if(brand_idx==16){
+			$(".subject_slider li:eq(1)").fadeIn();
+			$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_2.jpg') 0 0 no-repeat", "background-size":"cover" });
+		}else if(brand_idx==9){
 			$(".brand_tab ul li").removeClass("cnt")
 			$(".brand_tab ul li:eq(2)").addClass("cnt");
 			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(4)").fadeIn();
+			$(".subject_slider li:eq(2)").fadeIn();
 			brandSlide();
-		}else if(brand_idx==17){
-			$(".subject_slider li").hide();
-			$(".subject_slider li:eq(5)").fadeIn();
-			brandSlide();
+			$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_3.jpg') 0 0 no-repeat", "background-size":"cover" });
 		}
 		else if(brand_idx==brandTotal_length){
 			$(".brand_tab ul li").removeClass("cnt")
@@ -905,6 +894,7 @@ $(function(){
 				$(".tab_content_wrap .slider").css({"margin-left":0});
 				$(".tab_content_wrap .slider li:eq("+(brandTotal_length)+")").remove();
 			});
+			$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_1.jpg') 0 0 no-repeat", "background-size":"cover" });
 		}else{
 			brandSlide();
 		}
@@ -933,24 +923,27 @@ $(function(){
 		$(".subject_slider li").hide();
 		$(".subject_slider li:eq(0)").fadeIn();
 		$(".tab_content_wrap .slider").animate({"margin-left": -(brandWidth*brand_idx)},300,"easeInExpo");
+		$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_1.jpg') 0 0 no-repeat", "background-size":"cover" });
 	});
 	$(".brand_tab ul li:eq(1)").click(function(e){
 		e.preventDefault();
-		brand_idx =4;
+		brand_idx =5;
 		$(".brand_tab ul li").removeClass("cnt");
 		$(".brand_tab ul li:eq(1)").addClass("cnt");
 		$(".subject_slider li").hide();
-		$(".subject_slider li:eq(2)").fadeIn();
+		$(".subject_slider li:eq(1)").fadeIn();
 		$(".tab_content_wrap .slider").animate({"margin-left": -(brandWidth*brand_idx)},300,"easeInExpo");
+		$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_2.jpg') 0 0 no-repeat", "background-size":"cover" });
 	});
 	$(".brand_tab ul li:eq(2)").click(function(e){
 		e.preventDefault();
-		brand_idx =16;
+		brand_idx =9;
 		$(".brand_tab ul li").removeClass("cnt");
 		$(".brand_tab ul li:eq(2)").addClass("cnt");
 		$(".subject_slider li").hide();
-		$(".subject_slider li:eq(4)").fadeIn();
+		$(".subject_slider li:eq(2)").fadeIn();
 		$(".tab_content_wrap .slider").animate({"margin-left": -(brandWidth*brand_idx)},300,"easeInExpo");
+		$(".tab_content_wrap").css({"background":"url('/aboutCom/images/aboutme/img_brand2_3.jpg') 0 0 no-repeat", "background-size":"cover" });
 	});
 	
 	/*타임세일 이벤트 슬라이드*/
