@@ -20,45 +20,53 @@
 
     <script language="javascript">
 
-        $(function () {
-            //ajaxSelectCateCodeJavascriptInit();
-        });
+    $(function () {
+        //ajaxSelectCateCodeJavascriptInit();
+    });
 
-        function bsearch() {
-            var f = document.bform;
-            //alert('ok');
-            //alert(f.P_CATE_CODE_3DEPTH[0].checked);
-            f.target = "";
-            f.PAGE.value = 1;
-            f.submit();
-        }
+    function bsearch() {
+        var f = document.bform;
+        //alert('ok');
+        //alert(f.P_CATE_CODE_3DEPTH[0].checked);
+        f.target = "";
+        f.PAGE.value = 1;
+        f.submit();
+    }
 
-        function pCateCode(code,depthName3) {
-            //alert(code);
-            var f = document.bform;
-            f.P_CATE_CODE.value = code;
-            f.DEPTH_NAME3.value = depthName3;
+    function pCateCode(code,depthName3) {
+        //alert(code);
+        var f = document.bform;
+        f.P_CATE_CODE.value = code;
+        f.DEPTH_NAME3.value = depthName3;
+        f.C_CATE_CODE.value = "";
+        f.L_CATE_CODE.value = "";
 
+        //if (depthName3 == "전체") //유형별 선택시 3depth의 checked 값을 모두 false 처리한다.
+        //{
+        //유형별 선택시 3depth의 checked 값을 모두 false 처리한다.
+        NotAllchecked();
+        //}
+        //$('#span3depthname').html(depthName3); //3depth이름 넣어준다.
+        bsearch();
+    }
 
-            //if (depthName3 == "전체") //유형별 선택시 3depth의 checked 값을 모두 false 처리한다.
-            //{
-            //유형별 선택시 3depth의 checked 값을 모두 false 처리한다.
-            NotAllchecked();
-            //}
-            //$('#span3depthname').html(depthName3); //3depth이름 넣어준다.
-            bsearch();
-        }
-
-        function cCateCode(code) {
+        function cCateCode(code, depthName3) {
             //alert(code);
             var f = document.bform;
             f.C_CATE_CODE.value = code;
+            f.DEPTH_NAME3.value = depthName3;
+            f.P_CATE_CODE.value = @ViewBag.P_CATE_CODE.Substring(0, 3) + '100100';
+            f.L_CATE_CODE.value = "";
+            //alert(f.P_CATE_CODE.value);
             bsearch();
         }
 
-        function lCateCode(code) {
+        function lCateCode(code, depthName3) {
             var f = document.bform;
+            f.DEPTH_NAME3.value = depthName3;
             f.L_CATE_CODE.value = code;
+            f.P_CATE_CODE.value = @ViewBag.P_CATE_CODE.Substring(0, 3) + '100100';
+            f.C_CATE_CODE.value = "";
             bsearch();
         }
 
@@ -82,7 +90,7 @@
             //f.DEPTH_NAME3.value = "";
             var cbox;
             cbox = document.bform.P_CATE_CODE_3DEPTH;
-            
+
 
             if (cbox != undefined) {
 
@@ -170,57 +178,56 @@ else if (ViewBag.P_CATE_CODE.Substring(0, 3) == "103") //셀렉샵
 
                         <div class="selecttypeC">
                             <!--현재 소팅 대분류 class "on" 사용-->
-                            <div class="sort">
+                            <div @if ( (ViewBag.P_CATE_CODE.ToString() != "") && (ViewBag.C_CATE_CODE.ToString() == "") && (ViewBag.L_CATE_CODE.ToString() == "") ) { <text> class="sort on" </text> } else { <text> class="sort" </text>         } >
                                 <p class="tit">@subtitle1</p>
                                 <!--현재 소팅된 소분류 class "cnt" 사용합니다.-->
-                                <ul><li @if (ViewBag.P_CATE_CODE.ToString() == ViewBag.P_CATE_CODE.Substring(0, 3) + 100100)
-                                        { <text> class="cnt" </text>      } ><a href="#none" onclick="javascript:pCateCode('@ViewBag.P_CATE_CODE.Substring(0, 3)100100','전체');">전체</a></li>
+                                <ul>
+                                    <li @if (ViewBag.P_CATE_CODE.ToString() == ViewBag.P_CATE_CODE.Substring(0, 3) + 100100) { <text> class="cnt" </text>         }><a href="#none" onclick="javascript:pCateCode('@ViewBag.P_CATE_CODE.Substring(0, 3)100100','전체');">전체</a></li>
 
                                     @{ var i = 0; }
                                     @foreach (var item in ViewData["CateCodeP"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
-                                        <li @if (ViewBag.P_CATE_CODE.ToString() == @item.CATE_CODE.ToString())
-                                            { <text> class="cnt" </text>     }><a href="javascript:pCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');">@item.DEPTH2_NAME</a></li>
+                                        <li @if (ViewBag.P_CATE_CODE.ToString() == @item.CATE_CODE.ToString()) { <text> class="cnt" </text>        }><a href="javascript:pCateCode('@item.CATE_CODE');" onclick="javascript:pCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');">@item.DEPTH2_NAME</a></li>
 
-                                    i++;
+i++;
                                     }
                                 </ul>
                             </div>
-                            <div class="sort">
+
+                            <div @if (ViewBag.C_CATE_CODE.ToString() != "") { <text> class="sort on" </text>  } else { <text> class="sort" </text>          }>
                                 <p class="tit">@subtitle2</p>
                                 <ul>
-                                    <li @if (ViewBag.C_CATE_CODE.ToString() == "") { <text> class="cnt" </text> }><a href="" onclick="javascript:cCateCode('');">전체</a></li>
+                                    <li @if (ViewBag.C_CATE_CODE.ToString() == "") { <text> class="cnt" </text>  }><a href="" onclick="javascript: cCateCode('', '전체');">전체</a></li>
 
                                     @{ i = 0; }
                                     @foreach (var item in ViewData["CateCodeC"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
-                                        <li @if (ViewBag.C_CATE_CODE.ToString() == @item.CATE_CODE.ToString())
-                                            { <text> class="cnt" </text>    }><a href="javascript:cCateCode('@item.CATE_CODE');" onclick="javascript:cCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
+                                        <li @if (ViewBag.C_CATE_CODE.ToString() == @item.CATE_CODE.ToString()) { <text> class="cnt" </text>     }><a href="javascript:cCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');" onclick="javascript:cCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');">@item.DEPTH2_NAME</a></li>
 
-                                    i++;
+i++;
                                     }
                                 </ul>
                             </div>
-@if (ViewBag.P_CATE_CODE.Substring(0, 3) != "102") //헬스에서는 제외
-{
-                            <div class="sort">
+
+                        @if (ViewBag.P_CATE_CODE.Substring(0, 3) != "102") //헬스에서는 제외
+                        {
+                            <div @if (ViewBag.L_CATE_CODE.ToString() != "") { <text> class="sort on" </text>   } else { <text> class="sort" </text>           }>
                                 <p class="tit">@subtitle3</p>
                                 <ul>
-                                    <li @if (ViewBag.L_CATE_CODE.ToString() == "") { <text> class="cnt" </text>  }><a href="#none" onclick="javascript:lCateCode('');">전체</a></li>
+                                    <li @if (ViewBag.L_CATE_CODE.ToString() == "") { <text> class="cnt" </text>   }><a href="#none" onclick="javascript: lCateCode('', '전체');">전체</a></li>
                                     @{ i = 0; }
                                     @foreach (var item in ViewData["CateCodeL"] as List<AboutMe.Domain.Entity.Product.SP_CATEGORY_DEPTH_SEL_Result>)
                                     {
 
-                                        <li @if (ViewBag.L_CATE_CODE.ToString() == @item.CATE_CODE.ToString())
-                                            { <text> class="cnt" </text>   } ><a href="javascript:lCateCode('@item.CATE_CODE');" onclick="javascript:lCateCode('@item.CATE_CODE');">@item.DEPTH2_NAME</a></li>
+                                        <li @if (ViewBag.L_CATE_CODE.ToString() == @item.CATE_CODE.ToString()) { <text> class="cnt" </text>    }><a href="javascript:lCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');" onclick="javascript:lCateCode('@item.CATE_CODE','@item.DEPTH2_NAME');">@item.DEPTH2_NAME</a></li>
 
-                                        i++;
+                        i++;
                                     }
                                 </ul>
                             </div>
-}    
+                        }    
                         </div>
                     </div>
                     <!--//display_top-->
@@ -243,7 +250,7 @@ i++;
                             }
                            
                         </ul>
-                        <a href="javascript:document.bform.submit();" class="btn_brown_w96h38"><i></i>검색</a>
+                        <a href="javascript:bsearch();" class="btn_brown_w96h38"><i></i>검색</a>
                     </div>
                         <!-- filter -->
 
