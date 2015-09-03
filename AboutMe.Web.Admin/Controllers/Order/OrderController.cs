@@ -589,8 +589,8 @@ namespace AboutMe.Web.Admin.Controllers.Order
             dt2 = DateTime.Now;
             string now_dt = dt2.ToString("yyyyMMddHHmms");
 
-            string source = Server.MapPath(uploadPath+"delivery_templet.xls");
-            string file_name = "delivery_templet_" + now_dt + ".xls";
+            string source = Server.MapPath(uploadPath+"delivery_templet.xlsx");
+            string file_name = "delivery_templet_" + now_dt + ".xlsx";
             string create_path = uploadPath + @"Download\" + now_dt;
             string dest = create_path + @"\" + file_name;
             string sql = "";
@@ -606,8 +606,9 @@ namespace AboutMe.Web.Admin.Controllers.Order
             }
 
             System.IO.File.Copy(source, Server.MapPath(dest));
-            string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(dest));
-
+            //string excelConnectionString = string.Format(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=""Excel 8.0;HDR=Yes"";", Server.MapPath(dest));
+            string excelConnectionString = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=""Excel 12.0;HDR=YES;IMEX=1;MAXSCANROWS=15;READONLY=FALSE"";", Server.MapPath(dest));
+            
             OleDbConnection con = new System.Data.OleDb.OleDbConnection(excelConnectionString);
             con.Open();
             try
@@ -625,7 +626,6 @@ namespace AboutMe.Web.Admin.Controllers.Order
 
                     OleDbCommand Com = new OleDbCommand(sql, con);
                     Com.ExecuteNonQuery();
-
                 }
             }
             finally
