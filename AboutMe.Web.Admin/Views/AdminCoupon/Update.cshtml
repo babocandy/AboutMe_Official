@@ -44,6 +44,34 @@
     }
 }
 
+@{
+    int FromYYYY =0, FromMM=0, FromDD=0, FromHH=0,FromMin =0 ,FromSS=0;
+    int ToYYYY=0, ToMM=0, ToDD=0, ToHH=0,ToMin=0, ToSS=0;
+
+    if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].SERVICE_LIFE_GBN == "A")
+    {
+        if (Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM != null)
+        {
+            FromYYYY = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value.Year;
+            FromMM = Convert.ToInt32(Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value.Month) - 1;
+            FromDD = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value.Day;
+            FromHH = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value.Hour;
+            FromMin = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value.Minute;
+            FromSS = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_FROM.Value.Second;
+
+            ToYYYY = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value.Year;
+            ToMM = Convert.ToInt32(Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value.Month) - 1;
+            ToDD = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value.Day;
+            ToHH = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value.Hour;
+            ToMin = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value.Minute;
+            ToSS = Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].FIXED_PERIOD_TO.Value.Second;
+        }
+    }
+}
+
+
+
+
 @section Scripts{
     @if (TempData["jsMessage"] != null && TempData["jsMessage"] != "")
     {
@@ -52,221 +80,308 @@
 
     <script language="javascript">
 
-        function frmCheck() {
-            //alert("여기입니다");
-
-            var f = document.frm01;
-
-            /**
-            //용도구분값이 지불쿠폰 일때
-
-            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
-            {
-                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN') == '') {
-                    alert("[용도구분]이 -지불-일때는 [상품적용범위]를 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN[0].focus();
-                    return false;
-                }
-
-                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == '')
-                {
-                    alert("[용도구분]이 -지불-일때는 [정률/정액 구분]을 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_RATE_OR_MONEY[0].focus();
-                    return false;
-                }
-            }
 
 
+    //DatePicker
+    $(document).ready(function () {
+        // create DatePicker from input HTML element
 
-           //발행방법이 자동발행일때
-            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_GBN') == 'A') {
-                if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO') == '')
-                {
-                    alert("[발행방법]이 -자동발행-일때는 [자동발행TYPE]을 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO[0].focus();
-                    return false;
-                }
-            }
+        var FromYYYY, FromMM, FromDD, FromHH, FromMin, FromSS;
+        var ToYYYY, ToMM, ToDD, ToHH,ToMin, ToSS;
+        var SERVICE_LIFE_GBN = "@Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].SERVICE_LIFE_GBN";
 
+        if(SERVICE_LIFE_GBN == "A")
+        {
+            FromYYYY =  @FromYYYY.ToString() ;
+            FromMM   =  @FromMM.ToString() ;
+            FromDD   =  @FromDD.ToString() ;
+            FromHH   =  @FromHH.ToString() ;
+            FromMin  =  @FromMin.ToString() ;
+            FromSS   =  @FromSS.ToString() ;
 
-
-
-            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
-
-                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
-                if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value == '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value == '') {
-                    alert("[사용기간 기준구분이]이 -고정기간 기준-일때는 [고정기간 일자]를 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
-                    return false;
-                }
-            }
-
-
-            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
+            ToYYYY =  @ToYYYY.ToString() ;
+            ToMM   =  @ToMM.ToString();
+            ToDD   =  @ToDD.ToString() ;
+            ToHH   =  @ToHH.ToString() ;
+            ToMin  =  @ToMin.ToString() ;
+            ToSS   =  @ToSS.ToString() ;
 
 
-                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
-                if (f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.value == '' ) {
-                    alert("[사용기간 기준구분이]이 -발행일 기준-일때는 [발행일 기준 유효기간]을 선택해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.focus();
-                    return false;
-                }
-            }
+            $("#inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM").kendoDateTimePicker({
+                value: new Date(FromYYYY,FromMM,FromDD,FromHH,FromMin,FromSS)
+                ,format: "yyyy/MM/dd HH:mm tt"
+                , interval: 30
+            });
 
+            $("#inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO").kendoDateTimePicker({
+                value: new Date(ToYYYY,ToMM,ToDD,ToHH,ToMin,ToSS)
+           , format: "yyyy/MM/dd HH:mm tt"
+           , interval: 30
+            });
 
+        }
+        else //고정기간기준이 아닐 경우는 고정기간시작일자와 종료일자는 datetimepicker에 셋팅하지 않는다
+        {
+            $("#inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                , interval: 60
+            });
 
+            $("#inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                , interval: 60
+            });
 
-            //alert("여기 " + getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
-            //사용기간 기준구분 - 정상
-            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'R') {
-                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
-                if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.value == '' )
-                {
-                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 할인율]를 입력해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.focus();
-                    return false;
-                }
-            }
-
-
-            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'M') {
-                //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
-                if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.value == '') {
-                    alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 금액]을 입력해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.focus();
-                    return false;
-                }
-            }
-
-            **/
-
-            var is_mem_checked = false;
-           // alert(f.CheckMemGrade.length);
-
-            for (var k = 0 ; f.CheckMemGrade.length > k ; k++)
-            {
-                if (f.CheckMemGrade[k].checked == true) {
-                    is_mem_checked = true;
-                    //alert(k);
-                    break;
-                }
-            }
-
-            if (is_mem_checked == false) {
-
-                 alert("적용회원등급을 선택하세요");
-                 f.CheckMemGrade[0].focus();
-                 return false;
-
-            }
-
-            if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM.value != '' || f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO.value != '') {
-
-                if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM.value > f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO.value) {
-                    alert("[고정기간 일자]의 시작일이 종료일보다 먼저여야 합니다.");
-                    f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TOfocus();
-                    return false;
-                }
-            }
-
-
-            if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE.value != '' || f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE.value != '') {
-
-                if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE.value > f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE.value) {
-                    alert("[발행가능기간]의 시작일이 종료일보다 먼저여야 합니다.");
-                    f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
-                    return false;
-                }
-            }
-
-            if (f.SERVICE_LIFE_GBN == 'B') //쿠폰유효기간 구분이 발행일 기준이면
-            {
-                if(f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.value == "")
-                {
-                    alert("발행일 기준 유효기간을 입력하세요");
-                    f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.focus();
-                }
-                else if(isNaN(f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.value))
-                {
-                    alert("발행일 기준 유효기간에는 숫자만 입력하세요.");
-                    f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.focus();
-                }
-            }
-
-            return true;
 
         }
 
-        function getRadioVal(form, name) {
-            var val = "";
-            // get list of radio buttons with specified name
-            var radios = form.elements[name];
 
 
-            // loop through list of radio buttons
-            // for (var i = 0; radios.length < i; i++)
-            for (var i = 0, len = radios.length; i < len; i++) {
-                //alert('in:   ' +name + ':' + radios[i].value);
-                if (radios[i].checked) { // radio checked?
-                    val = radios[i].value; // if so, hold its value in val
-                    break; // and break out of for loop
-                }
+        FromYYYY =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value.Year ;
+        FromMM   =  @Convert.ToString(Convert.ToInt32(Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value.Month) - 1);
+        FromDD   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value.Day ;
+        FromHH   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value.Hour ;
+        FromMin   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value.Minute ;
+        FromSS   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_FROM_DATE.Value.Second ;
+
+        ToYYYY =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value.Year ;
+        ToMM   =  @Convert.ToString(Convert.ToInt32(Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value.Month) - 1);
+        //ToMM = 11;
+        ToDD   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value.Day ;
+        ToHH   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value.Hour ;
+        ToMin   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value.Minute ;
+        ToSS   =  @Model.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result[0].MASTER_TO_DATE.Value.Second ;
+
+        $("#inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE").kendoDateTimePicker({
+            value: new Date(FromYYYY,FromMM,FromDD,FromHH,FromMin,FromSS)
+              ,format: "yyyy/MM/dd HH:mm tt"
+              , interval: 30
+        });
+
+
+        $("#inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE").kendoDateTimePicker({
+            value: new Date(ToYYYY,ToMM,ToDD,ToHH,ToMin,ToSS)
+                , format: "yyyy/MM/dd HH:mm tt"
+                , interval: 30
+        });
+
+    });
+
+    function frmCheck() {
+        //alert("여기입니다");
+
+        var f = document.frm01;
+
+        /**
+        //용도구분값이 지불쿠폰 일때
+
+        if (getRadioVal(f, 'inst_TB_COUPON_MASTER_COUPON_GBN') == 'M' )
+        {
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN') == '') {
+                alert("[용도구분]이 -지불-일때는 [상품적용범위]를 선택해야 합니다.");
+                f.inst_TB_COUPON_MASTER_PRODUCT_APP_SCOPE_GBN[0].focus();
+                return false;
             }
-            return val; // return value of checked radio or undefined if none checked
+
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == '')
+            {
+                alert("[용도구분]이 -지불-일때는 [정률/정액 구분]을 선택해야 합니다.");
+                f.inst_TB_COUPON_MASTER_RATE_OR_MONEY[0].focus();
+                return false;
+            }
         }
 
-        function setTotalCategory(obj_selectbox, sel_index) {
-            //alert(obj_selectbox[sel_index].value);
-            var f = document.frm01;
-            f.inst_TB_COUPON_MASTER_PMO_TOTAL_CATEGORY.value = obj_selectbox.options[sel_index].value;
 
-            //alert(obj_selectbox[sel_index].value);
 
-            if (obj_selectbox[sel_index].value == "01") //일반회원 전용할인
+       //발행방법이 자동발행일때
+        if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_GBN') == 'A') {
+            if (getRadioVal(f, 'inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO') == '')
             {
-
-                f.CheckMemGrade[0].disabled = false;
-                f.CheckMemGrade[1].disabled = false;
-                f.CheckMemGrade[2].disabled = false;
-                f.CheckMemGrade[3].disabled = false;
-
-                f.CheckMemGrade[4].disabled = true;
-                f.CheckMemGrade[5].disabled = true;
-                f.CheckMemGrade[6].disabled = true;
-                f.CheckMemGrade[7].disabled = true;
-
+                alert("[발행방법]이 -자동발행-일때는 [자동발행TYPE]을 선택해야 합니다.");
+                f.inst_TB_COUPON_MASTER_ISSUE_METHOD_WITH_AUTO[0].focus();
+                return false;
             }
+        }
 
-            if (obj_selectbox[sel_index].value == "00") //임직원 전용할인
+
+
+
+        if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'A') {
+
+            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+            if (f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.value == '' || f.inst_TB_COUPON_MASTER_FIXED_PERIOD_TO.value == '') {
+                alert("[사용기간 기준구분이]이 -고정기간 기준-일때는 [고정기간 일자]를 선택해야 합니다.");
+                f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
+                return false;
+            }
+        }
+
+
+        if (getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN') == 'B') {
+
+
+            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+            if (f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.value == '' ) {
+                alert("[사용기간 기준구분이]이 -발행일 기준-일때는 [발행일 기준 유효기간]을 선택해야 합니다.");
+                f.inst_TB_COUPON_MASTER_EXRIRED_DAY_FROM_ISSUE_DT.focus();
+                return false;
+            }
+        }
+
+
+
+
+        //alert("여기 " + getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+        //사용기간 기준구분 - 정상
+        if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'R') {
+            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+            if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.value == '' )
             {
-                f.CheckMemGrade[0].disabled = true;
-                f.CheckMemGrade[1].disabled = true;
-                f.CheckMemGrade[2].disabled = true;
-                f.CheckMemGrade[3].disabled = true;
-
-                f.CheckMemGrade[4].disabled = false;
-                f.CheckMemGrade[5].disabled = false;
-                f.CheckMemGrade[6].disabled = false;
-                f.CheckMemGrade[7].disabled = false;
-
+                alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 할인율]를 입력해야 합니다.");
+                f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_RATE.focus();
+                return false;
             }
+        }
 
-            if (obj_selectbox[sel_index].value == "03") //등급할인
-            {
-                f.CheckMemGrade[0].disabled = false;
-                f.CheckMemGrade[1].disabled = false;
-                f.CheckMemGrade[2].disabled = false;
-                f.CheckMemGrade[3].disabled = false;
 
-                f.CheckMemGrade[4].disabled = false;
-                f.CheckMemGrade[5].disabled = false;
-                f.CheckMemGrade[6].disabled = false;
-                f.CheckMemGrade[7].disabled = false;
-
+        if (getRadioVal(f, 'inst_TB_COUPON_MASTER_RATE_OR_MONEY') == 'M') {
+            //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
+            if (f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.value == '') {
+                alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 금액]을 입력해야 합니다.");
+                f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.focus();
+                return false;
             }
+        }
+
+        **/
+
+        var is_mem_checked = false;
+        // alert(f.CheckMemGrade.length);
+
+        for (var k = 0 ; f.CheckMemGrade.length > k ; k++)
+        {
+            if (f.CheckMemGrade[k].checked == true) {
+                is_mem_checked = true;
+                //alert(k);
+                break;
+            }
+        }
+
+        if (is_mem_checked == false) {
+
+            alert("적용회원등급을 선택하세요");
+            f.CheckMemGrade[0].focus();
+            return false;
 
         }
-    </script>
+
+        if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM.value != '' || f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO.value != '') {
+
+            if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_FROM.value > f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TO.value) {
+                alert("[고정기간 일자]의 시작일이 종료일보다 먼저여야 합니다.");
+                f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__FIXED_PERIOD_TOfocus();
+                return false;
+            }
+        }
+
+
+        if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE.value != '' || f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE.value != '') {
+
+            if (f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_FROM_DATE.value > f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__MASTER_TO_DATE.value) {
+                alert("[발행가능기간]의 시작일이 종료일보다 먼저여야 합니다.");
+                f.inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM.focus();
+                return false;
+            }
+        }
+
+        if (f.SERVICE_LIFE_GBN == 'B') //쿠폰유효기간 구분이 발행일 기준이면
+        {
+            if(f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.value == "")
+            {
+                alert("발행일 기준 유효기간을 입력하세요");
+                f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.focus();
+            }
+            else if(isNaN(f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.value))
+            {
+                alert("발행일 기준 유효기간에는 숫자만 입력하세요.");
+                f.inst_SP_ADMIN_COUPON_MASTER_DETAIL_SEL_Result_0__EXRIRED_DAY_FROM_ISSUE_DT.focus();
+            }
+        }
+
+        return true;
+
+    }
+
+    function getRadioVal(form, name) {
+        var val = "";
+        // get list of radio buttons with specified name
+        var radios = form.elements[name];
+
+
+        // loop through list of radio buttons
+        // for (var i = 0; radios.length < i; i++)
+        for (var i = 0, len = radios.length; i < len; i++) {
+            //alert('in:   ' +name + ':' + radios[i].value);
+            if (radios[i].checked) { // radio checked?
+                val = radios[i].value; // if so, hold its value in val
+                break; // and break out of for loop
+            }
+        }
+        return val; // return value of checked radio or undefined if none checked
+    }
+
+    function setTotalCategory(obj_selectbox, sel_index) {
+        //alert(obj_selectbox[sel_index].value);
+        var f = document.frm01;
+        f.inst_TB_COUPON_MASTER_PMO_TOTAL_CATEGORY.value = obj_selectbox.options[sel_index].value;
+
+        //alert(obj_selectbox[sel_index].value);
+
+        if (obj_selectbox[sel_index].value == "01") //일반회원 전용할인
+        {
+
+            f.CheckMemGrade[0].disabled = false;
+            f.CheckMemGrade[1].disabled = false;
+            f.CheckMemGrade[2].disabled = false;
+            f.CheckMemGrade[3].disabled = false;
+
+            f.CheckMemGrade[4].disabled = true;
+            f.CheckMemGrade[5].disabled = true;
+            f.CheckMemGrade[6].disabled = true;
+            f.CheckMemGrade[7].disabled = true;
+
+        }
+
+        if (obj_selectbox[sel_index].value == "00") //임직원 전용할인
+        {
+            f.CheckMemGrade[0].disabled = true;
+            f.CheckMemGrade[1].disabled = true;
+            f.CheckMemGrade[2].disabled = true;
+            f.CheckMemGrade[3].disabled = true;
+
+            f.CheckMemGrade[4].disabled = false;
+            f.CheckMemGrade[5].disabled = false;
+            f.CheckMemGrade[6].disabled = false;
+            f.CheckMemGrade[7].disabled = false;
+
+        }
+
+        if (obj_selectbox[sel_index].value == "03") //등급할인
+        {
+            f.CheckMemGrade[0].disabled = false;
+            f.CheckMemGrade[1].disabled = false;
+            f.CheckMemGrade[2].disabled = false;
+            f.CheckMemGrade[3].disabled = false;
+
+            f.CheckMemGrade[4].disabled = false;
+            f.CheckMemGrade[5].disabled = false;
+            f.CheckMemGrade[6].disabled = false;
+            f.CheckMemGrade[7].disabled = false;
+
+        }
+
+    }
+</script>
 }
 @section Left {
     @{Html.RenderPartial("~/Views/AboutMeAdminPartial/_AdminLeft.cshtml");}
@@ -278,11 +393,11 @@
     <div class="content">
         <!--path-->
         <div class="path">
-            <a href="/index.asp">HOME</a> &gt; <a href="#">환경설정</a> &gt; <a href="#">전체운영설정</a> &gt; <strong>배송설정</strong>
+            <a href="/index.asp">HOME</a> &gt; <a href="#">프로모션관리</a> &gt; <a href="#">쿠폰</a> &gt; <strong>쿠폰정책수정</strong>
         </div>
         <!--//path-->
         <div class="panel">
-            <h3 class="sub-header">쿠폰정책 등록</h3>
+            <h3 class="sub-header">쿠폰정책 수정</h3>
             @using (Html.BeginForm("Update", "AdminCoupon", FormMethod.Post, new { id = "frm01", name = "frm01", onsubmit = "return frmCheck();" }))
             {
                 @Html.AntiForgeryToken()              //폼 데이터 위조 방지 토큰 생성

@@ -416,7 +416,7 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 
 /* popup : 새창 */
 body.popup {min-width:0;overflow:hidden;}
-.popupwrap .pop {padding:20px 20px 30px;}
+.popupwrap .pop {position:relative;padding:20px 20px 30px;}
 .popupwrap .pop .pop_top{position:relative;}
 .popupwrap .pop .pop_top .title_area {padding-bottom:21px;text-align:center;border-top:2px solid #696361;border-bottom:1px solid #bbb5b4;}
 .popupwrap .pop .pop_top .title_area .title {margin-top:23px;font-size:26px;color:#1b1818;}
@@ -544,10 +544,13 @@ body.popup {min-width:0;overflow:hidden;}
 .pwchange .btngroup a + a{margin-left:2px;}
 
 /*에스크로 지급거절 팝업*/
-.noescrow{margin-top:29px;}
+.noescrow{margin-top:29px;padding-bottom:35px;}
 .noescrow h2{font-size:16px;color:#1b1818;font-weight:normal;}
 .noescrow .txtareatypea{margin-top:8px;height:114px;}
 .noescrow .btngroup a + a{margin-left:2px;}
+.noescrow .oneday_wrap{position:absolute;bottom:0;left:0;padding-right:20px;width:100%;height:35px;background-color:#efe8e6;text-align:right;box-sizing:border-box;}
+.noescrow .oneday_wrap label{font-family:"Dotum";font-size:12px;line-height:35px;color:#1b1818;}
+.noescrow .oneday_wrap label input[type="checkbox"]{vertical-align:middle;}
 
 /*에스크로 지급확인 거절 팝업*/
 .escrow_conf{margin-top:27px;text-align:center;}
