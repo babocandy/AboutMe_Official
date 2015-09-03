@@ -17,6 +17,27 @@
     
     <script language="javascript">
 
+
+        //DatePicker
+        $(document).ready(function () {
+            // create DatePicker from input HTML element
+
+            $("#inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_FROM").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                ,interval: 30
+            });
+
+
+            $("#inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_TO").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                ,interval: 30
+            });
+
+
+
+        });
+
+
         function frmCheck() {
             //alert("여기입니다");
 
@@ -27,7 +48,7 @@
                 f.SEL_PMO_TOTAL_CATEGORY.focus();
                 return false;
             }
-
+            /**
             if (getRadioVal(f, 'inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_RATE_OR_MONEY') == 'R') {
                 //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
                 if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DISCOUNT_RATE.value == '') {
@@ -40,11 +61,17 @@
 
             if (getRadioVal(f, 'inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_RATE_OR_MONEY') == 'M') {
                 //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
-                if (f.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY.value == '') {
+                if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_RATE_OR_MONEY.value == '') {
                     alert("[정률/정액 구분]이 -정률-일때는 [쿠폰 금액]을 입력해야 합니다.");
-                    f.inst_TB_COUPON_MASTER_COUPON_DISCOUNT_MONEY.focus();
+                    f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_RATE_OR_MONEY.focus();
                     return false;
                 }
+            }
+            **/
+            if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DISCOUNT_RATE.value == '') {
+                alert("[할인율]을 입력해야 합니다.");
+                f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DISCOUNT_RATE.focus();
+                return false;
             }
 
             var is_mem_checked = false;
@@ -68,6 +95,8 @@
                 return false;
 
             }
+
+            alert(f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_FROM.value);
 
             if (f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_FROM.value != '' || f.inst_TB_PROMOTION_BY_TOTAL_PMO_TOTAL_DATE_TO.value != '') {
 
@@ -215,22 +244,25 @@
 
                                             </tr>
 
-                                        
+                                           <!--
                                              <tr>
                                                 <th>정률/정액 </th>
                                                 <td>@Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_RATE_OR_MONEY, "R") 정률(%) @Html.RadioButtonFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_RATE_OR_MONEY, "M") 정액 <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_RATE_OR_MONEY)</font></td>
 
                                             </tr>
-                                            <tr>
+                                            -->
+                                             <tr>
                                                 <th>할인율 </th>
                                                 <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE, new { cssClass = "input-sm text-left" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_RATE)</font></td>
 
                                             </tr>
+                                            <!--
                                             <tr>
                                                 <th>할인액 </th>
                                                 <td>@Html.TextBoxFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" }) <font color="red"> @Html.ValidationMessageFor(model => model.inst_TB_PROMOTION_BY_TOTAL.PMO_TOTAL_DISCOUNT_MONEY)</font></td>
 
                                             </tr>
+                                                -->
  
                                         
                                             <tr>

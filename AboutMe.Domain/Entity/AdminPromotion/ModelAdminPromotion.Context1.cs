@@ -260,15 +260,6 @@ namespace AboutMe.Domain.Entity.AdminPromotion
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL_Result>("SP_ADMIN_PROMOTION_BY_TOTAL_DETAIL_SEL", cD_PROMOTION_TOTALParameter);
         }
     
-        public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL(string cD_PROMOTION_PRODUCT)
-        {
-            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
-                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
-                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL", cD_PROMOTION_PRODUCTParameter);
-        }
-    
         public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_VS_TOTAL_SEL(string cD_PROMOTION_PRODUCT)
         {
             var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
@@ -745,6 +736,15 @@ namespace AboutMe.Domain.Entity.AdminPromotion
                 new ObjectParameter("P_CODE", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_COMMON_CNT_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_PCODE_CHK", p_CODEParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result> SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL(string cD_PROMOTION_PRODUCT)
+        {
+            var cD_PROMOTION_PRODUCTParameter = cD_PROMOTION_PRODUCT != null ?
+                new ObjectParameter("CD_PROMOTION_PRODUCT", cD_PROMOTION_PRODUCT) :
+                new ObjectParameter("CD_PROMOTION_PRODUCT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL_Result>("SP_ADMIN_PROMOTION_BY_PRODUCT_PRICE_SEL", cD_PROMOTION_PRODUCTParameter);
         }
     }
 }

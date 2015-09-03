@@ -67,7 +67,7 @@
 
         <div class="tar mb10">
             <a class="btn btn-default middium" href="/AdminCoupon/IssueExcute?CdCoupon=@Request["CdCoupon"]">====== 쿠폰 발행 =======</a>
-            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+            <!--<a class="btn btn-default middium" href="#">EXEL 다운로드</a>-->
         </div>
 
         <div class="panel">
@@ -253,7 +253,7 @@
         </div>
 
 
-        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+        @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword + "&CdCoupon=" +  Request["CdCoupon"] });}
 
 
         <!--버튼모음--

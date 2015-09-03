@@ -109,7 +109,7 @@ namespace AboutMe.Web.Admin.Controllers
         [ValidateAntiForgeryToken]
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
         //public ActionResult Create([Bind(Include = "ADM_ID,ADM_PASS,ADM_NAME,ADM_DEPT,POINT")] MyMultiModelForCreate.inst_TB_PROMOTION_BY_TOTAL  , string[] CheckMemGrade)
-        public ActionResult Create([Bind(Prefix = "inst_TB_PROMOTION_BY_TOTAL", Include = "PMO_TOTAL_NAME,PMO_TOTAL_CATEGORY,PMO_TOTAL_RATE_OR_MONEY,PMO_TOTAL_DISCOUNT_RATE,PMO_TOTAL_DISCOUNT_MONEY,PMO_TOTAL_DATE_FROM,PMO_TOTAL_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_TOTAL tb_promotion_by_total, string[] CheckMemGrade)
+        public ActionResult Create([Bind(Prefix = "inst_TB_PROMOTION_BY_TOTAL", Include = "PMO_TOTAL_NAME,PMO_TOTAL_CATEGORY,PMO_TOTAL_DISCOUNT_RATE,PMO_TOTAL_DATE_FROM,PMO_TOTAL_DATE_TO,USABLE_YN")]  TB_PROMOTION_BY_TOTAL tb_promotion_by_total, string[] CheckMemGrade)
         {
             
             
@@ -125,6 +125,10 @@ namespace AboutMe.Web.Admin.Controllers
                 DateFrom = tb_promotion_by_total.PMO_TOTAL_DATE_FROM.Value;
                 DateTo= tb_promotion_by_total.PMO_TOTAL_DATE_TO.Value;
                 PmoTotalCategory = tb_promotion_by_total.PMO_TOTAL_CATEGORY.ToString();
+
+                //정액,정률구분은 무조건 정률(R)로 맞추기로 한다.. 정액은 잠정적으로 제외 2015.09.01
+                tb_promotion_by_total.PMO_TOTAL_RATE_OR_MONEY = "R";
+                tb_promotion_by_total.PMO_TOTAL_DISCOUNT_MONEY = 0 ;
 
                 if (DateTime.Compare(DateFrom, DateTo) < 0) //시작날짜가 끝날짜보다 먼저이면
                 {
@@ -210,6 +214,10 @@ namespace AboutMe.Web.Admin.Controllers
                 OrgDateTo = Convert.ToDateTime(PmoTotalInfolist[0].PMO_TOTAL_DATE_TO); 
             }
              * **/
+
+            //정액,정률구분은 무조건 정률(R)로 맞추기로 한다.. 정액은 잠정적으로 제외 2015.09.01
+            tb_promotion_by_total.PMO_TOTAL_RATE_OR_MONEY = "R";
+            tb_promotion_by_total.PMO_TOTAL_DISCOUNT_MONEY = 0;
 
 
             if (ModelState.IsValid)
