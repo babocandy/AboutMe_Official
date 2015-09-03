@@ -54,6 +54,7 @@ namespace AboutMe.Web.Admin.Controllers
             AdminReviewInputViewModel model = new AdminReviewInputViewModel();
             model.IDX = tp.Item1.IDX;
             model.COMMENT = tp.Item1.COMMENT;
+           // model.COMMENT_HTML  = tp.Item1.COMMENT;
             model.IS_BEST = tp.Item1.IS_BEST;
             model.IS_DISPLAY = tp.Item1.IS_DISPLAY;
             model.P_CODE = tp.Item1.P_CODE;
@@ -67,6 +68,9 @@ namespace AboutMe.Web.Admin.Controllers
             model.INS_DATE = tp.Item1.INS_DATE;
             model.IS_MOST_CNT = tp.Item1.IS_MOST_CNT;
             model.IS_PHOTO = tp.Item1.IS_PHOTO;
+
+            Debug.WriteLine(" tp.Item1.COMMENT" + tp.Item1.COMMENT);
+
 
             return View(model);
         }

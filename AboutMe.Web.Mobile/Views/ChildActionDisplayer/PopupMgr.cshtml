@@ -1,0 +1,34 @@
+﻿@model AboutMe.Domain.Entity.Display.PopupMgrMobileViewModel
+@using AboutMe.Web.Mobile.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+
+@if (Model.List.Count > 0)
+{
+    var item = Model.List[0];
+
+
+    <div id="ly_wrap" class="ly_wrap">
+        <div class="ly_contents">
+            <a href="@item.MOBILE_LINK"><img src="@string.Format("{0}{1}", myController._img_path_display, item.MOBILE_IMG)" alt="" /></a>
+        </div>
+        <div class="ly_button">
+            <a href="#none" class="btn btn_white_h30 v4 btn_oneday">오늘하루 닫기</a><a href="#none" class="btn btn_white_h30 v4 btn_once">닫기</a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        $(function () {
+            //layer_popup : cookie 값 체크 후 팝업 OPEN
+            if (getCookiePopup("ly_wrap") != "no") {
+                lyPopupShow("#ly_wrap");
+            }
+        });
+        //]]>
+    </script>
+
+}

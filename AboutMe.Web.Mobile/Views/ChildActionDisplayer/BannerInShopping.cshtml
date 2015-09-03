@@ -1,0 +1,23 @@
+﻿@model AboutMe.Domain.Entity.Display.BaseDisplayerViewModel
+@using AboutMe.Web.Mobile.Controllers
+@{
+    Layout = null;
+
+    var myController = ViewContext.Controller as ChildActionDisplayerController;
+}
+<div class="display_bnr">
+    <div class="nav">
+        <ul></ul>
+    </div>
+    <div class="slider">
+        <ul>
+            @foreach (var item in Model.List)
+            {
+                <li><a href="@item.URL"><img src="@string.Format("{0}{1}", myController._img_path_display, item.IMG)" alt="" /></a></li>
+            }
+
+        </ul>
+    </div>
+</div>
+
+
