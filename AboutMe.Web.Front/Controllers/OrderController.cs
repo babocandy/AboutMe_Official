@@ -1156,9 +1156,17 @@ namespace AboutMe.Web.Front.Controllers
             
         }
 
+        //개인정보 제3자 제공위탁동의서 약관
         public ActionResult OfferPrivacy()
         {
             return View();
         }
+
+        //무이자할부안내
+        public ActionResult PopCertinfo()
+        {
+            return View();
+        }
+        
     }
 }
