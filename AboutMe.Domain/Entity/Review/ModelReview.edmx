@@ -334,6 +334,7 @@
           <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="P_SUB_TITLE" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_REVIEW_CATE_THEMA_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -725,6 +726,7 @@
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
                 <ScalarProperty Name="P_SUB_TITLE" ColumnName="P_SUB_TITLE" />
                 <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

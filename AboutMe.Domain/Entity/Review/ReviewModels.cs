@@ -13,6 +13,7 @@ using AboutMe.Domain.Entity.Product;
 
 using System.Text.RegularExpressions;
 
+
 namespace AboutMe.Domain.Entity.Review
 {
     /*
@@ -72,6 +73,50 @@ namespace AboutMe.Domain.Entity.Review
         public int NextPage { get; set; }
     }
 
+
+    public partial class SP_REVIEW_PRODUCT_COMPLETE_SEL_Result
+    {
+
+        public string COMMENT_SHORT
+        {
+            get
+            {
+                var tmp = Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+                if (tmp.Length > 200)
+                {
+                    tmp = tmp.Substring(0, 200);
+                }
+                return tmp;
+            }
+        }
+
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+    }
+
+
     //상품리뷰 목록
     public partial class ReviewProductListViewModel
     {
@@ -102,6 +147,30 @@ namespace AboutMe.Domain.Entity.Review
         public int? NextPage { get; set; }
     }
 
+    public partial class SP_REVIEW_PRODUCT_SEL_Result
+    {
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH { 
+            get { 
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+	            {
+		            path =  "R308_"+ ADD_IMAGE;
+	            }else{
+                    path = "old/"+ ADD_IMAGE;
+                }
+                return path;
+            } 
+        }
+    }
+
     /**
      * 나의 상품리뷰 등록,수정
      */
@@ -114,9 +183,11 @@ namespace AboutMe.Domain.Entity.Review
 
         public string P_CODE { get; set; }
 
+        
         [Required(ErrorMessage = "*")]
         public string SKIN_TYPE { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessage = "*")]
         public string COMMENT { get; set; }
 
@@ -139,8 +210,49 @@ namespace AboutMe.Domain.Entity.Review
         public string MEDIA_GBN { get; set; }
 
         public string IS_PHOTO { get; set; }
+
+        public string COMMENT_SHORT
+        {
+            get
+            {
+                var tmp = Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+                if (tmp.Length > 200)
+                {
+                    tmp = tmp.Substring(0, 200);
+                }
+                return tmp;
+            }
+        }
+
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
     }
 
+    /**
+     * 상품상세에서 상품리뷰
+     */
     public class ReviewInProductDetailViewModel
     {
         public ReviewInProductDetailViewModel()
@@ -155,6 +267,47 @@ namespace AboutMe.Domain.Entity.Review
         public int Total { get; set; }
         public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
         public string Pcode { get; set; }
+    }
+
+    public partial class SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result
+    {
+        public string COMMENT_SHORT
+        {
+            get
+            {
+                var tmp = Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+                if (tmp.Length > 200)
+                {
+                    tmp = tmp.Substring(0, 200);
+                }
+                return tmp;
+            }
+        }
+
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
     }
 
     /**
@@ -194,19 +347,7 @@ namespace AboutMe.Domain.Entity.Review
 
         public string COMMENT_TEXT { 
             get {
-
-                string _commentText = COMMENT;
-                
-
-                string textOnly = string.Empty;
-                Regex tagRemove = new Regex(@"<[^>]*(>|$)");
-                Regex compressSpaces = new Regex(@"[\s\r\n]+");
-                Regex etc = new Regex(@"&(nbsp|amp|quot|lt|gt);");
-                textOnly = tagRemove.Replace(_commentText, string.Empty);
-                textOnly = compressSpaces.Replace(textOnly, " ");
-                textOnly = etc.Replace(textOnly, " ");
-
-                return textOnly;
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
             }
         }
     }
@@ -217,19 +358,7 @@ namespace AboutMe.Domain.Entity.Review
         {
             get
             {
-
-                string _commentText = COMMENT;
-
-
-                string textOnly = string.Empty;
-                Regex tagRemove = new Regex(@"<[^>]*(>|$)");
-                Regex compressSpaces = new Regex(@"[\s\r\n]+");
-                Regex etc = new Regex(@"&(nbsp|amp|quot|lt|gt);");
-                textOnly = tagRemove.Replace(_commentText, string.Empty);
-                textOnly = compressSpaces.Replace(textOnly, " ");
-                textOnly = etc.Replace(textOnly, " ");
-
-                return textOnly;
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
             }
         }
     }
@@ -240,19 +369,7 @@ namespace AboutMe.Domain.Entity.Review
         {
             get
             {
-
-                string _commentText = COMMENT;
-
-
-                string textOnly = string.Empty;
-                Regex tagRemove = new Regex(@"<[^>]*(>|$)");
-                Regex compressSpaces = new Regex(@"[\s\r\n]+");
-                Regex etc = new Regex(@"&(nbsp|amp|quot|lt|gt);");
-                textOnly = tagRemove.Replace(_commentText, string.Empty);
-                textOnly = compressSpaces.Replace(textOnly, " ");
-                textOnly = etc.Replace(textOnly, " ");
-
-                return textOnly;
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
             }
         }
     }
@@ -344,6 +461,4 @@ namespace AboutMe.Domain.Entity.Review
         public SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result ReviewDetail { get; set; }
         public SP_PRODUCT_MOBILE_DETAIL_VIEW_Result ProductDetail { get; set; }
     }
-
-
 }

@@ -245,6 +245,7 @@
           <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="SKIN_TYPE_CSS" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="IS_MOST_CNT" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_REVIEW_PRODUCT_INFO_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -268,6 +269,7 @@
           <Property Type="String" Name="MEDIA_GBN_LBL" Nullable="false" MaxLength="6" />
           <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="IS_MOST_CNT" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_REVIEW_CATE_THEMA_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="false" />
@@ -399,6 +401,7 @@
                 <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
                 <ScalarProperty Name="SKIN_TYPE_CSS" ColumnName="SKIN_TYPE_CSS" />
                 <ScalarProperty Name="IS_MOST_CNT" ColumnName="IS_MOST_CNT" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -426,6 +429,7 @@
                 <ScalarProperty Name="MEDIA_GBN_LBL" ColumnName="MEDIA_GBN_LBL" />
                 <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
                 <ScalarProperty Name="IS_MOST_CNT" ColumnName="IS_MOST_CNT" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

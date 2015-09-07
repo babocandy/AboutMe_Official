@@ -1,6 +1,7 @@
 ﻿@model AboutMe.Domain.Entity.Review.MyReviewCompleteViewModel
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Front.Controllers
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "나의 리뷰 - ABOUT ME";
     ViewBag.TopClass = "mypage";
@@ -86,11 +87,11 @@
                                 <div class="subj accordsubject">
 
                                     <div class="writer">
-                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "": "display:none")"></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age": "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                         <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
                                     </div>
                                     <p class="txtdotdot">
-                                        @Html.Raw(item.COMMENT)
+                                        @Html.Raw(item.COMMENT_SHORT)
                                     </p>
                                     @if (item.IS_PHOTO == "Y")
                                     {
@@ -103,15 +104,15 @@
                                 <div class="contxt accordtxt">
 
                                     <div class="writer">
-                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "": "display:none")" ></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age": "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                     </div>
-                                    @Html.Raw(item.COMMENT.Replace("\r\n", "<br />"))
+                                    @Html.Raw(item.COMMENT_HTML)
                                     @if (item.IS_PHOTO == "Y")
                                     {
-                                        <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" />
+                                        <img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE_PATH)" alt="" />
                                     }
 
-                                    <a href="#none" class="btn_modify btn_gray_w96h38" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")', '', 780, 600); return false;">수정</a>
+                                    <a href="#none" class="btn_modify btn_gray_w96h38" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "MyReview")', '', 780, 690); return false;">수정</a>
                                 </div>
 
                             </div>

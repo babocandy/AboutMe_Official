@@ -56,6 +56,7 @@
     <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
     <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
     <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
+    <input type="hidden" name="ORDER_DETAIL_IDX" value="@Model.ORDER_DETAIL_IDX" />
     <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
 
         <table class="table table_row" style="max-width:500px">
@@ -103,7 +104,7 @@
                 <td>
                     @if (Model.IS_PHOTO == "Y")
 	                {
-                        <img src="@string.Format("{0}R308_{1}", myctrl._img_path_review, Model.ADD_IMAGE)   " alt="" />
+                        <img src="@string.Format("{0}{1}", myctrl._img_path_review, Model.ADD_IMAGE_PATH)   " alt="" />
                     }
                     else
                     {
@@ -115,8 +116,8 @@
             <tr>
                 <th>내용</th>
                 <td colspan="3">
-                <textarea style="width:100%;height:100px;">@Html.Raw(Model.COMMENT)</textarea>
-                   
+                    @*<textarea style="width:100%;height:100px;"></textarea>*@
+                    <div contenteditable="false" style="width:100%;height:100px;overflow-y:auto">@Html.Raw(Model.COMMENT_HTML)</div>                   
                 </td>
             </tr>
         </table>
