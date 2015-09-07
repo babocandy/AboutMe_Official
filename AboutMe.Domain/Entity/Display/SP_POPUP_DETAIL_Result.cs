@@ -19,5 +19,7 @@ namespace AboutMe.Domain.Entity.Display
         public string WEB_TARGET { get; set; }
         public string MOBILE_IMG { get; set; }
         public string MOBILE_LINK { get; set; }
+        public int IDX { get; set; }
+        public Nullable<System.DateTime> INS_DATE { get; set; }
     }
 }
