@@ -41,4 +41,9 @@ namespace AboutMe.Domain.Entity.Display
         public SP_POPUP_DETAIL_Result Detail { get; set; }
     }
 
+    public class PopupMgrMobileViewModel
+    {
+        public List<SP_POPUP_MOBILE_SEL_Result> List { get; set; }
+    }
+
 }

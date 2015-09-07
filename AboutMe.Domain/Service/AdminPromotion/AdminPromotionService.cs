@@ -665,24 +665,27 @@ namespace AboutMe.Domain.Service.AdminPromotion
                                 , Tb.P_DISCOUNT_PRICE
                                 , "M"
                                 , Tb.PMO_PRICE
-                                , Tb.P_CODE //Tb.PMO_ONE_ONE_P_CODE
-                                , Tb.PMO_PRICE //Tb.PMO_ONE_ONE_PRICE
+                                , "" //Tb.PMO_ONE_ONE_P_CODE
+                                , 0 //Tb.PMO_ONE_ONE_PRICE
                                 , Tb.USABLE_YN
                                 , objOutParam);
                             NewPricingIdx = int.Parse(objOutParam.Value.ToString());
                         }
 
-                        string[] CheckCdPromotiontTotal = Tb.CD_PROMOTION_TOTAL_LST.Split(',');
-
-                        if (CheckCdPromotiontTotal != null)
+                        if (Tb.CD_PROMOTION_TOTAL_LST != null && Tb.CD_PROMOTION_TOTAL_LST != "")
                         {
-                            using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
+                            string[] CheckCdPromotiontTotal = Tb.CD_PROMOTION_TOTAL_LST.Split(',');
+
+                            if (CheckCdPromotiontTotal != null)
                             {
-                                for (int i = 0; i < CheckCdPromotiontTotal.Length; i++)
+                                using (AdminPromotion3Entities AdmPromotionContext = new AdminPromotion3Entities())
                                 {
-                                    if (CheckCdPromotiontTotal[i].Trim() != "")
+                                    for (int i = 0; i < CheckCdPromotiontTotal.Length; i++)
                                     {
-                                        AdmPromotionContext.SP_ADMIN_PROMOTION_PRODUCT_PRICE_VS_TOTAL_INS(CdPromotionProduct, CheckCdPromotiontTotal[i], NewPricingIdx, Tb.P_CODE, Tb.USABLE_YN);
+                                        if (CheckCdPromotiontTotal[i].Trim() != "")
+                                        {
+                                            AdmPromotionContext.SP_ADMIN_PROMOTION_PRODUCT_PRICE_VS_TOTAL_INS(CdPromotionProduct, CheckCdPromotiontTotal[i], NewPricingIdx, Tb.P_CODE, Tb.USABLE_YN);
+                                        }
                                     }
                                 }
                             }

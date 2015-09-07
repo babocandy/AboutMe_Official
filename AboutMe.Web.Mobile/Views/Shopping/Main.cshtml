@@ -34,19 +34,7 @@
         <!--container-->
         <div class="container">
             <!--전시메인배너-->
-            <div class="display_bnr">
-                <div class="nav">
-                    <ul></ul>
-                </div>
-                <div class="slider">
-                    <img src="/aboutCom/images/shopping/sbanner_1.jpg" class="dummy" alt="" />
-                    <ul>
-                        <li><a href="/Event/ExhibitView?IDX=6"><img src="/aboutCom/images/shopping/sbanner_1.jpg" alt="" /></a></li>
-                        <li><a href="/Event/EventView?IDX=5"><img src="/aboutCom/images/shopping/sbanner_2.jpg" alt="" /></a></li>
-                        <li><a href="/Event/ExhibitView?IDX=5"><img src="/aboutCom/images/shopping/sbanner_3.jpg" alt="" /></a></li>
-                    </ul>
-                </div>
-            </div>
+            @Html.Action("BannerInShopping", "ChildActionDisplayer")
             <!--//전시메인배너-->
             <!--best sellers-->
             <div class="best_sellers">

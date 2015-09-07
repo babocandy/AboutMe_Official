@@ -60,6 +60,17 @@
             }
 
         }
+
+        function save() {
+            var frm = document.frm
+
+            console.log(frm.COMMENT)
+            console.log(document.getElementById("commentDummy").innerHTML)
+
+            frm.COMMENT.value = document.getElementById("commentDummy").innerHTML;
+
+            frm.submit();
+        }
     </script>
 
 }
@@ -91,7 +102,8 @@
                     <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
                     <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
                     <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
-
+                    <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
+                    <input type="hidden" name="ORDER_DETAIL_IDX" value="@Model.ORDER_DETAIL_IDX" />
                     <fieldset>
                         <legend>상품 리뷰 등록 폼</legend>
                         <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
@@ -135,25 +147,29 @@
                                 <tr class="edit">
                                     <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /></th>
                                     <td colspan="3">
-                                        <textarea name="COMMENT" class="txtareatypea" style="width:100%">@Model.COMMENT</textarea>
+                                        <div id="commentDummy" contenteditable="true" style=" max-height: 150px; overflow-y: auto;">@Html.Raw(Model.COMMENT_HTML)</div>
+                                        @*<textarea name="COMMENT" class="txtareatypea" style="width:100%">@Html.Raw(Model.COMMENT_HTML)</textarea>*@
                                     </td>
                                 </tr>
+
+                                @if (Model.IS_PHOTO == "Y")
+{
                                 <tr class="attach">
                                     <th>사진</th>
                                     <td colspan="3">
 
-@if (Model.IS_PHOTO == "Y")
-{
+
                                         <span class="imgbox">
-                                            <img id="previewImage" src="@string.Format("{0}R308_{1}", myController._img_path_review, Model.ADD_IMAGE)" alt="" /><!--/aboutCom/images/review/write_imgnone.jpg-->
+                                            <img id="previewImage" src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE_PATH)" alt="" /><!--/aboutCom/images/review/write_imgnone.jpg-->
                                         </span>
                                          <input type="text" readonly="readonly" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" value="@Model.ADD_IMAGE" />
                                         @Html.TextBoxFor(m => m.UploadImage, new { type = "file", style = "visibility:hidden;width:0px;", onchange = "changeUploadFile(this);" })
                                         <a href="#" class="btn_white_w96h38 ml5" onclick="findUploadFile(); return false;">찾아보기</a>
 
-}
+
                                     </td>
                                 </tr>
+}
                             </tbody>
                         </table>
                         <div class="note">
@@ -165,7 +181,7 @@
                             </ul>
                         </div>
                         <div class="btngroup mt30">
-                            <a href="#" class="btn_brown_w96h38" onclick="document.frm.submit(); return false;">수정</a><a href="#" onclick="PopupClose()" class="btn_white_w96h38 typeb">취소</a>
+                            <a href="#" class="btn_brown_w96h38" onclick="save(); return false;">수정</a><a href="#" onclick="    PopupClose()" class="btn_white_w96h38 typeb">취소</a>
                         </div>
                     </fieldset>
                 }

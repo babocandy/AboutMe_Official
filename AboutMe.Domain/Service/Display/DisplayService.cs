@@ -30,6 +30,14 @@ namespace AboutMe.Domain.Service.Display
             }
         }
 
+        public List<SP_POPUP_MOBILE_SEL_Result> GetListPopupMobile()
+        {
+            using (DisplayEntities context = new DisplayEntities())
+            {
+                return context.SP_POPUP_MOBILE_SEL().ToList();
+            }
+        }
+
         public SP_POPUP_DETAIL_Result GePopupDetail(int? idx)
         {
             using (DisplayEntities context = new DisplayEntities())

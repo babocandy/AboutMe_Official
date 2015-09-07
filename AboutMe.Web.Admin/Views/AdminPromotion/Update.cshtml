@@ -58,19 +58,67 @@
     
     <script language="javascript">
 
-        /**
-        window.onload = function () {
-            chkbox = document.getElementById("CheckMemGrade");
-            chkbox.addEventListener("Click", function () {
-                alert(1);
-            });
-        }
+    //DatePicker
+    $(document).ready(function () {
+        // create DatePicker from input HTML element
 
-            /**
-            document.getElementById("CheckMemGrade").addEventListener("Click", function () {
-                return false;
-            });
-            **/
+        var FromYYYY, FromMM, FromDD, FromHH, FromMin, FromSS;
+        var ToYYYY, ToMM, ToDD, ToHH, ToMin, ToSS;
+
+        FromYYYY =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Year ;
+        //FromMM   =  @Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Month)- 1);
+        FromDD   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Day ;
+        FromHH   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Hour ;
+        FromMin   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Minute ;
+        FromSS   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Second ;
+
+        ToYYYY =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Year ;
+        //ToMM   =  @Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Month) - 1);
+        ToMM = 11;
+        ToDD   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Day ;
+        ToHH   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Hour ;
+        ToMin   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Minute ;
+        ToSS   =  @Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Second ;
+
+
+        $("#inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_FROM").kendoDateTimePicker({
+            value: new Date(FromYYYY, @Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.Month)- 1),FromDD,FromHH,FromMin,FromSS)
+            ,format: "yyyy/MM/dd HH:mm tt"
+            , interval: 30
+        });
+
+
+        $("#inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_TO").kendoDateTimePicker({
+            value: new Date(ToYYYY,@Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.Month) - 1),ToDD,ToHH,ToMin,ToSS)
+            , format: "yyyy/MM/dd HH:mm tt"
+            , interval: 30
+        });
+
+        // var value = datetimepicker.value();
+        // alert(value)
+
+    });
+
+    //var dt_from = '@Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM.Value.ToString("yyyy-MM-dd HH:mm:ss")' ;
+    var dt_to = '@Model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_TO.Value.ToString("yyyy-MM-dd HH:mm:ss")' ;
+
+    /**
+    $('#inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_FROM').val(dt_from);
+    $('#inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_TO').val(dt_to);
+    **/
+    /**
+    window.onload = function () {
+        chkbox = document.getElementById("CheckMemGrade");
+        chkbox.addEventListener("Click", function () {
+            alert(1);
+        });
+    }
+
+        /**
+        document.getElementById("CheckMemGrade").addEventListener("Click", function () {
+            return false;
+        });
+        **/
 
     function frmCheck() {
 
@@ -86,7 +134,7 @@
         }
         **/
 
-
+        /**
         if (f.PMO_TOTAL_RATE_OR_MONEY.value == 'R') {
             //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
             if (f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.value == '') {
@@ -105,9 +153,26 @@
 
             }
         }
+        **/
 
-        
+        if (f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.value == '') {
+            alert("[쿠폰 할인율]를 입력해야 합니다.");
+            f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.focus();
+            return false;
+        }
+        else
+        {
+            if(isNaN(f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.value))
+            {
+                alert("할인율에는 숫자만 입력하세요");
+                f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.focus();
+                return false;
+            }
 
+        }
+
+
+        /**
         if (f.PMO_TOTAL_RATE_OR_MONEY.value == 'M') {
             //alert(getRadioVal(f, 'inst_TB_COUPON_MASTER_SERVICE_LIFE_GBN'));
             if (f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_MONEYY.value == '') {
@@ -116,7 +181,7 @@
                 return false;
             }
             else {
-                
+
                 if (isNaN(f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_MONEY.value)) {
                     alert("할인액에는 숫자만 입력하세요");
                     f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_MONEY.focus();
@@ -124,8 +189,8 @@
                 }
 
             }
-
         }
+        **/
 
         var is_mem_checked = false;
         // alert(f.CheckMemGrade.length);
@@ -139,8 +204,6 @@
             }
         }
 
-
-
         if (is_mem_checked == false) {
 
             alert("적용회원등급을 선택하세요");
@@ -148,7 +211,7 @@
             return false;
 
         }
-              
+
         if (f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_FROM.value != '' || f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_TO.value != '') {
 
             if (f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_FROM.value > f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_TO.value) {
@@ -158,10 +221,7 @@
             }
         }
 
-
     }
-
-
 
 
     function getRadioVal(form, name) {
@@ -326,6 +386,7 @@
                                                     </td>
 
                                                 </tr>
+                                                <!--
                                                 <tr>
                                                     <th>정률/정액 </th>
                                                     <td>
@@ -341,7 +402,7 @@
                                                     </td>
 
                                                 </tr>
-                                                
+                                                -->
                                             
                                                 <tr>
                                                     <th>할인율 </th>
@@ -353,6 +414,7 @@
                                                     @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DISCOUNT_RATE) </td>
 
                                                 </tr>
+                                                <!--
                                                 <tr>
                                                     <th>할인액 </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DISCOUNT_MONEY, new { cssClass = "input-sm text-left" })
@@ -363,7 +425,8 @@
                                                      @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DISCOUNT_MONEY)</td>
 
                                                 </tr>
-                                              
+                                                 -->
+
                                                 <tr>
                                                     <th>프로모션시작일시 (YYYY-MM-DD) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00"  })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result[0].PMO_TOTAL_DATE_FROM)</td>
@@ -461,7 +524,7 @@
     // 할인액 , 할인율 readonly 처리
     f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.readOnly = true;
     //f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_RATE.onClick("alert('프로모션이 시작 되어서 수정불가합니다.')")
-    f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_MONEY.readOnly = true;
+    //f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DISCOUNT_MONEY.readOnly = true;
 
     //시작일시
     f.inst_PROMOTION_BY_TOTAL_DETAIL_SEL_Result_0__PMO_TOTAL_DATE_FROM.readOnly = true;

@@ -79,6 +79,49 @@
 
     <script language="javascript">
 
+
+
+        $(document).ready(function () {
+            // create DatePicker from input HTML element
+
+            var FromYYYY, FromMM, FromDD, FromHH, FromMin, FromSS;
+            var ToYYYY, ToMM, ToDD, ToHH, ToMin, ToSS;
+
+            FromYYYY =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Year ;
+            //FromMM   =  @Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Month)- 1);
+            FromDD   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Day ;
+            FromHH   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Hour ;
+            FromMin   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Minute ;
+            FromSS   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Second ;
+
+            ToYYYY =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Year ;
+            //ToMM   =  @Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Month) - 1);
+            ToMM = 11;
+            ToDD   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Day ;
+            ToHH   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Hour ;
+            ToMin   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Minute ;
+            ToSS   =  @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Second ;
+
+
+            $("#inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result_0__PMO_PRODUCT_DATE_FROM").kendoDateTimePicker({
+                value: new Date(FromYYYY, @Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM.Value.Month)- 1),FromDD,FromHH,FromMin,FromSS)
+                ,format: "yyyy/MM/dd HH:mm tt"
+                , interval: 30
+            });
+
+
+            $("#inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result_0__PMO_PRODUCT_DATE_TO").kendoDateTimePicker({
+                value: new Date(ToYYYY,@Convert.ToString(Convert.ToInt32(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO.Value.Month) - 1),ToDD,ToHH,ToMin,ToSS)
+                , format: "yyyy/MM/dd HH:mm tt"
+                , interval: 30
+            });
+
+            // var value = datetimepicker.value();
+            // alert(value)
+
+        });
+
+
         function frmCheck() {
             //alert("여기입니다");
 
@@ -91,6 +134,8 @@
                 return false;
             }
             **/
+
+            f.submit();
 
         }
 
@@ -182,6 +227,7 @@
 
                                                 </tr>
                                                 @{
+                                                    string Promotion_category_name = "";
                                                     string url = "";
                                                     string front_url = "";
                                                     string mobile_front_url = "";
@@ -191,18 +237,21 @@
                                                     url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "/Event/SetPromotion";
                                                     front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
                                                     mobile_front_url = "";
+                                                    Promotion_category_name = "세트상품";
                                                 }
                                                 else if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "03") //타임세일
                                                 {
                                                     url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "/Event/TimeSale";
                                                     front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
                                                     mobile_front_url = "";
+                                                    Promotion_category_name = "타임세일";
                                                 }
                                                 else if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "05") //아웃렛
                                                 {
                                                     url = AboutMe.Common.Helper.Config.GetConfigValue("FrontUrl") + "Event/Outlet";
                                                     front_url = string.Format("<a href='{0}' target='_default'>{1}<a>", url, url); 
                                                     mobile_front_url = "";
+                                                    Promotion_category_name = "아웃렛";
                                                 }
 
                                                 @if (front_url != "")
@@ -222,8 +271,7 @@
                                                     <th>프로모션 종류 </th>
                                                     <td>
                                                         @Html.HiddenFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY)  <font color="red">@Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY)</font>
-
-                                                        @Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY_NAME;
+                                                        @Promotion_category_name
                                                         @* 상품프로모션 기간시작이전/이후 모두 프로모션 카테고리는 변경불가
                                                             @if (IsOverStartTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)) != true)
                                                             {
@@ -325,11 +373,11 @@
 
                                                         @if (IsOverStartTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)) != true)
                                                         {
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
                                                         }
                                                         else
                                                         {  //이미 시작한 프로모션이면 수정불가능 => Readonly
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new { cssClass = "input-sm text-left", ReadOnly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM, new {  ReadOnly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_FROM)
 
                                                         }
                                                     </td>
@@ -340,11 +388,11 @@
                                                     <td>
                                                         @if (IsOverEndingTime(Convert.ToDateTime(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO)) != true)
                                                         { //종료일자가 지나지 않았을때에만 수정가능
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left" })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO)
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO)  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO)
                                                         }
                                                         else
                                                         { //Readonly
-                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new { cssClass = "input-sm text-left", Readonly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO) <text><font color="red"><b>수정불가</b></font></text>
+                                                            @Html.TextBoxFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO, new {  Readonly = true })  @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_DATE_TO) <text><font color="red"><b>수정불가</b></font></text>
                                                         }
 
                                                     </td>
@@ -355,100 +403,107 @@
                                                     <td>@Html.RadioButtonFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(model => model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].USABLE_YN)</td>
 
                                                 </tr>
-                                                @{ string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");}
+                                               
 
-
-                                                <tr>
-                                                    <th>PC-프로모션 대표 페이지 이미지</th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG))
-                                                        {  
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>PC-메인 페이지 이미지</th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_PC_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG))
-                                                        {
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>PC-메인 페이지 SMALL 이미지</th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG))
-                                                        {
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>PC-이벤트메인 페이지 이미지</th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG))
-                                                        {
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>M-프로모션 상세페이지 이미지 </th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG))
-                                                        {
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>M-메인 페이지 이미지 </th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG))
-                                                        {
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>M-이벤트 메인 페이지 이미지 </th>
-                                                    <td>
-                                                        <input type="file" id="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
-                                                        @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG))
-                                                        {
-                                                            <br />
-                                                            <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>저장</th>
-                                                    <td>
-                                                        <input type="submit" value="저장" class="btn btn-default middium" />
-                                                    </td>
-                                                </tr>
+    
                                             </tbody>
                                         </table>
+                               if (Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_CATEGORY == "03") {  //타임세일일때에만 보여주는 영역   
+                                   <div id="tbl_timesale_images">
+                                        <h3 class="sub-header">타임세일 이미지</h3>
+                                            <table class="table table_row">
+                                                <colgroup><col width="25%" /><col width="75%" /></colgroup>
+                                                   <tbody>
+                                                       @{ string Promotion_photo_path = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath");}
+
+
+                                                       <tr>
+                                                           <th>PC-프로모션 대표 페이지 이미지</th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_MAIN_IMG_FILE" name="PMO_PRODUCT_MAIN_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MAIN_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <th>PC-메인 페이지 이미지</th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_PC_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <th>PC-메인 페이지 SMALL 이미지</th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE" name="PMO_PRODUCT_PC_MAINPG_SMALL_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_MAINPG_SMALL_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <th>PC-이벤트메인 페이지 이미지</th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_PC_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_PC_EVENT_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <th>M-프로모션 상세페이지 이미지 </th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAIN_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <th>M-메인 페이지 이미지 </th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                       <tr>
+                                                           <th>M-이벤트 메인 페이지 이미지 </th>
+                                                           <td>
+                                                               <input type="file" id="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" name="PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG_FILE" maxlength="100" value="" />
+                                                               @if (!string.IsNullOrEmpty(Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG))
+                                                               {
+                                                                   <br />
+                                                                   <span id="SPAN_MAIN_IMG"><img src="@Promotion_photo_path@Model.inst_PROMOTION_BY_PRODUCT_DETAIL_SEL_Result[0].PMO_PRODUCT_MOBILE_EVENT_MAINPG_IMG" /><!--<a href="#none" onclick="imgDelChk('MAIN_IMG');">[삭제]</a>--></span>
+                                                               }
+                                                           </td>
+                                                       </tr>
+                                                   </tbody>
+                                            </table>
+                                    </div>
+                                  }
 
             }
         </div>
 
         <div class="btn_area">
-            <a class="btn btn-default middium" href="/AdminPromotion/PrdIndex"> 리스트로 돌아가기 </a>
+            <input type="button" value="저장" class="btn btn-default middium" onclick="frmCheck();" />  <a class="btn btn-primary small" href="/AdminPromotion/PrdIndex">목록</a>
         </div>
 
 

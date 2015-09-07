@@ -51,7 +51,7 @@
 
             //타임세일 현재날짜와 종료날짜를 입력해주세요.
             $('#timesale').countdown({
-                starttimestamp: "@FromYYYY,@FromMM,@FromDD,@FromHH,@FromMin,@FromSS",	//현재날짜
+                starttimestamp: "@CurYYYY,@CurMM,@CurDD,@CurHH,@CurMin,@CurSS",	//현재날짜
                 endtimestamp: "@ToYYYY,@ToMM,@ToDD,@ToHH,@ToMin,@ToSS",	//종료날짜
                 callback: function (m) {
                     $('#timesale').html(m);

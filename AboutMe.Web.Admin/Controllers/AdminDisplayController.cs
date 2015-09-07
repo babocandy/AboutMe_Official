@@ -95,6 +95,21 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         /**
+         * 모바일 쇼핑  전시
+         */
+        [CustomAuthorize]
+        public ActionResult MobileShopping()
+        {
+            AdminDisplayMobileShoppingViewModel model = new AdminDisplayMobileShoppingViewModel();
+
+            //웹메인 배너 조회
+            model.BannerList = _Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.MOBILE_SHOPPING });
+
+
+            return View(model);
+        }
+
+        /**
          * 장바구니 배너 관리 전시
          */
         [CustomAuthorize]
@@ -158,6 +173,23 @@ namespace AboutMe.Web.Admin.Controllers
 
             return View(model);
         }
+
+
+        /**
+         * 체험단 배너 관리 전시
+         */
+        [CustomAuthorize]
+        public ActionResult ExpBanner()
+        {
+            AdminDisplayExpViewModel model = new AdminDisplayExpViewModel();
+
+            //배너
+            model.Mobile = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.EXP_MOBILE}));
+            model.Web = GetOneDisplayResult(_Service.GetDisplayerList(new DisplayerParam { KIND = DisplayerCode.EXP_WEB }));
+
+            return View(model);
+        }
+
 
         /**
          * 한개짜리만 가져오기

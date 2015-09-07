@@ -20,6 +20,26 @@ namespace AboutMe.Domain.Entity.AdminReview
         public IList<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> List { get; set; }
     }
 
+    public partial class SP_ADMIN_REVIEW_PRODUCT_SEL_Result
+    {
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if ( ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+    }
+
     /**
      * 상품리뷰 상품찾기 
      */
@@ -66,17 +86,20 @@ namespace AboutMe.Domain.Entity.AdminReview
     /**
      * 상품리뷰 수정
      */
-    public class AdminReviewInputViewModel : SP_ADMIN_REVIEW_PRODUCT_INFO_Result
+    public class AdminReviewInputViewModel 
     {
-        /*public int IDX { get; set; }
+        public int IDX { get; set; }
         public string P_CODE { get; set; }
         public string P_NAME { get; set; }
         public string C_CATE_CODE { get; set; }
         public string IS_BEST { get; set; }
         public string CATE_GBN { get; set; }
+        
+        [AllowHtml]
         public string COMMENT { get; set; }
+
         public string IS_PHOTO { get; set; }
-        public int VIEW_CNT { get; set; }
+        public Nullable<int> VIEW_CNT { get; set; }
         public string M_GRADE { get; set; }
         public string MEDIA_GBN { get; set; }
         public string ADD_IMAGE { get; set; }
@@ -89,7 +112,34 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string MEDIA_GBN_LBL { get; set; }
         public string SKIN_TYPE_LBL { get; set; }
         public string IS_MOST_CNT { get; set; }
-        **/
+        public Nullable<int> ORDER_DETAIL_IDX { get; set; }
+
+
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+
     }
 
     /**

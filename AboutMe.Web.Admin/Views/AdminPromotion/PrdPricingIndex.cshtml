@@ -130,14 +130,14 @@
             @if (IsOverEndingTime(Convert.ToDateTime(ViewData["PromotionEndTime"])) != true )
             { 
                 <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 등록 </a>
-                <!--<a class="btn btn-default middium" href="/AdminPromotion/PrdPricingMultiCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 복수등록 </a>-->
+                <a class="btn btn-default middium" href="/AdminPromotion/PrdPricingMultiCreate?CdPromotionProduct=@Request["CdPromotionProduct"].ToString()">신규 상품 가격정보 복수등록 </a>
             }
             else
             {
                 <a class="btn btn-default middium" href="javascript:alert('종료된 프로모션에는 상품등록이 불가합니다.')">신규 상품 가격정보 등록 </a>
             }
             <a class="btn btn-default middium" href="/AdminPromotion/PrdIndex">상위리스트로</a>
-            <a class="btn btn-default middium" href="#">EXEL 다운로드</a>
+            <!--<a class="btn btn-default middium" href="#">EXEL 다운로드</a>-->
         </div>
         <!--
         <div class="panel">
@@ -166,7 +166,6 @@
                     <col width="8%" />
                     <col width="8%" />
                     <col width="8%" />
-                    <col width="10%" />
                     <col width="12%" />
                     <col width="12%" />
                     <col width="*" />
@@ -178,7 +177,7 @@
                         <th scope="col">상품코드</th>
                         <th scope="col">상품명</th>
                         
-                        <th scope="col">정상가</th>
+                        <th scope="col">정상가(할인가)</th>
                         <!--
                         <th scope="col">정률/정액</th>
                         <th scope="col">할인율</th>
@@ -188,7 +187,6 @@
 
                         <th scope="col">1+1 증정품 상품코드</th>
                         <th scope="col">1+1 증정품 가격</th>
-                        <th scope="col">생성일자</th>
                         <th scope="col">활성화</th>
                         <th scope="col">전체할인 적용</th>
                         <th scope="col">Edit</th>
@@ -214,8 +212,8 @@
                           
                               
                             <td class="brnone">@Html.DisplayFor(modelItem => item.P_CODE)</td>
-                            <td>상품명</td>
-                            <td>정상가</td>
+                            <td>@Html.DisplayFor(modelItem => item.P_NAME)</td>
+                            <td>@item.SELLING_PRICE (@item.DISCOUNT_PRICE)</td>
 
                             <!--
                             <td>@Html.DisplayFor(modelItem => item.PMO_PRODUCT_RATE_OR_MONEY)</td>
@@ -226,19 +224,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.PMO_PRICE, new { cssClass = "input-sm text-left" })
                             </td>
-                            <td>
+                            <td>@Html.DisplayFor(modelItem => item.PMO_ONE_ONE_P_CODE)</td>
 
-                                @Html.DisplayFor(modelItem => item.PMO_ONE_ONE_P_CODE)
-                            </td>
-
-                            <td>
-
-                                   @Html.DisplayFor(modelItem => item.PMO_ONE_ONE_PRICE)
-
-                            </td>
-
-                            <td>-</td>
-
+                            <td>@Html.DisplayFor(modelItem => item.PMO_ONE_ONE_PRICE)</td>
                             <td>
                                  @*
                                     @Html.RadioButtonFor(modelItem => item.USABLE_YN, "Y")  활성화  @Html.RadioButtonFor(modelItem => item.USABLE_YN, "N") 비활성화 @Html.ValidationMessageFor(modelItem => item.USABLE_YN, "Y")

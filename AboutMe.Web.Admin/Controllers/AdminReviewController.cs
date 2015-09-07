@@ -44,6 +44,8 @@ namespace AboutMe.Web.Admin.Controllers
  
         }
 
+
+
         [CustomAuthorize]
         [Route("Update/{id:int}")]
         public ActionResult Update(int? id , AdminReviewRouteParam p)
@@ -67,6 +69,7 @@ namespace AboutMe.Web.Admin.Controllers
             model.INS_DATE = tp.Item1.INS_DATE;
             model.IS_MOST_CNT = tp.Item1.IS_MOST_CNT;
             model.IS_PHOTO = tp.Item1.IS_PHOTO;
+            model.ORDER_DETAIL_IDX = tp.Item1.ORDER_DETAIL_IDX;
 
             return View(model);
         }

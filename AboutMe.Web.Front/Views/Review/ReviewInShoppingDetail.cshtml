@@ -1,5 +1,7 @@
 ﻿@model AboutMe.Domain.Entity.Review.ReviewInProductDetailViewModel
 @using AboutMe.Web.Front.Controllers
+@using System.Text.RegularExpressions
+@using AboutMe.Common.Helper
 @{
     Layout = null;
     var myController = ViewContext.Controller as ReviewController;
@@ -24,7 +26,6 @@
                 }
                 @foreach (var item in Model.Reviews)
                 {
-
                     var cssClassName = "";
                     var selectContent = "";
 
@@ -36,23 +37,16 @@
                     else if (i >= count - 1)
                     {
                         cssClassName = "last";
-
                     }
-
                     <div class="cont accordcont @cssClassName @selectContent">
-
                         <div class="subj accordsubject">
-
                             <div class="writer">
-                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                 <span class="id">@item.M_ID_LBL</span>
                             </div>
-
-
                             <p class="txtdotdot" style="">
-                                @Html.Raw(item.COMMENT);
+                                @Html.Raw(item.COMMENT_SHORT)
                             </p>
-
                             @if (item.IS_PHOTO == "Y")
                             {
                                 <span class="ico_photo">포토리뷰</span>
@@ -60,19 +54,16 @@
                         </div>
                         <div class="contxt accordtxt">
                             <div class="writer">
-                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS"></em><em class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                 <span class="id">@item.M_ID_LBL</span>
                             </div>
-
-                            @Html.Raw(item.COMMENT.Replace("\r\n", "<br/>"));
+                            @Html.Raw(item.COMMENT_HTML)
                             @if (item.IS_PHOTO == "Y")
                             {
-                                <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" />
+                                <img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE_PATH)" alt="" />
                             }
                         </div>
-
                     </div>
-
                             i++;
                 }
             </div>
@@ -124,7 +115,6 @@
                             </div>
                         </div>
                         <div class="writer">
-
                             <div class="userinfo">
                                 <span id="skin_type" class="" ></span>
                                 <span class="age_gender"></span>
@@ -317,7 +307,7 @@
                 , PAGE_NO :no
             },
             success: function (data) {
-
+                console.log(data)
                 if (data.Success) {
                     if(data.Reviews.length > 0){
                         buildList(data.Reviews);
@@ -369,13 +359,15 @@
             html += "<div class='subj accordsubject'>";
 
             html += "   <div class='writer'>";
-            html += "      <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+"'></em><em class='age'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
+            html += "      <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)=="101" ? "" :"display:none")+"' ></em><em class='"+( item.C_CATE_CODE.substr(0, 3)=="101" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
             html += "        <span class='id'>"+item.M_ID_LBL+"</span>";
             html += "     </div>";
 
 
             html += "     <p class='txtdotdot' style=''>";
-            html +=      item.COMMENT;
+
+
+            html +=      item.COMMENT_SHORT;
             html += "                </p>";
 
                             if (item.IS_PHOTO == 'Y')
@@ -385,14 +377,14 @@
                             html += "</div>";
                             html += " <div class='contxt accordtxt'>";
                             html += "  <div class='writer'>";
-                            html += "                <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+"'></em><em class='age'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
+                            html += "                <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)=="101" ? "" :"display:none")+"'  ></em><em class='"+( item.C_CATE_CODE.substr(0, 3)=="101" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
                             html += "                <span class='id'>"+item.M_ID_LBL+"</span>";
                             html += "          </div>";
 
-                            html += item.COMMENT.replace('\r\n','<br/>');
+                            html += item.COMMENT_HTML;
             if (item.IS_PHOTO == "Y")
             {
-                                html += "          <img src='"+img_path_review+"R308_"+item.ADD_IMAGE+"' alt='' />";
+                                html += "          <img src='"+img_path_review+item.ADD_IMAGE_PATH+"' alt='' />";
                                 }
                             html += "       </div>";
 
@@ -419,6 +411,8 @@
             }
         });
 
+
+        $(".txtdotdot").dotdotdot();
 
     }//end func
 

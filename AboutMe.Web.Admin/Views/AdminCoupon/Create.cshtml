@@ -15,6 +15,37 @@
     
     <script language="javascript">
 
+        //DatePicker
+        $(document).ready(function () {
+            // create DatePicker from input HTML element
+
+
+            $("#inst_TB_COUPON_MASTER_FIXED_PERIOD_FROM").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                , interval: 60
+            });
+
+            $("#inst_TB_COUPON_MASTER_FIXED_PERIOD_TO").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                , interval: 60
+            });
+
+
+            $("#inst_TB_COUPON_MASTER_MASTER_FROM_DATE").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+               , interval: 60
+            });
+
+            $("#inst_TB_COUPON_MASTER_MASTER_TO_DATE").kendoDateTimePicker({
+                format: "yyyy/MM/dd HH:mm tt"
+                , interval: 60
+            });
+
+
+
+        });
+
+
         function frmCheck() {
             //alert("여기입니다");
 
@@ -369,12 +400,12 @@
                                                 </tr>
                                                 
                                                  <tr>
-                                                    <th>고정기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>고정기간 시작일시 (YYYY-MM-DD) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_FROM)</font></td>
 
                                                 </tr>
                                                 <tr>
-                                                    <th>고정기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>고정기간 만료일시 (YYYY-MM-DD) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" })  @Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)<font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.FIXED_PERIOD_TO)</font></td>
                                                 </tr>
                                                   
@@ -419,12 +450,12 @@
                                                 </tr>
                                                     -->
                                                 <tr>
-                                                    <th>정책유효기간 시작일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>정책유효기간 시작일시 (YYYY-MM-DD) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE, new { cssClass = "input-sm text-left", value = "2015-09-15 00:00:00" })  <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
 
                                                 </tr>
                                                 <tr>
-                                                    <th>정책유효기간 만료일시 (YYYY-MM-DD HH:MM:SS) </th>
+                                                    <th>정책유효기간 만료일시 (YYYY-MM-DD) </th>
                                                     <td>@Html.TextBoxFor(model => model.inst_TB_COUPON_MASTER.MASTER_TO_DATE, new { cssClass = "input-sm text-left", value = "2015-09-20 23:59:59" }) <font color="red">@Html.ValidationMessageFor(model => model.inst_TB_COUPON_MASTER.MASTER_FROM_DATE)</font></td>
 
                                                 </tr>

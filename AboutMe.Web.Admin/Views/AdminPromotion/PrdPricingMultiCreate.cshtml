@@ -136,25 +136,27 @@
 
 
                 <input type="hidden" name="CdPromotionProduct" value="@Request["CdPromotionProduct"].ToString()" />
-                <table class="table table_row">
+                <table class="table table_row" style="width:800px" >
                     <colgroup>
+                        <col width="3%" />
+                        <col width="25%" />
                         <col width="20%" />
                         <col width="15%" />
                         <col width="15%" />
-                        <col width="15%" />
-                        <col width="15%" />
+                 
                     </colgroup>
                     <thead>
+                     <td><b>No</b></td>
                     <td>상품코드</td>
                     <td>전체할인 적용</td>
                     <td>최종할인가</td>
                     <td>활성화 Y/N</td>
-                    <td><input type="button" value=" Add >> " class="btn btn-default middium" /></td>
+                    
                     </thead>
                     <tbody>
                         <!--[0]-->
                         <tr>
-
+                            <td>1</td>
                             <td>
                                 <input type="hidden" id="PCODE_0_CHK" name="PCODE_0_CHK" value="" />
                                 <input id="PCODE_0" name="Tb_PmoProdEntity[0].P_CODE" type="text" size="10" maxlength="8" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_0')" />
@@ -185,11 +187,11 @@
                                 }
 
                             </td>
-                            <td></td>
+                            
                         </tr>
                         <!---[1]-->
                         <tr>
-
+                            <td>2</td>
                             <td>
                                 <input type="hidden" id="PCODE_1_CHK" name="PCODE_1_CHK" value="" />
                                 <input id="PCODE_1" name="Tb_PmoProdEntity[1].P_CODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_1')" />
@@ -218,11 +220,11 @@
                                 }
                                 <input type="radio" id="USABLE_YN" value="N" name="Tb_PmoProdEntity[1].USABLE_YN" /> 비활성화
                             </td>
-                            <td></td>
+                           
                         </tr>
                         <!--[2]-->
                         <tr>
-
+                            <td>3</td>
                             <td>
                                 <input type="hidden" id="PCODE_2_CHK" name="PCODE_2_CHK" value="" />
                                 <input id="PCODE_2" name="Tb_PmoProdEntity[2].P_CODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_2')" />
@@ -251,11 +253,11 @@
                                 }
                                 <input type="radio" id="USABLE_YN" value="N" name="Tb_PmoProdEntity[2].USABLE_YN" /> 비활성화
                             </td>
-                            <td></td>
+                            
                         </tr>
                         <!--[3]-->
                         <tr>
-
+                            <td>4</td>
                             <td>
                                 <input type="hidden" id="PCODE_3_CHK" name="PCODE_3_CHK" value="" />
                                 <input id="PCODE_3" name="Tb_PmoProdEntity[3].P_CODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_3')" />
@@ -284,11 +286,11 @@
                                 }
                                 <input type="radio" id="USABLE_YN" value="N" name="Tb_PmoProdEntity[3].USABLE_YN" /> 비활성화
                             </td>
-                            <td></td>
+                            
                         </tr>
                         <!--[4]-->
                         <tr>
-
+                            <td>5</td>
                             <td>
                                 <input type="hidden" id="PCODE_4_CHK" name="PCODE_4_CHK" value="" />
                                 <input id="PCODE_4" name="Tb_PmoProdEntity[4].P_CODE" type="text" size="10" maxlength="10" value="" onkeyup="return pcodeUseChk(this, '#pcodeMsgSpan_4')" />
@@ -317,7 +319,7 @@
                                 }
                                 <input type="radio" id="USABLE_YN" value="N" name="Tb_PmoProdEntity[4].USABLE_YN" /> 비활성화
                             </td>
-                            <td></td>
+                            
                         </tr>
 
 

@@ -16,7 +16,57 @@ function PopupCenter(popNM, parms, width, height){
 function PopupClose(){
 	self.close();
 }
+
+//쿠키 설정
+function setCookie(name, value, expiredays){
+	var todayDate = new Date(); 
+	todayDate.setDate( todayDate.getDate() + expiredays ); 
+	document.cookie = name + "=" + escape( value ) + ";path=/;"
+}
+//쿠키 삭제
+function deleteCookie(cookieName){
+	var expireDate = new Date();
+
+	//어제 날짜를 쿠키 소멸 날짜로 설정한다.
+	expireDate.setDate( expireDate.getDate() - 1 );
+	document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString() + "; path=/";
+}
+//쿠키 체크
+function getCookie(name){
+	var Found = false 
+	var start, end 
+	var i = 0 
+	while(i <= document.cookie.length) { 
+		start = i 
+		end = start + name.length 
+		if(document.cookie.substring(start, end) == name) { 
+			Found = true 
+			break 
+		}
+		i++
+	} 
+	if(Found == true) { 
+		start = end + 1 
+		end = document.cookie.indexOf(";", start) 
+		if(end < start)
+			end = document.cookie.length 
+		return document.cookie.substring(start, end) 
+	}
+	return "" 
+}
+
 $(function(){
+	if($(".oneday_wrap").length){
+		$("#oneday").on("change",function(e){
+			//e.preventDefault();
+			var cookieid = $(this).get(0).id;
+			if($(this).is(":checked"))
+				setCookie(cookieid, "no", 1);
+			else
+				deleteCookie(cookieid);
+		});
+	}
+
 	if( $("*").is(".txtdotdot") ){
 		$(".txtdotdot").dotdotdot();
 	}

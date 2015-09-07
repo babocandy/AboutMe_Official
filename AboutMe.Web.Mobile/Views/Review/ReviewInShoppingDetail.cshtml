@@ -63,11 +63,9 @@
 
     <!--체험단리뷰-->
     <div class="tab_content" id="expReview">
-        <div class="brnwrap">
-            <a href="#" class="bnr">
-                <span class="txt">어바웃미 <strong>1기 체험단</strong> 모집<br />2015.06.01-2015.06.30</span>
-            </a>
-        </div>
+        <!--체험단배너-->
+        @Html.Action("ExpBanner", "ChildActionDisplayer")
+        <!--/체험단배너-->
         <ul id="review_exp_list" class="review_list exp">
 
 

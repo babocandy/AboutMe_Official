@@ -24,5 +24,11 @@ namespace AboutMe.Domain.Entity.AdminPromotion
         public string PMO_ONE_ONE_P_CODE { get; set; }
         public Nullable<int> PMO_ONE_ONE_PRICE { get; set; }
         public string USABLE_YN { get; set; }
+        public string P_NAME { get; set; }
+        public Nullable<int> SELLING_PRICE { get; set; }
+        public Nullable<int> DISCOUNT_PRICE { get; set; }
+        public string DISPLAY_YN { get; set; }
+        public string SOLDOUT_YN { get; set; }
+        public string P_OUTLET_YN { get; set; }
     }
 }

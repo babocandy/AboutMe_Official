@@ -171,8 +171,7 @@ namespace AboutMe.Web.Front.Controllers
             model.SKIN_TYPE_LBL = detail.SKIN_TYPE_LBL;
             model.IS_PHOTO = detail.IS_PHOTO;
             model.ADD_IMAGE = detail.ADD_IMAGE;
-
-            //Debug.WriteLine("model.C_CATE_CODE " + model.C_CATE_CODE);
+            model.ORDER_DETAIL_IDX = detail.ORDER_DETAIL_IDX;
 
             return View(model);
         }

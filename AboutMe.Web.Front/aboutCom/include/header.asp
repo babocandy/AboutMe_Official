@@ -14,7 +14,7 @@
 					<!--2015-07-13브랜드소개-->
 					<div class="depth1_2">
 						<img src="/aboutCom/images/common/bul_detph2.gif" class="bul_detph2" alt="" />
-						<p class="tit">브랜드소개</p>
+						<p class="tit">브랜드 소개</p>
 						<ul class="list">
 							<li><a href="/aboutme/brand.asp">브랜드 스토리</a></li>
 							<li><a href="/aboutme/magazin.asp">매거진</a></li>
