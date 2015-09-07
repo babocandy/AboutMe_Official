@@ -67,6 +67,16 @@
         }
 
     }
+
+
+    function save() {
+        var frm = document.frm;
+
+        frm.COMMENT.value = document.getElementById("commentDummy").innerHTML;
+
+        frm.submit();
+    }
+
     </script>
 
 
@@ -105,6 +115,8 @@
                     <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
                     <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
                     <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
+                    <input type="hidden" name="ORDER_DETAIL_IDX" value="@Model.ORDER_DETAIL_IDX" />
+                    <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
 
                     <fieldset>
                         <legend>제품리뷰등록 입력</legend>
@@ -118,7 +130,7 @@
                                     </div>
                                 </div>
                             </li>
-                            @if (ReviewHelper.CheckBeauty(Model.C_CATE_CODE))
+                            @if (!ReviewHelper.CheckHealth(Model.C_CATE_CODE))
                             {
                                 <li>
                                     <dl>
@@ -137,7 +149,8 @@
                                 <dl>
                                     <dt><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용</dt>
                                     <dd>
-                                        <textarea class="textarea" name="COMMENT">@Model.COMMENT</textarea>
+                                        @*<textarea class="textarea" name="COMMENT">@Model.COMMENT</textarea>*@
+                                        <div id="commentDummy" contenteditable="true" style="border: 1px solid #dad5d4;">@Html.Raw(Model.COMMENT_HTML)</div>
                                     </dd>
                                 </dl>
                             </li>
@@ -151,7 +164,7 @@
                                     <input type="file" id="UploadImage" name="UploadImage" value="@Model.UploadImage" class="fileField" onchange="changeUploadFile(this);" />
                                     <input type="text" id="ImageFileName" name="ImageFileName" readonly="readonly" class="ipttypea" title="첨부사진 경로" value="@Model.ADD_IMAGE"/><a href="#none" class="btn btn_white_h30 v2" onclick="findUploadFile(); return false;">찾아보기</a>
                                 </div>
-                                <div class="thumb"><img id="previewImage" src="@string.Format("{0}R308_{1}", myController._img_path_review, Model.ADD_IMAGE)" alt="" /></div>
+                                <div class="thumb"><img id="previewImage" src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE_PATH)" alt="" /></div>
                             </dd>
                         </dl>
                     </li>
@@ -166,7 +179,7 @@
                             </ul>
                         </div>
                         <div class="btn_group">
-                            <a href="#none" class="btn btn_brown_h40" onclick="document.frm.submit(); return false;">수정</a><a href="@Request.UrlReferrer.ToString()" class="btn btn_white_h40 v2">취소</a>
+                            <a href="#none" class="btn btn_brown_h40" onclick="save(); return false;">수정</a><a href="@Request.UrlReferrer.ToString()" class="btn btn_white_h40 v2">취소</a>
                         </div>
                     </fieldset>
                 }

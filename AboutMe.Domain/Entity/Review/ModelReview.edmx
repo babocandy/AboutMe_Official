@@ -474,6 +474,7 @@
           <Property Type="String" Name="EXHIBIT_WEB_BANNER" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="EXHIBIT_MOBILE_BANNER" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="EXHIBIT_LINK_URL" Nullable="true" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
         </ComplexType>
         <ComplexType Name="SP_REVIEW_EXP_IN_SHOPPING_DETAIL_Result">
           <Property Type="Int32" Name="IDX" Nullable="true" />
@@ -501,6 +502,7 @@
           <Property Type="String" Name="TAG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
         </ComplexType>
         <ComplexType Name="SP_REVIEW_PRODUCT_MOBILE_SEL_Result">
           <Property Type="Int32" Name="IDX" Nullable="true" />
@@ -839,6 +841,7 @@
                 <ScalarProperty Name="EXHIBIT_WEB_BANNER" ColumnName="EXHIBIT_WEB_BANNER" />
                 <ScalarProperty Name="EXHIBIT_MOBILE_BANNER" ColumnName="EXHIBIT_MOBILE_BANNER" />
                 <ScalarProperty Name="EXHIBIT_LINK_URL" ColumnName="EXHIBIT_LINK_URL" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -870,6 +873,7 @@
                 <ScalarProperty Name="TAG" ColumnName="TAG" />
                 <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
                 <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

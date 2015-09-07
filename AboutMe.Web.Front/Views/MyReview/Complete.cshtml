@@ -87,7 +87,7 @@
                                 <div class="subj accordsubject">
 
                                     <div class="writer">
-                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "": "display:none")"></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age": "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)" style="@(ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "display:none" : "")"></em><em class="@(ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "" : "age")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                         <span class="date">@item.INS_DATE.Value.ToString("yyyy.MM.dd")</span>
                                     </div>
                                     <p class="txtdotdot">
@@ -104,7 +104,7 @@
                                 <div class="contxt accordtxt">
 
                                     <div class="writer">
-                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "": "display:none")" ></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age": "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                        <span class="userage"><em class="skin @(item.SKIN_TYPE_CSS)" style="@(ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "display:none" : "")" ></em><em class="@(ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "" : "age")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                     </div>
                                     @Html.Raw(item.COMMENT_HTML)
                                     @if (item.IS_PHOTO == "Y")

@@ -90,7 +90,7 @@ namespace AboutMe.Web.Mobile.Controllers
             /**
              * 뷰티일때만 피부타입 유효성 체크
              */
-            if (!ReviewHelper.CheckBeauty(model.ProductInfo.C_CATE_CODE))
+            if (ReviewHelper.CheckHealth(model.ProductInfo.C_CATE_CODE))
             {
                 var valueToClean = ModelState["SKIN_TYPE"];
                 valueToClean.Errors.Clear(); 
@@ -189,6 +189,7 @@ namespace AboutMe.Web.Mobile.Controllers
             model.MEDIA_GBN = detail.MEDIA_GBN;
             model.IS_PHOTO = detail.IS_PHOTO;
             model.ADD_IMAGE = detail.ADD_IMAGE;
+            model.ORDER_DETAIL_IDX = detail.ORDER_DETAIL_IDX;
        
             return View(model);
         }
