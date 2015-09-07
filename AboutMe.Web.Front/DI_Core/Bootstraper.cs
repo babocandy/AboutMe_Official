@@ -56,6 +56,8 @@ namespace AboutMe.Web.Front.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Point.IPointService, AboutMe.Domain.Service.Point.PointService>(); //포인트
             container.RegisterType<AboutMe.Domain.Service.Display.IDisplayService, AboutMe.Domain.Service.Display.DisplayService>(); //전시,배너,팝업
 
+            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminEtcErrorLogService, AboutMe.Domain.Service.AdminEtc.AdminEtcErrorLogService>(); //에러처리
+
             //-------------------------------------------------------------------------------------------------------
 
 

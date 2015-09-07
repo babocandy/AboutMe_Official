@@ -721,7 +721,7 @@ $(function(){
 	});
 
 
-	$(".magazin_view .btn_area .prev").click(function(e){
+	$(".magazin_list .btn_area .prev").click(function(e){
 		e.preventDefault();
 		if(magazinIdx==1){
 			return;
@@ -733,7 +733,7 @@ $(function(){
 			$(".magazin_list .listwrap ul").animate({"margin-left":-((maxIndex-pageSize)*magazinWidth)});
 		}
 	});
-	$(".magazin_view .btn_area .next").click(function(e){
+	$(".magazin_list .btn_area .next").click(function(e){
 		e.preventDefault();
 		if(magazinIdx==magazinLength){
 			return;
