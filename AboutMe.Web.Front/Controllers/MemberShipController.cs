@@ -813,7 +813,7 @@ namespace AboutMe.Web.Front.Controllers
                 skin_body = skin_body.Replace("$$M_NAME$$", M_NAME);  //이름
                 skin_body = skin_body.Replace("$$M_ID$$", M_ID);  //아이디
 
-                string MAIL_SUBJECT = "[AboutMe]어바웃미 회원가입을 축하합니다.";
+                string MAIL_SUBJECT = "[ABOUT ME]어바웃미 회원가입을 축하합니다.";
                 string MAIL_BODY = skin_body;
 
 
@@ -1128,7 +1128,7 @@ namespace AboutMe.Web.Front.Controllers
             skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
             skin_body = skin_body.Replace("$$M_PWD$$", strNEW_PWD);  //신규암호
 
-            string MAIL_SUBJECT = "[AboutMe]어바웃미 비밀번호가 변경되었습니다.";
+            string MAIL_SUBJECT = "[ABOUT ME]어바웃미 비밀번호가 변경되었습니다.";
             string MAIL_BODY = skin_body;
 
 

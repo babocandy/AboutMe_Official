@@ -65,7 +65,7 @@ namespace AboutMe.Web.Admin.Controllers
         }
 
         [CustomAuthorize] //어드민로그인 필요 //[CustomAuthorize(Roles = "S")] //수퍼어드민만 가능 
-        public ActionResult SendMailGo(string receiver = "", string subject = "[AboutMe]No Subject", string body = "")
+        public ActionResult SendMailGo(string receiver = "", string subject = "[ABOUT ME]No Subject", string body = "")
         {
 
             //메일 발송을 위한 발송정보 준비 ----------------------------------------------------

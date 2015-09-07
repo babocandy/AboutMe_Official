@@ -157,7 +157,7 @@ namespace AboutMe.Web.Front.Controllers
                 skin_body = skin_body.Replace("$$DOMAIN$$", cur_domain);  //도메인
                 skin_body = skin_body.Replace("$$M_ID$$", M_ID);  //아이디
 
-                string MAIL_SUBJECT = "[AboutMe]어바웃미 회원 탈퇴가 완료 되었습니다.";
+                string MAIL_SUBJECT = "[ABOUT ME]어바웃미 회원 탈퇴가 완료 되었습니다.";
                 string MAIL_BODY = skin_body;
 
 

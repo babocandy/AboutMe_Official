@@ -24,9 +24,9 @@ namespace AboutMe.Common.Helper
         private int sender_smtp_port;
         private int timeout;
 
-        //public async Task MailSendAction(string _receiver = "", string _subject = "[AboutMe]No Subject", string _body = "")
+        //public async Task MailSendAction(string _receiver = "", string _subject = "[ABOUT ME]No Subject", string _body = "")
         public void MailSendAction(string _sender = "", string _sender_pw = "", string _sender_smtp_server = "", string _sender_smtp_port = "587", string _timeout="20000"
-            ,string _receiver = "", string _subject = "[AboutMe]No Subject", string _body = "")
+            , string _receiver = "", string _subject = "[ABOUT ME]No Subject", string _body = "")
         {
             this.err_no = 0; //일단 에러없음
             this.err_msg = ""; //일단 에러없음

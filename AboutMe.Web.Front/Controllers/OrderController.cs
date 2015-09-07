@@ -1139,7 +1139,7 @@ namespace AboutMe.Web.Front.Controllers
 
                 string M_EMAIL = DetailInfo.SENDER_EMAIL; //수신자이메일
 
-                string MAIL_SUBJECT = "[AboutMe] " + DetailInfo.ORDER_NAME+ "님이 결제하신 주문이 완료되었습니다.";
+                string MAIL_SUBJECT = "[ABOUT ME] " + DetailInfo.ORDER_NAME + "님이 결제하신 주문이 완료되었습니다.";
                 string MAIL_BODY = skin_body;
 
                 //메일 발송을 위한 발송정보 준비 ----------------------------------------------------

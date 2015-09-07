@@ -22,7 +22,7 @@ namespace AboutMe.Web.Test.Controllers
             return View();
         }
         [ValidateInput(false)]
-        public ActionResult SendMailGo(string receiver = "", string subject = "[AboutMe]No Subject", string body = "")
+        public ActionResult SendMailGo(string receiver = "", string subject = "[ABOUT ME]No Subject", string body = "")
         {
 
             //메일 발송을 위한 발송정보 준비 ----------------------------------------------------
@@ -49,7 +49,7 @@ namespace AboutMe.Web.Test.Controllers
             return View();
         }
 
-        public ActionResult SendMailGoUsinMailSkin(string receiver = "", string subject = "[AboutMe]No Subject")
+        public ActionResult SendMailGoUsinMailSkin(string receiver = "", string subject = "[ABOUT ME]No Subject")
         {
             string base_path = "D:\\CStone\\삼양어바웃미\\VisualStudio\\AboutMe_Official\\AboutMe.Web.Test\\Views\\TestJSH\\";
             string skin_body = GetTextResourceFile(base_path + "mail_skin01.html");
