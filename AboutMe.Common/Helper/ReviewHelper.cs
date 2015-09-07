@@ -27,6 +27,9 @@ namespace AboutMe.Common.Helper
             return pCateCode.Substring(0, 3) == CategoryCode.BEAUTY? true : false;
         }
 
-
+        public static bool CheckHealth(string pCateCode)
+        {
+            return pCateCode.Substring(0, 3) == CategoryCode.HEALTH ? true : false;
+        }
     }
 }

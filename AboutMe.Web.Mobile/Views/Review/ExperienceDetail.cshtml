@@ -1,5 +1,6 @@
 ﻿@model AboutMe.Domain.Entity.Review.SP_REVIEW_EXP_DETAIL_Result
 @using AboutMe.Web.Mobile.Controllers
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "Review";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
@@ -41,7 +42,11 @@
 
                 foreach (var tag in arr)
                 {
-                    <span>#@tag</span>
+                    if ( !String.IsNullOrEmpty(tag))
+                    {
+                        <span>#@tag</span>
+                    }
+                    
                 }
             }            
         </div>
@@ -54,15 +59,9 @@
 
     <div class="expreview_txt">
         <div class="user_info">
-            <!--
-            피부타입별 class
-            건성 : dry
-            중성 : normal
-            지복합성 :oily
-            -->
-            <span class="skin @(Model.SKIN_TYPE_LBL)"></span>
-            <span class="age">@(Model.M_BIRTHDAY_LBL)대, @(Model.M_SEX_LBL)</span>
-            <strong class="id">KKON***</strong>
+            <span class="skin @(Model.SKIN_TYPE_CSS)" style="@(!ReviewHelper.CheckHealth(  Model.C_CATE_CODE)  ? "" : "display:none")" ></span>
+            <span class="@(!ReviewHelper.CheckHealth(  Model.C_CATE_CODE)  ? "age" : "")">@(Model.M_BIRTHDAY_LBL)대, @(Model.M_SEX_LBL)</span>
+            <strong class="id">@(Model.M_ID_LBL)</strong>
         </div>
         <div class="contxt">
             @Html.Raw( Model.COMMENT)

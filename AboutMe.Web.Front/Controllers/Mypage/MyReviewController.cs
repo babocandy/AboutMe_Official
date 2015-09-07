@@ -93,7 +93,7 @@ namespace AboutMe.Web.Front.Controllers
             /**
              * 뷰티일때만 피부타입 유효성 체크
              */
-            if (!ReviewHelper.CheckBeauty(model.ProductInfo.C_CATE_CODE))
+            if (ReviewHelper.CheckHealth(model.ProductInfo.C_CATE_CODE))
             {
                 var valueToClean = ModelState["SKIN_TYPE"];
                 valueToClean.Errors.Clear(); 

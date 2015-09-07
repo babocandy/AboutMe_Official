@@ -44,5 +44,6 @@ namespace AboutMe.Domain.Entity.Review
         public string EXHIBIT_WEB_BANNER { get; set; }
         public string EXHIBIT_MOBILE_BANNER { get; set; }
         public string EXHIBIT_LINK_URL { get; set; }
+        public string C_CATE_CODE { get; set; }
     }
 }

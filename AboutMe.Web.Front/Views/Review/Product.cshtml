@@ -160,11 +160,11 @@
                 html += "<div class='comments'>";
                 html += "<div class='writer'>";
 
-                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' style='"+(d.C_CATE_CODE.substr(0, 3)=="101" ? "" :"display:none")+"'></span>";
+                html += "<span class='skin " + d.SKIN_TYPE_CSS + "' style='"+(d.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"'></span>";
                 html += "<span class='id'>" + d.M_ID_LBL + "</span>";
 
 
-                html += "<span class='"+( d.C_CATE_CODE.substr(0, 3)=="101" ? "userage" :"" )+"'>" + d.M_BIRTHDAY_LBL + "대, " +d.M_SEX_LBL + "</span>";
+                html += "<span class='"+( d.C_CATE_CODE.substr(0, 3)!="102" ? "userage" :"" )+"'>" + d.M_BIRTHDAY_LBL + "대, " +d.M_SEX_LBL + "</span>";
 
                 html += "</div>";
 
@@ -319,9 +319,9 @@
                             <!--리뷰-->
                             <div class="comments">
                                 <div class="writer">
-                                    <span class="skin @item.SKIN_TYPE_CSS" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "" : "display:none")"></span>
+                                    <span class="skin @item.SKIN_TYPE_CSS" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "" : "display:none")"></span>
                                     <span class="id">@item.M_ID_LBL</span>
-                                    <span class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "userage" : "")" > @item.M_BIRTHDAY_LBL 대,  @item.M_SEX_LBL</span>
+                                    <span class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "userage" : "")" > @item.M_BIRTHDAY_LBL 대,  @item.M_SEX_LBL</span>
                                     
                                 </div>
                                 <div class="reviewtxt">

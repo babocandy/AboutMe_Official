@@ -137,10 +137,10 @@
                 var item = list[i];
 
 
-                var html = "<div class='grid' onclick=\"reviewpop_view("+item.IDX +",'"+item.P_CODE+"',this);return false;\">";
+                var html = "<div class='grid' >";
 
                 //<!--제품 이름 및 정보-->
-                html += "<div class='product_info'>";
+                html += "<div class='product_info' onclick=\"window.location.href='/Shopping/Detail?pcode="+ item.P_CODE+"';return false;\" >";
                 html += "    <div class='photo'><img src='"+img_path_product +"R120_"+ item.P_MAIN_IMG+"' alt=''></div>";
                 html += "    <div class='detail'>";
                 html += "       <p class='tit'>"+item.P_NAME+"</p>";
@@ -149,21 +149,23 @@
                 html += "</div>";
 
                 // <!--리뷰-->
-                html += "<div class='comments'>";
+                html += "<div class='comments'  onclick=\"reviewpop_view("+item.IDX +",'"+item.P_CODE+"',this);return false;\">";
                 html += "   <div class='idhit'>";
                 html += "       <span class='id'>"+item.M_ID_LBL+"</span>";
                 html += "       <span class='hit'>조회수 <em>"+(item.VIEW_CNT != undefined ? item.VIEW_CNT : "0")+"</em></span>";
                 html += "   </div>";
 
                 html += "   <div class='writer'>";
-                html += "       <span class='skin "+item.SKIN_TYPE_LBL+"'>"+item.SKIN_TYPE_CSS+"</span><em class='userage'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em>";
+                html += "       <span class='skin "+item.SKIN_TYPE_CSS+"'  style='"+(item.SKIN_TYPE != undefined ? "" :"display:none") +"' >"+item.SKIN_TYPE_LBL+"</span><em class='"+(item.SKIN_TYPE != undefined ? "userage" :"")+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em>";
                 html += "   </div>";
                 html += "   <div class='tag'>";
 
                     /*tag common*/
                     var arr = item.TAG.split("#");
                     for(var k = 0; k < arr.length ; ++k){
-                        html += "<span>#" + arr[k] + "</span>\n";
+                        if(arr[k] != ""){
+                            html += "<span>#" + arr[k] + "</span>\n";
+                        }                        
                     }
 
                 html += "   </div>";
@@ -284,10 +286,10 @@
 
 @foreach (var item in Model.Reviews)
 {
-                        <div class="grid" onclick="reviewpop_view(@item.IDX, '@item.P_CODE', this);return false;">
+                        <div class="grid" >
                            
                             <!--제품 이름 및 정보-->
-                            <div class="product_info">
+                            <div class="product_info" onclick="window.location.href='@(Url.Action("Detail", "Shopping", new  { pcode=item.P_CODE }))';return false;">
                                 <div class="photo"><img src="@string.Format("{0}R120_{1}",   myController._img_path_product, item.P_MAIN_IMG)" alt=""></div>
                                 <div class="detail">
                                     <p class="tit">@item.P_NAME</p>
@@ -296,48 +298,50 @@
                             </div>
                             <!--//제품 이름 및 정보-->
                             <!--리뷰-->
-                            <div class="comments">
+                            <div class="comments" onclick="reviewpop_view(@item.IDX, '@item.P_CODE', this);return false;">
                                 <div class="idhit">
                                     <span class="id">@item.M_ID_LBL</span>
                                     <span class="hit">조회수 <em>@(item.VIEW_CNT ?? 0)</em></span>
                                 </div>
                                 <div class="writer">
-                                    <span class="skin @(item.SKIN_TYPE_CSS)">@(item.SKIN_TYPE_LBL)</span><em class="userage">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</em>
+                                    @item.SKIN_TYPE
+                                    <span class="skin @(item.SKIN_TYPE_CSS)" style="@(item.SKIN_TYPE != null ? "":"display:none")" >@(item.SKIN_TYPE_LBL)</span><em class="@(item.SKIN_TYPE != null ? "userage" : "") ">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</em>
                                 </div>
                                 <div class="tag">
-                                     @{
+                                    @{
                                         @*tag common*@
                                         var arr = item.TAG.Split('#');
-                                                
+
                                         foreach (var tag in arr)
                                         {
-                                            if ( !String.IsNullOrEmpty(tag))
+                                            if (!String.IsNullOrEmpty(tag))
                                             {
-                                                 <span>#@tag</span>
+                                                            <span>#@tag</span>
                                             }
-                                           
+
                                         }
-                                    }   
-           
+                                    }
+
                                 </div>
                                 <div class="reviewtxt">
                                     <p class="title">@item.TITLE</p>
                                     <p class="txt txtdotdot">
-                                        @item.COMMENT_TEXT                                    
+                                        @item.COMMENT_TEXT
                                     </p>
 
                                     @if (item.SUB_IMG_1 != null)
                                     {
                                         <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.SUB_IMG_1)" alt="" /><br />
                                     }
-                                   
+
                                     @if (item.SUB_IMG_2 != null)
                                     {
                                         <img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.SUB_IMG_2)" alt="" /><br />
                                     }
-                                    
+
                                 </div>
                             </div>
+
                             <!--//리뷰-->
                         </div>
                        
@@ -361,7 +365,7 @@
                                 <div class="writer">
                                     <div class="userinfo">
                                         <span id="skin_type" class=""></span>
-                                        <span class="age_gender"></span>
+                                        <span id="age_gender" class="age_gender"></span>
                                     </div>
                                     <div class="right">
                                         <span class="id"></span>
@@ -456,19 +460,29 @@
                                     var arr = item.TAG.split("#");
                                     var html = "";
                                     for(var k = 0; k < arr.length ; ++k){
-                                        html += "<span>#" + arr[k] + "</span>";
+                                        if(arr[k] != "")
+                                        html += "<span>#" + arr[k] + "</span>\n";
                                     }
 
                                     $(".reviewpop_wrap .title_area .tag").html( html);
 
                                     $(".reviewpop_wrap .writer .skin").removeClass();
-                              
-                                    $("#skin_type").addClass("skin " + item.SKIN_TYPE_CSS);
 
-                                    $(".reviewpop_wrap .writer .skin").text( item.SKIN_TYPE_LBL );
+                                    if ( item.SKIN_TYPE != undefined) {
+                                        $("#skin_type").show();
+                                        $("#skin_type").addClass("skin " + item.SKIN_TYPE_CSS);
+                                        $(".reviewpop_wrap .writer .skin").text( item.SKIN_TYPE_LBL );
+                                        $("#age_gender").addClass("age_gender")
+                                    }else{
+                                        $("#skin_type").hide();
+                                        $("#age_gender").removeClass()
+                                    }
+                                   
+
+                                    
                                     $(".reviewpop_wrap .writer .age_gender").text( item.M_BIRTHDAY_LBL +"대, "+ item.M_SEX_LBL );
 
-                                    $(".reviewpop_wrap .writer .id").text( item.SKIN_TYPE_LBL );
+                                    $(".reviewpop_wrap .writer .id").text( item.M_ID_LBL );
                                     $(".reviewpop_wrap .writer .date").text( item.INS_DATE_LBL );
                                     $(".reviewpop_wrap .writer .hits em").text( item.VIEW_CNT != undefined ? item.VIEW_CNT : 0 );
                                     

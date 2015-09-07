@@ -1,5 +1,6 @@
 ﻿@model AboutMe.Domain.Entity.Review.ReviewInProductDetailViewModel
 @using AboutMe.Web.Mobile.Controllers
+@using AboutMe.Common.Helper
 @{
     Layout = null;
     var myController = ViewContext.Controller as ReviewController;
@@ -20,7 +21,6 @@
             </a>
         </div>
         <ul id="review_pro_list" class="review_list" style="display:@(Model.Reviews.Count > 0 ? "block":"none")">
-            @Model.Reviews.Count
             @if (Model.Reviews.Count > 0)
             {
 
@@ -28,14 +28,14 @@
                 {
                     <li class="review_info">
                         <div class="rinfo_top">
-                            <p class="winfo"><span class="type oily"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</span><strong class="id">@item.M_ID_LBL</strong></p>
+                            <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "":"display:none")"></span><span class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "age":"")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</span><strong class="id">@item.M_ID_LBL</strong></p>
                         </div>
                         <div class="rinfo_con">
-                            <p class="txtbox">@item.COMMENT</p>
+                            <p class="txtbox">@Html.Raw(item.COMMENT_TEXT)</p>
 
-                            @if (item.ADD_IMAGE != null)
+                            @if (item.IS_PHOTO == "Y")
                             {
-                                <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE )" alt="" /></div>
+                                <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE_PATH )" alt="" /></div>
                                 <div class="morebox">
                                     <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
                                     <span class="photo_review"><i></i>포토리뷰</span>
@@ -64,7 +64,9 @@
     <!--체험단리뷰-->
     <div class="tab_content" id="expReview">
         <!--체험단배너-->
-        @Html.Action("ExpBanner", "ChildActionDisplayer")
+        <div class="brnwrap">
+            @Html.Action("ExpBanner", "ChildActionDisplayer")
+        </div>
         <!--/체험단배너-->
         <ul id="review_exp_list" class="review_list exp">
 
@@ -194,14 +196,15 @@
 
                 html += "<li class='review_info'>";
                 html += "   <div class='rinfo_top'>";
-                html += "<p class='winfo'><span class='type oily'></span><span class='age'>"+d.M_BIRTHDAY_LBL+"대, "+d.M_SEX_LBL+"</span><strong class='id'>"+d.M_ID_LBL+"</strong></p>";
+                html += "<p class='winfo'><span class='type "+d.SKIN_TYPE_CSS+ "' style='"+(d.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
+                html += "<span class='"+( d.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+d.M_BIRTHDAY_LBL+"대, "+d.M_SEX_LBL+"</span><strong class='id'>"+d.M_ID_LBL+"</strong></p>";
                 html += "</div>";
                 html += "<div class='rinfo_con'>";
-                html += "<p class='txtbox'>"+d.COMMENT+"</p>";
+                html += "<p class='txtbox'>"+d.COMMENT_TEXT+"</p>";
 
                 if (d.IS_PHOTO == "Y"){
                     
-                        html += "<div class='imgbox'><img src='"+ img_path_review+ d.ADD_IMAGE +"' alt='' /></div>";
+                        html += "<div class='imgbox'><img src='"+ img_path_review+ d.ADD_IMAGE_PATH +"' alt='' /></div>";
                         html += "<div class='morebox'>";
 		
                         html += " <span class='photo_review'><i></i>포토리뷰</span>";
@@ -274,7 +277,8 @@
 
                 html += "<li class='review_info'>";
                 html += "<div class='rinfo_top'>";
-                html += "  <p class='winfo'><span class='type normal'></span><span class='age'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</span><strong class='id'>"+item.M_ID_LBL+"</strong><span class='hit'>조회수 "+item.VIEW_CNT+"</span></p>";
+                html += "  <p class='winfo'><span class='type "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
+                html += "<span class='"+( item.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</span><strong class='id'>"+item.M_ID_LBL+"</strong><span class='hit'>조회수 "+item.VIEW_CNT+"</span></p>";
                 html += "   </div>";
                 html += "   <div class='rinfo_con'>";
 
@@ -283,9 +287,10 @@
                 /*tag common*/
                 var arr = item.TAG.split("#");
                 for(var k = 0; k < arr.length ; ++k){
-                    html += "<li>#" + arr[k] + "</li>\n"
-                }
-                
+                    if(arr[k] != ""){
+                        html += "<li>#" + arr[k] + "</li>\n";
+                    }
+                }                
                
                 html += "    </ul>";
                     

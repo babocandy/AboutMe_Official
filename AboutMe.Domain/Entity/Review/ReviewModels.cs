@@ -76,6 +76,13 @@ namespace AboutMe.Domain.Entity.Review
 
     public partial class SP_REVIEW_PRODUCT_COMPLETE_SEL_Result
     {
+        public string COMMENT_TEXT
+        {
+            get
+            {
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+            }
+        }
 
         public string COMMENT_SHORT
         {
@@ -145,6 +152,42 @@ namespace AboutMe.Domain.Entity.Review
         public ReviewListMobileUrlParam MobileParam { get; set; }
         public int? PrevPage { get; set; }
         public int? NextPage { get; set; }
+    }
+
+    public partial class SP_REVIEW_PRODUCT_MOBILE_SEL_Result
+    {
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string COMMENT_TEXT
+        {
+            get
+            {
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
     }
 
     public partial class SP_REVIEW_PRODUCT_SEL_Result
@@ -271,6 +314,15 @@ namespace AboutMe.Domain.Entity.Review
 
     public partial class SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result
     {
+
+        public string COMMENT_TEXT
+        {
+            get
+            {
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+            }
+        }
+
         public string COMMENT_SHORT
         {
             get
