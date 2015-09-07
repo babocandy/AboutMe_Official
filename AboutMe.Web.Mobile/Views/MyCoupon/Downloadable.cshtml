@@ -61,7 +61,7 @@
                     <h3>다운로드가능 쿠폰</h3>
                     <div class="coupon_top pt10 pb25">
                         <span class="count">총 <strong>@ViewBag.TotalRecord</strong>개 쿠폰이있습니다</span>
-                        <a href="UpdateToUsable" class="btn btn_white_h30 v2 cupondown">전체 다운로드</a>
+                        <a href="UpdateToUsable?UpdateMethod=A&IdxCouponNumber=0" class="btn btn_white_h30 v2 cupondown">전체 다운로드</a>
                     </div>
                     <ul>
                         @{
@@ -134,7 +134,7 @@
                                         사용가능 기간 : @FromYYYY.@FromMM.@FromDD~@ToMM.@ToDD<br />
                                         다운로드 기간 : @DwFromYYYY.@DwFromMM.@DwFromDD~@DwToMM.@DwToDD
                                     </p>
-                                    <a href="#" class="btn btn_white_h30 v3 cupondown">쿠폰 다운로드</a>
+                                    <a href="/Mypage/MyCoupon/UpdateToUsable?UpdateMethod=S&IdxCouponNumber=@item.IDX_COUPON_NUMBER" class="btn btn_white_h30 v3 cupondown">쿠폰 다운로드</a>
                                 </div>
                             </li>
                         }

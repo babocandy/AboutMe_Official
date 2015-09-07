@@ -45,6 +45,25 @@
           <Property Name="ADM_INS_DATE" Type="datetime" />
           <Property Name="ADM_USE_YN" Type="varchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="TB_APP_ERROR_LOG">
+          <Key>
+            <PropertyRef Name="SEQNO" />
+          </Key>
+          <Property Name="SEQNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ERR_DATE" Type="datetime" Nullable="false" />
+          <Property Name="MODULE_ID" Type="varchar" MaxLength="100" />
+          <Property Name="ERR_NO" Type="bigint" />
+          <Property Name="ERR_MSG" Type="varchar" MaxLength="3000" />
+          <Property Name="ERR_QUERY" Type="varchar" MaxLength="1000" />
+          <Property Name="COMPUTER_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="EMP_NAME" Type="varchar" MaxLength="20" />
+          <Property Name="EMP_EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="MEMB_ID" Type="varchar" MaxLength="20" />
+          <Property Name="RESULT_YN" Type="char" MaxLength="1" />
+          <Property Name="POST_DATA" Type="varchar" MaxLength="500" />
+          <Property Name="PCID" Type="bigint" />
+          <Property Name="HTTP_COOKIE" Type="varchar" MaxLength="2000" />
+        </EntityType>
         <Function Name="SP_ADM_ADMIN_DEPT_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_ADM_ADMIN_MEMBER_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SEARCH_COL" Type="varchar" Mode="In" />
@@ -109,12 +128,27 @@
         <Function Name="SP_ADMIN_ADMIN_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_APP_ERRORLOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MODULE_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_NUM" Type="bigint" Mode="In" />
+          <Parameter Name="ERR_MSG" Type="varchar" Mode="In" />
+          <Parameter Name="ERR_QUERY" Type="varchar" Mode="In" />
+          <Parameter Name="COMPUTER_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="MEMB_ID" Type="varchar" Mode="In" />
+          <Parameter Name="RESULT_YN" Type="char" Mode="In" />
+          <Parameter Name="POST_DATA" Type="varchar" Mode="In" />
+          <Parameter Name="PCID" Type="bigint" Mode="In" />
+          <Parameter Name="HTTP_COOKIE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_DUMMY_ADMIN_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_song_test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AdminEtcModelStoreContainer">
           <EntitySet Name="ADMIN_MEMBER" EntityType="Self.ADMIN_MEMBER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADMIN_MEMBER_DEPT" EntityType="Self.ADMIN_MEMBER_DEPT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ADMIN_MEMBER" EntityType="Self.TB_ADMIN_MEMBER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_APP_ERROR_LOG" EntityType="Self.TB_APP_ERROR_LOG" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -208,6 +242,21 @@
           <Parameter Name="ADM_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_song_test" ReturnType="Collection(DateTime)" />
+          <EntitySet Name="TB_APP_ERROR_LOG" EntityType="AdminEtcModel.TB_APP_ERROR_LOG" />
+          <FunctionImport Name="SP_APP_ERRORLOG_INS">
+            <Parameter Name="MODULE_ID" Mode="In" Type="String" />
+            <Parameter Name="ERR_NUM" Mode="In" Type="Int64" />
+            <Parameter Name="ERR_MSG" Mode="In" Type="String" />
+            <Parameter Name="ERR_QUERY" Mode="In" Type="String" />
+            <Parameter Name="COMPUTER_NAME" Mode="In" Type="String" />
+            <Parameter Name="EMP_NAME" Mode="In" Type="String" />
+            <Parameter Name="EMP_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="MEMB_ID" Mode="In" Type="String" />
+            <Parameter Name="RESULT_YN" Mode="In" Type="String" />
+            <Parameter Name="POST_DATA" Mode="In" Type="String" />
+            <Parameter Name="PCID" Mode="In" Type="Int64" />
+            <Parameter Name="HTTP_COOKIE" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADM_ADMIN_MEMBER_CNT" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -291,6 +340,25 @@
           <Property Type="DateTime" Name="ADM_INS_DATE" Nullable="true" Precision="23" />
           <Property Type="String" Name="ADM_USE_YN" Nullable="true" MaxLength="1" />
         </ComplexType>
+        <EntityType Name="TB_APP_ERROR_LOG">
+          <Key>
+            <PropertyRef Name="SEQNO" />
+          </Key>
+          <Property Name="SEQNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ERR_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MODULE_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ERR_NO" Type="Int64" />
+          <Property Name="ERR_MSG" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="ERR_QUERY" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="COMPUTER_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EMP_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EMP_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MEMB_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RESULT_YN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="POST_DATA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PCID" Type="Int64" />
+          <Property Name="HTTP_COOKIE" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -445,6 +513,27 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_song_test" FunctionName="AdminEtcModel.Store.sp_song_test" />
+          <EntitySetMapping Name="TB_APP_ERROR_LOG">
+            <EntityTypeMapping TypeName="AdminEtcModel.TB_APP_ERROR_LOG">
+              <MappingFragment StoreEntitySet="TB_APP_ERROR_LOG">
+                <ScalarProperty Name="HTTP_COOKIE" ColumnName="HTTP_COOKIE" />
+                <ScalarProperty Name="PCID" ColumnName="PCID" />
+                <ScalarProperty Name="POST_DATA" ColumnName="POST_DATA" />
+                <ScalarProperty Name="RESULT_YN" ColumnName="RESULT_YN" />
+                <ScalarProperty Name="MEMB_ID" ColumnName="MEMB_ID" />
+                <ScalarProperty Name="EMP_EMAIL" ColumnName="EMP_EMAIL" />
+                <ScalarProperty Name="EMP_NAME" ColumnName="EMP_NAME" />
+                <ScalarProperty Name="COMPUTER_NAME" ColumnName="COMPUTER_NAME" />
+                <ScalarProperty Name="ERR_QUERY" ColumnName="ERR_QUERY" />
+                <ScalarProperty Name="ERR_MSG" ColumnName="ERR_MSG" />
+                <ScalarProperty Name="ERR_NO" ColumnName="ERR_NO" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="ERR_DATE" ColumnName="ERR_DATE" />
+                <ScalarProperty Name="SEQNO" ColumnName="SEQNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_APP_ERRORLOG_INS" FunctionName="AdminEtcModel.Store.SP_APP_ERRORLOG_INS" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
