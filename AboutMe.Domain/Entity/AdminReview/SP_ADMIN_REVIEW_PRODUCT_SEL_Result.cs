@@ -39,5 +39,6 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string SKIN_TYPE_LBL { get; set; }
         public string SKIN_TYPE_CSS { get; set; }
         public string IS_MOST_CNT { get; set; }
+        public Nullable<int> ORDER_DETAIL_IDX { get; set; }
     }
 }

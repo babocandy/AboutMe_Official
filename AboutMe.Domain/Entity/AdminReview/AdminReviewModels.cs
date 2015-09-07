@@ -20,6 +20,26 @@ namespace AboutMe.Domain.Entity.AdminReview
         public IList<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> List { get; set; }
     }
 
+    public partial class SP_ADMIN_REVIEW_PRODUCT_SEL_Result
+    {
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if ( ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+    }
+
     /**
      * 상품리뷰 상품찾기 
      */
@@ -92,6 +112,33 @@ namespace AboutMe.Domain.Entity.AdminReview
         public string MEDIA_GBN_LBL { get; set; }
         public string SKIN_TYPE_LBL { get; set; }
         public string IS_MOST_CNT { get; set; }
+        public Nullable<int> ORDER_DETAIL_IDX { get; set; }
+
+
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
 
     }
 

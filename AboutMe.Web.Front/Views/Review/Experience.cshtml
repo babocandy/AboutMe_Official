@@ -111,8 +111,9 @@
                         }
 
                         if(is_more_req){
-                            alert("더 이상 결과값이 없습니다.");
                             is_more_req = false;
+                            $(".btn_more").hide();
+                            alert("더이상 리뷰가 없습니다.");
                         }
                     }
 
@@ -310,7 +311,11 @@
                                                 
                                         foreach (var tag in arr)
                                         {
-                                            <span>#@tag</span>
+                                            if ( !String.IsNullOrEmpty(tag))
+                                            {
+                                                 <span>#@tag</span>
+                                            }
+                                           
                                         }
                                     }   
            
