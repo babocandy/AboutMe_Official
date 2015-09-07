@@ -10,6 +10,8 @@ using AboutMe.Common.Helper;
 using AboutMe.Common.Data;
 using AboutMe.Domain.Service.AdminPromotion;
 using AboutMe.Domain.Entity.AdminPromotion;
+using AboutMe.Domain.Service.AdminEtc;
+using AboutMe.Domain.Entity.AdminEtc;
 
 using AboutMe.Web.Admin.Common.Filters;
 
@@ -21,10 +23,12 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         private IAdminPromotionService _AdminPromotionService;
+        private IAdminEtcErrorLogService _AdminEtcErrorLogService;
 
-        public AdminPromotionController(IAdminPromotionService _adminPromotionService)
+        public AdminPromotionController(IAdminPromotionService _adminPromotionService, IAdminEtcErrorLogService _adminEtcErrorLogService)
         {
             this._AdminPromotionService = _adminPromotionService;
+            this._AdminEtcErrorLogService = _adminEtcErrorLogService;
         }
 
         protected override void HandleUnknownAction(string actionName)
@@ -1375,6 +1379,28 @@ namespace AboutMe.Web.Admin.Controllers
 
 
         #endregion ===============================================================================================
+
+
+        public ActionResult ErrIndex(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
+        {
+            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.SearchCol = SearchCol;
+            this.ViewBag.SearchKeyword = SearchKeyword;
+            this.ViewBag.SortCol = SortCol;
+            this.ViewBag.SortDir = SortDir;
+
+            //AdminMemberService srv =  new AdminMemberService();
+            int TotalRecord = 0;
+            TotalRecord = this._AdminEtcErrorLogService.GetAppErrorListCnt(SearchCol, SearchKeyword);
+            this.ViewBag.TotalRecord = TotalRecord;
+            //this.ViewBag.MaxPage = (int)Math.Ceiling((double)count / page_size); //올림
+            this.ViewBag.Page = Page;
+
+
+            return View(this._AdminEtcErrorLogService.GetAppErrorList(SearchCol, SearchKeyword, Page, PageSize).ToList());
+            //return View();
+
+        }
 
         /**
                 [HttpPost]

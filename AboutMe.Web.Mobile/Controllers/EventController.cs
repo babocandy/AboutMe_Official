@@ -194,6 +194,7 @@ namespace AboutMe.Web.Mobile.Controllers
         public ActionResult TimeSale()
         {
             ViewBag.PromotionPhotoPath = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //이미지디렉토리경로
+            ViewBag.ProductPhotoPath = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //이미지디렉토리경로
 
             var mMyMultiModelForPromotionProduct = new MyMultiModelForPromotionProduct
             {

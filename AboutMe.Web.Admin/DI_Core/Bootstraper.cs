@@ -43,6 +43,7 @@ namespace AboutMe.Web.Admin.DI_Core
             container.RegisterType<AboutMe.Domain.Service.Winner.IWinnerService, AboutMe.Domain.Service.Winner.WinnerService>(); //당첨자발표
             container.RegisterType<AboutMe.Domain.Service.AdminPoint.IAdminPointService, AboutMe.Domain.Service.AdminPoint.AdminPointService>(); //관리자 포인트
             container.RegisterType<AboutMe.Domain.Service.AdminPromotion.IAdminPromotionService, AboutMe.Domain.Service.AdminPromotion.AdminPromotionService>(); //프로모션관리
+            container.RegisterType<AboutMe.Domain.Service.AdminEtc.IAdminEtcErrorLogService, AboutMe.Domain.Service.AdminEtc.AdminEtcErrorLogService>(); //app error핸들링
 
             container.RegisterType<AboutMe.Domain.Service.AdminCoupon.IAdminCouponService, AboutMe.Domain.Service.AdminCoupon.AdminCouponService>(); //쿠폰관리
             container.RegisterType<AboutMe.Domain.Service.AdminOrder.IAdminOrderService, AboutMe.Domain.Service.AdminOrder.AdminOrderService>(); //주문관리
@@ -53,6 +54,7 @@ namespace AboutMe.Web.Admin.DI_Core
 
           
             container.RegisterType<AboutMe.Domain.Service.BizPromotion.IBizPromotion, AboutMe.Domain.Service.BizPromotion.BizPromotion>(); //비즈니스로직..쿠폰,프로모션을 같이 이용하는... 
+
 
 
             /**

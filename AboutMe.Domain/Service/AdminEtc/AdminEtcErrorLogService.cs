@@ -27,5 +27,51 @@ namespace AboutMe.Domain.Service.AdminEtc
 
             }
         }
+
+
+
+        //에러리스트
+        public List<SP_APP_LOG_DETAIL_SEL_Result> GetAppErrorList(string SearchCol, string SearchKeyword, int Page, int PageSize)
+        {
+
+            List<SP_APP_LOG_DETAIL_SEL_Result> lst = new List<SP_APP_LOG_DETAIL_SEL_Result>();
+            using (AdminEtcEntities AdmEtcContext = new AdminEtcEntities())
+            {
+                /**try {**/
+                lst = AdmEtcContext.SP_APP_ERROR_LOG_SEL(Page, PageSize, SearchCol, SearchKeyword).ToList();
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return lst;
+
+        }
+
+        //쿠폰마스터  row수 가져오기 
+        public int GetAppErrorListCnt(string SearchCol, string SearchKeyword)
+        {
+
+            List<SP_ADMIN_COMMON_CNT_Result> lst = new List<SP_ADMIN_COMMON_CNT_Result>();
+            int list_cnt = 0;
+
+            using (AdminEtcEntities AdmEtcContext = new AdminEtcEntities())
+            {
+             
+                /**try {**/
+                lst = AdmEtcContext.SP_APP_ERROR_LOG_CNT(SearchCol, SearchKeyword).ToList();
+                if (lst != null && lst.Count > 0)
+                    list_cnt = lst[0].COUNT;
+                /** }catch()
+                 {
+                       AdmEtcContext.Dispose();
+                 }**/
+            }
+
+            return list_cnt;
+
+        }
+
     }
 }

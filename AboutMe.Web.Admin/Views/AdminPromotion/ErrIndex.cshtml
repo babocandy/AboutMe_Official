@@ -1,0 +1,106 @@
+﻿@model  IEnumerable<AboutMe.Domain.Entity.AdminEtc.SP_APP_LOG_DETAIL_SEL_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null ;
+}
+
+
+<div class="content">
+    <!--path-->
+    <div class="path">
+        <a href="/">HOME</a> &gt; <a href="#">프로모션 관리</a> &gt; <strong>전체할인 프로모션 리스트</strong>
+    </div>
+    <!--//path-->
+
+    <div class="tar mb10">
+        <a class="btn btn-default middium" href="/AdminPromotion/Create">신규 프로모션 등록</a>
+        <!--<a class="btn btn-default middium" href="#">EXEL 다운로드</a>-->
+    </div>
+    <div class="panel">
+        <h4>전체할인 프로모션 리스트</h4>
+
+        @{ var selected_str = "selected";}
+        @using (Html.BeginForm("ErrIndex", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01" }))
+        {
+            @Html.AntiForgeryToken()  //폼 데이터 위조 방지 토큰 생성
+
+
+                                    <table class="table table_row">
+                                        <colgroup><col width="20%" /><col width="*" /></colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" class="vam">검색</th>
+                                                <td class="condition_seacth">
+                                                    <select name="SearchCol" style="width:170px;">
+                                                        <option>-선택하세요-</option>
+                                                        <option value="MEMB_ID" @if (ViewBag.SearchCol == "MEMB_ID") { @selected_str       ; }>회원아이디</option>
+                                                    </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
+                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+        }
+    </div>
+
+    <div class="panel">
+        <h4>전체할인 프로모션 리스트</h4>
+        <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
+        <table border="1">
+            <colgroup><col width="3%" /><col width="8%" /><col width="10%" /><col width="*" /><col width="10%" /><col width="8%" /><col width="10%" /><col width="10%" /></colgroup>
+            <thead>
+                <tr>
+                    <th scope="col" class="brnone">SEQNO</th>
+                    <th scope="col">ERR_DATE</th>
+                    <th scope="col">MODULE_ID</th>
+
+
+                    <th scope="col">ERR_MSG</th>
+                    <th scope="col">COMPUTER_NAME</th>
+                    <th scope="col">MEMB_ID</th>
+
+                    <th scope="col">POST_DATA</th>
+                    <th scope="col">HTTP_COOKIE</th>
+           
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="brnone">@item.SEQNO</td>
+
+                        <td class="brnone">@item.ERR_DATE.ToString()</td>
+                        <td><a href="Detail">@item.MODULE_ID</a></td>
+
+                        <td>@item.ERR_MSG </td>
+                        <td>@item.COMPUTER_NAME</td>
+                        <td>@item.MEMB_ID</td>
+
+                        <td>@item.POST_DATA</td>
+                        <td>@item.HTTP_COOKIE</td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @{Html.RenderAction("Paging", "CommonChildAction", new { TotalRecord = ViewBag.TotalRecord, RecordPerPage = ViewBag.PageSize, PagePerBlock = 10, CurrentPage = ViewBag.Page, QueryStr = "SearchCol=" + ViewBag.SearchCol + "&SearchKeyword=" + ViewBag.SearchKeyword });}
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+</div>
+
+

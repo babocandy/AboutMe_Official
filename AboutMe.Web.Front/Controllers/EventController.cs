@@ -188,6 +188,7 @@ namespace AboutMe.Web.Front.Controllers
         //타임세일
         public ActionResult TimeSale()
         {
+            ViewBag.PRODUCT_PATH = AboutMe.Common.Helper.Config.GetConfigValue("ProductPhotoPath"); //상품 이미지디렉토리경로
             ViewBag.PromotionPhotoPath = AboutMe.Common.Helper.Config.GetConfigValue("PromotionPhotoPath"); //이미지디렉토리경로
 
             var mMyMultiModelForPromotionProduct = new MyMultiModelForPromotionProduct

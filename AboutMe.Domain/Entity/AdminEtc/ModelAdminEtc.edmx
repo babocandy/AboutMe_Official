@@ -128,6 +128,16 @@
         <Function Name="SP_ADMIN_ADMIN_MEMBER_VIEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ADM_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_APP_ERROR_LOG_CNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_APP_ERROR_LOG_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_KEYWORD" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_APP_ERRORLOG_INS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MODULE_ID" Type="varchar" Mode="In" />
           <Parameter Name="ERR_NUM" Type="bigint" Mode="In" />
@@ -141,6 +151,9 @@
           <Parameter Name="POST_DATA" Type="varchar" Mode="In" />
           <Parameter Name="PCID" Type="bigint" Mode="In" />
           <Parameter Name="HTTP_COOKIE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_APP_LOG_DETAIL_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEQNO" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_DUMMY_ADMIN_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_song_test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -257,6 +270,19 @@
             <Parameter Name="PCID" Mode="In" Type="Int64" />
             <Parameter Name="HTTP_COOKIE" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_APP_LOG_DETAIL_SEL" ReturnType="Collection(AdminEtcModel.SP_APP_LOG_DETAIL_SEL_Result)">
+            <Parameter Name="SEQNO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_APP_ERROR_LOG_SEL" ReturnType="Collection(AdminEtcModel.SP_APP_LOG_DETAIL_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_APP_ERROR_LOG_CNT" ReturnType="Collection(AdminEtcModel.SP_ADMIN_COMMON_CNT_Result)">
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_KEYWORD" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADM_ADMIN_MEMBER_CNT" >
           <Property Type="Int32" Name="COUNT" Nullable="false" />
@@ -359,6 +385,22 @@
           <Property Name="PCID" Type="Int64" />
           <Property Name="HTTP_COOKIE" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SP_APP_LOG_DETAIL_SEL_Result">
+          <Property Type="Int32" Name="SEQNO" Nullable="false" />
+          <Property Type="DateTime" Name="ERR_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MODULE_ID" Nullable="true" MaxLength="100" />
+          <Property Type="Int64" Name="ERR_NO" Nullable="true" />
+          <Property Type="String" Name="ERR_MSG" Nullable="true" MaxLength="3000" />
+          <Property Type="String" Name="ERR_QUERY" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="COMPUTER_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EMP_NAME" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="EMP_EMAIL" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MEMB_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RESULT_YN" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="POST_DATA" Nullable="true" MaxLength="500" />
+          <Property Type="Int64" Name="PCID" Nullable="true" />
+          <Property Type="String" Name="HTTP_COOKIE" Nullable="true" MaxLength="2000" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -534,6 +576,53 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_APP_ERRORLOG_INS" FunctionName="AdminEtcModel.Store.SP_APP_ERRORLOG_INS" />
+          <FunctionImportMapping FunctionImportName="SP_APP_LOG_DETAIL_SEL" FunctionName="AdminEtcModel.Store.SP_APP_LOG_DETAIL_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_APP_LOG_DETAIL_SEL_Result">
+                <ScalarProperty Name="SEQNO" ColumnName="SEQNO" />
+                <ScalarProperty Name="ERR_DATE" ColumnName="ERR_DATE" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="ERR_NO" ColumnName="ERR_NO" />
+                <ScalarProperty Name="ERR_MSG" ColumnName="ERR_MSG" />
+                <ScalarProperty Name="ERR_QUERY" ColumnName="ERR_QUERY" />
+                <ScalarProperty Name="COMPUTER_NAME" ColumnName="COMPUTER_NAME" />
+                <ScalarProperty Name="EMP_NAME" ColumnName="EMP_NAME" />
+                <ScalarProperty Name="EMP_EMAIL" ColumnName="EMP_EMAIL" />
+                <ScalarProperty Name="MEMB_ID" ColumnName="MEMB_ID" />
+                <ScalarProperty Name="RESULT_YN" ColumnName="RESULT_YN" />
+                <ScalarProperty Name="POST_DATA" ColumnName="POST_DATA" />
+                <ScalarProperty Name="PCID" ColumnName="PCID" />
+                <ScalarProperty Name="HTTP_COOKIE" ColumnName="HTTP_COOKIE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_APP_ERROR_LOG_SEL" FunctionName="AdminEtcModel.Store.SP_APP_ERROR_LOG_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_APP_LOG_DETAIL_SEL_Result">
+                <ScalarProperty Name="SEQNO" ColumnName="SEQNO" />
+                <ScalarProperty Name="ERR_DATE" ColumnName="ERR_DATE" />
+                <ScalarProperty Name="MODULE_ID" ColumnName="MODULE_ID" />
+                <ScalarProperty Name="ERR_NO" ColumnName="ERR_NO" />
+                <ScalarProperty Name="ERR_MSG" ColumnName="ERR_MSG" />
+                <ScalarProperty Name="ERR_QUERY" ColumnName="ERR_QUERY" />
+                <ScalarProperty Name="COMPUTER_NAME" ColumnName="COMPUTER_NAME" />
+                <ScalarProperty Name="EMP_NAME" ColumnName="EMP_NAME" />
+                <ScalarProperty Name="EMP_EMAIL" ColumnName="EMP_EMAIL" />
+                <ScalarProperty Name="MEMB_ID" ColumnName="MEMB_ID" />
+                <ScalarProperty Name="RESULT_YN" ColumnName="RESULT_YN" />
+                <ScalarProperty Name="POST_DATA" ColumnName="POST_DATA" />
+                <ScalarProperty Name="PCID" ColumnName="PCID" />
+                <ScalarProperty Name="HTTP_COOKIE" ColumnName="HTTP_COOKIE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_APP_ERROR_LOG_CNT" FunctionName="AdminEtcModel.Store.SP_APP_ERROR_LOG_CNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdminEtcModel.SP_ADMIN_COMMON_CNT_Result">
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

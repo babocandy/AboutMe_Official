@@ -305,5 +305,48 @@ namespace AboutMe.Domain.Entity.AdminEtc
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_APP_ERRORLOG_INS", mODULE_IDParameter, eRR_NUMParameter, eRR_MSGParameter, eRR_QUERYParameter, cOMPUTER_NAMEParameter, eMP_NAMEParameter, eMP_EMAILParameter, mEMB_IDParameter, rESULT_YNParameter, pOST_DATAParameter, pCIDParameter, hTTP_COOKIEParameter);
         }
+    
+        public virtual ObjectResult<SP_APP_LOG_DETAIL_SEL_Result> SP_APP_LOG_DETAIL_SEL(Nullable<int> sEQNO)
+        {
+            var sEQNOParameter = sEQNO.HasValue ?
+                new ObjectParameter("SEQNO", sEQNO) :
+                new ObjectParameter("SEQNO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_APP_LOG_DETAIL_SEL_Result>("SP_APP_LOG_DETAIL_SEL", sEQNOParameter);
+        }
+    
+        public virtual ObjectResult<SP_APP_LOG_DETAIL_SEL_Result> SP_APP_ERROR_LOG_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_APP_LOG_DETAIL_SEL_Result>("SP_APP_ERROR_LOG_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COMMON_CNT_Result> SP_APP_ERROR_LOG_CNT(string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COMMON_CNT_Result>("SP_APP_ERROR_LOG_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
     }
 }

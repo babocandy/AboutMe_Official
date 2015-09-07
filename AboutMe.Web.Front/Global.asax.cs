@@ -51,8 +51,8 @@ namespace AboutMe.Web.Front
         protected void Application_Error(object sender, EventArgs e)
         {
 
-            Common.AppErrorLog AppErr = new Common.AppErrorLog();
-            AppErr.HandlerInsertAppErrLog(sender, e);
+            //Common.AppErrorLog AppErr = new Common.AppErrorLog();
+           // AppErr.HandlerInsertAppErrLog(sender, e);
            
             /**
             Exception exception = Server.GetLastError();
@@ -89,7 +89,7 @@ namespace AboutMe.Web.Front
             }
              * **/
 
-            Response.Redirect("/CustomError/Err500");
+            //Response.Redirect("/CustomError/Err500");
              
 
         }

@@ -28,7 +28,7 @@
                     
                     <li>
                         <a href="#none" class="shoplist" id="shop_@item.IDX" onclick="loadShop(this)">
-                            <span class="name">@Html.Raw(item.SHOP_NAME)</span>
+                            <span class="name">어바웃미 <em class="stloc">@Html.Raw(item.SHOP_NAME)</em></span>
                             <span class="addres">@item.ADDR1 @item.ADDR2</span>
                             <span class="tel">@item.TEL_NUM</span>
                             <span class="location_info" style="display:none">@item.LOCATION_INFO</span>
@@ -47,7 +47,7 @@
                 { 
                     <div class="map_area">
                         <div class="map_info" style="z-index:2">
-                            <p class="tit"></p>
+                            <p class="tit">어바웃미<br /><strong></strong></p>
                             <p class="address" id="shopAddress">
                             
                             </p>
@@ -66,8 +66,8 @@
         $("#naverMap").empty();
         
         //주소 레이어정보
-        var shop_name = $(s).find(".name").html();
-        $(".map_info .tit").html(shop_name);
+        var shop_name = $(s).find(".stloc").html();
+        $(".map_info .tit strong").html(shop_name);
         var address = $(s).find(".addres").html();
         var location_info = $(s).find(".location_info").html();
         if (location_info != "")
