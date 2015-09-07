@@ -129,8 +129,6 @@ namespace AboutMe.Domain.Entity.Review
     {
         public static string SORT_PHOTO = "0";
         public static string SORT_LASTEST = "1";
-
-
         public List<SP_REVIEW_PRODUCT_SEL_Result> Reviews { get; set; }
 
         public int PageNo { get; set; }
