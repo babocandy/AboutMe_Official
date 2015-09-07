@@ -2,14 +2,22 @@
 .display #container {background:#fff; padding-bottom:80px;}
 /*뷰티*/
 .beauty {background:#eaf9fc;}
-.beauty .inner {background:#eaf9fc; padding:40px 0 30px;}
+.beauty .inner {background:#eaf9fc; padding:54px 0;}
 /*헬스*/
 .health {background:#f9f6f5;}
-.health .inner {background:#f9f6f5; padding:40px 0 30px;}
+.health .inner {background:#f9f6f5; padding:54px 0;}
+/*기타브랜드*/
+.etc {background:#f9f6f5;}
+.etc .inner {background:#f9f6f5; padding:33px 0;}
 
-.display_top {}
-.display_top h2 {text-align:center; margin-bottom:55px;}
+.display_top {position:relative; }
+.display_top h2 {float:left; width:330px;}
+.display_top:after {display:block; clear:both; content:'';}
 .display_top .sort_area {text-align:center;}
+
+.beauty .selecttypeC {position:absolute; left:330px; top:0;}
+.health .selecttypeC {position:absolute; left:600px; top:0;}
+.etc .selecttypeC {position:absolute; left:330px; top:20px;}
 
 /* .display_bottom .product_area .filter{position:relative; margin-top:30px;padding:21px 0 18px;border:1px solid #95d9f0;overflow:hidden;}
 .display_bottom .product_area .filter .fti{float:left;display:inline-block;width:139px;font-size:18px;line-height:1;color:#1a1818;text-align:center;}
@@ -146,7 +154,7 @@
 .detail_bottom .left_area .product_tab .related_product .boxtypee .tit {font-size:16px; color:#1b1818; margin-top:0; margin-bottom:4px;}
 .detail_bottom .left_area .product_tab .related_product .boxtypee .txt {font-size:13px; color:#696361;}
 .detail_bottom .left_area .product_tab .related_product .product_admin {}
-.detail_bottom .left_area .product_tab .protabs {padding-bottom:30px; margin-bottom:30px; border-bottom:1px solid #43413f; overflow:hidden;}
+.detail_bottom .left_area .product_tab .protabs {padding-bottom:30px; border-bottom:1px solid #43413f; overflow:hidden;}
 .detail_bottom .left_area .product_tab .protabs li {float:left;}
 .detail_bottom .left_area .product_tab .protabs li a {display:block; padding:0 20px; height:20px; overflow:hidden;}
 .detail_bottom .left_area .product_tab .protabs li.cnt a img {margin-top:-53px;}
