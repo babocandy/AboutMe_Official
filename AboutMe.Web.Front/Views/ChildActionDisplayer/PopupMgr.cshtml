@@ -14,10 +14,15 @@
     @foreach (var item in Model.List)
     {
         var prop = string.Format("width={0},height={1},left={2},top={3}", item.SIZE_HEIGHT, item.SIZE_HEIGHT, item.POS_LEFT, item.POS_TOP);
+        <text>
+
+        if (getCookie("popup_@item.IDX") != "no"){
+            window.open("@Url.Action("PopupWindow", "ChildActionDisplayer", new { idx = @item.IDX })", "popup_@(item.IDX)", "@prop");
+        }
         
-        @:
-        
-          @:window.open("@Url.Action("PopupWindow", "ChildActionDisplayer", new { idx = @item.IDX })", "popup_@(item.IDX)", "@prop");
+    </text>
+
+
 
         ++cnt;
 
