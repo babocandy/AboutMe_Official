@@ -11,7 +11,7 @@ namespace AboutMe.Domain.Service.AdminEtc
     public class AdminMemberService : IAdminMemberService
     {
 
-        public List<SP_ADM_ADMIN_MEMBER_SEL_Result> GetAdminMemberList(string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, int pAGE, int pAGESIZE)
+       public List<SP_ADM_ADMIN_MEMBER_SEL_Result> GetAdminMemberList(string sEARCH_COL, string sEARCH_KEYWORD, string sORT_COL, string sORT_DIR, int pAGE, int pAGESIZE)
       {
 
           List<SP_ADM_ADMIN_MEMBER_SEL_Result> lst = new List<SP_ADM_ADMIN_MEMBER_SEL_Result>();
