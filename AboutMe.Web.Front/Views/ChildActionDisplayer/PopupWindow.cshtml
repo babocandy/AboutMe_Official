@@ -30,6 +30,6 @@
 @section Body{
     <a href="#" onclick="gotoPage();return false;"><img src="@string.Format("{0}{1}", myController._img_path_display, Model.Detail.WEB_IMG)" alt="@Model.Detail.TITLE" /></a>
     <div class="oneday_wrap">
-        <label><input id="oneday" type="checkbox"> 오늘 하루 이 창을 열지않음</label>
+        <label><input id="popup_@(Model.Detail.IDX)" type="checkbox"> 오늘 하루 이 창을 열지않음</label>
     </div>
 }
