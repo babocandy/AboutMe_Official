@@ -250,10 +250,16 @@
     <Compile Include="Entity\AdminEtc\SP_ADM_ADMIN_MEMBER_SEL_Result.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AdminEtc\SP_APP_LOG_DETAIL_SEL_Result.cs">
+      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\AdminEtc\SP_DUMMY_ADMIN_SEL_Result.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminEtc\TB_ADMIN_MEMBER.cs">
+      <DependentUpon>ModelAdminEtc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AdminEtc\TB_APP_ERROR_LOG.cs">
       <DependentUpon>ModelAdminEtc.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AdminFrontMember\ModelAdminFrontMember.Context.cs">
@@ -1216,8 +1222,10 @@
     <Compile Include="Service\AdminCoupon\IAdminCouponService.cs" />
     <Compile Include="Service\AdminDisplay\AdminDisplayService.cs" />
     <Compile Include="Service\AdminDisplay\IAdminDisplayService.cs" />
+    <Compile Include="Service\AdminEtc\AdminEtcErrorLogService.cs" />
     <Compile Include="Service\AdminEtc\AdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\AdminUserService.cs" />
+    <Compile Include="Service\AdminEtc\IAdminEtcErrorLogService.cs" />
     <Compile Include="Service\AdminEtc\IAdminMemberService.cs" />
     <Compile Include="Service\AdminEtc\IAdminUserService.cs" />
     <Compile Include="Service\AdminFrontMember\AdminFrontMemberService.cs" />

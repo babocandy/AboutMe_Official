@@ -163,12 +163,13 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 .outSelB .tag_options li.open_hover {color: #2465ec;}
 
 .selecttypeC {text-align:center;}
-.selecttypeC .sort {display: inline-block; position:relative;  width:210px; margin-right:56px;}
-.selecttypeC .sort .tit {width:100%; background: url("/aboutCom/images/common/bg_select.png") no-repeat right 0;	 border-bottom:2px solid #1b1818; box-sizing: border-box;color: #262727;cursor: pointer;	font-size: 20px; height: 38px; line-height: 26px; text-align:left;}
+.selecttypeC .sort {display: inline-block; position:relative;  width:210px;margin-left:56px;}
+.selecttypeC .sort:first-child {margin-left:0px;}
+.selecttypeC .sort .tit {width:100%; background: url("/aboutCom/images/common/bg_select.png") no-repeat right 0;	 border-bottom:1px solid #82888a; box-sizing: border-box;color: #262727;cursor: pointer;	font-size: 20px; height: 32px; line-height: 26px; text-align:left;}
 .selecttypeC .sort.nolist .tit {background:none;}
 .selecttypeC .sort.on .tit {color:#33c1e5; font-weight:bold;}
 .selecttypeC .sort.on .tit a {color:#33c1e5;}
-.selecttypeC .sort ul {display:none;width:100%; position:absolute; left:0; top:38px; padding-top:24px; padding-bottom:21px; text-align:left; background:#fff; box-sizing: border-box; z-index:20;}
+.selecttypeC .sort ul {display:none;width:100%; position:absolute; left:0; top:32px; padding-top:24px; padding-bottom:21px; text-align:left; background:#fff; box-sizing: border-box; z-index:20;}
 .selecttypeC .sort ul li {font-size:13px; margin-left:20px;  padding-left:30px; padding-top:6px; padding-bottom:6px;}
 .selecttypeC .sort ul li.cnt {background:url("/aboutCom/images/common/bul20.png") 0 -150px no-repeat; }
 .selecttypeC .sort ul li a {color:#1b1818;}
@@ -392,9 +393,10 @@ p { word-wrap:break-word; word-break:break-all; -webkit-text-size-adjust:none;}
 .reviewpop .reviewpop_bottom {padding-top:35px;}
 .reviewpop .userinfo {}
 .reviewpop .userinfo .skin {display:inline-block; height:18px; background:url("/aboutCom/images/review/bg_skintype.gif") right 0 no-repeat; font-size:0; vertical-align:middle;}
-.reviewpop .userinfo .skin.dry {width:81px; background-position:-54px -100px;}
+.reviewpop .userinfo .skin.dry {width:48px; background-position:-54px -100px;}
 .reviewpop .userinfo .skin.normal {width:48px; background-position:-54px -43px;}
-.reviewpop .userinfo .skin.oliy {width:48px; background-position:-23px 0;}
+.reviewpop .userinfo .skin.oliy {width:81px; background-position:-21px 0;}
+.reviewpop .userinfo .skin.oily {width:81px; background-position:-21px 0;}
 .reviewpop .userinfo .age_gender {display:inline-block; margin-left:13px; padding-left:15px; background:url("/aboutCom/images/review/bg_bar2.gif") 0 1px no-repeat;vertical-align:middle; font-size:16px; color:#1b1818}
 .reviewpop .right{position:absolute; right:0px; top:21px;}
 .reviewpop .reviewpop_bottom .reviewtxt {padding-top:22px; padding-bottom:10px; font-size:13px; color:#696361; background:url("/aboutCom/images/review/bg_dotted.gif") 0 bottom repeat-x;}
@@ -548,9 +550,6 @@ body.popup {min-width:0;overflow:hidden;}
 .noescrow h2{font-size:16px;color:#1b1818;font-weight:normal;}
 .noescrow .txtareatypea{margin-top:8px;height:114px;}
 .noescrow .btngroup a + a{margin-left:2px;}
-.noescrow .oneday_wrap{position:absolute;bottom:0;left:0;padding-right:20px;width:100%;height:35px;background-color:#efe8e6;text-align:right;box-sizing:border-box;}
-.noescrow .oneday_wrap label{font-family:"Dotum";font-size:12px;line-height:35px;color:#1b1818;}
-.noescrow .oneday_wrap label input[type="checkbox"]{vertical-align:middle;}
 
 /*에스크로 지급확인 거절 팝업*/
 .escrow_conf{margin-top:27px;text-align:center;}
@@ -567,6 +566,11 @@ body.popup {min-width:0;overflow:hidden;}
 /*검색결과없음*/
 .no_data {padding-top:50px; padding-bottom:67px; text-align:center; font-size:12px; color:#686360; background:#fff;}
 .no_data .txt {margin-top:28px; font-size:18px; line-height:18px;}
+
+/* (팝업)오늘하루 이 창을 열지 않음 */
+.oneday_wrap{padding-right:20px;width:100%;height:35px;background-color:#efe8e6;text-align:right;box-sizing:border-box;}
+.oneday_wrap label{font-family:"Dotum";font-size:12px;line-height:35px;color:#1b1818;}
+.oneday_wrap label input[type="checkbox"]{vertical-align:middle;}
 
 /* IE8 only */
 @media \0screen {

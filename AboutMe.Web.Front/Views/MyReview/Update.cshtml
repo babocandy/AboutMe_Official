@@ -64,8 +64,6 @@
         function save() {
             var frm = document.frm
 
-            console.log(frm.COMMENT)
-            console.log(document.getElementById("commentDummy").innerHTML)
 
             frm.COMMENT.value = document.getElementById("commentDummy").innerHTML;
 
@@ -110,7 +108,7 @@
                         <table summary="상품찾기, 피부타입, 제목">
                             <caption>상품 리뷰 등록 입력 표</caption>
                             <colgroup>
-                                @if (ReviewHelper.CheckBeauty(@Model.C_CATE_CODE))
+                                @if (!ReviewHelper.CheckHealth(@Model.C_CATE_CODE))
                                 {
                                     <col width="147" />
                                     <col width="*" />
@@ -126,7 +124,7 @@
                             <tbody>
                                 <tr>
                                     <th>상품명</th>
-                                    <td class="pro_info" colspan="@(ReviewHelper.CheckBeauty(Model.C_CATE_CODE) ? "" : "3")" >
+                                    <td class="pro_info" colspan="@(!ReviewHelper.CheckHealth(Model.C_CATE_CODE) ? "" : "3")" >
                                         <!--이미지사이즈 96x96-->
                                         <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
                                         <div class="detail">
@@ -135,7 +133,7 @@
                                         </div>
                                     </td>
 
-                                    @if (ReviewHelper.CheckBeauty(@Model.C_CATE_CODE))
+                                    @if (!ReviewHelper.CheckHealth(@Model.C_CATE_CODE))
                                     {
                                         <th class="skintype">피부타입</th>
                                         <td class="skintype">

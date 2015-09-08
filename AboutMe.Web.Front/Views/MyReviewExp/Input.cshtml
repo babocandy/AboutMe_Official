@@ -2,6 +2,7 @@
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Front.Controllers
 @using AboutMe.Common.Data
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "체험단 리뷰 - ABOUT ME";
     ViewBag.TopClass = "mypage";
@@ -152,10 +153,10 @@
                                                         <th>상품</th>
 
                                                         <td class="prosearch"> @(Model.ProductInfo.P_NAME)</td>
-                                                        <td rowspan="2" class="product">
+                                                        <td rowspan="@(!ReviewHelper.CheckHealth(Model.ProductInfo.C_CATE_CODE) ? "2" : "1")" class="product">
                                                             <div class="pro_info">
                                                                 <!--이미지사이즈 96x96-->
-                                                                <div class="photo"><img src="@string.Format("{0}R64_{1}", myController._img_path_product, Model.ProductInfo.MAIN_IMG)" alt="" /></div>
+                                                                <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.ProductInfo.MAIN_IMG)" alt="" /></div>
                                                                 <div class="detail">
                                                                     <p class="tit">@Model.ProductInfo.P_NAME</p>
                                                                     <p class="stit">@Model.ProductInfo.P_SUB_TITLE</p>
@@ -163,33 +164,33 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <th><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
-                                                        <td class="skintype">
+                                                    @if (!ReviewHelper.CheckHealth(Model.ProductInfo.C_CATE_CODE))
+                                                    {
+                                                        <tr>
+                                                            <th><span>@Html.ValidationMessageFor(model => model.SKIN_TYPE)</span>피부타입</th>
+                                                            <td class="skintype">
 
-                                                            @{
-                List<SelectListItem> items = new List<SelectListItem>();
-                items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
-                items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
-                items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
-
-
-                foreach (var xx in items)
-                {
-                    if (xx.Value == Model.SKIN_TYPE)
-                    {
-                        xx.Selected = true;
-                        break;
-                    }
-                }
-                                                            }
-
-                                                            @Html.DropDownList("SKIN_TYPE", items, "선택", new { @class = "selectstyleb" })
+                                                                @{
+                                                                    List<SelectListItem> items = new List<SelectListItem>();
+                                                                    items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
+                                                                    items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
+                                                                    items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
 
 
-
-                                                        </td>
-                                                    </tr>
+                                                                    foreach (var xx in items)
+                                                                    {
+                                                                        if (xx.Value == Model.SKIN_TYPE)
+                                                                        {
+                                                                            xx.Selected = true;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                @Html.DropDownList("SKIN_TYPE", items, "선택", new { @class = "selectstyleb" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+     
                                                     <tr>
                                                         <th><span>@Html.ValidationMessageFor(model => model.TITLE)</span>제목</th>
                                                         <td colspan="2"><input type="text" class="ipttypea" style="width:100%" title="제목 입력" name="TITLE" value="@Model.TITLE" /></td>

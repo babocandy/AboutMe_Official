@@ -9,6 +9,8 @@ using System.Transactions;
 using System.Data.Entity.Core.Objects;
 using AboutMe.Domain.Entity.AdminCoupon;
 
+
+
 namespace AboutMe.Domain.Service.Coupon
 {
     public class CouponService : ICouponService
@@ -83,6 +85,7 @@ namespace AboutMe.Domain.Service.Coupon
                                 using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
                                 {
                                     AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(M_Id, IdxCouponNumber, UpdateMethod);
+                                    //AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(null, null, null);
                                 }
                                 scope.Complete();
                             }
@@ -91,7 +94,12 @@ namespace AboutMe.Domain.Service.Coupon
                                 Transaction.Current.Rollback();
                                 scope.Dispose();
                                 ResulstCode = -1;
+                                
+                                //에러를 강제로 발생시킨다.
+                                throw new Exception("", ex);
+                            
                             }
+                         
                         }
                     }
                 }
@@ -118,6 +126,8 @@ namespace AboutMe.Domain.Service.Coupon
                         Transaction.Current.Rollback();
                         scope.Dispose();
                         ResulstCode = -1;
+                        //에러를 강제로 발생시킨다.
+                        throw new Exception("", ex);
                     }
                 }
                    
@@ -357,6 +367,9 @@ namespace AboutMe.Domain.Service.Coupon
                     Transaction.Current.Rollback();
                     scope.Dispose();
                     IsSuccess = -1;
+
+                    //에러를 강제로 발생시킨다.
+                    throw new Exception("", ex);
                 }
 
             }
@@ -445,6 +458,8 @@ namespace AboutMe.Domain.Service.Coupon
                             Transaction.Current.Rollback();
                             scope.Dispose();
                             ResulstCode = -1;
+                            //에러를 강제로 발생시킨다.
+                            throw new Exception("", ex);
                         }
                     }
                 }

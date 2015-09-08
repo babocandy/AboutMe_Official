@@ -30,6 +30,7 @@ namespace AboutMe.Domain.Entity.AdminEtc
         public virtual DbSet<ADMIN_MEMBER> ADMIN_MEMBER { get; set; }
         public virtual DbSet<ADMIN_MEMBER_DEPT> ADMIN_MEMBER_DEPT { get; set; }
         public virtual DbSet<TB_ADMIN_MEMBER> TB_ADMIN_MEMBER { get; set; }
+        public virtual DbSet<TB_APP_ERROR_LOG> TB_APP_ERROR_LOG { get; set; }
     
         public virtual ObjectResult<SP_ADM_ADMIN_MEMBER_CNT> SP_ADM_ADMIN_MEMBER_CNT(string sEARCH_COL, string sEARCH_KEYWORD)
         {
@@ -250,6 +251,102 @@ namespace AboutMe.Domain.Entity.AdminEtc
         public virtual ObjectResult<Nullable<System.DateTime>> sp_song_test()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("sp_song_test");
+        }
+    
+        public virtual int SP_APP_ERRORLOG_INS(string mODULE_ID, Nullable<long> eRR_NUM, string eRR_MSG, string eRR_QUERY, string cOMPUTER_NAME, string eMP_NAME, string eMP_EMAIL, string mEMB_ID, string rESULT_YN, string pOST_DATA, Nullable<long> pCID, string hTTP_COOKIE)
+        {
+            var mODULE_IDParameter = mODULE_ID != null ?
+                new ObjectParameter("MODULE_ID", mODULE_ID) :
+                new ObjectParameter("MODULE_ID", typeof(string));
+    
+            var eRR_NUMParameter = eRR_NUM.HasValue ?
+                new ObjectParameter("ERR_NUM", eRR_NUM) :
+                new ObjectParameter("ERR_NUM", typeof(long));
+    
+            var eRR_MSGParameter = eRR_MSG != null ?
+                new ObjectParameter("ERR_MSG", eRR_MSG) :
+                new ObjectParameter("ERR_MSG", typeof(string));
+    
+            var eRR_QUERYParameter = eRR_QUERY != null ?
+                new ObjectParameter("ERR_QUERY", eRR_QUERY) :
+                new ObjectParameter("ERR_QUERY", typeof(string));
+    
+            var cOMPUTER_NAMEParameter = cOMPUTER_NAME != null ?
+                new ObjectParameter("COMPUTER_NAME", cOMPUTER_NAME) :
+                new ObjectParameter("COMPUTER_NAME", typeof(string));
+    
+            var eMP_NAMEParameter = eMP_NAME != null ?
+                new ObjectParameter("EMP_NAME", eMP_NAME) :
+                new ObjectParameter("EMP_NAME", typeof(string));
+    
+            var eMP_EMAILParameter = eMP_EMAIL != null ?
+                new ObjectParameter("EMP_EMAIL", eMP_EMAIL) :
+                new ObjectParameter("EMP_EMAIL", typeof(string));
+    
+            var mEMB_IDParameter = mEMB_ID != null ?
+                new ObjectParameter("MEMB_ID", mEMB_ID) :
+                new ObjectParameter("MEMB_ID", typeof(string));
+    
+            var rESULT_YNParameter = rESULT_YN != null ?
+                new ObjectParameter("RESULT_YN", rESULT_YN) :
+                new ObjectParameter("RESULT_YN", typeof(string));
+    
+            var pOST_DATAParameter = pOST_DATA != null ?
+                new ObjectParameter("POST_DATA", pOST_DATA) :
+                new ObjectParameter("POST_DATA", typeof(string));
+    
+            var pCIDParameter = pCID.HasValue ?
+                new ObjectParameter("PCID", pCID) :
+                new ObjectParameter("PCID", typeof(long));
+    
+            var hTTP_COOKIEParameter = hTTP_COOKIE != null ?
+                new ObjectParameter("HTTP_COOKIE", hTTP_COOKIE) :
+                new ObjectParameter("HTTP_COOKIE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_APP_ERRORLOG_INS", mODULE_IDParameter, eRR_NUMParameter, eRR_MSGParameter, eRR_QUERYParameter, cOMPUTER_NAMEParameter, eMP_NAMEParameter, eMP_EMAILParameter, mEMB_IDParameter, rESULT_YNParameter, pOST_DATAParameter, pCIDParameter, hTTP_COOKIEParameter);
+        }
+    
+        public virtual ObjectResult<SP_APP_LOG_DETAIL_SEL_Result> SP_APP_LOG_DETAIL_SEL(Nullable<int> sEQNO)
+        {
+            var sEQNOParameter = sEQNO.HasValue ?
+                new ObjectParameter("SEQNO", sEQNO) :
+                new ObjectParameter("SEQNO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_APP_LOG_DETAIL_SEL_Result>("SP_APP_LOG_DETAIL_SEL", sEQNOParameter);
+        }
+    
+        public virtual ObjectResult<SP_APP_LOG_DETAIL_SEL_Result> SP_APP_ERROR_LOG_SEL(Nullable<int> pAGE, Nullable<int> pAGESIZE, string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_APP_LOG_DETAIL_SEL_Result>("SP_APP_ERROR_LOG_SEL", pAGEParameter, pAGESIZEParameter, sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
+        }
+    
+        public virtual ObjectResult<SP_ADMIN_COMMON_CNT_Result> SP_APP_ERROR_LOG_CNT(string sEARCH_KEY, string sEARCH_KEYWORD)
+        {
+            var sEARCH_KEYParameter = sEARCH_KEY != null ?
+                new ObjectParameter("SEARCH_KEY", sEARCH_KEY) :
+                new ObjectParameter("SEARCH_KEY", typeof(string));
+    
+            var sEARCH_KEYWORDParameter = sEARCH_KEYWORD != null ?
+                new ObjectParameter("SEARCH_KEYWORD", sEARCH_KEYWORD) :
+                new ObjectParameter("SEARCH_KEYWORD", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ADMIN_COMMON_CNT_Result>("SP_APP_ERROR_LOG_CNT", sEARCH_KEYParameter, sEARCH_KEYWORDParameter);
         }
     }
 }

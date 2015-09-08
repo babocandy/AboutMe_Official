@@ -50,6 +50,30 @@ namespace AboutMe.Web.Front.Controllers
           
         }
 
+        public ActionResult ttt()
+        {
+
+            try
+            {
+                using (AdminCouponEntities AdmCouponContext = new AdminCouponEntities())
+                {
+                    AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE("", 0, "");
+                    //AdmCouponContext.SP_COUPON_DOWNLOAD_AT_PC_VERSION_UPDATE(null, null, null);
+                }
+               
+            }
+            catch (Exception ex)
+            {
+         
+                //에러 Writing 
+                AboutMe.Common.ErrorHandler.AppErrorLog AppErr = new AboutMe.Common.ErrorHandler.AppErrorLog();
+                AppErr.HandlerInsertAppErrLogForController(ex);
+
+            }
+            return RedirectToAction("Availablelist", "MyCoupon");
+
+        }
+
 
         //쿠폰 다운로드 버튼을 클릭했을 때 다운로드 처리 // PC버전, 번호인증 필요없는 쿠폰 
         [CustomAuthorize(CustomRedirection="/MyPage/MyCoupon/Downloadable")]
@@ -69,6 +93,7 @@ namespace AboutMe.Web.Front.Controllers
                 IdxCouponNumber = 0;
             }
              * **/
+
 
             IsSuccess = _CouponService.UpdateCouponDownload_Pc_Ver_And_NoNumberChk_Ver(M_Id, IdxCouponNumber, UpdateMethod);
 

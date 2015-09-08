@@ -235,7 +235,7 @@
                             {
                                 <li>
                                     <p class="tit">@(new HtmlString(item.P_NAME))</p>
-                                    <img src="/aboutCom/images/sample/thum_event1.jpg" alt="" />
+                                    <img src="@ViewBag.PRODUCT_PATH@item.MAIN_IMG" width="370" height="370" alt="" />
                                     <p class="price"><del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del><span><strong>@String.Format("{0:#,##0}", item.RESULT_PRICE)</strong>원</span></p>
                                     <div class="prolink">
                                         <a href="/shopping/detail?pcode=@item.P_CODE" class="btn_white_w130h60">

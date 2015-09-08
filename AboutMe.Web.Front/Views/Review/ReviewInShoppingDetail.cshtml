@@ -41,7 +41,7 @@
                     <div class="cont accordcont @cssClassName @selectContent">
                         <div class="subj accordsubject">
                             <div class="writer">
-                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                 <span class="id">@item.M_ID_LBL</span>
                             </div>
                             <p class="txtdotdot" style="">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="contxt accordtxt">
                             <div class="writer">
-                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(ReviewHelper.CheckBeauty(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
+                                <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                 <span class="id">@item.M_ID_LBL</span>
                             </div>
                             @Html.Raw(item.COMMENT_HTML)
@@ -359,7 +359,7 @@
             html += "<div class='subj accordsubject'>";
 
             html += "   <div class='writer'>";
-            html += "      <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)=="101" ? "" :"display:none")+"' ></em><em class='"+( item.C_CATE_CODE.substr(0, 3)=="101" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
+            html += "      <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></em><em class='"+( item.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
             html += "        <span class='id'>"+item.M_ID_LBL+"</span>";
             html += "     </div>";
 
@@ -377,7 +377,7 @@
                             html += "</div>";
                             html += " <div class='contxt accordtxt'>";
                             html += "  <div class='writer'>";
-                            html += "                <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)=="101" ? "" :"display:none")+"'  ></em><em class='"+( item.C_CATE_CODE.substr(0, 3)=="101" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
+                            html += "                <span class='userage'><em class='skin "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"'  ></em><em class='"+( item.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em></span>";
                             html += "                <span class='id'>"+item.M_ID_LBL+"</span>";
                             html += "          </div>";
 
@@ -486,8 +486,8 @@
             html += " <div class='writer'>";
 
             html += "<span class='userage'>";
-            html += "<em class='skin "+item.SKIN_TYPE_CSS+"'>";
-            html += "</em><em class='age'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em>";
+            html += "<em class='skin "+item.SKIN_TYPE_CSS+"'  style='"+(item.SKIN_TYPE != undefined ? "" :"display:none")+"' >";
+            html += "</em><em class='"+(item.SKIN_TYPE != undefined ? "age" :"")+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</em>";
             html += "</span>";
 
             html += "<span class='idhit'>";
@@ -501,7 +501,10 @@
 
             html += "    <div class='reviewcont' onclick=\"reviewpop_view("+item.IDX +",'"+item.P_CODE+"',this);return false;\">";
             html += "        <div class='photo'>";
-            html += "             <img src='"+img_path_review+"R308_"+item.SUB_IMG_1+"' alt='' />";
+            if (item.SUB_IMG_1 != undefined) {
+                html += "             <img src='"+img_path_review+"R308_"+item.SUB_IMG_1+"' alt='' />";
+            }
+            
             html += "        </div>";
             html += "        <div class='detail'>";
             html += "            <div class='tag'>";
@@ -509,7 +512,10 @@
             /*tag common*/
             var arr = item.TAG.split("#");
             for(var k = 0; k < arr.length ; ++k){
-                html += "<span>#" + arr[k] + "</span>\n";
+                if (arr[k] != "") {
+                    html += "<span>#" + arr[k] + "</span>\n";
+                }
+                
             }
 
             html += "            </div>";

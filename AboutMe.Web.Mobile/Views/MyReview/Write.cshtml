@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </li>
-            @if (ReviewHelper.CheckBeauty(Model.ProductInfo.C_CATE_CODE))
+            @if (!ReviewHelper.CheckHealth(Model.ProductInfo.C_CATE_CODE))
             {
                 <li>
                     <dl>

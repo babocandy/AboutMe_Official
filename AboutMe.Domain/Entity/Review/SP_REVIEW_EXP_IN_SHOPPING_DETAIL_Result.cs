@@ -38,5 +38,6 @@ namespace AboutMe.Domain.Entity.Review
         public string TAG { get; set; }
         public string IS_BEST { get; set; }
         public Nullable<System.DateTime> INS_DATE { get; set; }
+        public string C_CATE_CODE { get; set; }
     }
 }

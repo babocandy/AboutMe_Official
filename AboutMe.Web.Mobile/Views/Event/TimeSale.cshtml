@@ -133,6 +133,7 @@
 
 
         function AddCartSingle(sel_p_code) {
+           
             var arrP = new Array;
             var obj = new Object();
             /**
@@ -141,6 +142,8 @@
             **/
             obj.p_code = sel_p_code;
             obj.p_count = 1;
+
+           
             arrP.push(obj);
             Cart_Input(arrP);
         }
@@ -148,6 +151,7 @@
 
 
         //여러개의 상품을 쇼핑백에 넣고, 바로구매 하기 (ToDo)
+
         function NowOrderPluralInput() {
             if (confirm('바로구매하시겠습니까?')) {
 
@@ -265,11 +269,10 @@
                 <h2>타임세일</h2>
             </div>
             <div class="timesale_area">
-                <p id="timesale" class="timesale"></p>
-
                 <div class="timebnr">
                     <!-- <img src="/aboutCom/images/sample/timesale.jpg" alt="" />-->
                     <img src="@ViewBag.PromotionPhotoPath@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MOBILE_MAIN_IMG" alt="" />
+                    <p id="timesale" class="timesale"></p>
                 </div>
                 <!--2015-08-21 추가-->
                 <div class="eventtime_bnr">
@@ -282,7 +285,7 @@
                         {
                             <li>
                                 <div class="probnr">
-                                    <div class="photo"><img src="/aboutCom/images/sample/thumb270_2.jpg" alt="" /></div>
+                                    <div class="photo"><img src="@ViewBag.ProductPhotoPath@item.MAIN_IMG" alt="" /></div>
                                     <div class="detail">
                                         <!--.ico_best
                                         .ico_coupon
@@ -322,7 +325,7 @@
                                     </div>
                                 </div>
                                 <div class="btn_area">
-                                    <a href="#" class="btn btn_brown_h40 mr5" style="width:142px;">바로구매</a><a href="javascript:AddCartSingle('@item.P_CODE');" class="btn btn_white_h40 cart" style="width:142px;">쇼핑백</a>
+                                    <a href="javascript:NowOrderInput('@item.P_CODE',1);" class="btn btn_brown_h40 mr5" style="width:142px;">바로구매</a><a href="javascript:AddCartSingle('@item.P_CODE');" class="btn btn_white_h40 cart" style="width:142px;">쇼핑백</a>
                                 </div>
                             </li>
                         }

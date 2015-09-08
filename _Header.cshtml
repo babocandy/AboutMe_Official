@@ -1,0 +1,322 @@
+﻿@using AboutMe.Web.Mobile.Common;
+
+@{
+    //IP 차단 허용 설정 --start------------------------------------------
+  
+   DateTime dOPEN_DT = Convert.ToDateTime("2015-09-08 10:30");   //오픈할 일시
+   DateTime dNOW_DT =  DateTime.Now;  //현재시각
+
+   if (dNOW_DT < dOPEN_DT) //오픈 전이라면
+   {    
+	    bool bret_IMSI_OPEN = false; //기본: 차단
+	    string strIP_IMSI_OPEN = Request.ServerVariables["REMOTE_ADDR"];
+	    // 허용IP목록 ------------------------------
+	    //114.52.63.*:코너스톤
+	    //222.112.106.57:지젠
+	    //220.72.*.*:삼양
+	    //운영사 61.252.139.67 ,61.252.139.114  ,61.252.139.107  , 61.252.139.115
+           //정재연과장 요청으로 추가 203.130.103.21 
+
+        string[] arrPERMIT_IP_IMSI_OPEN = { "114.52.63.", "222.112.106.57", "220.72.", "127.0.0.1", "61.252.139.", "203.130.103.21" };
+	    for (int i = 0; i < arrPERMIT_IP_IMSI_OPEN.Length; i++)
+	    {
+		if (strIP_IMSI_OPEN.Length >= arrPERMIT_IP_IMSI_OPEN[i].Length && arrPERMIT_IP_IMSI_OPEN[i].Length > 1)
+		{
+		    if (arrPERMIT_IP_IMSI_OPEN[i] == strIP_IMSI_OPEN.Substring(0, arrPERMIT_IP_IMSI_OPEN[i].Length))
+		    {
+			bret_IMSI_OPEN = true;
+			break;
+		    }
+		}
+	    }
+
+	    if (bret_IMSI_OPEN == true)
+	    {
+		;
+	    }
+	    else
+	    {
+
+		Response.Redirect("/OPEN_READY/READY.html");  //IP차단 대상의 경우 : 이동한 위치 지정필요
+		//Response.End;
+	    }
+   }
+//IP 차단 허용 설정 --end ------------------------------------------
+
+}
+
+<div class="header">
+    <!--h_top-->
+    <div class="h_top">
+        <h1><a href="/"><img src="/aboutCom/images/common/h_logo.png" alt="ABOUTME" /></a></h1>
+        <a href="#" class="openlnb"><img src="/aboutCom/images/common/btn_nav.png" alt="" /></a>
+        <a href="#" class="btn_search"><img src="/aboutCom/images/common/btn_search.png" alt="" /></a>
+        <a href="/Cart/" class="btn_cart">
+            <span class="num" id="flycart_cnt_txt">0</span>
+            <img src="/aboutCom/images/common/btn_cart.png" alt="" />
+        </a>
+    </div>
+    <!--h_top-->
+    <!--h_menu-->
+    <div class="h_menu">
+        <ul>
+            <li><a href="/Brand">브랜드스토리</a></li>
+            <li><a href="/shopping/Main">쇼핑</a></li>
+            <li><a href="/Event">이벤트</a></li>
+        </ul>
+    </div>
+    <!--//h_menu-->
+
+    <!--상단검색-->
+    <div class="h_search_wrap">
+        <div class="dimd"></div>
+        <span class="h_search">
+            <input type="text" id="h_search_keyword" name="h_search_keyword" value="" placeholder="상품을 검색해 주세요" />
+            <a href="javascript:goSearch();" class="btn_search"><img src="/aboutCom/images/common/btn_search.gif" alt="" /></a>
+        </span>
+    </div>
+    <!--//상단검색-->
+
+    <!--lnb-->
+    <div class="lnb_area">
+        <div class="dim"></div>
+        <a href="#" class="lnbclose">닫으시오</a>
+        <div class="lnb">
+            <!--로그인 여부에 따른 메뉴 조정-->
+            @{Html.RenderAction("ChildLayoutMenu_Util", "CommonChildAction");}
+
+            <a href="/Cart/" class="btn_cart"><img src="/aboutCom/images/common/btn_lnbcart.gif" alt="쇼핑백" /></a>
+            <div class="nav">
+                <ul class="depth1">
+                    <li><a href="/MyPage/Main">마이페이지</a></li>
+                    <li><a href="/MyPage/MyOrder">주문/배송 조회</a></li>
+                    <li class="slidetype">
+                        <a href="#none">브랜드소개</a>
+                        <div class="depth2">
+                            <ul>
+                                <li><a href="/Brand">브랜드스토리</a></li>
+                                <li><a href="/Brand/Magazine">매거진</a></li>
+                                <li><a href="/Brand/Shopinfo">매장안내</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!--카테고리정보-->
+                    @{Html.RenderAction("HeaderCategoryMenu", "ChildActionProduct");}
+                    <li><a href="/Event">이벤트</a></li>
+                    <li><a href="/Customer/Benefit">멤버쉽혜택</a></li>
+                    <li><a href="@(Url.Action("Product", "Review"))">상품리뷰</a></li>
+                    <li><a href="@(Url.Action("Experience", "Review"))">체험단리뷰</a></li>
+                    <li><a href="/Customer">고객센터</a></li>
+                    <li><a href="/Brand/Shopinfo">매장안내</a></li>
+                </ul>
+                <div class="cscenter">
+                    <p class="tit">고객센터</p>
+                    <p class="tel"><a href="tel:0807407983">080. 740. 7983</a></p>
+                    <p class="txt">평일 오전 9시-12시, 오후 1시-6시(토,일,공휴일 휴무)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form name="nowOrderform" method="post">
+        <input type="hidden" name="OrderList" value="">
+    </form>
+    <!--//lnb-->
+</div>
+
+
+<script language="javascript">
+    function goSearch() {
+        var param = document.getElementById("h_search_keyword").value
+        location.href = "/Search/Index?SEARCH_KEWWORD=" + param;
+    }
+
+    // 쇼핑백담기
+    function Cart_Product_Input(p_code, p_count) {
+        var arrP = new Array;
+        var obj = new Object();
+        obj.p_code = p_code;
+        obj.p_count = p_count;
+        arrP.push(obj);
+        Cart_Input(arrP);
+    }
+
+    // 쇼핑백담기
+    //var arr = [ {"p_code":"1111111", "p_count":"1" }, {"p_code":"1111111", "p_count":"1" }];
+    function Cart_Input(arrayOfObjects) {
+
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
+
+        var src_url = "/Cart/CartInput";
+        var param = "data=" + jobj;
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.cart_count > -1) {
+                    $("#flycart_cnt_txt").text(data.cart_count);
+                }
+
+                if (data.result == "true") {
+                    //  ow_no("/order/cart_confirm.asp",'cart_confirm', "416","270");
+                    if (confirm("쇼핑백에 담았습니다. 쇼핑백으로 이동하시겠습니까?")) {
+                        location.href = "/Cart/";
+                    }
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+
+
+    }
+    // 쇼핑백 개수
+    function CartCount() {
+        var src_url = "/Cart/CartCount";
+        //var result = jQuery.parseJSON(getHttpRequest(src_url, 'POST', param));
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: "",
+            success: function (data) {
+                if (data.cart_count > -1) {
+                    $("#flycart_cnt_txt").text(data.cart_count);
+                }
+
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+
+    }
+
+    //바로구매 하기 (ToDo)
+    function NowOrderInput(p_code, p_count) {
+        if (confirm('바로구매하시겠습니까?')) {
+            var arrP = new Array;
+            var obj = new Object();
+            obj.p_code = p_code;
+            obj.p_count = p_count;
+            arrP.push(obj);
+
+            var jobj = JSON.stringify(arrP);
+            var f = document.nowOrderform;
+            f.OrderList.value = jobj;
+            var islogin = '@MemberInfo.IsMemberLogin()';
+
+            if (islogin == 'True') {
+                f.action = '/Order/InsertOrderStep1';
+            }
+            else {
+                f.action = '/MemberShip/Login';
+            }
+            f.submit();
+        }
+    }
+
+
+
+
+    //찜하기
+    function Wish_Product_Input(p_code) {
+        var arrP = new Array;
+        arrP.push(p_code);
+        Wish_Input(arrP);
+    }
+
+    //찜하기 저장
+    function Wish_Input(arrayOfObjects) {
+
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
+
+        var src_url = "/Cart/WishInput";
+        var param = "data=" + jobj;
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.wish_count > -1) {
+                    // $("#div_QUICK_CART_CNT").text(data.wish_count);
+                }
+
+                if (data.result == "true") {
+                    alert("찜하였습니다.");
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    //찜하기 카운트
+    function Wish_Count() {
+        var src_url = "/Cart/WishCount";
+        var param = "";
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.wish_count > -1) {
+                    // $("#div_QUICK_CART_CNT").text(data.wish_count);
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    //찜하기 삭제
+    function Wish_Delete(arrayOfObjects) {
+
+        var jobj = encodeURIComponent(JSON.stringify(arrayOfObjects));
+
+        var src_url = "/Cart/WishDelete";
+        var param = "data=" + jobj;
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: src_url,
+            data: param,
+            success: function (data) {
+                if (data.wish_count > -1) {
+                    // $("#div_QUICK_CART_CNT").text(data.wish_count);
+                }
+
+                if (data.result == "true") {
+                    alert("찜을 삭제하였습니다.");
+                }
+                else {
+                    if (data.msg != "") {
+                        alert(data.msg);
+                    }
+                }
+            },
+            complete: function (jqXHR, textStatus) {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        CartCount();
+    });
+</script>

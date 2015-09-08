@@ -1,6 +1,7 @@
 ﻿@model AboutMe.Domain.Entity.Review.MyReviewCompleteViewModel
 @using AboutMe.Domain.Entity.Review
 @using AboutMe.Web.Mobile.Controllers
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "나의 리뷰 - ABOUT ME";
     ViewBag.TopClass = "mypage";
@@ -76,13 +77,13 @@
                                 </div>
                                 <div class="review_info">
                                     <div class="rinfo_top">
-                                        <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
+                                        <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "":"display:none")"></span><span class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "age":"")">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong></p>
                                     </div>
                                     <div class="rinfo_con">
-                                        <p class="txtbox">@item.COMMENT</p>
+                                        <p class="txtbox">@Html.Raw(item.COMMENT_TEXT)</p>
                                         @if (item.IS_PHOTO == "Y")
                                         {
-                                            <div class="imgbox"><img src="@string.Format("{0}R308_{1}", myController._img_path_review, item.ADD_IMAGE)" alt="" /></div>
+                                            <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE_PATH)" alt="" /></div>
                                     <!-- [Desc] 텍스트의 길이가 3줄이 넘거나, 포토리뷰가 있으면 div.morebox가 있음 -->
                                             <div class="morebox">
                                                 <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->

@@ -5,8 +5,11 @@
 
     var myController = ViewContext.Controller as ChildActionDisplayerController;
 }
-<div class="brnwrap">
+
+@if (!String.IsNullOrEmpty(@Model.One.IMG))
+{
     <a href="@Model.One.URL" class="bnr">
         <img src="@Model.One.IMG" alt="">
     </a>
-</div>
+
+}

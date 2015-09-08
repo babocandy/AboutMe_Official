@@ -83,6 +83,8 @@
           <Property Type="String" Name="WEB_TARGET" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="MOBILE_IMG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MOBILE_LINK" Nullable="true" MaxLength="300" />
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -155,6 +157,8 @@
                 <ScalarProperty Name="WEB_TARGET" ColumnName="WEB_TARGET" />
                 <ScalarProperty Name="MOBILE_IMG" ColumnName="MOBILE_IMG" />
                 <ScalarProperty Name="MOBILE_LINK" ColumnName="MOBILE_LINK" />
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

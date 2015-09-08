@@ -76,7 +76,7 @@
 
                                         @if (item.Item1 != null)
                                         {
-                                            @if (!string.IsNullOrEmpty(item.Item1.ICON_YN))
+                                            if (!string.IsNullOrEmpty(item.Item1.ICON_YN))
                                             {
                                                 if (item.Item1.ICON_YN.IndexOf('B') != -1)
                                                 {
@@ -92,7 +92,7 @@
                                                 }
                                             }
 
-                                            @if (item.Item1.SOLDOUT_YN == "Y")
+                                            if (item.Item1.SOLDOUT_YN == "Y")
                                             {
                                                 <text> <span class="ico_soldout">SOLD OUT</span></text>
                                             }

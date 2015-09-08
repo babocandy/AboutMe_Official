@@ -5,10 +5,10 @@
 }
 
 <!--오른쪽영역 : 상품상세 세트상품 정보-->
-
-    <div class="setgoods">
 @if(Model.Count > 0 )
-{ 
+{
+    <div class="setgoods">
+
         <a href="/Event/SetPromotion"><img src="/aboutCom/images/shopping/tit_setgoods.gif" alt="" /></a>
         <ul>
             @foreach (var item in Model)
@@ -38,7 +38,7 @@
                 </li>
             }       
         </ul>
-}
     </div>
+}
 <!--오른쪽영역 : 상품상세 세트상품 정보-->
 

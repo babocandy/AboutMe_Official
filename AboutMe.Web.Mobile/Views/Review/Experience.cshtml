@@ -100,7 +100,11 @@
                             </span>
                         </fieldset>
                     </form>
-                    <a class="information">어바웃미 <strong>1기 체험단</strong> 모집<br>2015.06.01-2015.06.30</a>
+                    <!--체험단배너-->
+                    @Html.Action("ExpBanner", "ChildActionDisplayer")
+                    <!--/체험단배너-->
+                    @* <a class="information">어바웃미 <strong>1기 체험단</strong> 모집<br>2015.06.01-2015.06.30</a>*@
+                   
                     <p class="count">총 <strong>@Model.Total</strong>개 상품이 있습니다.</p>
                 </div>
                 @if (true)
@@ -120,7 +124,7 @@
                                 </div>
                                 <div class="review_info">
                                     <div class="rinfo_top">
-                                        <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)"></span><span class="age">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong><span class="hit">조회수 @item.VIEW_CNT</span></p>
+                                        <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)" style="@(item.SKIN_TYPE != null ? "":"display:none")"></span><span class="@(item.SKIN_TYPE != null ? "age":"")">@(item.M_BIRTHDAY_LBL)대, @(item.M_SEX_LBL)</span><strong class="id">@item.M_ID_LBL</strong><span class="hit">조회수 @item.VIEW_CNT</span></p>
                                     </div>
                                     <div class="rinfo_con">
                                         <!-- 해시태그 -->
@@ -131,7 +135,10 @@
                                                 
                                                 foreach (var tag in arr)
                                                 {
-                                                    <li>#@tag</li>
+                                                    if (!String.IsNullOrEmpty(tag))
+                                                    {
+                                                        <li>#@tag</li>
+                                                    }                                                    
                                                 }
                                             }                                            
                                         </ul>
@@ -153,8 +160,6 @@
                                 <a href="#" onclick="window.open('@(Url.Action("ExperienceDetail", "Review", param))'); return false;" class="view_link"><!-- 여기에 상품별 링크를 연결 --></a>
                             </li>
                         }
-
-
                     </ul>
 
                 <!--페이징-->
