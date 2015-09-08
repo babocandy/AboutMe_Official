@@ -36,7 +36,7 @@
 
 	var uploadPath = $Element("uploadPath").$value().value;
 
-	console.log(uploadPath)
+	//console.log(uploadPath)
 	
 	//File API 지원 여부로 결정
 	function checkDragAndDropAPI() {
@@ -587,8 +587,8 @@
 	 */
 	function setPhotoToEditor(oFileInfo) {
 
-	    console.log(oFileInfo)
-	    console.log(opener);
+	   // console.log(oFileInfo)
+	    //console.log(opener);
 		if (!!opener && !!opener.nhn && !!opener.nhn.husky && !!opener.nhn.husky.PopUpManager) {
 			//스마트 에디터 플러그인을 통해서 넣는 방법 (oFileInfo는 Array)
 			opener.nhn.husky.PopUpManager.setCallback(window, 'SET_PHOTO', [oFileInfo]);
