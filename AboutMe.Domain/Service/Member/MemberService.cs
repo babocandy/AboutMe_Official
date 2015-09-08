@@ -86,10 +86,10 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "계정 중복 확인.\\n 이미 존재하는 ID입니다.\\n 다른 계정을 사용 하십시오.";
+                    strERR_MSG = "오류! 이미 존재하는 ID입니다. 다른 계정을 사용 하십시오.";
 
 
                 /** }catch()
@@ -157,12 +157,12 @@ namespace AboutMe.Domain.Service.Member
                 strRET_M_ID = (string)objOutParam2.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "DB 처리 오류.ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! DB 처리 오류.ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "실명인증 중복 오류.\\n 이미 가입하신 회원 입니다.\\n 아이디/암호찾기를 활용 하십시오.";
+                    strERR_MSG = "오류! 이미 가입하신 회원 입니다. 아이디/암호찾기를 활용 하십시오.";
                 if (nERR_CODE == 20)
-                    strERR_MSG = "실명인증 중복체크.\\n 파라메타 DI값 전달오류.";
+                    strERR_MSG = "오류! 파라메타 DI값 전달오류.";
 
 
                 /** }catch()
@@ -200,12 +200,12 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE !=0)
-                    strERR_MSG = "DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "회원가입 오류.\\n 이미 존재하는 ID입니다.";
+                    strERR_MSG = "오류! 이미 존재하는 ID입니다.";
                 if (nERR_CODE == 11)
-                    strERR_MSG = "회원가입 오류.\\n 이미 존재하는 메일계정 입니다.";
+                    strERR_MSG = "오류! 이미 존재하는 메일계정 입니다.";
 
 
                 /** }catch()
@@ -248,12 +248,12 @@ namespace AboutMe.Domain.Service.Member
                 strRET_M_CREDATE = (string)objOutParam4.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "아이디찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! 아이디찾기 DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "아이디찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                    strERR_MSG = "오류! 회원계정을 찾을수 없습니다.";
                 if (nERR_CODE == 20)
-                    strERR_MSG = "아이디찾기 오류.\\n 파라메타 전달 오류.";
+                    strERR_MSG = "오류! 파라메타 전달 오류.";
 
 
                 /** }catch()
@@ -295,12 +295,12 @@ namespace AboutMe.Domain.Service.Member
                 strRET_M_EMAIL = (string)objOutParam3.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "비밀번호찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! 비밀번호찾기 DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "비밀번호찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                    strERR_MSG = "오류! 회원계정을 찾을수 없습니다.";
                 if (nERR_CODE == 20)
-                    strERR_MSG = "비밀번호찾기 오류.\\n 파라메타 전달 오류.";
+                    strERR_MSG = "오류! 파라메타 전달 오류.";
 
                 /** }catch()
                  {
@@ -334,10 +334,10 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "탈퇴할 회원 찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! 탈퇴할 회원 찾기 DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "탈퇴할 회원 찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                    strERR_MSG = "오류! 회원계정을 찾을수 없습니다.";
 
                 /** }catch()
                  {
@@ -369,12 +369,12 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "회원 정보수정 회원 찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "회원 정보수정 회원 찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                    strERR_MSG = "오류! 회원계정을 찾을수 없습니다.";
                 if (nERR_CODE == 11)
-                    strERR_MSG = "회원 정보수정 메일계정 오류.\\n 이미 사용중인 메일계정입니다..";
+                    strERR_MSG = "오류! 이미 사용중인 메일계정입니다.";
 
                 /** }catch()
                  {
@@ -406,13 +406,13 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "회원 비밀번호변경 회원 찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "회원 비밀번호변경 회원 찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                    strERR_MSG = "오류! 회원계정을 찾을수 없습니다.";
 
                 if (nERR_CODE == 20)
-                    strERR_MSG = "회원 비밀번호변경 오류.\\n 기존 비밀번호가 일치하지 않습니다.";
+                    strERR_MSG = "오류! 기존 비밀번호가 일치하지 않습니다.";
 
                 /** }catch()
                  {
@@ -444,10 +444,10 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "회원 피부트러블변경 회원 찾기 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "회원 피부트러블변경 회원 찾기 오류.\\n 회원계정을 찾을수 없습니다.";
+                    strERR_MSG = "오류! 회원계정을 찾을수 없습니다.";
 
                 /** }catch()
                  {
@@ -480,7 +480,7 @@ namespace AboutMe.Domain.Service.Member
                 nERR_CODE = (int)objOutParam.Value;
 
                 if (nERR_CODE != 0)
-                    strERR_MSG = "임직원 신청 등록 DB 처리 오류.\\n ERR_CODE:" + nERR_CODE.ToString();
+                    strERR_MSG = "오류! 임직원 신청 등록 DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
 
                 /** }catch()

@@ -740,7 +740,7 @@ namespace AboutMe.Web.Front.Controllers
             if (ObjretDIC.ERR_CODE != "0")
             {
                 strERR_CODE = ObjretDIC.ERR_CODE;
-                strERR_MSG = "==DB저장중 오류발생!==";
+                strERR_MSG = "오류! ";
                 strERR_MSG = strERR_MSG + " ERR_CODE:" + strERR_CODE;
                 if (strERR_CODE == "10")
                     strERR_MSG = strERR_MSG + " 이미 존재하는 계정입니다.";
