@@ -89,7 +89,7 @@ namespace AboutMe.Domain.Service.Member
                     strERR_MSG = "오류! DB 처리 오류. ERR_CODE:" + nERR_CODE.ToString();
 
                 if (nERR_CODE == 10)
-                    strERR_MSG = "오류! 이미 존재하는 ID입니다. 다른 계정을 사용 하십시오.";
+                    strERR_MSG = "이미 존재하는 ID입니다. 다른 계정을 사용 하십시오.";
 
 
                 /** }catch()
