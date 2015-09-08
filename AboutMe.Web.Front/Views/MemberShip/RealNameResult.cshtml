@@ -22,22 +22,7 @@
     <title>ABOUT ME</title>
     <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
-    <script>
-            var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
-            var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
 
-            $(document).ready(function () {
-
-                var f = document.frmTMP;
-                f.action = glHTTP_DOMAIN + "/MemberShip/JoinStep2";
-                f.method = "post";
-                f.target = "";
-                f.submit();
-
-            });
-
-
-    </script>
 
 </head>
 <body>
@@ -49,5 +34,32 @@
                                     <input type="hidden" name="WORK_TMP_ID" value="@ViewBag.WORK_TMP_ID" />
         }
     </div>
+
+    <script>
+    var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+    var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+/*
+    $(document).ready(function () {
+
+        var f = document.frmTMP;
+        f.action = glHTTP_DOMAIN + "/MemberShip/JoinStep2";
+        f.method = "post";
+        f.target = "";
+        f.submit();
+
+    });
+*/
+    function fGoNextStep()
+    {
+        var f = document.frmTMP;
+        f.action = glHTTP_DOMAIN + "/MemberShip/JoinStep2";
+        f.method = "post";
+        f.target = "";
+        f.submit();
+    }
+
+    fGoNextStep();
+    </script>
+
 </body>
 </html>

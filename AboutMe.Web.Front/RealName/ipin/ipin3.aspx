@@ -129,7 +129,7 @@ function fncOpenerSubmit() {
 <%
  	if (ret == 0) {
 		// 인증결과 복호화 성공
-		Response.Write ("<script>alert('Success! 본인인증성공'); fncOpenerSubmit();</script>");
+        Response.Write("<script>alert('본인인증 성공 했습니다.'); fncOpenerSubmit();</script>");
 	}
 	else {
 		// 인증결과 복호화 실패

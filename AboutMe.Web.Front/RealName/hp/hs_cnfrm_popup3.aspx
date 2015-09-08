@@ -170,7 +170,7 @@ string REAL_NAME_SubmitLocalURL = ConfigurationSettings.AppSettings["REAL_NAME_S
 		// 인증결과 복호화 성공
 		// 인증결과를 확인하여 페이지분기등의 처리를 수행해야한다.
 		if (retcode == "B000") {
-			Response.Write ("<script>alert('Success! 본인인증성공'); fncOpenerSubmit();</script>");
+            Response.Write("<script>alert('본인인증 성공 했습니다.'); fncOpenerSubmit();</script>");
 		}
 		else {
 			Response.Write ("<script>alert('Error1! 본인인증실패 : "+retcode+"'); fncOpenerSubmit();</script>");

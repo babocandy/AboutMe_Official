@@ -23,22 +23,7 @@
         <title>ABOUT ME</title>
         <script type="text/javascript" src="/aboutCom/js/common_member.js"></script>
 
-        <script>
-            var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
-            var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
 
-            $(document).ready(function () {
-
-                var f = document.frmPopSearch;
-                f.action = glHTTP_DOMAIN+"/MemberShip/IdSearch_End";
-                f.method = "post";
-                f.target = "";
-                f.submit();
-
-            });
-
-
-        </script>
 
     </head>
 </head>
@@ -53,5 +38,38 @@
     <input type="hidden" name="M_CREDATE" value="@ViewBag.M_CREDATE" />
  }
     </div>
+
+
+
+    <script>
+        var glHTTPS_DOMAIN = "@ViewBag.HTTPS_DOMAIN";
+        var glHTTP_DOMAIN = "@ViewBag.HTTP_DOMAIN";
+
+        /*
+
+            $(document).ready(function () {
+
+                var f = document.frmPopSearch;
+                f.action = glHTTP_DOMAIN+"/MemberShip/IdSearch_End";
+                f.method = "post";
+                f.target = "";
+                f.submit();
+
+            });
+	    */
+
+        function fGoNEstStep() {
+            var f = document.frmPopSearch;
+            f.action = glHTTP_DOMAIN + "/MemberShip/IdSearch_End";
+            f.method = "post";
+            f.target = "";
+            f.submit();
+        }
+
+        fGoNEstStep();
+
+    </script>
+
+
 </body>
 </html>
