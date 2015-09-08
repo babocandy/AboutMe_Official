@@ -77,7 +77,7 @@ namespace AboutMe.Web.Mobile.Common
             }
             tb.ERR_QUERY = "";
             tb.COMPUTER_NAME = context.Server.MachineName;
-            tb.EMP_NAME = "";
+            tb.EMP_NAME = "[Mobile버전]";
             tb.EMP_EMAIL = "";
             tb.MEMB_ID = MemberInfo.GetMemberId();
             tb.RESULT_YN = "N";
