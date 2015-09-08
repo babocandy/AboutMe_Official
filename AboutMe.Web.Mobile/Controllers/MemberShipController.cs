@@ -721,11 +721,11 @@ namespace AboutMe.Web.Mobile.Controllers
             {
                 strERR_CODE = ObjretDIC.ERR_CODE;
                 strERR_MSG = "==DB저장중 오류발생!==";
-                strERR_MSG = strERR_MSG + "\\n ERR_CODE:" + strERR_CODE;
+                strERR_MSG = strERR_MSG + " ERR_CODE:" + strERR_CODE;
                 if (strERR_CODE == "10")
-                    strERR_MSG = strERR_MSG + "\\n 이미 존재하는 계정입니다.";
+                    strERR_MSG = strERR_MSG + " 이미 존재하는 계정입니다.";
                 if (strERR_CODE == "11")
-                    strERR_MSG = strERR_MSG + "\\n 이미 사용중인 EMAIL입니다";
+                    strERR_MSG = strERR_MSG + " 이미 사용중인 EMAIL입니다";
             }
 
             //로그 기록
