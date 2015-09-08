@@ -46,6 +46,14 @@ namespace AboutMe.Web.Mobile.Controllers
             {
                 product_front_search_entity.P_CATE_CODE = "101100100"; //뷰티 default
             }
+            if (string.IsNullOrEmpty(product_front_search_entity.C_CATE_CODE))
+            {
+                product_front_search_entity.C_CATE_CODE = ""; //피부고민 DEFAULT
+            }
+            if (string.IsNullOrEmpty(product_front_search_entity.L_CATE_CODE))
+            {
+                product_front_search_entity.L_CATE_CODE = ""; //라인 default
+            }
             if (string.IsNullOrEmpty(product_front_search_entity.SORT_GBN))
             {
                 product_front_search_entity.SORT_GBN = "NEW";
