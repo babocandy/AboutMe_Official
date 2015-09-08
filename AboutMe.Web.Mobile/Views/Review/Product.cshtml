@@ -79,21 +79,58 @@
                 <form action="">
                     <fieldset>
                         <legend>뷰티상세 선택</legend>
-                        <span class="selbox select_a">
+                        <span class="selbox select_a" style="@(Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM ? "visibility:hidden" : "")">
 
-
+                        @if (Model.MobileParam.CATE == CategoryCode.BEAUTY_MOBLE_PARAM )
+                        {
                             <select title="세부항목 선택" onchange="selCate(this); return false;">
                                 @if (Model.CategoryBeauty.Count > 0)
                                 {
                                     <option value="@CategoryCode.BEAUTY_DEFAULT">전체</option>
                                     foreach (var item in Model.CategoryBeauty)
                                     {
-                                        <option value="@item.CATE_CODE" @(item.CATE_CODE == Model.MobileParam.CATE_CODE ? "selected" : "" ) >@item.DEPTH2_NAME</option>
-                                    }                        
+                                        <option value="@item.CATE_CODE" @(item.CATE_CODE == Model.MobileParam.CATE_CODE ? "selected" : "")>@item.DEPTH2_NAME</option>
+                                    }
                                 }
-                                
-    
+
+
                             </select>
+                        }
+                        else if (Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM)
+                        {
+                            <select title="세부항목 선택" onchange="selCate(this); return false;" style="visibility:hidden"></select>
+                        }
+                        else if (Model.MobileParam.CATE == CategoryCode.SEL_SHOP_MOBLE_PARAM)
+                        {
+                            <select title="세부항목 선택" onchange="selCate(this); return false;">
+                                @if (Model.CategorySelShop.Count > 0)
+                                {
+                                    <option value="@CategoryCode.SEL_SHOP_DEFAULT">전체</option>
+                                    foreach (var item in Model.CategorySelShop)
+                                    {
+                                        <option value="@item.CATE_CODE" @(item.CATE_CODE == Model.MobileParam.CATE_CODE ? "selected" : "")>@item.DEPTH2_NAME</option>
+                                    }
+                                }
+
+
+                            </select>
+                        }
+                        else if (Model.MobileParam.CATE == CategoryCode.THEMA_MOBLE_PARAM)
+                        {
+                            <select title="세부항목 선택" onchange="selCate(this); return false;">
+                                @if (Model.CategoryThema.Count > 0)
+                                {
+ 
+                                    foreach (var item in Model.CategoryThema)
+                                    {
+                                        <option value="@item.CODE" @(item.CODE == Model.MobileParam.CATE_CODE ? "selected" : "")>@item.TITLE</option>
+                                    }
+                                }
+
+
+                            </select>
+                        }
+
                         </span><!--
                      --><span class="selbox select_a">
                             <select title="정렬" onchange="selOrder(this); return false;">
