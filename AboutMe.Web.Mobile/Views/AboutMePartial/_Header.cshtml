@@ -1,6 +1,48 @@
 ﻿@using AboutMe.Web.Mobile.Common;
 
+@{
+    //IP 차단 허용 설정 --start------------------------------------------
 
+    DateTime dOPEN_DT = Convert.ToDateTime("2015-09-08 10:30");   //오픈할 일시
+    DateTime dNOW_DT = DateTime.Now;  //현재시각
+
+    if (dNOW_DT < dOPEN_DT) //오픈 전이라면
+    {
+        bool bret_IMSI_OPEN = false; //기본: 차단
+        string strIP_IMSI_OPEN = Request.ServerVariables["REMOTE_ADDR"];
+        // 허용IP목록 ------------------------------
+        //114.52.63.*:코너스톤
+        //222.112.106.57:지젠
+        //220.72.*.*:삼양
+        //운영사 61.252.139.67 ,61.252.139.114  ,61.252.139.107  , 61.252.139.115
+        //정재연과장 요청으로 추가 203.130.103.21
+
+        string[] arrPERMIT_IP_IMSI_OPEN = { "114.52.63.", "222.112.106.57", "220.72.", "127.0.0.1", "61.252.139.", "203.130.103.21" };
+        for (int i = 0; i < arrPERMIT_IP_IMSI_OPEN.Length; i++)
+        {
+            if (strIP_IMSI_OPEN.Length >= arrPERMIT_IP_IMSI_OPEN[i].Length && arrPERMIT_IP_IMSI_OPEN[i].Length > 1)
+            {
+                if (arrPERMIT_IP_IMSI_OPEN[i] == strIP_IMSI_OPEN.Substring(0, arrPERMIT_IP_IMSI_OPEN[i].Length))
+                {
+                    bret_IMSI_OPEN = true;
+                    break;
+                }
+            }
+        }
+
+        if (bret_IMSI_OPEN == true)
+        {
+            ;
+        }
+        else
+        {
+
+            Response.Redirect("/OPEN_READY/READY.html");  //IP차단 대상의 경우 : 이동한 위치 지정필요
+            //Response.End;
+        }
+    }
+    //IP 차단 허용 설정 --end ------------------------------------------
+}
 
 <div class="header">
     <!--h_top-->

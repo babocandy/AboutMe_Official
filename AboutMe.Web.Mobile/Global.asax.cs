@@ -60,43 +60,12 @@ namespace AboutMe.Web.Mobile
         protected void Application_Error(object sender, EventArgs e)
         {
 
-            Common.AppErrorLog AppErr = new Common.AppErrorLog();
-            AppErr.HandlerInsertAppErrLog(sender, e);
-
-            /**
-            Exception exception = Server.GetLastError();
-            //Response.Clear();
-
-            HttpException httpException = exception as HttpException;
-
-            if (httpException != null)
+            if (AboutMe.Common.Helper.Config.GetConfigValue("CustomErrorHandlerOnOff") == "ON")
             {
-                string action;
-
-                switch (httpException.GetHttpCode())
-                {
-                    case 404:
-                        // page not found
-                        action = "AboutMeHttpError404";
-                        break;
-                    case 500:
-                        // server error
-                        Common.AppErrorLog AppErr =  new Common.AppErrorLog();
-                        AppErr.HandlerInsertAppErrLog(sender, e);
-                        action = "AboutMeHttpError500";
-
-                        break;
-                    default:
-                        action = "AboutMeHttpError500";
-                        break;
-                }
-
-                // clear error on server
-                Server.ClearError();
-
-                Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
-            }
-             * **/
+                Common.AppErrorLog AppErr = new Common.AppErrorLog();
+                AppErr.HandlerInsertAppErrLog(sender, e);
+                //Response.Redirect("/CustomError/Err500");
+            } 
 
 
         }

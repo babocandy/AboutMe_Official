@@ -65,9 +65,10 @@ namespace AboutMe.Web.Front.Controllers
             catch (Exception ex)
             {
          
-                //에러 Writing 
+                //에러 Writing -----------------------------------------------------------------------------------
                 AboutMe.Common.ErrorHandler.AppErrorLog AppErr = new AboutMe.Common.ErrorHandler.AppErrorLog();
                 AppErr.HandlerInsertAppErrLogForController(ex);
+                //-----------------------------------------------------------------------------------------------
 
             }
             return RedirectToAction("Availablelist", "MyCoupon");
