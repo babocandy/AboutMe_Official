@@ -49,7 +49,8 @@
                     {
                         if (item.GBN != "EXHIBIT" && item.IDX != Model.ExhibitInfo.IDX)
                         {
-                            @Html.Raw("<option value='" + Convert.ToString(item.IDX) + "'>" + item.NAME + "</option>");
+                            @*Html.Raw("<option value='" + Convert.ToString(item.IDX) + "'>" + item.NAME + "</option>");*@
+                            @Html.Raw("<option value='" + Convert.ToString(item.IDX) + "' gubun='" + item.GBN + "'>" + item.NAME + "</option>");
                         }
                     }
                 </select>
