@@ -54,8 +54,8 @@
                 var src = images[i].src;
                 var target = "@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority,myController._img_path_review)";
 
-                console.log(src);
-                console.log(src.indexOf(target));
+                //console.log(src);
+                //console.log(src.indexOf(target));
 
                 if (src.indexOf(target) > -1) {
 
@@ -79,7 +79,7 @@
             tmp_comment = tmp_comment.replace(rm_etc, "");
             tmp_comment = tmp_comment.replace(rm_space, "");
 
-            console.log(tmp_comment, tmp_comment.length)
+            //console.log(tmp_comment, tmp_comment.length)
 
             if (tmp_comment.length == 0 && img_arr.length == 0) {
                 document.getElementById("COMMENT").value = "";

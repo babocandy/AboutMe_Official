@@ -22,9 +22,9 @@
     <link href="/aboutCom/css/shoping.css" rel="stylesheet" />
 <meta property="fb:app_id" content="817303641716698" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="상품 상세페이지" />
+<meta property="og:title" content="[ABOUT ME] @(Model.P_NAME)" />
 <meta property="og:url" content="@preUrl" />
-<meta property="og:description" content="상품설명" />
+<meta property="og:description" content="@(Model.P_SUB_TITLE)" />
 <meta property="og:image" content="@meta_big_img1" />
 <meta property="og:site_name" content="@DomainUrl" />
 
@@ -82,7 +82,7 @@
                 case 'kakaotalk':
                     o = {
                         method: 'web2app',
-                        param: 'sendurl?msg=' + _txt + '&url=' + _url + '&type=link&apiver=2.0.1&appver=2.0&appid=dev.epiloum.net&appname=' + encodeURIComponent('Epiloum 개발노트'),
+                        param: 'sendurl?msg=' + _txt + '&url=' + _url + '&type=link&apiver=2.0.1&appver=2.0&appid=m.aboutmeshop.com&appname=' + encodeURIComponent('어바웃미'),
                         a_store: 'itms-apps://itunes.apple.com/app/id362057947?mt=8',
                         g_store: 'market://details?id=com.kakao.talk',
                         a_proto: 'kakaolink://',
@@ -93,7 +93,7 @@
                 case 'kakaostory':
                     o = {
                         method: 'web2app',
-                        param: 'posting?post=' + _txt + _br + _url + '&apiver=1.0&appver=2.0&appid=dev.epiloum.net&appname=' + encodeURIComponent('Epiloum 개발노트'),
+                        param: 'posting?post=' + _txt + _br + _url + '&apiver=1.0&appver=2.0&appid=m.aboutmeshop.com&appname=' + encodeURIComponent('어바웃미'),
                         a_store: 'itms-apps://itunes.apple.com/app/id486244601?mt=8',
                         g_store: 'market://details?id=com.kakao.story',
                         a_proto: 'storylink://',
