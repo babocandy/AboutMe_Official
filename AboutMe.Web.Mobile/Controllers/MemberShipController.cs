@@ -821,7 +821,7 @@ namespace AboutMe.Web.Mobile.Controllers
             }
             else  //회원가입 저장중 오류발생
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('" + retDic.ERR_MSG + "'); history.go(-1);</script>");
+                return Content("<script language='javascript' type='text/javascript'>alert('" + strERR_MSG + "'); history.go(-1);</script>");
             }
 
         }
