@@ -118,7 +118,7 @@ function fncOpenerSubmit() {
 
     //opener.document.kcbOutForm_IPIN.action = "/MemberShip/RealNameResult";
     //opener.document.kcbOutForm_IPIN.action = "http://aboutme-dev.cstone.co.kr/MemberShip/RealNameResult";  //실제-> https
-    opener.document.kcbOutForm_IPIN.action = "<%=REAL_NAME_returnUrl_IPIN%>";  //실제-> https
+    opener.document.kcbOutForm_IPIN.action = "<%=REAL_NAME_SubmitLocalURL%>";  //실제-> https
     opener.document.kcbOutForm_IPIN.submit();
 	self.close();
 }
