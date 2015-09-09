@@ -20,13 +20,13 @@
 @section Head{
     @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
     <link href="/aboutCom/css/shoping.css" rel="stylesheet" />
-<meta property="fb:app_id" content="817303641716698" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="[ABOUT ME] @(Model.P_NAME)" />
-<meta property="og:url" content="@preUrl" />
-<meta property="og:description" content="@(Model.P_SUB_TITLE)" />
-<meta property="og:image" content="@meta_big_img1" />
-<meta property="og:site_name" content="@DomainUrl" />
+    <meta property="fb:app_id" content="893726854052610" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="[ABOUT ME] @(Model.P_NAME)" />
+    <meta property="og:url" content="@preUrl" />
+    <meta property="og:description" content="@(Model.P_SUB_TITLE)" />
+    <meta property="og:image" content="@meta_big_img1" />
+    <meta property="og:site_name" content="@DomainUrl" />
 
 }
 
@@ -37,8 +37,19 @@
 <!--//header-->
 
 @section Scripts{
-
+     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script language="javascript">
+        /**
+            facebook 공유후 리다이렉트 처리. post_id 값이 있으면 창닫기!
+        */
+        @{
+            
+            var post_id = Request.QueryString["post_id"];
+            if ( !String.IsNullOrEmpty(post_id) )
+            {
+                @:self.close();
+            }                
+        }
 
         $(function () {
             //ajaxSelectCateCodeJavascriptInit();
@@ -47,96 +58,8 @@
         function isJJimLogin() {
             if (confirm('로그인 후 찜을 저장할 수 있습니다.\n로그인페이지로 이동하시겠습니까?')) {
                 location.href = '/MemberShip/Login?RedirectUrl=/Shopping/Detail?pcode=@ViewBag.P_CODE&page=@ViewBag.PAGE&pagesize=@ViewBag.PAGESIZE&SORT_GBN=@ViewBag.SORT_GBN&P_CATE_CODE=@ViewBag.P_CATE_CODE&C_CATE_CODE=@ViewBag.C_CATE_CODE&L_CATE_CODE=@ViewBag.L_CATE_CODE&P_CATE_CODE_3DEPTH=@ViewBag.P_CATE_CODE_3DEPTH&DEPTH_NAME3=@ViewBag.DEPTH_NAME3';
-                return;
-            }
-        }
-
-        function sendSns(sns, url, txt) {
-            var o;
-            var _url = encodeURIComponent(url);
-            var _txt = encodeURIComponent(txt);
-            var _br = encodeURIComponent('\r\n');
-
-            switch (sns) {
-                case 'facebook':
-                    o = {
-                        method: 'popup',
-                        url: 'http://www.facebook.com/sharer/sharer.php?u=' + _url
-                    };
-                    break;
-
-                case 'twitter':
-                    o = {
-                        method: 'popup',
-                        url: 'http://twitter.com/intent/tweet?text=' + _txt + '&url=' + _url
-                    };
-                    break;
-
-                case 'me2day':
-                    o = {
-                        method: 'popup',
-                        url: 'http://me2day.net/posts/new?new_post[body]=' + _txt + _br + _url + '&new_post[tags]=epiloum'
-                    };
-                    break;
-
-                case 'kakaotalk':
-                    o = {
-                        method: 'web2app',
-                        param: 'sendurl?msg=' + _txt + '&url=' + _url + '&type=link&apiver=2.0.1&appver=2.0&appid=m.aboutmeshop.com&appname=' + encodeURIComponent('어바웃미'),
-                        a_store: 'itms-apps://itunes.apple.com/app/id362057947?mt=8',
-                        g_store: 'market://details?id=com.kakao.talk',
-                        a_proto: 'kakaolink://',
-                        g_proto: 'scheme=kakaolink;package=com.kakao.talk'
-                    };
-                    break;
-
-                case 'kakaostory':
-                    o = {
-                        method: 'web2app',
-                        param: 'posting?post=' + _txt + _br + _url + '&apiver=1.0&appver=2.0&appid=m.aboutmeshop.com&appname=' + encodeURIComponent('어바웃미'),
-                        a_store: 'itms-apps://itunes.apple.com/app/id486244601?mt=8',
-                        g_store: 'market://details?id=com.kakao.story',
-                        a_proto: 'storylink://',
-                        g_proto: 'scheme=kakaolink;package=com.kakao.story'
-                    };
-                    break;
-
-                case 'band':
-                    o = {
-                        method: 'web2app',
-                        param: 'create/post?text=' + _txt + _br + _url,
-                        a_store: 'itms-apps://itunes.apple.com/app/id542613198?mt=8',
-                        g_store: 'market://details?id=com.nhn.android.band',
-                        a_proto: 'bandapp://',
-                        g_proto: 'scheme=bandapp;package=com.nhn.android.band'
-                    };
-                    break;
-
-                default:
-                    alert('지원하지 않는 SNS입니다.');
-                    return false;
-            }
-
-            switch (o.method) {
-                case 'popup':
-                    window.open(o.url);
-                    break;
-
-                case 'web2app':
-                    if (navigator.userAgent.match(/android/i)) {
-                        // Android
-                        setTimeout(function () { location.href = 'intent://' + o.param + '#Intent;' + o.g_proto + ';end' }, 100);
-                    }
-                    else if (navigator.userAgent.match(/(iphone)|(ipod)|(ipad)/i)) {
-                        // Apple
-                        setTimeout(function () { location.href = o.a_store; }, 200);
-                        setTimeout(function () { location.href = o.a_proto + o.param }, 100);
-                    }
-                    else {
-                        alert('이 기능은 모바일에서만 사용할 수 있습니다.');
-                    }
-                    break;
-            }
+                    return;
+                }
         }
 
     </script>
@@ -205,231 +128,279 @@
                         <!--sns버튼-->
                         <div class="sns">
                             <ul>
-                                <li><a href="javascript:sendSns('facebook','@preUrl','@Model.P_NAME')"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
-                                <li><a href="javascript:sendSns('kakaostory','@preUrl','@Model.P_NAME')" ><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
-                                <li><a href="javascript:sendSns('kakaotalk','@preUrl','@Model.P_NAME')" ><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>
+                                <li><a href="#" onclick="fbShare(); return false;"><img src="/aboutCom/images/common/sns_facebook.gif" alt="페이스북" /></a></li>
+                                <li><a id="kakaostory-share-button" href="#" onclick="shareStory();return false;"><img src="/aboutCom/images/common/sns_kakaostory.gif" alt="카카오스토리" /></a></li>
+                                @*<li><a id="kakao-link-btn" href="#"><img src="/aboutCom/images/common/sns_kakaotalk.gif" alt="카카오톡" /></a></li>*@
                             </ul>
-                        </div>
-                        <!--//sns버튼-->
-                        
-    
-                        <!--상품해당아이콘-->
-                        <div class="ico_area">
-                            @if (!string.IsNullOrEmpty(Model.ICON_YN))
-                            {
-                                if (Model.ICON_YN.IndexOf('B') != -1)
-                                { <text> <span class="ico_best">BEST</span></text> }
-                                if (Model.ICON_YN.IndexOf('N') != -1)
-                                { <text> <span class="ico_new">NEW</span></text> }
-                                if (Model.ICON_YN.IndexOf('C') != -1)
-                                { <text> <span class="ico_custom ">커스텀</span></text> }
-                            }
-                            @if (Model.SOLDOUT_YN == "Y")
-                            { <text> <span class="ico_soldout">SOLD OUT</span></text> }
-                            @if (!string.IsNullOrEmpty(Model.PMO_PRODUCT_CATEGORY))
-                            {
-                                if (Model.PMO_PRODUCT_CATEGORY == "01")
-                                { <text> <span class="ico_set">SET</span></text> }
-                                if (Model.PMO_PRODUCT_CATEGORY == "02")
-                                { <text> <span class="ico_1_1">1+1</span></text> }
-                                if (Model.PMO_PRODUCT_CATEGORY == "03")
-                                { <text> <span class="ico_time">TIME</span></text> }
-                            }
-                            @if (!string.IsNullOrEmpty(Model.COUPON_CODE))
-                            {
-                                <text> <span class="ico_coupon">COUPON</span></text>
-                            }
-                        </div>
-                        <!--//상품해당아이콘-->
-                        <div class="pro_tit">
-                            <!--각각 2줄씩 제한-->
-                            <p class="tit">@(new HtmlString(Model.P_NAME))</p>
-                            <p class="stit">@(new HtmlString(Model.P_SUB_TITLE))</p>
-                        </div>
-                        <div class="pro_info">
-                            <ul>
-                                <li class="price">
-                                    <strong>판매가</strong>
-@if (Model.SELLING_PRICE != Model.RESULT_PRICE)
-{
-                                    <del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del>
-}<span class="curprice"><em>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</em>원</span>
-                                </li>
-                                <!--쿠폰, 임직원가, 포인트 -->
-                                @{Html.RenderAction("ProductDetailSalePrice", "ChildActionPromotion", new { UsableDeviceGbn = "P", P_CODE = @ViewBag.P_CODE, ResultPrice = @Model.RESULT_PRICE });}
-                                <li>
-                                    <strong>구입개수</strong>
-                                    <div class="counttypeb">
-                                        <input type='text' name='count' id='product_num_count' value='1' size='3' readonly />
-                                        <span class="btn_updown">
-                                            <a href="javascript:fncAdd(1);" class="up"><i>up</i></a>
-                                            <a href="javascript:fncAdd(-1);" class="down"><i>down</i></a>
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="btn_group">
-                                <a href="#" class="btn_brown_w160h60" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로 구매</a>
-                                <a href="#" class="btn_white_w148h60" onclick="javascript:Cart_Product_Input('@Model.P_CODE',$('#product_num_count').val());"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
-                                @{
-                                   bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
-                                 }
-                                 @if (bLogin)  //로그인 상황
-                                {
-                                <a href="#" class="btn_white_w148h60" onclick="javascript:Wish_Product_Input('@Model.P_CODE');"><img src="/aboutCom/images/common/ico_heart.png" class="wishimg" alt="" />찜하기</a>
+
+                            <script>
+
+                                //FACEBOOK SHARE
+                                function fbShare() {
+
+                                    var url = "https://www.facebook.com/dialog/feed?";
+                                    url += "app_id=893726854052610&";
+                                    url += "display=popup" + "&";
+                                    url += "link=" + encodeURI("@preUrl") + "&";
+                                    url += "name=" + encodeURI("@Model.P_NAME") + "&";
+                                    //url += "caption=" + encodeURI("@Model.P_NAME") + "&";
+                                    url += "description=" + encodeURI("@Model.P_SUB_TITLE") + "&";
+                                    url += "picture=" + encodeURI("@(DomainUrl + ViewBag.PRODUCT_PATH + "R500_" + Model.MAIN_IMG)") + "&";
+                                    url += "redirect_uri=" + encodeURI("@preUrl");
+
+                                    window.open(url, 'facebook_popup', 'width=700,height=500,scrollbars=yes');
                                 }
-                                 else
-                                 {
-                                    <a href="#" class="btn_white_w148h60" onclick="javascript:isJJimLogin();"><img src="/aboutCom/images/common/ico_heart.png" class="wishimg" alt="" />찜하기</a>
-                                 }
 
-                            </div>
-                       
-                    </div>
-                    <!--//상품정보-->
-                    <!-- cartinfo -->
-                    <div class="ly cartinfo boxtypee">
-                        <div class="top"></div>
-                        <div class="middle">
-                            <p class="txt"><em>@(Html.Action("ProductofCartCnt", "Cart", new { p_code = @ViewBag.P_CODE }))</em>명 고객님이<br />쇼핑백에 담았습니다.</p>
-                            <a href="javascript:void(0)" class="ly_close"></a>
-                        </div>
-                        <div class="bottom"></div>
-                    </div>
-                    <!-- //cartinfo -->
-                </div>
-                <!--//detail_top : 상품정보-->
-                <!--detail_bottom : 사용자 보유정보 , 제품상세정보 -->
-                <div class="detail_bottom">
-                    <!--왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
-                    <div class="left_area">
-                        <!--event_banner : 이벤트 상세페이지로 이동 dykim-->
-                        @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}
-                        <!--//event_banner : 이벤트 상세페이지로 이동-->
-                        <!--상세정보, 리뷰, 품질보증/배송관련 tab-->
-                        <div class="product_tab">
 
-                            <!--상세정보-->
-                            <div class="menu" id="tabCon1">
-                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
-                                <!--tab메뉴-->
-                                <ul class="protabs">
-                                    <li class="cnt"><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
-                                    <li><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
-                                    <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
-                                </ul>
-                                <!--//tab메뉴-->
+                                // 카카오톡
+                                Kakao.init('87053573103d372c353a8a5f7934ae3f');
+                                /*
+                                Kakao.Link.createTalkLinkButton({
+                                    container: '#kakao-link-btn',
+                                    label: '카카오링크 샘플에 오신 것을 환영합니다.',
+                                    image: {
+                                        src: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
+                                        width: '300',
+                                        height: '200'
+                                    },
+                                    webButton: {
+                                        text: '카카오 디벨로퍼스',
+                                        url: 'https://dev.kakao.com/docs/js' // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                                    }
+                                });*/
+
+                                //카카오스토리 공유
+                                function shareStory() {
+                                    
+                                    Kakao.Story.share({
+                                        url: "@preUrl",
+                                        text: "[ABOUT ME] @(Model.P_NAME) \n@(Model.P_SUB_TITLE)"
+                                    });
+                                    
+                                }
+                            </script>
                             </div>
 
-                            <!--관련상품-->
-                            <div class="related_product">
-                                @(new HtmlString(Model.P_INFO_DETAIL_WEB))
+                            <!--//sns버튼-->
+
+
+                            <!--상품해당아이콘-->
+                            <div class="ico_area">
+                                @if (!string.IsNullOrEmpty(Model.ICON_YN))
+                                {
+                                    if (Model.ICON_YN.IndexOf('B') != -1)
+                                    { <text> <span class="ico_best">BEST</span></text> }
+                                    if (Model.ICON_YN.IndexOf('N') != -1)
+                                    { <text> <span class="ico_new">NEW</span></text> }
+                                    if (Model.ICON_YN.IndexOf('C') != -1)
+                                    { <text> <span class="ico_custom ">커스텀</span></text> }
+                                }
+                                @if (Model.SOLDOUT_YN == "Y")
+                                { <text> <span class="ico_soldout">SOLD OUT</span></text> }
+                                @if (!string.IsNullOrEmpty(Model.PMO_PRODUCT_CATEGORY))
+                                {
+                                    if (Model.PMO_PRODUCT_CATEGORY == "01")
+                                    { <text> <span class="ico_set">SET</span></text> }
+                                    if (Model.PMO_PRODUCT_CATEGORY == "02")
+                                    { <text> <span class="ico_1_1">1+1</span></text> }
+                                    if (Model.PMO_PRODUCT_CATEGORY == "03")
+                                    { <text> <span class="ico_time">TIME</span></text> }
+                                }
+                                @if (!string.IsNullOrEmpty(Model.COUPON_CODE))
+                                {
+                                    <text> <span class="ico_coupon">COUPON</span></text>
+                                }
                             </div>
-                            <!--//상세정보-->
-                            <div class="menu" id="tabCon2">
-                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
-                                <!--tab메뉴-->
-                                <ul class="protabs">
-                                    <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
-                                    <li class="cnt"><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
-                                    <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                            <!--//상품해당아이콘-->
+                            <div class="pro_tit">
+                                <!--각각 2줄씩 제한-->
+                                <p class="tit">@(new HtmlString(Model.P_NAME))</p>
+                                <p class="stit">@(new HtmlString(Model.P_SUB_TITLE))</p>
+                            </div>
+                            <div class="pro_info">
+                                <ul>
+                                    <li class="price">
+                                        <strong>판매가</strong>
+    @if (Model.SELLING_PRICE != Model.RESULT_PRICE)
+    {
+                                        <del>@string.Format("{0:#,##0}", Model.SELLING_PRICE)원</del>
+    }<span class="curprice"><em>@string.Format("{0:#,##0}", Model.RESULT_PRICE)</em>원</span>
+                                    </li>
+                                    <!--쿠폰, 임직원가, 포인트 -->
+                                    @{Html.RenderAction("ProductDetailSalePrice", "ChildActionPromotion", new { UsableDeviceGbn = "P", P_CODE = @ViewBag.P_CODE, ResultPrice = @Model.RESULT_PRICE });}
+                                    <li>
+                                        <strong>구입개수</strong>
+                                        <div class="counttypeb">
+                                            <input type='text' name='count' id='product_num_count' value='1' size='3' readonly />
+                                            <span class="btn_updown">
+                                                <a href="javascript:fncAdd(1);" class="up"><i>up</i></a>
+                                                <a href="javascript:fncAdd(-1);" class="down"><i>down</i></a>
+                                            </span>
+                                        </div>
+                                    </li>
                                 </ul>
-                                <!--//tab메뉴-->
                             </div>
-                            <!--리뷰 dykim-->
-                            @{Html.RenderAction("ReviewInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
-                            <!--//리뷰-->
-                            <!--품질보증-->
-                            <div class="menu" id="tabCon3">
-                                <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
-                                <!--tab메뉴-->
-                                <ul class="protabs">
-                                    <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
-                                    <li><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
-                                    <li class="cnt"><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
-                                </ul>
-                                <!--//tab메뉴-->
-                            </div>
-                            <div class="pro_content">
-                                <div class="quality_assurance">
-                                    <ul>
-                                        <li>
-                                            <div class="cont">
-                                                <p class="quality_tit">품질 보증 기준</p>
-                                                <p class="quality_txt">
-                                                    본 제품은 구입 시 유통기한이 경과 되었거나 유통 과정 중 변질, 변패 또는 파손된 제품일 경우에는 소비자기본법에 따른 소비자분쟁해결기준에 의거 교환 또는 보상을 받을 수 있습니다.
-                                                </p>
-                                            </div>
-                                            <div class="cont">
-                                                <p class="quality_tit">소비자 상담 연락처</p>
-                                                <p class="quality_txt">
-                                                    080-740-7983
-                                                </p>
-                                            </div>
-                                            <div class="cont">
-                                                <p class="quality_tit">사용시 주의사항</p>
-                                                <p class="quality_txt">
-                                                    1. 화장품을 사용하여 다음과 같은 이상이 있는 경우에는 사용을 중지하여야 하며, 계속 사용하면 증상이 악화되므로 피부과 전문의 등에게 상담할 것<br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;가) 사용 중 붉은 반점, 부어오름, 가려움증, 자극 등의 이상이 있는 경우<br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;나) 적용부위가 직사광선에 의하여 위와 같은 이상이 있는 경우<br />
-                                                    2. 상처가 있는 부위, 습진 및 피부염 등의 이상이 있는 부위에는 사용을 하지 말 것<br />
-                                                    3.(스크럽 제품의 경우) 사용시 입자가 눈에 들어가지 아니하도록 할 것<br />
-                                                    4. 보관 및 취급 시의 주의사항<br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;가) 사용후에는 반드시 마개를 닫아둘 것<br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;나) 유아,소아의 손이 닿지 않는 곳에 보관할 것<br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;다) 고온 또는 저온의 장소 및 직사광선이 닿는 곳에는 보관하지 말 것<br />
-                                                    5.(자외선 차단 기능이 포함된 제품의 경우) 이 제품의 자외선차단지수 및 자외선 A 차단등급은 식품의약품안전청고시 자외선 차단 효과 측정방법 및<br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;기준에 따라 측정하였음<br />
-                                                    6. (버블워시의 경우) 살리실릭애씨드 및 그 염류를 함유하고 있으므로 만3세 이하 어린이에게는 사용하지 말 것<br />
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cont">
-                                                <p class="quality_tit">배송 안내</p>
-                                                <p class="quality_txt">
-                                                    배송사 : CJ대한통운<br />
-                                                    배송지역 : 전국<br />
-                                                    주문하신 상품은 결제 완료 후 평균 2~5일(휴일 및 공휴일 제외) 이내에 배송됩니다.<br />
-                                                    산간 도서지방,군부대 등 일부 지역은 배송기간이 더 소요될 수 있습니다.<br /><br />
-                                                    배송비 : 실결제금액 30,000원 이상(할인 등이 적용된 최종 결제 금액 기준) 배송비 무료, 그 외 2,500원 (도서, 산간, 오지 일부지역은 배송비가 추가될 수 있습니다.)<br /><br />
-                                                    배송 예정일 : 평일 오전 9시 이전 주문 건은 당일 출고되며, 그 후 주문건은 다음날 출고됩니다.<br />
-                                                    주문하신 상품은 결제 완료 후 평균 2~5일(휴일 및 공휴일 제외) 이내에 배송됩니다.<br />
-                                                    산간 도서지방,군부대 등 일부 지역은 배송기간이 더 소요될 수 있습니다.<br />
-                                                    할인 행사로 인한 주문 폭주 및 택배사의 사정 등으로 인한 경우 배송이 지연될 수 있습니다.<br /><br />
-                                                    상품 불량 및 오배송 등으로 인한 교환/반품 신청의 경우 배송비는 무료입니다.<br /><br />
-                                                    고객님의 단순 변심으로 인한 교환/반품 신청은 고객님께서 왕복배송비 5,000원을 부담해주셔야 처리가 됩니다. <br />
-                                                    신한은행 150-000-061736 ㈜삼양제넥스
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="cont">
-                                                <p class="quality_tit">주문 취소/교환 / 반품 안내</p>
-                                                <p class="quality_txt">
-                                                    · 사은품 품절 시 공지 없이 대체 상품이 발송됩니다. <br />
-                                                    · 단순변심, 착오구매에 따른 교환/반품 신청은 상품을 공급받은 날부터 7일 이내 가능합니다. (배송비 고객 부담)<br />
-                                                    · 공급받은 상품이 표시/광고의 내용과 다르거나 계약내용과 다르게 이행된 경우에는 상품을 공급받은 날부터 3개월 이내, <br />
-                                                    &nbsp;&nbsp; 그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내 교환/반품 신청을 하실 수 있습니다. (배송비 회사 부담)<br />
-                                                    · 교환/반품을 원하는 고객은 쇼핑몰 고객센터 (080-740-7983)에 전화하시거나 [마이페이지>교환/반품 신청]을 통해신청하시면 됩니다.<br />
-                                                    · 해당 상품 구매 시 사은품/증정품 등이 제공된 경우, 상품 교환/반품 시 함께 보내주셔야 합니다.<br />
-                                                    · 오프라인 매장에서 구매한 제품은 교환/반품이 불가능 합니다.
-                                                </p>
-                                            </div>
-                                        </li>
-                                    </ul>
+                            <div class="btn_group">
+                                    <a href="#" class="btn_brown_w160h60" onclick="javascript:NowOrderInput('@Model.P_CODE',$('#product_num_count').val());">바로 구매</a>
+                                    <a href="#" class="btn_white_w148h60" onclick="javascript:Cart_Product_Input('@Model.P_CODE',$('#product_num_count').val());"><img src="/aboutCom/images/common/ico_cart3.png" class="cartimg" alt="" />쇼핑백</a>
+                                    @{
+                                       bool bLogin = ViewBag.IS_LOGIN;  //로그인 정보는 ViewBag 에 담겨져 있을것
+                                     }
+                                     @if (bLogin)  //로그인 상황
+                                    {
+                                    <a href="#" class="btn_white_w148h60" onclick="javascript:Wish_Product_Input('@Model.P_CODE');"><img src="/aboutCom/images/common/ico_heart.png" class="wishimg" alt="" />찜하기</a>
+                                    }
+                                     else
+                                     {
+                                        <a href="#" class="btn_white_w148h60" onclick="javascript:isJJimLogin();"><img src="/aboutCom/images/common/ico_heart.png" class="wishimg" alt="" />찜하기</a>
+                                     }
+
                                 </div>
-                            </div>
-                            <!--//품질보증-->
+
                         </div>
-                        <!--//상세정보, 리뷰, 품질보증/배송관련 tab-->
+                        <!--//상품정보-->
+                        <!-- cartinfo -->
+                        <div class="ly cartinfo boxtypee">
+                            <div class="top"></div>
+                            <div class="middle">
+                                <p class="txt"><em>@(Html.Action("ProductofCartCnt", "Cart", new { p_code = @ViewBag.P_CODE }))</em>명 고객님이<br />쇼핑백에 담았습니다.</p>
+                                <a href="javascript:void(0)" class="ly_close"></a>
+                            </div>
+                            <div class="bottom"></div>
+                        </div>
+                        <!-- //cartinfo -->
                     </div>
-                    <!--//왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
-                    <!--오른쪽영역 : 사용자 보유 정보-->
-                    <div class="right_area">
-                        <!--배너 지젠 기획전-->
-                       @* @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}*@
+                    <!--//detail_top : 상품정보-->
+                    <!--detail_bottom : 사용자 보유정보 , 제품상세정보 -->
+                    <div class="detail_bottom">
+                        <!--왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
+                        <div class="left_area">
+                            <!--event_banner : 이벤트 상세페이지로 이동 dykim-->
+                            @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}
+                            <!--//event_banner : 이벤트 상세페이지로 이동-->
+                            <!--상세정보, 리뷰, 품질보증/배송관련 tab-->
+                            <div class="product_tab">
+
+                                <!--상세정보-->
+                                <div class="menu" id="tabCon1">
+                                    <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                    <!--tab메뉴-->
+                                    <ul class="protabs">
+                                        <li class="cnt"><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                        <li><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                        <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                    </ul>
+                                    <!--//tab메뉴-->
+                                </div>
+
+                                <!--관련상품-->
+                                <div class="related_product">
+                                    @(new HtmlString(Model.P_INFO_DETAIL_WEB))
+                                </div>
+                                <!--//상세정보-->
+                                <div class="menu" id="tabCon2">
+                                    <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                    <!--tab메뉴-->
+                                    <ul class="protabs">
+                                        <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                        <li class="cnt"><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                        <li><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                    </ul>
+                                    <!--//tab메뉴-->
+                                </div>
+                                <!--리뷰 dykim-->
+                                @{Html.RenderAction("ReviewInShoppingDetail", "Review", new { P_CODE = @ViewBag.P_CODE });}
+                                <!--//리뷰-->
+                                <!--품질보증-->
+                                <div class="menu" id="tabCon3">
+                                    <a href="#"><img src="/aboutCom/images/shopping/img_top.gif" class="btn_top" alt="top" /></a>
+                                    <!--tab메뉴-->
+                                    <ul class="protabs">
+                                        <li><a href="#tabCon1"><img src="/aboutCom/images/shopping/txt_tab1.gif" alt="상세정보" /></a></li>
+                                        <li><a href="#tabCon2"><img src="/aboutCom/images/shopping/txt_tab2.gif" alt="리뷰" /></a></li>
+                                        <li class="cnt"><a href="#tabCon3"><img src="/aboutCom/images/shopping/txt_tab3.gif" alt="품질보증/배송관련" /></a></li>
+                                    </ul>
+                                    <!--//tab메뉴-->
+                                </div>
+                                <div class="pro_content">
+                                    <div class="quality_assurance">
+                                        <ul>
+                                            <li>
+                                                <div class="cont">
+                                                    <p class="quality_tit">품질 보증 기준</p>
+                                                    <p class="quality_txt">
+                                                        본 제품은 구입 시 유통기한이 경과 되었거나 유통 과정 중 변질, 변패 또는 파손된 제품일 경우에는 소비자기본법에 따른 소비자분쟁해결기준에 의거 교환 또는 보상을 받을 수 있습니다.
+                                                    </p>
+                                                </div>
+                                                <div class="cont">
+                                                    <p class="quality_tit">소비자 상담 연락처</p>
+                                                    <p class="quality_txt">
+                                                        080-740-7983
+                                                    </p>
+                                                </div>
+                                                <div class="cont">
+                                                    <p class="quality_tit">사용시 주의사항</p>
+                                                    <p class="quality_txt">
+                                                        1. 화장품을 사용하여 다음과 같은 이상이 있는 경우에는 사용을 중지하여야 하며, 계속 사용하면 증상이 악화되므로 피부과 전문의 등에게 상담할 것<br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;가) 사용 중 붉은 반점, 부어오름, 가려움증, 자극 등의 이상이 있는 경우<br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;나) 적용부위가 직사광선에 의하여 위와 같은 이상이 있는 경우<br />
+                                                        2. 상처가 있는 부위, 습진 및 피부염 등의 이상이 있는 부위에는 사용을 하지 말 것<br />
+                                                        3.(스크럽 제품의 경우) 사용시 입자가 눈에 들어가지 아니하도록 할 것<br />
+                                                        4. 보관 및 취급 시의 주의사항<br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;가) 사용후에는 반드시 마개를 닫아둘 것<br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;나) 유아,소아의 손이 닿지 않는 곳에 보관할 것<br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;다) 고온 또는 저온의 장소 및 직사광선이 닿는 곳에는 보관하지 말 것<br />
+                                                        5.(자외선 차단 기능이 포함된 제품의 경우) 이 제품의 자외선차단지수 및 자외선 A 차단등급은 식품의약품안전청고시 자외선 차단 효과 측정방법 및<br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;기준에 따라 측정하였음<br />
+                                                        6. (버블워시의 경우) 살리실릭애씨드 및 그 염류를 함유하고 있으므로 만3세 이하 어린이에게는 사용하지 말 것<br />
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="cont">
+                                                    <p class="quality_tit">배송 안내</p>
+                                                    <p class="quality_txt">
+                                                        배송사 : CJ대한통운<br />
+                                                        배송지역 : 전국<br />
+                                                        주문하신 상품은 결제 완료 후 평균 2~5일(휴일 및 공휴일 제외) 이내에 배송됩니다.<br />
+                                                        산간 도서지방,군부대 등 일부 지역은 배송기간이 더 소요될 수 있습니다.<br /><br />
+                                                        배송비 : 실결제금액 30,000원 이상(할인 등이 적용된 최종 결제 금액 기준) 배송비 무료, 그 외 2,500원 (도서, 산간, 오지 일부지역은 배송비가 추가될 수 있습니다.)<br /><br />
+                                                        배송 예정일 : 평일 오전 9시 이전 주문 건은 당일 출고되며, 그 후 주문건은 다음날 출고됩니다.<br />
+                                                        주문하신 상품은 결제 완료 후 평균 2~5일(휴일 및 공휴일 제외) 이내에 배송됩니다.<br />
+                                                        산간 도서지방,군부대 등 일부 지역은 배송기간이 더 소요될 수 있습니다.<br />
+                                                        할인 행사로 인한 주문 폭주 및 택배사의 사정 등으로 인한 경우 배송이 지연될 수 있습니다.<br /><br />
+                                                        상품 불량 및 오배송 등으로 인한 교환/반품 신청의 경우 배송비는 무료입니다.<br /><br />
+                                                        고객님의 단순 변심으로 인한 교환/반품 신청은 고객님께서 왕복배송비 5,000원을 부담해주셔야 처리가 됩니다. <br />
+                                                        신한은행 150-000-061736 ㈜삼양제넥스
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="cont">
+                                                    <p class="quality_tit">주문 취소/교환 / 반품 안내</p>
+                                                    <p class="quality_txt">
+                                                        · 사은품 품절 시 공지 없이 대체 상품이 발송됩니다. <br />
+                                                        · 단순변심, 착오구매에 따른 교환/반품 신청은 상품을 공급받은 날부터 7일 이내 가능합니다. (배송비 고객 부담)<br />
+                                                        · 공급받은 상품이 표시/광고의 내용과 다르거나 계약내용과 다르게 이행된 경우에는 상품을 공급받은 날부터 3개월 이내, <br />
+                                                        &nbsp;&nbsp; 그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내 교환/반품 신청을 하실 수 있습니다. (배송비 회사 부담)<br />
+                                                        · 교환/반품을 원하는 고객은 쇼핑몰 고객센터 (080-740-7983)에 전화하시거나 [마이페이지>교환/반품 신청]을 통해신청하시면 됩니다.<br />
+                                                        · 해당 상품 구매 시 사은품/증정품 등이 제공된 경우, 상품 교환/반품 시 함께 보내주셔야 합니다.<br />
+                                                        · 오프라인 매장에서 구매한 제품은 교환/반품이 불가능 합니다.
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--//품질보증-->
+                            </div>
+                            <!--//상세정보, 리뷰, 품질보증/배송관련 tab-->
+                        </div>
+                        <!--//왼쪽영역 : 이벤트 배너, 연관상품, 상품정보, 리뷰, 품질보증 제공-->
+                        <!--오른쪽영역 : 사용자 보유 정보-->
+                        <div class="right_area">
+                            <!--배너 지젠 기획전-->
+                           @* @{Html.RenderAction("BannerInProductDetail", "ChildActionDisplayer", new { P_CODE = @ViewBag.P_CODE });}*@
                         <!--오른쪽영역 : 상품상세의 right 프로모션-->
                         
                                 @{Html.RenderAction("EventInProductDetail", "Event", new {p_code = @ViewBag.P_CODE });}
