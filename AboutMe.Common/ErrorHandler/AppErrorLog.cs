@@ -63,7 +63,7 @@ namespace AboutMe.Common.ErrorHandler
                 tb.ERR_QUERY = "";
                 tb.COMPUTER_NAME = context.Server.MachineName;
                 tb.EMP_NAME = "";
-                tb.EMP_EMAIL = "";
+                tb.EMP_EMAIL = AboutMe.Common.Helper.Utility01.GetUserIPAddress(); ;
                 tb.MEMB_ID = M_ID;
                 tb.RESULT_YN = "N";
                 tb.POST_DATA = sData;

@@ -1383,7 +1383,7 @@ namespace AboutMe.Web.Admin.Controllers
 
         public ActionResult ErrIndex(string SearchCol = "", string SearchKeyword = "", string SortCol = "IDX", string SortDir = "DESC", int Page = 1, int PageSize = 10)
         {
-            this.ViewBag.PageSize = PageSize;
+            this.ViewBag.PageSize = 50;
             this.ViewBag.SearchCol = SearchCol;
             this.ViewBag.SearchKeyword = SearchKeyword;
             this.ViewBag.SortCol = SortCol;

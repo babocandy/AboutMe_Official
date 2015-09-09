@@ -78,7 +78,7 @@ namespace AboutMe.Web.Front.Common
             tb.ERR_QUERY = "";
             tb.COMPUTER_NAME = context.Server.MachineName;
             tb.EMP_NAME = "[PC버전]";
-            tb.EMP_EMAIL = "";
+            tb.EMP_EMAIL = AboutMe.Common.Helper.Utility01.GetUserIPAddress();
             tb.MEMB_ID = MemberInfo.GetMemberId();
             tb.RESULT_YN = "N";
             tb.POST_DATA = sData;

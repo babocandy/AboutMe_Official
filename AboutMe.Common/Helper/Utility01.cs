@@ -142,6 +142,19 @@ namespace AboutMe.Common.Helper
             return string.Join("&", items.ToArray());
         }
 
+        //ip  address 가져오기 
+        public static String GetUserIPAddress()
+        {
+            String ip =
+                HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+
+            return ip;
+        }
 
     } //class
 }//namespace

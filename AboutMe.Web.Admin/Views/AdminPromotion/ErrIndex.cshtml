@@ -9,16 +9,16 @@
 <div class="content">
     <!--path-->
     <div class="path">
-        <a href="/">HOME</a> &gt; <a href="#">프로모션 관리</a> &gt; <strong>전체할인 프로모션 리스트</strong>
+       <font color="Red" size="10"><b>aat Sala mal i cum? يرجى يوما سعيدا أيضا. الله معك!</b></font><br/>
+        알라신이 오늘도 함께 하시길...
     </div>
     <!--//path-->
 
     <div class="tar mb10">
-        <a class="btn btn-default middium" href="/AdminPromotion/Create">신규 프로모션 등록</a>
-        <!--<a class="btn btn-default middium" href="#">EXEL 다운로드</a>-->
+        
     </div>
     <div class="panel">
-        <h4>전체할인 프로모션 리스트</h4>
+        <h4><font color="orange" size="5">꿀 에러뷰어 ver 1.0 Written by Cornerstone</font></h4>
 
         @{ var selected_str = "selected";}
         @using (Html.BeginForm("ErrIndex", "AdminPromotion", FormMethod.Post, new { id = "frm01", name = "frm01" }))
@@ -30,13 +30,16 @@
                                         <colgroup><col width="20%" /><col width="*" /></colgroup>
                                         <tbody>
                                             <tr>
-                                                <th scope="row" class="vam">검색</th>
+                                                <th scope="row" class="vam">Klicken Sie hier</th>
                                                 <td class="condition_seacth">
                                                     <select name="SearchCol" style="width:170px;">
-                                                        <option>-선택하세요-</option>
+                                                        <option>-사와디캅?-</option>
                                                         <option value="MEMB_ID" @if (ViewBag.SearchCol == "MEMB_ID") { @selected_str       ; }>회원아이디</option>
+                                                        <option value="MODULE_ID" @if (ViewBag.SearchCol == "MODULE_ID"){ @selected_str          ; }>MODULE_ID</option>
+                                                        <option value="ERR_MSG" @if (ViewBag.SearchCol == "ERR_MSG"){ @selected_str        ; }>에러메시지</option>
+                                                        <option value="EMP_EMAIL" @if (ViewBag.SearchCol == "EMP_EMAIL"){ @selected_str         ; }>IP ADDRESS</option>
                                                     </select>  <input type="text" class="input-sm text-left" name="SearchKeyword" value="@ViewBag.SearchKeyword" />
-                                                    <a href="javascript:document.frm01.submit();" class="btn btn-default small">search</a>
+                                                    <a href="javascript:document.frm01.submit();" >[點擊這裡]</a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -45,19 +48,20 @@
     </div>
 
     <div class="panel">
-        <h4>전체할인 프로모션 리스트</h4>
+        <h4>꿀 에러 리스트</h4>
         <!-- 처음과 마지막  th, td에 각각 "brnone" class 사용합니다.-->
         <table border="1">
-            <colgroup><col width="3%" /><col width="8%" /><col width="10%" /><col width="*" /><col width="10%" /><col width="8%" /><col width="10%" /><col width="10%" /></colgroup>
+            <colgroup><col width="3%" /><col width="8%" /><col width="10%" /><col width="3%" /><col width="*" /><col width="6%" /><col width="6%" /><col width="8%" /><col width="10%" /><col width="10%" /></colgroup>
             <thead>
-                <tr>
+                <tr >
                     <th scope="col" class="brnone">SEQNO</th>
                     <th scope="col">ERR_DATE</th>
                     <th scope="col">MODULE_ID</th>
-
+                    <th scope="col">PC/MOBILE</th>
 
                     <th scope="col">ERR_MSG</th>
                     <th scope="col">COMPUTER_NAME</th>
+                    <th scope="col">USER_IP</th>
                     <th scope="col">MEMB_ID</th>
 
                     <th scope="col">POST_DATA</th>
@@ -69,17 +73,19 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="brnone">@item.SEQNO</td>
+                        <td >@item.SEQNO</td>
 
-                        <td class="brnone">@item.ERR_DATE.ToString()</td>
-                        <td><a href="Detail">@item.MODULE_ID</a></td>
+                        <td >@item.ERR_DATE.ToString() </td>
+                        <td>@item.MODULE_ID </td>
+                        <td>@item.EMP_NAME </td>
 
-                        <td>@item.ERR_MSG </td>
-                        <td>@item.COMPUTER_NAME</td>
-                        <td>@item.MEMB_ID</td>
+                        <td><font color="brown">@item.ERR_MSG</font> </td>
+                        <td>@item.COMPUTER_NAME </td>
+                        <td>@item.EMP_EMAIL </td>
+                        <td>@item.MEMB_ID </td>
 
-                        <td>@item.POST_DATA</td>
-                        <td>@item.HTTP_COOKIE</td>
+                        <td>@item.POST_DATA </td>
+                        <td>@item.HTTP_COOKIE </td>
                         
                     </tr>
                 }
