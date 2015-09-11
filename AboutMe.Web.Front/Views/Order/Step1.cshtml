@@ -21,6 +21,7 @@
     <script language="javascript" src="http://plugin.inicis.com/pay61_secuni_cross.js"></script>
 
     <script language="javascript">
+
         function textCounter(field, maxlimit) {
 	        var applycontents;
     
@@ -82,7 +83,7 @@
         
         //쿠폰적용
         function setOrderCoupon(arrP) {
-            var jobj = encodeURIComponent(JSON.stringify(arrP));
+            var jobj = encodeURIComponent(arrP);
             var src_url = "/Order/ApplyCoupon";
             var param = "data=" + jobj;
             $.ajax({

@@ -135,7 +135,8 @@
                 arrP.push(obj);
             });
             if (confirm('쿠폰을 적용하시겠습니까?')) {
-                window.opener.setOrderCoupon(arrP);
+                var objtxt = JSON.stringify(arrP);
+                window.opener.setOrderCoupon(objtxt);
                 self.close();
             }
         }
