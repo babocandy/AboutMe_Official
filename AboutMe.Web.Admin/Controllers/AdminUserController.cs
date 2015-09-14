@@ -159,7 +159,7 @@ namespace AboutMe.Web.Admin.Controllers
             }
 
             
-            return RedirectToAction("Index", "AdminFrontMember"); // 로그인 성공
+            return RedirectToAction("Index", "Order"); // 로그인 성공
             //return View();
         }
 
