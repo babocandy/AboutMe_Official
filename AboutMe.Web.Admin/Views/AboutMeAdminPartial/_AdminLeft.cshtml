@@ -132,7 +132,7 @@
                 <ul class="nav nav-sidebar depth1">
                     <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
                     <li @fLeftMenuCSSOn("Index,Edit")>
-                        <a href="/AdminFrontMember/Index" class="menu ">회원관리</a>
+                        <a href="/AdminFrontMember/Index?SEL_IS_RETIRE=N" class="menu ">회원관리</a>
                     </li>
                     <li @fLeftMenuCSSOn("StaffRequestIndex,StaffRequestEdit")>
                         <a href="/AdminFrontMember/StaffRequestIndex?SEL_STATUS=@HttpUtility.UrlEncode("접수")" class="menu ">임직원신청내역</a>
