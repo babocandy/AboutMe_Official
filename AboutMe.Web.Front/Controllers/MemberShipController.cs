@@ -1172,5 +1172,78 @@ namespace AboutMe.Web.Front.Controllers
             return View();
         }
 
+        #region 테스트 로그인 
+
+        //고객에러 보고시 확인위한 가상 사용자 로그인
+        public ActionResult Login000777(string ID = "")
+        {
+         
+
+            string strHTTPS_DOMAIN = Config.GetConfigValue("HTTPS_PROTOCOL") + Request.Url.Authority; //ex)https://www.aboutme.co.kr
+            string strHTTP_DOMAIN = "http://" + Request.Url.Authority; //ex)http://www.aboutme.co.kr
+
+            UrlHelper uh = new UrlHelper(this.ControllerContext.RequestContext);  //https ->  http 로 변경 적용시
+
+            //로그 기록 준비
+            string memo = "사용자-로그인";
+            string comment = "사용자-로그인";
+
+
+            //1.넘어온 인자값 확인 
+            if (ID == "" )
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('아이디가 전달되지 않았습니다.');history.go(-1);</script>");
+            }
+
+
+            //2.DB조회
+            //List<SP_MEMBER_VIEW_Result> result_list = _MemberService.GetMemberView(ID);
+            SP_MEMBER_VIEW_Result result = _MemberService.GetMemberView(ID);
+            if (result == null)
+            {
+
+                return Content("<script language='javascript' type='text/javascript'>alert('아이디가 존재하지 않습니다.');history.go(-1);;</script>");
+            }
+            else
+            {
+      
+
+                //사용자 세션or 쿠키 저장
+                CookieSessionStore cookiesession = new CookieSessionStore();
+                cookiesession.SetSecretSession("M_ID", result.M_ID);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("M_NAME", result.M_NAME);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("M_GRADE", result.M_GRADE);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("M_EMAIL", result.M_EMAIL);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("M_PHONE", result.M_PHONE);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("M_GBN", result.M_GBN);  //로그인 세션 세팅
+                cookiesession.SetSecretSession("NOMEMBER_ORDER_CODE", "");  //비회원주문 ORDER_CODE
+
+                cookiesession.SetSecretSession("M_SKIN_TROUBLE_CD", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅
+                cookiesession.SetSession("M_SKIN_TROUBLE_CD_TEXT", result.M_SKIN_TROUBLE_CD);  //로그인 세션 세팅 -평문
+
+
+                _Cartservice.CartMerge(result.M_ID, _user_profile.SESSION_ID, "N");  //로그인후 장바구니 합치기 : 서비스 호출  << 지젠 요청 :  HttpContext.Session.SessionID???
+
+
+                memo = "test-로그인";
+                comment = "사용자-로그인성공";
+                memo = memo + "|ID:" + ID;
+            
+                UserLog userlog = new UserLog();
+                userlog.UserLogSave(memo, comment);
+
+                //https 제거 처리 start------------- SSL적용후 테스트 필요--------------------------
+
+              
+
+                //https 제거 처리 end-------------
+
+            }
+
+            return Redirect(uh.Action("Index", "Home", null, "http"));
+
+        }
+        #endregion
+
     } //class
 }//namespace

@@ -61,14 +61,16 @@
                                 var soptionObj = $("#COUPON_" + bx_pcode + " option:selected");
                                 var optionObj = $("#COUPON_" + bx_pcode + " option[value='']");
                                
-                                //초기화
-                                bx.nextAll("ul").children("li:eq(" + bx[0].selectedIndex + ")").addClass("open_selected").siblings().removeClass("open_selected");
-                                bx.next("div").children('a').html(bx.children("option:eq(" + bx[0].selectedIndex + ")").text());
                                 $("#COUPON_PRICE_" + bx_pcode).html(formatnumber(bx_total));
                                 $("#COUPON_PRICE_" + bx_pcode).attr("data-couponprice", bx_total);
 
                                 $("#COUPON_AMT_" + bx_pcode).html(formatnumber(bx_sale));
                                 $("#COUPON_AMT_" + bx_pcode).attr("data-couponamt", bx_sale);
+
+                                //초기화
+                                bx.val('');
+                                bx.nextAll("ul").children("li:eq(" + bx[0].selectedIndex + ")").addClass("open_selected").siblings().removeClass("open_selected");
+                                bx.next("div").children('a').html(bx.children("option:eq(" + bx[0].selectedIndex + ")").text());
 
                                 //CalSumPrice();
                             }
@@ -135,7 +137,8 @@
                 arrP.push(obj);
             });
             if (confirm('쿠폰을 적용하시겠습니까?')) {
-                window.opener.setOrderCoupon(arrP);
+                var objtxt = JSON.stringify(arrP);
+                window.opener.setOrderCoupon(objtxt);
                 self.close();
             }
         }
