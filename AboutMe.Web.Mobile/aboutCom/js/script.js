@@ -832,25 +832,25 @@ $(function(){
 	var brandWidth = $(window).width()-20; // 아이템 width
 	var winHeight ;
 	$(".tab_content_wrap .bg").load(function(){
-		$(".tab_content_wrap .bg").height();
-		winHeight = $(".tab_content_wrap .bg").height();
-		$(".tab_content_wrap").css({"width":brandWidth+20, "height":winHeight});
+		//winHeight = $(".tab_content_wrap .bg").height();
+		//$(".tab_content_wrap").css({"width":brandWidth+20, "height":winHeight});
 	});
 	$(".tab_content_wrap .tab_content").css({"width":brandWidth});
 	$(".tab_content_wrap .tab_content li").css({"width":brandWidth});
 	$(window).resize(function(){
 		brandWidth = $(window).width()-20;
-		winHeight = $(".tab_content_wrap .bg").height();
-		$(".tab_content_wrap").css({"width":brandWidth+20, "height":winHeight});
+		//winHeight = $(".tab_content_wrap .bg").height();
+		//$(".tab_content_wrap").css({"width":brandWidth+20, "height":winHeight});
 		$(".tab_content_wrap .tab_content").css({"width":brandWidth});
 		$(".tab_content_wrap .tab_content li").css({"width":brandWidth});
+		$(".tab_content_wrap .slider").css({"margin-left": -(brandWidth*brand_idx)});
 	});
 	
 	var brand_idx=0; //idx값
 	var brandTotal_length = $(".tab_content_wrap .slider li").length; //총 li갯수
-	$(".tab_content_wrap .subject_slider li img").load(function(){
-		$(".tab_content_wrap .btn_prevnext").css({"height":$(".tab_content_wrap .subject_slider li img").height()})
-	});
+	// $(".tab_content_wrap .subject_slider li img").load(function(){
+	// 	$(".tab_content_wrap .btn_prevnext").css({"height":$(".tab_content_wrap .subject_slider li img").height()})
+	// });
 	
 	function brandSlide(){
 		$(".tab_content_wrap .slider").animate({"margin-left": -(brandWidth*brand_idx)},300,"easeInExpo");
