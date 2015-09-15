@@ -510,6 +510,11 @@
           <Property Type="String" Name="PMO_PRODUCT_NAME" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="FREEGIFT_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="DELIVERY_NUM" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="RECEIVER_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="RECEIVER_TEL" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RECEIVER_HP" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RECEIVER_ADDR" Nullable="true" MaxLength="521" />
+          <Property Type="String" Name="ORDER_MEMO" Nullable="true" MaxLength="500" />
         </ComplexType>
         <ComplexType Name="SP_ADMIN_ORDER_MEMBER_STATUS_Result">
           <Property Type="Int32" Name="ORDER_CNT" Nullable="true" />
@@ -721,6 +726,11 @@
                 <ScalarProperty Name="PMO_PRODUCT_NAME" ColumnName="PMO_PRODUCT_NAME" />
                 <ScalarProperty Name="FREEGIFT_NAME" ColumnName="FREEGIFT_NAME" />
                 <ScalarProperty Name="DELIVERY_NUM" ColumnName="DELIVERY_NUM" />
+                <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+                <ScalarProperty Name="RECEIVER_TEL" ColumnName="RECEIVER_TEL" />
+                <ScalarProperty Name="RECEIVER_HP" ColumnName="RECEIVER_HP" />
+                <ScalarProperty Name="RECEIVER_ADDR" ColumnName="RECEIVER_ADDR" />
+                <ScalarProperty Name="ORDER_MEMO" ColumnName="ORDER_MEMO" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
