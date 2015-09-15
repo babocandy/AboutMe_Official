@@ -622,10 +622,16 @@ namespace AboutMe.Web.Admin.Controllers.Order
                 foreach (var row in lst)
                 {
                     string delivery_num = (string.IsNullOrEmpty(row.DELIVERY_NUM) ? "" : row.DELIVERY_NUM.ToString().Trim());
-                    
-                    sql = "INSERT INTO [Sheet1$] ([ORDER IDX],[ORDER DETAIL IDX],[주문번호],[주문일자],[주문자명],[임직원여부],[상품코드],[상품명],[개수],[결제구분],[결제액],[상태],[프로모션종류],[프로모션명],[사은품명],[송장번호]) ";
-                    sql = sql + String.Format(" VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}');"
+                    string ORDER_MEMO = (string.IsNullOrEmpty(row.ORDER_MEMO) ? "" : row.ORDER_MEMO.ToString().Trim());
+                    string RECEIVER_NAME = (string.IsNullOrEmpty(row.RECEIVER_NAME) ? "" : row.RECEIVER_NAME.ToString().Trim());
+                    string RECEIVER_TEL = (string.IsNullOrEmpty(row.RECEIVER_TEL) ? "" : row.RECEIVER_TEL.ToString().Trim());
+                    string RECEIVER_HP = (string.IsNullOrEmpty(row.RECEIVER_HP) ? "" : row.RECEIVER_HP.ToString().Trim());
+                    string RECEIVER_ADDR = (string.IsNullOrEmpty(row.RECEIVER_ADDR) ? "" : row.RECEIVER_ADDR.ToString().Trim());
+
+                    sql = "INSERT INTO [Sheet1$] ([ORDER IDX],[ORDER DETAIL IDX],[주문번호],[주문일자],[주문자명],[받으시는분],[연락처],[휴대폰],[주소],[배송메시지],[임직원여부],[상품코드],[상품명],[개수],[결제구분],[결제액],[상태],[프로모션종류],[프로모션명],[사은품명],[송장번호]) ";
+                    sql = sql + String.Format(" VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}');"
                                     , row.ORDER_IDX.ToString().Trim(), row.ORDER_DETAIL_IDX.ToString().Trim(), row.ORDER_CODE.ToString().Trim(), row.ORDER_DATE.ToString().Trim(), row.ORDER_NAME.ToString().Trim()
+                                    , RECEIVER_NAME, RECEIVER_TEL, RECEIVER_HP, RECEIVER_ADDR, ORDER_MEMO
                                     , row.EMP_YN.ToString().Trim(), row.P_CODE.ToString().Trim(), row.P_NAME.ToString().Trim(), row.P_COUNT.ToString().Trim(), row.PAY_NM.ToString().Trim()
                                     , row.REAL_PAY_PRICE.ToString().Trim(), row.ORDER_STATUS_NM.ToString().Trim(), row.PROMOTION_NM.ToString().Trim(), row.PMO_PRODUCT_NAME.ToString().Trim()
                                     , row.FREEGIFT_NAME.ToString().Trim(), delivery_num);
@@ -760,17 +766,25 @@ namespace AboutMe.Web.Admin.Controllers.Order
                             string order_code = cval[2].ToString().Trim();
                             string order_date = cval[3].ToString().Trim();
                             string order_name = cval[4].ToString().Trim();
-                            string emp_yn = cval[5].ToString().Trim();
-                            string p_code = cval[6].ToString().Trim();
-                            string p_name = cval[7].ToString().Trim();
-                            string p_count = cval[8].ToString().Trim();
-                            string pay_nm = cval[9].ToString().Trim();
-                            string real_pay_price = cval[10].ToString().Trim();
-                            string order_status_nm = cval[11].ToString().Trim();
-                            string promotion_nm = cval[12].ToString().Trim();
-                            string pmo_product_name = cval[13].ToString().Trim();
-                            string freegift_name = cval[14].ToString().Trim();
-                            string delivery_num = cval[15].ToString().Trim();
+
+                            string receiver_name = cval[5].ToString().Trim();
+                            string receiver_tel = cval[6].ToString().Trim();
+                            string receiver_hp = cval[7].ToString().Trim();
+                            string receiver_addr = cval[8].ToString().Trim();
+                            string order_memo = (string.IsNullOrEmpty(cval[9].ToString()) ? "" : cval[9].ToString().Trim());
+
+
+                            string emp_yn = cval[10].ToString().Trim();
+                            string p_code = cval[11].ToString().Trim();
+                            string p_name = cval[12].ToString().Trim();
+                            string p_count = cval[13].ToString().Trim();
+                            string pay_nm = cval[14].ToString().Trim();
+                            string real_pay_price = cval[15].ToString().Trim();
+                            string order_status_nm = cval[16].ToString().Trim();
+                            string promotion_nm = cval[17].ToString().Trim();
+                            string pmo_product_name = cval[18].ToString().Trim();
+                            string freegift_name = cval[19].ToString().Trim();
+                            string delivery_num = cval[20].ToString().Trim();
 
                             if (!string.IsNullOrEmpty(delivery_num))
                             {
@@ -782,6 +796,11 @@ namespace AboutMe.Web.Admin.Controllers.Order
                                     dv.ORDER_CODE = order_code;
                                     dv.ORDER_DATE = order_date;
                                     dv.ORDER_NAME = order_name;
+                                    dv.RECEIVER_NAME = receiver_name;
+                                    dv.RECEIVER_TEL = receiver_tel;
+                                    dv.RECEIVER_HP = receiver_hp;
+                                    dv.RECEIVER_ADDR = receiver_addr;
+                                    dv.ORDER_MEMO = order_memo;
                                     dv.EMP_YN = emp_yn;
                                     dv.P_CODE = p_code;
                                     dv.P_NAME = p_name;

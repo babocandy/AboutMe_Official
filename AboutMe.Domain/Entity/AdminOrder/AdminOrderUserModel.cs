@@ -160,11 +160,19 @@ namespace AboutMe.Domain.Entity.AdminOrder
 
     public class DELIVERTY_EXCEL_RESULT
     {
+
         public string ORDER_IDX { get; set; }
         public string ORDER_DETAIL_IDX { set; get; }
         public string ORDER_CODE { set; get; }
         public string ORDER_DATE { set; get; }
         public string ORDER_NAME { set; get; }
+
+        public string RECEIVER_NAME { get; set; }
+        public string RECEIVER_TEL { get; set; }
+        public string RECEIVER_HP { get; set; }
+        public string RECEIVER_ADDR { get; set; }
+        public string ORDER_MEMO { get; set; }
+
         public string EMP_YN { set; get; }
         public string P_CODE { set; get; }
         public string P_NAME { set; get; }

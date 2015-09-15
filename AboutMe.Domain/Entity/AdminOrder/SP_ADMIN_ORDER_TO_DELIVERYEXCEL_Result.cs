@@ -30,5 +30,10 @@ namespace AboutMe.Domain.Entity.AdminOrder
         public string PMO_PRODUCT_NAME { get; set; }
         public string FREEGIFT_NAME { get; set; }
         public string DELIVERY_NUM { get; set; }
+        public string RECEIVER_NAME { get; set; }
+        public string RECEIVER_TEL { get; set; }
+        public string RECEIVER_HP { get; set; }
+        public string RECEIVER_ADDR { get; set; }
+        public string ORDER_MEMO { get; set; }
     }
 }
