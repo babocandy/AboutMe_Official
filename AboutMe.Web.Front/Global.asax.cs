@@ -55,7 +55,11 @@ namespace AboutMe.Web.Front
             {
                 Common.AppErrorLog AppErr = new Common.AppErrorLog();
                 AppErr.HandlerInsertAppErrLog(sender, e);
+
+                //Response.Flush();
+                //Response.Headers.Clear(); // 이 에러메시지를 방지하기 위한 조치 =>  "Cannot redirect after HTTP headers have been sent error"
                 Response.Redirect("/CustomError/Err500");
+                //Server.Transfer("/CustomError/Err500");
             } 
 
         }
