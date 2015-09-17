@@ -60,6 +60,11 @@ namespace AboutMe.Web.Mobile.Controllers.MyPage
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName();
             this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피부고민코드
 
+            this.ViewBag.M_GBN = MemberInfo.GetMemberGBN();
+            this.ViewBag.M_GBN_NAME = "";
+            if (MemberInfo.GetMemberGBN() == "S")
+                this.ViewBag.M_GBN_NAME = "[임직원]";
+
             SP_MYPAGE_MAIN_STATUS_Result M = _orderservice.MyPageMainInfo(_user_profile.M_ID);
 
             return View(M);
