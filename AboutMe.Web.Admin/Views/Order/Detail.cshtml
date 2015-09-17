@@ -482,7 +482,7 @@
 		</tbody>
 	</table>
     <div class="mt10" style="position: absolute;">
-        @Html.ActionLink("주문목록", "Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
+        @Html.ActionLink("주문목록", "Index","Order/Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
     </div>	
     <div class="mt10 tar">
         <a class="btn btn-default middium" href="/AdminPoint" target="_blank">포인트 수동 관리</a>
@@ -783,7 +783,7 @@
             </ul>
         </div>
         <div class="mt10" style="position: absolute;">
-            @Html.ActionLink("주문목록", "Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
+            @Html.ActionLink("주문목록", "Index", "Order/Index", @Model.SearchOption, new { @class = "btn btn-default middium" })
         </div>
         <div class="tar mt10">
             <a href="#" class="btn btn-default middium">해당 주문 건 취소/교환/반품 신청 내역 보기</a>

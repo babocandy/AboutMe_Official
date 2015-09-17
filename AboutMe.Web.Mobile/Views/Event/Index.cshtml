@@ -8,25 +8,29 @@
 @section Scripts {
 <link href="/aboutCom/css/event.css" rel="stylesheet" />
 <script type="text/javascript">
-    /**
+ 
     $(function () {
 
 			//타임세일 현재날짜와 종료날짜를 입력해주세요.
-			$('#timesale').countdown({
+            /**
+            $('#timesale').countdown({
 				starttimestamp	: "2014,07,12,12,00,00",	//현재날짜
 				endtimestamp	: "2014,07,13,10,20,30",	//종료날짜
 				callback	: function(m){
 					$('#timesale').html(m);
 				}
 			});
+            **/
 			//레이어타임세일의 현재날짜와 종료날짜 입력해주세요 (위와 같은 날자 입력)
-			$('#ly_timesale').countdown({
+            /**
+            $('#ly_timesale').countdown({
 				starttimestamp	: "2014,07,12,12,00,00",	//현재날짜
 				endtimestamp	: "2014,07,13,10,20,30",	//종료날짜
 				callback	: function(m){
 					$('#ly_timesale').html(m);
 				}
 			});
+            **/
 			//Lazy Load Script
 			$("img.lazyload").lazyload({
 				threshold : 100,
@@ -34,7 +38,7 @@
 				skip_invisible : false
 			});
 		});
-        **/
+     
 </script>
 
 }
