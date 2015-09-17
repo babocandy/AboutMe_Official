@@ -66,7 +66,11 @@ namespace AboutMe.Web.Front.Controllers
             this.ViewBag.M_GRADE_NAME = MemberInfo.GetMemberGradeName();
             this.ViewBag.M_SKIN_TROUBLE_CD = MemberInfo.GetMemberSkinTroubleCD(); //피부고민코드
 
-
+            this.ViewBag.M_GBN =MemberInfo.GetMemberGBN();
+            this.ViewBag.M_GBN_NAME = "";
+            if (MemberInfo.GetMemberGBN() == "S")
+                this.ViewBag.M_GBN_NAME = "[임직원]";
+            
             #region 쿠폰 =========================================================================================================
             //다운로드 가능한 쿠폰 수량 가져오기 
             List<SP_ADMIN_COUPON_COMMON_CNT_Result> lst =  _CouponService.GetDownloadableCouponCnt(MemberInfo.GetMemberId());
