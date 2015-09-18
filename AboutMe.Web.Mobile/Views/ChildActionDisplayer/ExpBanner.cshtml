@@ -9,7 +9,7 @@
 @if (!String.IsNullOrEmpty(@Model.One.IMG))
 {
     <a href="@Model.One.URL" class="bnr">
-        <img src="@Model.One.IMG" alt="">
+        <img src="@string.Format("{0}{1}", myController._img_path_display, Model.One.IMG)" alt="">
     </a>
 
 }
