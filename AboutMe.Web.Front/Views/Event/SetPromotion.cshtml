@@ -322,8 +322,8 @@
                     <div class="txtbox">
                         <span class="txt1"># @Html.Raw(Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_TITLE) <!--밤 9시 예뻐지는 시각--></span>
                         <span class="txt2">
-                           <!-- <img src="/aboutCom/images/sample/txt_setgoods.png" alt="3개 이상 같이 구매해서 30% 할인 받자!" /></p> -->
-                            <img src="@ViewBag.PROMOTION_IMG_PATH@Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_MAIN_IMG" alt="" </p>
+                           <!-- <img src="/aboutCom/images/sample/txt_setgoods.png" alt="3개 이상 같이 구매해서 30% 할인 받자!" /></span> -->
+                            @Html.Raw(Model.inst_PROMOTION_TOP_1_Result[0].PMO_PRODUCT_SUB_TITLE)
                            <!--<span class="date"><em>2015. 09. 01</em> ~ <em>2015. 09. 02</em></span> -->
                             <span class="date"><em>@FromYYYY. @FromMM.  @FromDD</em> ~ <em>@ToYYYY. @ToMM.  @ToDD</em></span>
                     </div>
@@ -379,7 +379,7 @@
                                                     </span>
                                                     <em class="price">
                                                         <del>@String.Format("{0:#,##0}", item.SELLING_PRICE)원</del>
-                                                        <strong>@String.Format("{0:#,##0}", item.DISCOUNT_PRICE)원</strong>
+                                                        <strong>@String.Format("{0:#,##0}", item.RESULT_PRICE)원</strong>
                                                     </em>
                                                 </span>
                                             </a>
