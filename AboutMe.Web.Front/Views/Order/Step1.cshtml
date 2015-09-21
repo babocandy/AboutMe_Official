@@ -21,6 +21,12 @@
     <script language="javascript" src="http://plugin.inicis.com/pay61_secuni_cross.js"></script>
 
     <script language="javascript">
+        //IE8에서 trim을지원하지않음.
+        if (typeof String.prototype.trim !== 'function') {
+            String.prototype.trim = function () {
+                return this.replace(/^\s+|\s+$/g, '');
+            }
+        }
 
         function textCounter(field, maxlimit) {
 	        var applycontents;
