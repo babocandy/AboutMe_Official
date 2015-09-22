@@ -62,6 +62,7 @@ $(function () {
             var cookieid = $(this).get(0).id;
             if ($(this).is(":checked"))
                 setCookie(cookieid, "no", 1);
+                self.close();
             else
                 deleteCookie(cookieid);
         });
