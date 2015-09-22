@@ -13,7 +13,7 @@
     }
     @foreach (var item in Model.List)
     {
-        var prop = string.Format("width={0},height={1},left={2},top={3}", item.SIZE_HEIGHT, item.SIZE_HEIGHT, item.POS_LEFT, item.POS_TOP);
+        var prop = string.Format("width={0},height={1},left={2},top={3}", item.SIZE_WIDTH, item.SIZE_HEIGHT, item.POS_LEFT, item.POS_TOP);
         <text>
 
         if (getCookie("popup_@item.IDX") != "no"){

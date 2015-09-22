@@ -65,7 +65,7 @@
             <!-- 항목 선택 -->
             <ul class="tabs tabtypee">
                 <li class="@(Model.MobileParam.CATE == CategoryCode.BEAUTY_MOBLE_PARAM ? "cnt" : "")"><a href="@Url.Action("Experience", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.BEAUTY_MOBLE_PARAM, CATE_CODE = CategoryCode.BEAUTY_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">뷰티</a></li>
-                <li class="@(Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM ? "cnt" : "")"><a href="@Url.Action("Experience", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.HEALTH_MOBLE_PARAM, CATE_CODE = CategoryCode.HEALTH_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">헬스</a></li>
+                @*<li class="@(Model.MobileParam.CATE == CategoryCode.HEALTH_MOBLE_PARAM ? "cnt" : "")"><a href="@Url.Action("Experience", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.HEALTH_MOBLE_PARAM, CATE_CODE = CategoryCode.HEALTH_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">헬스</a></li>*@
                 <li class="@(Model.MobileParam.CATE == CategoryCode.SEL_SHOP_MOBLE_PARAM ? "cnt" : "")"><a href="@Url.Action("Experience", "Review", new ReviewListMobileUrlParam() { CATE = CategoryCode.SEL_SHOP_MOBLE_PARAM, CATE_CODE = CategoryCode.SEL_SHOP_DEFAULT, PAGE = 1, SORT = ReviewProductListViewModel.SORT_PHOTO })">기타브랜드</a></li>
             </ul>
             <!-- //항목 선택 -->

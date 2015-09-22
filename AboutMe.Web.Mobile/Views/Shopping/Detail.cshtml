@@ -1,4 +1,5 @@
 ﻿@model AboutMe.Domain.Entity.Product.SP_PRODUCT_MOBILE_DETAIL_VIEW_Result
+@using AboutMe.Common.Helper
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AboutMeLayoutA.cshtml";
@@ -223,7 +224,10 @@
             <div class="pro_detail">
                 <ul class="tabs tabtyped">
                     <li class="cnt"><a href="#proInfo">상품정보</a></li>
+@if (!ReviewHelper.CheckHealth(Model.P_CATE_CODE))
+{
                     <li><a href="#Review">리뷰</a></li>
+}
                     <li><a href="#Delivery">보증/배송</a></li>
                 </ul>
 
@@ -234,7 +238,7 @@
                 </div>
                 <!--//상품정보-->
                 <!--리뷰-->
-                @Html.Action("ReviewInShoppingDetail", "Review", new { P_CODE=Model.P_CODE})
+                @Html.Action("ReviewInShoppingDetail", "Review", new { P_CODE = Model.P_CODE, P_CATE_CODE = Model.P_CATE_CODE })
                 <!--//리뷰-->
                 <!--보증/배송-->
                 <div id="Delivery" class="tab_content">
