@@ -6,6 +6,10 @@
     var myController = ViewContext.Controller as ReviewController;
 }
 
+@*헬스 상품은 리뷰 안보이게 처리*@
+@if (!ReviewHelper.CheckHealth( Model.P_CATE_CODE) )
+{
+
 <div id="Review" class="tab_content">
     <div class="review_tab">
         <ul class="tabs tabtypeb">
@@ -313,3 +317,5 @@
 
     })();
 </script>
+    
+}

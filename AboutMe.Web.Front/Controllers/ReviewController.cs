@@ -153,7 +153,7 @@ namespace AboutMe.Web.Front.Controllers
          * 공통. 상품상세에서 상품, 체험단리뷰 함께. 상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
          */
         [ChildActionOnly]
-        public ActionResult ReviewInShoppingDetail(string P_CODE)
+        public ActionResult ReviewInShoppingDetail(string P_CODE, string P_CATE_CODE = "")
         {
             ReviewInProductDetailViewModel model = new ReviewInProductDetailViewModel();
             ReviewListJsonParamInShopping p = new ReviewListJsonParamInShopping();
@@ -165,7 +165,8 @@ namespace AboutMe.Web.Front.Controllers
             model.PageNo = 1;
             model.Pcode = P_CODE;
             model.PageSize = p.PAGE_SIZE??0;
-
+            model.P_CATE_CODE = P_CATE_CODE;
+            //model.ProductDetail = _ProductService.ViewProduct(P_CODE);
             return View(model);
         }
 

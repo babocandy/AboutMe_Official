@@ -308,6 +308,8 @@ namespace AboutMe.Domain.Entity.Review
         public int Total { get; set; }
         public SP_REVIEW_GET_PRODUCT_INFO_Result ProductInfo { get; set; }
         public string Pcode { get; set; }
+        public string P_CATE_CODE { get; set; }
+       // public SP_PRODUCT_DETAIL_VIEW_Result ProductDetail { get; set; }
     }
 
     public partial class SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result
