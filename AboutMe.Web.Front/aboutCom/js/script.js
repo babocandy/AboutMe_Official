@@ -58,13 +58,15 @@ function getCookie(name) {
 $(function () {
     if ($(".oneday_wrap").length) {
         $(".oneday_wrap input[type='checkbox']").on("change", function (e) {
-            //e.preventDefault();
+            //e. preventDefault();
             var cookieid = $(this).get(0).id;
-            if ($(this).is(":checked"))
+            if ($(this).is(":checked")) {
                 setCookie(cookieid, "no", 1);
                 self.close();
-            else
+            }
+            else {
                 deleteCookie(cookieid);
+            }
         });
     }
 
