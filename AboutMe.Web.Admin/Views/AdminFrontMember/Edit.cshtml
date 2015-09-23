@@ -738,15 +738,15 @@
                     <td>@Model.M_POINT.ToString("#,##0")
                         <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('POINT');" />
                     </td>
-                    <th>보유쿠폰</th>
-                    <td>(담당자구현필요)@ViewBag.TOTAL_COUPON_CNT.ToString("#,##0")
-                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('COUPON');" />
-                    
-                    </td>
                     <th>1:1문의</th>
-                    <td>@ViewBag.TOTAL_QNA_CNT.ToString("#,##0")
-                        <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('QNA');" />
+                    <td>
+                        @ViewBag.TOTAL_QNA_CNT.ToString("#,##0")
+                    <input type="button" value="상세보기" onclick="javascript:fPopPersonalDetail('QNA');" />
+                </td>
+                    <th></th>
+                    <td>
                     </td>
+                    
                 </tr>
             </tbody>
         </table>
