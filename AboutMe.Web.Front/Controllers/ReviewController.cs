@@ -150,7 +150,8 @@ namespace AboutMe.Web.Front.Controllers
         }
 
         /**
-         * 공통. 상품상세에서 상품, 체험단리뷰 함께. 상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
+         * 공통. 상품상세에서 상품, 체험단리뷰 함께. (신)상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
+         *  ==> 2015.10.12 (신)상품리뷰데이터을 가져오는것으로 변경함  구-상품리뷰는 구매리뷰로 변경됨
          */
         [ChildActionOnly]
         public ActionResult ReviewInShoppingDetail(string P_CODE, string P_CATE_CODE = "")
@@ -158,9 +159,12 @@ namespace AboutMe.Web.Front.Controllers
             ReviewInProductDetailViewModel model = new ReviewInProductDetailViewModel();
             ReviewListJsonParamInShopping p = new ReviewListJsonParamInShopping();
             p.P_CODE = P_CODE;
-            var tp = _ReviewService.GetReviewProductListByProductCode(p);
+            
+            //var tp = _ReviewService.GetReviewProductListByProductCode(p); // 2015.10.12 아래로 변경
+            var tp = _ReviewService.GetReviewFreeListByProductCode(p);
 
-            model.Reviews = tp.Item1;
+            //model.Reviews = tp.Item1; 2015.10.12 아래로 변경 
+            model.FreeReviews = tp.Item1; 
             model.Total = tp.Item2;
             model.PageNo = 1;
             model.Pcode = P_CODE;
@@ -170,6 +174,68 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
+
+
+        #region (신)상품리뷰 Version 2 By 송선우 ########################################################
+
+        /**
+         * 공통. 상품리뷰 데이터
+         */
+        /**
+        [ChildActionOnly]
+        public ActionResult FreeReviewInShoppingDetail(string P_CODE, string P_CATE_CODE = "")
+        {
+            ReviewInProductDetailViewModel model = new ReviewInProductDetailViewModel();
+            ReviewListJsonParamInShopping p = new ReviewListJsonParamInShopping();
+            p.P_CODE = P_CODE;
+            var tp = _ReviewService.GetReviewFreeListByProductCode(p);
+
+            model.FreeReviews = tp.Item1;
+            model.Total = tp.Item2;
+            model.PageNo = 1;
+            model.Pcode = P_CODE;
+            model.PageSize = p.PAGE_SIZE ?? 0;
+            model.P_CATE_CODE = P_CATE_CODE;
+            //model.ProductDetail = _ProductService.ViewProduct(P_CODE);
+            return View(model);
+        }
+         * **/
+
+
+
+        /**
+         * 
+         * 상품리뷰 목록 - JSON
+         * 
+         */
+        [HttpPost]
+        public JsonResult GetReviewFreeList(ReviewListJsonParam param)
+        {
+            ReviewProductListViewModel model = new ReviewProductListViewModel();
+            var tp = _ReviewService.GetReviewProductList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
+            model.Reviews = tp.Item1;//ReviewHelper.GetDataForUser(tp.Item1);
+            model.Total = tp.Item2;
+
+            var jsonData = new { Total = model.Total, Reviews = model.Reviews, Success = true, Postdata = param };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        /**
+         * 상품상세에서 상품리뷰 조회
+         */
+        [HttpPost]
+        public JsonResult GetReviewFreeListInShopping(ReviewListJsonParamInShopping p)
+        {
+            var tp = _ReviewService.GetReviewFreeListByProductCode(p);
+            var jsonData = new { Total = tp.Item2, Reviews = tp.Item1, Success = true, Postdata = p };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+        
+        #endregion
         /*
          * 
   Regex urlregex = new Regex(@"(#)((?:[A-Za-z0-9-_]*))", RegexOptions.IgnoreCase RegexOptions.Compiled);

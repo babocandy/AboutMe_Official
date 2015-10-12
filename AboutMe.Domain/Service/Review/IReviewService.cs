@@ -41,5 +41,15 @@ namespace AboutMe.Domain.Service.Review
 
         int GetReviewTotalByProductCode(string pcode);
         SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT_Result GetReviewDetailByMostReviewPdt();
+
+         #region (신)상품리뷰 Version 2 By 송선우 ######################################################## 
+        
+        //(신)-상품 리뷰 목록 조회 - 리뷰 전체리스트에서 사용
+        Tuple<List<SP_REVIEW_FREE_SEL_Result>, int> GetReviewFreeList(int? tailIdx, string categoryCode, string sort);
+
+        //상품코드별 상품리뷰 조회 - 상품상세에서 사용
+        Tuple<List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>, int> GetReviewFreeListByProductCode(ReviewListJsonParamInShopping p);
+
+        #endregion
     }
 }

@@ -115,7 +115,7 @@ namespace AboutMe.Domain.Service.Review
         }
 
         /*
-         * 상품 리뷰 목록 조회
+         * 구매리뷰 (구-상품 리뷰) 목록 조회
          */
         public Tuple<List<SP_REVIEW_PRODUCT_SEL_Result>, int> GetReviewProductList(int? tailIdx, string categoryCode, string sort)
         {
@@ -134,7 +134,7 @@ namespace AboutMe.Domain.Service.Review
         }
 
         /**
-         * 상품코드별 상품리뷰 조회 - 상품상세에서 사용
+         * 상품코드별 구매리뷰 (구-상품리뷰) 조회 - 상품상세에서 사용
          */
         public Tuple<List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result>, int> GetReviewProductListByProductCode(ReviewListJsonParamInShopping p)
         {
@@ -154,7 +154,7 @@ namespace AboutMe.Domain.Service.Review
 
         /**
          * 
-         * 상품리뷰 상세 
+         * 구매리뷰 (구-상품리뷰) 상세 
          */
         public SP_REVIEW_PRODUCT_INFO_Result GetReviewProductDetail(int? idx)
         {
@@ -366,5 +366,52 @@ namespace AboutMe.Domain.Service.Review
                 return context.SP_REVIEW_PRODCUT_DETAIL_BY_MOST_REVIEW_PDT().SingleOrDefault();
             }
         }
+
+
+
+        #region (신)상품리뷰 Version 2 By 송선우 ######################################################## 
+        
+        /*
+         * (신)-상품 리뷰 목록 조회 - 리뷰 전체리스트에서 사용
+         */
+        public Tuple<List<SP_REVIEW_FREE_SEL_Result>, int> GetReviewFreeList(int? tailIdx, string categoryCode, string sort)
+        {
+            List<SP_REVIEW_FREE_SEL_Result> lst = new List<SP_REVIEW_FREE_SEL_Result>();
+
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_FREE_SEL(tailIdx, categoryCode, sort, total).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_FREE_SEL_Result>, int> tp = new Tuple<List<SP_REVIEW_FREE_SEL_Result>, int>(lst, Convert.ToInt32(total.Value));
+
+            return tp;
+        }
+
+        /**
+         * 상품코드별 (신)상품리뷰 조회 - 상품상세에서 사용
+         */
+        public Tuple<List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>, int> GetReviewFreeListByProductCode(ReviewListJsonParamInShopping p)
+        {
+            List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result> lst = new List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>();
+
+            ObjectParameter total = new ObjectParameter("TOTAL", typeof(int));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                lst = context.SP_REVIEW_FREE_IN_SHOPPING_DETAIL(p.P_CODE, p.PAGE_NO, p.PAGE_SIZE, total).ToList();
+            }
+
+            Tuple<List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>, int> tp = new Tuple<List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>, int>(lst, Convert.ToInt32(total.Value));
+
+            return tp;
+        }
+
+        
+        #endregion
+
+
     }
 }
