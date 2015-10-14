@@ -363,6 +363,7 @@ namespace AboutMe.Domain.Entity.Review
         }
     }
 
+    #region (신)상품리뷰관련 ============================================================
 
     //(신)상품리뷰 - 2015.10.12 By 송선우 
     public partial class SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result
@@ -414,6 +415,8 @@ namespace AboutMe.Domain.Entity.Review
             }
         }
     }
+
+    #endregion
 
     /**
      * 체험단 리뷰 조회

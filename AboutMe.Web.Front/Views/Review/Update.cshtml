@@ -1,0 +1,195 @@
+﻿@model AboutMe.Domain.Entity.Review.MyReviewProductInputViewModel
+@using AboutMe.Common.Helper
+@using AboutMe.Common.Data
+@using AboutMe.Web.Front.Controllers
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AboutMeLayoutPopup.cshtml";
+
+    var myController = ViewContext.Controller as ReviewController;
+}
+@section Head{
+    @{ Html.RenderPartial("~/Views/AboutMePartial/_Head.cshtml");}
+
+    <style>
+        .field-validation-error, .validation-summary-errors {
+            color: red;
+            font-size: 13px;
+            line-height: 15px;
+        }
+    </style>
+
+
+    <script>
+
+        //결과값 처리
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        //console.log(rNum)
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+        } else if (rNum == "0") {
+            //window.opener.location = "@Url.Action("Complete", "MyReview")";
+
+            window.opener.reviewReload();
+
+            self.close();
+        }
+
+
+        function findUploadFile() {
+            document.getElementById("UploadImage").click();
+        }
+
+        function changeUploadFile(file) {
+            var filename = file.value;
+            filename = filename.split(/(\\|\/)/g).pop();
+
+            document.frm.ImageFileName.value = filename;
+
+            //이미지 미리보기 등록
+            if (FileReader != undefined) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    var previewImage = document.getElementById("previewImage");
+                    previewImage.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file.files[0]);
+            }
+
+        }
+
+        function save() {
+            var frm = document.frm
+
+
+            frm.COMMENT.value = document.getElementById("commentDummy").innerHTML;
+
+            frm.submit();
+        }
+    </script>
+
+}
+
+@section Body{
+    <!-- 상품리뷰등록_뷰티 팝업 -->
+    <div class="popupwrap">
+        <div class="pop">
+            <!--pop_top-->
+            <div class="pop_top">
+                <div class="title_area">
+                    <p class="title">상품 리뷰 등록</p>
+                </div>
+                <a href="#none" class="pop_close" onclick="PopupClose()"><img src="/aboutCom/images/review/reviewpop_close.gif" alt="닫기" /></a>
+            </div>
+            <!--//pop_top-->
+            <!--pop_bottom-->
+            <div class="write_review pro">
+                @using (Html.BeginForm("Update", "Review", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>@Html.ValidationSummary(true, "", new { @style = "display:inline;" })</div>
+                    <input type="hidden" name="IDX" value="@Model.IDX" />
+                    <input type="hidden" name="P_MAIN_IMG" value="@Model.P_MAIN_IMG" />
+                    <input type="hidden" name="P_NAME" value="@Model.P_NAME" />
+                    <input type="hidden" name="P_SUB_TITLE" value="@Model.P_SUB_TITLE" />
+                    <input type="hidden" name="C_CATE_CODE" value="@Model.C_CATE_CODE" />
+                    <input type="hidden" name="SKIN_TYPE" value="@Model.SKIN_TYPE" />
+                    <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
+                    <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
+                    <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
+                    <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
+                    <input type="hidden" name="ORDER_DETAIL_IDX" value="@Model.ORDER_DETAIL_IDX" />
+                    <fieldset>
+                        <legend>상품 리뷰 등록 폼</legend>
+                        <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
+                        <table summary="상품찾기, 피부타입, 제목">
+                            <caption>상품 리뷰 등록 입력 표</caption>
+                            <colgroup>
+                                @if (!ReviewHelper.CheckHealth(@Model.C_CATE_CODE))
+                                {
+                                    <col width="147" />
+                                    <col width="*" />
+                                    <col width="88" />
+                                    <col width="142" />
+                                }
+                                else
+                                {
+                                    <col width="147" />
+                                    <col width="*" />
+                                }
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>상품명</th>
+                                    <td class="pro_info" colspan="@(!ReviewHelper.CheckHealth(Model.C_CATE_CODE) ? "" : "3")">
+                                        <!--이미지사이즈 96x96-->
+                                        <div class="photo"><img src="@string.Format("{0}R120_{1}", myController._img_path_product, Model.P_MAIN_IMG)" alt="" /></div>
+                                        <div class="detail">
+                                            <p class="tit">@Model.P_NAME</p>
+                                            <p class="stit">@Model.P_SUB_TITLE</p>
+                                        </div>
+                                    </td>
+
+                                    @if (!ReviewHelper.CheckHealth(@Model.C_CATE_CODE))
+                                    {
+                                        <th class="skintype">피부타입</th>
+                                        <td class="skintype">
+                                            @Model.SKIN_TYPE_LBL
+                                        </td>
+                                    }
+
+                                </tr>
+                                <tr class="edit">
+                                    <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /></th>
+                                    <td colspan="3">
+                                        <div id="commentDummy" contenteditable="true" style=" max-height: 150px; overflow-y: auto;">@Html.Raw(Model.COMMENT_HTML)</div>
+                                        @*<textarea name="COMMENT" class="txtareatypea" style="width:100%">@Html.Raw(Model.COMMENT_HTML)</textarea>*@
+                                    </td>
+                                </tr>
+
+                                @if (Model.IS_PHOTO == "Y")
+                                {
+                                    <tr class="attach">
+                                        <th>사진</th>
+                                        <td colspan="3">
+
+
+                                            <span class="imgbox">
+                                                <img id="previewImage" src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE_PATH)" alt="" /><!--/aboutCom/images/review/write_imgnone.jpg-->
+                                            </span>
+                                            <input type="text" readonly="readonly" id="ImageFileName" name="ImageFileName" class="ipttypea ml10" style="width:360px" title="파일 경로입력" value="@Model.ADD_IMAGE" />
+                                            @Html.TextBoxFor(m => m.UploadImage, new { type = "file", style = "visibility:hidden;width:0px;", onchange = "changeUploadFile(this);" })
+                                            <a href="#" class="btn_white_w96h38 ml5" onclick="findUploadFile(); return false;">찾아보기</a>
+
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="note">
+                            <h3>유의사항</h3>
+                            <ul>
+                                <li>- 리뷰 작성 시 일반리뷰는 500포인트, 포토리뷰는 1,000포인트를 적립해 드립니다.</li>
+                                <li>- 텍스트 리뷰 작성 후 포토리뷰로 수정 불가능합니다.</li>
+                                <li>- 근거 없는 악성 비방글,게시판의 성격과 맞지 않는 글은 삭제 돌 수 있으니 양해 부탁 드립니다.</li>
+                            </ul>
+                        </div>
+                        <div class="btngroup mt30">
+                            <a href="#" class="btn_brown_w96h38" onclick="save(); return false;">수정</a><a href="#" onclick="    PopupClose()" class="btn_white_w96h38 typeb">취소</a>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+            <!--//pop_bottom-->
+        </div>
+    </div>
+    <!-- //상품리뷰등록_뷰티 팝업 -->
+}
+
