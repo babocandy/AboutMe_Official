@@ -129,7 +129,7 @@
         <div id="review1" class="tab_content" style="display:block">
         -->
         <!--구매리뷰 (구)상품리뷰 -->
-        <div id="review2" class="tab_content" style="display:block">
+        <div id="review2" class="tab_content" >
             <div class="btn_riviewenroll">
                 <a href="@Url.Action("Ready", "MyReview")" class="btn_white_w120h38">구매리뷰 등록</a>
             </div>
@@ -275,7 +275,7 @@
         var buy_first = false;
         
         $(".review_tab .tabs li").click(function(){
-        //console.log($(this).index());
+        console.log($(this).index());
         if ($(this).index() == 2 && !exp_first) {
 
             review.getReviewExpListByPageNo(1);
@@ -307,6 +307,7 @@
     $(function(){
 
         //구매리뷰 - (구)상품리뷰 페이징 초기화
+        console.log("total", total)
         if(total > 0){
             paging(pageNo, pageSize, blockSize, total, $("#review1 .paging"), "review.getReviewFreeListByPageNo" );
             //------------------paging(pageNo, pageSize, blockSize, total, $("#review .paging"), "review.getReviewProducListByPageNo" );
@@ -318,6 +319,9 @@
             페이징 - 공통
         */
     function paging(pno, psize, pbloc, total, $target, callback) {
+
+        console.log("paging in func", pno, psize, pbloc, total, $target, callback)
+
         var totalPage = Math.ceil(total / psize);
         var totalBlock = Math.ceil(totalPage / pbloc);
 
@@ -392,7 +396,7 @@
     ###############################################################################################################################**/
 
         /**
-                 구매리뷰 (구)상품리뷰 데이타 로드
+                 (신)상품리뷰 데이타 로드
          */
     review.getReviewFreeListByPageNo = function(no) {
 
@@ -543,7 +547,7 @@
             구매리뷰 (구)상품리뷰 데이타 로드
     */
     review.getReviewProducListByPageNo = function(no) {
-
+        console.log("getReviewProducListByPageNo", no)
         $.ajax({
             url: "@(Url.Action("GetReviewProductListInShopping", "Review"))",
             type: "POST",
@@ -553,14 +557,14 @@
                 , PAGE_NO :no
             },
             success: function (data) {
-                //console.log(data)
+                console.log(data)
                 if (data.Success) {
                     if(data.Reviews.length > 0){
                         buildList(data.Reviews);
                         // paging(no, pageSize, blockSize, data.Total, $("#review1 .paging"), "review.getReviewProducListByPageNo" );
                         paging(no, pageSize, blockSize, data.Total, $("#review2 .paging"), "review.getReviewProducListByPageNo" );
                     }else{
-                        
+                        $("#review2 .no_data").show();
                     }
                     
 

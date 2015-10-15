@@ -124,12 +124,13 @@ namespace AboutMe.Domain.Entity.Review
     }
 
 
-    //상품리뷰 목록
+    //신-상품리뷰 & 구매리뷰(구-상품리뷰) 목록
     public partial class ReviewProductListViewModel
     {
         public static string SORT_PHOTO = "0";
         public static string SORT_LASTEST = "1";
         public List<SP_REVIEW_PRODUCT_SEL_Result> Reviews { get; set; }
+        public List<SP_REVIEW_FREE_SEL_Result> FreeReviews { get; set; } // 상품리뷰 v2 by 송선우, 2015.10.12
 
         public int PageNo { get; set; }
         public int PageSize { get { return 10; } }
@@ -390,6 +391,36 @@ namespace AboutMe.Domain.Entity.Review
             }
         }
 
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+    }
+
+
+
+    public partial class SP_REVIEW_FREE_SEL_Result
+    {
         public string COMMENT_HTML
         {
             get

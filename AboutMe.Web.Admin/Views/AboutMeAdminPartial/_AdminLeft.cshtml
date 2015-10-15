@@ -168,8 +168,11 @@
                 <h2>컨텐츠관리</h2>
                 <ul class="nav nav-sidebar depth1">
                     <!-- 현재 페이지 활성화 시 "active" class 사용합니다.-->
+                    <li @fLeftMenuCSSOn("ReviewFree")>
+                        <a href="@Url.Action("Index", "AdminReviewFree")" class="menu">상품리뷰관리</a>
+                    </li>
                     <li @fLeftMenuCSSOn("Review")>
-                        <a href="@Url.Action("Index", "AdminReview")" class="menu">상품리뷰관리</a>
+                        <a href="@Url.Action("Index", "AdminReview")" class="menu">구매리뷰관리</a>
                     </li>
                     <li @fLeftMenuCSSOn("ReviewExp")>
                         <a href="@Url.Action("Index", "AdminReviewExp")" class="menu ">체험리뷰관리</a>

@@ -80,6 +80,34 @@
         <Function Name="SP_ADMIN_REVIEW_EXP_MEMBER_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EXP_MASTER_IDX" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_ADMIN_REVIEW_FREE_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_REVIEW_FREE_SEL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PAGE" Type="int" Mode="In" />
+          <Parameter Name="PAGESIZE" Type="int" Mode="In" />
+          <Parameter Name="SEARCH_KEY" Type="varchar" Mode="In" />
+          <Parameter Name="SEARCH_VALUE" Type="varchar" Mode="In" />
+          <Parameter Name="MEDIA_GBN_W" Type="varchar" Mode="In" />
+          <Parameter Name="MEDIA_GBN_M" Type="varchar" Mode="In" />
+          <Parameter Name="SEL_DATE_FROM" Type="datetime" Mode="In" />
+          <Parameter Name="SEL_DATE_TO" Type="datetime" Mode="In" />
+          <Parameter Name="IS_PHOTO_Y" Type="varchar" Mode="In" />
+          <Parameter Name="IS_PHOTO_N" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY_Y" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY_N" Type="varchar" Mode="In" />
+          <Parameter Name="TOTAL" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ADMIN_REVIEW_FREE_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDX" Type="int" Mode="In" />
+          <Parameter Name="IS_BEST" Type="varchar" Mode="In" />
+          <Parameter Name="IS_DISPLAY" Type="varchar" Mode="In" />
+          <Parameter Name="IS_MOST_CNT" Type="varchar" Mode="In" />
+          <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
+          <Parameter Name="RET_MESSAGE" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="SP_ADMIN_REVIEW_PRODUCT_INFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDX" Type="int" Mode="In" />
           <Parameter Name="RET_NUM" Type="varchar" Mode="InOut" />
@@ -216,6 +244,34 @@
           <FunctionImport Name="SP_ADMIN_REVIEW_EXP_ARTICLE_UPDATE">
             <Parameter Name="IDX" Mode="In" Type="Int32" />
             <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_FREE_INFO" ReturnType="Collection(AboutMeModel6.SP_ADMIN_REVIEW_FREE_INFO_Result)">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_FREE_SEL" ReturnType="Collection(AboutMeModel6.SP_ADMIN_REVIEW_FREE_SEL_Result)">
+            <Parameter Name="PAGE" Mode="In" Type="Int32" />
+            <Parameter Name="PAGESIZE" Mode="In" Type="Int32" />
+            <Parameter Name="SEARCH_KEY" Mode="In" Type="String" />
+            <Parameter Name="SEARCH_VALUE" Mode="In" Type="String" />
+            <Parameter Name="MEDIA_GBN_W" Mode="In" Type="String" />
+            <Parameter Name="MEDIA_GBN_M" Mode="In" Type="String" />
+            <Parameter Name="SEL_DATE_FROM" Mode="In" Type="DateTime" />
+            <Parameter Name="SEL_DATE_TO" Mode="In" Type="DateTime" />
+            <Parameter Name="IS_PHOTO_Y" Mode="In" Type="String" />
+            <Parameter Name="IS_PHOTO_N" Mode="In" Type="String" />
+            <Parameter Name="IS_DISPLAY_Y" Mode="In" Type="String" />
+            <Parameter Name="IS_DISPLAY_N" Mode="In" Type="String" />
+            <Parameter Name="TOTAL" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ADMIN_REVIEW_FREE_UPDATE">
+            <Parameter Name="IDX" Mode="In" Type="Int32" />
+            <Parameter Name="IS_BEST" Mode="In" Type="String" />
+            <Parameter Name="IS_DISPLAY" Mode="In" Type="String" />
+            <Parameter Name="IS_MOST_CNT" Mode="In" Type="String" />
+            <Parameter Name="RET_NUM" Mode="InOut" Type="String" />
+            <Parameter Name="RET_MESSAGE" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_ADMIN_REVIEW_PRODUCT_SEL_Result">
@@ -365,6 +421,59 @@
           <Property Type="String" Name="TAG" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
           <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_REVIEW_FREE_INFO_Result">
+          <Property Type="Int32" Name="IDX" Nullable="false" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="true" />
+          <Property Type="String" Name="M_ID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="P_CODE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="VIEW_CNT" Nullable="true" />
+          <Property Type="String" Name="M_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="MEDIA_GBN" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="MEDIA_GBN_LBL" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="ADD_IMAGE" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="false" MaxLength="8" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="IS_MOST_CNT" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="SP_ADMIN_REVIEW_FREE_SEL_Result">
+          <Property Type="Int32" Name="IDX" Nullable="true" />
+          <Property Type="Int32" Name="ORDER_DETAIL_IDX" Nullable="true" />
+          <Property Type="String" Name="M_ID" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="M_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="P_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="P_NAME" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="P_MAIN_IMG" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="C_CATE_CODE" Nullable="true" MaxLength="9" />
+          <Property Type="String" Name="IS_BEST" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="CATE_GBN" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="CATE_GBN_LBL" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="COMMENT" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="IS_PHOTO" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="IS_PHOTO_LBL" Nullable="true" MaxLength="3" />
+          <Property Type="Int32" Name="VIEW_CNT" Nullable="true" />
+          <Property Type="String" Name="M_GRADE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="M_GRADE_LBL" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="MEDIA_GBN" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="MEDIA_GBN_LBL" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="ADD_IMAGE" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IS_DISPLAY" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="IS_DISPLAY_LBL" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="SKIN_TYPE" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="SKIN_TYPE_LBL" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="SKIN_TYPE_CSS" Nullable="true" MaxLength="5" />
+          <Property Type="DateTime" Name="INS_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IS_MOST_CNT" Nullable="true" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -563,6 +672,68 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_EXP_ARTICLE_UPDATE" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_EXP_ARTICLE_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_FREE_INFO" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_FREE_INFO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel6.SP_ADMIN_REVIEW_FREE_INFO_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
+                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="MEDIA_GBN" ColumnName="MEDIA_GBN" />
+                <ScalarProperty Name="MEDIA_GBN_LBL" ColumnName="MEDIA_GBN_LBL" />
+                <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
+                <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="IS_MOST_CNT" ColumnName="IS_MOST_CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_FREE_SEL" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_FREE_SEL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AboutMeModel6.SP_ADMIN_REVIEW_FREE_SEL_Result">
+                <ScalarProperty Name="IDX" ColumnName="IDX" />
+                <ScalarProperty Name="ORDER_DETAIL_IDX" ColumnName="ORDER_DETAIL_IDX" />
+                <ScalarProperty Name="M_ID" ColumnName="M_ID" />
+                <ScalarProperty Name="M_NAME" ColumnName="M_NAME" />
+                <ScalarProperty Name="P_CODE" ColumnName="P_CODE" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_MAIN_IMG" ColumnName="P_MAIN_IMG" />
+                <ScalarProperty Name="C_CATE_CODE" ColumnName="C_CATE_CODE" />
+                <ScalarProperty Name="IS_BEST" ColumnName="IS_BEST" />
+                <ScalarProperty Name="CATE_GBN" ColumnName="CATE_GBN" />
+                <ScalarProperty Name="CATE_GBN_LBL" ColumnName="CATE_GBN_LBL" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="IS_PHOTO" ColumnName="IS_PHOTO" />
+                <ScalarProperty Name="IS_PHOTO_LBL" ColumnName="IS_PHOTO_LBL" />
+                <ScalarProperty Name="VIEW_CNT" ColumnName="VIEW_CNT" />
+                <ScalarProperty Name="M_GRADE" ColumnName="M_GRADE" />
+                <ScalarProperty Name="M_GRADE_LBL" ColumnName="M_GRADE_LBL" />
+                <ScalarProperty Name="MEDIA_GBN" ColumnName="MEDIA_GBN" />
+                <ScalarProperty Name="MEDIA_GBN_LBL" ColumnName="MEDIA_GBN_LBL" />
+                <ScalarProperty Name="ADD_IMAGE" ColumnName="ADD_IMAGE" />
+                <ScalarProperty Name="IS_DISPLAY" ColumnName="IS_DISPLAY" />
+                <ScalarProperty Name="IS_DISPLAY_LBL" ColumnName="IS_DISPLAY_LBL" />
+                <ScalarProperty Name="SKIN_TYPE" ColumnName="SKIN_TYPE" />
+                <ScalarProperty Name="SKIN_TYPE_LBL" ColumnName="SKIN_TYPE_LBL" />
+                <ScalarProperty Name="SKIN_TYPE_CSS" ColumnName="SKIN_TYPE_CSS" />
+                <ScalarProperty Name="INS_DATE" ColumnName="INS_DATE" />
+                <ScalarProperty Name="IS_MOST_CNT" ColumnName="IS_MOST_CNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ADMIN_REVIEW_FREE_UPDATE" FunctionName="AboutMeModel6.Store.SP_ADMIN_REVIEW_FREE_UPDATE" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

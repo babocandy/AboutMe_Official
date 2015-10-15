@@ -18,6 +18,7 @@ namespace AboutMe.Domain.Entity.AdminReview
         public int? Total { get; set; }
         //public IList<AdminReviewUserModel> List { get; set; }
         public IList<SP_ADMIN_REVIEW_PRODUCT_SEL_Result> List { get; set; }
+        public IList<SP_ADMIN_REVIEW_FREE_SEL_Result> FreeList { get; set; } //신-상품리뷰 관련 2015.10.15
     }
 
     public partial class SP_ADMIN_REVIEW_PRODUCT_SEL_Result
@@ -39,6 +40,29 @@ namespace AboutMe.Domain.Entity.AdminReview
             }
         }
     }
+
+
+
+    public partial class SP_ADMIN_REVIEW_FREE_SEL_Result
+    {
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+    }
+
 
     /**
      * 상품리뷰 상품찾기 
