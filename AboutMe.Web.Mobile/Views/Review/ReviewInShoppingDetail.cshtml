@@ -1,5 +1,8 @@
 ﻿@model AboutMe.Domain.Entity.Review.ReviewInProductDetailViewModel
 @using AboutMe.Web.Mobile.Controllers
+@using AboutMe.Web.Mobile.Common
+@using AboutMe.Domain.Entity.Review
+@using AboutMe.Domain.Entity.Product
 @using AboutMe.Common.Helper
 @{
     Layout = null;
@@ -7,210 +10,352 @@
 }
 
 @*헬스 상품은 리뷰 안보이게 처리*@
-@if (!ReviewHelper.CheckHealth( Model.P_CATE_CODE) )
+@if (!ReviewHelper.CheckHealth(Model.P_CATE_CODE))
 {
 
-<div id="Review" class="tab_content">
-    <div class="review_tab">
-        <ul class="tabs tabtypeb">
-            <li class="cnt"><a href="#proReview">상품리뷰</a></li>
-            <li><a href="#expReview">체험단리뷰</a></li>
-        </ul>
-    </div>
-    <!--제품리뷰-->
-    <div style="display:block" class="tab_content" id="proReview">
-        <div class="brnwrap">
-            <a href="@Url.Action("Ready", "MyReview")" class="bnr">
-                <span class="txt">리뷰등록하면 <strong>500P</strong>,<br />포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
-            </a>
+    <div id="Review" class="tab_content">
+        <div class="review_tab">
+            <ul class="tabs tabtypeb">
+                <li class="cnt"><a href="#proReview">상품리뷰</a></li>
+                <li><a href="#buyReview">구매리뷰</a></li>
+                <li><a href="#expReview">체험단리뷰</a></li>
+            </ul>
         </div>
-        <ul id="review_pro_list" class="review_list" style="display:@(Model.Reviews.Count > 0 ? "block":"none")">
-            @if (Model.Reviews.Count > 0)
+        <!--상품리뷰-->
+        <div style="display:block" class="tab_content" id="proReview">
+            @{
+                MyReviewPdtInputParam p = new MyReviewPdtInputParam();
+                p.ORDER_DETAIL_IDX = 0;
+                p.P_CODE = Model.Pcode;
+
+            }
+            @if (MemberInfo.IsMemberLogin() == true)
             {
-
-                foreach (var item in Model.Reviews)
+                <div class="brnwrap">
+                    <a href="@Url.Action("FreeWrite", "Review", p)" class="btn btn_brown_h30 review_write">리뷰쓰기</a>
+                </div>
+            }
+            else
+            {
+                <div class="brnwrap">
+                    <a href="/MemberShip/Login?RedirectUrl=@Server.UrlEncode(Request.Url.OriginalString)" class="btn btn_brown_h30 review_write">리뷰쓰기</a>
+                </div>
+            }
+            <ul id="review_pro_list" class="review_list" style="display:@(Model.FreeReviews.Count > 0 ? "block":"none")">
+                @if (Model.FreeReviews.Count > 0)
                 {
-                    <li class="review_info">
-                        <div class="rinfo_top">
-                            <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "":"display:none")"></span><span class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "age":"")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</span><strong class="id">@item.M_ID_LBL</strong></p>
-                        </div>
-                        <div class="rinfo_con">
-                            <p class="txtbox">@Html.Raw(item.COMMENT_TEXT)</p>
 
-                            @if (item.IS_PHOTO == "Y")
-                            {
-                                <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE_PATH )" alt="" /></div>
-                                <div class="morebox">
-                                    <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
-                                    <span class="photo_review"><i></i>포토리뷰</span>
-                                    <a href="#none" class="btn_more"><i></i></a>
-                                </div>
-                            }
+                    foreach (var item in Model.FreeReviews)
+                    {
+                        <li class="review_info">
+                            <div class="rinfo_top">
+                                <p class="winfo"><span class="type @(item.SKIN_TYPE_CSS)" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "":"display:none")"></span><span class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE)? "age":"")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</span><strong class="id">@item.M_ID_LBL</strong></p>
+                            </div>
+                            <div class="rinfo_con">
+                                <p class="txtbox">@Html.Raw(item.COMMENT_TEXT)</p>
 
-                        </div>
-                    </li>
+                                @if (item.IS_PHOTO == "Y")
+                                {
+                                    <div class="imgbox"><img src="@string.Format("{0}{1}", myController._img_path_review, item.ADD_IMAGE_PATH )" alt="" /></div>
+                                    <div class="morebox">
+                                        <!-- [Desc] 포토가 없으면 span.photo_review가 없음 -->
+                                        <span class="photo_review"><i></i>포토리뷰</span>
+                                        <a href="#none" class="btn_more"><i></i></a>
+                                    </div>
+                                }
+
+                                @if (item.M_ID == MemberInfo.GetMemberId())
+                                {
+                                <!-- 수정 버튼 -->
+                                    <div class="btn_modify">
+                                        <a  href="@Url.Action(string.Format("FreeUpdate/{0}", item.IDX), "Review")" class="btn btn_gray_h30">수정</a>
+                                    </div>
+                                <!-- //수정 버튼 -->
+                                }
+
+                            </div>
+                        </li>
+                    }
                 }
-            }
-        </ul>
+            </ul>
 
-        <div class="datanone nobg" style="display:@(Model.Reviews.Count > 0 ? "none":"block")">
-            <p class="txt_none">상품리뷰가 없습니다.</p>
+            <div class="datanone nobg" style="display:@(Model.FreeReviews.Count > 0 ? "none":"block")">
+                <p class="txt_none">상품리뷰가 없습니다.</p>
+            </div>
+
+            <!--페이징-->
+            <div class="paging" style="display:@(Model.FreeReviews.Count > 0 ? "block":"none")">
+            </div>
+            <!--//페이징-->
+
         </div>
+        <!--//상품리뷰-->
+        <!--구매리뷰-->
+        <div style="display:block" class="tab_content" id="buyReview">
+            <div class="brnwrap">
+                <a href="@Url.Action("Ready", "MyReview")" class="bnr">
+                    <span class="txt">리뷰등록하면 <strong>500P</strong>,<br />포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
+                </a>
+            </div>
+            <ul id="review_buy_list" class="review_list" style="display:none"></ul>
 
-        <!--페이징-->
-        <div class="paging" style="display:@(Model.Reviews.Count > 0 ? "block":"none")">
+            <div class="datanone nobg" style="display:none">
+                <p class="txt_none">구매리뷰가 없습니다.</p>
+            </div>
+
+            <!--페이징-->
+            <div class="paging" style="display:none">
+            </div>
+            <!--//페이징-->
+
         </div>
-        <!--//페이징-->
+        <!--//구매리뷰-->
+        <!--체험단리뷰-->
+        <div class="tab_content" id="expReview">
+            <!--체험단배너-->
+            <div class="brnwrap">
+                @Html.Action("ExpBanner", "ChildActionDisplayer")
+            </div>
+            <!--/체험단배너-->
+            <ul id="review_exp_list" class="review_list exp"></ul>
+            <!--//리뷰팝업-->
+            <div class="datanone nobg" style="display:none">
+                <p class="txt_none">체험단리뷰가 없습니다.</p>
+            </div>
+            <!--페이징-->
+            <div class="paging">
 
+            </div>
+            <!--//페이징-->
+        </div>
+        <!--//체험단리뷰-->
     </div>
-    <!--//제품리뷰-->
 
-    <!--체험단리뷰-->
-    <div class="tab_content" id="expReview">
-        <!--체험단배너-->
-        <div class="brnwrap">
-            @Html.Action("ExpBanner", "ChildActionDisplayer")
-        </div>
-        <!--/체험단배너-->
-        <ul id="review_exp_list" class="review_list exp">
+    <script>
 
-
-        </ul>
-        <!--//리뷰팝업-->
-        <div class="datanone nobg" style="display:none">
-            <p class="txt_none">체험단리뷰가 없습니다.</p>
-        </div>
-        <!--페이징-->
-        <div class="paging">
-            
-        </div>
-        <!--//페이징-->
-    </div>
-    <!--//체험단리뷰-->
-</div>
-
-<script>
-
-    var img_path_product = "@myController._img_path_product";
-    var img_path_review = "@myController._img_path_review";
-
-
-    (function(){
-
-        window.review = {};
-        var exp_first = false;
-        $(".review_tab .tabs li").click(function(){
-            if ($(this).index() == 1 && !exp_first) {
-
-                review.getReviewExpListByPageNo(1);
-
-                exp_first = true;
-            }
-        });
-        //공통 이하
-        var pcode ="@Model.Pcode";
+        var img_path_product = "@myController._img_path_product";
         var img_path_review = "@myController._img_path_review";
 
-        var pageNo = @Model.PageNo;
-        var pageSize = @Model.PageSize;
 
-        //상품리뷰 총수
-        var total = @Model.Total;
+        (function(){
 
+            window.review = {};
+            var exp_first = false;
+            var buy_first = false;
 
-        /*
-            init
-        */
-        $(function(){
+            $(".review_tab .tabs li").click(function(){
+                if ($(this).index() == 2 && !exp_first) {
 
-            if(total > 0){
-                //상품리뷰 페이징 초기화
-                paging(pageNo, pageSize, total, $("#proReview .paging"), "review.getReviewProducListByPageNo" );
-            }
+                    review.getReviewExpListByPageNo(1);
 
-        });
+                    exp_first = true;
+                }else if($(this).index() == 1 && !buy_first) {
 
-        /**
-            페이징 - 공통
-        */
-        function paging(pno, psize, total, $target, callback) {
-            var totalPage = Math.ceil(total / psize);
-
-           // console.log("totalPage", totalPage)
-
-            var prevPage = 0;
-            var nextPage = 0;
-
-            prevPage = pno - 1 < 1 ? 1 : pno - 1;
-            nextPage = pno + 1 > totalPage ? totalPage : pno + 1;
-
-            var html = "";
-            html += "<a href='#' class='prev'  onclick='"+callback+"("+prevPage+");return false;'></a>";
-            html += "<strong>"+pno+"</strong> / "+totalPage;
-            html += "<a href='#' class='next'  onclick='"+callback+"("+nextPage+");return false;'></a>";
-
-            $target.html(html)
-
-        }//end func
-
-        /**
-            상품리뷰 데이타 로드
-        */
-        review.getReviewProducListByPageNo= function(no) {
-
-            $.ajax({
-                url: "@(Url.Action("GetReviewProductListInShopping", "Review"))",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    P_CODE: pcode
-                    , PAGE_NO :no
-                },
-                success: function (data) {
-
-                    if (data.Success) {
-
-                        buildList(data.Reviews)
-
-                        paging(no, pageSize, data.Total, $("#proReview .paging"), "review.getReviewProducListByPageNo" );
-                    }else{
-
-
-                    }
-                },
-                error: function (e) {
-                    //console.log(e);
+                    review.getReviewProducListByPageNo(1);
+                    buy_first = true;
                 }
             });
-        }//end func
 
-        /**
-            상품리뷰 목록 구성
-        */
-        function buildList(dd) {
-           // console.log(dd)
-            var $container  = $("#review_pro_list")
-            $container.empty();
+            //공통 이하
+            var pcode ="@Model.Pcode";
+            var img_path_review = "@myController._img_path_review";
+
+            var pageNo = @Model.PageNo;
+            var pageSize = @Model.PageSize;
+
+            //상품리뷰 총수
+            var total = @Model.Total;
 
 
-            for (var i = 0; i < dd.length; i++) {
-                var d = dd[i];
+            /*
+                init
+            */
+            $(function(){
+
+                if(total > 0){
+                    //상품리뷰 페이징 초기화
+                    paging(pageNo, pageSize, total, $("#proReview .paging"), "review.getReviewFreeListByPageNo" );
+                }
+
+            });
+
+
+
+
+            /**
+                페이징 - 공통
+            */
+            function paging(pno, psize, total, $target, callback) {
+                var totalPage = Math.ceil(total / psize);
+
+                // console.log("totalPage", totalPage)
+
+                var prevPage = 0;
+                var nextPage = 0;
+
+                prevPage = pno - 1 < 1 ? 1 : pno - 1;
+                nextPage = pno + 1 > totalPage ? totalPage : pno + 1;
 
                 var html = "";
+                html += "<a href='#' class='prev'  onclick='"+callback+"("+prevPage+");return false;'></a>";
+                html += "<strong>"+pno+"</strong> / "+totalPage;
+                html += "<a href='#' class='next'  onclick='"+callback+"("+nextPage+");return false;'></a>";
 
-                html += "<li class='review_info'>";
-                html += "   <div class='rinfo_top'>";
-                html += "<p class='winfo'><span class='type "+d.SKIN_TYPE_CSS+ "' style='"+(d.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
-                html += "<span class='"+( d.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+d.M_BIRTHDAY_LBL+"대, "+d.M_SEX_LBL+"</span><strong class='id'>"+d.M_ID_LBL+"</strong></p>";
-                html += "</div>";
-                html += "<div class='rinfo_con'>";
-                html += "<p class='txtbox'>"+d.COMMENT_TEXT+"</p>";
+                $target.html(html)
 
-                if (d.IS_PHOTO == "Y"){
-                    
+            }//end func
+
+
+            /** (신)상품리뷰 ========================================================================================[시작] **/
+
+
+            /**
+                (신)상품리뷰 데이타 로드
+            */
+            review.getReviewFreeListByPageNo= function(no) {
+
+                $.ajax({
+                    url: "@(Url.Action("GetReviewFreeListInShopping", "Review"))",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        P_CODE: pcode
+                        , PAGE_NO :no
+                    },
+                    success: function (data) {
+
+                        if (data.Success) {
+
+                            buildFreeList(data.FreeReviews);
+
+                            paging(no, pageSize, data.Total, $("#proReview .paging"), "review.getReviewFreeListByPageNo" );
+                        }else{
+
+
+                        }
+                    },
+                    error: function (e) {
+                        //console.log(e);
+                    }
+                });
+            }//end func
+
+            /**
+                (신)상품리뷰 목록 구성
+            */
+            function buildFreeList(dd) {
+                // console.log(dd)
+                var $container  = $("#review_pro_list")
+                $container.empty();
+
+
+                for (var i = 0; i < dd.length; i++) {
+                    var d = dd[i];
+
+                    var html = "";
+
+                    html += "<li class='review_info'>";
+                    html += "   <div class='rinfo_top'>";
+                    html += "<p class='winfo'><span class='type "+d.SKIN_TYPE_CSS+ "' style='"+(d.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
+                    html += "<span class='"+( d.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+d.M_BIRTHDAY_LBL+"대, "+d.M_SEX_LBL+"</span><strong class='id'>"+d.M_ID_LBL+"</strong></p>";
+                    html += "</div>";
+                    html += "<div class='rinfo_con'>";
+                    html += "<p class='txtbox'>"+d.COMMENT_TEXT+"</p>";
+
+                    if (d.IS_PHOTO == "Y"){
+
                         html += "<div class='imgbox'><img src='"+ img_path_review+ d.ADD_IMAGE_PATH +"' alt='' /></div>";
                         html += "<div class='morebox'>";
-		
+
+                        html += " <span class='photo_review'><i></i>포토리뷰</span>";
+                        html += " <a href='#none' class='btn_more'><i></i></a>";
+                        html += "</div>";
+                    }
+
+                    if (d.M_ID == '@MemberInfo.GetMemberId()')
+                    {
+                        html +="<div class='btn_modify'>";
+                        html += "<a href='#' onclick=\"/Review/Update/"+item.IDX+"\" class='btn_gray_h30'>" ;
+                        html +=   "수정" ;
+                        html += "</a>" ;
+                        html += "</div>";
+                    }
+
+                    html += "</div>";
+                    html += "</li>";
+                    //console.log(html)
+
+                    $container.append($(html));
+                }// end for
+
+                $(".review_info .btn_more").click(function(){
+                    $(this).parents(".review_info").toggleClass("on");
+                });
+
+            }//end func
+
+
+            /** (신)상품리뷰 ========================================================================================[ 끝 ] **/
+
+
+            /**
+                구매리뷰 (구-상품리뷰) 데이타 로드
+            */
+            review.getReviewProducListByPageNo= function(no) {
+
+                $.ajax({
+                    url: "@(Url.Action("GetReviewProductListInShopping", "Review"))",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        P_CODE: pcode
+                        , PAGE_NO :no
+                    },
+                    success: function (data) {
+
+                        if (data.Success) {
+
+                            buildList(data.Reviews)
+
+                            paging(no, pageSize, data.Total, $("#buyReview .paging"), "review.getReviewProducListByPageNo" );
+                        }else{
+
+
+                        }
+                    },
+                    error: function (e) {
+                        //console.log(e);
+                    }
+                });
+            }//end func
+
+            /**
+                구매리뷰-(구 상품리뷰) 목록 구성
+            */
+            function buildList(dd) {
+                // console.log(dd)
+                var $container  = $("#review_buy_list")
+                $container.empty();
+
+
+                for (var i = 0; i < dd.length; i++) {
+                    var d = dd[i];
+
+                    var html = "";
+
+                    html += "<li class='review_info'>";
+                    html += "   <div class='rinfo_top'>";
+                    html += "<p class='winfo'><span class='type "+d.SKIN_TYPE_CSS+ "' style='"+(d.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
+                    html += "<span class='"+( d.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+d.M_BIRTHDAY_LBL+"대, "+d.M_SEX_LBL+"</span><strong class='id'>"+d.M_ID_LBL+"</strong></p>";
+                    html += "</div>";
+                    html += "<div class='rinfo_con'>";
+                    html += "<p class='txtbox'>"+d.COMMENT_TEXT+"</p>";
+
+                    if (d.IS_PHOTO == "Y"){
+
+                        html += "<div class='imgbox'><img src='"+ img_path_review+ d.ADD_IMAGE_PATH +"' alt='' /></div>";
+                        html += "<div class='morebox'>";
+
                         html += " <span class='photo_review'><i></i>포토리뷰</span>";
                         html += " <a href='#none' class='btn_more'><i></i></a>";
                         html += "</div>";
@@ -221,101 +366,105 @@
                     //console.log(html)
 
                     $container.append($(html));
-            }// end for
-            
-            $(".review_info .btn_more").click(function(){
-                $(this).parents(".review_info").toggleClass("on");
-            });
-            
-        }//end func
+                }// end for
 
-        /**
-            체험단 리뷰 데이타
-        */
-        review.getReviewExpListByPageNo = function(no) {
+                $(".review_info .btn_more").click(function(){
+                    $(this).parents(".review_info").toggleClass("on");
+                });
 
-            $.ajax({
-                url: "@(Url.Action("GetReviewExpListInShopping", "Review"))",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    P_CODE: pcode
-                    , PAGE_NO :no
-                },
-                success: function (data) {
+            }//end func
 
-                    if (data.Success) {
-                        if(data.Reviews.length > 0){
-                            buildList2(data.Reviews);
-                            paging(no, pageSize, data.Total, $("#expReview .paging"), "review.getReviewExpListByPageNo" );
+
+
+
+
+            /**
+                체험단 리뷰 데이타
+            */
+            review.getReviewExpListByPageNo = function(no) {
+
+                $.ajax({
+                    url: "@(Url.Action("GetReviewExpListInShopping", "Review"))",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        P_CODE: pcode
+                        , PAGE_NO :no
+                    },
+                    success: function (data) {
+
+                        if (data.Success) {
+                            if(data.Reviews.length > 0){
+                                buildList2(data.Reviews);
+                                paging(no, pageSize, data.Total, $("#expReview .paging"), "review.getReviewExpListByPageNo" );
+                            }else{
+                                $("#expReview .paging").hide();
+                                $("#expReview .datanone").show();
+                            }
+
                         }else{
-                            $("#expReview .paging").hide();                        
-                            $("#expReview .datanone").show();
+
                         }
-
-                    }else{
-   
+                    },
+                    error: function (e) {
+                        //console.log(e);
                     }
-                },
-                error: function (e) {
-                    //console.log(e);
+                });
+            }//end func
+
+
+            /**
+                목록 구성
+            */
+            function buildList2(dd) {
+
+                var $container  = $("#review_exp_list")
+                $container.empty();
+
+
+                for (var i = 0; i < dd.length; i++) {
+                    var item = dd[i];
+
+                    var html = "";
+
+
+                    html += "<li class='review_info'>";
+                    html += "<div class='rinfo_top'>";
+                    html += "  <p class='winfo'><span class='type "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
+                    html += "<span class='"+( item.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</span><strong class='id'>"+item.M_ID_LBL+"</strong><span class='hit'>조회수 "+item.VIEW_CNT+"</span></p>";
+                    html += "   </div>";
+                    html += "   <div class='rinfo_con'>";
+
+                    html += "    <ul class='hash'>";
+
+                    /*tag common*/
+                    var arr = item.TAG.split("#");
+                    for(var k = 0; k < arr.length ; ++k){
+                        if(arr[k] != ""){
+                            html += "<li>#" + arr[k] + "</li>\n";
+                        }
+                    }
+
+                    html += "    </ul>";
+
+                    html += "   <div class='review_view'>";
+                    html += "   <div class='photo'><img src='"+img_path_review+item.SUB_IMG_1+"' alt='' /></div>";
+                    html += "   <div class='detail'>";
+                    html += "   <p class='tit'>"+item.TITLE+"</p>";
+                    html += "    <p class='txt'>"+item.COMMENT_TEXT+"</p>";
+                    html += "    </div>";
+                    html += "   </div>";
+                    html += "   </div>";
+                    html += "    <a href='#' onclick=\"window.open(\'/Review/ExperienceDetail?ARTICLE_IDX="+item.IDX+"&P_CODE="+item.P_CODE+"\');return false;\" class='view_link'></a>";
+                    html += "   </li>";
+
+                    $container.append($(html));
                 }
-            });
-        }//end func
+
+            }//end func
 
 
-        /**
-            목록 구성
-        */
-        function buildList2(dd) {
+        })();
+    </script>
 
-            var $container  = $("#review_exp_list")
-            $container.empty();
-
-
-            for (var i = 0; i < dd.length; i++) {
-                var item = dd[i];
-
-                var html = "";
-
-
-                html += "<li class='review_info'>";
-                html += "<div class='rinfo_top'>";
-                html += "  <p class='winfo'><span class='type "+item.SKIN_TYPE_CSS+ "' style='"+(item.C_CATE_CODE.substr(0, 3)!="102" ? "" :"display:none")+"' ></span>";
-                html += "<span class='"+( item.C_CATE_CODE.substr(0, 3)!="102" ? "age" :"" )+"'>"+item.M_BIRTHDAY_LBL+"대, "+item.M_SEX_LBL+"</span><strong class='id'>"+item.M_ID_LBL+"</strong><span class='hit'>조회수 "+item.VIEW_CNT+"</span></p>";
-                html += "   </div>";
-                html += "   <div class='rinfo_con'>";
-
-                html += "    <ul class='hash'>";
-
-                /*tag common*/
-                var arr = item.TAG.split("#");
-                for(var k = 0; k < arr.length ; ++k){
-                    if(arr[k] != ""){
-                        html += "<li>#" + arr[k] + "</li>\n";
-                    }
-                }                
-               
-                html += "    </ul>";
-                    
-                html += "   <div class='review_view'>";
-                html += "   <div class='photo'><img src='"+img_path_review+item.SUB_IMG_1+"' alt='' /></div>";
-                html += "   <div class='detail'>";
-                html += "   <p class='tit'>"+item.TITLE+"</p>";
-                html += "    <p class='txt'>"+item.COMMENT_TEXT+"</p>";
-                html += "    </div>";
-                html += "   </div>";
-                html += "   </div>";
-                html += "    <a href='#' onclick=\"window.open(\'/Review/ExperienceDetail?ARTICLE_IDX="+item.IDX+"&P_CODE="+item.P_CODE+"\');return false;\" class='view_link'></a>";
-                html += "   </li>";
-
-                $container.append($(html));
-            }
-
-        }//end func
-
-
-    })();
-</script>
-    
 }
