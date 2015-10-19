@@ -279,7 +279,7 @@ namespace AboutMe.Domain.Entity.Review
             get
             {
                 var path = "";
-                if (ORDER_DETAIL_IDX != null)
+                if (ORDER_DETAIL_IDX != null )
                 {
                     path = "R308_" + ADD_IMAGE;
                 }
@@ -426,15 +426,17 @@ namespace AboutMe.Domain.Entity.Review
         {
             get
             {
-                var path = "";
+                var path  = "R308_" + ADD_IMAGE;
+                /**
                 if (ORDER_DETAIL_IDX != null)
                 {
                     path = "R308_" + ADD_IMAGE;
                 }
                 else
                 {
-                    path = "old/" + ADD_IMAGE;
+                    path = "R308_" + ADD_IMAGE;
                 }
+                 * **/
                 return path;
             }
         }

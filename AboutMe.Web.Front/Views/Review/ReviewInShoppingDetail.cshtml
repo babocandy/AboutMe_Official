@@ -43,7 +43,7 @@
             <div class="btn_riviewenroll">
             @if (MemberInfo.IsMemberLogin() == true)
             { 
-                <a href="#" onclick="PopupCenter('@Url.Action("Write", "Review", p)', '', 780, 600); return false;" class="btn_white_w120h38">상품리뷰 등록</a>
+                <a href="#" onclick="PopupCenter('@Url.Action("Write", "Review", p)', '', 760, 600); return false;" class="btn_white_w120h38">상품리뷰 등록</a>
             }
             else
             {
@@ -88,7 +88,7 @@
                             @if (item.M_ID == MemberInfo.GetMemberId())
                             {
                                 <!-- 수정 버튼 추가 -->
-                                <a href="#" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "Review")', '', 780, 690); return false;" class="btn_gray_w96h38 fs14 btn_modify">
+                                <a href="#" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "Review")', '', 760, 600); return false;" class="btn_gray_w96h38 fs14 btn_modify">
                                     수정
                                 </a>
                                <!-- //수정 버튼 추가 -->
@@ -485,7 +485,7 @@
         if (item.M_ID == '@MemberInfo.GetMemberId()')
         {
             
-            html += "<a href='#' onclick=\"PopupCenter('/Review/Update/"+item.IDX+"', '', 780, 690); return false;\" class='btn_gray_w96h38 fs14 btn_modify'>" ;
+            html += "<a href='#' onclick=\"PopupCenter('/Review/Update/"+item.IDX+"', '', 760, 600); return false;\" class='btn_gray_w96h38 fs14 btn_modify'>" ;
             html +=   "수정" ;
             html += "</a>" ;
           
