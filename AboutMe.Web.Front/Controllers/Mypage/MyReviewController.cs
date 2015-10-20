@@ -96,33 +96,34 @@ namespace AboutMe.Web.Front.Controllers
             if (ReviewHelper.CheckHealth(model.ProductInfo.C_CATE_CODE))
             {
                 var valueToClean = ModelState["SKIN_TYPE"];
-                valueToClean.Errors.Clear(); 
+                valueToClean.Errors.Clear();
             }
 
 
-           if (ModelState.IsValid){
+            if (ModelState.IsValid)
+            {
 
-               ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true};
-
-              
-               if (model.UploadImage != null)
-               {
-                   ImageResult imageResult = imageUpload.RenameUploadFile( model.UploadImage );
-                   if (imageResult.Success)
-                   {
-                       model.ADD_IMAGE = imageResult.ImageName;
-                       
-                   }
-               }
+                ImagePlainUpload imageUpload = new ImagePlainUpload { UploadPath = _img_path_review, IsThumbNail = true };
 
 
-               Tuple<string, string> ret = _ReviewService.InsertMyReview(model);
+                if (model.UploadImage != null)
+                {
+                    ImageResult imageResult = imageUpload.RenameUploadFile(model.UploadImage);
+                    if (imageResult.Success)
+                    {
+                        model.ADD_IMAGE = imageResult.ImageName;
 
-               TempData["ResultNum"] = ret.Item1;
-               TempData["ResultMessage"] = ret.Item2;
+                    }
+                }
 
-               return View(model);
-           }
+
+                Tuple<string, string> ret = _ReviewService.InsertMyReview(model);
+
+                TempData["ResultNum"] = ret.Item1;
+                TempData["ResultMessage"] = ret.Item2;
+
+                return View(model);
+            }
 
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
 
@@ -156,8 +157,8 @@ namespace AboutMe.Web.Front.Controllers
         public ActionResult Update(int? id)
         {
             MyReviewProductInputViewModel model = new MyReviewProductInputViewModel();
-            
-            
+
+
             //상품리뷰 상세
             var detail = _ReviewService.GetReviewProductDetail(id);
 
@@ -201,7 +202,7 @@ namespace AboutMe.Web.Front.Controllers
                         }
                     }
                 }
-               
+
 
                 Tuple<string, string> ret = _ReviewService.UpdateMyReview(model);
 

@@ -263,7 +263,9 @@
 
     function focus_control() {
         if ($("#clickcontrol").val() == "disable")
-            openwin.focus();
+            if (openwin) {
+                openwin.focus();
+            }
     }
 </script>
 <script language="JavaScript" type="text/JavaScript">

@@ -393,5 +393,39 @@ namespace AboutMe.Domain.Entity.Review
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_REVIEW_PRODCUT_TOTAL_BY_PCODE", p_CODEParameter);
         }
+    
+        public virtual ObjectResult<SP_REVIEW_FREE_SEL_Result> SP_REVIEW_FREE_SEL(Nullable<int> tAIL_IDX, string cATE_CODE, string sORT, ObjectParameter tOTAL)
+        {
+            var tAIL_IDXParameter = tAIL_IDX.HasValue ?
+                new ObjectParameter("TAIL_IDX", tAIL_IDX) :
+                new ObjectParameter("TAIL_IDX", typeof(int));
+    
+            var cATE_CODEParameter = cATE_CODE != null ?
+                new ObjectParameter("CATE_CODE", cATE_CODE) :
+                new ObjectParameter("CATE_CODE", typeof(string));
+    
+            var sORTParameter = sORT != null ?
+                new ObjectParameter("SORT", sORT) :
+                new ObjectParameter("SORT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_FREE_SEL_Result>("SP_REVIEW_FREE_SEL", tAIL_IDXParameter, cATE_CODEParameter, sORTParameter, tOTAL);
+        }
+    
+        public virtual ObjectResult<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result> SP_REVIEW_FREE_IN_SHOPPING_DETAIL(string p_CODE, Nullable<int> pAGE, Nullable<int> pAGESIZE, ObjectParameter tOTAL)
+        {
+            var p_CODEParameter = p_CODE != null ?
+                new ObjectParameter("P_CODE", p_CODE) :
+                new ObjectParameter("P_CODE", typeof(string));
+    
+            var pAGEParameter = pAGE.HasValue ?
+                new ObjectParameter("PAGE", pAGE) :
+                new ObjectParameter("PAGE", typeof(int));
+    
+            var pAGESIZEParameter = pAGESIZE.HasValue ?
+                new ObjectParameter("PAGESIZE", pAGESIZE) :
+                new ObjectParameter("PAGESIZE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>("SP_REVIEW_FREE_IN_SHOPPING_DETAIL", p_CODEParameter, pAGEParameter, pAGESIZEParameter, tOTAL);
+        }
     }
 }

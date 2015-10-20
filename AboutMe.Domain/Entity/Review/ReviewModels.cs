@@ -302,6 +302,7 @@ namespace AboutMe.Domain.Entity.Review
         }
 
         public List<SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result> Reviews { get; set; }
+        public List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result> FreeReviews { get; set; } // 상품리뷰 v2 by 송선우, 2015.10.12
 
         public int PageNo { get; set; }
         public int PageSize { get; set; }
@@ -313,6 +314,58 @@ namespace AboutMe.Domain.Entity.Review
     }
 
     public partial class SP_REVIEW_PRODUCT_IN_SHOPPING_DETAIL_Result
+    {
+
+        public string COMMENT_TEXT
+        {
+            get
+            {
+                return Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+            }
+        }
+
+        public string COMMENT_SHORT
+        {
+            get
+            {
+                var tmp = Regex.Replace(HttpUtility.HtmlDecode(COMMENT), @"<[^>]*>", String.Empty);
+                if (tmp.Length > 200)
+                {
+                    tmp = tmp.Substring(0, 200);
+                }
+                return tmp;
+            }
+        }
+
+        public string COMMENT_HTML
+        {
+            get
+            {
+                return HttpUtility.HtmlDecode(COMMENT).Replace("\r\n", "<br/>");
+            }
+        }
+
+        public string ADD_IMAGE_PATH
+        {
+            get
+            {
+                var path = "";
+                if (ORDER_DETAIL_IDX != null)
+                {
+                    path = "R308_" + ADD_IMAGE;
+                }
+                else
+                {
+                    path = "old/" + ADD_IMAGE;
+                }
+                return path;
+            }
+        }
+    }
+
+
+    //(신)상품리뷰 - 2015.10.12 By 송선우 
+    public partial class SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result
     {
 
         public string COMMENT_TEXT

@@ -41,7 +41,7 @@ namespace AboutMe.Web.Front.Controllers
             model.CategoryCodeHealth = CategoryCode.HEALTH_DEFAULT;
             model.CategorySelShop = _ProductService.GetCategoryDeptList("SKIN_TYPE", CategoryCode.SEL_SHOP, "");
             model.CategoryThema = _ReviewService.ThemaList();
-            
+
 
             var tp = _ReviewService.GetReviewProductList(null, CategoryCode.BEAUTY_DEFAULT, ReviewProductListViewModel.SORT_PHOTO);
             model.Reviews = tp.Item1;
@@ -58,7 +58,7 @@ namespace AboutMe.Web.Front.Controllers
          * 
          */
         [HttpPost]
-        public JsonResult GetReviewProductList(ReviewListJsonParam param)   
+        public JsonResult GetReviewProductList(ReviewListJsonParam param)
         {
             ReviewProductListViewModel model = new ReviewProductListViewModel();
             var tp = _ReviewService.GetReviewProductList(param.TAIL_IDX, param.CATEGORY_CODE, param.SORT);
@@ -164,7 +164,7 @@ namespace AboutMe.Web.Front.Controllers
             model.Total = tp.Item2;
             model.PageNo = 1;
             model.Pcode = P_CODE;
-            model.PageSize = p.PAGE_SIZE??0;
+            model.PageSize = p.PAGE_SIZE ?? 0;
             model.P_CATE_CODE = P_CATE_CODE;
             //model.ProductDetail = _ProductService.ViewProduct(P_CODE);
             return View(model);
