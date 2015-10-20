@@ -800,7 +800,18 @@ namespace AboutMe.Web.Mobile.Controllers
 
                 //메일 발송
                 MailSender mObj = new MailSender();
-                mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+                //mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+                //메일발송 오류를 대비 try catch 로 변경 -2015-10-20
+                try
+                {
+                    mObj.MailSendAction(MAIL_SENDER_EMAIL, MAIL_SENDER_PW, MAIL_SENDER_SMTP_SERVER, MAIL_SENDER_SMTP_PORT, MAIL_SENDER_SMTP_TIMEOUT, M_EMAIL, MAIL_SUBJECT, MAIL_BODY);
+                }
+                catch (System.Net.Mail.SmtpException ex)
+                {
+                    //throw new Exception(ex.Message);
+                    //메일발송 에러시 무시함.
+                    ;
+                }
             }
 
 

@@ -136,7 +136,14 @@
             alert("EMAIL을 입력하세요.");
             return;
         }
-
+        if (f.M_EMAIL_2.value.indexOf(".") < 0) {
+            alert("EMAIL을 입력하세요. 메일 도메인은 콤마 '.'를 포함해야 합니다.");
+            return;
+        }
+        if (f.M_EMAIL_1.value.indexOf("@@") >= 0 || f.M_EMAIL_2.value.indexOf("@@") >= 0) {
+            alert("EMAIL을 입력하세요. 메일주소에는 '@@'를 제거하셔야 합니다.");
+            return;
+        }
         if (f.M_ISSMS[0].checked == false && f.M_ISSMS[1].checked == false) {
             alert("SMS수신여부를 선택하세요.");
             return;
