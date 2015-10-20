@@ -835,7 +835,7 @@ namespace AboutMe.Web.Front.Controllers
                 catch (System.Net.Mail.SmtpException ex)
                 {
                     //throw new Exception(ex.Message);
-                    //메일발송 에러시 무시함.
+                    //메일발송 에러시 무시함. 
                     ;
                 }
             }
