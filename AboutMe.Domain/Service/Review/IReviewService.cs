@@ -49,6 +49,14 @@ namespace AboutMe.Domain.Service.Review
 
         //상품코드별 상품리뷰 조회 - 상품상세에서 사용
         Tuple<List<SP_REVIEW_FREE_IN_SHOPPING_DETAIL_Result>, int> GetReviewFreeListByProductCode(ReviewListJsonParamInShopping p);
+      
+        //상품리뷰. 작성  
+        Tuple<string, string> InsertFreeReview(MyReviewProductInputViewModel p);
+
+        SP_REVIEW_FREE_INFO_Result GetReviewFreeDetail(int? idx);
+        
+        //신 상품리뷰 수정
+        Tuple<string, string> UpdateFreeReview(MyReviewProductInputViewModel p);
 
         #endregion
     }

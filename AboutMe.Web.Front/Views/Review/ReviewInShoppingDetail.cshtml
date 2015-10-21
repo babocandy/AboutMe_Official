@@ -1,6 +1,10 @@
 ﻿@model AboutMe.Domain.Entity.Review.ReviewInProductDetailViewModel
 @using AboutMe.Web.Front.Controllers
+@using AboutMe.Web.Front.Common
 @using System.Text.RegularExpressions
+@using AboutMe.Domain.Entity.Product
+@using AboutMe.Domain.Entity.Review
+
 @using AboutMe.Common.Helper
 @{
     Layout = null;
@@ -20,20 +24,44 @@
                 <li><a href="#review2"><img src="/aboutCom/images/shopping/review_tab2.gif" alt="" /></a></li>
             </ul>
             <div id="review1" class="tab_content" style="display:block">
+            @{
+                MyReviewPdtInputParam p = new MyReviewPdtInputParam();
+                p.ORDER_DETAIL_IDX = 0;
+                p.P_CODE = Model.Pcode;
+                
+            }
                 <div class="btn_riviewenroll">
-                    <a href="@Url.Action("Ready", "MyReview")" class="btn_white_w120h38">상품리뷰 등록</a>
+            @if (MemberInfo.IsMemberLogin() == true)
+            { 
+                <a href="#" onclick="PopupCenter('@Url.Action("Write", "Review", p)', '', 760, 600); return false;" class="btn_white_w120h38">상품리뷰 등록</a>
+            }
+            else
+            {
+                <a href="/MemberShip/Login?RedirectUrl=@Server.UrlEncode(Request.Url.OriginalString)" class="btn_white_w120h38">상품리뷰 등록</a>
+            }
                 </div>
                 <!--리뷰 슬라이드-->
                 <div class="pur_review accordion" style="display:@(Model.Reviews.Count > 0 ? "block" : "none")">
                     @{
     var i = 0;
     var count = Model.Reviews.Count;
+            </div>
+            <!--리뷰 슬라이드-->
+            <div class="pur_review accordion" style="display:@(Model.FreeReviews.Count > 0 ? "block" : "none")">
+                @{
+                        var i = 0;
+                        var count = Model.FreeReviews.Count;
 
                     }
                     @foreach (var item in Model.Reviews)
                     {
                         var cssClassName = "";
                         var selectContent = "";
+                }
+                @foreach (var item in Model.FreeReviews)
+                {
+                    var cssClassName = "";
+                    var selectContent = "";
 
                         if (i == 0)
                         {
@@ -57,12 +85,21 @@
                                 {
                                     <span class="ico_photo">포토리뷰</span>
                                 }
-                            </div>
+                            
+                            @if (item.M_ID == MemberInfo.GetMemberId())
+                            {
+                                <!-- 수정 버튼 추가 -->
+                                <a href="#" onclick="PopupCenter('@Url.Action(string.Format("Update/{0}", item.IDX), "Review")', '', 760, 600); return false;" class="btn_gray_w96h38 fs14 btn_modify">
+                                    수정
+                                </a>
+                               <!-- //수정 버튼 추가 -->
+                            }
+                          </div>
                             <div class="contxt accordtxt">
                                 <div class="writer">
                                     <span class="userage"><em class="skin @item.SKIN_TYPE_CSS" style="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "" : "display:none")"></em><em class="@(!ReviewHelper.CheckHealth(item.C_CATE_CODE) ? "age" : "")">@(item.M_BIRTHDAY_LBL)대, @item.M_SEX_LBL</em></span>
                                     <span class="id">@item.M_ID_LBL</span>
-                                </div>
+                            </div>
                                 @Html.Raw(item.COMMENT_HTML)
                                 @if (item.IS_PHOTO == "Y")
                                 {
@@ -89,6 +126,8 @@
 
 
             <div id="review2" class="tab_content">
+        <div id="review2" class="tab_content" >
+                <a href="@Url.Action("Ready", "MyReview")" class="btn_white_w120h38">구매리뷰 등록</a>
                 <div class="btn_riviewenroll">
                     <!--<a href="#" class="btn_white_w120h38">체험단 신청</a>-->
                 </div>
@@ -192,6 +231,13 @@
         var img_path_review = "@myController._img_path_review";
 
 
+    function reviewReload(){
+
+        //alert("review reload");
+        review.getReviewFreeListByPageNo(1);
+    }
+
+
         (function(){
             var exp_first = false;
             $(".review_tab .tabs li").click(function(){
@@ -221,6 +267,7 @@
             $(function(){
 
                 //상품리뷰 페이징 초기화
+        console.log("total", total)
                 if(total > 0){
                     paging(pageNo, pageSize, blockSize, total, $("#review1 .paging"), "review.getReviewProducListByPageNo" );
                 }
@@ -231,6 +278,9 @@
                 페이징 - 공통
             */
             function paging(pno, psize, pbloc, total, $target, callback) {
+
+        console.log("paging in func", pno, psize, pbloc, total, $target, callback)
+
                 var totalPage = Math.ceil(total / psize);
                 var totalBlock = Math.ceil(totalPage / pbloc);
 
@@ -297,11 +347,27 @@
 
             }//end func
 
+                 (신)상품리뷰 데이타 로드
             /**
                 상품리뷰 데이타 로드
             */
-            review.getReviewProducListByPageNo = function(no) {
+   function buildListFree(dd) {
 
+
+       var $container  = $("#review1 .pur_review")
+    var cur_idx = 0 ;
+
+        cur_idx = item.IDX ;
+        if (item.M_ID == '@MemberInfo.GetMemberId()')
+        {
+            
+            html += "<a href='#' onclick=\"PopupCenter('/Review/Update/"+item.IDX+"', '', 760, 600); return false;\" class='btn_gray_w96h38 fs14 btn_modify'>" ;
+            html +=   "수정" ;
+            html += "</a>" ;
+          
+        }
+            review.getReviewProducListByPageNo = function(no) {
+        console.log("getReviewProducListByPageNo", no)
                 $.ajax({
                     url: "@(Url.Action("GetReviewProductListInShopping", "Review"))",
                     type: "POST",
@@ -311,13 +377,13 @@
                         , PAGE_NO :no
                     },
                     success: function (data) {
-                        //console.log(data)
+                //console.log(data)
                         if (data.Success) {
                             if(data.Reviews.length > 0){
                                 buildList(data.Reviews);
                                 paging(no, pageSize, blockSize, data.Total, $("#review1 .paging"), "review.getReviewProducListByPageNo" );
                             }else{
-
+                        $("#review2 .no_data").show();
                             }
 
 
@@ -338,7 +404,7 @@
             */
             function buildList(dd) {
 
-                var $container  = $(".pur_review")
+        var $container  = $("#review2 .pur_review")
                 $container.empty();
 
 

@@ -1,0 +1,137 @@
+﻿@model AboutMe.Domain.Entity.AdminReview.AdminReviewInputViewModel
+@using AboutMe.Web.Admin.Controllers
+@{
+    Layout = "~/Views/Shared/_AboutMeAdminLayoutB.cshtml";
+    var myctrl = ViewContext.Controller as AdminReviewFreeController;
+}
+
+
+@section Scripts{
+    <script>
+
+
+        function closePopup() {
+            if (window.opener) {
+                window.opener.location.reload(true);
+            }
+            self.close();
+
+        }
+
+        function update(frm) {
+            //console.log(frm);
+            if (confirm("수정하시겠습니까?")) {
+                frm.submit();
+            }
+        }
+
+
+        var rNum = "@TempData["ResultNum"]";
+        var rMsg = "@TempData["ResultMessage"]";
+
+        if (rNum != "0" && rNum != "") {
+            alert(rMsg);
+            self.close();
+        } else if (rNum == "0") {
+            closePopup();
+        }
+
+    </script>
+}
+
+
+@section Body{
+    <!--content-->
+    <div class="content">
+        @using (Html.BeginForm("Update", "AdminReviewFree", FormMethod.Post, new { id = "frm", name = "frm" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="IDX" value="@Model.IDX" />
+            <input type="hidden" name="P_CODE" value="@Model.P_CODE" />
+            <input type="hidden" name="P_NAME" value="@Model.P_NAME" />
+            <input type="hidden" name="MEDIA_GBN_LBL" value="@Model.MEDIA_GBN_LBL" />
+            <input type="hidden" name="INS_DATE" value="@Model.INS_DATE" />
+            <input type="hidden" name="M_ID" value="@Model.M_ID" />
+            <input type="hidden" name="M_NAME" value="@Model.M_NAME" />
+            <input type="hidden" name="SKIN_TYPE_LBL" value="@Model.SKIN_TYPE_LBL" />
+            <input type="hidden" name="IS_PHOTO" value="@Model.IS_PHOTO" />
+            <input type="hidden" name="ADD_IMAGE" value="@Model.ADD_IMAGE" />
+            <input type="hidden" name="ORDER_DETAIL_IDX" value="@Model.ORDER_DETAIL_IDX" />
+            <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
+
+            <table class="table table_row" style="max-width:500px">
+                <!--
+                <tr>
+                    <th>베스트지정</th>
+                    <td colspan="3"><label for="chb1"><input type="checkbox" id="chb1" name="IS_BEST" value="Y" @(Model.IS_BEST == "Y" ? "checked" : "") /></label></td>
+                </tr>
+                <tr>
+                    <th>최다리뷰 상품 지정</th>
+                    <td colspan="3"><label for="chb2"><input type="checkbox" id="chb2" name="IS_MOST_CNT" value="Y" @(Model.IS_MOST_CNT == "Y" ? "checked" : "") /></label></td>
+                </tr>
+                    -->
+                <tr>
+                    <th>상품코드</th>
+                    <td colspan="3">@Model.P_CODE</td>
+                </tr>
+                <tr>
+                    <th>상품명</th>
+                    <td colspan="3">@Model.P_NAME</td>
+                </tr>
+                <tr>
+                    <th>등록구분</th>
+                    <td>@Model.MEDIA_GBN_LBL</td>
+                    <th>등록일</th>
+                    <td>@Model.INS_DATE.ToShortDateString()</td>
+                </tr>
+                <tr>
+                    <th>회원ID/성명</th>
+                    <td colspan="3">@Model.M_ID / @Model.M_NAME</td>
+                </tr>
+                <tr>
+                    <th>전시여부</th>
+                    <td colspan="3">
+                        @{
+            var checked_0 = Model.IS_DISPLAY == "Y" ? "checked" : "";
+            var checked_1 = Model.IS_DISPLAY == "N" ? "checked" : "";
+                        }
+                        <label for="radi1"><input type="radio" name="IS_DISPLAY" id="radi1" value="Y" @checked_0 /><span class="txt mr5">전시</span></label>
+                        <label for="radi2"><input type="radio" name="IS_DISPLAY" id="radi2" value="N" @checked_1 /><span class="txt mr5">비전시</span></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>피부타입</th>
+                    <td>@Model.SKIN_TYPE_LBL</td>
+                    <th>포토이미지1</th>
+                    <td>
+                        @if (Model.IS_PHOTO == "Y")
+                        {
+                            <img src="@string.Format("{0}{1}", myctrl._img_path_review, Model.ADD_IMAGE_PATH)" style="width:200px;" alt="" />
+                        }
+                        else
+                        {
+                            <span>텍스트 리뷰입니다.</span>
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td colspan="3">
+                        @*<textarea style="width:100%;height:100px;"></textarea>*@
+                        <div id="seditor_dummy" contenteditable="false" style="max-width:500px;width:100%;height:300px;overflow-y:auto">@Html.Raw(Model.COMMENT_HTML)</div>
+                    </td>
+                </tr>
+            </table>
+
+
+            <div class="tac mt20">
+                <a class="btn btn-default small" href="#" onclick="update(this.parentElement.parentElement);return false;">수정</a>
+                <a class="btn btn-success small" href="#" onclick="closePopup(); return false;">취소</a>
+            </div>
+        }
+    </div>
+    <!--//content-->
+}
+
+

@@ -409,6 +409,65 @@ namespace AboutMe.Domain.Service.Review
             return tp;
         }
 
+
+
+
+        /**
+         *  상품리뷰. 작성  
+         */
+        public Tuple<string, string> InsertFreeReview(MyReviewProductInputViewModel p)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                context.SP_REVIEW_FREE_INS(p.M_ID,p.P_CODE, p.SKIN_TYPE, p.COMMENT, p.ADD_IMAGE, p.MEDIA_GBN, retNum, retMsg);
+            }
+
+            Tuple<string, string> tp = new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+            //Debug.WriteLine("UpdateMemberPointSave retNum:  " + retNum.Value);
+            Debug.WriteLine("UpdateMemberPointSave retMsg:  " + retMsg.Value);
+
+            return tp;
+        }
+
+
+        /**
+         * (신-상품리뷰) 상세 
+         **/
+        public SP_REVIEW_FREE_INFO_Result GetReviewFreeDetail(int? idx)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            SP_REVIEW_FREE_INFO_Result info = new SP_REVIEW_FREE_INFO_Result();
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                info = context.SP_REVIEW_FREE_INFO(idx, retNum, retMsg).SingleOrDefault();
+            }
+            return info;
+        }
+
+
+     /**
+     * 신-상품리뷰  수정
+     **/
+        public Tuple<string, string> UpdateFreeReview(MyReviewProductInputViewModel p)
+        {
+            ObjectParameter retNum = new ObjectParameter("RET_NUM", typeof(string));
+            ObjectParameter retMsg = new ObjectParameter("RET_MESSAGE", typeof(string));
+
+            using (ReviewEntities context = new ReviewEntities())
+            {
+                context.SP_REVIEW_FREE_UPD(p.IDX, p.COMMENT, p.ADD_IMAGE, retNum, retMsg);
+            }
+
+            return new Tuple<string, string>(retNum.Value.ToString(), retMsg.Value.ToString());
+        }
+
+
         
         #endregion
 

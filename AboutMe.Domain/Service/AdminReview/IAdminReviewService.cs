@@ -36,6 +36,23 @@ namespace AboutMe.Domain.Service.AdminReview
 
         Tuple<List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>, int, string, string> ReviewExpArticleList(AdminReviewExpArticleRouteParam p);
         SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result ReviewExpArticleDetail(int? idx);
+//<<<<<<< SongSunWoo
         void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model);
+
+
+        
+        #region (신) 상품리뷰 by 송선우 ================================================================
+
+        Tuple<List<SP_ADMIN_REVIEW_FREE_SEL_Result>, int> ReviewFreeList(AdminReviewRouteParam p);
+        Tuple<SP_ADMIN_REVIEW_FREE_INFO_Result, string, string> ReviewFreeInfo(int? idx);
+        Tuple<string, string> ReviewFreeUpdate(AdminReviewInputViewModel p);
+
+       #endregion ====================================================================================
+
     }
 }
+//=======
+        //void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model);
+    //}
+//}
+//>>>>>>> local

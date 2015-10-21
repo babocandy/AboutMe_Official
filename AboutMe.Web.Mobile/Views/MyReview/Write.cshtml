@@ -87,11 +87,11 @@
         <div class="container write">
             <div class="h2_area">
                 <a href="#" class="historyback"><img src="/aboutCom/images/common/btn_historyback.gif" alt="뒤로가기" /></a>
-                <h2>제품리뷰등록</h2>
+                <h2>구매리뷰등록</h2>
             </div>
             <!-- 제품리뷰등록 -->
             <div class="review_write boxtypea">
-                <h3>제품리뷰등록</h3>
+                <h3>구매리뷰등록</h3>
 
 @using (Html.BeginForm("Write", "MyReview", FormMethod.Post, new { id = "frm", name = "frm", enctype = "multipart/form-data" }))
 {                    @Html.AntiForgeryToken()
@@ -101,7 +101,7 @@
     <input type="hidden" name="P_CODE" value="@(Model.P_CODE)" />
     <input type="hidden" name="MEDIA_GBN" value="@MediaCode.MOBILE" />
     <fieldset>
-        <legend>제품리뷰등록 입력</legend>
+        <legend>구매리뷰등록 입력</legend>
         <ul class="review_list">
             <li class="product_info">
                 <div class="photo_info">
