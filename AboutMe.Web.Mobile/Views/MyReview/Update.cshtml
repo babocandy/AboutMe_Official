@@ -150,7 +150,7 @@
                                     <dt><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용</dt>
                                     <dd>
                                         @*<textarea class="textarea" name="COMMENT">@Model.COMMENT</textarea>*@
-                                        <div id="commentDummy" contenteditable="true" style="border: 1px solid #dad5d4;">@Html.Raw(Model.COMMENT_HTML)</div>
+                                        <div id="commentDummy" class="txtareatypea" contenteditable="true" style="border: 1px solid #dad5d4;">@Html.Raw(Model.COMMENT_HTML)</div>
                                     </dd>
                                 </dl>
                             </li>
@@ -161,7 +161,7 @@
                             <dt>사진첨부</dt>
                             <dd class="photo_upload">
                                 <div>
-                                    <input type="file" id="UploadImage" name="UploadImage" value="@Model.UploadImage" class="fileField" onchange="changeUploadFile(this);" />
+                                    <input type="file" id="UploadImage" accept="image/*"  name="UploadImage" value="@Model.UploadImage" class="fileField" onchange="changeUploadFile(this);" />
                                     <input type="text" id="ImageFileName" name="ImageFileName" readonly="readonly" class="ipttypea" title="첨부사진 경로" value="@Model.ADD_IMAGE"/><a href="#none" class="btn btn_white_h30 v2" onclick="findUploadFile(); return false;">찾아보기</a>
                                 </div>
                                 <div class="thumb"><img id="previewImage" src="@string.Format("{0}{1}", myController._img_path_review, Model.ADD_IMAGE_PATH)" alt="" /></div>

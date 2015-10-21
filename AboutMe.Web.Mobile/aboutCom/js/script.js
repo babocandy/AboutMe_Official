@@ -168,6 +168,7 @@ $(function(){
 			$(".f_bottom .historyback, .f_bottom .documtop").css({"position":"absolute"});
 		}
 	});*/
+	//safari position fixed offset
 	$(window).scroll(function(){
 		scrollTop=$(window).scrollTop();
 		if(scrollTop > 10){

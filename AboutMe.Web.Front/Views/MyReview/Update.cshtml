@@ -103,10 +103,10 @@
                     <input type="hidden" name="COMMENT" value="@Model.COMMENT" />
                     <input type="hidden" name="ORDER_DETAIL_IDX" value="@Model.ORDER_DETAIL_IDX" />
                     <fieldset>
-                        <legend>상품 리뷰 등록 폼</legend>
+                        <legend>상품 리뷰 수정 폼</legend>
                         <!-- [Desc]마지막 행에는 class="last"를 붙여줍니다. -->
                         <table summary="상품찾기, 피부타입, 제목">
-                            <caption>상품 리뷰 등록 입력 표</caption>
+                            <caption>상품 리뷰 수정 입력 표</caption>
                             <colgroup>
                                 @if (!ReviewHelper.CheckHealth(@Model.C_CATE_CODE))
                                 {
@@ -145,7 +145,7 @@
                                 <tr class="edit">
                                     <th><span>@Html.ValidationMessageFor(model => model.COMMENT)</span>내용<br /></th>
                                     <td colspan="3">
-                                        <div id="commentDummy" contenteditable="true" style=" max-height: 150px; overflow-y: auto;">@Html.Raw(Model.COMMENT_HTML)</div>
+                                        <div id="commentDummy" class="txtareatypea" contenteditable="true" style=" max-height: 50px; overflow-y: auto;">@Html.Raw(Model.COMMENT_HTML)</div>
                                         @*<textarea name="COMMENT" class="txtareatypea" style="width:100%">@Html.Raw(Model.COMMENT_HTML)</textarea>*@
                                     </td>
                                 </tr>

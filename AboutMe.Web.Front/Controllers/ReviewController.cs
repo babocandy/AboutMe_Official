@@ -151,9 +151,10 @@ namespace AboutMe.Web.Front.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
-
+        
         /**
-         * 공통. 상품상세에서 상품, 체험단리뷰 함께. 상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
+             * 공통. 상품상세에서 상품, 체험단리뷰 함께. (신)상품리뷰가 첫번째로 보이지기 때문에 상품리뷰 데이타만 넘겨준다.
+             *  ==> 2015.10.12 (신)상품리뷰데이터을 가져오는것으로 변경함  구-상품리뷰는 구매리뷰로 변경됨
          */
         [ChildActionOnly]
         public ActionResult ReviewInShoppingDetail(string P_CODE, string P_CATE_CODE = "")
@@ -161,9 +162,12 @@ namespace AboutMe.Web.Front.Controllers
             ReviewInProductDetailViewModel model = new ReviewInProductDetailViewModel();
             ReviewListJsonParamInShopping p = new ReviewListJsonParamInShopping();
             p.P_CODE = P_CODE;
-            var tp = _ReviewService.GetReviewProductListByProductCode(p);
 
-            model.Reviews = tp.Item1;
+            //var tp = _ReviewService.GetReviewProductListByProductCode(p); // 2015.10.12 아래로 변경
+            var tp = _ReviewService.GetReviewFreeListByProductCode(p);
+
+            //model.Reviews = tp.Item1; 2015.10.12 아래로 변경 
+            model.FreeReviews = tp.Item1;
             model.Total = tp.Item2;
             model.PageNo = 1;
             model.Pcode = P_CODE;
@@ -172,6 +176,8 @@ namespace AboutMe.Web.Front.Controllers
             //model.ProductDetail = _ProductService.ViewProduct(P_CODE);
             return View(model);
         }
+
+
         /**
          * 
          *  (신-상품리뷰) 목록
@@ -194,7 +200,7 @@ namespace AboutMe.Web.Front.Controllers
             return View(model);
         }
 
-
+        /*
          * 신-상품리뷰 목록 - JSON
          * 
          */
@@ -369,6 +375,7 @@ namespace AboutMe.Web.Front.Controllers
             ModelState.AddModelError("", "필수항목(*)들을 입력해주세요");
 
             return View(model);
+        }
         /*
          * 
   Regex urlregex = new Regex(@"(#)((?:[A-Za-z0-9-_]*))", RegexOptions.IgnoreCase RegexOptions.Compiled);

@@ -120,21 +120,21 @@
                         <dd class="frm_sel100per">
                             <span class="selbox select_a">
                                 @{
-                List<SelectListItem> items = new List<SelectListItem>();
-                items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
-                items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
-                items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
+                                List<SelectListItem> items = new List<SelectListItem>();
+                                items.Add(new SelectListItem { Text = SkinTypeCode.Dry_NAME, Value = SkinTypeCode.Dry });
+                                items.Add(new SelectListItem { Text = SkinTypeCode.Normal_NAME, Value = SkinTypeCode.Normal });
+                                items.Add(new SelectListItem { Text = SkinTypeCode.Oily_NAME, Value = SkinTypeCode.Oily });
 
 
-                foreach (var xx in items)
-                {
-                    if (xx.Value == Model.SKIN_TYPE)
-                    {
-                        xx.Selected = true;
-                        break;
-                    }
-                }
+                                foreach (var xx in items)
+                                {
+                                    if (xx.Value == Model.SKIN_TYPE)
+                                    {
+                                        xx.Selected = true;
+                                        break;
+                                    }
                                 }
+                                                }
                                 @Html.DropDownList("SKIN_TYPE", items, "피부타입 선택")
 
                             </span>
@@ -155,7 +155,7 @@
                     <dt>사진첨부</dt>
                     <dd class="photo_upload">
                         <div>
-                            <input type="file" id="UploadImage" name="UploadImage" value="@Model.UploadImage" class="fileField" onchange="changeUploadFile(this);" />
+                            <input type="file" id="UploadImage" accept="image/*" name="UploadImage" value="@Model.UploadImage" class="fileField" onchange="changeUploadFile(this);" />
                             <input type="text" id="ImageFileName" name="ImageFileName" readonly="readonly" class="ipttypea" title="첨부사진 경로" /><a href="#none" class="btn btn_white_h30 v2" onclick="findUploadFile(); return false;">찾아보기</a>
                         </div>
                         <div class="thumb"><img id="previewImage" src="/aboutCom/images/review/write_imgnone.jpg" alt="" /></div>
