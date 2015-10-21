@@ -36,6 +36,7 @@ namespace AboutMe.Domain.Service.AdminReview
 
         Tuple<List<SP_ADMIN_REVIEW_EXP_ARTICLE_SEL_Result>, int, string, string> ReviewExpArticleList(AdminReviewExpArticleRouteParam p);
         SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result ReviewExpArticleDetail(int? idx);
+//<<<<<<< SongSunWoo
         void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model);
 
 
@@ -50,3 +51,8 @@ namespace AboutMe.Domain.Service.AdminReview
 
     }
 }
+//=======
+        //void ReviewExpArticleUpdate(SP_ADMIN_REVIEW_EXP_ARTICLE_DETAIL_Result model);
+    //}
+//}
+//>>>>>>> local
