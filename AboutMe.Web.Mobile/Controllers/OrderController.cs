@@ -711,7 +711,15 @@ namespace AboutMe.Web.Mobile.Controllers
                 returnVal = _orderservice.OrderGetOrderCodeByOldOrderIdx(Convert.ToInt32(DataList.P_OID));
 
                 //메일발송
-                SendOrderResultMail(order_code);
+                try
+                {
+
+                    SendOrderResultMail(order_code);
+                }
+                catch (Exception ex)
+                {
+
+                }
 
             }
             else
@@ -1010,8 +1018,16 @@ namespace AboutMe.Web.Mobile.Controllers
                 orderResult.ORDER_CODE = order_code;
 
                 //메일발송
-                SendOrderResultMail(orderResult.ORDER_CODE);
 
+                try
+                {
+
+                    SendOrderResultMail(orderResult.ORDER_CODE);
+                }
+                catch (Exception ex)
+                {
+
+                }
                 //실행결과
                 StringBuilder SBuilder = new StringBuilder();
                 SBuilder.Append("<form name='mysubmitform' action='/Order/OrderResult' method='POST'>\n");

@@ -602,7 +602,14 @@ namespace AboutMe.Web.Front.Controllers
                 orderResult.ORDER_CODE = order_code;
 
                 //메일발송
-                SendOrderResultMail(orderResult.ORDER_CODE);
+                try
+                {
+                    SendOrderResultMail(orderResult.ORDER_CODE);
+                }
+                catch (Exception ex)
+                {
+
+                }
                 return orderResult;
             }
             catch (Exception e)
@@ -958,7 +965,16 @@ namespace AboutMe.Web.Front.Controllers
                         //메일발송
                         if (PayResult.Resultcode == "00" && !string.IsNullOrEmpty(orderResult.ORDER_CODE))
                         {
-                            SendOrderResultMail(orderResult.ORDER_CODE);
+                            //메일발송
+                            try
+                            {
+                                SendOrderResultMail(orderResult.ORDER_CODE);
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
                         }
 
                     }
