@@ -290,7 +290,10 @@
                         </ul>
                     </div>
                     <!--//sort-->
+     
                     <div id="reviewConts" class="bocksitls">
+                    
+                      
                         @foreach (var item in Model.FreeReviews)
                         {
                             <div class="grid">
@@ -333,15 +336,17 @@
                                 </div>
                                 <!--//리뷰-->
                             </div>
-                        }
+                          }
                     </div>
                 </div>
-                <a href="#" class="btn_more" onclick="moreView(); return false;">더보기<i></i></a>
-
-                <div class="no_data" style="display:none">
+               @if (Model.FreeReviews.Count > 0){  <a href="#" class="btn_more" onclick="moreView(); return false;">더보기<i></i></a> }
+              
+                <div class="no_data" @if (Model.FreeReviews.Count == 0) { <text> style="display:block" </text>  } else { <text> style="display:none" </text> }>
                     <img alt="" src="/aboutCom/images/common/ico_nodata2.gif">
                     <p class="txt">총 0개의 상품 리뷰가 있습니다.</p>
                 </div>
+
+
             </div>
         </div>
         <!--//container-->

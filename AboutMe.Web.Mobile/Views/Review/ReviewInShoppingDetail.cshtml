@@ -91,12 +91,14 @@
         </div>
         <!--//상품리뷰-->
         <!--구매리뷰-->
-        <div style="display:block" class="tab_content" id="buyReview">
-            <div class="brnwrap">
+        <div style="display:none" class="tab_content" id="buyReview">
+          
+             <div class="brnwrap">
                 <a href="@Url.Action("Ready", "MyReview")" class="bnr">
                     <span class="txt">리뷰등록하면 <strong>500P</strong>,<br />포토리뷰는 <strong>1000P</strong> 바로 적립!</span>
                 </a>
             </div>
+          
             <ul id="review_buy_list" class="review_list" style="display:none"></ul>
 
             <div class="datanone nobg" style="display:none">

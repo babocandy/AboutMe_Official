@@ -131,7 +131,7 @@ namespace AboutMe.Common.Data
         public static string Normal = "20";
         public static string Oily = "30";
 
-        public static string Dry_NAME = "지성";
+        public static string Dry_NAME = "건성";
         public static string Normal_NAME = "중성";
         public static string Oily_NAME = "지복합성";
 
