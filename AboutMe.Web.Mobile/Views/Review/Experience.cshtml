@@ -164,7 +164,10 @@
                                         </ul>
                                         <!-- //해시태그 -->
                                         <div class="review_view">
-                                            <div class="photo"><img src="@string.Format("{0}{1}", mycontrl._img_path_review, item.SUB_IMG_1)" alt="" /></div>
+                                            @if (item.SUB_IMG_1 != null)
+                                            {
+                                                <div class="photo"><img src="@string.Format("{0}{1}", mycontrl._img_path_review, item.SUB_IMG_1)" alt="" /></div>
+                                            }
                                             <div class="detail">
                                                 <p class="tit">@item.TITLE</p>
                                                 <p class="txt">@item.COMMENT_TEXT</p>
