@@ -70,7 +70,7 @@
 
     function pcodeUseChk(obj,span_name) {
 
-
+        var pop = 0;
        
         if (obj.value == '') {
             $(span_name).html("상품코드를 입력하세요.");
@@ -94,8 +94,11 @@
                 } else {
                     //bform.P_CODE_CHK_OK.value = "N";
                 }
-                alert(data.msg);
+                if (pop == 0) {
+                    alert(data.msg);
+                }
 
+                pop++; 
                 //alert(data.success);
 
             },

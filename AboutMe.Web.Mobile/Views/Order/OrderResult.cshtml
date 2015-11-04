@@ -19,7 +19,7 @@
 <script type="text/javascript" src="http://wcs.naver.net/wcslog.js"> </script>
 <script type="text/javascript">
     var _nasa = {};
-    _nasa["cnv"] = wcs.cnv("1", "10"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
+    _nasa["cnv"] = wcs.cnv("1", '@String.Format("{0:#,#0.}", Model.DetailInfo.TOTAL_PAY_PRICE)'); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
 </script>
 
 }
