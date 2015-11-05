@@ -99,7 +99,7 @@
         if (confirm("수량을 변경하시겠습니까?")) {
             f.IDX.value = idx;
             f.CNT.value = cnt;
-            f.OrderList = '';
+            f.OrderList.value = '';
             f.action = "/Cart/CartUpdateCnt";
             f.submit();
         }
@@ -112,7 +112,7 @@
         if (confirm("삭제하시겠습니까?")) {
             f.IDX.value = idx;
             f.CNT.value = '';
-            f.OrderList = '';
+            f.OrderList.value = '';
             f.action = "/Cart/CartDelete";
             f.submit();
         }
@@ -146,7 +146,7 @@
             if (confirm(cnt + "개의 상품을 쇼핑백에서 삭제하시겠습니까?")) {
                 f.IDX.value = idxstr;
                 f.CNT.value = '';
-                f.OrderList = '';
+                f.OrderList.value = '';
                 f.action = "/Cart/CartDelete";
                 f.submit();
             }
